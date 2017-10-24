@@ -92,6 +92,7 @@ namespace MasterBuilder
                     File.WriteAllText(EntityTemplate.FileName(entitiesPath, item), EntityTemplate.Evaluate(project, item));
                 }
             }
+            File.WriteAllText(EntityFrameworkContextTemplate.FileName(entitiesPath, project), EntityFrameworkContextTemplate.Evaluate(project));
 
 
             if (project.Screens != null)
@@ -103,6 +104,10 @@ namespace MasterBuilder
                     File.WriteAllText(ModelTemplate.FileName(modelsPath, item), ModelTemplate.Evaluate(project, item));
                 }
             }
+
+            // Nav menu
+            File.WriteAllText(Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.Evaluate(project));
+
         }
     }
 }

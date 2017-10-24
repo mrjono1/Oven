@@ -14,13 +14,16 @@ namespace MasterBuilder
             {
                 InternalName = "TestReference",
                 Id = Guid.NewGuid(),
-                Version = "0.0.1"
+                Version = "0.0.1",
+                Title = "Test Reference",
+                DatabaseConnectionString = "Server=(localdb)\\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;"
             };
             project.Entities = new Entity[]
             {
                 new Entity()
                 {
                     InternalName = "StreetTypes",
+                    Title = "Street Types",
                     Properties = new Property[]
                     {
                     new Property()
@@ -38,6 +41,7 @@ namespace MasterBuilder
                 new Entity()
                 {
                     InternalName = "WeatherForecast",
+                    Title = "Weather Forecast",
                     Properties = new Property[]
                     {
                         new Property()

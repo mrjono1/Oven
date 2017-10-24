@@ -14,6 +14,13 @@ namespace MasterBuilder.Templates.ProjectFiles
         public static string Evaluate(Project project)
         {
             string solutionGuid = Guid.NewGuid().ToString();
+
+            StringBuilder packageReferences = new StringBuilder();
+            foreach (var item in project.DefaultNugetReferences)
+            {
+                packageReferences.AppendLine($@"<PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
+            }
+
             return $@"<Project Sdk=""Microsoft.NET.Sdk.Web"">
 
   <PropertyGroup>
@@ -24,7 +31,7 @@ namespace MasterBuilder.Templates.ProjectFiles
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include=""Microsoft.AspNetCore.All"" Version=""2.0.0"" />
+    {packageReferences}
   </ItemGroup>
 
   <ItemGroup>

@@ -16,6 +16,13 @@ namespace MasterBuilder.Request
                 "obj",
                 "node_modules"
             };
+
+            DefaultNugetReferences = new Dictionary<string, string>
+            {
+                { "Microsoft.AspNetCore.All", "2.0.0" },
+                { "Microsoft.EntityFrameworkCore", "2.0.0"},
+                { "Microsoft.EntityFrameworkCore.SqlServer", "2.0.0"}
+            };
         }
 
         public bool CleanDirectory { get; set; }
@@ -29,5 +36,7 @@ namespace MasterBuilder.Request
         public IEnumerable<Screen> Screens { get; set; }
 
         public string[] CleanDirectoryIgnoreDirectories { get; set; }
+        public string DatabaseConnectionString { get; set; }
+        internal Dictionary<string, string> DefaultNugetReferences { get; set; }
     }
 }

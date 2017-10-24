@@ -57,19 +57,37 @@ namespace MasterBuilder
             // Delete Folders each subdirectory using recursion.
             foreach (DirectoryInfo directory in source.GetDirectories())
             {
-                var relativePath = directory.FullName;
+                var relativePath = TrimStart(directory.FullName, baseDirectory + "\\");
                 if (!project.CleanDirectoryIgnoreDirectories.Contains(relativePath))
                 {
-                    foreach (FileInfo file in directory.GetFiles())
+                    try
                     {
-                        file.Delete();
-                    }
-                    foreach (DirectoryInfo dir in directory.GetDirectories())
+                        foreach (FileInfo file in directory.GetFiles())
+                        {
+                            file.Delete();
+                        }
+                        foreach (DirectoryInfo dir in directory.GetDirectories())
+                        {
+                            dir.Delete(true);
+                        }
+                    }catch (Exception ex)
                     {
-                        dir.Delete(true);
+                        Console.WriteLine(ex);
+                        Console.ReadKey();
                     }
                 }
             }
+        }
+
+        public static string TrimStart(string target, string trimString)
+        {
+            string result = target;
+            while (result.StartsWith(trimString))
+            {
+                result = result.Substring(trimString.Length);
+            }
+
+            return result;
         }
     }
 }
