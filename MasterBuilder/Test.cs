@@ -16,53 +16,61 @@ namespace MasterBuilder
                 Id = Guid.NewGuid(),
                 Version = "0.0.1",
                 Title = "Test Reference",
-                DatabaseConnectionString = "Server=(localdb)\\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;"
+                DatabaseConnectionString = "ConnectionString"//"Server=(localdb)\\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;"
             };
             project.Entities = new Entity[]
             {
                 new Entity()
                 {
+                    Id = Guid.NewGuid(),
                     InternalName = "StreetTypes",
                     Title = "Street Types",
                     Properties = new Property[]
                     {
-                    new Property()
-                    {
-                        InternalName = "Title",
-                        Type = "string"
-                    },
-                    new Property()
-                    {
-                        InternalName = "Code",
-                        Type = "string"
-                    }
+                        new Property()
+                        {
+                            Id = Guid.NewGuid(),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String
+                        },
+                        new Property()
+                        {
+                            Id = Guid.NewGuid(),
+                            InternalName = "Code",
+                            Type = PropertyTypeEnum.String
+                        }
                     }
                 },
                 new Entity()
                 {
+                    Id = Guid.NewGuid(),
                     InternalName = "WeatherForecast",
                     Title = "Weather Forecast",
                     Properties = new Property[]
                     {
                         new Property()
                         {
+                            Id = Guid.NewGuid(),
                             InternalName = "DateFormatted",
-                            Type = "string"
+                            Type = PropertyTypeEnum.String
                         },
                         new Property()
                         {
+                            Id = Guid.NewGuid(),
                             InternalName = "TemperatureC",
-                            Type = "int"
+                            Type = PropertyTypeEnum.Integer
                         },
                         new Property()
                         {
+                            Id = Guid.NewGuid(),
                             InternalName = "Summary",
-                            Type = "string"
+                            Type = PropertyTypeEnum.String
                         },
                         new Property()
                         {
+                            Id = Guid.NewGuid(),
                             InternalName = "TemperatureF",
-                            Type = "int",
+                            Type = PropertyTypeEnum.Integer,
                             Calculation = "32 + (int)(TemperatureC / 0.5556)"
                         }
                     }
@@ -73,6 +81,7 @@ namespace MasterBuilder
             {
                 new Screen()
                 {
+                    Id = Guid.NewGuid(),
                     InternalName = "SampleData",
                     ControllerCode = @"private static string[] Summaries = new[]
         {

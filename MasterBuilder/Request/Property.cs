@@ -8,7 +8,7 @@ namespace MasterBuilder.Request
     {
         public string InternalName { get; set; }
 
-        public string Type { get; set; }
+        public PropertyTypeEnum Type { get; set; }
         internal bool HasCalculation
         {
             get
@@ -17,5 +17,29 @@ namespace MasterBuilder.Request
             }
         }
         public string Calculation { get; set; }
+        public Guid Id { get; internal set; }
+
+        /// <summary>
+        /// C# Data Type
+        /// </summary>
+        internal string CsType
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case PropertyTypeEnum.Uniqueidentifier:
+                        return "Guid";
+                    case PropertyTypeEnum.String:
+                        return "string";
+                    case PropertyTypeEnum.Integer:
+                        return "int";
+                    case PropertyTypeEnum.DateTime:
+                        return "DateTime";
+                    default:
+                        return "string";
+                }
+            }
+        }
     }
 }

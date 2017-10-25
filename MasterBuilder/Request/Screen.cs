@@ -8,6 +8,8 @@ namespace MasterBuilder.Request
     {
         public string InternalName { get; set; }
         public string ControllerCode { get; set; }
+        public Guid Id { get; internal set; }
+
         internal bool HasControllerCode
         {
             get

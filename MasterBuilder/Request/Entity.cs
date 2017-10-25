@@ -10,6 +10,8 @@ namespace MasterBuilder.Request
 
         public IEnumerable<Property> Properties { get; set; }
         public string Title { get; internal set; }
+        public Guid Id { get; internal set; }
+
         internal string InternalNamePlural
         {
             get

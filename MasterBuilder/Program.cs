@@ -34,8 +34,7 @@ namespace MasterBuilder
         {
             var project = new Test().Project;
 
-
-
+            // Validate & Pre Process Project
 
             // Create Solution Directory
             var solutionDirectory = FileHelper.CreateFolder(outputDirectory, project.InternalName);

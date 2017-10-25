@@ -3,20 +3,25 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MasterBuilder.Templates.Entities
+namespace MasterBuilder.Templates.Entities.Maps
 {
-    public class EntityPropertyTemplate
+    public class EntityPropertyMapTemplate
     {
 
         public static string Evaluate(Property property)
         {
+            switch (property.Type)
+            {
+                default:
+                    break;
+            }
             if (!property.HasCalculation)
             {
-                return $@"      public {property.CsType} {property.InternalName} {{ get; set; }}";
+                return $@"      public {property.Type} {property.InternalName} {{ get; set; }}";
             }
             else
             {
-                return $@"      public {property.CsType} {property.InternalName} 
+                return $@"      public {property.Type} {property.InternalName} 
                                 {{ 
                                     get
                                     {{

@@ -10,7 +10,7 @@ namespace MasterBuilder.Templates.Models
 
         public static string Evaluate(Property property)
         {
-            return $@"      public {property.Type} {property.InternalName} {{ get; set; }}";
+            return $@"      public {property.CsType} {property.InternalName} {{ get; set; }}";
         }
     }
 }
