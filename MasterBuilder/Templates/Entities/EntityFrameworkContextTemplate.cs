@@ -16,15 +16,15 @@ namespace MasterBuilder.Templates.Entities
         public static string Evaluate(Project project)
         {
             StringBuilder properties = null;
-            StringBuilder maps = null;
+            StringBuilder configurations = null;
             if (project.Entities != null)
             {
                 properties = new StringBuilder();
-                maps = new StringBuilder();
+                configurations = new StringBuilder();
                 foreach (var item in project.Entities)
                 {
                     properties.AppendLine($"        public DbSet<{item.InternalName}> {item.InternalNamePlural} {{ get; set; }}");
-                    maps.AppendLine($"          modelBuilder.AddConfiguration(new {item.InternalName}Map());");
+                    configurations.AppendLine($"            builder.ApplyConfiguration(new {item.InternalName}Config());");
                 }
             }
 
@@ -32,6 +32,7 @@ namespace MasterBuilder.Templates.Entities
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using {project.InternalName}.EntityTypeConfigurations;
 
 namespace {project.InternalName}.Entities
 {{
@@ -44,9 +45,10 @@ namespace {project.InternalName}.Entities
             optionsBuilder.UseSqlServer(""{project.DatabaseConnectionString}"");
         }}
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {{
-{maps}
+            base.OnModelCreating(builder);
+{configurations}
         }}
     }}
 }}";

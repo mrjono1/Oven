@@ -9,8 +9,8 @@ namespace MasterBuilder.Request
         public string InternalName { get; set; }
 
         public IEnumerable<Property> Properties { get; set; }
-        public string Title { get; internal set; }
-        public Guid Id { get; internal set; }
+        public string Title { get; set; }
+        public Guid Id { get; set; }
 
         internal string InternalNamePlural
         {
@@ -21,5 +21,15 @@ namespace MasterBuilder.Request
             }
         }
         internal string QualifiedInternalName { get; set; }
+
+        internal bool Validate()
+        {
+            // TODO:
+            // must have Id Entity
+            // Internal Name must be valid
+            // Id must not be empty
+
+            return true;
+        }
     }
 }

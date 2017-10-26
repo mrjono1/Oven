@@ -12,17 +12,17 @@ namespace MasterBuilder.Templates.Entities
         {
             if (!property.HasCalculation)
             {
-                return $@"      public {property.CsType} {property.InternalName} {{ get; set; }}";
+                return $@"         public {property.CsType} {property.InternalName} {{ get; set; }}";
             }
             else
             {
-                return $@"      public {property.CsType} {property.InternalName} 
-                                {{ 
-                                    get
-                                    {{
-                                        return {property.Calculation};
-                                    }}
-                                }}";
+                return $@"         public {property.CsType} {property.InternalName} 
+         {{ 
+             get
+             {{
+                 return {property.Calculation};
+             }}
+         }}";
             }
         }
     }

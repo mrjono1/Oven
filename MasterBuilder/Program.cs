@@ -38,14 +38,17 @@ namespace MasterBuilder
 
             // Create Solution Directory
             var solutionDirectory = FileHelper.CreateFolder(outputDirectory, project.InternalName);
-            
-            // Create Directories
             var projectDirectory = FileHelper.CreateFolder(solutionDirectory, project.InternalName);
+
+            // Clean out directory
+            FileHelper.CleanProject(projectDirectory, null, project);
+
+            // Create Directories
             var binPath = FileHelper.CreateFolder(projectDirectory, "bin");
             var clientAppPath = FileHelper.CreateFolder(projectDirectory, "ClientApp");
             var controllersPath = FileHelper.CreateFolder(projectDirectory, "Controllers");
             var entitiesPath = FileHelper.CreateFolder(projectDirectory, "Entities");
-            var entityMapPath = FileHelper.CreateFolder(entitiesPath, "Maps");
+            var entityTypeConfigsPath = FileHelper.CreateFolder(projectDirectory, "EntityTypeConfigurations");
             var modelsPath = FileHelper.CreateFolder(projectDirectory, "Models");
             var nodeModulesPath = FileHelper.CreateFolder(projectDirectory, "node_modules");
             var objPath = FileHelper.CreateFolder(projectDirectory, "obj");
@@ -53,10 +56,7 @@ namespace MasterBuilder
             var viewsPath = FileHelper.CreateFolder(projectDirectory, "Views");
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
             var distPath = FileHelper.CreateFolder(wwwrootPath, "dist");
-
-            // Clean out directory
-            FileHelper.CleanProject(projectDirectory, null, project);
-
+            
             // Create Solution File
             File.WriteAllText(Path.Combine(solutionDirectory, SolutionTemplate.FileName(project)), SolutionTemplate.Evaluate(project));
             
@@ -80,8 +80,8 @@ namespace MasterBuilder
             File.WriteAllText(Templates.Views.Shared.LayoutTemplate.FileName(viewsPath), Templates.Views.Shared.LayoutTemplate.Evaluate(project));
 
             // Artifacts
-            FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "Artifacts"), wwwrootPath);
-            FileHelper.CopyFolderContent(Path.Combine(GetProjectRootFolder(), "Artifacts", "ClientApp"), clientAppPath);
+            FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "CopyFiles"), wwwrootPath);
+            FileHelper.CopyFolderContent(Path.Combine(GetProjectRootFolder(), "CopyFiles", "ClientApp"), clientAppPath);
 
             if (project.Entities != null)
             {
@@ -89,6 +89,7 @@ namespace MasterBuilder
                 {
                     // Create Entity & Map
                     File.WriteAllText(EntityTemplate.FileName(entitiesPath, item), EntityTemplate.Evaluate(project, item));
+                    File.WriteAllText(Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.FileName(entityTypeConfigsPath, item), Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.Evaluate(project, item));
                 }
             }
             File.WriteAllText(EntityFrameworkContextTemplate.FileName(entitiesPath, project), EntityFrameworkContextTemplate.Evaluate(project));

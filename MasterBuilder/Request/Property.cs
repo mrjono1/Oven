@@ -17,8 +17,8 @@ namespace MasterBuilder.Request
             }
         }
         public string Calculation { get; set; }
-        public Guid Id { get; internal set; }
-
+        public Guid Id { get; set; }
+        
         /// <summary>
         /// C# Data Type
         /// </summary>
@@ -40,6 +40,14 @@ namespace MasterBuilder.Request
                         return "string";
                 }
             }
+        }
+
+        public IEnumerable<Validation> ValidationItems { get; set; }
+
+        internal bool Validate()
+        {
+            // Ensure only one validation method of each type
+            return true;
         }
     }
 }

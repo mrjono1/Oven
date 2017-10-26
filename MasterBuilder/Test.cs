@@ -30,6 +30,12 @@ namespace MasterBuilder
                         new Property()
                         {
                             Id = Guid.NewGuid(),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier
+                        },
+                        new Property()
+                        {
+                            Id = Guid.NewGuid(),
                             InternalName = "Title",
                             Type = PropertyTypeEnum.String
                         },
@@ -48,6 +54,12 @@ namespace MasterBuilder
                     Title = "Weather Forecast",
                     Properties = new Property[]
                     {
+                        new Property()
+                        {
+                            Id = Guid.NewGuid(),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier
+                        },
                         new Property()
                         {
                             Id = Guid.NewGuid(),
