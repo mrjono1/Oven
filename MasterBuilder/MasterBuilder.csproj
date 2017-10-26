@@ -6,17 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Artifacts\favicon.ico" />
+    <None Remove="CopyFiles\favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Artifacts\favicon.ico">
+    <Content Include="CopyFiles\favicon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Artifacts\ClientApp\" />
     <Folder Include="Templates\ClientApp\app\components\home\" />
     <Folder Include="Templates\ClientApp\app\components\app\" />
     <Folder Include="Templates\ClientApp\app\components\fetchdata\" />
