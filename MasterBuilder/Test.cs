@@ -16,7 +16,7 @@ namespace MasterBuilder
                 Id = Guid.NewGuid(),
                 Version = "0.0.1",
                 Title = "Test Reference",
-                DatabaseConnectionString = "ConnectionString"//"Server=(localdb)\\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;"
+                DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MacroFinder;Integrated Security=True"
             };
             project.Entities = new Entity[]
             {

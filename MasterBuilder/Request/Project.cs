@@ -14,7 +14,8 @@ namespace MasterBuilder.Request
             {
                 "bin",
                 "obj",
-                "node_modules"
+                "node_modules",
+                "wwwroot"
             };
 
             DefaultNugetReferences = new Dictionary<string, string>

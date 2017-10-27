@@ -65,7 +65,7 @@ namespace MasterBuilder
             File.WriteAllText(Path.Combine(projectDirectory, StartupTemplate.FileName()), StartupTemplate.Evaluate(project));
             File.WriteAllText(Path.Combine(projectDirectory, GitIgnoreTemplate.FileName()), GitIgnoreTemplate.Evaluate());
             File.WriteAllText(Path.Combine(projectDirectory, ProgramTemplate.FileName()), ProgramTemplate.Evaluate(project));
-            File.WriteAllText(Path.Combine(projectDirectory, AppSettingsTemplate.FileName()), AppSettingsTemplate.Evaluate());
+            File.WriteAllText(Path.Combine(projectDirectory, AppSettingsTemplate.FileName()), AppSettingsTemplate.Evaluate(project));
             File.WriteAllText(Path.Combine(projectDirectory, TypeScriptConfigTemplate.FileName()), TypeScriptConfigTemplate.Evaluate());
             File.WriteAllText(Path.Combine(projectDirectory, WebPackConfigTemplate.FileName()), WebPackConfigTemplate.Evaluate());
             File.WriteAllText(Path.Combine(projectDirectory, WebPackConfigVendorTemplate.FileName()), WebPackConfigVendorTemplate.Evaluate());

@@ -38,12 +38,10 @@ namespace {project.InternalName}.Entities
 {{
     public class {project.InternalName}Context : DbContext
     {{
-{properties}
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public {project.InternalName}Context(DbContextOptions<{project.InternalName}Context> options) : base(options)
         {{
-            optionsBuilder.UseSqlServer(""{project.DatabaseConnectionString}"");
         }}
+{properties}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {{
