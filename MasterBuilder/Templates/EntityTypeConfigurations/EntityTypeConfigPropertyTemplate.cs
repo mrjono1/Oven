@@ -42,6 +42,25 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
 
             value.Append(";");
 
+            if (property.ValidationItems != null)
+            {
+                foreach (var item in property.ValidationItems)
+                {
+                    switch (item.ValidationType)
+                    {
+                        case ValidationTypeEnum.Unique:
+                            value.AppendLine();
+                            value.Append($@"            builder.HasIndex(p => p.{property.InternalName})
+                    .IsUnique();");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            
+
             return value.ToString();
         }
     }

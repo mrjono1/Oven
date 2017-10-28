@@ -12,8 +12,8 @@ namespace MasterBuilder
         {
             var project = new Project
             {
-                InternalName = "TestReference",
                 Id = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}"),
+                InternalName = "TestReference",
                 Version = "0.0.1",
                 Title = "Test Reference",
                 DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MacroFinder;Integrated Security=True"
@@ -39,21 +39,52 @@ namespace MasterBuilder
                             Id = new Guid("{CB6D802C-1F26-4D23-9272-6396E6268D72}"),
                             InternalName = "Title",
                             Type = PropertyTypeEnum.String,
-                            Title = "Title"
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{8D5A78EB-B24D-4789-A498-1D37B57BF63D}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
+                                    ValidationType = ValidationTypeEnum.MinimumLength,
+                                    IntegerValue = 200
+                                }
+                            }
                         },
                         new Property()
                         {
                             Id = new Guid("{527365A6-D0BF-4239-85DF-BF8647B6F372}"),
                             InternalName = "DatabaseConnectionString",
                             Type = PropertyTypeEnum.String,
-                            Title = "Database Connection String"
+                            Title = "Database Connection String",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{09ED3A71-3F3A-46BB-B24B-D2796E796A39}"),
+                                    ValidationType = ValidationTypeEnum.MinimumLength,
+                                    IntegerValue = 500
+                                }
+                            }
                         },
                         new Property()
                         {
                             Id = new Guid("{F1EEF37B-F40D-44D4-832F-ACEC4B63D147}"),
                             InternalName = "Version",
                             Type = PropertyTypeEnum.String,
-                            Title = "Version"
+                            Title = "Version",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{09ED3A71-3F3A-46BB-B24B-D2796E796A39}"),
+                                    ValidationType = ValidationTypeEnum.MinimumLength,
+                                    IntegerValue = 50
+                                }
+                            }
                         }
                     }
                 },

@@ -6,6 +6,7 @@
         MaximumLength,
         MinimumLength,
         MaximumValue,
-        MinimumValue
+        MinimumValue,
+        Unique
     }
 }
