@@ -13,7 +13,7 @@ namespace MasterBuilder
             var project = new Project
             {
                 InternalName = "TestReference",
-                Id = Guid.NewGuid(),
+                Id = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}"),
                 Version = "0.0.1",
                 Title = "Test Reference",
                 DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MacroFinder;Integrated Security=True"
@@ -22,28 +22,38 @@ namespace MasterBuilder
             {
                 new Entity()
                 {
-                    Id = Guid.NewGuid(),
-                    InternalName = "StreetTypes",
-                    Title = "Street Types",
+                    Id = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                    InternalName = "Project",
+                    Title = "Project",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = Guid.NewGuid(),
+                            Id = new Guid("{C3E14B66-FF43-478A-95D0-39524F6555B5}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id"
                         },
                         new Property()
                         {
-                            Id = Guid.NewGuid(),
+                            Id = new Guid("{CB6D802C-1F26-4D23-9272-6396E6268D72}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title"
                         },
                         new Property()
                         {
-                            Id = Guid.NewGuid(),
-                            InternalName = "Code",
-                            Type = PropertyTypeEnum.String
+                            Id = new Guid("{527365A6-D0BF-4239-85DF-BF8647B6F372}"),
+                            InternalName = "DatabaseConnectionString",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Database Connection String"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{F1EEF37B-F40D-44D4-832F-ACEC4B63D147}"),
+                            InternalName = "Version",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Version"
                         }
                     }
                 },
@@ -111,8 +121,26 @@ namespace MasterBuilder
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
         }"
+                },
+                new Screen()
+                {
+                    Id = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
+                    EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                    ScreenTypeId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), // Search
+                    Title = "Projects",
+                    InternalName = "Projects"
+                },
+                new Screen()
+                {
+                    Id = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
+                    EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                    ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
+                    Title = "Project",
+                    InternalName = "Project"
                 }
             };
+
+
 
             Project = project;
         }

@@ -7,6 +7,7 @@ using MasterBuilder.Templates.ProjectFiles;
 using MasterBuilder.Templates.Views;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace MasterBuilder
 {
@@ -90,6 +91,33 @@ namespace MasterBuilder
                     // Create Entity & Map
                     File.WriteAllText(EntityTemplate.FileName(entitiesPath, item), EntityTemplate.Evaluate(project, item));
                     File.WriteAllText(Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.FileName(entityTypeConfigsPath, item), Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.Evaluate(project, item));
+
+                    File.WriteAllText(ControllerTemplate.FileName(controllersPath, item), ControllerTemplate.Evaluate(project, item));
+
+                    if (project.Screens != null)
+                    {
+                        foreach (var screen in project.Screens.Where(p => p.EntityId.HasValue && p.EntityId.Value == item.Id))
+                        {
+                            switch (screen.ScreenType)
+                            {
+                                case ScreenTypeEnum.Search:
+                                    File.WriteAllText(ModelSearchRequestTemplate.FileName(modelsPath, item, screen), ModelSearchRequestTemplate.Evaluate(project, item, screen));
+                                    File.WriteAllText(ModelSearchResponseTemplate.FileName(modelsPath, item, screen), ModelSearchResponseTemplate.Evaluate(project, item, screen));
+                                    File.WriteAllText(ModelSearchItemTemplate.FileName(modelsPath, item, screen), ModelSearchItemTemplate.Evaluate(project, item, screen));
+                                    break;
+                                case ScreenTypeEnum.Edit:
+                                    //File.WriteAllText(ModelTemplate.FileName(modelsPath, item, screen), ModelTemplate.Evaluate(project, item, screen));
+                                    //File.WriteAllText(ModelTemplate.FileName(modelsPath, item, screen), ModelTemplate.Evaluate(project, item, screen));
+                                    break;
+                                case ScreenTypeEnum.View:
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                            
+                        }
+                    }
                 }
             }
             File.WriteAllText(EntityFrameworkContextTemplate.FileName(entitiesPath, project), EntityFrameworkContextTemplate.Evaluate(project));
@@ -97,11 +125,11 @@ namespace MasterBuilder
 
             if (project.Screens != null)
             {
-                foreach (var item in project.Screens)
+                foreach (var item in project.Screens.Where(p => !p.EntityId.HasValue))
                 {
                     // Create Controller & Models for UI
-                    File.WriteAllText(ControllerTemplate.FileName(controllersPath, item), ControllerTemplate.Evaluate(project, item));
-                    File.WriteAllText(ModelTemplate.FileName(modelsPath, item), ModelTemplate.Evaluate(project, item));
+                    File.WriteAllText(ControllerAltTemplate.FileName(controllersPath, item), ControllerAltTemplate.Evaluate(project, item));
+                    //File.WriteAllText(ModelTemplate.FileName(modelsPath, item), ModelTemplate.Evaluate(project, item));
                 }
             }
 

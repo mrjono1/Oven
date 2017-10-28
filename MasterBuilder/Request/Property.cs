@@ -18,7 +18,29 @@ namespace MasterBuilder.Request
         }
         public string Calculation { get; set; }
         public Guid Id { get; set; }
-        
+
+        public Guid? PropertyTemplateId { get; set; }
+
+        internal PropertyTemplateEnum PropertyTemplate
+        {
+            get
+            {
+                if (PropertyTemplateId.HasValue)
+                {
+                    var propertyTemplates = new Dictionary<Guid, PropertyTemplateEnum>
+                {
+                    {new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), PropertyTemplateEnum.PrimaryKey }
+                };
+
+                    return propertyTemplates.GetValueOrDefault(PropertyTemplateId.Value, PropertyTemplateEnum.None);
+                }
+                else
+                {
+                    return PropertyTemplateEnum.None;
+                }
+            }
+        }
+
         /// <summary>
         /// C# Data Type
         /// </summary>
@@ -43,6 +65,7 @@ namespace MasterBuilder.Request
         }
 
         public IEnumerable<Validation> ValidationItems { get; set; }
+        public string Title { get; internal set; }
 
         internal bool Validate()
         {
