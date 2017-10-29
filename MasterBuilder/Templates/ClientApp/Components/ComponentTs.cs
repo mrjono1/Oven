@@ -15,11 +15,18 @@ namespace MasterBuilder.Templates.ClientApp.Components
 
         public static string Evaluate(Project project, Screen screen)
         {
+            string cssFile = null;
+            if (!string.IsNullOrEmpty(screen.Css))
+            {
+                cssFile = $@",
+    styleUrls: ['./{screen.InternalName.ToLowerInvariant()}.component.css']";
+            }
+
             return $@"import {{ Component }} from '@angular/core';
 
 @Component({{
     selector: '{screen.InternalName.ToLowerInvariant()}',
-    templateUrl: './{screen.InternalName.ToLowerInvariant()}.component.html'
+    templateUrl: './{screen.InternalName.ToLowerInvariant()}.component.html'{cssFile}
 }})
 export class {screen.InternalName}Component {{
 }}

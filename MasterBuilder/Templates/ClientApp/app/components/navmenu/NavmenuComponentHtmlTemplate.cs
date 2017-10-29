@@ -30,7 +30,7 @@ namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
                     }
                     menuItems.Append($@"<li [routerLinkActive]=""['link-active']"">
                     <a [routerLink]=""['/{path}']"">
-                        <span class='glyphicon glyphicon-home'></span> {item.Title}
+                        <span class='{item.Icon}'></span> {item.Title}
                     </a>
                 </li>");
                 }

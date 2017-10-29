@@ -8,5 +8,6 @@ namespace MasterBuilder.Request
         public string Title { get; set; }
         public string Path { get; set; }
         public Guid? ScreenId { get; set; }
+        public string Icon { get; internal set; }
     }
 }
