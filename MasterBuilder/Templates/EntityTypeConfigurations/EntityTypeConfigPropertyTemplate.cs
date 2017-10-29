@@ -8,7 +8,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
     public class EntityTypeConfigPropertyTemplate
     {
 
-        public static string Evaluate(Property property)
+        public static string Evaluate(Project project, Property property)
         {
             if (property.HasCalculation)
             {
@@ -18,7 +18,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             var value = new StringBuilder();
             
             value.AppendLine($"            builder.Property(p => p.{property.InternalName})");
-            value.Append($@"                .HasColumnName(""{property.Id}"")");
+            value.Append($@"                .HasColumnName(""{(project.ImutableDatabase ? property.Id.ToString() : property.InternalName)}"")");
 
             if (property.ValidationItems != null)
             {

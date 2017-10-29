@@ -6,7 +6,6 @@ namespace MasterBuilder.Request
 {
     public class Project
     {
-
         public Project()
         {
             CleanDirectory = true;
@@ -24,6 +23,7 @@ namespace MasterBuilder.Request
                 { "Microsoft.EntityFrameworkCore", "2.0.0"},
                 { "Microsoft.EntityFrameworkCore.SqlServer", "2.0.0"}
             };
+            ImutableDatabase = true;
         }
 
         public bool CleanDirectory { get; set; }
@@ -35,9 +35,12 @@ namespace MasterBuilder.Request
 
         public IEnumerable<Entity> Entities { get; set; }
         public IEnumerable<Screen> Screens { get; set; }
+        public IEnumerable<MenuItem> MenuItems { get; set; }
 
         public string[] CleanDirectoryIgnoreDirectories { get; set; }
         public string DatabaseConnectionString { get; set; }
+        public bool ImutableDatabase { get; set; }
+        public Guid DefaultScreenId { get; set; }
         internal Dictionary<string, string> DefaultNugetReferences { get; set; }
     }
 }

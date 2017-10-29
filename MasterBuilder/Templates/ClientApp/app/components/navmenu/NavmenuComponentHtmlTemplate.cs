@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
@@ -15,6 +16,27 @@ namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
 
         public static string Evaluate(Project project)
         {
+            var menuItems = new StringBuilder();
+
+            if (project.MenuItems != null)
+            {
+                foreach (var item in project.MenuItems)
+                {
+                    var path = item.Path;
+                    if (item.ScreenId.HasValue)
+                    {
+                        path = project.Screens.Where(s => s.Id == item.ScreenId.Value).Select(p => p.Path).FirstOrDefault();
+                        // todo if url is null error
+                    }
+                    menuItems.Append($@"<li [routerLinkActive]=""['link-active']"">
+                    <a [routerLink]=""['/{path}']"">
+                        <span class='glyphicon glyphicon-home'></span> {item.Title}
+                    </a>
+                </li>");
+                }
+
+            }
+
             return $@"<div class='main-nav'>
     <div class='navbar navbar-inverse'>
         <div class='navbar-header'>
@@ -29,21 +51,7 @@ namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse'>
             <ul class='nav navbar-nav'>
-                <li [routerLinkActive]=""['link-active']"">
-                    <a [routerLink]=""['/home']"">
-                        <span class='glyphicon glyphicon-home'></span> Home
-                    </a>
-                </li>
-                <li [routerLinkActive]=""['link-active']"">
-                    <a [routerLink]=""['/counter']"">
-                        <span class='glyphicon glyphicon-education'></span> Counter
-                    </a>
-                </li>
-                <li [routerLinkActive]=""['link-active']"">
-                    <a [routerLink]=""['/fetch-data']"">
-                        <span class='glyphicon glyphicon-th-list'></span> Fetch data
-                    </a>
-                </li>
+{menuItems}
             </ul>
         </div>
     </div>

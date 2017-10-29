@@ -1,4 +1,15 @@
-import 'reflect-metadata';
+﻿using MasterBuilder.Request;
+using System.IO;
+
+namespace MasterBuilder.Templates.ClientApp
+{
+    public class BootServerTsTemplate
+    {
+        public static string FileName(string folder) => Path.Combine(folder, "boot.server.ts");
+
+        public static string Evaluate(Project project)
+        {
+            return @"import 'reflect-metadata';
 import 'zone.js';
 import 'rxjs/add/operator/first';
 import { APP_BASE_HREF } from '@angular/common';
@@ -35,4 +46,7 @@ export default createServerRenderer(params => {
             });
         });
     });
-});
+});";
+        }
+    }
+}

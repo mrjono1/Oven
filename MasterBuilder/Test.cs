@@ -16,7 +16,9 @@ namespace MasterBuilder
                 InternalName = "TestReference",
                 Version = "0.0.1",
                 Title = "Test Reference",
-                DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MacroFinder;Integrated Security=True"
+                DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MacroFinder;Integrated Security=True",
+                ImutableDatabase = false,
+                DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}")
             };
             project.Entities = new Entity[]
             {
@@ -134,6 +136,30 @@ namespace MasterBuilder
             {
                 new Screen()
                 {
+                    Id = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
+                    ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
+                    Title = "Home",
+                    InternalName = "Home",
+                    Path = "home"
+                },
+                new Screen()
+                {
+                    Id = new Guid("{5AF4DA25-77C4-4DDE-946C-7FF266976E83}"),
+                    ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
+                    Title = "Counter",
+                    InternalName = "Counter",
+                    Path = "counter"
+                },
+                new Screen()
+                {
+                    Id = new Guid("{13C78359-33E6-4DD1-8E16-2C5D92305FE2}"),
+                    ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
+                    Title = "Fetch Data",
+                    InternalName = "FetchData",
+                    Path = "fetch-data"
+                },
+                new Screen()
+                {
                     Id = Guid.NewGuid(),
                     InternalName = "SampleData",
                     ControllerCode = @"private static string[] Summaries = new[]
@@ -171,7 +197,24 @@ namespace MasterBuilder
                 }
             };
 
-
+            project.MenuItems = new MenuItem[]
+            {
+                new MenuItem
+                {
+                    Title = "Home",
+                    ScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}")
+                },
+                new MenuItem
+                {
+                    Title = "Counter",
+                    ScreenId = new Guid("{5AF4DA25-77C4-4DDE-946C-7FF266976E83}")
+                },
+                new MenuItem
+                {
+                    Title = "Fetch Data",
+                    ScreenId = new Guid("{13C78359-33E6-4DD1-8E16-2C5D92305FE2}")
+                }
+            };
 
             Project = project;
         }

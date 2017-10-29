@@ -20,7 +20,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 properties = new StringBuilder();
                 foreach (var item in entity.Properties)
                 {
-                    properties.AppendLine(EntityTypeConfigPropertyTemplate.Evaluate(item));
+                    properties.AppendLine(EntityTypeConfigPropertyTemplate.Evaluate(project, item));
                 }
             }
 
@@ -34,7 +34,7 @@ namespace {project.InternalName}.EntityTypeConfigurations
     {{
         public void Configure(EntityTypeBuilder<{entity.QualifiedInternalName}> builder)
         {{
-            builder.ToTable(""{entity.Id}"");
+            builder.ToTable(""{(project.ImutableDatabase ? entity.Id.ToString() : entity.InternalName)}"");
             builder.HasKey(p => p.Id);
 {properties}
         }}

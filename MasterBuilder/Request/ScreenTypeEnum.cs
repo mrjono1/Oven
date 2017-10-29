@@ -4,6 +4,7 @@
     {
         Search,
         Edit,
-        View
+        View,
+        Html
     }
 }

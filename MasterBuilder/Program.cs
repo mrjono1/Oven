@@ -133,9 +133,23 @@ namespace MasterBuilder
                 }
             }
 
+            // Client App
+
             // Nav menu
             File.WriteAllText(Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.Evaluate(project));
+            File.WriteAllText(Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate.Evaluate(project));
 
+            // app
+            File.WriteAllText(Templates.ClientApp.app.components.app.AppComponentTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.app.AppComponentTsTemplate.Evaluate(project));
+            File.WriteAllText(Templates.ClientApp.app.components.app.AppComponentHtmlTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.app.AppComponentHtmlTemplate.Evaluate(project));
+
+
+            // shared
+            File.WriteAllText(Templates.ClientApp.app.AppModuleSharedTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.AppModuleSharedTsTemplate.Evaluate(project));
+
+            // Client App
+            File.WriteAllText(Templates.ClientApp.BootBrowserTsTemplate.FileName(clientAppPath), Templates.ClientApp.BootBrowserTsTemplate.Evaluate(project));
+            File.WriteAllText(Templates.ClientApp.BootServerTsTemplate.FileName(clientAppPath), Templates.ClientApp.BootServerTsTemplate.Evaluate(project));
         }
     }
 }

@@ -1,4 +1,15 @@
-import 'reflect-metadata';
+﻿using MasterBuilder.Request;
+using System.IO;
+
+namespace MasterBuilder.Templates.ClientApp
+{
+    public class BootBrowserTsTemplate
+    {
+        public static string FileName(string folder) => Path.Combine(folder, "boot.browser.ts");
+
+        public static string Evaluate(Project project)
+        {
+            return @"import 'reflect-metadata';
 import 'zone.js';
 import 'bootstrap';
 import { enableProdMode } from '@angular/core';
@@ -21,3 +32,7 @@ if (module.hot) {
 // Note: @ng-tools/webpack looks for the following expression when performing production
 // builds. Don't change how this line looks, otherwise you may break tree-shaking.
 const modulePromise = platformBrowserDynamic().bootstrapModule(AppModule);
+";
+        }
+    }
+}

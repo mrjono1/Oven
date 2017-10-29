@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <Folder Include="Templates\ClientApp\app\components\home\" />
-    <Folder Include="Templates\ClientApp\app\components\app\" />
     <Folder Include="Templates\ClientApp\app\components\fetchdata\" />
     <Folder Include="Templates\ClientApp\app\components\counter\" />
   </ItemGroup>
