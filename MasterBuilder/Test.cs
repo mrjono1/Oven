@@ -180,7 +180,31 @@ namespace MasterBuilder
                     ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
                     Title = "Fetch Data",
                     InternalName = "FetchData",
-                    Path = "fetch-data"
+                    Path = "fetch-data",
+                    Html = @"<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<p *ngIf=""!forecasts""><em>Loading...</em></p>
+
+<table class='table' *ngIf=""forecasts"">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor=""let forecast of forecasts"">
+            <td>{{ forecast.dateFormatted }}</td>
+            <td>{{ forecast.temperatureC }}</td>
+            <td>{{ forecast.temperatureF }}</td>
+            <td>{{ forecast.summary }}</td>
+        </tr>
+    </tbody>
+</table>"
                 },
                 new Screen()
                 {
