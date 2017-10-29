@@ -9,24 +9,27 @@ namespace MasterBuilder.Templates.Controllers
 {
     public class ControllerTemplate
     {
-        public static string FileName(string folder, Entity entity)
+        public static string FileName(string folder, Entity entity, Screen screen)
         {
-            return Path.Combine(folder, $"{entity.InternalName}Controller.cs");
+            var controllerName = (entity != null ? entity.InternalName : screen.InternalName);
+
+            return Path.Combine(folder, $"{controllerName}Controller.cs");
         }
 
-        public static string Evaluate(Project project, Entity entity)
+        public static string Evaluate(Project project, Entity entity, Screen screen)
         {
-
+            var controllerName = (entity != null ? entity.InternalName : screen.InternalName);
             var methods = new StringBuilder();
-
-            if (project.Screens != null)
+            var classAttributes = @"[Route(""api/[controller]"")]";
+                        
+            if (entity != null && project.Screens != null)
             {
-                foreach (var screen in project.Screens.Where(p => p.EntityId.HasValue && p.EntityId.Value == entity.Id))
+                foreach (var item in project.Screens.Where(p => p.EntityId.HasValue && p.EntityId.Value == entity.Id))
                 {
-                    switch (screen.ScreenType)
+                    switch (item.ScreenType)
                     {
                         case ScreenTypeEnum.Search:
-                            methods.Append(ControllerSearchMethodTemplate.Evaluate(project, entity, screen));
+                            methods.Append(ControllerSearchMethodTemplate.Evaluate(project, entity, item));
                             break;
                         case ScreenTypeEnum.Edit:
                             break;
@@ -35,10 +38,38 @@ namespace MasterBuilder.Templates.Controllers
                         default:
                             break;
                     }
+
+                    if (item.HasControllerCode)
+                    {
+                        methods.AppendLine(item.ControllerCode);
+                    }
+
                     methods.AppendLine();
                 }
             }
 
+            if (screen != null)
+            {
+                if (screen.TemplateId.HasValue && screen.TemplateId.Value == new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"))
+                {
+                    methods.AppendLine(@"        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Error()
+        {
+            ViewData[""RequestId""] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            return View();
+        }");
+                    classAttributes = null;
+                }
+
+                if (screen.HasControllerCode)
+                {
+                    methods.AppendLine(screen.ControllerCode);
+                }
+            } 
 
             return $@"using System;
 using System.Collections.Generic;
@@ -48,16 +79,17 @@ using Microsoft.AspNetCore.Mvc;
 using {project.InternalName}.Models;
 using {project.InternalName}.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace {project.InternalName}.Controllers
 {{
-    [Route(""api/[controller]"")]
-    public class {entity.InternalName}Controller : Controller
+{classAttributes}
+    public class {controllerName}Controller : Controller
     {{
     
         private readonly {project.InternalName}Context _context;
 
-        public {entity.InternalName}Controller({project.InternalName}Context context)
+        public {controllerName}Controller({project.InternalName}Context context)
         {{
             _context = context;
         }}

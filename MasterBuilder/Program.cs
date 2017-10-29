@@ -6,8 +6,10 @@ using MasterBuilder.Templates.Models;
 using MasterBuilder.Templates.ProjectFiles;
 using MasterBuilder.Templates.Views;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MasterBuilder
 {
@@ -30,9 +32,13 @@ namespace MasterBuilder
         {
             return File.ReadAllText(fileName);
         }
-        
+
         public Program(string outputDirectory)
         {
+            Run(outputDirectory).Wait();
+        }
+
+        public async Task Run(string outputDirectory) {
             var project = new Test().Project;
 
             // Validate & Pre Process Project
@@ -57,28 +63,31 @@ namespace MasterBuilder
             var viewsPath = FileHelper.CreateFolder(projectDirectory, "Views");
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
             var distPath = FileHelper.CreateFolder(wwwrootPath, "dist");
-            
-            // Create Solution File
-            File.WriteAllText(Path.Combine(solutionDirectory, SolutionTemplate.FileName(project)), SolutionTemplate.Evaluate(project));
-            
-            // Create Project Files
-            File.WriteAllText(Path.Combine(projectDirectory, ProjectTemplate.FileName(project)), ProjectTemplate.Evaluate(project));
-            File.WriteAllText(Path.Combine(projectDirectory, StartupTemplate.FileName()), StartupTemplate.Evaluate(project));
-            File.WriteAllText(Path.Combine(projectDirectory, GitIgnoreTemplate.FileName()), GitIgnoreTemplate.Evaluate());
-            File.WriteAllText(Path.Combine(projectDirectory, ProgramTemplate.FileName()), ProgramTemplate.Evaluate(project));
-            File.WriteAllText(Path.Combine(projectDirectory, AppSettingsTemplate.FileName()), AppSettingsTemplate.Evaluate(project));
-            File.WriteAllText(Path.Combine(projectDirectory, TypeScriptConfigTemplate.FileName()), TypeScriptConfigTemplate.Evaluate());
-            File.WriteAllText(Path.Combine(projectDirectory, WebPackConfigTemplate.FileName()), WebPackConfigTemplate.Evaluate());
-            File.WriteAllText(Path.Combine(projectDirectory, WebPackConfigVendorTemplate.FileName()), WebPackConfigVendorTemplate.Evaluate());
-            File.WriteAllText(Path.Combine(projectDirectory, PackageJsonTemplate.FileName()), PackageJsonTemplate.Evaluate(project));
 
-            // Generic Views & Controllers
-            File.WriteAllText(HomeControllerTemplate.FileName(controllersPath), HomeControllerTemplate.Evaluate(project));
-            File.WriteAllText(ViewImportsTemplate.FileName(viewsPath), ViewImportsTemplate.Evaluate(project));
-            File.WriteAllText(ViewStartTemplate.FileName(viewsPath), ViewStartTemplate.Evaluate());
-            File.WriteAllText(Templates.Views.Home.IndexTemplate.FileName(viewsPath), Templates.Views.Home.IndexTemplate.Evaluate(project));
-            File.WriteAllText(Templates.Views.Shared.ErrorTemplate.FileName(viewsPath), Templates.Views.Shared.ErrorTemplate.Evaluate(project));
-            File.WriteAllText(Templates.Views.Shared.LayoutTemplate.FileName(viewsPath), Templates.Views.Shared.LayoutTemplate.Evaluate(project));
+            var filesToWrite = new List<Task>
+            {
+                // Create Solution File
+                FileHelper.WriteAllText(Path.Combine(solutionDirectory, SolutionTemplate.FileName(project)), SolutionTemplate.Evaluate(project)),
+
+                // Create Project Files
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, ProjectTemplate.FileName(project)), ProjectTemplate.Evaluate(project)),
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, StartupTemplate.FileName()), StartupTemplate.Evaluate(project)),
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, GitIgnoreTemplate.FileName()), GitIgnoreTemplate.Evaluate()),
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, ProgramTemplate.FileName()), ProgramTemplate.Evaluate(project)),
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, AppSettingsTemplate.FileName()), AppSettingsTemplate.Evaluate(project)),
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, TypeScriptConfigTemplate.FileName()), TypeScriptConfigTemplate.Evaluate()),
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackConfigTemplate.FileName()), WebPackConfigTemplate.Evaluate()),
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackConfigVendorTemplate.FileName()), WebPackConfigVendorTemplate.Evaluate()),
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, PackageJsonTemplate.FileName()), PackageJsonTemplate.Evaluate(project)),
+
+                // Generic Views & Controllers
+                //FileHelper.WriteAllText(HomeControllerTemplate.FileName(controllersPath), HomeControllerTemplate.Evaluate(project)),
+                FileHelper.WriteAllText(ViewImportsTemplate.FileName(viewsPath), ViewImportsTemplate.Evaluate(project)),
+                FileHelper.WriteAllText(ViewStartTemplate.FileName(viewsPath), ViewStartTemplate.Evaluate()),
+                FileHelper.WriteAllText(Templates.Views.Home.IndexTemplate.FileName(viewsPath), Templates.Views.Home.IndexTemplate.Evaluate(project)),
+                FileHelper.WriteAllText(Templates.Views.Shared.ErrorTemplate.FileName(viewsPath), Templates.Views.Shared.ErrorTemplate.Evaluate(project)),
+                FileHelper.WriteAllText(Templates.Views.Shared.LayoutTemplate.FileName(viewsPath), Templates.Views.Shared.LayoutTemplate.Evaluate(project))
+            };
 
             // Artifacts
             FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "CopyFiles"), wwwrootPath);
@@ -92,7 +101,7 @@ namespace MasterBuilder
                     File.WriteAllText(EntityTemplate.FileName(entitiesPath, item), EntityTemplate.Evaluate(project, item));
                     File.WriteAllText(Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.FileName(entityTypeConfigsPath, item), Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.Evaluate(project, item));
 
-                    File.WriteAllText(ControllerTemplate.FileName(controllersPath, item), ControllerTemplate.Evaluate(project, item));
+                    File.WriteAllText(ControllerTemplate.FileName(controllersPath, item, null), ControllerTemplate.Evaluate(project, item, null));
 
                     if (project.Screens != null)
                     {
@@ -115,41 +124,56 @@ namespace MasterBuilder
                                 default:
                                     break;
                             }
-                            
+
                         }
                     }
                 }
             }
-            File.WriteAllText(EntityFrameworkContextTemplate.FileName(entitiesPath, project), EntityFrameworkContextTemplate.Evaluate(project));
+            filesToWrite.Add(FileHelper.WriteAllText(EntityFrameworkContextTemplate.FileName(entitiesPath, project), EntityFrameworkContextTemplate.Evaluate(project)));
 
 
             if (project.Screens != null)
             {
-                foreach (var item in project.Screens.Where(p => !p.EntityId.HasValue))
+                foreach (var screen in project.Screens.Where(p => !p.EntityId.HasValue))
                 {
-                    // Create Controller & Models for UI
-                    File.WriteAllText(ControllerAltTemplate.FileName(controllersPath, item), ControllerAltTemplate.Evaluate(project, item));
-                    //File.WriteAllText(ModelTemplate.FileName(modelsPath, item), ModelTemplate.Evaluate(project, item));
+                    filesToWrite.AddRange(
+                        new Task[] {
+                            // Create Controller & Models for UI
+                            FileHelper.WriteAllText(ControllerTemplate.FileName(controllersPath, null, screen), ControllerTemplate.Evaluate(project, null, screen)),
+                            //File.WriteAllText(ModelTemplate.FileName(modelsPath, item), ModelTemplate.Evaluate(project, item));                            
+                        }
+                    );
+
+                    if (!string.IsNullOrEmpty(screen.Html))
+                    {
+                        filesToWrite.Add(FileHelper.WriteAllText(Templates.ClientApp.Components.ComponentHtml.FileName(clientAppPath, screen), Templates.ClientApp.Components.ComponentHtml.Evaluate(project, screen)));
+                    }
                 }
             }
 
             // Client App
 
-            // Nav menu
-            File.WriteAllText(Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.Evaluate(project));
-            File.WriteAllText(Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate.Evaluate(project));
+            filesToWrite.AddRange(
+                new Task[] {
 
-            // app
-            File.WriteAllText(Templates.ClientApp.app.components.app.AppComponentTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.app.AppComponentTsTemplate.Evaluate(project));
-            File.WriteAllText(Templates.ClientApp.app.components.app.AppComponentHtmlTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.app.AppComponentHtmlTemplate.Evaluate(project));
+                    // Nav menu
+                    FileHelper.WriteAllText(Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.Evaluate(project)),
+                    FileHelper.WriteAllText(Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate.Evaluate(project)),
 
+                    // app
+                    FileHelper.WriteAllText(Templates.ClientApp.app.components.app.AppComponentTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.app.AppComponentTsTemplate.Evaluate(project)),
+                    FileHelper.WriteAllText(Templates.ClientApp.app.components.app.AppComponentHtmlTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.app.AppComponentHtmlTemplate.Evaluate(project)),
+                    
+                    // shared
+                    FileHelper.WriteAllText(Templates.ClientApp.app.AppModuleSharedTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.AppModuleSharedTsTemplate.Evaluate(project)),
 
-            // shared
-            File.WriteAllText(Templates.ClientApp.app.AppModuleSharedTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.AppModuleSharedTsTemplate.Evaluate(project));
+                    // Client App
+                    FileHelper.WriteAllText(Templates.ClientApp.BootBrowserTsTemplate.FileName(clientAppPath), Templates.ClientApp.BootBrowserTsTemplate.Evaluate(project)),
+                    FileHelper.WriteAllText(Templates.ClientApp.BootServerTsTemplate.FileName(clientAppPath), Templates.ClientApp.BootServerTsTemplate.Evaluate(project))
+                }
+            );
 
-            // Client App
-            File.WriteAllText(Templates.ClientApp.BootBrowserTsTemplate.FileName(clientAppPath), Templates.ClientApp.BootBrowserTsTemplate.Evaluate(project));
-            File.WriteAllText(Templates.ClientApp.BootServerTsTemplate.FileName(clientAppPath), Templates.ClientApp.BootServerTsTemplate.Evaluate(project));
+            await Task.WhenAll(filesToWrite.ToArray());
         }
     }
 }

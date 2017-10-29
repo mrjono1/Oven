@@ -2,6 +2,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MasterBuilder
 {
@@ -88,6 +89,18 @@ namespace MasterBuilder
             }
 
             return result;
+        }
+
+        public static async Task WriteAllText(string path, string contents)
+        {
+            try
+            {
+                await File.WriteAllTextAsync(path, contents);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }
