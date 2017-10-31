@@ -34,7 +34,23 @@ namespace MasterBuilder.Templates.ClientApp.app
             }
 
             menuItems.Add($"            {{ path: '**', redirectTo: '{defaultScreen.Path}' }}");
-            
+
+            var componentImports = new List<string>();
+            var declarations = new List<string>
+            {
+                "AppComponent",
+                "NavMenuComponent",
+                "CounterComponent",
+                "FetchDataComponent",
+                "HomeComponent"
+            };
+            foreach (var screen in project.Screens.Where(s => s.ScreenType == ScreenTypeEnum.Search))
+            {
+                componentImports.Add($"import {{ {screen.InternalName}Component }} from './components/{screen.InternalName.ToCamlCase()}/{screen.InternalName.ToCamlCase()}.component';");
+                declarations.Add($"{screen.InternalName}Component");
+            }
+
+
             return $@"import {{ NgModule }} from '@angular/core';
 import {{ CommonModule }} from '@angular/common';
 import {{ FormsModule }} from '@angular/forms';
@@ -46,14 +62,11 @@ import {{ NavMenuComponent }} from './components/navmenu/navmenu.component';
 import {{ HomeComponent }} from './components/home/home.component';
 import {{ FetchDataComponent }} from './components/fetchdata/fetchdata.component';
 import {{ CounterComponent }} from './components/counter/counter.component';
+{string.Join(Environment.NewLine, componentImports)}
 
 @NgModule({{
     declarations: [
-        AppComponent,
-        NavMenuComponent,
-        CounterComponent,
-        FetchDataComponent,
-        HomeComponent
+{string.Join(string.Concat(",", Environment.NewLine), declarations)}
     ],
     imports: [
         CommonModule,

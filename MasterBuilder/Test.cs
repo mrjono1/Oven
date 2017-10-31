@@ -17,7 +17,7 @@ namespace MasterBuilder
                 Version = "0.0.1",
                 Title = "Test Reference",
                 DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MacroFinder;Integrated Security=True",
-                ImutableDatabase = false,
+             //   ImutableDatabase = false,
                 DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}")
             };
             project.Entities = new Entity[]
@@ -210,6 +210,7 @@ namespace MasterBuilder
                 {
                     Id = Guid.NewGuid(),
                     InternalName = "SampleData",
+                    ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
                     ControllerCode = @"private static string[] Summaries = new[]
         {
             ""Freezing"", ""Bracing"", ""Chilly"", ""Cool"", ""Mild"", ""Warm"", ""Balmy"", ""Hot"", ""Sweltering"", ""Scorching""
@@ -233,7 +234,8 @@ namespace MasterBuilder
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                     ScreenTypeId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), // Search
                     Title = "Projects",
-                    InternalName = "Projects"
+                    InternalName = "Projects",
+                    Path = "projects"
                 },
                 new Screen()
                 {
@@ -250,17 +252,26 @@ namespace MasterBuilder
                 new MenuItem
                 {
                     Title = "Home",
-                    ScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}")
+                    ScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
+                    Icon = "glyphicon glyphicon-home"
                 },
                 new MenuItem
                 {
                     Title = "Counter",
-                    ScreenId = new Guid("{5AF4DA25-77C4-4DDE-946C-7FF266976E83}")
+                    ScreenId = new Guid("{5AF4DA25-77C4-4DDE-946C-7FF266976E83}"),
+                    Icon = "glyphicon glyphicon-education"
                 },
                 new MenuItem
                 {
                     Title = "Fetch Data",
-                    ScreenId = new Guid("{13C78359-33E6-4DD1-8E16-2C5D92305FE2}")
+                    ScreenId = new Guid("{13C78359-33E6-4DD1-8E16-2C5D92305FE2}"),
+                    Icon = "glyphicon glyphicon-th-list"
+                },
+                new MenuItem
+                {
+                    Title = "Projects",
+                    ScreenId = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
+                    Icon = "glyphicon glyphicon-th-list"
                 }
             };
 

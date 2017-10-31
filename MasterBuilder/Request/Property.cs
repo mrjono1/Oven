@@ -64,6 +64,29 @@ namespace MasterBuilder.Request
             }
         }
 
+        /// <summary>
+        /// Type Script Data Type
+        /// </summary>
+        internal string TsType
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case PropertyTypeEnum.Uniqueidentifier:
+                        return "string";
+                    case PropertyTypeEnum.String:
+                        return "string";
+                    case PropertyTypeEnum.Integer:
+                        return "number";
+                    case PropertyTypeEnum.DateTime:
+                        return "string";
+                    default:
+                        return "string";
+                }
+            }
+        }
+
         public IEnumerable<Validation> ValidationItems { get; set; }
         public string Title { get; internal set; }
 

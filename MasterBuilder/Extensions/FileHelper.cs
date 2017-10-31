@@ -74,7 +74,6 @@ namespace MasterBuilder
                     }catch (Exception ex)
                     {
                         Console.WriteLine(ex);
-                        Console.ReadKey();
                     }
                 }
             }

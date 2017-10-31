@@ -31,7 +31,11 @@ namespace MasterBuilder.Templates.Controllers
                         select item;            
 
             var totalItems = query.Count();
-            var totalPages = Convert.ToInt32(Math.Ceiling((double)totalItems / request.PageSize));
+                        int totalPages = 0;
+            if (totalItems != 0)
+            {{
+                totalPages = Convert.ToInt32(Math.Ceiling((double)totalItems / request.PageSize));
+            }}
 
             var items = new {screen.InternalName}Item[0];
 
@@ -55,7 +59,7 @@ namespace MasterBuilder.Templates.Controllers
                 TotalPages = totalPages,
                 Items = items
             }};
-            return Ok();
+            return Ok(result);
         }}";
         }
     }

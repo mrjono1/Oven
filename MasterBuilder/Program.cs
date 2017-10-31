@@ -110,9 +110,17 @@ namespace MasterBuilder
                             switch (screen.ScreenType)
                             {
                                 case ScreenTypeEnum.Search:
-                                    File.WriteAllText(ModelSearchRequestTemplate.FileName(modelsPath, item, screen), ModelSearchRequestTemplate.Evaluate(project, item, screen));
-                                    File.WriteAllText(ModelSearchResponseTemplate.FileName(modelsPath, item, screen), ModelSearchResponseTemplate.Evaluate(project, item, screen));
-                                    File.WriteAllText(ModelSearchItemTemplate.FileName(modelsPath, item, screen), ModelSearchItemTemplate.Evaluate(project, item, screen));
+                                    filesToWrite.AddRange(
+                                        new Task[] {
+                                            // Server Side
+                                            FileHelper.WriteAllText(ModelSearchRequestTemplate.FileName(modelsPath, item, screen), ModelSearchRequestTemplate.Evaluate(project, item, screen)),
+                                            FileHelper.WriteAllText(ModelSearchResponseTemplate.FileName(modelsPath, item, screen), ModelSearchResponseTemplate.Evaluate(project, item, screen)),
+                                            FileHelper.WriteAllText(ModelSearchItemTemplate.FileName(modelsPath, item, screen), ModelSearchItemTemplate.Evaluate(project, item, screen)),
+
+                                            // Client Side
+                                            FileHelper.WriteAllText(Templates.ClientApp.Components.Search.ComponentHtmlTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Search.ComponentHtmlTemplate.Evaluate(project, item, screen)),
+                                            FileHelper.WriteAllText(Templates.ClientApp.Components.Search.ComponentTsTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Search.ComponentTsTemplate.Evaluate(project, item, screen))
+                                        });
                                     break;
                                 case ScreenTypeEnum.Edit:
                                     //File.WriteAllText(ModelTemplate.FileName(modelsPath, item, screen), ModelTemplate.Evaluate(project, item, screen));
@@ -148,6 +156,11 @@ namespace MasterBuilder
                     {
                         filesToWrite.Add(FileHelper.WriteAllText(Templates.ClientApp.Components.ComponentHtml.FileName(clientAppPath, screen), Templates.ClientApp.Components.ComponentHtml.Evaluate(project, screen)));
                     }
+                }
+
+                foreach (var screen in project.Screens)
+                {
+                  //  filesToWrite.Add(FileHelper.WriteAllText(Templates.ClientApp.Components.ComponentTs.FileName(clientAppPath, screen), Templates.ClientApp.Components.ComponentTs.Evaluate(project, screen)));
                 }
             }
 
