@@ -58,6 +58,8 @@ namespace MasterBuilder.Request
                         return "int";
                     case PropertyTypeEnum.DateTime:
                         return "DateTime";
+                    case PropertyTypeEnum.Boolean:
+                        return "bool";
                     default:
                         return "string";
                 }
@@ -81,6 +83,8 @@ namespace MasterBuilder.Request
                         return "number";
                     case PropertyTypeEnum.DateTime:
                         return "string";
+                    case PropertyTypeEnum.Boolean:
+                        return "bool";
                     default:
                         return "string";
                 }

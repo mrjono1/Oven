@@ -64,6 +64,11 @@ namespace MasterBuilder
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
             var distPath = FileHelper.CreateFolder(wwwrootPath, "dist");
 
+
+            // Artifacts
+            FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "CopyFiles"), wwwrootPath);
+            FileHelper.CopyFolderContent(Path.Combine(GetProjectRootFolder(), "CopyFiles", "ClientApp"), clientAppPath);
+
             var filesToWrite = new List<Task>
             {
                 // Create Solution File
@@ -89,20 +94,18 @@ namespace MasterBuilder
                 FileHelper.WriteAllText(Templates.Views.Shared.LayoutTemplate.FileName(viewsPath), Templates.Views.Shared.LayoutTemplate.Evaluate(project))
             };
 
-            // Artifacts
-            FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "CopyFiles"), wwwrootPath);
-            FileHelper.CopyFolderContent(Path.Combine(GetProjectRootFolder(), "CopyFiles", "ClientApp"), clientAppPath);
-
             if (project.Entities != null)
             {
                 foreach (var item in project.Entities)
                 {
                     // Create Entity & Map
-                    File.WriteAllText(EntityTemplate.FileName(entitiesPath, item), EntityTemplate.Evaluate(project, item));
-                    File.WriteAllText(Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.FileName(entityTypeConfigsPath, item), Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.Evaluate(project, item));
+                    filesToWrite.AddRange(
+                        new Task[] {
+                            FileHelper.WriteAllText(EntityTemplate.FileName(entitiesPath, item), EntityTemplate.Evaluate(project, item)),
+                            FileHelper.WriteAllText(Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.FileName(entityTypeConfigsPath, item), Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.Evaluate(project, item)),
 
-                    File.WriteAllText(ControllerTemplate.FileName(controllersPath, item, null), ControllerTemplate.Evaluate(project, item, null));
-
+                            FileHelper.WriteAllText(ControllerTemplate.FileName(controllersPath, item, null), ControllerTemplate.Evaluate(project, item, null))
+                    });
                     if (project.Screens != null)
                     {
                         foreach (var screen in project.Screens.Where(p => p.EntityId.HasValue && p.EntityId.Value == item.Id))
@@ -123,6 +126,16 @@ namespace MasterBuilder
                                         });
                                     break;
                                 case ScreenTypeEnum.Edit:
+                                    filesToWrite.AddRange(
+                                        new Task[] {
+                                            // Server Side
+                                            FileHelper.WriteAllText(ModelEditResponseTemplate.FileName(modelsPath, item, screen), ModelEditResponseTemplate.Evaluate(project, item, screen)),
+                                         //   FileHelper.WriteAllText(ModelSearchResponseTemplate.FileName(modelsPath, item, screen), ModelSearchResponseTemplate.Evaluate(project, item, screen))
+
+                                            // Client Side
+                                            FileHelper.WriteAllText(Templates.ClientApp.Components.Edit.ComponentHtmlTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Edit.ComponentHtmlTemplate.Evaluate(project, item, screen)),
+                                            FileHelper.WriteAllText(Templates.ClientApp.Components.Edit.ComponentTsTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Edit.ComponentTsTemplate.Evaluate(project, item, screen))
+                                        });
                                     //File.WriteAllText(ModelTemplate.FileName(modelsPath, item, screen), ModelTemplate.Evaluate(project, item, screen));
                                     //File.WriteAllText(ModelTemplate.FileName(modelsPath, item, screen), ModelTemplate.Evaluate(project, item, screen));
                                     break;

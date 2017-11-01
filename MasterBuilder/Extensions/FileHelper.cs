@@ -36,6 +36,8 @@ namespace MasterBuilder
                 Directory.CreateDirectory(toDirectory);
             }
 
+            try
+            { 
             //Now Create all of the directories
             foreach (string dirPath in Directory.GetDirectories(fromDirectory, "*",
                 SearchOption.AllDirectories))
@@ -45,6 +47,11 @@ namespace MasterBuilder
             foreach (string newPath in Directory.GetFiles(fromDirectory, "*.*",
                 SearchOption.AllDirectories))
                 File.Copy(newPath, newPath.Replace(fromDirectory, toDirectory), true);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         public static void CleanProject(string baseDirectory, string subDirectory, Project project)

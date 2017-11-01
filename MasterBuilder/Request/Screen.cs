@@ -17,6 +17,7 @@ namespace MasterBuilder.Request
         public string TypeScript { get; set; }
         public Guid? TemplateId { get; set; }
         public string Css { get; set; }
+        public IEnumerable<ScreenFeature> ScreenFeatures { get; set; }
 
         internal ScreenTypeEnum ScreenType
         {

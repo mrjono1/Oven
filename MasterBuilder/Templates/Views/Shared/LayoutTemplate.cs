@@ -21,7 +21,7 @@ namespace MasterBuilder.Templates.Views.Shared
     <meta charset=""utf-8"" />
     <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"" />
     <title>@ViewData[""Title""] - {project.Title}</title>
-    <base href=""~/"" />
+    <base href=""/"" />
 
     <link rel=""stylesheet"" href=""~/dist/vendor.css"" asp-append-version=""true"" />
 </head>

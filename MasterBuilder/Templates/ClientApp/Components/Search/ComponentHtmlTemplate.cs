@@ -24,7 +24,9 @@ namespace MasterBuilder.Templates.ClientApp.Components.Search
             }
             
             return $@"<h1>{screen.Title}</h1>
-
+<nav>
+    <a [routerLink]=""['/project']"">New</a>
+</nav>
 <p *ngIf=""!response""><em>Loading...</em></p>
 
 <table class='table' *ngIf=""response && response.items"">

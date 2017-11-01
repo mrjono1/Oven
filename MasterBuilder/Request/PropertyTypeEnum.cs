@@ -5,6 +5,7 @@
         Uniqueidentifier,
         String,
         Integer,
-        DateTime
+        DateTime,
+        Boolean
     }
 }

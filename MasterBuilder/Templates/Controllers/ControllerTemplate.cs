@@ -32,6 +32,7 @@ namespace MasterBuilder.Templates.Controllers
                             methods.Append(ControllerSearchMethodTemplate.Evaluate(project, entity, item));
                             break;
                         case ScreenTypeEnum.Edit:
+                            methods.Append(ControllerEditMethodTemplate.Evaluate(project, entity, item));
                             break;
                         case ScreenTypeEnum.View:
                             break;

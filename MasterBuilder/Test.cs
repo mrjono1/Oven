@@ -235,7 +235,14 @@ namespace MasterBuilder
                     ScreenTypeId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), // Search
                     Title = "Projects",
                     InternalName = "Projects",
-                    Path = "projects"
+                    Path = "projects",
+                    ScreenFeatures = new ScreenFeature[]
+                    {
+                        new ScreenFeature{
+                            Id = new Guid("{00CAB28C-F1CA-4FDC-9184-AC7DDA7FD3C5}"),
+                            FeatureId = new Guid("{6114120E-BD93-4CE4-A673-7DC295F93CFE}") // New
+                        }
+                    }
                 },
                 new Screen()
                 {
@@ -243,7 +250,8 @@ namespace MasterBuilder
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                     ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
                     Title = "Project",
-                    InternalName = "Project"
+                    InternalName = "Project",
+                    Path = "project"
                 }
             };
 

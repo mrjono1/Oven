@@ -21,19 +21,7 @@ namespace MasterBuilder.Templates.ClientApp.app
             {
                 $"          {{ path: '', redirectTo: '{defaultScreen.Path}', pathMatch: 'full' }}"
             };
-
-            if (project.MenuItems != null)
-            {
-                foreach (var item in project.MenuItems)
-                {
-                    var screen = project.Screens.Where(s => s.Id == item.ScreenId.Value).FirstOrDefault();
-                    // todo if screen is null error
-                    
-                    menuItems.Add($"            {{ path: '{screen.Path}', component: {screen.InternalName}Component }}");
-                }
-            }
-
-            menuItems.Add($"            {{ path: '**', redirectTo: '{defaultScreen.Path}' }}");
+            
 
             var componentImports = new List<string>();
             var declarations = new List<string>
@@ -44,12 +32,28 @@ namespace MasterBuilder.Templates.ClientApp.app
                 "FetchDataComponent",
                 "HomeComponent"
             };
-            foreach (var screen in project.Screens.Where(s => s.ScreenType == ScreenTypeEnum.Search))
+            foreach (var screen in project.Screens.Where(s => s.ScreenType == ScreenTypeEnum.Search || s.ScreenType == ScreenTypeEnum.Edit))
             {
                 componentImports.Add($"import {{ {screen.InternalName}Component }} from './components/{screen.InternalName.ToCamlCase()}/{screen.InternalName.ToCamlCase()}.component';");
                 declarations.Add($"{screen.InternalName}Component");
+
+                if (!string.IsNullOrEmpty(screen.Path))
+                {
+                    if (screen.ScreenType == ScreenTypeEnum.Edit)
+                    {
+                        menuItems.Add($"            {{ path: '{screen.Path}/:id', component: {screen.InternalName}Component }}");
+
+                        // TODO make optional
+                        menuItems.Add($"            {{ path: '{screen.Path}', component: {screen.InternalName}Component }}");
+                    }
+                    else
+                    {
+                        menuItems.Add($"            {{ path: '{screen.Path}', component: {screen.InternalName}Component }}");
+                    }
+                }
             }
 
+            menuItems.Add($"            {{ path: '**', redirectTo: '{defaultScreen.Path}' }}");
 
             return $@"import {{ NgModule }} from '@angular/core';
 import {{ CommonModule }} from '@angular/common';
