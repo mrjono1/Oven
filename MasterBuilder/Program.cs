@@ -130,7 +130,7 @@ namespace MasterBuilder
                                         new Task[] {
                                             // Server Side
                                             FileHelper.WriteAllText(ModelEditResponseTemplate.FileName(modelsPath, item, screen), ModelEditResponseTemplate.Evaluate(project, item, screen)),
-                                         //   FileHelper.WriteAllText(ModelSearchResponseTemplate.FileName(modelsPath, item, screen), ModelSearchResponseTemplate.Evaluate(project, item, screen))
+                                            FileHelper.WriteAllText(ModelEditRequestTemplate.FileName(modelsPath, item, screen), ModelEditRequestTemplate.Evaluate(project, item, screen)),
 
                                             // Client Side
                                             FileHelper.WriteAllText(Templates.ClientApp.Components.Edit.ComponentHtmlTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Edit.ComponentHtmlTemplate.Evaluate(project, item, screen)),

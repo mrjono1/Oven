@@ -19,6 +19,7 @@ namespace MasterBuilder.Templates.Controllers
         public static string Evaluate(Project project, Entity entity, Screen screen)
         {
             var controllerName = (entity != null ? entity.InternalName : screen.InternalName);
+            var usings = new List<string>();
             var methods = new StringBuilder();
             var classAttributes = @"[Route(""api/[controller]"")]";
                         
@@ -29,6 +30,10 @@ namespace MasterBuilder.Templates.Controllers
                     switch (item.ScreenType)
                     {
                         case ScreenTypeEnum.Search:
+                            if (!usings.Contains("using Microsoft.AspNetCore.JsonPatch;"))
+                            {
+                                usings.Add("using Microsoft.AspNetCore.JsonPatch;");
+                            }
                             methods.Append(ControllerSearchMethodTemplate.Evaluate(project, entity, item));
                             break;
                         case ScreenTypeEnum.Edit:
@@ -81,6 +86,7 @@ using {project.InternalName}.Models;
 using {project.InternalName}.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+{string.Join(Environment.NewLine, usings)}
 
 namespace {project.InternalName}.Controllers
 {{

@@ -22,7 +22,8 @@ namespace MasterBuilder.Request
             {
                 { "Microsoft.AspNetCore.All", "2.0.0" },
                 { "Microsoft.EntityFrameworkCore", "2.0.0"},
-                { "Microsoft.EntityFrameworkCore.SqlServer", "2.0.0"}
+                { "Microsoft.EntityFrameworkCore.SqlServer", "2.0.0"},
+                { "Microsoft.AspNetCore.JsonPatch", "2.0.0" }
             };
             ImutableDatabase = true;
         }

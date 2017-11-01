@@ -40,6 +40,7 @@ export class {screen.InternalName}Component implements OnInit {{
     public response: {screen.InternalName};
     public new: boolean;
     private sub: any;
+    private submitted: boolean;
 
     constructor(private route: ActivatedRoute, 
                 private http: Http//, 
@@ -60,6 +61,17 @@ export class {screen.InternalName}Component implements OnInit {{
         }});
     }}
     
+    onSubmit() {{ 
+        
+        //todo ensure validated
+        this.submitted = true;
+        
+        let request = {{}};
+        
+
+        this.http.post('api/{entity.InternalName}/{screen.InternalName}', request);
+    }}
+
     ngOnDestroy(){{
         this.sub.unsubscribe();
     }}

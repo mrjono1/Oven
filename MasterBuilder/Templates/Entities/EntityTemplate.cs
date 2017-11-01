@@ -34,6 +34,9 @@ namespace {project.InternalName}.Entities
 {{
     public class {entity.InternalName}
     {{
+        public {entity.InternalName}(){{
+            Id = Guid.NewGuid();
+        }}
 {properties}
     }}
 }}";

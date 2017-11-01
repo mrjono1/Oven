@@ -46,9 +46,9 @@ namespace MasterBuilder.Templates.ClientApp.Components.Edit
                 
             }
             
-            return $@"<div class=""container"">
+            return $@"<div>
     <h1>Hero Form</h1>
-    <form>
+    <form (ngSubmit)=""onSubmit()"" #{screen.InternalName}Form=""ngForm"">
 {string.Join(Environment.NewLine, formGroups)}
 
       <button type=""submit"" class=""btn btn-success"">Submit</button>
