@@ -15,12 +15,12 @@ namespace MasterBuilder.Templates.Controllers
             var propertyMapping = new List<string>();
             foreach (var item in entity.Properties)
             {
-                propertyMapping.Add($"                      {item.InternalName} = item.{item.InternalName}");
+                propertyMapping.Add($"                        {item.InternalName} = item.{item.InternalName}");
             }
 
             return $@"
-        [HttpGet(""[action]"")]
-        public async Task<IActionResult> {screen.InternalName}({screen.InternalName}Request request)
+        [HttpPost(""{screen.InternalName}"")]
+        public async Task<IActionResult> {screen.InternalName}([FromBody]{screen.InternalName}Request request)
         {{
             if (request == null)
             {{
@@ -31,17 +31,14 @@ namespace MasterBuilder.Templates.Controllers
                         select item;            
 
             var totalItems = query.Count();
-                        int totalPages = 0;
-            if (totalItems != 0)
-            {{
-                totalPages = Convert.ToInt32(Math.Ceiling((double)totalItems / request.PageSize));
-            }}
-
+            int totalPages = 0;
             var items = new {screen.InternalName}Item[0];
 
-            if (totalItems != 0)
+            if (totalItems != 0 && request.PageSize != 0)
             {{
-                var dbResults = await query
+                totalPages = Convert.ToInt32(Math.Ceiling((double)totalItems / request.PageSize));
+
+                items = await query
                     .OrderBy(p => p.Title) //TODO: From Setting
                     .Skip((request.Page - 1) * request.PageSize)
                     .Take(request.PageSize)

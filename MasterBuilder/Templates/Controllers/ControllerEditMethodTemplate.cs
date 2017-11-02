@@ -13,15 +13,15 @@ namespace MasterBuilder.Templates.Controllers
             var postPropertyMapping = new List<string>();
             foreach (var item in entity.Properties)
             {
-                getPropertyMapping.Add($"                          {item.InternalName} = item.{item.InternalName}");
-                postPropertyMapping.Add($"              {item.InternalName} = post.{item.InternalName}");
+                getPropertyMapping.Add($"                           {item.InternalName} = item.{item.InternalName}");
+                postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
             }
 
             var get = $@"
-        [HttpGet]
-        public async Task<IActionResult> {screen.InternalName}(Guid? id)
+        [HttpGet(""{screen.InternalName}/{{id}}"")]
+        public async Task<IActionResult> {screen.InternalName}(Guid id)
         {{
-            if (!id.HasValue)
+            if (id == Guid.Empty)
             {{
                 return NotFound();
             }}
@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.Controllers
                             {{
 {string.Join(string.Concat(",", Environment.NewLine), getPropertyMapping)}
                             }})
-                            .SingleOrDefaultAsync(p => p.Id == id.Value);
+                            .SingleOrDefaultAsync(p => p.Id == id);
             if (result == null)
             {{
                 return NotFound();
@@ -43,8 +43,8 @@ namespace MasterBuilder.Templates.Controllers
 
 
             var post = $@"
-        [HttpPost]
-        public async Task<IActionResult> {screen.InternalName}([FromBody]{screen.InternalName}Request post)
+        [HttpPost(""{screen.InternalName}"")]
+        public async Task<IActionResult> {screen.InternalName}({screen.InternalName}Request post)
         {{
             if (post == null)
             {{
@@ -63,13 +63,29 @@ namespace MasterBuilder.Templates.Controllers
 
             //http://benfoster.io/blog/aspnet-core-json-patch-partial-api-updates
             var patch = $@"
-        [HttpPatch]
-        public async Task<IActionResult> {screen.InternalName}([FromBody]JsonPatchDocument<{screen.InternalName}Request> patch)
+        [HttpPatch(""{screen.InternalName}/{{id}}"")]
+        public async Task<IActionResult> {screen.InternalName}(Guid id, JsonPatchDocument<{screen.InternalName}Request> patch)
         {{
             if (patch == null)
             {{
                 return BadRequest();
             }}
+
+            if (!patch.Operations.Any())
+            {{
+                return Ok();
+            }}
+
+            var entity = await _context.{entity.InternalNamePlural}.FindAsync(id);
+            
+            // do stuff
+
+            if (!ModelState.IsValid)
+            {{
+                return new BadRequestObjectResult(ModelState);
+            }}
+
+            await _context.SaveChangesAsync();
             
             return Ok();
         }}";

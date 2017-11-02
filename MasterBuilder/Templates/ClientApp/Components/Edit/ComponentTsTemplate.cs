@@ -67,9 +67,10 @@ export class {screen.InternalName}Component implements OnInit {{
         this.submitted = true;
         
         let request = {{}};
-        
 
-        this.http.post('api/{entity.InternalName}/{screen.InternalName}', request);
+        this.http.post('api/{entity.InternalName}/{screen.InternalName}', this.response).subscribe( results => {{
+            alert(results);
+        }});
     }}
 
     ngOnDestroy(){{

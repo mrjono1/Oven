@@ -37,12 +37,22 @@ import {{ Http }} from '@angular/http';
 }})
 export class {screen.InternalName}Component {{
     public response: {screen.InternalName};
+    public request: {screen.InternalName}Request;
 
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {{
-        http.get(baseUrl + 'api/{entity.InternalName}/{screen.InternalName}').subscribe(result => {{
+        this.request = new {screen.InternalName}Request();
+        this.request.page = 1;
+        this.request.pageSize = 20;
+
+        http.post(baseUrl + 'api/{entity.InternalName}/{screen.InternalName}', this.request).subscribe(result => {{
             this.response = result.json() as {screen.InternalName};
         }}, error => console.error(error));
     }}
+}}
+
+export class {screen.InternalName}Request {{
+    page: number;
+    pageSize: number;
 }}
 
 interface {screen.InternalName} {{
