@@ -28,7 +28,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                     {
                         case ValidationTypeEnum.Required:
                             value.AppendLine();
-                            value.Append("              .IsRequired()");
+                            value.Append("                .IsRequired()");
                             break;
                         case ValidationTypeEnum.MaximumLength:
                             value.AppendLine();
@@ -51,7 +51,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                         case ValidationTypeEnum.Unique:
                             value.AppendLine();
                             value.Append($@"            builder.HasIndex(p => p.{property.InternalName})
-                    .IsUnique();");
+                  .IsUnique();");
                             break;
                         default:
                             break;

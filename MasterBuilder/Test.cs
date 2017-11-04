@@ -54,7 +54,11 @@ namespace MasterBuilder
                                     Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
                                     ValidationType = ValidationTypeEnum.MinimumLength,
                                     IntegerValue = 200
-                                }
+                                },
+                                new Validation{
+                                    Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
                             }
                         },
                         new Property()

@@ -22,12 +22,13 @@ namespace MasterBuilder.Templates.Models
                 properties = new StringBuilder();
                 foreach (var item in entity.Properties)
                 {
-                    properties.AppendLine(ModelPropertyTemplate.Evaluate(item));
+                    properties.AppendLine(ModelPropertyTemplate.Evaluate(item, true));
                 }
             }
 
-            return $@"
-using System;
+            return $@"using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace {project.InternalName}.Models
 {{

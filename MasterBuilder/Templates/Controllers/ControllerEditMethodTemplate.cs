@@ -21,6 +21,11 @@ namespace MasterBuilder.Templates.Controllers
         [HttpGet(""{screen.InternalName}/{{id}}"")]
         public async Task<IActionResult> {screen.InternalName}(Guid id)
         {{
+            if (!ModelState.IsValid)
+            {{
+                return new BadRequestObjectResult(ModelState);
+            }}
+
             if (id == Guid.Empty)
             {{
                 return NotFound();
@@ -51,6 +56,11 @@ namespace MasterBuilder.Templates.Controllers
                 return BadRequest();
             }}
             
+            if (!ModelState.IsValid)
+            {{
+                return new BadRequestObjectResult(ModelState);
+            }}
+            
             var newRecord = new {entity.InternalName}{{
 {string.Join(string.Concat(",", Environment.NewLine), postPropertyMapping)}
             }};            
@@ -69,6 +79,11 @@ namespace MasterBuilder.Templates.Controllers
             if (patch == null)
             {{
                 return BadRequest();
+            }}
+            
+            if (!ModelState.IsValid)
+            {{
+                return new BadRequestObjectResult(ModelState);
             }}
 
             if (!patch.Operations.Any())

@@ -27,6 +27,11 @@ namespace MasterBuilder.Templates.Controllers
                 return BadRequest();
             }}
             
+            if (!ModelState.IsValid)
+            {{
+                return new BadRequestObjectResult(ModelState);
+            }}
+
             var query = from item in _context.{entity.InternalNamePlural}
                         select item;            
 

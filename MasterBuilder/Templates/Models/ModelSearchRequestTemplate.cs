@@ -16,14 +16,19 @@ namespace MasterBuilder.Templates.Models
 
         public static string Evaluate(Project project, Entity entity, Screen screen)
         {
-            return $@"
-using System;
+            return $@"using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace {project.InternalName}.Models
 {{
     public class {screen.InternalName}Request
     {{
+        [Required]
+        [DefaultValue(1)]
         public int Page {{ get; set; }}
+        [Required]
+        [DefaultValue(10)]
         public int PageSize {{ get; set; }}
         
         // TODO: Search fields

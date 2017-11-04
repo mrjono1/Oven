@@ -24,8 +24,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 }
             }
 
-            return $@"
-using Microsoft.EntityFrameworkCore;
+            return $@"using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace {project.InternalName}.EntityTypeConfigurations
