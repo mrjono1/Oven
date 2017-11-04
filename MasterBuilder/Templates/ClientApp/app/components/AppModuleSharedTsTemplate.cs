@@ -19,7 +19,7 @@ namespace MasterBuilder.Templates.ClientApp.app
             var defaultScreen = project.Screens.Where(s => s.Id == project.DefaultScreenId).FirstOrDefault();
             var menuItems = new List<string>
             {
-                $"          {{ path: '', redirectTo: '{defaultScreen.Path}', pathMatch: 'full' }}"
+                $"           {{ path: '', redirectTo: '{defaultScreen.Path}', pathMatch: 'full' }}"
             };
             
 
@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.ClientApp.app
                 "FetchDataComponent",
                 "HomeComponent"
             };
-            foreach (var screen in project.Screens.Where(s => s.ScreenType == ScreenTypeEnum.Search || s.ScreenType == ScreenTypeEnum.Edit))
+            foreach (var screen in project.Screens) //.Where(s => s.ScreenType == ScreenTypeEnum.Search || s.ScreenType == ScreenTypeEnum.Edit))
             {
                 componentImports.Add($"import {{ {screen.InternalName}Component }} from './components/{screen.InternalName.ToCamlCase()}/{screen.InternalName.ToCamlCase()}.component';");
                 declarations.Add($"{screen.InternalName}Component");
@@ -63,14 +63,11 @@ import {{ RouterModule }} from '@angular/router';
 
 import {{ AppComponent }} from './components/app/app.component';
 import {{ NavMenuComponent }} from './components/navmenu/navmenu.component';
-import {{ HomeComponent }} from './components/home/home.component';
-import {{ FetchDataComponent }} from './components/fetchdata/fetchdata.component';
-import {{ CounterComponent }} from './components/counter/counter.component';
 {string.Join(Environment.NewLine, componentImports)}
 
 @NgModule({{
     declarations: [
-{string.Join(string.Concat(",", Environment.NewLine), declarations)}
+{string.Join(string.Concat(",", Environment.NewLine, "        "), declarations)}
     ],
     imports: [
         CommonModule,

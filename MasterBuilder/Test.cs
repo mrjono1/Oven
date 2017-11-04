@@ -210,13 +210,7 @@ namespace MasterBuilder
             <td>{{ forecast.summary }}</td>
         </tr>
     </tbody>
-</table>"
-                },
-                new Screen()
-                {
-                    Id = Guid.NewGuid(),
-                    InternalName = "SampleData",
-                    ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
+</table>",
                     ControllerCode = @"private static string[] Summaries = new[]
         {
             ""Freezing"", ""Bracing"", ""Chilly"", ""Cool"", ""Mild"", ""Warm"", ""Balmy"", ""Hot"", ""Sweltering"", ""Scorching""
