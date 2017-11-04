@@ -18,6 +18,7 @@ namespace MasterBuilder.Request
         public Guid? TemplateId { get; set; }
         public string Css { get; set; }
         public IEnumerable<ScreenFeature> ScreenFeatures { get; set; }
+        public Guid? NavigateToScreenId { get; set; }
 
         internal ScreenTypeEnum ScreenType
         {

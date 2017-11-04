@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.Components.Search
@@ -19,13 +20,21 @@ namespace MasterBuilder.Templates.ClientApp.Components.Search
             var bindings = new List<string>();
             foreach (var property in entity.Properties)
             {
-                headings.Add($"             <th>{property.Title}</th>");
+                if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
+                {
+                    continue;
+                }
+                headings.Add($@"             <th data-property-id=""{property.Id}"" >{property.Title}</th>");
                 bindings.Add($"             <td>{{{{ {screen.InternalName.ToCamlCase()}Item.{property.InternalName.ToCamlCase()} }}}}</td>");
             }
+
+            var navigateToScreenPath = (from s in project.Screens
+                                        where s.Id == screen.NavigateToScreenId
+                                        select s.Path).FirstOrDefault();
             
             return $@"<h1>{screen.Title}</h1>
 <nav>
-    <a [routerLink]=""['/project']"">New</a>
+    <a [routerLink]=""['/{navigateToScreenPath}']"">New</a>
 </nav>
 <p *ngIf=""!response""><em>Loading...</em></p>
 
@@ -36,7 +45,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Search
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor=""let {screen.InternalName.ToCamlCase()}Item of response.items"">
+        <tr [attr.data-id]=""{screen.InternalName.ToCamlCase()}Item.id"" *ngFor=""let {screen.InternalName.ToCamlCase()}Item of response.items""  [routerLink]=""['/{navigateToScreenPath}', {screen.InternalName.ToCamlCase()}Item.id]"">
 {string.Join(Environment.NewLine, bindings)}
         </tr>
     </tbody>

@@ -34,7 +34,8 @@ namespace MasterBuilder
                             Id = new Guid("{C3E14B66-FF43-478A-95D0-39524F6555B5}"),
                             InternalName = "Id",
                             Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id"
+                            Title = "Id",
+                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
                         },
                         new Property()
                         {
@@ -101,7 +102,8 @@ namespace MasterBuilder
                         {
                             Id = Guid.NewGuid(),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
                         },
                         new Property()
                         {
@@ -236,6 +238,7 @@ namespace MasterBuilder
                     Title = "Projects",
                     InternalName = "Projects",
                     Path = "projects",
+                    NavigateToScreenId = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
                     ScreenFeatures = new ScreenFeature[]
                     {
                         new ScreenFeature{
@@ -246,7 +249,7 @@ namespace MasterBuilder
                 },
                 new Screen()
                 {
-                    Id = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
+                    Id = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                     ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
                     Title = "Project",
