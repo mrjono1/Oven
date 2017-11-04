@@ -28,7 +28,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Edit
     styleUrls: ['./{screen.InternalName.ToLowerInvariant()}.component.css']";
             }
 
-            return $@"import {{ Component, Inject, OnInit, OnDestroy }} from '@angular/core';
+            return $@"import {{ Component, Inject, OnInit }} from '@angular/core';
 import {{ Http }} from '@angular/http';
 import {{ ActivatedRoute }} from '@angular/router';
 
@@ -51,9 +51,9 @@ export class {screen.InternalName}Component implements OnInit {{
         this.sub = this.route.params.subscribe(params => {{
             if (params['id']) {{
                 this.new = false;
-                //http.get(baseUrl + 'api/{entity.InternalName}/{screen.InternalName}/' + params['id']).subscribe(result => {{
-                //    this.response = result.json() as {screen.InternalName};
-               // }}, error => console.error(error));
+                this.http.get('api/{entity.InternalName}/{screen.InternalName}/' + params['id']).subscribe(result => {{
+                    this.response = result.json() as {screen.InternalName};
+                }}, error => console.error(error));
             }} else {{
                 this.new = true;
                 this.response = new {screen.InternalName}();
@@ -71,10 +71,6 @@ export class {screen.InternalName}Component implements OnInit {{
         this.http.post('api/{entity.InternalName}/{screen.InternalName}', this.response).subscribe( results => {{
             alert(results);
         }});
-    }}
-
-    ngOnDestroy(){{
-        this.sub.unsubscribe();
     }}
 }}
 
