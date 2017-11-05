@@ -49,7 +49,7 @@ namespace MasterBuilder.Templates.Controllers
 
             var post = $@"
         [HttpPost(""{screen.InternalName}"")]
-        public async Task<IActionResult> {screen.InternalName}({screen.InternalName}Request post)
+        public async Task<IActionResult> {screen.InternalName}([FromBody]{screen.InternalName}Request post)
         {{
             if (post == null)
             {{
@@ -74,7 +74,7 @@ namespace MasterBuilder.Templates.Controllers
             //http://benfoster.io/blog/aspnet-core-json-patch-partial-api-updates
             var patch = $@"
         [HttpPatch(""{screen.InternalName}/{{id}}"")]
-        public async Task<IActionResult> {screen.InternalName}(Guid id, JsonPatchDocument<{screen.InternalName}Request> patch)
+        public async Task<IActionResult> {screen.InternalName}([FromRoute]Guid id, [FromBody]JsonPatchDocument<{screen.InternalName}Request> patch)
         {{
             if (patch == null)
             {{
@@ -94,6 +94,10 @@ namespace MasterBuilder.Templates.Controllers
             var entity = await _context.{entity.InternalNamePlural}.FindAsync(id);
             
             // do stuff
+            foreach(var operation in path.Operations)
+            {{
+                
+            }}
 
             if (!ModelState.IsValid)
             {{
