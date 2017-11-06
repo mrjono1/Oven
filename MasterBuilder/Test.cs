@@ -63,6 +63,30 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
+                            Id = new Guid("{883DB867-2098-4CA0-AE63-87DE09FDEF76}"),
+                            InternalName = "InternalName",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Internal Name",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{F60F66AC-F6AD-45E2-9850-9A474CC43C4E}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{FF3EF7FD-7A8F-45A5-ACB0-C0A2F97C816B}"),
+                                    ValidationType = ValidationTypeEnum.MinimumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
                             Id = new Guid("{527365A6-D0BF-4239-85DF-BF8647B6F372}"),
                             InternalName = "DatabaseConnectionString",
                             Type = PropertyTypeEnum.String,
@@ -92,6 +116,31 @@ namespace MasterBuilder
                                     IntegerValue = 50
                                 }
                             }
+                        }
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                    InternalName = "Entity",
+                    Title = "Entity",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{4B5077DA-1516-44C4-81CC-D0CE25BBBCF0}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}"),
+                            InternalName = "Project",
+                            Type = PropertyTypeEnum.Relationship,
+                            Title = "Project",
+                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}")
                         }
                     }
                 },

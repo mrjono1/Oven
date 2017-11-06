@@ -6,6 +6,7 @@
         String,
         Integer,
         DateTime,
-        Boolean
+        Boolean,
+        Relationship
     }
 }

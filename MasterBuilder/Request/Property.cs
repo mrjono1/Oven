@@ -92,7 +92,8 @@ namespace MasterBuilder.Request
         }
 
         public IEnumerable<Validation> ValidationItems { get; set; }
-        public string Title { get; internal set; }
+        public string Title { get; set; }
+        public Guid? ParentEntityId { get; set; }
 
         internal bool Validate()
         {
