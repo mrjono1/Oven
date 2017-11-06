@@ -33,6 +33,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using {project.InternalName}.EntityTypeConfigurations;
+using Microsoft.EntityFrameworkCore.Design.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace {project.InternalName}.Entities
 {{
@@ -47,6 +56,59 @@ namespace {project.InternalName}.Entities
         {{
             base.OnModelCreating(builder);
 {configurations}
+        }}
+
+        internal void MigrateDatabase()
+        {{
+            if (Database.EnsureCreated())
+            {{
+                return;
+            }}
+
+            var reporter = new OperationReporter(handler: null);
+            var designTimeServiceCollection = new ServiceCollection()
+                .AddSingleton<IOperationReporter>(reporter)
+                .AddScaffolding(reporter);
+            new SqlServerDesignTimeServices().ConfigureDesignTimeServices(designTimeServiceCollection);
+
+            var designTimeServices = designTimeServiceCollection.BuildServiceProvider();
+
+            // TODO: Just use db.Database.EnsureCreated() if the database doesn't exist
+            var databaseModelFactory = designTimeServices.GetService<IScaffoldingModelFactory>();
+            var databaseModel = (Model)databaseModelFactory.Create(
+                Database.GetDbConnection().ConnectionString,
+                tables: new string[0],
+                schemas: new string[0],
+                useDatabaseNames: false);
+
+            var currentModel = Model;
+
+            // Fix up the database model. It was never intended to be used like this. ;-)
+            foreach (var entityType in databaseModel.GetEntityTypes())
+            {{
+                if (entityType.Relational().Schema == databaseModel.Relational().DefaultSchema)
+                {{
+                    entityType.Relational().Schema = null;
+                }}
+            }}
+            databaseModel.Relational().DefaultSchema = null;
+            databaseModel.SqlServer().ValueGenerationStrategy =
+                currentModel.SqlServer().ValueGenerationStrategy;
+            // TODO: ...more fix up as needed
+
+            var differ = this.GetService<IMigrationsModelDiffer>();
+
+            var operations = differ.GetDifferences(databaseModel, currentModel);
+            if (operations.Any(o => o.IsDestructiveChange))
+            {{
+                throw new InvalidOperationException(
+                    ""Automatic migration was not applied because it would result in data loss."");
+            }}
+
+            var sqlGenerator = this.GetService<IMigrationsSqlGenerator>();
+            var commands = sqlGenerator.Generate(operations, currentModel);
+            var executor = this.GetService<IMigrationCommandExecutor>();
+            executor.ExecuteNonQuery(commands, this.GetService<IRelationalConnection>());
         }}
     }}
 }}";
