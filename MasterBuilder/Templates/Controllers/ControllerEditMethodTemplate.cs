@@ -11,10 +11,18 @@ namespace MasterBuilder.Templates.Controllers
         {
             var getPropertyMapping = new List<string>();
             var postPropertyMapping = new List<string>();
+            var patchEntityOperations = new List<string>();
             foreach (var item in entity.Properties)
             {
                 getPropertyMapping.Add($"                           {item.InternalName} = item.{item.InternalName}");
-                postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                if (item.PropertyTemplate != PropertyTemplateEnum.PrimaryKey)
+                {
+                    postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                    patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
+                        entity.{item.InternalName} = operation.value.ToString();
+                        entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                        break;");
+                }
             }
 
             var get = $@"
@@ -91,17 +99,16 @@ namespace MasterBuilder.Templates.Controllers
                 return Ok();
             }}
 
-            var entity = await _context.{entity.InternalNamePlural}.FindAsync(id);
+            var entity = new Entities.{entity.InternalName}() {{ Id = id }};
+            var entityEntry = _context.{entity.InternalNamePlural}.Attach(entity);
             
             // do stuff
-            foreach(var operation in path.Operations)
+            foreach(var operation in patch.Operations)
             {{
-                
-            }}
-
-            if (!ModelState.IsValid)
-            {{
-                return new BadRequestObjectResult(ModelState);
+                switch (operation.path)
+                {{
+{string.Join(Environment.NewLine, patchEntityOperations)}
+                }}
             }}
 
             await _context.SaveChangesAsync();

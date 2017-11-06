@@ -77,7 +77,7 @@ export class {screen.InternalName}Component implements OnInit {{
             }});
         }} else {{
             // Patch existing
-            this.http.patch(api/{entity.InternalName}/{screen.InternalName}/' + this.response.id, this.postChanges).subscribe( results => {{
+            this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.response.id, this.postChanges).subscribe( results => {{
                 alert(results);
             }});
         }}
