@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.Entities
@@ -17,18 +18,28 @@ namespace MasterBuilder.Templates.Entities
         {
             entity.QualifiedInternalName = $"Entities.{entity.InternalName}";
 
-            StringBuilder properties = null;
+            var properties = new List<string>();
+            var navigationProperties = new List<string>();
+
             if (entity.Properties != null)
             {
-                properties = new StringBuilder();
                 foreach (var item in entity.Properties)
                 {
-                    properties.AppendLine(EntityPropertyTemplate.Evaluate(item));
+                    properties.Add(EntityPropertyTemplate.Evaluate(project, item));
                 }
             }
 
-            return $@"
-using System;
+            foreach (var item in (from e in project.Entities
+                where e.Properties != null
+                from p in e.Properties
+                where p.Type == PropertyTypeEnum.Relationship &&
+                p.ParentEntityId.Value == entity.Id
+                select new { e, p }))
+            {
+                navigationProperties.Add($"        public ICollection<{item.e.InternalName}> {item.e.InternalNamePlural} {{ get; set; }}");
+            }
+
+            return $@"using System; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
 
 namespace {project.InternalName}.Entities
 {{
@@ -37,7 +48,8 @@ namespace {project.InternalName}.Entities
         public {entity.InternalName}(){{
             Id = Guid.NewGuid();
         }}
-{properties}
+{string.Join(Environment.NewLine, properties)}
+{string.Join(Environment.NewLine, navigationProperties)}
     }}
 }}";
         }

@@ -1,6 +1,7 @@
 ﻿using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.EntityTypeConfigurations
@@ -8,7 +9,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
     public class EntityTypeConfigPropertyTemplate
     {
 
-        public static string Evaluate(Project project, Property property)
+        public static string Evaluate(Project project, Entity entity, Property property)
         {
             if (property.HasCalculation)
             {
@@ -16,8 +17,15 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             }
             
             var value = new StringBuilder();
-            
-            value.AppendLine($"            builder.Property(p => p.{property.InternalName})");
+
+            if (property.Type == PropertyTypeEnum.Relationship)
+            {
+                value.AppendLine($"            builder.Property(p => p.{property.InternalName}Id)");
+            }
+            else
+            {
+                value.AppendLine($"            builder.Property(p => p.{property.InternalName})");
+            }
             value.Append($@"                .HasColumnName(""{(project.ImutableDatabase ? property.Id.ToString() : property.InternalName)}"")");
 
             if (property.ValidationItems != null)
@@ -59,7 +67,15 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 }
             }
 
-            
+            if (property.Type == PropertyTypeEnum.Relationship)
+            {
+                var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
+                value.AppendLine();
+                value.Append($@"            builder.HasOne(p => p.{property.InternalName})
+                .WithMany(p => p.{entity.InternalNamePlural})
+                .HasForeignKey(p => p.{property.InternalName}Id);");
+            }
+
 
             return value.ToString();
         }

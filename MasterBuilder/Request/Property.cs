@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Request
@@ -48,18 +49,25 @@ namespace MasterBuilder.Request
         {
             get
             {
+
+                var required = false;
+                if (ValidationItems != null)
+                {
+                    required = ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
+                }
+
                 switch (Type)
                 {
                     case PropertyTypeEnum.Uniqueidentifier:
-                        return "Guid";
+                        return $"Guid{(required ? "?": string.Empty)}";
                     case PropertyTypeEnum.String:
                         return "string";
                     case PropertyTypeEnum.Integer:
-                        return "int";
+                        return $"int{(required ? "?" : string.Empty)}";
                     case PropertyTypeEnum.DateTime:
                         return "DateTime";
                     case PropertyTypeEnum.Boolean:
-                        return "bool";
+                        return $"bool{(required ? "?" : string.Empty)}";
                     default:
                         return "string";
                 }

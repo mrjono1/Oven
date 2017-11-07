@@ -9,7 +9,7 @@ export class FetchDataComponent {
     public forecasts: WeatherForecast[];
 
     constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {
-        http.get(baseUrl + 'api/WeatherForecasts/WeatherForecasts').subscribe(result => {
+        http.get(baseUrl + 'api/FetchData/WeatherForecasts').subscribe(result => {
             this.forecasts = result.json() as WeatherForecast[];
         }, error => console.error(error));
     }

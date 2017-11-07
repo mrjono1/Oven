@@ -1,7 +1,7 @@
 ﻿using MasterBuilder.Request;
+using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
 
 namespace MasterBuilder.Templates.EntityTypeConfigurations
 {
@@ -14,13 +14,12 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
 
         public static string Evaluate(Project project, Entity entity)
         {
-            StringBuilder properties = null;
+            var properties = new List<string>();
             if (entity.Properties != null)
             {
-                properties = new StringBuilder();
                 foreach (var item in entity.Properties)
                 {
-                    properties.AppendLine(EntityTypeConfigPropertyTemplate.Evaluate(project, item));
+                    properties.Add(EntityTypeConfigPropertyTemplate.Evaluate(project, entity, item));
                 }
             }
 
@@ -35,12 +34,10 @@ namespace {project.InternalName}.EntityTypeConfigurations
         {{
             builder.ToTable(""{(project.ImutableDatabase ? entity.Id.ToString() : entity.InternalName)}"");
             builder.HasKey(p => p.Id);
-{properties}
+{string.Join(Environment.NewLine, properties)}
         }}
     }}
 }}";
         }
-
-
     }
 }
