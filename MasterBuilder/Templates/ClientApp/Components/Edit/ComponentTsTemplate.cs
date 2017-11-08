@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.Components.Edit
@@ -16,9 +17,47 @@ namespace MasterBuilder.Templates.ClientApp.Components.Edit
         public static string Evaluate(Project project, Entity entity, Screen screen)
         {
             var properties = new List<string>();
+            var formControls = new List<string>();
             foreach (var property in entity.Properties)
             {
                 properties.Add($"   {property.InternalName.ToCamlCase()}: {property.TsType};");
+
+                if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
+                {
+                    continue;
+                }
+
+                var propertyValidators = new List<string>();
+                if (property.ValidationItems != null)
+                {
+                    foreach (var validationItem in property.ValidationItems)
+                    {
+                        switch (validationItem.ValidationType)
+                        {
+                            case ValidationTypeEnum.Required:
+                                propertyValidators.Add("            Validators.required");
+                                break;
+                            case ValidationTypeEnum.MaximumLength:
+                                propertyValidators.Add($"            Validators.maxLength({validationItem.IntegerValue.Value})");
+                                break;
+                            case ValidationTypeEnum.MinimumLength:
+                                propertyValidators.Add($"            Validators.minLength({validationItem.IntegerValue.Value})");
+                                break;
+                            case ValidationTypeEnum.MaximumValue:
+                                break;
+                            case ValidationTypeEnum.MinimumValue:
+                                break;
+                            case ValidationTypeEnum.Unique:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+                var propertyValidatorsString = (propertyValidators.Any() ? $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" : string.Empty);
+
+                formControls.Add($@"        '{property.InternalName.ToCamlCase()}': new FormControl(this.{screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}{propertyValidatorsString})");
             }
 
             string cssFile = null;
@@ -31,13 +70,15 @@ namespace MasterBuilder.Templates.ClientApp.Components.Edit
             return $@"import {{ Component, Inject, OnInit, KeyValueChanges, KeyValueDiffer, KeyValueDiffers }} from '@angular/core';
 import {{ Http }} from '@angular/http';
 import {{ ActivatedRoute }} from '@angular/router';
+import {{ FormControl,FormGroup, Validators }} from '@angular/forms';
 
 @Component({{
     selector: '{screen.InternalName.ToLowerInvariant()}',
     templateUrl: './{screen.InternalName.ToLowerInvariant()}.component.html'{cssFile}
 }})
 export class {screen.InternalName}Component implements OnInit {{
-    public response: {screen.InternalName};
+    public {screen.InternalName.ToCamlCase()}: {screen.InternalName};
+    public {screen.InternalName.ToCamlCase()}Form: FormGroup;
     public new: boolean;
     private sub: any;
     private submitted: boolean;
@@ -53,14 +94,22 @@ export class {screen.InternalName}Component implements OnInit {{
             if (params['id']) {{
                 this.new = false;
                 this.http.get('api/{entity.InternalName}/{screen.InternalName}/' + params['id']).subscribe(result => {{
-                    this.response = result.json() as {screen.InternalName};
-                    this.objectDiffer = this.differs.find(this.response).create();
+                    this.{screen.InternalName.ToCamlCase()} = result.json() as {screen.InternalName};
+                    this.objectDiffer = this.differs.find(this.{screen.InternalName.ToCamlCase()}).create();
                     this.postChanges = [];
+                    this.setupForm();
                 }}, error => console.error(error));
             }} else {{
                 this.new = true;
-                this.response = new {screen.InternalName}();
+                this.{screen.InternalName.ToCamlCase()} = new {screen.InternalName}();
+                this.setupForm();
             }}
+        }});
+    }}
+
+    setupForm(){{
+        this.{screen.InternalName.ToCamlCase()}Form = new FormGroup({{
+{string.Join(string.Concat(",", Environment.NewLine), formControls)}
         }});
     }}
     
@@ -72,12 +121,12 @@ export class {screen.InternalName}Component implements OnInit {{
         let request = {{}};
         if (this.new){{
             // Post new
-            this.http.post('api/{entity.InternalName}/{screen.InternalName}', this.response).subscribe( results => {{
+            this.http.post('api/{entity.InternalName}/{screen.InternalName}', this.{screen.InternalName.ToCamlCase()}).subscribe( results => {{
                 alert(results);
             }});
         }} else {{
             // Patch existing
-            this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.response.id, this.postChanges).subscribe( results => {{
+            this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.{screen.InternalName.ToCamlCase()}.id, this.postChanges).subscribe( results => {{
                 alert(results);
             }});
         }}
@@ -104,7 +153,7 @@ export class {screen.InternalName}Component implements OnInit {{
 
     ngDoCheck(): void {{
         if (this.objectDiffer) {{
-            const changes = this.objectDiffer.diff(this.response);
+            const changes = this.objectDiffer.diff(this.{screen.InternalName.ToCamlCase()});
             if (changes) {{
                 this.objectChanged(changes);
             }}
@@ -120,9 +169,7 @@ export class Operation {{
     op: string;
     path: string;
     value: any;
-}}
-
-";
+}}";
         }
     }
 }

@@ -29,12 +29,11 @@ namespace MasterBuilder.Templates.ClientApp.Components.Edit
                     case PropertyTypeEnum.Uniqueidentifier:
                         break;
                     case PropertyTypeEnum.String:
-                        formGroups.Add($@"<div class=""form-group"">
-  <label for=""{property.Id}"">{property.Title}</label>
-  <input *ngIf=""response"" type=""text"" class=""form-control"" id=""{property.Id}""
-         {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}
-         [(ngModel)]=""response.{property.InternalName.ToCamlCase()}"" name=""{property.Id}"">
-</div>");
+                        formGroups.Add($@"        <div class=""form-group"">
+            <label for=""{property.InternalName.ToCamlCase()}"">{property.Title}</label>
+            <input *ngIf=""{screen.InternalName.ToCamlCase()}"" type=""text"" class=""form-control"" id=""{property.Id}""
+                formControlName=""{property.InternalName.ToCamlCase()}"" name=""{property.InternalName.ToCamlCase()}"" {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}>
+        </div>");
                         break;
                     case PropertyTypeEnum.Integer:
                         break;
@@ -47,8 +46,8 @@ namespace MasterBuilder.Templates.ClientApp.Components.Edit
             }
             
             return $@"<div>
-    <h1>Hero Form</h1>
-    <form (ngSubmit)=""onSubmit()"" #{screen.InternalName}Form=""ngForm"">
+    <h1>{screen.Title}</h1>
+    <form [formGroup]=""{screen.InternalName.ToCamlCase()}Form"" #formDir=""ngForm"">
 {string.Join(Environment.NewLine, formGroups)}
 
       <button type=""submit"" class=""btn btn-success"">Submit</button>

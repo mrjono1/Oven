@@ -19,23 +19,25 @@ namespace MasterBuilder.Templates.ClientApp.app
             var defaultScreen = project.Screens.Where(s => s.Id == project.DefaultScreenId).FirstOrDefault();
             var menuItems = new List<string>
             {
-                $"           {{ path: '', redirectTo: '{defaultScreen.Path}', pathMatch: 'full' }}"
+                $"            {{ path: '', redirectTo: '{defaultScreen.Path}', pathMatch: 'full' }}"
             };
-            
 
-            var componentImports = new List<string>();
-            var declarations = new List<string>
+
+            var componentImports = new Dictionary<string, string>
             {
-                "AppComponent",
-                "NavMenuComponent",
-                "CounterComponent",
-                "FetchDataComponent",
-                "HomeComponent"
+                { "CommonModule", "import { CommonModule } from '@angular/common';" },
+                { "HttpModule", "import { HttpModule } from '@angular/http';" },
+                { "FormsModule", "import { FormsModule } from '@angular/forms';" },
+                { "ReactiveFormsModule", "import { ReactiveFormsModule } from '@angular/forms';" },
+            };
+            var declarations = new Dictionary<string, string>
+            {
+                { "AppComponent", "import { AppComponent } from './components/app/app.component';"},
+                { "NavMenuComponent", "import { NavMenuComponent } from './components/navmenu/navmenu.component';"}
             };
             foreach (var screen in project.Screens) //.Where(s => s.ScreenType == ScreenTypeEnum.Search || s.ScreenType == ScreenTypeEnum.Edit))
             {
-                componentImports.Add($"import {{ {screen.InternalName}Component }} from './components/{screen.InternalName.ToCamlCase()}/{screen.InternalName.ToCamlCase()}.component';");
-                declarations.Add($"{screen.InternalName}Component");
+                declarations.Add($"{screen.InternalName}Component", $"import {{ {screen.InternalName}Component }} from './components/{screen.InternalName.ToCamlCase()}/{screen.InternalName.ToCamlCase()}.component';");
 
                 if (!string.IsNullOrEmpty(screen.Path))
                 {
@@ -56,23 +58,17 @@ namespace MasterBuilder.Templates.ClientApp.app
             menuItems.Add($"            {{ path: '**', redirectTo: '{defaultScreen.Path}' }}");
 
             return $@"import {{ NgModule }} from '@angular/core';
-import {{ CommonModule }} from '@angular/common';
-import {{ FormsModule }} from '@angular/forms';
-import {{ HttpModule }} from '@angular/http';
+{string.Join(Environment.NewLine, componentImports.Values)}
 import {{ RouterModule }} from '@angular/router';
 
-import {{ AppComponent }} from './components/app/app.component';
-import {{ NavMenuComponent }} from './components/navmenu/navmenu.component';
-{string.Join(Environment.NewLine, componentImports)}
+{string.Join(Environment.NewLine, declarations.Values)}
 
 @NgModule({{
     declarations: [
-{string.Join(string.Concat(",", Environment.NewLine, "        "), declarations)}
+        {string.Join(string.Concat(",", Environment.NewLine, "        "), declarations.Keys)}
     ],
     imports: [
-        CommonModule,
-        HttpModule,
-        FormsModule,
+        {string.Join(string.Concat(",", Environment.NewLine, "        "), componentImports.Keys)},
         RouterModule.forRoot([
 {string.Join(string.Concat(",", Environment.NewLine), menuItems)}
         ])
