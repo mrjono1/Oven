@@ -47,8 +47,8 @@ namespace MasterBuilder.Templates.ClientApp.Components.Edit
             
             return $@"<div>
     <h1>{screen.Title}</h1>
-    <form [formGroup]=""{screen.InternalName.ToCamlCase()}Form"" #formDir=""ngForm"">
-{string.Join(Environment.NewLine, formGroups)}
+    <form *ngIf=""{screen.InternalName.ToCamlCase()}"" [formGroup]=""{screen.InternalName.ToCamlCase()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
+{ string.Join(Environment.NewLine, formGroups)}
 
       <button type=""submit"" class=""btn btn-success"">Submit</button>
  

@@ -114,6 +114,10 @@ export class {screen.InternalName}Component implements OnInit {{
     }}
     
     onSubmit() {{ 
+        // Don't submit if nothing has changed
+        if (this.projectForm.pristine) {{
+            return;
+        }}
         
         //todo ensure validated
         this.submitted = true;
