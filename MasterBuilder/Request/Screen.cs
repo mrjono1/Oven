@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace MasterBuilder.Request
 {
@@ -19,6 +19,7 @@ namespace MasterBuilder.Request
         public string Css { get; set; }
         public IEnumerable<ScreenFeature> ScreenFeatures { get; set; }
         public Guid? NavigateToScreenId { get; set; }
+        public ScreenSection[] ScreenSections { get; set; }
 
         internal ScreenTypeEnum ScreenType
         {
@@ -36,12 +37,25 @@ namespace MasterBuilder.Request
             }
         }
 
-        internal bool HasControllerCode
+        internal bool ValidateAndResolve(out string errors)
         {
-            get
+            if (ScreenSections == null || !ScreenSections.Any())
             {
-                return !string.IsNullOrWhiteSpace(ControllerCode);
+                ScreenSections = new ScreenSection[]
+                {
+                    new ScreenSection
+                    {
+                        Id = Id,
+                        Title = Title,
+                        EntityId = EntityId,
+                        InternalName = InternalName,
+                        ScreenSectionTypeId = ScreenTypeId // todo fix this
+                    }
+                };
             }
+            
+            errors = "";
+            return true;
         }
     }
 }

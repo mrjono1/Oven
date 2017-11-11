@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace MasterBuilder.Templates.ClientApp.Components.Edit
+namespace MasterBuilder.Templates.ClientApp.Components.Screen
 {
     public class ComponentTsTemplate
     {
@@ -16,48 +16,15 @@ namespace MasterBuilder.Templates.ClientApp.Components.Edit
 
         public static string Evaluate(Project project, Entity entity, Request.Screen screen)
         {
-            var properties = new List<string>();
-            var formControls = new List<string>();
-            foreach (var property in entity.Properties)
+
+            var sectionImports = new List<string>();
+            var sections = new List<string>();
+            foreach (var section in screen.ScreenSections)
             {
-                properties.Add($"   {property.InternalName.ToCamlCase()}: {property.TsType};");
 
-                if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
-                {
-                    continue;
-                }
+                //var propertyValidatorsString = (propertyValidators.Any() ? $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" : string.Empty);
 
-                var propertyValidators = new List<string>();
-                if (property.ValidationItems != null)
-                {
-                    foreach (var validationItem in property.ValidationItems)
-                    {
-                        switch (validationItem.ValidationType)
-                        {
-                            case ValidationTypeEnum.Required:
-                                propertyValidators.Add("            Validators.required");
-                                break;
-                            case ValidationTypeEnum.MaximumLength:
-                                propertyValidators.Add($"            Validators.maxLength({validationItem.IntegerValue.Value})");
-                                break;
-                            case ValidationTypeEnum.MinimumLength:
-                                propertyValidators.Add($"            Validators.minLength({validationItem.IntegerValue.Value})");
-                                break;
-                            case ValidationTypeEnum.MaximumValue:
-                                break;
-                            case ValidationTypeEnum.MinimumValue:
-                                break;
-                            case ValidationTypeEnum.Unique:
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-
-                var propertyValidatorsString = (propertyValidators.Any() ? $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" : string.Empty);
-
-                formControls.Add($@"        '{property.InternalName.ToCamlCase()}': new FormControl(this.{screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}{propertyValidatorsString})");
+              //  formControls.Add($@"        '{property.InternalName.ToCamlCase()}': new FormControl(this.{screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}{propertyValidatorsString})");
             }
 
             string cssFile = null;
@@ -102,11 +69,6 @@ export class {screen.InternalName}Component implements OnInit {{
         }});
     }}
 
-    setupForm(){{
-        this.{screen.InternalName.ToCamlCase()}Form = new FormGroup({{
-{string.Join(string.Concat(",", Environment.NewLine), formControls)}
-        }});
-    }}
     
     private getPatchOperations(): Operation[] {{
         let operations: Operation[] = [];
@@ -145,14 +107,10 @@ export class {screen.InternalName}Component implements OnInit {{
             let operations = this.getPatchOperations();
             this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.{screen.InternalName.ToCamlCase()}.id, operations).subscribe( results => {{
                 alert(results);
-                this.projectForm.markAsPristine({{ onlySelf: false }});
+                this.projectForm.markAsPristine(true);
             }});
         }}
     }}
-}}
-
-export class {screen.InternalName} {{
-{string.Join(Environment.NewLine, properties)}
 }}
 
 export class Operation {{

@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace MasterBuilder.Templates.ClientApp.Components.Edit
+namespace MasterBuilder.Templates.ClientApp.Components.Screen
 {
     public class ComponentHtmlTemplate
     {

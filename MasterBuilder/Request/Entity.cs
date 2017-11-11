@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Humanizer;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,12 +13,16 @@ namespace MasterBuilder.Request
         public string Title { get; set; }
         public Guid Id { get; set; }
 
+        private string _internalNamePlural = null;
         internal string InternalNamePlural
         {
             get
             {
-                // TODO: improve plurlisation
-                return $"{InternalName}s";
+                if (_internalNamePlural == null)
+                {
+                    _internalNamePlural = InternalName.Pluralize();
+                }
+                return _internalNamePlural;
             }
         }
         internal string QualifiedInternalName { get; set; }

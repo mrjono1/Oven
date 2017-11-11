@@ -9,14 +9,14 @@ namespace MasterBuilder.Templates.Controllers
 {
     public class ControllerTemplate
     {
-        public static string FileName(string folder, Entity entity, Screen screen)
+        public static string FileName(string folder, Entity entity, Request.Screen screen)
         {
             var controllerName = (entity != null ? entity.InternalName : screen.InternalName);
 
             return Path.Combine(folder, $"{controllerName}Controller.cs");
         }
 
-        public static string Evaluate(Project project, Entity entity, Screen screen)
+        public static string Evaluate(Project project, Entity entity, Request.Screen screen)
         {
             var controllerName = (entity != null ? entity.InternalName : screen.InternalName);
             var usings = new List<string>();
@@ -45,7 +45,7 @@ namespace MasterBuilder.Templates.Controllers
                             break;
                     }
 
-                    if (item.HasControllerCode)
+                    if (!string.IsNullOrWhiteSpace(item.ControllerCode))
                     {
                         methods.AppendLine(item.ControllerCode);
                     }
@@ -71,7 +71,7 @@ namespace MasterBuilder.Templates.Controllers
                     classAttributes = null;
                 }
 
-                if (screen.HasControllerCode)
+                if (!string.IsNullOrWhiteSpace(screen.ControllerCode))
                 {
                     methods.AppendLine(screen.ControllerCode);
                 }
@@ -93,7 +93,6 @@ namespace {project.InternalName}.Controllers
 {classAttributes}
     public class {controllerName}Controller : Controller
     {{
-    
         private readonly {project.InternalName}Context _context;
 
         public {controllerName}Controller({project.InternalName}Context context)

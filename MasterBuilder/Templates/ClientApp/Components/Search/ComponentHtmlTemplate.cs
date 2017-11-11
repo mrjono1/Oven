@@ -9,12 +9,12 @@ namespace MasterBuilder.Templates.ClientApp.Components.Search
 {
     public class ComponentHtmlTemplate
     {
-        public static string FileName(string folder, Screen screen)
+        public static string FileName(string folder, Request.Screen screen)
         {
             return Path.Combine(FileHelper.CreateFolder(folder, Path.Combine("app", "components", screen.InternalName.ToLowerInvariant())), $"{screen.InternalName.ToLowerInvariant()}.component.html");
         }
 
-        public static string Evaluate(Project project, Entity entity, Screen screen)
+        public static string Evaluate(Project project, Entity entity, Request.Screen screen)
         {
             var headings = new List<string>();
             var bindings = new List<string>();

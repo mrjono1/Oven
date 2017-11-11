@@ -301,7 +301,25 @@ namespace MasterBuilder
                     ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
                     Title = "Project",
                     InternalName = "Project",
-                    Path = "project"
+                    Path = "project",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{BCB84DAB-B0AD-45B9-975D-5C07DE4F8990}"),
+                            Title = "Project",
+                            InternalName = "Project",
+                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Edit
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{903FEB8F-DC3C-49AA-AB1F-BB5C82F20DC5}"),
+                            Title = "Entities",
+                            InternalName = "Entities",
+                            ScreenSectionTypeId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), // Child Search
+                            EntityId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}")
+                        }
+                    }
                 }
             };
 
