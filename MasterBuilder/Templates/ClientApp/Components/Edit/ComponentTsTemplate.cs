@@ -67,7 +67,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Edit
     styleUrls: ['./{screen.InternalName.ToLowerInvariant()}.component.css']";
             }
 
-            return $@"import {{ Component, Inject, OnInit, KeyValueChanges, KeyValueDiffer, KeyValueDiffers }} from '@angular/core';
+            return $@"import {{ Component, Inject, OnInit }} from '@angular/core';
 import {{ Http }} from '@angular/http';
 import {{ ActivatedRoute }} from '@angular/router';
 import {{ FormControl,FormGroup, Validators }} from '@angular/forms';
@@ -82,12 +82,9 @@ export class {screen.InternalName}Component implements OnInit {{
     public new: boolean;
     private sub: any;
     private submitted: boolean;
-    private objectDiffer: KeyValueDiffer<string, any>;
-    private postChanges: Operation[];
 
     constructor(private route: ActivatedRoute, 
-                private http: Http,
-                private differs: KeyValueDiffers) {{ }}
+                private http: Http) {{ }}
 
     ngOnInit(){{
         this.sub = this.route.params.subscribe(params => {{
@@ -95,8 +92,6 @@ export class {screen.InternalName}Component implements OnInit {{
                 this.new = false;
                 this.http.get('api/{entity.InternalName}/{screen.InternalName}/' + params['id']).subscribe(result => {{
                     this.{screen.InternalName.ToCamlCase()} = result.json() as {screen.InternalName};
-                    this.objectDiffer = this.differs.find(this.{screen.InternalName.ToCamlCase()}).create();
-                    this.postChanges = [];
                     this.setupForm();
                 }}, error => console.error(error));
             }} else {{
@@ -113,6 +108,23 @@ export class {screen.InternalName}Component implements OnInit {{
         }});
     }}
     
+    private getPatchOperations(): Operation[] {{
+        let operations: Operation[] = [];
+
+        Object.keys(this.projectForm.controls).forEach((name) => {{
+            let currentControl = this.projectForm.controls[name];
+
+            if (currentControl.dirty) {{
+                let operation = new Operation();
+                operation.op = 'replace';
+                operation.path = '/' + name;
+                operation.value = currentControl.value;
+                operations.push(operation);
+            }}
+        }});
+        return operations;
+    }}
+
     onSubmit() {{ 
         // Don't submit if nothing has changed
         if (this.projectForm.pristine) {{
@@ -130,37 +142,11 @@ export class {screen.InternalName}Component implements OnInit {{
             }});
         }} else {{
             // Patch existing
-            this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.{screen.InternalName.ToCamlCase()}.id, this.postChanges).subscribe( results => {{
+            let operations = this.getPatchOperations();
+            this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.{screen.InternalName.ToCamlCase()}.id, operations).subscribe( results => {{
                 alert(results);
+                this.projectForm.markAsPristine(true);
             }});
-        }}
-    }}
-
-    objectChanged(changes: KeyValueChanges<string, any>) {{
-        changes.forEachChangedItem((record) => {{
-            let change = this.postChanges.filter(function(element, index) {{
-                return (element.path === '/' + record.key);
-            }})[0];
-            if (change) {{
-                change.value = record.currentValue;
-            }} else {{
-                change = new Operation();
-                change.op = 'replace';
-                change.path = '/' + record.key;
-                change.value = record.currentValue;
-                this.postChanges.push(change);
-            }}
-        }});
-
-        console.log('changes');
-    }}
-
-    ngDoCheck(): void {{
-        if (this.objectDiffer) {{
-            const changes = this.objectDiffer.diff(this.{screen.InternalName.ToCamlCase()});
-            if (changes) {{
-                this.objectChanged(changes);
-            }}
         }}
     }}
 }}
