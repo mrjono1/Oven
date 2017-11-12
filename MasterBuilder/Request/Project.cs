@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Request
@@ -35,6 +36,43 @@ namespace MasterBuilder.Request
         public Guid Id { get; set; }
 
         public string InternalName { get; set; }
+
+        /// <summary>
+        /// Validate a whole project, also may resolve some issues or perform upgrades
+        /// </summary>
+        /// <param name="messages">returns "Success" or details an issue found</param>
+        internal bool Validate(out string messages)
+        {
+            if (Screens == null || !Screens.Any())
+            {
+                messages = "No Screens have been defined";
+                return false;
+            }
+            foreach (var screen in Screens)
+            {
+                if (!screen.Validate(out messages))
+                {
+                    return false;
+                }
+            }
+
+            if (Entities == null || !Entities.Any())
+            {
+                messages = "No Entities have been defined";
+                return false;
+            }
+            foreach (var entity in Entities)
+            {
+                if (!entity.Validate(out messages))
+                {
+                    return false;
+                }
+            }
+
+            messages = "Success";
+            return true;
+        }
+
         public string Title { get; set; }
         public string Version { get; set; }
 

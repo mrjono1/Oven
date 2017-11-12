@@ -41,6 +41,12 @@ namespace MasterBuilder
         public async Task Run(string outputDirectory) {
             var project = new Test().Project;
 
+            if (!project.Validate(out string messages))
+            {
+                Console.WriteLine(messages);
+                return;
+            }
+
             // Validate & Pre Process Project
 
             // Create Solution Directory
@@ -121,8 +127,11 @@ namespace MasterBuilder
                                             FileHelper.WriteAllText(ModelSearchItemTemplate.FileName(modelsPath, item, screen), ModelSearchItemTemplate.Evaluate(project, item, screen)),
 
                                             // Client Side
-                                            FileHelper.WriteAllText(Templates.ClientApp.Components.Search.ComponentHtmlTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Search.ComponentHtmlTemplate.Evaluate(project, item, screen)),
-                                            FileHelper.WriteAllText(Templates.ClientApp.Components.Search.ComponentTsTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Search.ComponentTsTemplate.Evaluate(project, item, screen))
+                                            FileHelper.WriteAllText(Templates.ClientApp.Components.Screen.ScreenComponentHtmlTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Screen.ScreenComponentHtmlTemplate.Evaluate(project, screen)),
+                                            FileHelper.WriteAllText(Templates.ClientApp.Components.Screen.ScreenComponentTsTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Screen.ScreenComponentTsTemplate.Evaluate(project, screen))
+
+          //                                  FileHelper.WriteAllText(Templates.ClientApp.Components.Search.ComponentHtmlTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Search.ComponentHtmlTemplate.Evaluate(project, item, screen)),
+            //                                FileHelper.WriteAllText(Templates.ClientApp.Components.Search.ComponentTsTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Search.ComponentTsTemplate.Evaluate(project, item, screen))
                                         });
                                     break;
                                 case ScreenTypeEnum.Edit:

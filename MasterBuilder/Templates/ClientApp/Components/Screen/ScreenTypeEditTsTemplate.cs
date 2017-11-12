@@ -7,48 +7,32 @@ using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.Components.Screen
 {
-    public class ComponentTsTemplate
+    public class ScreenTypeEditTsTemplate
     {
-        public static string FileName(string folder, Request.Screen screen)
+        public static IEnumerable<string> Imports(Project project, Request.Screen screen)
         {
-            return Path.Combine(FileHelper.CreateFolder(folder, Path.Combine("app", "components", screen.InternalName.ToLowerInvariant())), $"{screen.InternalName.ToLowerInvariant()}.component.ts");
+            var imports = new List<string>
+            {
+                "import { ActivatedRoute } from '@angular/router';",
+                "import { FormControl, FormGroup, Validators } from '@angular/forms';"
+            };
+
+            return imports;
         }
 
-        public static string Evaluate(Project project, Entity entity, Request.Screen screen)
+
+        public static string Evaluate(Project project, Request.Screen screen)
         {
+            var entity = project.Entities.SingleOrDefault(p => p.Id == screen.EntityId);
 
             var sectionImports = new List<string>();
             var sections = new List<string>();
             foreach (var section in screen.ScreenSections)
             {
 
-                //var propertyValidatorsString = (propertyValidators.Any() ? $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" : string.Empty);
-
-              //  formControls.Add($@"        '{property.InternalName.ToCamlCase()}': new FormControl(this.{screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}{propertyValidatorsString})");
             }
-
-            string cssFile = null;
-            if (!string.IsNullOrEmpty(screen.Css))
-            {
-                cssFile = $@",
-    styleUrls: ['./{screen.InternalName.ToLowerInvariant()}.component.css']";
-            }
-
-            return $@"import {{ Component, Inject, OnInit }} from '@angular/core';
-import {{ Http }} from '@angular/http';
-import {{ ActivatedRoute }} from '@angular/router';
-import {{ FormControl,FormGroup, Validators }} from '@angular/forms';
-
-@Component({{
-    selector: '{screen.InternalName.ToLowerInvariant()}',
-    templateUrl: './{screen.InternalName.ToLowerInvariant()}.component.html'{cssFile}
-}})
-export class {screen.InternalName}Component implements OnInit {{
-    public {screen.InternalName.ToCamlCase()}: {screen.InternalName};
-    public {screen.InternalName.ToCamlCase()}Form: FormGroup;
-    public new: boolean;
-    private sub: any;
-    private submitted: boolean;
+            
+            return $@"
 
     constructor(private route: ActivatedRoute, 
                 private http: Http) {{ }}
@@ -111,13 +95,33 @@ export class {screen.InternalName}Component implements OnInit {{
             }});
         }}
     }}
-}}
+}}";
+        }
 
-export class Operation {{
+        internal static IEnumerable<string> Classes(Project project, Request.Screen screen)
+        {
+            return new string[]
+            {
+                @"export class Operation {
     op: string;
     path: string;
     value: any;
-}}";
+}"
+            };
+        }
+
+        internal static IEnumerable<string> ClassProperties(Project project, Request.Screen screen)
+        {
+            var properties = new List<string>
+            {
+                $@"public {screen.InternalName.ToCamlCase()}: {screen.InternalName};",
+                $"public {screen.InternalName.ToCamlCase()}Form: FormGroup;",
+                "public new: boolean;",
+                "private sub: any;",
+                "private submitted: boolean;"
+            };
+
+            return properties;
         }
     }
 }

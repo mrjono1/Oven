@@ -309,14 +309,14 @@ namespace MasterBuilder
                             Id = new Guid("{BCB84DAB-B0AD-45B9-975D-5C07DE4F8990}"),
                             Title = "Project",
                             InternalName = "Project",
-                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Edit
+                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
                         },
                         new ScreenSection
                         {
                             Id = new Guid("{903FEB8F-DC3C-49AA-AB1F-BB5C82F20DC5}"),
                             Title = "Entities",
                             InternalName = "Entities",
-                            ScreenSectionTypeId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), // Child Search
+                            ScreenSectionTypeId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), // Search
                             EntityId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}")
                         }
                     }

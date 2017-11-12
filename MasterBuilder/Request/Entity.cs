@@ -27,13 +27,13 @@ namespace MasterBuilder.Request
         }
         internal string QualifiedInternalName { get; set; }
 
-        internal bool Validate()
+        internal bool Validate(out string messages)
         {
             // TODO:
             // must have Id Entity
             // Internal Name must be valid
             // Id must not be empty
-
+            messages = "Success";
             return true;
         }
     }

@@ -37,7 +37,7 @@ namespace MasterBuilder.Request
             }
         }
 
-        internal bool ValidateAndResolve(out string errors)
+        internal bool Validate(out string errors)
         {
             if (ScreenSections == null || !ScreenSections.Any())
             {
