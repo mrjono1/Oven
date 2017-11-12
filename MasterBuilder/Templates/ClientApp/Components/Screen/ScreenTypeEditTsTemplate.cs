@@ -13,7 +13,6 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
         {
             var imports = new List<string>
             {
-                "import { ActivatedRoute } from '@angular/router';",
                 "import { FormControl, FormGroup, Validators } from '@angular/forms';"
             };
 
@@ -31,10 +30,49 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
             {
 
             }
-            
-            return $@"
+            var formControls = new List<string>();
+            foreach (var property in entity.Properties)
+            {
+                if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
+                {
+                    continue;
+                }
 
-    constructor(private route: ActivatedRoute, 
+                var propertyValidators = new List<string>();
+                if (property.ValidationItems != null)
+                {
+                    foreach (var validationItem in property.ValidationItems)
+                    {
+                        switch (validationItem.ValidationType)
+                        {
+                            case ValidationTypeEnum.Required:
+                                propertyValidators.Add("            Validators.required");
+                                break;
+                            case ValidationTypeEnum.MaximumLength:
+                                propertyValidators.Add($"            Validators.maxLength({validationItem.IntegerValue.Value})");
+                                break;
+                            case ValidationTypeEnum.MinimumLength:
+                                propertyValidators.Add($"            Validators.minLength({validationItem.IntegerValue.Value})");
+                                break;
+                            case ValidationTypeEnum.MaximumValue:
+                                break;
+                            case ValidationTypeEnum.MinimumValue:
+                                break;
+                            case ValidationTypeEnum.Unique:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+
+                var propertyValidatorsString = (propertyValidators.Any() ? $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" : string.Empty);
+
+                formControls.Add($@"        '{property.InternalName.ToCamlCase()}': new FormControl(this.{screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}{propertyValidatorsString})");
+            }
+
+            return $@"    constructor(private route: ActivatedRoute,
+                private router: Router,
                 private http: Http) {{ }}
 
     ngOnInit(){{
@@ -53,7 +91,12 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
         }});
     }}
 
-    
+    setupForm(){{
+        this.{screen.InternalName.ToCamlCase()}Form = new FormGroup({{
+{string.Join(string.Concat(",", Environment.NewLine), formControls)}
+        }});
+    }}
+
     private getPatchOperations(): Operation[] {{
         let operations: Operation[] = [];
 
@@ -80,28 +123,44 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
         //todo ensure validated
         this.submitted = true;
         
-        let request = {{}};
         if (this.new){{
             // Post new
-            this.http.post('api/{entity.InternalName}/{screen.InternalName}', this.{screen.InternalName.ToCamlCase()}).subscribe( results => {{
-                alert(results);
+            this.http.post('api/{entity.InternalName}/{screen.InternalName}', this.{screen.InternalName.ToCamlCase()}Form.getRawValue()).subscribe( result => {{
+                if (result.status === 200){{
+                    this.router.navigate(['{screen.InternalName.ToCamlCase()}/' + result.json()]);
+                }} else {{
+                    alert(result);
+                }}
             }});
         }} else {{
             // Patch existing
             let operations = this.getPatchOperations();
-            this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.{screen.InternalName.ToCamlCase()}.id, operations).subscribe( results => {{
-                alert(results);
-                this.projectForm.markAsPristine(true);
+            this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.{screen.InternalName.ToCamlCase()}.id, operations).subscribe( result => {{
+                if (result.status === 200){{
+                    this.projectForm.markAsPristine({{ onlySelf: false }});
+                }} else {{
+                    alert(result);
+                }}
             }});
         }}
-    }}
-}}";
+    }}";
         }
 
         internal static IEnumerable<string> Classes(Project project, Request.Screen screen)
         {
+            var entity = project.Entities.SingleOrDefault(p => p.Id == screen.EntityId);
+
+            var properties = new List<string>();
+            foreach (var property in entity.Properties)
+            {
+                properties.Add($"   {property.InternalName.ToCamlCase()}: {property.TsType};");
+            }
+
             return new string[]
             {
+                $@"export class {screen.InternalName} {{
+{string.Join(Environment.NewLine, properties)}
+}}",
                 @"export class Operation {
     op: string;
     path: string;

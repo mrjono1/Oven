@@ -76,7 +76,7 @@ namespace MasterBuilder.Templates.Controllers
             _context.{entity.InternalNamePlural}.Add(newRecord);
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(newRecord.Id);
         }}";
 
             //http://benfoster.io/blog/aspnet-core-json-patch-partial-api-updates

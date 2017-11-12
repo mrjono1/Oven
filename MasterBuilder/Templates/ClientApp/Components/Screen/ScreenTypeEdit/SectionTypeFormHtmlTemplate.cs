@@ -12,7 +12,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeEdit
         {
             var formGroups = new List<string>();
 
-            var entity = project.Entities.SingleOrDefault(p => p.Id == screenSection.EntityId);
+            var entity = project.Entities.SingleOrDefault(p => p.Id == (screenSection.EntityId ?? screen.EntityId));
 
             foreach (var property in entity.Properties)
             {

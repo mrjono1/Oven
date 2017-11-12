@@ -52,6 +52,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
 
             return $@"import {{ Http }} from '@angular/http';
 import {{ Component, Inject, OnInit }} from '@angular/core';
+import {{ Router, ActivatedRoute }} from '@angular/router';
 {string.Join(Environment.NewLine, imports.Distinct())}
 
 @Component({{
