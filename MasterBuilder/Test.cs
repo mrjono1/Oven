@@ -18,7 +18,8 @@ namespace MasterBuilder
                 Title = "Test Reference",
                 DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MacroFinder;Integrated Security=True",
              //   ImutableDatabase = false,
-                DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}")
+                DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
+                AllowDestructiveDatabaseChanges = true
             };
             project.Entities = new Entity[]
             {
@@ -52,7 +53,7 @@ namespace MasterBuilder
                                 new Validation
                                 {
                                     Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
-                                    ValidationType = ValidationTypeEnum.MinimumLength,
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
@@ -76,7 +77,7 @@ namespace MasterBuilder
                                 new Validation
                                 {
                                     Id = new Guid("{FF3EF7FD-7A8F-45A5-ACB0-C0A2F97C816B}"),
-                                    ValidationType = ValidationTypeEnum.MinimumLength,
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
@@ -96,7 +97,7 @@ namespace MasterBuilder
                                 new Validation
                                 {
                                     Id = new Guid("{09ED3A71-3F3A-46BB-B24B-D2796E796A39}"),
-                                    ValidationType = ValidationTypeEnum.MinimumLength,
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
                                     IntegerValue = 500
                                 }
                             }
@@ -112,7 +113,7 @@ namespace MasterBuilder
                                 new Validation
                                 {
                                     Id = new Guid("{09ED3A71-3F3A-46BB-B24B-D2796E796A39}"),
-                                    ValidationType = ValidationTypeEnum.MinimumLength,
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
                                     IntegerValue = 50
                                 }
                             }

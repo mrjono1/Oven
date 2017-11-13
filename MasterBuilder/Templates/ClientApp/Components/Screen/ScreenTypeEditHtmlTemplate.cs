@@ -33,12 +33,12 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
                 }
             }
 
-            return $@"<div class=""screen-type-edit"">
-    <form *ngIf=""{screen.InternalName.ToCamlCase()}"" [formGroup]=""{screen.InternalName.ToCamlCase()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
+            return $@"{new String(' ', 4)}<div class=""screen-type-edit"">
+{new String(' ', 8)}<form *ngIf=""{screen.InternalName.ToCamlCase()}"" [formGroup]=""{screen.InternalName.ToCamlCase()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
 {string.Join(Environment.NewLine, sections)}
-      <button type=""submit"" class=""btn btn-success"">Submit</button>
-    </form>
-</div>";
+{new String(' ', 12)}<button type=""submit"" class=""btn btn-success"">Submit</button>
+{new String(' ', 8)}</form>
+{new String(' ', 4)}</div>";
 
         }
     }

@@ -85,5 +85,6 @@ namespace MasterBuilder.Request
         public bool ImutableDatabase { get; set; }
         public Guid DefaultScreenId { get; set; }
         internal Dictionary<string, string> DefaultNugetReferences { get; set; }
+        public bool AllowDestructiveDatabaseChanges { get; internal set; }
     }
 }

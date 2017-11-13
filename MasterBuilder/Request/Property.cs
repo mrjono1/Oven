@@ -10,13 +10,6 @@ namespace MasterBuilder.Request
         public string InternalName { get; set; }
 
         public PropertyTypeEnum Type { get; set; }
-        internal bool HasCalculation
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(Calculation);
-            }
-        }
         public string Calculation { get; set; }
         public Guid Id { get; set; }
 

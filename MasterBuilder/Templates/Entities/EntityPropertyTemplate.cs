@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.Entities
                 return $@"        public Guid{(required ? "?" : "")} {property.InternalName}Id {{ get; set; }}
         public {parentEntity.InternalName} {property.InternalName} {{ get; set; }}";
             }
-            else if (!property.HasCalculation)
+            else if (string.IsNullOrWhiteSpace(property.Calculation))
             {
                 return $@"        public {property.CsType} {property.InternalName} {{ get; set; }}";
             }

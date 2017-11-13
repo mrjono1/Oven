@@ -98,12 +98,13 @@ namespace {project.InternalName}.Entities
 
             var differ = this.GetService<IMigrationsModelDiffer>();
 
-            var operations = differ.GetDifferences(databaseModel, currentModel);
+            var operations = differ.GetDifferences(databaseModel, currentModel);{(!project.AllowDestructiveDatabaseChanges ? @"
+
             if (operations.Any(o => o.IsDestructiveChange))
             {{
                 throw new InvalidOperationException(
                     ""Automatic migration was not applied because it would result in data loss."");
-            }}
+            }}" : string.Empty)}
 
             var sqlGenerator = this.GetService<IMigrationsSqlGenerator>();
             var commands = sqlGenerator.Generate(operations, currentModel);

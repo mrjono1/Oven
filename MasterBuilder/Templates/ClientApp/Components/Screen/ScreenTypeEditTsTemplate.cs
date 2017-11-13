@@ -26,6 +26,8 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
 
             var sectionImports = new List<string>();
             var sections = new List<string>();
+            var properties = new List<string>();
+
             foreach (var section in screen.ScreenSections)
             {
 
@@ -55,10 +57,21 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
                                 propertyValidators.Add($"            Validators.minLength({validationItem.IntegerValue.Value})");
                                 break;
                             case ValidationTypeEnum.MaximumValue:
+                                propertyValidators.Add($"            Validators.max({validationItem.IntegerValue.Value})");
                                 break;
                             case ValidationTypeEnum.MinimumValue:
+                                propertyValidators.Add($"            Validators.min({validationItem.IntegerValue.Value})");
                                 break;
                             case ValidationTypeEnum.Unique:
+                                break;
+                            case ValidationTypeEnum.Email:
+                                propertyValidators.Add($"            Validators.email");
+                                break;
+                            case ValidationTypeEnum.RequiredTrue:
+                                propertyValidators.Add($"            Validators.requiredTrue");
+                                break;
+                            case ValidationTypeEnum.Pattern:
+                                propertyValidators.Add($"            Validators.pattern({validationItem.StringValue})");
                                 break;
                             default:
                                 break;
@@ -69,6 +82,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
                 var propertyValidatorsString = (propertyValidators.Any() ? $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" : string.Empty);
 
                 formControls.Add($@"        '{property.InternalName.ToCamlCase()}': new FormControl(this.{screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}{propertyValidatorsString})");
+                properties.Add($@"    get {property.InternalName.ToCamlCase()}() {{ return this.{screen.InternalName.ToCamlCase()}Form.get('{property.InternalName.ToCamlCase()}'); }}");
             }
 
             return $@"    constructor(private route: ActivatedRoute,
@@ -97,6 +111,8 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
         }});
     }}
 
+{string.Join(Environment.NewLine, properties)}
+
     private getPatchOperations(): Operation[] {{
         let operations: Operation[] = [];
 
@@ -116,7 +132,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
 
     onSubmit() {{ 
         // Don't submit if nothing has changed
-        if (this.projectForm.pristine) {{
+        if (this.projectForm.pristine || !this.projectForm.valid) {{
             return;
         }}
         

@@ -11,7 +11,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
 
         public static string Evaluate(Project project, Entity entity, Property property)
         {
-            if (property.HasCalculation)
+            if (!string.IsNullOrWhiteSpace(property.Calculation))
             {
                 return $"            builder.Ignore(p => p.{property.InternalName});";
             }

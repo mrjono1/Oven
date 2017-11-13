@@ -7,6 +7,9 @@
         MinimumLength,
         MaximumValue,
         MinimumValue,
-        Unique
+        Unique,
+        Email,
+        RequiredTrue,
+        Pattern
     }
 }
