@@ -26,21 +26,29 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
                 bindings.Add($"             <td>{{{{ {screen.InternalName.ToCamlCase()}Item.{property.InternalName.ToCamlCase()} }}}}</td>");
             }
 
-            var navigateToScreenPath = (from s in project.Screens
-                                        where s.Id == screen.NavigateToScreenId
+            string navigateToScreen = null;
+            if (screenSection.NavigateToScreenId.HasValue)
+            {
+                var navigateToScreenPath = (from s in project.Screens
+                                        where s.Id == screenSection.NavigateToScreenId
                                         select s.Path).FirstOrDefault();
+                if (!string.IsNullOrEmpty(navigateToScreenPath))
+                {
+                    navigateToScreen = $@"[routerLink]=""['/{navigateToScreenPath}', {screen.InternalName.ToCamlCase()}Item.id]""";
+                }
+            }
             
             return $@"<div>
-<p *ngIf=""!response""><em>Loading...</em></p>
+<p *ngIf=""!{screenSection.InternalName.ToCamlCase()}Response""><em>Loading...</em></p>
 
-<table class='table' *ngIf=""response && response.items"">
+<table class='table' *ngIf=""{screenSection.InternalName.ToCamlCase()}Response && {screenSection.InternalName.ToCamlCase()}Response.items"">
     <thead>
         <tr>
 {string.Join(Environment.NewLine, headings)}
         </tr>
     </thead>
     <tbody>
-        <tr [attr.data-id]=""{screen.InternalName.ToCamlCase()}Item.id"" *ngFor=""let {screen.InternalName.ToCamlCase()}Item of response.items""  [routerLink]=""['/{navigateToScreenPath}', {screen.InternalName.ToCamlCase()}Item.id]"">
+        <tr [attr.data-id]=""{screen.InternalName.ToCamlCase()}Item.id"" *ngFor=""let {screen.InternalName.ToCamlCase()}Item of {screenSection.InternalName.ToCamlCase()}Response.items"" {navigateToScreen}>
 {string.Join(Environment.NewLine, bindings)}
         </tr>
     </tbody>

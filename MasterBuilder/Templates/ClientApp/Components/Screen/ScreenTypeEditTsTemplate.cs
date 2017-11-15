@@ -9,17 +9,6 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
 {
     public class ScreenTypeEditTsTemplate
     {
-        public static IEnumerable<string> Imports(Project project, Request.Screen screen)
-        {
-            var imports = new List<string>
-            {
-                "import { FormControl, FormGroup, Validators } from '@angular/forms';"
-            };
-
-            return imports;
-        }
-
-
         public static string Evaluate(Project project, Request.Screen screen)
         {
             var entity = project.Entities.SingleOrDefault(p => p.Id == screen.EntityId);
@@ -28,10 +17,6 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
             var sections = new List<string>();
             var properties = new List<string>();
 
-            foreach (var section in screen.ScreenSections)
-            {
-
-            }
             var formControls = new List<string>();
             foreach (var property in entity.Properties)
             {
@@ -85,25 +70,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
                 properties.Add($@"    get {property.InternalName.ToCamlCase()}() {{ return this.{screen.InternalName.ToCamlCase()}Form.get('{property.InternalName.ToCamlCase()}'); }}");
             }
 
-            return $@"    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private http: Http) {{ }}
-
-    ngOnInit(){{
-        this.sub = this.route.params.subscribe(params => {{
-            if (params['id']) {{
-                this.new = false;
-                this.http.get('api/{entity.InternalName}/{screen.InternalName}/' + params['id']).subscribe(result => {{
-                    this.{screen.InternalName.ToCamlCase()} = result.json() as {screen.InternalName};
-                    this.setupForm();
-                }}, error => console.error(error));
-            }} else {{
-                this.new = true;
-                this.{screen.InternalName.ToCamlCase()} = new {screen.InternalName}();
-                this.setupForm();
-            }}
-        }});
-    }}
+            return $@" 
 
     setupForm(){{
         this.{screen.InternalName.ToCamlCase()}Form = new FormGroup({{
@@ -136,9 +103,6 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
             return;
         }}
         
-        //todo ensure validated
-        this.submitted = true;
-        
         if (this.new){{
             // Post new
             this.http.post('api/{entity.InternalName}/{screen.InternalName}', this.{screen.InternalName.ToCamlCase()}Form.getRawValue()).subscribe( result => {{
@@ -162,41 +126,158 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
     }}";
         }
 
-        internal static IEnumerable<string> Classes(Project project, Request.Screen screen)
+        internal static IEnumerable<string> Imports(Project project, Request.Screen screen)
         {
-            var entity = project.Entities.SingleOrDefault(p => p.Id == screen.EntityId);
-
-            var properties = new List<string>();
-            foreach (var property in entity.Properties)
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
             {
-                properties.Add($"   {property.InternalName.ToCamlCase()}: {property.TsType};");
+                switch (section.ScreenSectionType)
+                {
+                    case ScreenSectionTypeEnum.Form:
+                        results.AddRange(ScreenTypeEdit.SectionTypeFormTsTemplate.Imports(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Search:
+                        results.AddRange(ScreenTypeSearch.SectionTypeSearchTsTemplate.Imports(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Grid:
+                        break;
+                    case ScreenSectionTypeEnum.Html:
+                        break;
+                    default:
+                        break;
+                }
             }
-
-            return new string[]
-            {
-                $@"export class {screen.InternalName} {{
-{string.Join(Environment.NewLine, properties)}
-}}",
-                @"export class Operation {
-    op: string;
-    path: string;
-    value: any;
-}"
-            };
+            return results.Distinct();
         }
 
         internal static IEnumerable<string> ClassProperties(Project project, Request.Screen screen)
         {
-            var properties = new List<string>
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
             {
-                $@"public {screen.InternalName.ToCamlCase()}: {screen.InternalName};",
-                $"public {screen.InternalName.ToCamlCase()}Form: FormGroup;",
-                "public new: boolean;",
-                "private sub: any;",
-                "private submitted: boolean;"
-            };
+                switch (section.ScreenSectionType)
+                {
+                    case ScreenSectionTypeEnum.Form:
+                        results.AddRange(ScreenTypeEdit.SectionTypeFormTsTemplate.ClassProperties(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Search:
+                        results.AddRange(ScreenTypeSearch.SectionTypeSearchTsTemplate.ClassProperties(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Grid:
+                        break;
+                    case ScreenSectionTypeEnum.Html:
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-            return properties;
+            results.Add("public new: boolean;");
+
+            return results.Distinct();
+        }
+
+        internal static IEnumerable<string> ConstructorParameters(Project project, Request.Screen screen)
+        {
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
+            {
+                switch (section.ScreenSectionType)
+                {
+                    case ScreenSectionTypeEnum.Form:
+                        results.AddRange(ScreenTypeEdit.SectionTypeFormTsTemplate.ConstructorParameters(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Search:
+                        results.AddRange(ScreenTypeSearch.SectionTypeSearchTsTemplate.ConstructorParameters(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Grid:
+                        break;
+                    case ScreenSectionTypeEnum.Html:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return results.Distinct();
+        }
+
+        internal static IEnumerable<string> ConstructorBody(Project project, Request.Screen screen)
+        {
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
+            {
+                switch (section.ScreenSectionType)
+                {
+                    case ScreenSectionTypeEnum.Form:
+                        results.Add(ScreenTypeEdit.SectionTypeFormTsTemplate.ConstructorBody(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Search:
+                        results.Add(ScreenTypeSearch.SectionTypeSearchTsTemplate.ConstructorBody(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Grid:
+                        break;
+                    case ScreenSectionTypeEnum.Html:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return results.Distinct();
+        }
+
+        internal static IEnumerable<string> NgInitBody(Project project, Request.Screen screen)
+        {
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
+            {
+                switch (section.ScreenSectionType)
+                {
+                    case ScreenSectionTypeEnum.Form:
+                        results.Add(ScreenTypeEdit.SectionTypeFormTsTemplate.NgOnInitBody(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Search:
+                        results.Add(ScreenTypeSearch.SectionTypeSearchTsTemplate.NgOnInitBody(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Grid:
+                        break;
+                    case ScreenSectionTypeEnum.Html:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return results.Distinct();
+        }
+
+        internal static IEnumerable<string> Classes(Project project, Request.Screen screen)
+        {
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
+            {
+                switch (section.ScreenSectionType)
+                {
+                    case ScreenSectionTypeEnum.Form:
+                        results.AddRange(ScreenTypeEdit.SectionTypeFormTsTemplate.Classes(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Search:
+                        results.AddRange(ScreenTypeSearch.SectionTypeSearchTsTemplate.Classes(project, screen, section));
+                        break;
+                    case ScreenSectionTypeEnum.Grid:
+                        break;
+                    case ScreenSectionTypeEnum.Html:
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            // Patch operation
+            results.Add(@"export class Operation {
+    op: string;
+    path: string;
+    value: any;
+}");
+            return results.Distinct();
         }
     }
 }

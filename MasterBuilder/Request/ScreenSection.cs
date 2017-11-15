@@ -27,5 +27,6 @@ namespace MasterBuilder.Request
             }
         }
         public Guid? EntityId { get; set; }
+        public Guid? NavigateToScreenId { get; set; }
     }
 }

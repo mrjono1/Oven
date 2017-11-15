@@ -22,6 +22,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
                             sections.Add(ScreenTypeEdit.SectionTypeFormHtmlTemplate.Evaluate(project, screen, screenSection));
                             break;
                         case ScreenSectionTypeEnum.Search:
+                            sections.Add(ScreenTypeSearch.SectionTypeSearchHtmlTemplate.Evaluate(project, screen, screenSection));
                             break;
                         case ScreenSectionTypeEnum.Grid:
                             break;
@@ -35,8 +36,8 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
 
             return $@"{new String(' ', 4)}<div class=""screen-type-edit"">
 {new String(' ', 8)}<form *ngIf=""{screen.InternalName.ToCamlCase()}"" [formGroup]=""{screen.InternalName.ToCamlCase()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
-{string.Join(Environment.NewLine, sections)}
 {new String(' ', 12)}<button type=""submit"" class=""btn btn-success"">Submit</button>
+{string.Join(Environment.NewLine, sections)}
 {new String(' ', 8)}</form>
 {new String(' ', 4)}</div>";
 

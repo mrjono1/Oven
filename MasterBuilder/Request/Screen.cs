@@ -49,9 +49,20 @@ namespace MasterBuilder.Request
                         Title = Title,
                         EntityId = EntityId,
                         InternalName = InternalName,
-                        ScreenSectionTypeId = ScreenTypeId // todo fix this
+                        ScreenSectionTypeId = ScreenTypeId, // todo fix this
+                        NavigateToScreenId = NavigateToScreenId
                     }
                 };
+            }
+            else
+            {
+                foreach (var screenSection in ScreenSections)
+                {
+                    if (!screenSection.EntityId.HasValue)
+                    {
+                        screenSection.EntityId = EntityId;
+                    }
+                }
             }
             
             errors = "";

@@ -318,7 +318,7 @@ namespace MasterBuilder
                             Title = "Entities",
                             InternalName = "Entities",
                             ScreenSectionTypeId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), // Search
-                            EntityId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}")
+                            EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
                         }
                     }
                 }

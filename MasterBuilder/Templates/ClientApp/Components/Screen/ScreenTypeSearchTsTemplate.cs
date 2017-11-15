@@ -9,65 +9,64 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
 {
     public class ScreenTypeSearchTsTemplate
     {
-        public static string Evaluate(Project project, Request.Screen screen)
-        {
-            var entity = project.Entities.SingleOrDefault(p => p.Id == screen.EntityId);
-                        
-            return $@"
-    constructor(http: Http, @Inject('BASE_URL') baseUrl: string) {{
-        this.request = new {screen.InternalName}Request();
-        this.request.page = 1;
-        this.request.pageSize = 20;
-
-        http.post(baseUrl + 'api/{entity.InternalName}/{screen.InternalName}', this.request).subscribe(result => {{
-            this.response = result.json() as {screen.InternalName};
-        }}, error => console.error(error));
-    }}
-
-    ngOnInit(){{
-    }}";
-        }
-
         internal static IEnumerable<string> Imports(Project project, Request.Screen screen)
         {
-            return new string[] { };
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
+            {
+                results.AddRange(ScreenTypeSearch.SectionTypeSearchTsTemplate.Imports(project, screen, section));
+            }
+            return results;
         }
 
         internal static IEnumerable<string> ClassProperties(Project project, Request.Screen screen)
         {
-            return new string[] {
-                $"public response: {screen.InternalName};",
-                $"public request: {screen.InternalName}Request;"
-            };
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
+            {
+                results.AddRange(ScreenTypeSearch.SectionTypeSearchTsTemplate.ClassProperties(project, screen, section));
+            }
+            return results;
+        }
+
+        internal static IEnumerable<string> ConstructorParameters(Project project, Request.Screen screen)
+        {
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
+            {
+                results.AddRange(ScreenTypeSearch.SectionTypeSearchTsTemplate.ConstructorParameters(project, screen, section));
+            }
+            return results;
+        }
+
+        internal static IEnumerable<string> ConstructorBody(Project project, Request.Screen screen)
+        {
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
+            {
+                results.Add(ScreenTypeSearch.SectionTypeSearchTsTemplate.ConstructorBody(project, screen, section));
+            }
+            return results;
+        }
+
+        internal static IEnumerable<string> NgInitBody(Project project, Request.Screen screen)
+        {
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
+            {
+                results.Add(ScreenTypeSearch.SectionTypeSearchTsTemplate.NgOnInitBody(project, screen, section));
+            }
+            return results;
         }
         
         internal static IEnumerable<string> Classes(Project project, Request.Screen screen)
         {
-            var entity = project.Entities.SingleOrDefault(p => p.Id == screen.EntityId);
-
-            var properties = new List<string>();
-            foreach (var property in entity.Properties)
+            var results = new List<string>();
+            foreach (var section in screen.ScreenSections)
             {
-                properties.Add($"   {property.InternalName.ToCamlCase()}: {property.TsType};");
+                results.AddRange(ScreenTypeSearch.SectionTypeSearchTsTemplate.Classes(project, screen, section));
             }
-
-            return new string[]
-            {
-                $@"export class {screen.InternalName}Request {{
-    page: number;
-    pageSize: number;
-}}",
-
-$@"interface {screen.InternalName} {{
-    items: {screen.InternalName}Item[];
-    totalPages: number;
-    totalItems: number;
-}}
-
-interface {screen.InternalName}Item {{
-{string.Join(Environment.NewLine, properties)}
-}}"
-            };
+            return results;
         }
     }
 }
