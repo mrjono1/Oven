@@ -51,16 +51,17 @@ namespace MasterBuilder.Request
 
                 switch (Type)
                 {
+                    case PropertyTypeEnum.Relationship:
                     case PropertyTypeEnum.Uniqueidentifier:
-                        return $"Guid{(required ? "?": string.Empty)}";
+                        return $"Guid{(!required ? "?": string.Empty)}";
                     case PropertyTypeEnum.String:
                         return "string";
                     case PropertyTypeEnum.Integer:
-                        return $"int{(required ? "?" : string.Empty)}";
+                        return $"int{(!required ? "?" : string.Empty)}";
                     case PropertyTypeEnum.DateTime:
                         return "DateTime";
                     case PropertyTypeEnum.Boolean:
-                        return $"bool{(required ? "?" : string.Empty)}";
+                        return $"bool{(!required ? "?" : string.Empty)}";
                     default:
                         return "string";
                 }

@@ -83,8 +83,8 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
     private getPatchOperations(): Operation[] {{
         let operations: Operation[] = [];
 
-        Object.keys(this.projectForm.controls).forEach((name) => {{
-            let currentControl = this.projectForm.controls[name];
+        Object.keys(this.{screen.InternalName.ToCamlCase()}Form.controls).forEach((name) => {{
+            let currentControl = this.{screen.InternalName.ToCamlCase()}Form.controls[name];
 
             if (currentControl.dirty) {{
                 let operation = new Operation();
@@ -99,7 +99,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
 
     onSubmit() {{ 
         // Don't submit if nothing has changed
-        if (this.projectForm.pristine || !this.projectForm.valid) {{
+        if (this.{screen.InternalName.ToCamlCase()}Form.pristine || !this.{screen.InternalName.ToCamlCase()}Form.valid) {{
             return;
         }}
         
@@ -117,7 +117,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
             let operations = this.getPatchOperations();
             this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.{screen.InternalName.ToCamlCase()}.id, operations).subscribe( result => {{
                 if (result.status === 200){{
-                    this.projectForm.markAsPristine({{ onlySelf: false }});
+                    this.{screen.InternalName.ToCamlCase()}Form.markAsPristine({{ onlySelf: false }});
                 }} else {{
                     alert(result);
                 }}

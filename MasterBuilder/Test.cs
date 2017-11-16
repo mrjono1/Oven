@@ -189,7 +189,14 @@ namespace MasterBuilder
                             InternalName = "Project",
                             Type = PropertyTypeEnum.Relationship,
                             Title = "Project",
-                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}")
+                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
                         }
                     }
                 },
@@ -366,7 +373,37 @@ namespace MasterBuilder
                             Title = "Entities",
                             InternalName = "Entities",
                             ScreenSectionTypeId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), // Search
-                            EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
+                            EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            NavigateToScreenId = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
+                            MenuItems = new MenuItem[]
+                            {
+                                new MenuItem
+                                {
+                                    Id = new Guid("{AE228BBC-8A38-4D7D-B3B0-7964A281B7A5}"),
+                                    MenuItemType = MenuItemTypeEnum.New,
+                                    ScreenId = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
+                                    Title = "New"
+                                }
+                            }
+                        }
+                    }
+                },
+                new Screen()
+                {
+                    Id = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
+                    EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                    ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
+                    Title = "Entity",
+                    InternalName = "Entity",
+                    Path = "entity",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{8130C0F4-F8F7-4A7A-9793-85B8939589EB}"),
+                            Title = "Entity",
+                            InternalName = "Entity",
+                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
                         }
                     }
                 }

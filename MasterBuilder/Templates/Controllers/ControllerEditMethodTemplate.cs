@@ -14,14 +14,28 @@ namespace MasterBuilder.Templates.Controllers
             var patchEntityOperations = new List<string>();
             foreach (var item in entity.Properties)
             {
-                getPropertyMapping.Add($"                           {item.InternalName} = item.{item.InternalName}");
+                if (item.Type != PropertyTypeEnum.Relationship)
+                {
+                    getPropertyMapping.Add($"                           {item.InternalName} = item.{item.InternalName}");
+                }
                 if (item.PropertyTemplate != PropertyTemplateEnum.PrimaryKey)
                 {
-                    postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                    patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
+                    if (item.Type == PropertyTypeEnum.Relationship)
+                    {
+                        postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
+                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}Id"":
+                        entity.{item.InternalName}Id = new Guid(operation.value.ToString());
+                        entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                        break;");
+                    }
+                    else
+                    {
+                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
                         entity.{item.InternalName} = operation.value.ToString();
                         entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
                         break;");
+                    }
                 }
             }
 

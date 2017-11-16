@@ -28,5 +28,6 @@ namespace MasterBuilder.Request
         }
         public Guid? EntityId { get; set; }
         public Guid? NavigateToScreenId { get; set; }
+        public MenuItem[] MenuItems { get; internal set; }
     }
 }

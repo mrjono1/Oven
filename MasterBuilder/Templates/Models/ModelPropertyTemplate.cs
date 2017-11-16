@@ -22,8 +22,14 @@ namespace MasterBuilder.Templates.Models
                     }
                 }
             }
-
-            result.Append($@"        public {property.CsType} {property.InternalName} {{ get; set; }}");
+            if (property.Type == PropertyTypeEnum.Relationship)
+            {
+                result.Append($@"        public {property.CsType} {property.InternalName}Id {{ get; set; }}");
+            }
+            else
+            {
+                result.Append($@"        public {property.CsType} {property.InternalName} {{ get; set; }}");
+            }
             return result.ToString();
         }
     }
