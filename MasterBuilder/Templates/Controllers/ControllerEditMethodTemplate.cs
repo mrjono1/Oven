@@ -7,7 +7,7 @@ namespace MasterBuilder.Templates.Controllers
 {
     public class ControllerEditMethodTemplate
     {
-        internal static string Evaluate(Project project, Entity entity, Screen screen)
+        internal static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
         {
             var getPropertyMapping = new List<string>();
             var postPropertyMapping = new List<string>();

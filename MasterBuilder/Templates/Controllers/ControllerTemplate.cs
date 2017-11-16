@@ -20,37 +20,34 @@ namespace MasterBuilder.Templates.Controllers
         {
             var controllerName = (entity != null ? entity.InternalName : screen.InternalName);
             var usings = new List<string>();
-            var methods = new StringBuilder();
+            var methods = new List<string>();
             var classAttributes = @"[Route(""api/[controller]"")]";
-                        
+            
             if (entity != null && project.Screens != null)
             {
-                foreach (var item in project.Screens.Where(p => p.EntityId.HasValue && p.EntityId.Value == entity.Id))
+                var sections = (from s in project.Screens
+                                where s.ScreenSections != null
+                                from ss in s.ScreenSections
+                                where ss.EntityId == entity.Id
+                                select new
+                                {
+                                    Screen = s,
+                                    ScreenSection = ss
+                                });
+                foreach (var item in sections)
                 {
-                    switch (item.ScreenType)
+                    switch (item.ScreenSection.ScreenSectionType)
                     {
-                        case ScreenTypeEnum.Search:
-                            if (!usings.Contains("using Microsoft.AspNetCore.JsonPatch;"))
-                            {
-                                usings.Add("using Microsoft.AspNetCore.JsonPatch;");
-                            }
-                            methods.Append(ControllerSearchMethodTemplate.Evaluate(project, entity, item));
+                        case ScreenSectionTypeEnum.Search:
+                            usings.Add("using Microsoft.AspNetCore.JsonPatch;");
+                            methods.Add(ControllerSearchMethodTemplate.Evaluate(project, entity, item.Screen, item.ScreenSection));
                             break;
-                        case ScreenTypeEnum.Edit:
-                            methods.Append(ControllerEditMethodTemplate.Evaluate(project, entity, item));
-                            break;
-                        case ScreenTypeEnum.View:
+                        case ScreenSectionTypeEnum.Form:
+                            methods.Add(ControllerEditMethodTemplate.Evaluate(project, entity, item.Screen, item.ScreenSection));
                             break;
                         default:
                             break;
                     }
-
-                    if (!string.IsNullOrWhiteSpace(item.ControllerCode))
-                    {
-                        methods.AppendLine(item.ControllerCode);
-                    }
-
-                    methods.AppendLine();
                 }
             }
 
@@ -58,7 +55,7 @@ namespace MasterBuilder.Templates.Controllers
             {
                 if (screen.TemplateId.HasValue && screen.TemplateId.Value == new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"))
                 {
-                    methods.AppendLine(@"        public IActionResult Index()
+                    methods.Add(@"        public IActionResult Index()
         {
             return View();
         }
@@ -73,7 +70,7 @@ namespace MasterBuilder.Templates.Controllers
 
                 if (!string.IsNullOrWhiteSpace(screen.ControllerCode))
                 {
-                    methods.AppendLine(screen.ControllerCode);
+                    methods.Add(screen.ControllerCode);
                 }
             } 
 
@@ -86,7 +83,7 @@ using {project.InternalName}.Models;
 using {project.InternalName}.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-{string.Join(Environment.NewLine, usings)}
+{string.Join(Environment.NewLine, usings.Distinct())}
 
 namespace {project.InternalName}.Controllers
 {{
@@ -99,7 +96,7 @@ namespace {project.InternalName}.Controllers
         {{
             _context = context;
         }}
-{methods}
+{string.Join(Environment.NewLine, methods)}
     }}
 }}";
         }

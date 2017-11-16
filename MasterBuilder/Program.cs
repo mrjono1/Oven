@@ -123,32 +123,34 @@ namespace MasterBuilder
                     {
                         foreach (var screen in project.Screens.Where(p => p.EntityId.HasValue && p.EntityId.Value == item.Id))
                         {
-                            switch (screen.ScreenType)
+                            foreach (var screenSection in screen.ScreenSections)
                             {
-                                case ScreenTypeEnum.Search:
-                                    filesToWrite.AddRange(
-                                        new Task[] {
+                                switch (screenSection.ScreenSectionType)
+                                {
+                                    case ScreenSectionTypeEnum.Form:
+                                        filesToWrite.AddRange(
+                                            new Task[] {
                                             // Server Side
-                                            FileHelper.WriteAllText(ModelSearchRequestTemplate.FileName(modelsPath, item, screen), ModelSearchRequestTemplate.Evaluate(project, item, screen)),
-                                            FileHelper.WriteAllText(ModelSearchResponseTemplate.FileName(modelsPath, item, screen), ModelSearchResponseTemplate.Evaluate(project, item, screen)),
-                                            FileHelper.WriteAllText(ModelSearchItemTemplate.FileName(modelsPath, item, screen), ModelSearchItemTemplate.Evaluate(project, item, screen))
-                                        });
-                                    break;
-                                case ScreenTypeEnum.Edit:
-                                    filesToWrite.AddRange(
-                                        new Task[] {
+                                            FileHelper.WriteAllText(ModelEditResponseTemplate.FileName(modelsPath, item, screen, screenSection), ModelEditResponseTemplate.Evaluate(project, item, screen, screenSection)),
+                                            FileHelper.WriteAllText(ModelEditRequestTemplate.FileName(modelsPath, item, screen, screenSection), ModelEditRequestTemplate.Evaluate(project, item, screen, screenSection))
+                                            });
+                                        break;
+                                    case ScreenSectionTypeEnum.Search:
+                                        filesToWrite.AddRange(
+                                            new Task[] {
                                             // Server Side
-                                            FileHelper.WriteAllText(ModelEditResponseTemplate.FileName(modelsPath, item, screen), ModelEditResponseTemplate.Evaluate(project, item, screen)),
-                                            FileHelper.WriteAllText(ModelEditRequestTemplate.FileName(modelsPath, item, screen), ModelEditRequestTemplate.Evaluate(project, item, screen))
-                                        });
-                                    //File.WriteAllText(ModelTemplate.FileName(modelsPath, item, screen), ModelTemplate.Evaluate(project, item, screen));
-                                    //File.WriteAllText(ModelTemplate.FileName(modelsPath, item, screen), ModelTemplate.Evaluate(project, item, screen));
-                                    break;
-                                case ScreenTypeEnum.View:
-
-                                    break;
-                                default:
-                                    break;
+                                            FileHelper.WriteAllText(ModelSearchRequestTemplate.FileName(modelsPath, item, screen, screenSection), ModelSearchRequestTemplate.Evaluate(project, item, screen, screenSection)),
+                                            FileHelper.WriteAllText(ModelSearchResponseTemplate.FileName(modelsPath, item, screen, screenSection), ModelSearchResponseTemplate.Evaluate(project, item, screen, screenSection)),
+                                            FileHelper.WriteAllText(ModelSearchItemTemplate.FileName(modelsPath, item, screen, screenSection), ModelSearchItemTemplate.Evaluate(project, item, screen, screenSection))
+                                            });
+                                        break;
+                                    case ScreenSectionTypeEnum.Grid:
+                                        break;
+                                    case ScreenSectionTypeEnum.Html:
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
 
                             // Client Side

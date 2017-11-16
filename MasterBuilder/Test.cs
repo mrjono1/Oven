@@ -137,6 +137,54 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
+                            Id = new Guid("{6D09DE04-2FDA-4091-A4DA-B3448ABA1A52}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{8D5A78EB-B24D-4789-A498-1D37B57BF63D}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{1CB8E873-07C7-461A-8859-672CE66C8513}"),
+                            InternalName = "InternalName",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Internal Name",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{F60F66AC-F6AD-45E2-9850-9A474CC43C4E}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{FF3EF7FD-7A8F-45A5-ACB0-C0A2F97C816B}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
                             Id = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}"),
                             InternalName = "Project",
                             Type = PropertyTypeEnum.Relationship,

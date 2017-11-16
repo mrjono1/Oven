@@ -8,24 +8,39 @@ namespace MasterBuilder.Templates.Models
 {
     public class ModelSearchResponseTemplate
     {
-        public static string FileName(string folder, Entity entity, Screen screen)
+        public static string FileName(string folder, Entity entity, Screen screen, ScreenSection screenSection)
         {
             var path = FileHelper.CreateFolder(folder, screen.InternalName);
-            return Path.Combine(path, $"{screen.InternalName}Response.cs");
+            if (screen.EntityId.HasValue && screenSection.EntityId.HasValue && screen.EntityId != screenSection.EntityId)
+            {
+                return Path.Combine(path, $"{screen.InternalName}{screenSection.InternalName}Response.cs");
+            }
+            else
+            {
+                return Path.Combine(path, $"{screen.InternalName}Response.cs");
+            }
         }
 
-        public static string Evaluate(Project project, Entity entity, Screen screen)
+        public static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
         {
+            var className = $"{screen.InternalName}Response";
+            var itemClassName = $"{screen.InternalName}Item";
+            if (screen.EntityId.HasValue && screenSection.EntityId.HasValue && screen.EntityId != screenSection.EntityId)
+            {
+                className = $"{screen.InternalName}{screenSection.InternalName}Response";
+                itemClassName = $"{screen.InternalName}{screenSection.InternalName}Item";
+            }
+
             return $@"
 using System;
 
 namespace {project.InternalName}.Models
 {{
-    public class {screen.InternalName}Response
+    public class {className}
     {{
         public int TotalPages {{ get; internal set; }}
         public int TotalItems {{ get; internal set; }}
-        public {screen.InternalName}Item[] Items {{ get; internal set; }}
+        public {itemClassName}[] Items {{ get; internal set; }}
     }}
 }}";
         }

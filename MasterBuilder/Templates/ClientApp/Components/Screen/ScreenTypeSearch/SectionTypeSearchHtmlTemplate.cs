@@ -22,6 +22,10 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
                 {
                     continue;
                 }
+                else if (property.Type == PropertyTypeEnum.Relationship)
+                {
+                    continue;
+                }
                 headings.Add($@"             <th data-property-id=""{property.Id}"" >{property.Title}</th>");
                 bindings.Add($"             <td>{{{{ {screen.InternalName.ToCamlCase()}Item.{property.InternalName.ToCamlCase()} }}}}</td>");
             }

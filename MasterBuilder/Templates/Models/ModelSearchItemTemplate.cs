@@ -8,13 +8,21 @@ namespace MasterBuilder.Templates.Models
 {
     public class ModelSearchItemTemplate
     {
-        public static string FileName(string folder, Entity entity, Screen screen)
+        public static string FileName(string folder, Entity entity, Screen screen, ScreenSection screenSection)
         {
             var path = FileHelper.CreateFolder(folder, screen.InternalName);
-            return Path.Combine(path, $"{screen.InternalName}Item.cs");
+
+            if (screen.EntityId.HasValue && screenSection.EntityId.HasValue && screen.EntityId != screenSection.EntityId)
+            {
+                return Path.Combine(path, $"{screen.InternalName}{screenSection.InternalName}Item.cs");
+            }
+            else
+            {
+                return Path.Combine(path, $"{screen.InternalName}Item.cs");
+            }
         }
 
-        public static string Evaluate(Project project, Entity entity, Screen screen)
+        public static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
         {
             StringBuilder properties = null;
             if (entity.Properties != null)
@@ -26,12 +34,17 @@ namespace MasterBuilder.Templates.Models
                 }
             }
 
+            var className = $"{screen.InternalName}Item";
+            if (screen.EntityId.HasValue && screenSection.EntityId.HasValue && screen.EntityId != screenSection.EntityId)
+            {
+                className = $"{screen.InternalName}{screenSection.InternalName}Item";
+            }
             return $@"
 using System;
 
 namespace {project.InternalName}.Models
 {{
-    public class {screen.InternalName}Item
+    public class {className}
     {{
 {properties}
     }}

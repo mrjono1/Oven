@@ -27,7 +27,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
         this.{screenSection.InternalName.ToCamlCase()}Request.page = 1;
         this.{screenSection.InternalName.ToCamlCase()}Request.pageSize = 20;
 
-        this.http.post('api/{entity.InternalName}/{screenSection.InternalName}', this.{screenSection.InternalName.ToCamlCase()}Request).subscribe(result => {{
+        this.http.post('api/{entity.InternalName}/{screen.InternalName}{screenSection.InternalName}', this.{screenSection.InternalName.ToCamlCase()}Request).subscribe(result => {{
             this.{screenSection.InternalName.ToCamlCase()}Response = result.json() as {screenSection.InternalName};
         }}, error => console.error(error));";
         }
@@ -53,11 +53,15 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
 
         internal static IEnumerable<string> Classes(Project project, Request.Screen screen, ScreenSection screenSection)
         {
-            var entity = project.Entities.SingleOrDefault(p => p.Id == screen.EntityId);
+            var entity = project.Entities.SingleOrDefault(p => p.Id == screenSection.EntityId);
 
             var properties = new List<string>();
             foreach (var property in entity.Properties)
             {
+                if (property.Type == PropertyTypeEnum.Relationship)
+                {
+                    continue;
+                }
                 properties.Add($"   {property.InternalName.ToCamlCase()}: {property.TsType};");
             }
 
