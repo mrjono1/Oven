@@ -14,13 +14,13 @@ namespace MasterBuilder.Templates.Controllers
             var patchEntityOperations = new List<string>();
             foreach (var item in entity.Properties)
             {
-                if (item.Type != PropertyTypeEnum.Relationship)
+                if (item.Type != PropertyTypeEnum.ParentRelationship)
                 {
                     getPropertyMapping.Add($"                           {item.InternalName} = item.{item.InternalName}");
                 }
                 if (item.PropertyTemplate != PropertyTemplateEnum.PrimaryKey)
                 {
-                    if (item.Type == PropertyTypeEnum.Relationship)
+                    if (item.Type == PropertyTypeEnum.ParentRelationship)
                     {
                         postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
                         patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}Id"":

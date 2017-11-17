@@ -17,7 +17,7 @@ namespace MasterBuilder.Templates.Controllers
             var sectionEntity = project.Entities.FirstOrDefault(e => e.Id == screenSection.EntityId);
             foreach (var item in sectionEntity.Properties)
             {
-                if (item.Type == PropertyTypeEnum.Relationship)
+                if (item.Type == PropertyTypeEnum.ParentRelationship)
                 {
                     continue;
                 }

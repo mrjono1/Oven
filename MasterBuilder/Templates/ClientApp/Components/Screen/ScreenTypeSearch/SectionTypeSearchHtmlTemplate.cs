@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
                 {
                     continue;
                 }
-                else if (property.Type == PropertyTypeEnum.Relationship)
+                else if (property.Type == PropertyTypeEnum.ParentRelationship)
                 {
                     continue;
                 }

@@ -17,7 +17,7 @@ namespace MasterBuilder.Templates.Entities
                 required = property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
             }
 
-            if (property.Type == PropertyTypeEnum.Relationship)
+            if (property.Type == PropertyTypeEnum.ParentRelationship)
             {
                 var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 return $@"        public Guid{(required ? "?" : "")} {property.InternalName}Id {{ get; set; }}

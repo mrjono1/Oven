@@ -51,7 +51,7 @@ namespace MasterBuilder.Request
 
                 switch (Type)
                 {
-                    case PropertyTypeEnum.Relationship:
+                    case PropertyTypeEnum.ParentRelationship:
                     case PropertyTypeEnum.Uniqueidentifier:
                         return $"Guid{(!required ? "?": string.Empty)}";
                     case PropertyTypeEnum.String:

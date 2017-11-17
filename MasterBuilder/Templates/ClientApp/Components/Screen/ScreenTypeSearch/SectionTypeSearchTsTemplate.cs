@@ -58,7 +58,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
             var properties = new List<string>();
             foreach (var property in entity.Properties)
             {
-                if (property.Type == PropertyTypeEnum.Relationship)
+                if (property.Type == PropertyTypeEnum.ParentRelationship)
                 {
                     continue;
                 }

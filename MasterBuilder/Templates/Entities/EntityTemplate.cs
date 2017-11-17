@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.Entities
             foreach (var item in (from e in project.Entities
                 where e.Properties != null
                 from p in e.Properties
-                where p.Type == PropertyTypeEnum.Relationship &&
+                where p.Type == PropertyTypeEnum.ParentRelationship &&
                 p.ParentEntityId.Value == entity.Id
                 select new { e, p }))
             {

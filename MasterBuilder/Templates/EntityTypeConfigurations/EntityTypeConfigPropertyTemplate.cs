@@ -18,7 +18,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             
             var value = new StringBuilder();
 
-            if (property.Type == PropertyTypeEnum.Relationship)
+            if (property.Type == PropertyTypeEnum.ParentRelationship)
             {
                 value.AppendLine($"            builder.Property(p => p.{property.InternalName}Id)");
             }
@@ -67,7 +67,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 }
             }
 
-            if (property.Type == PropertyTypeEnum.Relationship)
+            if (property.Type == PropertyTypeEnum.ParentRelationship)
             {
                 var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 value.AppendLine();

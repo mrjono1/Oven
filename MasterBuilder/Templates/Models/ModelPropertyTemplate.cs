@@ -22,7 +22,7 @@ namespace MasterBuilder.Templates.Models
                     }
                 }
             }
-            if (property.Type == PropertyTypeEnum.Relationship)
+            if (property.Type == PropertyTypeEnum.ParentRelationship)
             {
                 result.Append($@"        public {property.CsType} {property.InternalName}Id {{ get; set; }}");
             }

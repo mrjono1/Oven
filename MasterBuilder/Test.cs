@@ -187,7 +187,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}"),
                             InternalName = "Project",
-                            Type = PropertyTypeEnum.Relationship,
+                            Type = PropertyTypeEnum.ParentRelationship,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]

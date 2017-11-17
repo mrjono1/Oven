@@ -7,6 +7,6 @@
         Integer,
         DateTime,
         Boolean,
-        Relationship
+        ParentRelationship
     }
 }
