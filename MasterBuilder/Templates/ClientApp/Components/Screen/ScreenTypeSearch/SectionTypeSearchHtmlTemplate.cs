@@ -32,14 +32,28 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
             }
 
             string navigateToScreen = null;
+            Request.Screen foundParentScreen = null;
             if (screenSection.NavigateToScreenId.HasValue)
             {
-                var navigateToScreenPath = (from s in project.Screens
+                var navigateScreen = (from s in project.Screens
                                         where s.Id == screenSection.NavigateToScreenId
-                                        select s.Path).FirstOrDefault();
-                if (!string.IsNullOrEmpty(navigateToScreenPath))
+                                        select s).FirstOrDefault();
+
+                
+                var parentProperty = (from p in entity.Properties
+                                        where p.Type == PropertyTypeEnum.ParentRelationship
+                                        select p).SingleOrDefault();
+                if (parentProperty != null)
                 {
-                    navigateToScreen = $@"[routerLink]=""['/{navigateToScreenPath}', {screen.InternalName.ToCamlCase()}Item.id]""";
+                    foundParentScreen = (from s in project.Screens
+                                            where s.EntityId == parentProperty.ParentEntityId &&
+                                            s.ScreenType == ScreenTypeEnum.Edit
+                                            select s).SingleOrDefault();
+                }
+
+                if (navigateScreen != null)
+                {
+                    navigateToScreen = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}', {screen.InternalName.ToCamlCase()}Item.id]""";
                 }
             }
 
@@ -48,7 +62,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
                 foreach (var menuItem in screenSection.MenuItems)
                 {
                     var screenTo = project.Screens.SingleOrDefault(s => s.Id == menuItem.ScreenId);
-                    menuItems.Add($@"<a [routerLink]=""['/{screenTo.Path}']"">
+                    menuItems.Add($@"<a [routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{screenTo.Path}']"">
                         <span class='{menuItem.Icon}'></span> {menuItem.Title}
                      </a>");
                 }

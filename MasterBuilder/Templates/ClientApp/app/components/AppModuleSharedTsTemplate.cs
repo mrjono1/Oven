@@ -28,54 +28,37 @@ namespace MasterBuilder.Templates.ClientApp.app
                 return menuItems;
             }
 
-            Screen[] childScreens = null;
-
+            Screen foundParentScreen = null;
+            
             var entity = (from e in project.Entities
                           where e.Id == screen.EntityId
                           select e).SingleOrDefault();
             if (entity != null)
             {
-                // children
-                if (screen.EntityId.HasValue)
+                var parentProperty = (from p in entity.Properties
+                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      select p).SingleOrDefault();
+                if (parentProperty != null)
                 {
-                    Guid[] childEntityIds = (from e in project.Entities
-                                             where e.Id != entity.Id
-                                             from p in e.Properties
-                                             where p.Type == PropertyTypeEnum.ParentRelationship &&
-                                             p.ParentEntityId == screen.EntityId
-                                             select e.Id).ToArray();
-
-                    if (childEntityIds != null && childEntityIds.Any())
-                    {
-                        childScreens = (from s in project.Screens
-                                                 where s.Id != screen.Id &&
-                                                 s.EntityId.HasValue &&
-                                                 childEntityIds.Contains(s.EntityId.Value)
-                                                 select s).ToArray();
-                    }
+                    foundParentScreen = (from s in project.Screens
+                                         where s.EntityId == parentProperty.ParentEntityId &&
+                                         s.ScreenType == ScreenTypeEnum.Edit &&
+                                         s.Id != screen.Id
+                                         select s).SingleOrDefault();
                 }
             }
-            if (childScreens != null && childScreens.Any())
+            if (foundParentScreen != null)
             {
-                var childRoutes = new List<string>();
-                foreach (var childScreen in childScreens)
-                {
-                    childRoutes.AddRange(AppModuleSharedTsTemplate.BuildRoutes(project, childScreen, screen));
-                }
-
-                menuItems.Add($@"            {{ path: '{screen.Path}/:id', component: {screen.InternalName}Component, 
-                children: [
-{string.Join(String.Concat(",", Environment.NewLine), childRoutes)}
-                ] }}");
+                var parentEntity = project.Entities.SingleOrDefault(e => e.Id == foundParentScreen.EntityId);
+                menuItems.Add($"            {{ path: '{foundParentScreen.Path}/:{parentEntity.InternalName.ToCamlCase()}Id/{screen.Path}/:{entity.InternalName.ToCamlCase()}Id', component: {screen.InternalName}Component }}");
+                menuItems.Add($"            {{ path: '{foundParentScreen.Path}/:{parentEntity.InternalName.ToCamlCase()}Id/{screen.Path}', component: {screen.InternalName}Component }}");
             }
             else
             {
-                menuItems.Add($"            {{ path: '{screen.Path}/:id', component: {screen.InternalName}Component }}");
-            }
-
-            // TODO make optional
-            menuItems.Add($"            {{ path: '{screen.Path}', component: {screen.InternalName}Component }}");
-            
+                menuItems.Add($"            {{ path: '{screen.Path}/:{entity.InternalName.ToCamlCase()}Id', component: {screen.InternalName}Component }}");
+                // TODO make optional
+                menuItems.Add($"            {{ path: '{screen.Path}', component: {screen.InternalName}Component }}");
+            }            
             
             return menuItems;
         }

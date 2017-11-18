@@ -66,8 +66,16 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
 
                 var propertyValidatorsString = (propertyValidators.Any() ? $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" : string.Empty);
 
-                formControls.Add($@"        '{property.InternalName.ToCamlCase()}': new FormControl(this.{screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}{propertyValidatorsString})");
-                properties.Add($@"    get {property.InternalName.ToCamlCase()}() {{ return this.{screen.InternalName.ToCamlCase()}Form.get('{property.InternalName.ToCamlCase()}'); }}");
+                if (property.Type == PropertyTypeEnum.ParentRelationship)
+                {
+                    formControls.Add($@"        '{property.InternalName.ToCamlCase()}Id': new FormControl(this.{screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}Id{propertyValidatorsString})");
+                    properties.Add($@"    get {property.InternalName.ToCamlCase()}Id() {{ return this.{screen.InternalName.ToCamlCase()}Form.get('{property.InternalName.ToCamlCase()}Id'); }}");
+                }
+                else
+                {
+                    formControls.Add($@"        '{property.InternalName.ToCamlCase()}': new FormControl(this.{screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}{propertyValidatorsString})");
+                    properties.Add($@"    get {property.InternalName.ToCamlCase()}() {{ return this.{screen.InternalName.ToCamlCase()}Form.get('{property.InternalName.ToCamlCase()}'); }}");
+                }
             }
 
             return $@" 

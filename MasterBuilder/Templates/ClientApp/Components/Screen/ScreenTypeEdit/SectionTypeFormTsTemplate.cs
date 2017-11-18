@@ -27,16 +27,29 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeEdit
         {
             var entity = project.Entities.SingleOrDefault(p => p.Id == screenSection.EntityId);
 
+            var parentProperty = (from p in entity.Properties
+                                  where p.Type == PropertyTypeEnum.ParentRelationship
+                                  select p).SingleOrDefault();
+            string setParentProperty = null;
+            if (parentProperty != null)
+            {
+                var parentEnitity = (from e in project.Entities
+                                     where e.Id == parentProperty.ParentEntityId
+                                     select e).SingleOrDefault();
+                setParentProperty = $"this.{screenSection.InternalName.ToCamlCase()}.{parentProperty.InternalName.ToCamlCase()}Id = params['{parentEnitity.InternalName.ToCamlCase()}Id'];";
+            }
+
             return $@"this.route.params.subscribe(params => {{
-            if (params['id']) {{
+            if (params['{screen.InternalName.ToCamlCase()}Id']) {{
                 this.new = false;
-                this.http.get('api/{entity.InternalName}/{screenSection.InternalName}/' + params['id']).subscribe(result => {{
+                this.http.get('api/{entity.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.ToCamlCase()}Id']).subscribe(result => {{
                     this.{screenSection.InternalName.ToCamlCase()} = result.json() as {screenSection.InternalName};
                     this.setupForm();
                 }}, error => console.error(error));
             }} else {{
                 this.new = true;
                 this.{screenSection.InternalName.ToCamlCase()} = new {screenSection.InternalName}();
+                {setParentProperty}
                 this.setupForm();
             }}
         }});";
@@ -66,7 +79,14 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeEdit
             var properties = new List<string>();
             foreach (var property in entity.Properties)
             {
-                properties.Add($"   {property.InternalName.ToCamlCase()}: {property.TsType};");
+                if (property.Type == PropertyTypeEnum.ParentRelationship)
+                {
+                    properties.Add($"   {property.InternalName.ToCamlCase()}Id: {property.TsType};");
+                }
+                else
+                {
+                    properties.Add($"   {property.InternalName.ToCamlCase()}: {property.TsType};");
+                }
             }
 
             return new string[]
