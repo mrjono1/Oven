@@ -34,6 +34,22 @@ namespace MasterBuilder.Templates.Controllers
                 requestClassName = $"{screen.InternalName}{screenSection.InternalName}Request";
             }
 
+            string parentPropertyWhereString = null;
+            Entity parentEntity = null;
+            if (sectionEntity != null)
+            {
+                var parentProperty = (from p in sectionEntity.Properties
+                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      select p).SingleOrDefault();
+                if (parentProperty != null)
+                {
+                    parentEntity = (from s in project.Entities
+                                    where s.Id == parentProperty.ParentEntityId
+                                    select s).SingleOrDefault();
+                    parentPropertyWhereString = $"where !request.{parentEntity.InternalName}Id.HasValue || (request.{parentEntity.InternalName}Id.HasValue &&  request.{parentEntity.InternalName}Id.Value == item.{parentEntity.InternalName}Id)";
+                }
+            }
+
             return $@"
         [HttpPost(""{screen.InternalName}{screenSection.InternalName}"")]
         public async Task<IActionResult> {screen.InternalName}{screenSection.InternalName}([FromBody]{requestClassName} request)
@@ -49,6 +65,7 @@ namespace MasterBuilder.Templates.Controllers
             }}
 
             var query = from item in _context.{entity.InternalNamePlural}
+            {parentPropertyWhereString}
                         select item;            
 
             var totalItems = query.Count();

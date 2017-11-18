@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.Models
@@ -29,6 +30,25 @@ namespace MasterBuilder.Templates.Models
                 className = $"{screen.InternalName}{screenSection.InternalName}Request";
             }
 
+            string parentPropertyString = null;
+            Entity parentEntity = null;
+            var sectionEntity = (from e in project.Entities
+                          where e.Id == screenSection.EntityId
+                          select e).SingleOrDefault();
+            if (sectionEntity != null)
+            {
+                var parentProperty = (from p in sectionEntity.Properties
+                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      select p).SingleOrDefault();
+                if (parentProperty != null)
+                {
+                    parentEntity = (from s in project.Entities
+                                         where s.Id == parentProperty.ParentEntityId
+                                         select s).SingleOrDefault();
+                    parentPropertyString = $"public Guid? {parentEntity.InternalName}Id {{ get; set; }}";
+                }
+            }
+
             return $@"using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -43,7 +63,7 @@ namespace {project.InternalName}.Models
         [Required]
         [DefaultValue(10)]
         public int PageSize {{ get; set; }}
-        
+        {parentPropertyString}
         // TODO: Search fields
     }}
 }}";
