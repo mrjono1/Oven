@@ -35,6 +35,18 @@ namespace MasterBuilder.Request
             }
         }
 
+        internal bool Required
+        {
+            get
+            {
+                var required = false;
+                if (ValidationItems != null)
+                {
+                    required = ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
+                }
+                return required;
+            }
+        }
         /// <summary>
         /// C# Data Type
         /// </summary>
@@ -43,25 +55,19 @@ namespace MasterBuilder.Request
             get
             {
 
-                var required = false;
-                if (ValidationItems != null)
-                {
-                    required = ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
-                }
-
                 switch (Type)
                 {
                     case PropertyTypeEnum.ParentRelationship:
                     case PropertyTypeEnum.Uniqueidentifier:
-                        return $"Guid{(!required ? "?": string.Empty)}";
+                        return $"Guid{(!Required ? "?": string.Empty)}";
                     case PropertyTypeEnum.String:
                         return "string";
                     case PropertyTypeEnum.Integer:
-                        return $"int{(!required ? "?" : string.Empty)}";
+                        return $"int{(!Required ? "?" : string.Empty)}";
                     case PropertyTypeEnum.DateTime:
                         return "DateTime";
                     case PropertyTypeEnum.Boolean:
-                        return $"bool{(!required ? "?" : string.Empty)}";
+                        return $"bool{(!Required ? "?" : string.Empty)}";
                     default:
                         return "string";
                 }

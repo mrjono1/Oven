@@ -132,6 +132,36 @@ namespace MasterBuilder
                                //     ValidationType = ValidationTypeEnum.Required
                                // }
                             }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{D7E750B0-159D-464C-A88C-6E67673CFAF2}"),
+                            InternalName = "BuildNumber",
+                            Type = PropertyTypeEnum.Integer,
+                            Title = "Build Number",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{B3784D79-72C0-4DC6-86C3-4ECD256821D1}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{0FBD3AA3-E6DD-4CCB-9FAA-E8AA8C8009F8}"),
+                            InternalName = "CreatedDate",
+                            Type = PropertyTypeEnum.DateTime,
+                            Title = "Created Date",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{E9625AE5-85A7-42FF-95D1-D39265F35628}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                }
+                            }
                         }
                     }
                 },
@@ -293,6 +323,67 @@ namespace MasterBuilder
                                 },
                             }
                         },
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
+                    InternalName = "ValidationType",
+                    Title = "Validation Type",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{03020776-6F7E-41CD-9475-6E2CA72E92B4}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{771B57F0-F3D8-4E12-AA93-C801447BDB83}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{C15FC6F8-B4CD-4541-95C5-796B0B71A4B8}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{4363958E-2632-45C4-B44C-5AEDA379781F}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{1ED350B4-CD53-4B8C-991F-02DDC8117DDF}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{9D06A6AF-6050-41F8-B880-C1AFE9D46909}"),
+                            InternalName = "DefaultMessage",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Default Message",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{374D43AF-4A41-4D21-BBE1-C5E6CB00DF5F}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{EED8D5BB-857C-48E3-ABFC-9F09545FD165}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        }
                     }
                 },
                 new Entity()
