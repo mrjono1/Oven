@@ -217,6 +217,86 @@ namespace MasterBuilder
                 },
                 new Entity()
                 {
+                    Id = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                    InternalName = "Property",
+                    Title = "Property",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{D34BF79B-F052-4090-BBDD-8FAE69A256C4}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}"),
+                            InternalName = "Entity",
+                            Type = PropertyTypeEnum.ParentRelationship,
+                            Title = "Entity",
+                            ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{D69A337F-7171-4CAE-9E9D-492FE9578D89}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{8BEA3D51-07FB-4111-A01F-1624B8B91A57}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{ACB68BF7-5842-42C7-B77A-88AC71CA22B1}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{1EACE07B-FD49-4B18-AA3F-36DF87D63B6E}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{C52F7B8E-CAD0-40FF-8E89-B313A290A96E}"),
+                            InternalName = "InternalName",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Internal Name",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{7CBFA8F5-364D-4EDF-8563-22BE16CE2B16}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{74789541-1939-4F0F-9098-EBDF0AE70A1C}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{035339EF-C09F-4412-8779-BD2088387757}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                    }
+                },
+                new Entity()
+                {
                     Id = new Guid("{B833CE8A-1877-45A6-9FC3-161266524082}"),
                     InternalName = "WeatherForecast",
                     Title = "Weather Forecast",
@@ -418,6 +498,44 @@ namespace MasterBuilder
                             Id = new Guid("{8130C0F4-F8F7-4A7A-9793-85B8939589EB}"),
                             Title = "Entity",
                             InternalName = "Entity",
+                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{C2A19FAF-5C62-43D2-8FA4-2293B4B68569}"),
+                            Title = "Properties",
+                            InternalName = "Properties",
+                            ScreenSectionTypeId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), // Search
+                            EntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                            NavigateToScreenId = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
+                            MenuItems = new MenuItem[]
+                            {
+                                new MenuItem
+                                {
+                                    Id = new Guid("{C236C6DC-A21A-44DF-B125-FFA46E1810FC}"),
+                                    MenuItemType = MenuItemTypeEnum.New,
+                                    ScreenId = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
+                                    Title = "New"
+                                }
+                            }
+                        }
+                    }
+                },
+                new Screen()
+                {
+                    Id = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
+                    EntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                    ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
+                    Title = "Property",
+                    InternalName = "Property",
+                    Path = "property",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{03934004-41EF-40A7-B317-723019001DCB}"),
+                            Title = "Property",
+                            InternalName = "Property",
                             ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
                         }
                     }

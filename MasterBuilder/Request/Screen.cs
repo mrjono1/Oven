@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace MasterBuilder.Request
 {
@@ -67,6 +68,88 @@ namespace MasterBuilder.Request
             
             errors = "";
             return true;
+        }
+
+        internal string EditFullPath(Project project)
+        {
+            if (string.IsNullOrEmpty(Path))
+            {
+                return null;
+            }
+
+            if (ScreenType != ScreenTypeEnum.Edit)
+            {
+                return null;
+            }
+            var entity = (from e in project.Entities
+                            where e.Id == EntityId
+                            select e).SingleOrDefault();
+            if (entity == null)
+            {
+                return null;
+            }
+
+            var ancestors = GetAncestors(project, this);
+            StringBuilder ancestorsString = new StringBuilder();
+            if (ancestors.Any())
+            {
+                foreach (var item in ancestors)
+                {
+                    ancestorsString.Append($"{item.Item1}/:{item.Item2}Id/");
+                }
+            }
+
+            return $"{ancestorsString}{Path}/:{entity.InternalName.ToCamlCase()}Id";
+            
+        }
+
+        private List<Tuple<string,string>> GetAncestors(Project project, Screen screen)
+        {
+            var anc = new List<Tuple<string, string>>();
+            Screen foundParentScreen = null;
+
+            var entity = (from e in project.Entities
+                          where e.Id == screen.EntityId
+                          select e).SingleOrDefault();
+            if (entity != null)
+            {
+                var parentProperty = (from p in entity.Properties
+                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      select p).SingleOrDefault();
+                if (parentProperty != null)
+                {
+                    foundParentScreen = (from s in project.Screens
+                                         where s.EntityId == parentProperty.ParentEntityId &&
+                                         s.ScreenType == ScreenTypeEnum.Edit &&
+                                         s.Id != screen.Id
+                                         select s).SingleOrDefault();
+
+                    var parentEntity = project.Entities.SingleOrDefault(e => e.Id == foundParentScreen.EntityId);
+
+                    anc.AddRange(GetAncestors(project, foundParentScreen));
+                    anc.Add(new Tuple<string, string>(foundParentScreen.Path, parentEntity.InternalName.ToCamlCase()));
+                }
+            }
+            return anc;
+        }
+
+        internal string FullPath(Project project)
+        {
+            if (string.IsNullOrEmpty(Path))
+            {
+                return null;
+            }
+            
+            var ancestors = GetAncestors(project, this);
+            StringBuilder ancestorsString = new StringBuilder();
+            if (ancestors.Any())
+            {
+                foreach (var item in ancestors)
+                {
+                    ancestorsString.Append($"{item.Item1}/:{item.Item2}Id/");
+                }
+            }
+            return $"{ancestorsString}{Path}";
         }
     }
 }

@@ -39,6 +39,24 @@ namespace MasterBuilder.Templates.Controllers
                         break;");
                             break;
                         case PropertyTypeEnum.Integer:
+                            postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
+                        bool int32Value;
+                        if (operation.value != null && Int32.TryParse(operation.value.ToString(), out int32Value))
+                        {{
+                            entity.{item.InternalName} = int32Value;
+                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                        }}
+                        else if (operation.value == null || string.IsNullOrWhitespace(operation.value.ToString()))
+                        {{
+                            entity.{item.InternalName} = null;
+                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                        }}
+                        else
+                        {{
+                            throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid boolean value"");
+                        }}
+                        break;");
                             break;
                         case PropertyTypeEnum.DateTime:
                             break;

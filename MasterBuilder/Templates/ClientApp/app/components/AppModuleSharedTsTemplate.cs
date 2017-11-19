@@ -17,48 +17,17 @@ namespace MasterBuilder.Templates.ClientApp.app
         public static IEnumerable<string> BuildRoutes(Project project, Screen screen, Screen parentScreen = null)
         {
             var menuItems = new List<string>();
-            if (string.IsNullOrEmpty(screen.Path))
-            {
-                return menuItems;
-            }
 
-            if (screen.ScreenType != ScreenTypeEnum.Edit)
+            var fullEditPath = screen.EditFullPath(project);
+            if (!string.IsNullOrEmpty(fullEditPath))
             {
-                menuItems.Add($"            {{ path: '{screen.Path}', component: {screen.InternalName}Component }}");
-                return menuItems;
+                menuItems.Add($"            {{ path: '{fullEditPath}', component: {screen.InternalName}Component }}");
             }
-
-            Screen foundParentScreen = null;
-            
-            var entity = (from e in project.Entities
-                          where e.Id == screen.EntityId
-                          select e).SingleOrDefault();
-            if (entity != null)
+            var fullPath = screen.FullPath(project);
+            if (!string.IsNullOrEmpty(fullPath))
             {
-                var parentProperty = (from p in entity.Properties
-                                      where p.Type == PropertyTypeEnum.ParentRelationship
-                                      select p).SingleOrDefault();
-                if (parentProperty != null)
-                {
-                    foundParentScreen = (from s in project.Screens
-                                         where s.EntityId == parentProperty.ParentEntityId &&
-                                         s.ScreenType == ScreenTypeEnum.Edit &&
-                                         s.Id != screen.Id
-                                         select s).SingleOrDefault();
-                }
+                menuItems.Add($"            {{ path: '{fullPath}', component: {screen.InternalName}Component }}");
             }
-            if (foundParentScreen != null)
-            {
-                var parentEntity = project.Entities.SingleOrDefault(e => e.Id == foundParentScreen.EntityId);
-                menuItems.Add($"            {{ path: '{foundParentScreen.Path}/:{parentEntity.InternalName.ToCamlCase()}Id/{screen.Path}/:{entity.InternalName.ToCamlCase()}Id', component: {screen.InternalName}Component }}");
-                menuItems.Add($"            {{ path: '{foundParentScreen.Path}/:{parentEntity.InternalName.ToCamlCase()}Id/{screen.Path}', component: {screen.InternalName}Component }}");
-            }
-            else
-            {
-                menuItems.Add($"            {{ path: '{screen.Path}/:{entity.InternalName.ToCamlCase()}Id', component: {screen.InternalName}Component }}");
-                // TODO make optional
-                menuItems.Add($"            {{ path: '{screen.Path}', component: {screen.InternalName}Component }}");
-            }            
             
             return menuItems;
         }
