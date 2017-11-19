@@ -86,7 +86,7 @@ namespace MasterBuilder.Request
                     case PropertyTypeEnum.DateTime:
                         return "string";
                     case PropertyTypeEnum.Boolean:
-                        return "bool";
+                        return "boolean";
                     default:
                         return "string";
                 }

@@ -80,8 +80,20 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeEdit
 {new String(' ', 22)}formControlName=""{property.InternalName.ToCamlCase()}"" name=""{property.InternalName.ToCamlCase()}"" {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}>";
                         break;
                     case PropertyTypeEnum.Integer:
+                        control = $@"{new String(' ', 20)}<label for=""{property.InternalName.ToCamlCase()}"">{property.Title}</label>
+{new String(' ', 20)}<input *ngIf=""{screen.InternalName.ToCamlCase()}"" type=""number"" class=""form-control"" id=""{property.Id}""
+{new String(' ', 22)}formControlName=""{property.InternalName.ToCamlCase()}"" name=""{property.InternalName.ToCamlCase()}"" {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}>";
                         break;
                     case PropertyTypeEnum.DateTime:
+                        control = $@"{new String(' ', 20)}<label for=""{property.InternalName.ToCamlCase()}"">{property.Title}</label>
+{new String(' ', 20)}<input *ngIf=""{screen.InternalName.ToCamlCase()}"" type=""datetime"" class=""form-control"" id=""{property.Id}""
+{new String(' ', 22)}formControlName=""{property.InternalName.ToCamlCase()}"" name=""{property.InternalName.ToCamlCase()}"" {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}>";
+                        break;
+                    case PropertyTypeEnum.Boolean:
+                        control = $@"{new String(' ', 20)}<label>
+{new String(' ', 20)}<input *ngIf=""{screen.InternalName.ToCamlCase()}"" type=""checkbox"" id=""{property.Id}""
+{new String(' ', 22)}formControlName=""{property.InternalName.ToCamlCase()}"" name=""{property.InternalName.ToCamlCase()}"" {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}>{property.Title}
+{new String(' ', 20)}</label>";
                         break;
                     default:
                         break;

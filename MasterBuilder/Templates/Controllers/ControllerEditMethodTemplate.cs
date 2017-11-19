@@ -20,21 +20,45 @@ namespace MasterBuilder.Templates.Controllers
                 }
                 if (item.PropertyTemplate != PropertyTemplateEnum.PrimaryKey)
                 {
-                    if (item.Type == PropertyTypeEnum.ParentRelationship)
+                    switch (item.Type)
                     {
-                        postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
-                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}Id"":
+                        case PropertyTypeEnum.ParentRelationship:
+                            postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}Id"":
                         entity.{item.InternalName}Id = new Guid(operation.value.ToString());
                         entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
                         break;");
-                    }
-                    else
-                    {
-                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
+                            break;
+                        case PropertyTypeEnum.Uniqueidentifier:
+                            break;
+                        case PropertyTypeEnum.String:
+                            postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
                         entity.{item.InternalName} = operation.value.ToString();
                         entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
                         break;");
+                            break;
+                        case PropertyTypeEnum.Integer:
+                            break;
+                        case PropertyTypeEnum.DateTime:
+                            break;
+                        case PropertyTypeEnum.Boolean:
+                            postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
+                        bool booleanValue;
+                        if (operation.value != null && Boolean.TryParse(operation.value.ToString(), out booleanValue))
+                        {{
+                            entity.{item.InternalName} = booleanValue;
+                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                        }}
+                        else
+                        {{
+                            throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid boolean value"");
+                        }}
+                        break;");
+                            break;
+                        default:
+                            break;
                     }
                 }
             }

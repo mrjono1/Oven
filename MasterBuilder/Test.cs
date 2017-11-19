@@ -117,6 +117,21 @@ namespace MasterBuilder
                                     IntegerValue = 50
                                 }
                             }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{62C6E4B9-5164-4A36-B90B-DC8129E09D2B}"),
+                            InternalName = "AllowDestructiveDatabaseChanges",
+                            Type = PropertyTypeEnum.Boolean,
+                            Title = "Allow Destructive Database Changes",
+                            ValidationItems = new Validation[]
+                            {
+                               // new Validation
+                               // {
+                               //     Id = new Guid("{20E93766-3D57-4DB1-820C-77C2E0809061}"),
+                               //     ValidationType = ValidationTypeEnum.Required
+                               // }
+                            }
                         }
                     }
                 },
