@@ -630,7 +630,43 @@ namespace MasterBuilder
                             ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
                         }
                     }
-                }
+                },
+                new Screen()
+                {
+                    Id = new Guid("{8E1A9AB1-799E-46B4-8364-85FB087C643E}"),
+                    EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
+                    ScreenTypeId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), // Search
+                    Title = "Validation Types",
+                    InternalName = "ValidationTypes",
+                    Path = "validation-types",
+                    NavigateToScreenId = new Guid("{5D9BA697-C64B-40EE-9DF4-F88BD683713F}"),
+                    ScreenFeatures = new ScreenFeature[]
+                    {
+                        new ScreenFeature{
+                            Id = new Guid("{DF498A46-08B7-450E-8CE4-3BCC1B711A0D}"),
+                            FeatureId = new Guid("{6114120E-BD93-4CE4-A673-7DC295F93CFE}") // New
+                        }
+                    }
+                },
+                new Screen()
+                {
+                    Id = new Guid("{5D9BA697-C64B-40EE-9DF4-F88BD683713F}"),
+                    EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
+                    ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
+                    Title = "Validation Type",
+                    InternalName = "ValidationType",
+                    Path = "validation-type",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{459E59DD-D382-4061-94EF-3E73B47BFCB2}"),
+                            Title = "Validation Type",
+                            InternalName = "ValidationType",
+                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
+                        }
+                    }
+                },
             };
 
             project.MenuItems = new MenuItem[]
@@ -657,6 +693,12 @@ namespace MasterBuilder
                 {
                     Title = "Projects",
                     ScreenId = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
+                    Icon = "glyphicon glyphicon-th-list"
+                },
+                new MenuItem
+                {
+                    Title = "Validation Types",
+                    ScreenId = new Guid("{8E1A9AB1-799E-46B4-8364-85FB087C643E}"),
                     Icon = "glyphicon glyphicon-th-list"
                 }
             };

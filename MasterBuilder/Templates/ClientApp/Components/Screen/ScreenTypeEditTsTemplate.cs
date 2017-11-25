@@ -115,7 +115,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
             // Post new
             this.http.post('api/{entity.InternalName}/{screen.InternalName}', this.{screen.InternalName.ToCamlCase()}Form.getRawValue()).subscribe( result => {{
                 if (result.status === 200){{
-                    this.router.navigate(['{screen.InternalName.ToCamlCase()}/' + result.json()]);
+                    this.router.navigate([this.router.url + '/' + result.json()]);
                 }} else {{
                     alert(result);
                 }}
