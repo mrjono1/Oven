@@ -388,6 +388,73 @@ namespace MasterBuilder
                 },
                 new Entity()
                 {
+                    Id = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
+                    InternalName = "Validation",
+                    Title = "Validation",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{B9E9AC32-5942-4DFF-8AFD-DEDC26795824}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{3690A6AE-0573-40F3-8680-0BCE13931EE3}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{D7C58A33-816E-45D7-8E8A-E7FCC44C270E}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{07CC8E0F-E69A-4B93-892A-2795B8E34C48}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{BA0702F8-6F26-4A25-9300-31B44F14B3A8}"),
+                            InternalName = "Property",
+                            Type = PropertyTypeEnum.ParentRelationship,
+                            Title = "Property",
+                            ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{FC73C9C5-953A-414F-9C20-4B5C57F4F709}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
+                            InternalName = "ValidationType",
+                            Type = PropertyTypeEnum.ParentRelationship,
+                            Title = "Validation Type",
+                            ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{707BD4C0-7ED4-4865-9168-176B4E843E72}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        }
+                    }
+                },
+                new Entity()
+                {
                     Id = new Guid("{B833CE8A-1877-45A6-9FC3-161266524082}"),
                     InternalName = "WeatherForecast",
                     Title = "Weather Forecast",
