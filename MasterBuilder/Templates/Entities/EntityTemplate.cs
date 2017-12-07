@@ -43,11 +43,19 @@ namespace MasterBuilder.Templates.Entities
 
 namespace {project.InternalName}.Entities
 {{
+    /// <summary>
+    /// {entity.InternalName} Entity
+    /// </summary>
     public class {entity.InternalName}
     {{
-        public {entity.InternalName}(){{
+        /// <summary>
+        /// {entity.InternalName} Constructor for defaulting values
+        /// </summary>
+        public {entity.InternalName}()
+        {{
             Id = Guid.NewGuid();
         }}
+
 {string.Join(Environment.NewLine, properties)}
 {string.Join(Environment.NewLine, navigationProperties)}
     }}

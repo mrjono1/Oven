@@ -28,8 +28,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace {project.InternalName}.EntityTypeConfigurations
 {{
+    /// <summary>
+    /// Class to configure the {entity.InternalName} database settings
+    /// </summary>
     public class {entity.InternalName}Config : IEntityTypeConfiguration<{entity.QualifiedInternalName}>
     {{
+        /// <summary>
+        /// Configure the {entity.InternalName} Entity
+        /// </summary>
+        /// <param name=""builder"">The injected model builder for the {entity.InternalName} entity</param>
         public void Configure(EntityTypeBuilder<{entity.QualifiedInternalName}> builder)
         {{
             builder.ToTable(""{(project.ImutableDatabase ? entity.Id.ToString() : entity.InternalName)}"");

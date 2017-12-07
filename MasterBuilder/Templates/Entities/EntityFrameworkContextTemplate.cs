@@ -45,6 +45,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace {project.InternalName}.Entities
 {{
+    /// <summary>
+    /// {project.InternalName} Entity Framework Database Context
+    /// </summary>
     public class {project.InternalName}Context : DbContext
     {{
         public {project.InternalName}Context(DbContextOptions<{project.InternalName}Context> options) : base(options)

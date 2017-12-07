@@ -41,7 +41,7 @@ namespace MasterBuilder
         public async Task Run(string outputDirectory) {
             var project = new Test().Project;
 
-            var fullBuild = true;
+            var fullBuild = false;
 
             // Validate & Pre Process Project
             if (!project.Validate(out string messages))
@@ -73,7 +73,6 @@ namespace MasterBuilder
             var propertiesPath = FileHelper.CreateFolder(projectDirectory, "Properties");
             var viewsPath = FileHelper.CreateFolder(projectDirectory, "Views");
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
-            var distPath = FileHelper.CreateFolder(wwwrootPath, "dist");
 
             if (fullBuild)
             {
