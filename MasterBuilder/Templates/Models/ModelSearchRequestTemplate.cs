@@ -55,6 +55,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace {project.InternalName}.Models
 {{
+    /// <summary>
+    /// {screen.InternalName} Search Request
+    /// </summary>
     public class {className}
     {{
         [Required]

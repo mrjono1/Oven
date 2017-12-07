@@ -36,6 +36,9 @@ using System;
 
 namespace {project.InternalName}.Models
 {{
+    /// <summary>
+    /// {screen.InternalName} Screen Search Response
+    /// </summary>
     public class {className}
     {{
         public int TotalPages {{ get; internal set; }}

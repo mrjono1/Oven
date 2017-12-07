@@ -44,6 +44,9 @@ using System;
 
 namespace {project.InternalName}.Models
 {{
+    /// <summary>
+    /// {screen.InternalName} Screen Search Item
+    /// </summary>
     public class {className}
     {{
 {properties}

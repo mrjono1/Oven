@@ -31,13 +31,14 @@ using System;
 
 namespace {project.InternalName}.Models
 {{
+    /// <summary>
+    /// {screen.InternalName} Screen Load
+    /// </summary>
     public class {screen.InternalName}Response
     {{
 {properties}
     }}
 }}";
         }
-
-
     }
 }
