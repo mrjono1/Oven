@@ -31,13 +31,13 @@ namespace {project.InternalName}.EntityTypeConfigurations
     /// <summary>
     /// Class to configure the {entity.InternalName} database settings
     /// </summary>
-    public class {entity.InternalName}Config : IEntityTypeConfiguration<{entity.QualifiedInternalName}>
+    public class {entity.InternalName}Config : IEntityTypeConfiguration<Entities.{entity.InternalName}>
     {{
         /// <summary>
         /// Configure the {entity.InternalName} Entity
         /// </summary>
         /// <param name=""builder"">The injected model builder for the {entity.InternalName} entity</param>
-        public void Configure(EntityTypeBuilder<{entity.QualifiedInternalName}> builder)
+        public void Configure(EntityTypeBuilder<Entities.{entity.InternalName}> builder)
         {{
             builder.ToTable(""{(project.ImutableDatabase ? entity.Id.ToString() : entity.InternalName)}"");
             builder.HasKey(p => p.Id);

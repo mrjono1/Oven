@@ -16,8 +16,6 @@ namespace MasterBuilder.Templates.Entities
 
         public static string Evaluate(Project project, Entity entity)
         {
-            entity.QualifiedInternalName = $"Entities.{entity.InternalName}";
-
             var properties = new List<string>();
             var navigationProperties = new List<string>();
 

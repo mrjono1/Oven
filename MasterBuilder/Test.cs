@@ -1,4 +1,5 @@
 ﻿using MasterBuilder.Request;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -384,7 +385,14 @@ namespace MasterBuilder
                                 },
                             }
                         }
-                    }
+                    },
+                    SeedData = JsonConvert.SerializeObject(new []
+                    {
+                        new {
+                            Id = new Guid("{C4F83A9E-0478-47F3-8789-2269ADF50573}"),
+
+                        }
+                    })
                 },
                 new Entity()
                 {
