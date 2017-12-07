@@ -16,8 +16,8 @@ namespace MasterBuilder
                 InternalName = "TestReference",
                 Version = "0.0.1",
                 Title = "Test Reference",
-                DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MacroFinder;Integrated Security=True",
-             //   ImutableDatabase = false,
+                DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MasterBuilder;Integrated Security=True",
+                ImutableDatabase = false,
                 DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
                 AllowDestructiveDatabaseChanges = true
             };
@@ -440,7 +440,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
                             InternalName = "ValidationType",
-                            Type = PropertyTypeEnum.ParentRelationship,
+                            Type = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Validation Type",
                             ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
                             ValidationItems = new Validation[]

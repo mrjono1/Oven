@@ -20,6 +20,10 @@ namespace MasterBuilder.Templates.Controllers
                 if (item.Type == PropertyTypeEnum.ParentRelationship)
                 {
                     continue;
+                } else if (item.Type == PropertyTypeEnum.ReferenceRelationship)
+                {
+                    // todo reference relationship
+                    continue;
                 }
                 propertyMapping.Add($"                        {item.InternalName} = item.{item.InternalName}");
             }

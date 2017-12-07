@@ -19,7 +19,7 @@ namespace MasterBuilder
         static void Main(string[] args)
         {
             Console.WriteLine("Start!");
-            new Program("E:\\Temp\\Generated");
+            new Program("C:\\Temp");
         }
 
 
@@ -41,7 +41,7 @@ namespace MasterBuilder
         public async Task Run(string outputDirectory) {
             var project = new Test().Project;
 
-            var fullBuild = false;
+            var fullBuild = true;
 
             // Validate & Pre Process Project
             if (!project.Validate(out string messages))

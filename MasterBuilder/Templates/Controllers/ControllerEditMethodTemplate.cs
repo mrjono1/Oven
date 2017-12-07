@@ -14,7 +14,7 @@ namespace MasterBuilder.Templates.Controllers
             var patchEntityOperations = new List<string>();
             foreach (var item in entity.Properties)
             {
-                if (item.Type != PropertyTypeEnum.ParentRelationship)
+                if (item.Type != PropertyTypeEnum.ParentRelationship && item.Type != PropertyTypeEnum.ReferenceRelationship)
                 {
                     getPropertyMapping.Add($"                           {item.InternalName} = item.{item.InternalName}");
                 }
@@ -23,6 +23,7 @@ namespace MasterBuilder.Templates.Controllers
                     switch (item.Type)
                     {
                         case PropertyTypeEnum.ParentRelationship:
+                        case PropertyTypeEnum.ReferenceRelationship:
                             postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
                             patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}Id"":
                         entity.{item.InternalName}Id = new Guid(operation.value.ToString());

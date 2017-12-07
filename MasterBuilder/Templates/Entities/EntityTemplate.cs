@@ -32,11 +32,11 @@ namespace MasterBuilder.Templates.Entities
             foreach (var item in (from e in project.Entities
                 where e.Properties != null
                 from p in e.Properties
-                where p.Type == PropertyTypeEnum.ParentRelationship &&
+                where (p.Type == PropertyTypeEnum.ParentRelationship || p.Type == PropertyTypeEnum.ReferenceRelationship) &&
                 p.ParentEntityId.Value == entity.Id
                 select new { e, p }))
             {
-                navigationProperties.Add($"        public ICollection<{item.e.InternalName}> {item.e.InternalNamePlural} {{ get; set; }}");
+                navigationProperties.Add($"        public ICollection<{item.e.InternalName}> {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
             }
 
             return $@"using System; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
