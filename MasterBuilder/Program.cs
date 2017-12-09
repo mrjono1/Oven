@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using MasterBuilder.Templates;
 using MasterBuilder.Templates.Controllers;
 using MasterBuilder.Templates.Entities;
@@ -87,15 +87,18 @@ namespace MasterBuilder
                     FileHelper.WriteAllText(Path.Combine(solutionDirectory, SolutionTemplate.FileName(project)), SolutionTemplate.Evaluate(project)),
 
                     // Create Project Files
+                    FileHelper.WriteAllText(Path.Combine(projectDirectory, AngularCliJsonTemplate.FileName()), AngularCliJsonTemplate.Evaluate(project)),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, ProjectTemplate.FileName(project)), ProjectTemplate.Evaluate(project)),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, StartupTemplate.FileName()), StartupTemplate.Evaluate(project)),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, GitIgnoreTemplate.FileName()), GitIgnoreTemplate.Evaluate()),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, ProgramTemplate.FileName()), ProgramTemplate.Evaluate(project)),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, AppSettingsTemplate.FileName()), AppSettingsTemplate.Evaluate(project)),
+                    FileHelper.WriteAllText(Path.Combine(projectDirectory, TypeScriptLintTemplate.FileName()), TypeScriptLintTemplate.Evaluate()),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, TypeScriptConfigTemplate.FileName()), TypeScriptConfigTemplate.Evaluate()),
+                    FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackAdditionsTemplate.FileName()), WebPackAdditionsTemplate.Evaluate()),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackConfigTemplate.FileName()), WebPackConfigTemplate.Evaluate()),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackConfigVendorTemplate.FileName()), WebPackConfigVendorTemplate.Evaluate()),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, PackageJsonTemplate.FileName()), PackageJsonTemplate.Evaluate(project)),
+                    FileHelper.WriteAllText(Path.Combine(projectDirectory, WebConfigTemplate.FileName()), WebConfigTemplate.Evaluate(project)),
 
                     // Generic Views & Controllers
                     //FileHelper.WriteAllText(HomeControllerTemplate.FileName(controllersPath), HomeControllerTemplate.Evaluate(project)),

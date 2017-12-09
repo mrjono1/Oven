@@ -10,20 +10,26 @@
         {
             return @"{
   ""compilerOptions"": {
-    ""module"": ""es2015"",
     ""moduleResolution"": ""node"",
+    ""module"": ""es2015"",
     ""target"": ""es5"",
+    ""alwaysStrict"": true,
+    ""noImplicitAny"": false,
     ""sourceMap"": true,
     ""experimentalDecorators"": true,
     ""emitDecoratorMetadata"": true,
     ""skipDefaultLibCheck"": true,
-    ""skipLibCheck"": true, // Workaround for https://github.com/angular/angular/issues/17863. Remove this if you upgrade to a fixed version of Angular.
-    ""strict"": true,
-    ""lib"": [ ""es6"", ""dom"" ],
-    ""types"": [ ""webpack-env"" ]
-    },
-  ""exclude"": [ ""bin"", ""node_modules"" ],
-  ""atom"": { ""rewriteTsconfig"": false }
+    ""skipLibCheck"": true,
+    ""allowUnreachableCode"": false,
+    ""lib"": [
+      ""es2016"",
+      ""dom""
+    ],
+    ""types"": [ ""node"" ]
+  },
+  ""include"": [
+    ""ClientApp""
+  ]
 }";
         }
     }

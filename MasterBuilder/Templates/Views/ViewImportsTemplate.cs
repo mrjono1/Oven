@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +16,6 @@ namespace MasterBuilder.Templates.Views
         public static string Evaluate(Project project)
         {
             return $@"@using {project.InternalName}
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, Microsoft.AspNetCore.SpaServices";
         }
     }

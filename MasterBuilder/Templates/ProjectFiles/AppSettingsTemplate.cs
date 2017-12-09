@@ -5,6 +5,9 @@ using System.Text;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
+    /// <summary>
+    /// appsettings.json configuration
+    /// </summary>
     public class AppSettingsTemplate
     {
         public static string FileName()
@@ -19,17 +22,12 @@ namespace MasterBuilder.Templates.ProjectFiles
   }},
   ""Logging"": {{
     ""IncludeScopes"": false,
-    ""Debug"": {{
-                ""LogLevel"": {{
-                    ""Default"": ""Warning""
-                }}
-            }},
-    ""Console"": {{
-            ""LogLevel"": {{
-                ""Default"": ""Warning""
-            }}
-        }}
+    ""LogLevel"": {{
+      ""Default"": ""Debug"",
+      ""System"": ""Information"",
+      ""Microsoft"": ""Information""
     }}
+  }}
 }}";
         }
     }

@@ -58,6 +58,11 @@ namespace {project.InternalName}.Entities
 {configurations}
         }}
 
+        public void Initialize()
+        {{
+            MigrateDatabase();
+        }}
+
         internal void MigrateDatabase()
         {{
             if (Database.EnsureCreated())

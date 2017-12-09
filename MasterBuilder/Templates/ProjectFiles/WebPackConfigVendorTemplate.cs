@@ -26,19 +26,22 @@ const treeShakableModules = [
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
     '@angular/router',
+    'ngx-bootstrap',
     'zone.js',
 ];
 const nonTreeShakableModules = [
-    'bootstrap',
-    'bootstrap/dist/css/bootstrap.css',
-    'es6-promise',
-    'es6-shim',
+    // 'bootstrap',
+    // 'bootstrap/dist/css/bootstrap.css',
+    'core-js',
+    // 'es6-promise',
+    // 'es6-shim',
     'event-source-polyfill',
-    'jquery',
+    // 'jquery',
 ];
 const allModules = treeShakableModules.concat(nonTreeShakableModules);
 
 module.exports = (env) => {
+  console.log(`env = ${JSON.stringify(env)}`)
     const extractCSS = new ExtractTextPlugin('vendor.css');
     const isDevBuild = !(env && env.prod);
     const sharedConfig = {
@@ -55,9 +58,9 @@ module.exports = (env) => {
             library: '[name]_[hash]'
         },
         plugins: [
-            new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }), // Maps these identifiers to the jQuery package (because Bootstrap expects it to be a global variable)
+            // new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }), // Maps these identifiers to the jQuery package (because Bootstrap expects it to be a global variable)
             new webpack.ContextReplacementPlugin(/\@angular\b.*\b(bundles|linker)/, path.join(__dirname, './ClientApp')), // Workaround for https://github.com/angular/angular/issues/11580
-            new webpack.ContextReplacementPlugin(/angular(\\|\/)core(\\|\/)@angular/, path.join(__dirname, './ClientApp')), // Workaround for https://github.com/angular/angular/issues/14898
+            new webpack.ContextReplacementPlugin(/(.+)?angular(\\|\/)core(.+)?/, path.join(__dirname, './ClientApp')), // Workaround for https://github.com/angular/angular/issues/14898
             new webpack.IgnorePlugin(/^vertx$/) // Workaround for https://github.com/stefanpenner/es6-promise/issues/100
         ]
     };
@@ -101,12 +104,13 @@ module.exports = (env) => {
                 path: path.join(__dirname, 'ClientApp', 'dist', '[name]-manifest.json'),
                 name: '[name]_[hash]'
             })
-        ]
+        ].concat(isDevBuild ? [] : [
+          new webpack.optimize.UglifyJsPlugin()
+      ])
     });
 
     return [clientBundleConfig, serverBundleConfig];
-}
-";
+}";
         }
     }
 }
