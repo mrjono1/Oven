@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,20 +51,51 @@ namespace MasterBuilder.Templates.Controllers
                 }
             }
 
+            // TODO: Build site map
             if (screen != null)
             {
                 if (screen.TemplateId.HasValue && screen.TemplateId.Value == new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"))
                 {
-                    methods.Add(@"        public IActionResult Index()
-        {
-            return View();
-        }
+                    methods.Add($@"        [HttpGet]
+    public async Task<IActionResult> Index()
+    {{
+      var prerenderResult = await Request.BuildPrerender();
 
-        public IActionResult Error()
-        {
-            ViewData[""RequestId""] = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
-            return View();
-        }");
+      ViewData[""SpaHtml""] = prerenderResult.Html; // our <app-root /> from Angular
+      ViewData[""Title""] = prerenderResult.Globals[""title""]; // set our <title> from Angular
+      ViewData[""Styles""] = prerenderResult.Globals[""styles""]; // put styles in the correct place
+      ViewData[""Scripts""] = prerenderResult.Globals[""scripts""]; // scripts (that were in our header)
+      ViewData[""Meta""] = prerenderResult.Globals[""meta""]; // set our <meta> SEO tags
+      ViewData[""Links""] = prerenderResult.Globals[""links""]; // set our <link rel=""canonical""> etc SEO tags
+      ViewData[""TransferData""] = prerenderResult.Globals[""transferData""]; // our transfer data set to window.TRANSFER_CACHE = {{}};
+
+      return View();
+    }}
+
+    [HttpGet]
+    [Route(""sitemap.xml"")]
+    public IActionResult SitemapXml()
+    {{
+      var xml = $@""<?xml version=\""1.0\"" encoding=\""utf-8\""?>
+<sitemapindex xmlns=\""http://www.sitemaps.org/schemas/sitemap/0.9\"">
+    <sitemap>
+        <loc>http://localhost:4251/home</loc>
+        <lastmod>{{DateTime.Now.ToString(""yyyy-MM-dd"")}}</lastmod>
+    </sitemap>
+    <sitemap>
+        <loc>http://localhost:4251/counter</loc>
+        <lastmod>{{DateTime.Now.ToString(""yyyy-MM-dd"")}}</lastmod>
+    </sitemap>
+</sitemapindex>"";
+
+      return Content(xml, ""text/xml"");
+
+    }}
+
+    public IActionResult Error()
+    {{
+      return View();
+    }}");
                     classAttributes = null;
                 }
 

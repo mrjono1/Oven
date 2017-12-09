@@ -66,6 +66,7 @@ namespace MasterBuilder
             var clientAppPath = FileHelper.CreateFolder(projectDirectory, "ClientApp");
             var controllersPath = FileHelper.CreateFolder(projectDirectory, "Controllers");
             var entitiesPath = FileHelper.CreateFolder(projectDirectory, "Entities");
+            var extensionsPath = FileHelper.CreateFolder(projectDirectory, "Extensions");
             var entityTypeConfigsPath = FileHelper.CreateFolder(projectDirectory, "EntityTypeConfigurations");
             var modelsPath = FileHelper.CreateFolder(projectDirectory, "Models");
             var nodeModulesPath = FileHelper.CreateFolder(projectDirectory, "node_modules");
@@ -74,6 +75,8 @@ namespace MasterBuilder
             var viewsPath = FileHelper.CreateFolder(projectDirectory, "Views");
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
             var distPath = FileHelper.CreateFolder(wwwrootPath, "dist");
+
+            var fileHelper = new FileHelper(projectDirectory);
 
             if (fullBuild)
             {
@@ -106,8 +109,12 @@ namespace MasterBuilder
                     FileHelper.WriteAllText(ViewStartTemplate.FileName(viewsPath), ViewStartTemplate.Evaluate()),
                     FileHelper.WriteAllText(Templates.Views.Home.IndexTemplate.FileName(viewsPath), Templates.Views.Home.IndexTemplate.Evaluate(project)),
                     FileHelper.WriteAllText(Templates.Views.Shared.ErrorTemplate.FileName(viewsPath), Templates.Views.Shared.ErrorTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Templates.Views.Shared.LayoutTemplate.FileName(viewsPath), Templates.Views.Shared.LayoutTemplate.Evaluate(project))
+                    FileHelper.WriteAllText(Templates.Views.Shared.LayoutTemplate.FileName(viewsPath), Templates.Views.Shared.LayoutTemplate.Evaluate(project)),
+
+
+                    FileHelper.WriteTemplate(new Templates.CoreModels.IRequestTemplate(project))
                 });
+
             }
 
             if (project.Entities != null)

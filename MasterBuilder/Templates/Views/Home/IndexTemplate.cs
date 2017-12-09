@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,17 +15,13 @@ namespace MasterBuilder.Templates.Views.Home
 
         public static string Evaluate(Project project)
         {
-            return $@"@{{
-    ViewData[""Title""] = ""{project.Title}"";
-}}
-
-<app asp-prerender-module=""ClientApp/dist/main-server"">Loading...</app>
+            return $@"@Html.Raw(ViewData[""SpaHtml""])
 
 <script src=""~/dist/vendor.js"" asp-append-version=""true""></script>
 @section scripts {{
+    <!-- Our webpack bundle -->
     <script src=""~/dist/main-client.js"" asp-append-version=""true""></script>
-}}
-";
+}}";
         }
     }
 }

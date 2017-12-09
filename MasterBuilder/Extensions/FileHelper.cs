@@ -1,8 +1,10 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using MasterBuilder.Templates.CoreModels;
+using MasterBuilder.Helpers;
 
 namespace MasterBuilder
 {
@@ -107,6 +109,22 @@ namespace MasterBuilder
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        internal static Task WriteTemplate(string baseDirectory, ITemplate template)
+        {
+            var path = Path.Combine(baseDirectory, template.GetFilePath(), template.GetFileName());
+            string content = null;
+            try
+            {
+                content = template.GetFileContent();
+            }
+            catch (Exception ex)
+            {
+                content = ex.ToString();
+                Console.WriteLine(ex.ToString());
+            }
+            return WriteAllText(path, content);
         }
     }
 }
