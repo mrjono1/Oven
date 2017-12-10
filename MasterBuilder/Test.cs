@@ -81,7 +81,8 @@ namespace MasterBuilder
                                     ValidationType = ValidationTypeEnum.MaximumLength,
                                     IntegerValue = 200
                                 },
-                                new Validation{
+                                new Validation
+                                {
                                     Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
                                     ValidationType = ValidationTypeEnum.Required
                                 },
@@ -364,33 +365,37 @@ namespace MasterBuilder
                                     ValidationType = ValidationTypeEnum.Required
                                 },
                             }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{9D06A6AF-6050-41F8-B880-C1AFE9D46909}"),
-                            InternalName = "DefaultMessage",
-                            Type = PropertyTypeEnum.String,
-                            Title = "Default Message",
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation
-                                {
-                                    Id = new Guid("{374D43AF-4A41-4D21-BBE1-C5E6CB00DF5F}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
-                                    IntegerValue = 200
-                                },
-                                new Validation{
-                                    Id = new Guid("{EED8D5BB-857C-48E3-ABFC-9F09545FD165}"),
-                                    ValidationType = ValidationTypeEnum.Required
-                                },
-                            }
                         }
                     },
                     SeedData = JsonConvert.SerializeObject(new []
                     {
                         new {
-                            Id = new Guid("{C4F83A9E-0478-47F3-8789-2269ADF50573}"),
-
+                            Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
+                            Title = "Email"
+                        },
+                        new {
+                            Id = new Guid("{F7788E3D-7753-4491-98B1-AE78E16CDD0E}"),
+                            Title = "Maximum Length"
+                        },
+                        new {
+                            Id = new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"),
+                            Title = "Maximum Value"
+                        },
+                        new {
+                            Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
+                            Title = "Email"
+                        },
+                        new {
+                            Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
+                            Title = "Email"
+                        },
+                        new {
+                            Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
+                            Title = "Email"
+                        },
+                        new {
+                            Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
+                            Title = "Email"
                         }
                     })
                 },

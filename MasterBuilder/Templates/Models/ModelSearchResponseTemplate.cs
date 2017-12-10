@@ -31,8 +31,7 @@ namespace MasterBuilder.Templates.Models
                 itemClassName = $"{screen.InternalName}{screenSection.InternalName}Item";
             }
 
-            return $@"
-using System;
+            return $@"using System;
 
 namespace {project.InternalName}.Models
 {{
@@ -47,7 +46,5 @@ namespace {project.InternalName}.Models
     }}
 }}";
         }
-
-
     }
 }

@@ -26,8 +26,7 @@ namespace MasterBuilder.Templates.Models
                 }
             }
 
-            return $@"
-using System;
+            return $@"using System;
 
 namespace {project.InternalName}.Models
 {{
