@@ -67,7 +67,6 @@ import {{ TranslateHttpLoader }} from '@ngx-translate/http-loader';
 {string.Join(Environment.NewLine, declarations.Values)}
 
 import {{ LinkService }} from './shared/link.service';
-import {{ UserService }} from './shared/user.service';
 import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine';
 
 export function createTranslateLoader(http: HttpClient, baseHref) {{

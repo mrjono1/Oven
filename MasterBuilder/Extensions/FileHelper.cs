@@ -131,6 +131,10 @@ namespace MasterBuilder
                 content = ex.ToString();
                 Console.WriteLine(ex.ToString());
             }
+            if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
             return WriteAllText(path, content);
         }
     }
