@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.Entities
@@ -28,20 +29,36 @@ namespace MasterBuilder.Templates.Entities
                 }
             }
 
-            return $@"
-using Microsoft.EntityFrameworkCore;
+            var seed = new List<string>();
+            foreach (var entity in project.Entities.Where(e => e.SeedData != null && e.SeedData != ""))
+            {
+                var content = Newtonsoft.Json.JsonConvert.SerializeObject(entity.SeedData);
+                seed.Add($@"if (!{entity.InternalNamePlural}.Any())
+                {{
+                    //var content = await File.ReadAllTextAsync(""{entity.InternalNamePlural.ToCamlCase()}.json"");
+                    var content = {content};
+                    var items = JsonConvert.DeserializeObject<List<{entity.InternalName}>>(content);
+                    await {entity.InternalNamePlural}.AddRangeAsync(items);
+                    await SaveChangesAsync();
+                }}");
+            }
+            
+
+            return $@"using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using {project.InternalName}.EntityTypeConfigurations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design.Internal;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
 using Microsoft.EntityFrameworkCore.Storage;
-using System.Linq;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using {project.InternalName}.EntityTypeConfigurations;
+using Newtonsoft.Json;
 
 namespace {project.InternalName}.Entities
 {{
@@ -113,6 +130,13 @@ namespace {project.InternalName}.Entities
             var commands = sqlGenerator.Generate(operations, currentModel);
             var executor = this.GetService<IMigrationCommandExecutor>();
             executor.ExecuteNonQuery(commands, this.GetService<IRelationalConnection>());
+
+            Seed();
+        }}
+
+        internal async Task Seed()
+        {{
+{string.Join(Environment.NewLine, seed)}
         }}
     }}
 }}";

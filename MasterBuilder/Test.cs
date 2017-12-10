@@ -382,20 +382,28 @@ namespace MasterBuilder
                             Title = "Maximum Value"
                         },
                         new {
-                            Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
-                            Title = "Email"
+                            Id = new Guid("{35D78EB6-F5DE-4E7B-AE79-B69A1D3DC7C9}"),
+                            Title = "Minimum Length"
                         },
                         new {
-                            Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
-                            Title = "Email"
+                            Id = new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}"),
+                            Title = "Minimum Value"
                         },
                         new {
-                            Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
-                            Title = "Email"
+                            Id = new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}"),
+                            Title = "Pattern"
                         },
                         new {
-                            Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
-                            Title = "Email"
+                            Id = new Guid("{BD110234-F05D-42AB-BF2E-382B83093D0C}"),
+                            Title = "Required"
+                        },
+                        new {
+                            Id = new Guid("{CB9A60D3-42B3-411F-8FCE-2FC36C812A16}"),
+                            Title = "Required True"
+                        },
+                        new {
+                            Id = new Guid("{890C7A9E-09AE-4BB8-970E-85C564F753F1}"),
+                            Title = "Unique"
                         }
                     })
                 },
