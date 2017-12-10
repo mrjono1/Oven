@@ -141,7 +141,7 @@ namespace MasterBuilder
                 });
 
             }
-
+            
             if (project.Entities != null)
             {
                 foreach (var item in project.Entities)
@@ -156,35 +156,38 @@ namespace MasterBuilder
                     });
                     if (project.Screens != null)
                     {
-                        foreach (var screen in project.Screens.Where(p => p.EntityId.HasValue && p.EntityId.Value == item.Id))
+                        foreach (var screen in project.Screens)
                         {
-                            foreach (var screenSection in screen.ScreenSections)
+                            if (screen.EntityId.HasValue && screen.EntityId.Value == item.Id)
                             {
-                                switch (screenSection.ScreenSectionType)
+                                foreach (var screenSection in screen.ScreenSections)
                                 {
-                                    case ScreenSectionTypeEnum.Form:
-                                        filesToWrite.AddRange(
-                                            new Task[] {
+                                    switch (screenSection.ScreenSectionType)
+                                    {
+                                        case ScreenSectionTypeEnum.Form:
+                                            filesToWrite.AddRange(
+                                                new Task[] {
                                             // Server Side
                                             FileHelper.WriteAllText(ModelEditResponseTemplate.FileName(modelsPath, item, screen, screenSection), ModelEditResponseTemplate.Evaluate(project, item, screen, screenSection)),
                                             FileHelper.WriteAllText(ModelEditRequestTemplate.FileName(modelsPath, item, screen, screenSection), ModelEditRequestTemplate.Evaluate(project, item, screen, screenSection))
-                                            });
-                                        break;
-                                    case ScreenSectionTypeEnum.Search:
-                                        filesToWrite.AddRange(
-                                            new Task[] {
+                                                });
+                                            break;
+                                        case ScreenSectionTypeEnum.Search:
+                                            filesToWrite.AddRange(
+                                                new Task[] {
                                             // Server Side
                                             FileHelper.WriteAllText(ModelSearchRequestTemplate.FileName(modelsPath, item, screen, screenSection), ModelSearchRequestTemplate.Evaluate(project, item, screen, screenSection)),
                                             FileHelper.WriteAllText(ModelSearchResponseTemplate.FileName(modelsPath, item, screen, screenSection), ModelSearchResponseTemplate.Evaluate(project, item, screen, screenSection)),
                                             FileHelper.WriteAllText(ModelSearchItemTemplate.FileName(modelsPath, item, screen, screenSection), ModelSearchItemTemplate.Evaluate(project, item, screen, screenSection))
-                                            });
-                                        break;
-                                    case ScreenSectionTypeEnum.Grid:
-                                        break;
-                                    case ScreenSectionTypeEnum.Html:
-                                        break;
-                                    default:
-                                        break;
+                                                });
+                                            break;
+                                        case ScreenSectionTypeEnum.Grid:
+                                            break;
+                                        case ScreenSectionTypeEnum.Html:
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
                             }
 
@@ -219,9 +222,18 @@ namespace MasterBuilder
                     }
                 }
 
-                foreach (var screen in project.Screens)
-                {
-                }
+                // TODO: seperate models
+                //foreach (var screen in project.Screens)
+                //{
+                //    if (screen.ScreenSections == null)
+                //    {
+                //        continue;
+                //    }
+                //    foreach (var screenSection in screen.ScreenSections)
+                //    {
+                //        filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.Models.ModelTemplate(project, screen, screenSection)));
+                //    }
+                //}
             }
 
             // Client App
@@ -297,6 +309,7 @@ li.link-active a:focus {
             );
 
             await Task.WhenAll(filesToWrite.ToArray());
+            Console.Read();
         }
     }
 }

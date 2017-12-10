@@ -1,28 +1,41 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
-    public class ProjectTemplate
+    public class ProjectTemplate: ITemplate
     {
-        public static string FileName(Project project)
+        private readonly Project Project;
+
+        public ProjectTemplate(Project project)
         {
-            return $"{project.InternalName}.csproj";
+            Project = project;
         }
-        public static string Evaluate(Project project)
+
+        public string GetFileName()
+        {
+            return $"{Project.InternalName}.csproj";
+        }
+
+        public string[] GetFilePath()
+        {
+            return new string[0];
+        }
+
+        public string GetFileContent()
         {
             string solutionGuid = Guid.NewGuid().ToString();
 
             StringBuilder packageReferences = new StringBuilder();
-            foreach (var item in project.DefaultNugetReferences)
+            foreach (var item in Project.DefaultNugetReferences)
             {
                 packageReferences.AppendLine($@"<PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
             }
 
             return $@"<Project Sdk=""Microsoft.NET.Sdk.Web"">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
@@ -35,10 +48,12 @@ namespace MasterBuilder.Templates.ProjectFiles
   </ItemGroup>
 
   <ItemGroup>
-    <DotNetCliToolReference Include=""Microsoft.VisualStudio.Web.CodeGeneration.Tools"" Version=""2.0.0"" />
-  </ItemGroup>
+    <!-- Files not to show in IDE -->
+    <None Remove=""yarn.lock"" />
+    <Content Remove=""wwwroot\dist\**"" />
+    <None Remove=""ClientApp\dist\**"" />
+    <Content Remove=""coverage\**"" />
 
-  <ItemGroup>
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
     <Content Remove=""ClientApp\**"" />
   </ItemGroup>
@@ -53,11 +68,11 @@ namespace MasterBuilder.Templates.ProjectFiles
     <!-- In development, the dist files won't exist on the first run or when cloning to
          a different machine, so rebuild them if not already present. -->
     <Message Importance=""high"" Text=""Performing first-run Webpack build..."" />
+    <Exec Command=""npm install"" />
     <Exec Command=""node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js"" />
     <Exec Command=""node node_modules/webpack/bin/webpack.js"" />
   </Target>
-
-  <Target Name=""PublishRunWebpack"" AfterTargets=""ComputeFilesToPublish"">
+  <Target Name=""RunWebpack"" AfterTargets=""ComputeFilesToPublish"">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec Command=""npm install"" />
     <Exec Command=""node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod"" />
@@ -72,7 +87,13 @@ namespace MasterBuilder.Templates.ProjectFiles
       </ResolvedFileToPublish>
     </ItemGroup>
   </Target>
-
+  <Target Name=""CleanDist"" AfterTargets=""Clean"">
+    <ItemGroup>
+      <FilesToDelete Include=""ClientApp\dist\**; wwwroot\dist\**"" />
+    </ItemGroup>
+    <Delete Files=""@(FilesToDelete)"" />
+    <RemoveDir Directories=""ClientApp\dist; wwwroot\dist"" />
+  </Target>
 </Project>";
         }
     }
