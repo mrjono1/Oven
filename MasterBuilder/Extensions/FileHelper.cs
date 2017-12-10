@@ -5,14 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using MasterBuilder.Templates.CoreModels;
 using MasterBuilder.Helpers;
+using System.Collections.Generic;
 
 namespace MasterBuilder
 {
     public class FileHelper
     {
-        public static string CreateFolder(string basePath, string folder)
+        public static string CreateFolder(string basePath, params string[] folder)
         {
-            var path = Path.Combine(basePath, folder);
+            var paths = new List<string>
+            {
+                basePath
+            };
+            paths.AddRange(folder);
+            var path = Path.Combine(paths.ToArray());
             if (!System.IO.Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -113,7 +119,8 @@ namespace MasterBuilder
 
         internal static Task WriteTemplate(string baseDirectory, ITemplate template)
         {
-            var path = Path.Combine(baseDirectory, template.GetFilePath(), template.GetFileName());
+            var path = Path.Combine(CreateFolder(baseDirectory, template.GetFilePath()), template.GetFileName());
+
             string content = null;
             try
             {

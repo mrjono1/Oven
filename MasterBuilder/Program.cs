@@ -41,7 +41,7 @@ namespace MasterBuilder
         public async Task Run(string outputDirectory) {
             var project = new Test().Project;
 
-            var fullBuild = false;
+            var fullBuild = true;
 
             // Validate & Pre Process Project
             if (!project.Validate(out string messages))
@@ -75,9 +75,7 @@ namespace MasterBuilder
             var viewsPath = FileHelper.CreateFolder(projectDirectory, "Views");
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
             var distPath = FileHelper.CreateFolder(wwwrootPath, "dist");
-
-            var fileHelper = new FileHelper(projectDirectory);
-
+            
             if (fullBuild)
             {
                 // Artifacts
@@ -111,8 +109,32 @@ namespace MasterBuilder
                     FileHelper.WriteAllText(Templates.Views.Shared.ErrorTemplate.FileName(viewsPath), Templates.Views.Shared.ErrorTemplate.Evaluate(project)),
                     FileHelper.WriteAllText(Templates.Views.Shared.LayoutTemplate.FileName(viewsPath), Templates.Views.Shared.LayoutTemplate.Evaluate(project)),
 
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.Extensions.HttpRequestExtensionsTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.CoreModels.IRequestTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.CoreModels.TransferDataTemplate(project)),
 
-                    FileHelper.WriteTemplate(new Templates.CoreModels.IRequestTemplate(project))
+                    // Client App
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.BootBrowserTsTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.BootServerTsTemplate()),
+
+                    // ClientApp/Test
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.Test.BootTestTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.Test.KarmaConfigTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.Test.WebpackConfigTest()),
+
+                    // ClientApp/Polyfills
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.Polyfills.BrowserPolyfillsTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.Polyfills.PolyfillsTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.Polyfills.RxImportsTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.Polyfills.ServerPolyfillsTemplate()),
+
+                    // ClientApp/App
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppComponentHtmlTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppComponentScssTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppComponentTsTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleBrowserTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleServerTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleTemplate(project))
                 });
 
             }
@@ -268,17 +290,6 @@ li.link-active a:focus {
     }
 }"),
                     #endregion
-
-                    // app
-                    FileHelper.WriteAllText(Templates.ClientApp.app.components.app.AppComponentTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.app.AppComponentTsTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Templates.ClientApp.app.components.app.AppComponentHtmlTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.app.AppComponentHtmlTemplate.Evaluate(project)),
-                    
-                    // shared
-                    FileHelper.WriteAllText(Templates.ClientApp.app.AppModuleSharedTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.AppModuleSharedTsTemplate.Evaluate(project)),
-
-                    // Client App
-                    FileHelper.WriteAllText(Templates.ClientApp.BootBrowserTsTemplate.FileName(clientAppPath), Templates.ClientApp.BootBrowserTsTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Templates.ClientApp.BootServerTsTemplate.FileName(clientAppPath), Templates.ClientApp.BootServerTsTemplate.Evaluate(project))
                 }
             );
 

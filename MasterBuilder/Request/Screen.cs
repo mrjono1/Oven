@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +10,7 @@ namespace MasterBuilder.Request
         public string InternalName { get; set; }
         public string ControllerCode { get; set; }
         public string Title { get; set; }
+        public string MetaDescription { get; set; }
         public Guid Id { get; set; }
         public Guid? EntityId { get; set; }
         public Guid ScreenTypeId { get; set; }

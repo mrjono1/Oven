@@ -1,3 +1,4 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
@@ -5,15 +6,28 @@ using System.Text;
 
 namespace MasterBuilder.Templates.Extensions
 {
-    public class HttpRequestExtensionsTemplate
+    public class HttpRequestExtensionsTemplate: ITemplate
     {
-        public static string FileName()
+        private readonly Project Project;
+
+        public HttpRequestExtensionsTemplate(Project project)
+        {
+            Project = project;
+        }
+
+        public string GetFileName()
         {
             return "HttpRequestExtensions.cs";
         }
-        public static string Evaluate(Project project)
+
+        public string[] GetFilePath()
         {
-            return $@"using {project.InternalName}.Models;
+            return new[] { "Extensions" };
+        }
+
+        public string GetFileContent()
+        {
+            return $@"using {Project.InternalName}.CoreModels;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -22,7 +36,7 @@ using Microsoft.AspNetCore.SpaServices.Prerendering;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
-namespace {project.InternalName}.Extensions
+namespace {Project.InternalName}.Extensions
 {{
   public static class HttpRequestExtensions
   {{
@@ -79,5 +93,6 @@ namespace {project.InternalName}.Extensions
   }}
 }}";
         }
+
     }
 }

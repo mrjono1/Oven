@@ -16,7 +16,7 @@ namespace MasterBuilder.Helpers
         /// <summary>
         /// Get the template file path
         /// </summary>
-        string GetFilePath();
+        string[] GetFilePath();
         /// <summary>
         /// Get the template content
         /// </summary>

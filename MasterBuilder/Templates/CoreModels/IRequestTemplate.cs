@@ -20,21 +20,21 @@ namespace MasterBuilder.Templates.CoreModels
             return "IRequest.cs";
         }
 
-        public string GetFilePath()
+        public string[] GetFilePath()
         {
-            return "Models";
+            return new[] { "CoreModels" };
         }
 
         public string GetFileContent()
         {
             return $@"namespace {Project.InternalName}.CoreModels
 {{
-  public class IRequest
-  {{
-    public object cookies {{ get; set; }}
-    public object headers {{ get; set; }}
-    public object host {{ get; set; }}
-  }}
+    public class IRequest
+    {{
+        public object cookies {{ get; set; }}
+        public object headers {{ get; set; }}
+        public object host {{ get; set; }}
+    }}
 }}";
         }
     }

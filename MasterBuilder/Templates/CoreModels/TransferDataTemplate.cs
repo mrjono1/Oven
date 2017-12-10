@@ -20,22 +20,22 @@ namespace MasterBuilder.Templates.CoreModels
             return "TransferData.cs";
         }
 
-        public string GetFilePath()
+        public string[] GetFilePath()
         {
-            return "CoreModels";
+            return new[] { "CoreModels" };
         }
 
         public string GetFileContent()
         {
             return $@"namespace {Project.InternalName}.CoreModels
 {{
-  public class TransferData
-  {{
-    public dynamic request {{ get; set; }}
-
-    // Your data here ?
-    public object thisCameFromDotNET {{ get; set; }}
-  }}
+    public class TransferData
+    {{
+        public dynamic request {{ get; set; }}
+      
+        // Your data here ?
+        public object thisCameFromDotNET {{ get; set; }}
+    }}
 }}";
         }
     }

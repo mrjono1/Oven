@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.Controllers
 {
@@ -59,25 +58,25 @@ namespace MasterBuilder.Templates.Controllers
                     methods.Add($@"        [HttpGet]
     public async Task<IActionResult> Index()
     {{
-      var prerenderResult = await Request.BuildPrerender();
+        var prerenderResult = await Request.BuildPrerender();
 
-      ViewData[""SpaHtml""] = prerenderResult.Html; // our <app-root /> from Angular
-      ViewData[""Title""] = prerenderResult.Globals[""title""]; // set our <title> from Angular
-      ViewData[""Styles""] = prerenderResult.Globals[""styles""]; // put styles in the correct place
-      ViewData[""Scripts""] = prerenderResult.Globals[""scripts""]; // scripts (that were in our header)
-      ViewData[""Meta""] = prerenderResult.Globals[""meta""]; // set our <meta> SEO tags
-      ViewData[""Links""] = prerenderResult.Globals[""links""]; // set our <link rel=""canonical""> etc SEO tags
-      ViewData[""TransferData""] = prerenderResult.Globals[""transferData""]; // our transfer data set to window.TRANSFER_CACHE = {{}};
-
-      return View();
+        ViewData[""SpaHtml""] = prerenderResult.Html; // our <app-root /> from Angular
+        ViewData[""Styles""] = prerenderResult.Globals[""styles""]; // put styles in the correct place
+        ViewData[""Scripts""] = prerenderResult.Globals[""scripts""]; // scripts (that were in our header)
+        ViewData[""Meta""] = prerenderResult.Globals[""meta""]; // set our <meta> SEO tags
+        ViewData[""Links""] = prerenderResult.Globals[""links""]; // set our <link rel=""canonical""> etc SEO tags
+        ViewData[""TransferData""] = prerenderResult.Globals[""transferData""]; // our transfer data set to window.TRANSFER_CACHE = {{}};
+        ViewData[""Title""] = prerenderResult.Globals[""title""]; // set our <title> from Angular
+        
+        return View();
     }}
 
     [HttpGet]
     [Route(""sitemap.xml"")]
     public IActionResult SitemapXml()
     {{
-      var xml = $@""<?xml version=\""1.0\"" encoding=\""utf-8\""?>
-<sitemapindex xmlns=\""http://www.sitemaps.org/schemas/sitemap/0.9\"">
+        var xml = $@""<?xml version=\""""1.0\"""" encoding=\""""utf-8\""""?>
+<sitemapindex xmlns=\""""http://www.sitemaps.org/schemas/sitemap/0.9\"""">
     <sitemap>
         <loc>http://localhost:4251/home</loc>
         <lastmod>{{DateTime.Now.ToString(""yyyy-MM-dd"")}}</lastmod>
@@ -88,14 +87,16 @@ namespace MasterBuilder.Templates.Controllers
     </sitemap>
 </sitemapindex>"";
 
-      return Content(xml, ""text/xml"");
+        return Content(xml, ""text/xml"");
 
     }}
 
     public IActionResult Error()
     {{
-      return View();
+        return View();
     }}");
+                    usings.Add($"using {project.InternalName}.CoreModels;");
+                    usings.Add($"using {project.InternalName}.Extensions;");
                     classAttributes = null;
                 }
 
