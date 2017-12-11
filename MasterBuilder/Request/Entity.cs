@@ -50,9 +50,9 @@ namespace MasterBuilder.Request
         }
         
         /// <summary>
-        /// JSON Array of JSON objects that represent seed data for this entity
+        /// Optional: Contains seed data and settings
         /// </summary>
-        public string SeedData { get; set; }
+        public Seed Seed { get; set; }
 
         /// <summary>
         /// Validate this object and reslove any issues if possible
