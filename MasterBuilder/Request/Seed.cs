@@ -30,7 +30,7 @@ namespace MasterBuilder.Request
         public Guid SeedTypeId { get; set; }
 
         /// <summary>
-        /// Seed Type Enum
+        /// Seed Type
         /// </summary>
         internal SeedTypeEnum SeedType
         {

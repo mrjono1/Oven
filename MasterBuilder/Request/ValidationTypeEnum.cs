@@ -3,7 +3,7 @@
     /// <summary>
     /// Validation Types
     /// </summary>
-    public enum ValidationTypeEnum
+    internal enum ValidationTypeEnum
     {
         /// <summary>
         /// Required

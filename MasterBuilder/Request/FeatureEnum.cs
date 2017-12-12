@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MasterBuilder.Request
+﻿namespace MasterBuilder.Request
 {
-    public enum FeatureEnum
+    /// <summary>
+    /// Feature Enum
+    /// </summary>
+    internal enum FeatureEnum
     {
+        /// <summary>
+        /// Undefined
+        /// </summary>
         Undefined,
+        /// <summary>
+        /// New
+        /// </summary>
         New
     }
 }

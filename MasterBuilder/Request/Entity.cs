@@ -1,7 +1,9 @@
 ﻿using Humanizer;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MasterBuilder.Request
 {
@@ -57,16 +59,54 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Validate this object and reslove any issues if possible
         /// </summary>
-        /// <param name="messages">Issue messages</param>
+        /// <param name="message">Issue messages</param>
         /// <returns>'true' for success or 'false' for failing to validate</returns>
-        internal bool Validate(out string messages)
+        internal bool Validate(out string message)
         {
-            // TODO:
-            // must have Id Entity
-            // Internal Name must be valid
+            var messageList = new List<string>();
+
             // Id must not be empty
-            messages = "Success";
-            return true;
+            if (Id == Guid.Empty)
+            {
+                messageList.Add("Entity must have an Id");
+            }
+            
+            // Title
+            if (string.IsNullOrWhiteSpace(Title))
+            {
+                messageList.Add("Entity must have a title");
+            }
+
+            // Internal Name must be valid
+            if (!Regex.IsMatch(InternalName, @"^[a-zA-Z]+$"))
+            {
+                messageList.Add("Entity Internal Name must only contain letters");
+            }
+            // Ensure Internal Name is standard caseing
+            InternalName = InternalName.Pascalize();
+
+            // TODO: move validation to model validation
+
+            if (Properties != null)
+            {
+                foreach (var property in Properties)
+                {
+                    if (!property.Validate(out string propertyMessage)) {
+                        messageList.Add(propertyMessage);
+                    }
+                }
+            }
+
+            if (messageList.Any())
+            {
+                message = string.Join(", ", messageList);
+                return false;
+            }
+            else
+            {
+                message = "Success";
+                return true;
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ namespace MasterBuilder
             {
                 Id = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}"),
                 InternalName = "TestReference",
-                Version = "0.0.1",
+                BuildVersion = 1,
                 Title = "Test Reference",
                 DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MasterBuilder;Integrated Security=True",
                 ImutableDatabase = false,
