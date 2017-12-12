@@ -6,10 +6,6 @@
     internal enum FeatureEnum
     {
         /// <summary>
-        /// Undefined
-        /// </summary>
-        Undefined,
-        /// <summary>
         /// New
         /// </summary>
         New

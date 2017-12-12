@@ -329,90 +329,6 @@ namespace MasterBuilder
                 },
                 new Entity()
                 {
-                    Id = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
-                    InternalName = "ValidationType",
-                    Title = "Validation Type",
-                    Properties = new Property[]
-                    {
-                        new Property()
-                        {
-                            Id = new Guid("{03020776-6F7E-41CD-9475-6E2CA72E92B4}"),
-                            InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{771B57F0-F3D8-4E12-AA93-C801447BDB83}"),
-                            InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
-                            Title = "Title",
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation{
-                                    Id = new Guid("{C15FC6F8-B4CD-4541-95C5-796B0B71A4B8}"),
-                                    ValidationType = ValidationTypeEnum.Unique
-                                },
-                                new Validation
-                                {
-                                    Id = new Guid("{4363958E-2632-45C4-B44C-5AEDA379781F}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
-                                    IntegerValue = 200
-                                },
-                                new Validation{
-                                    Id = new Guid("{1ED350B4-CD53-4B8C-991F-02DDC8117DDF}"),
-                                    ValidationType = ValidationTypeEnum.Required
-                                },
-                            }
-                        }
-                    },
-                    Seed = new Seed
-                    {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
-                        JsonData = JsonConvert.SerializeObject(new []
-                        {
-                            new {
-                                Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
-                                Title = "Email"
-                            },
-                            new {
-                                Id = new Guid("{F7788E3D-7753-4491-98B1-AE78E16CDD0E}"),
-                                Title = "Maximum Length"
-                            },
-                            new {
-                                Id = new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"),
-                                Title = "Maximum Value"
-                            },
-                            new {
-                                Id = new Guid("{35D78EB6-F5DE-4E7B-AE79-B69A1D3DC7C9}"),
-                                Title = "Minimum Length"
-                            },
-                            new {
-                                Id = new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}"),
-                                Title = "Minimum Value"
-                            },
-                            new {
-                                Id = new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}"),
-                                Title = "Pattern"
-                            },
-                            new {
-                                Id = new Guid("{BD110234-F05D-42AB-BF2E-382B83093D0C}"),
-                                Title = "Required"
-                            },
-                            new {
-                                Id = new Guid("{CB9A60D3-42B3-411F-8FCE-2FC36C812A16}"),
-                                Title = "Required True"
-                            },
-                            new {
-                                Id = new Guid("{890C7A9E-09AE-4BB8-970E-85C564F753F1}"),
-                                Title = "Unique"
-                            }
-                        })
-                    }
-                },
-                new Entity()
-                {
                     Id = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
                     InternalName = "Validation",
                     Title = "Validation",
@@ -795,7 +711,470 @@ namespace MasterBuilder
                 }
             };
 
+            var entities = new List<Entity>(project.Entities);
+            entities.AddRange(ReferenceEntities());
+            project.Entities = entities;
+
             Project = project;
+        }
+
+        private IEnumerable<Entity> ReferenceEntities()
+        {
+            return new Entity[]
+            {
+                new Entity()
+                {
+                    Id = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
+                    InternalName = "ValidationType",
+                    Title = "Validation Type",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{03020776-6F7E-41CD-9475-6E2CA72E92B4}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{771B57F0-F3D8-4E12-AA93-C801447BDB83}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{C15FC6F8-B4CD-4541-95C5-796B0B71A4B8}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{4363958E-2632-45C4-B44C-5AEDA379781F}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{1ED350B4-CD53-4B8C-991F-02DDC8117DDF}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
+                                Title = "Email"
+                            },
+                            new {
+                                Id = new Guid("{F7788E3D-7753-4491-98B1-AE78E16CDD0E}"),
+                                Title = "Maximum Length"
+                            },
+                            new {
+                                Id = new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"),
+                                Title = "Maximum Value"
+                            },
+                            new {
+                                Id = new Guid("{35D78EB6-F5DE-4E7B-AE79-B69A1D3DC7C9}"),
+                                Title = "Minimum Length"
+                            },
+                            new {
+                                Id = new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}"),
+                                Title = "Minimum Value"
+                            },
+                            new {
+                                Id = new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}"),
+                                Title = "Pattern"
+                            },
+                            new {
+                                Id = new Guid("{BD110234-F05D-42AB-BF2E-382B83093D0C}"),
+                                Title = "Required"
+                            },
+                            new {
+                                Id = new Guid("{CB9A60D3-42B3-411F-8FCE-2FC36C812A16}"),
+                                Title = "Required True"
+                            },
+                            new {
+                                Id = new Guid("{890C7A9E-09AE-4BB8-970E-85C564F753F1}"),
+                                Title = "Unique"
+                            }
+                        })
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
+                    InternalName = "Feature",
+                    Title = "Feature",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{6114120E-BD93-4CE4-A673-7DC295F93CFE}"),
+                                Title = "New"
+                            }
+                        })
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{092F60B1-EE1E-4451-A771-013376C93E65}"),
+                    InternalName = "MenuItemType",
+                    Title = "Menu Item Type",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{543BCF58-4929-4386-8B01-FBF4C1680430}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{7D223CCB-41AF-4888-B441-61B3BDBBE56B}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{51810E74-59E6-44AF-B6D3-1B8ECF82EE54}"),
+                                Title = "Application Link"
+                            },
+                            new {
+                                Id = new Guid("{A7B39F29-3887-4744-A4E3-926607DB15D2}"),
+                                Title = "New"
+                            }
+                        })
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}"),
+                    InternalName = "PropertyTemplate",
+                    Title = "Property Template",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{ACEF7F12-2CF4-46AC-BFCC-60EA3E017E9F}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
+                                Title = "Primary Key"
+                            },
+                            new {
+                                Id = new Guid("{1B966A14-45B9-4E34-92BB-E2D46D97C5C3}"),
+                                Title = "Reference Title"
+                            }
+                        })
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
+                    InternalName = "PropertyType",
+                    Title = "PropertyType",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{2E259BAE-F1E8-4B10-8672-8FDEC3061C80}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{8B61C0F2-9800-483C-A33E-0EFEDA6482BB}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"),
+                                Title = "Uniqueidentifier"
+                            },
+                            new {
+                                Id = new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}"),
+                                Title = "String"
+                            },
+                            new {
+                                Id = new Guid("{F126388B-8A6E-41DB-A98A-A0E511016441}"),
+                                Title = "Integer"
+                            },
+                            new {
+                                Id = new Guid("{25E3A798-5F63-4A1E-93B3-A0BCE69836BC}"),
+                                Title = "Date Time"
+                            },
+                            new {
+                                Id = new Guid("{2C1D2E2A-3531-41D9-90D3-3632C368B12A}"),
+                                Title = "Boolean"
+                            },
+                            new {
+                                Id = new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"),
+                                Title = "Parent Relationship"
+                            },
+                            new {
+                                Id = new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"),
+                                Title = "Reference Relationship"
+                            }
+                        })
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
+                    InternalName = "ScreenSectionType",
+                    Title = "Screen Section Type",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{4BBA98F7-4C6F-4E60-BE3F-06180D8A6141}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{4A67B6BF-99A0-4446-A61C-AF3EB857099C}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}"),
+                                Title = "Form"
+                            },
+                            new {
+                                Id = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"),
+                                Title = "Search"
+                            },
+                            new {
+                                Id = new Guid("{4270A420-64CB-4A2C-B718-2C645DB2B57B}"),
+                                Title = "Grid"
+                            },
+                            new {
+                                Id = new Guid("{38EF9B44-A993-479B-91EC-1FE436E91556}"),
+                                Title = "Html"
+                            },
+                        })
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{DAD52763-D0DA-4EB4-84E4-D07CB5545583}"),
+                    InternalName = "ScreenType",
+                    Title = "Screen Type",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{1C3BB952-A965-4327-8A90-1714F0F5CA31}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{6EB60C08-1E9B-4EFA-8D9B-4B6A57996D80}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{46C0CB41-256D-41E7-BF86-982738F4130B}"),
+                                Title = "New"
+                            }
+                        })
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
+                    InternalName = "Feature",
+                    Title = "Feature",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{46C0CB41-256D-41E7-BF86-982738F4130B}"),
+                                Title = "New"
+                            }
+                        })
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
+                    InternalName = "Feature",
+                    Title = "Feature",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{46C0CB41-256D-41E7-BF86-982738F4130B}"),
+                                Title = "New"
+                            }
+                        })
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
+                    InternalName = "Feature",
+                    Title = "Feature",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{46C0CB41-256D-41E7-BF86-982738F4130B}"),
+                                Title = "New"
+                            }
+                        })
+                    }
+                },
+            };
         }
     }
 }

@@ -12,6 +12,10 @@
         /// <summary>
         /// Primary Key
         /// </summary>
-        PrimaryKey
+        PrimaryKey,
+        /// <summary>
+        /// Reference Entity Title
+        /// </summary>
+        ReferenceTitle
     }
 }

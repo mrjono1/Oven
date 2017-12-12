@@ -30,7 +30,8 @@ namespace MasterBuilder.Request
         internal static readonly Dictionary<Guid, PropertyTemplateEnum> PropertyTemplateDictonary = new Dictionary<Guid, PropertyTemplateEnum>
         {
             { Guid.Empty, PropertyTemplateEnum.None },
-            { new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), PropertyTemplateEnum.PrimaryKey }
+            { new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), PropertyTemplateEnum.PrimaryKey },
+            { new Guid("{1B966A14-45B9-4E34-92BB-E2D46D97C5C3}"), PropertyTemplateEnum.ReferenceTitle }
         };
 
         /// <summary>
@@ -181,6 +182,26 @@ namespace MasterBuilder.Request
 
         internal bool Validate(out string message)
         {
+            // TODO: below validation items are default so fix this so they can be overwritten
+            if (PropertyTemplate == PropertyTemplateEnum.ReferenceTitle)
+            {
+                ValidationItems = new Validation[]
+                {
+                    new Validation{
+                        ValidationType = ValidationTypeEnum.Unique
+                    },
+                    new Validation
+                    {
+                        ValidationType = ValidationTypeEnum.MaximumLength,
+                        IntegerValue = 200
+                    },
+                    new Validation{
+                        ValidationType = ValidationTypeEnum.Required
+                    },
+                };
+            }
+
+
             // Ensure only one validation method of each type
             message = "";
             return true;
