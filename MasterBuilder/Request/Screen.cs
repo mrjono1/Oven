@@ -106,6 +106,24 @@ namespace MasterBuilder.Request
         {
             if (ScreenSections == null || !ScreenSections.Any())
             {
+                var screenSectionType = ScreenSectionTypeEnum.Form;
+                switch (ScreenType)
+                {
+                    case ScreenTypeEnum.Search:
+                        screenSectionType = ScreenSectionTypeEnum.Search;
+                        break;
+                    case ScreenTypeEnum.Edit:
+                        screenSectionType = ScreenSectionTypeEnum.Form;
+                        break;
+                    case ScreenTypeEnum.View:
+                        screenSectionType = ScreenSectionTypeEnum.Form;
+                        break;
+                    case ScreenTypeEnum.Html:
+                        screenSectionType = ScreenSectionTypeEnum.Html;
+                        break;
+                    default:
+                        break;
+                }
                 ScreenSections = new ScreenSection[]
                 {
                     new ScreenSection
@@ -114,7 +132,7 @@ namespace MasterBuilder.Request
                         Title = Title,
                         EntityId = EntityId,
                         InternalName = InternalName,
-                        ScreenSectionTypeId = ScreenTypeId, // todo fix this
+                        ScreenSectionType = screenSectionType,
                         NavigateToScreenId = NavigateToScreenId
                     }
                 };

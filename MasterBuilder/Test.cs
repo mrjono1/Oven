@@ -722,6 +722,7 @@ namespace MasterBuilder
         {
             return new Entity[]
             {
+                // Validation Type
                 new Entity()
                 {
                     Id = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
@@ -806,6 +807,7 @@ namespace MasterBuilder
                         })
                     }
                 },
+                // Feature
                 new Entity()
                 {
                     Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
@@ -842,6 +844,7 @@ namespace MasterBuilder
                         })
                     }
                 },
+                // Menu Item Type
                 new Entity()
                 {
                     Id = new Guid("{092F60B1-EE1E-4451-A771-013376C93E65}"),
@@ -882,6 +885,7 @@ namespace MasterBuilder
                         })
                     }
                 },
+                // Property Template
                 new Entity()
                 {
                     Id = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}"),
@@ -922,11 +926,12 @@ namespace MasterBuilder
                         })
                     }
                 },
+                // Property Type
                 new Entity()
                 {
                     Id = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
                     InternalName = "PropertyType",
-                    Title = "PropertyType",
+                    Title = "Property Type",
                     Properties = new Property[]
                     {
                         new Property()
@@ -982,6 +987,7 @@ namespace MasterBuilder
                         })
                     }
                 },
+                // Screen Section Type
                 new Entity()
                 {
                     Id = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
@@ -1030,16 +1036,17 @@ namespace MasterBuilder
                         })
                     }
                 },
+                // Screen Type
                 new Entity()
                 {
-                    Id = new Guid("{DAD52763-D0DA-4EB4-84E4-D07CB5545583}"),
+                    Id = new Guid("{C04282DB-CB85-445D-BB4B-AEBB3801DAC7}"),
                     InternalName = "ScreenType",
                     Title = "Screen Type",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{1C3BB952-A965-4327-8A90-1714F0F5CA31}"),
+                            Id = new Guid("{C9DBA086-ACC8-4BD9-8EEB-2B2AAF38CC78}"),
                             InternalName = "Id",
                             Type = PropertyTypeEnum.Uniqueidentifier,
                             Title = "Id",
@@ -1047,7 +1054,7 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{6EB60C08-1E9B-4EFA-8D9B-4B6A57996D80}"),
+                            Id = new Guid("{749ACD4D-1873-4314-B0A1-E61EED934D3C}"),
                             InternalName = "Title",
                             Type = PropertyTypeEnum.String,
                             Title = "Title",
@@ -1060,22 +1067,35 @@ namespace MasterBuilder
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{46C0CB41-256D-41E7-BF86-982738F4130B}"),
-                                Title = "New"
+                                Id = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
+                                Title = "Search"
+                            },
+                            new {
+                                Id = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"),
+                                Title = "Edit"
+                            },
+                            new {
+                                Id = new Guid("{ACE5A965-7005-4E34-9C66-AF0F0CD15AE9}"),
+                                Title = "View"
+                            },
+                            new {
+                                Id = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"),
+                                Title = "Html"
                             }
                         })
                     }
                 },
+                // Seed Type
                 new Entity()
                 {
-                    Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
-                    InternalName = "Feature",
-                    Title = "Feature",
+                    Id = new Guid("{EA6A9786-573A-4821-824C-3FB5322D2A51}"),
+                    InternalName = "SeedType",
+                    Title = "Seed Type",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
+                            Id = new Guid("{623C2ADB-9FAD-43F6-8DDD-970B21D49CCE}"),
                             InternalName = "Id",
                             Type = PropertyTypeEnum.Uniqueidentifier,
                             Title = "Id",
@@ -1083,7 +1103,7 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
+                            Id = new Guid("{E67EC40A-C1B6-4465-BA91-D40A488317BC}"),
                             InternalName = "Title",
                             Type = PropertyTypeEnum.String,
                             Title = "Title",
@@ -1096,84 +1116,20 @@ namespace MasterBuilder
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{46C0CB41-256D-41E7-BF86-982738F4130B}"),
-                                Title = "New"
-                            }
-                        })
-                    }
-                },
-                new Entity()
-                {
-                    Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
-                    InternalName = "Feature",
-                    Title = "Feature",
-                    Properties = new Property[]
-                    {
-                        new Property()
-                        {
-                            Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
-                            InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
-                            InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
-                            Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
-                        }
-                    },
-                    Seed = new Seed
-                    {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
-                        JsonData = JsonConvert.SerializeObject(new []
-                        {
+                                Id = new Guid("{8A07A94D-4A5F-420F-B02A-4B2223B1213B}"),
+                                Title = "Add if none"
+                            },
                             new {
-                                Id = new Guid("{46C0CB41-256D-41E7-BF86-982738F4130B}"),
-                                Title = "New"
-                            }
-                        })
-                    }
-                },
-                new Entity()
-                {
-                    Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
-                    InternalName = "Feature",
-                    Title = "Feature",
-                    Properties = new Property[]
-                    {
-                        new Property()
-                        {
-                            Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
-                            InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
-                            InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
-                            Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
-                        }
-                    },
-                    Seed = new Seed
-                    {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
-                        JsonData = JsonConvert.SerializeObject(new []
-                        {
+                                Id = new Guid("{2729F45B-269F-42B1-BBA9-3E76DC9D1CBB}"),
+                                Title = "Ensure All Added"
+                            },
                             new {
-                                Id = new Guid("{46C0CB41-256D-41E7-BF86-982738F4130B}"),
-                                Title = "New"
+                                Id = new Guid("{6989AE9F-D5BD-4861-ABE6-0142EDDE6130}"),
+                                Title = "Ensure All Updated"
                             }
                         })
                     }
-                },
+                }
             };
         }
     }

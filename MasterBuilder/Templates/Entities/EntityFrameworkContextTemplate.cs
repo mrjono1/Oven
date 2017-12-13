@@ -29,57 +29,58 @@ namespace MasterBuilder.Templates.Entities
                 }
             }
 
-            var seed = new List<string>();
+            var seed = new Dictionary<string, string>();
             foreach (var entity in project.Entities.Where(e => e.Seed != null))
             {
                 var content = Newtonsoft.Json.JsonConvert.SerializeObject(entity.Seed.JsonData);
                 
-                var seedStringBuilder = new StringBuilder($@"                // Seed {entity.InternalName}
-                var content = {content};
-                // TODO: possibly could convert this to delegate so only executed if needed
-                var items = JsonConvert.DeserializeObject<List<{entity.InternalName}>>(content);");
+                var seedStringBuilder = new StringBuilder($@"        private async Task {entity.InternalName}Seed(){{
+            var content = {content};
+            // TODO: possibly could convert this to delegate so only executed if needed
+            var items = JsonConvert.DeserializeObject<List<{entity.InternalName}>>(content);");
 
                 seedStringBuilder.AppendLine($@"
-                if (!{entity.InternalNamePlural}.Any())
-                {{
-                    await {entity.InternalNamePlural}.AddRangeAsync(items);
-                }}");
+            if (!{entity.InternalNamePlural}.Any())
+            {{
+                await {entity.InternalNamePlural}.AddRangeAsync(items);
+            }}");
 
                 switch (entity.Seed.SeedType)
                 {
                     case SeedTypeEnum.EnsureAllAdded:
                         // TODO: can this be done better with AttachRange?
-                seedStringBuilder.AppendLine($@"                else
+                seedStringBuilder.AppendLine($@"           else
+            {{
+                foreach (var item in items)
                 {{
-                    foreach (var item in items)
-                    {{
-                        var existing = await {entity.InternalNamePlural}.AnyAsync(p => p.Id == item.Id);
-                        if (!existing){{
-                            await {entity.InternalNamePlural}.AddAsync(item);
-                        }}
+                    var existing = await {entity.InternalNamePlural}.AnyAsync(p => p.Id == item.Id);
+                    if (!existing){{
+                        await {entity.InternalNamePlural}.AddAsync(item);
                     }}
-                }}");
+                }}
+            }}");
                         break;
                     case SeedTypeEnum.EnsureAllUpdated:
-                        seedStringBuilder.AppendLine($@"                else
+                        seedStringBuilder.AppendLine($@"            else
+            {{
+                foreach (var item in items)
                 {{
-                    foreach (var item in items)
-                    {{
-                        var existing = await {entity.InternalNamePlural}.AsNoTracking().SingleOrDefaultAsync(a => a.Id == item.Id);
-                        if (existing == null){{
-                            await {entity.InternalNamePlural}.AddAsync(item);
-                        }}
-                        else
-                        {{
-                            ValidationTypes.Attach(item);
-                        }}
+                    var existing = await {entity.InternalNamePlural}.AsNoTracking().SingleOrDefaultAsync(a => a.Id == item.Id);
+                    if (existing == null){{
+                       await {entity.InternalNamePlural}.AddAsync(item);
                     }}
-                }}");
+                    else
+                    {{
+                        {entity.InternalNamePlural}.Attach(item);
+                    }}
+                }}
+            }}");
                         break;
                 }
 
-                seedStringBuilder.AppendLine("                await SaveChangesAsync();");
-                seed.Add(seedStringBuilder.ToString());
+                seedStringBuilder.AppendLine(@"            await SaveChangesAsync();
+        }");
+                seed.Add($"            await {entity.InternalName}Seed();", seedStringBuilder.ToString());
             }
             
             return $@"using System;
@@ -174,8 +175,10 @@ namespace {project.InternalName}.Entities
 
         internal async Task Seed()
         {{
-{string.Join(Environment.NewLine, seed)}
+{string.Join(Environment.NewLine, seed.Keys)}
         }}
+
+{string.Join(Environment.NewLine, seed.Values)}
     }}
 }}";
         }
