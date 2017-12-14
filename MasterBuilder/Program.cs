@@ -47,6 +47,7 @@ namespace MasterBuilder
             if (!project.Validate(out string messages))
             {
                 Console.WriteLine(messages);
+                Console.Read();
                 return;
             }
             var filesToWrite = new List<Task>();

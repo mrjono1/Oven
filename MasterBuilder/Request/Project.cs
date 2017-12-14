@@ -119,37 +119,55 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Validate a whole project, also may resolve some issues or perform upgrades
         /// </summary>
-        /// <param name="messages">returns "Success" or details an issue found</param>
-        internal bool Validate(out string messages)
+        /// <param name="message">returns "Success" or details an issue found</param>
+        internal bool Validate(out string message)
         {
-            if (Screens == null || !Screens.Any())
-            {
-                messages = "No Screens have been defined";
-                return false;
-            }
-            foreach (var screen in Screens)
-            {
-                if (!screen.Validate(out messages))
-                {
-                    return false;
-                }
-            }
+            var messages = new List<string>();
 
+            // Validate Entities
             if (Entities == null || !Entities.Any())
             {
-                messages = "No Entities have been defined";
+                messages.Add("No Entities have been defined");
+                message = string.Join(Environment.NewLine, messages);
                 return false;
             }
             foreach (var entity in Entities)
             {
-                if (!entity.Validate(out messages))
+                if (!entity.Validate(this, out string entityMessage))
                 {
-                    return false;
+                    messages.Add(entityMessage);
                 }
             }
 
-            messages = "Success";
-            return true;
+            // Validate Screens
+            if (Screens == null || !Screens.Any())
+            {
+                messages.Add("No Screens have been defined");
+                message = string.Join(Environment.NewLine, messages);
+                return false;
+            }
+            if (Screens.Select(i => i.Id).Distinct().Count() != Screens.Count())
+            {
+                messages.Add("Duplicate screen ids defined");
+            }
+            foreach (var screen in Screens)
+            {
+                if (!screen.Validate(out string screenMessage))
+                {
+                    messages.Add(screenMessage);
+                }
+            }
+
+            if (messages.Any())
+            {
+                message = string.Join(Environment.NewLine, messages);
+                return false;
+            }
+            else
+            {
+                message = "Success";
+                return true;
+            }
         }
     }
 }

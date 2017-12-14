@@ -97,7 +97,7 @@ namespace MasterBuilder.Request
         /// </summary>
         /// <param name="message">Issue messages</param>
         /// <returns>'true' for success or 'false' for failing to validate</returns>
-        internal bool Validate(out string message)
+        internal bool Validate(Project project, out string message)
         {
             var messageList = new List<string>();
 
@@ -121,7 +121,7 @@ namespace MasterBuilder.Request
             // Ensure Internal Name is standard caseing
             InternalName = InternalName.Pascalize();
 
-            // TODO: move validation to model validation
+            // TODO: do more validation in model validation
 
             if (Properties != null)
             {
@@ -133,6 +133,8 @@ namespace MasterBuilder.Request
                 }
             }
 
+            GenerateScreen(project);
+            
             if (messageList.Any())
             {
                 message = string.Join(", ", messageList);
@@ -142,6 +144,53 @@ namespace MasterBuilder.Request
             {
                 message = "Success";
                 return true;
+            }
+        }
+
+        private void GenerateScreen(Project project)
+        {
+            if (EntityTemplate == EntityTemplateEnum.Reference)
+            {
+                var screenFound = project.Screens.Where(s => s.EntityId == Id).Any();
+
+                if (screenFound)
+                {
+                    return;
+                }
+                
+                var screens = new List<Screen>(project.Screens)
+                {
+                    new Screen()
+                    {
+                        Id = Id, // TODO: The id should be reproduceable I don't like this
+                        EntityId = Id,
+                        Title = Title.Pluralize(),
+                        InternalName = InternalNamePlural,
+                        ScreenType = ScreenTypeEnum.Search,
+                        Path = InternalNamePlural.Kebaberize()
+                    },
+                    new Screen()
+                    {
+                        Id = Guid.NewGuid(), // TODO: The id should be reproduceable I don't like this
+                        EntityId = Id,
+                        Title = Title,
+                        InternalName = InternalName,
+                        ScreenType = ScreenTypeEnum.Edit,
+                        Path = InternalName.Kebaberize()
+                    }
+                };
+                project.Screens = screens;
+
+                var menus = new List<MenuItem>(project.MenuItems)
+                {
+                    new MenuItem()
+                    {
+                        ScreenId = Id,
+                        Title = Title.Pluralize(),
+                        Icon = "glyphicon glyphicon-th-list"
+                    }
+                };
+                project.MenuItems = menus;
             }
         }
     }
