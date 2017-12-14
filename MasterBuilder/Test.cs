@@ -728,6 +728,7 @@ namespace MasterBuilder
                     Id = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
                     InternalName = "ValidationType",
                     Title = "Validation Type",
+                    EntityTemplate = EntityTemplateEnum.Reference,
                     Properties = new Property[]
                     {
                         new Property()
@@ -744,23 +745,7 @@ namespace MasterBuilder
                             InternalName = "Title",
                             Type = PropertyTypeEnum.String,
                             Title = "Title",
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation{
-                                    Id = new Guid("{C15FC6F8-B4CD-4541-95C5-796B0B71A4B8}"),
-                                    ValidationType = ValidationTypeEnum.Unique
-                                },
-                                new Validation
-                                {
-                                    Id = new Guid("{4363958E-2632-45C4-B44C-5AEDA379781F}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
-                                    IntegerValue = 200
-                                },
-                                new Validation{
-                                    Id = new Guid("{1ED350B4-CD53-4B8C-991F-02DDC8117DDF}"),
-                                    ValidationType = ValidationTypeEnum.Required
-                                },
-                            }
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }
                     },
                     Seed = new Seed
@@ -813,6 +798,7 @@ namespace MasterBuilder
                     Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
                     InternalName = "Feature",
                     Title = "Feature",
+                    EntityTemplate = EntityTemplateEnum.Reference,
                     Properties = new Property[]
                     {
                         new Property()
@@ -850,6 +836,7 @@ namespace MasterBuilder
                     Id = new Guid("{092F60B1-EE1E-4451-A771-013376C93E65}"),
                     InternalName = "MenuItemType",
                     Title = "Menu Item Type",
+                    EntityTemplate = EntityTemplateEnum.Reference,
                     Properties = new Property[]
                     {
                         new Property()
@@ -891,6 +878,7 @@ namespace MasterBuilder
                     Id = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}"),
                     InternalName = "PropertyTemplate",
                     Title = "Property Template",
+                    EntityTemplate = EntityTemplateEnum.Reference,
                     Properties = new Property[]
                     {
                         new Property()
@@ -932,6 +920,7 @@ namespace MasterBuilder
                     Id = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
                     InternalName = "PropertyType",
                     Title = "Property Type",
+                    EntityTemplate = EntityTemplateEnum.Reference,
                     Properties = new Property[]
                     {
                         new Property()
@@ -993,6 +982,7 @@ namespace MasterBuilder
                     Id = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
                     InternalName = "ScreenSectionType",
                     Title = "Screen Section Type",
+                    EntityTemplate = EntityTemplateEnum.Reference,
                     Properties = new Property[]
                     {
                         new Property()
@@ -1042,6 +1032,7 @@ namespace MasterBuilder
                     Id = new Guid("{C04282DB-CB85-445D-BB4B-AEBB3801DAC7}"),
                     InternalName = "ScreenType",
                     Title = "Screen Type",
+                    EntityTemplate = EntityTemplateEnum.Reference,
                     Properties = new Property[]
                     {
                         new Property()
@@ -1091,6 +1082,7 @@ namespace MasterBuilder
                     Id = new Guid("{EA6A9786-573A-4821-824C-3FB5322D2A51}"),
                     InternalName = "SeedType",
                     Title = "Seed Type",
+                    EntityTemplate = EntityTemplateEnum.Reference,
                     Properties = new Property[]
                     {
                         new Property()
@@ -1126,6 +1118,44 @@ namespace MasterBuilder
                             new {
                                 Id = new Guid("{6989AE9F-D5BD-4861-ABE6-0142EDDE6130}"),
                                 Title = "Ensure All Updated"
+                            }
+                        })
+                    }
+                },
+                // Entity Template
+                new Entity()
+                {
+                    Id = new Guid("{E20337EA-37F3-48D1-96F7-3CF2A40A7F52}"),
+                    InternalName = "EntityTemplate",
+                    Title = "Entity Template",
+                    EntityTemplate = EntityTemplateEnum.Reference,
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{5D0BEB0A-4B91-4B40-83F0-8EAE7426CCF6}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{83CFE967-1FEF-44F1-A3DC-C03FC2F0B167}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{B79D1C90-6320-4A07-9753-2A41110611C8}"),
+                                Title = "Reference"
                             }
                         })
                     }

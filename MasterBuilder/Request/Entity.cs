@@ -13,6 +13,15 @@ namespace MasterBuilder.Request
     public class Entity
     {
         /// <summary>
+        /// Register of all Entity Template Ids to Enum for easy use
+        /// </summary>
+        internal static readonly Dictionary<Guid, EntityTemplateEnum> EntityTemplateDictonary = new Dictionary<Guid, EntityTemplateEnum>
+        {
+            { Guid.Empty, EntityTemplateEnum.None },
+            { new Guid("{B79D1C90-6320-4A07-9753-2A41110611C8}"), EntityTemplateEnum.Reference }
+        };
+
+        /// <summary>
         /// Uniqueidentifier of an Entity
         /// </summary>
         public Guid Id { get; set; }
@@ -55,6 +64,33 @@ namespace MasterBuilder.Request
         /// Optional: Contains seed data and settings
         /// </summary>
         public Seed Seed { get; set; }
+        /// <summary>
+        /// Optional: Entity Template Id, if specified it will define default behaviours for this entity
+        /// </summary>
+        public Guid? EntityTemplateId { get; set; }
+        /// <summary>
+        /// Entity Template
+        /// </summary>
+        internal EntityTemplateEnum EntityTemplate
+        {
+            get
+            {
+                var id = EntityTemplateId ?? Guid.Empty;
+                return EntityTemplateDictonary[id];
+            }
+            set
+            {
+                var id = EntityTemplateDictonary.SingleOrDefault(v => v.Value == value).Key;
+                if (id == Guid.Empty)
+                {
+                    EntityTemplateId = null;
+                }
+                else
+                {
+                    EntityTemplateId = id;
+                }
+            }
+        }
 
         /// <summary>
         /// Validate this object and reslove any issues if possible
