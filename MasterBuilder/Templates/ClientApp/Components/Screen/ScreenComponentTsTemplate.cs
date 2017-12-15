@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +16,37 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
 
         public static string Evaluate(Project project, Request.Screen screen)
         {
+            if (screen.Path.Equals("home", StringComparison.OrdinalIgnoreCase))
+            {
+                // TODO: this is crap 
+                return $@"import {{ Component, OnInit, Inject }} from '@angular/core';
+
+import {{ TranslateService }} from '@ngx-translate/core';
+
+@Component({{
+    selector: 'app-home',
+    templateUrl: './home.component.html'
+}})
+export class HomeComponent implements OnInit {{
+
+    title: string = '{project.Title}';
+
+    // Use ""constructor""s only for dependency injection
+    constructor(
+      public translate: TranslateService
+    ) {{ }}
+
+    // Here you want to handle anything with @Input()'s @Output()'s
+    // Data retrieval / etc - this is when the Component is ""ready"" and wired up
+    ngOnInit() {{ }}
+
+    public setLanguage(lang) {{
+        this.translate.use(lang);
+    }}
+}}";
+            }
+
+
             var constructorParamerters = new List<string>();
             var constructorBodySections = new List<string>();
             var onNgInitBodySections = new List<string>();
@@ -57,8 +88,8 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
                 cssFile = $@",
     styleUrls: ['./{screen.InternalName.ToLowerInvariant()}.component.css']";
             }
-
-            return $@"import {{ Http }} from '@angular/http';
+            
+            return $@"import {{ HttpClient }} from '@angular/common/http';
 import {{ Component, Inject, OnInit }} from '@angular/core';
 import {{ Router, ActivatedRoute }} from '@angular/router';
 {string.Join(Environment.NewLine, imports.Distinct())}

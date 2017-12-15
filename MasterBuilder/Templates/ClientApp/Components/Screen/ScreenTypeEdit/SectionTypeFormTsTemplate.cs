@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,8 +42,8 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeEdit
             return $@"this.route.params.subscribe(params => {{
             if (params['{screen.InternalName.ToCamlCase()}Id']) {{
                 this.new = false;
-                this.http.get('api/{entity.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.ToCamlCase()}Id']).subscribe(result => {{
-                    this.{screenSection.InternalName.ToCamlCase()} = result.json() as {screenSection.InternalName};
+                this.http.get<{screenSection.InternalName}>('api/{entity.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.ToCamlCase()}Id']).subscribe(result => {{
+                    this.{screenSection.InternalName.ToCamlCase()} = result;
                     this.setupForm();
                 }}, error => console.error(error));
             }} else {{
@@ -58,7 +58,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeEdit
         internal static IEnumerable<string> ConstructorParameters(Project project, Request.Screen screen, ScreenSection screenSection)
         {
             return new string[] {
-                "private http: Http",
+                "private http: HttpClient",
                 "private router: Router",
                 "private route: ActivatedRoute"
             };

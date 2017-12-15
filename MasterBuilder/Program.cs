@@ -41,7 +41,7 @@ namespace MasterBuilder
         public async Task Run(string outputDirectory) {
             var project = new Test().Project;
 
-            var fullBuild = true;
+            var fullBuild = false;
 
             // Validate & Pre Process Project
             if (!project.Validate(out string messages))
@@ -138,6 +138,9 @@ namespace MasterBuilder
 
                     // ClientApp/App/Shared
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.Shared.LinkServiceTemplate()),
+
+                    // wwwroot/assets/i18n
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.WwwRoot.i18n.LanguageTemplate()),
                 });
 
             }

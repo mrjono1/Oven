@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -113,22 +113,22 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen
         
         if (this.new){{
             // Post new
-            this.http.post('api/{entity.InternalName}/{screen.InternalName}', this.{screen.InternalName.ToCamlCase()}Form.getRawValue()).subscribe( result => {{
-                if (result.status === 200){{
-                    this.router.navigate([this.router.url + '/' + result.json()]);
-                }} else {{
-                    alert(result);
-                }}
+            this.http.post<string>('api/{entity.InternalName}/{screen.InternalName}', this.{screen.InternalName.ToCamlCase()}Form.getRawValue()).subscribe( result => {{
+               // if (result.status === 200){{
+                    this.router.navigate([this.router.url + '/' + result]);
+                //}} else {{
+              //      alert(result);
+             //   }}
             }});
         }} else {{
             // Patch existing
             let operations = this.getPatchOperations();
             this.http.patch('api/{entity.InternalName}/{screen.InternalName}/' + this.{screen.InternalName.ToCamlCase()}.id, operations).subscribe( result => {{
-                if (result.status === 200){{
+             //   if (result.status === 200){{
                     this.{screen.InternalName.ToCamlCase()}Form.markAsPristine({{ onlySelf: false }});
-                }} else {{
-                    alert(result);
-                }}
+               // }} else {{
+              //      alert(result);
+              //  }}
             }});
         }}
     }}";

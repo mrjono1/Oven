@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -432,21 +432,6 @@ namespace MasterBuilder
                             {
                                 new Validation{
                                     Id = new Guid("{FC73C9C5-953A-414F-9C20-4B5C57F4F709}"),
-                                    ValidationType = ValidationTypeEnum.Required
-                                },
-                            }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
-                            InternalName = "ValidationType",
-                            Type = PropertyTypeEnum.ParentRelationship,
-                            Title = "Validation Type",
-                            ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation{
-                                    Id = new Guid("{707BD4C0-7ED4-4865-9168-176B4E843E72}"),
                                     ValidationType = ValidationTypeEnum.Required
                                 },
                             }

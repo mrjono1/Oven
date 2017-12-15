@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,8 +44,8 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
             this.{screenSection.InternalName.ToCamlCase()}Request.pageSize = 20;
             {parentPropertyFilterString}
 
-            this.http.post('api/{entity.InternalName}/{screen.InternalName}{screenSection.InternalName}', this.{screenSection.InternalName.ToCamlCase()}Request).subscribe(result => {{
-                this.{screenSection.InternalName.ToCamlCase()}Response = result.json() as {screenSection.InternalName};
+            this.http.post<{screenSection.InternalName}>('api/{entity.InternalName}/{screen.InternalName}{screenSection.InternalName}', this.{screenSection.InternalName.ToCamlCase()}Request).subscribe(result => {{
+                this.{screenSection.InternalName.ToCamlCase()}Response = result;
             }}, error => console.error(error));
         }});";
         }
@@ -53,7 +53,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeSearch
         internal static IEnumerable<string> ConstructorParameters(Project project, Request.Screen screen, ScreenSection screenSection)
         {
             return new string[] {
-                "private http: Http",
+                "private http: HttpClient",
                 "private router: Router",
                 "private route: ActivatedRoute"
             };
