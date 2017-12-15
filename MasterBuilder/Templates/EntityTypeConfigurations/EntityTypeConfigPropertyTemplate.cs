@@ -18,7 +18,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             
             var value = new StringBuilder();
 
-            if (property.Type == PropertyTypeEnum.ParentRelationship)
+            if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)
             {
                 value.AppendLine($"            builder.Property(p => p.{property.InternalName}Id)");
             }
@@ -67,13 +67,20 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 }
             }
 
-            if (property.Type == PropertyTypeEnum.ParentRelationship)
+            if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)
             {
                 var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 value.AppendLine();
                 value.Append($@"            builder.HasOne(p => p.{property.InternalName})
-                .WithMany(p => p.{entity.InternalNamePlural})
-                .HasForeignKey(p => p.{property.InternalName}Id);");
+                .WithMany(p => p.{property.InternalName}{entity.InternalNamePlural})
+                .HasForeignKey(p => p.{property.InternalName}Id)");
+
+                if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+                {
+                    value.Append(@"
+                 .OnDelete(DeleteBehavior.Restrict)");
+                }
+                value.Append(";");
             }
 
 

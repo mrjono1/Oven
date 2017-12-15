@@ -32,6 +32,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace {project.InternalName}.Models
 {{
+    /// <summary>
+    /// {screen.InternalName} Insert/Update Model
+    /// </summary>
     public class {screen.InternalName}Request
     {{
 {properties}

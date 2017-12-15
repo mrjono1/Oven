@@ -79,7 +79,7 @@ namespace MasterBuilder.Templates.ClientApp.Components.Screen.ScreenTypeEdit
             var properties = new List<string>();
             foreach (var property in entity.Properties)
             {
-                if (property.Type == PropertyTypeEnum.ParentRelationship)
+                if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)
                 {
                     properties.Add($"   {property.InternalName.ToCamlCase()}Id: {property.TsType};");
                 }

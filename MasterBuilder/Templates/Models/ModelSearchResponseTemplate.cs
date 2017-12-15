@@ -31,11 +31,13 @@ namespace MasterBuilder.Templates.Models
                 itemClassName = $"{screen.InternalName}{screenSection.InternalName}Item";
             }
 
-            return $@"
-using System;
+            return $@"using System;
 
 namespace {project.InternalName}.Models
 {{
+    /// <summary>
+    /// {screen.InternalName} Screen Search Response
+    /// </summary>
     public class {className}
     {{
         public int TotalPages {{ get; internal set; }}
@@ -44,7 +46,5 @@ namespace {project.InternalName}.Models
     }}
 }}";
         }
-
-
     }
 }

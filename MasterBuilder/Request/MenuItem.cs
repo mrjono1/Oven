@@ -1,14 +1,60 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MasterBuilder.Request
 {
+    /// <summary>
+    /// Menu Item
+    /// </summary>
     public class MenuItem
     {
+        /// <summary>
+        /// Register of all Menu Item Type Ids to Enum for easy use
+        /// </summary>
+        internal static readonly Dictionary<Guid, MenuItemTypeEnum> MenuItemTypeDictonary = new Dictionary<Guid, MenuItemTypeEnum>
+        {
+            { new Guid("{51810E74-59E6-44AF-B6D3-1B8ECF82EE54}"), MenuItemTypeEnum.ApplicationLink },
+            { new Guid("{A7B39F29-3887-4744-A4E3-926607DB15D2}"), MenuItemTypeEnum.New }
+        };
+
+        /// <summary>
+        /// Uniqueidentifier
+        /// </summary>
         public Guid Id { get; set; }
+        /// <summary>
+        /// Title
+        /// </summary>
         public string Title { get; set; }
+        /// <summary>
+        /// Path
+        /// </summary>
         public string Path { get; set; }
+        /// <summary>
+        /// Navigate to Screen Id
+        /// </summary>
         public Guid? ScreenId { get; set; }
+        /// <summary>
+        /// Icon css class
+        /// </summary>
         public string Icon { get; set; }
-        public MenuItemTypeEnum MenuItemType { get; set; }
+        /// <summary>
+        /// Menu Item Type Id
+        /// </summary>
+        public Guid MenuItemTypeId { get; set; }
+        /// <summary>
+        /// Menu Item Type
+        /// </summary>
+        internal MenuItemTypeEnum MenuItemType
+        {
+            get
+            {
+                return MenuItemTypeDictonary[MenuItemTypeId];
+            }
+            set
+            {
+                MenuItemTypeId = MenuItemTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
+            }
+        }
     }
 }

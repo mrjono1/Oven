@@ -119,11 +119,21 @@ using System.Diagnostics;
 
 namespace {project.InternalName}.Controllers
 {{
-{classAttributes}
+
+    /// <summary>
+    /// Controller for the {(entity != null ? string.Concat(entity.InternalName, " Entity") : string.Concat(screen.InternalName, " Screen"))}
+    /// </summary>
+    {classAttributes}
     public class {controllerName}Controller : Controller
     {{
+        /// <summary>
+        /// Database Context
+        /// </summary>
         private readonly {project.InternalName}Context _context;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public {controllerName}Controller({project.InternalName}Context context)
         {{
             _context = context;

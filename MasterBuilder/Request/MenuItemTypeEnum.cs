@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MasterBuilder.Request
+﻿namespace MasterBuilder.Request
 {
-    public enum MenuItemTypeEnum
+    /// <summary>
+    /// Menu Item Type Enum
+    /// </summary>
+    internal enum MenuItemTypeEnum
     {
+        /// <summary>
+        /// Application Link
+        /// </summary>
         ApplicationLink,
+        /// <summary>
+        ///  New Record
+        /// </summary>
         New
     }
 }

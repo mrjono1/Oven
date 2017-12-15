@@ -1,8 +1,21 @@
 ﻿namespace MasterBuilder.Request
 {
+    /// <summary>
+    /// Property Template Enum
+    /// </summary>
     internal enum PropertyTemplateEnum
     {
+        /// <summary>
+        /// No template
+        /// </summary>
         None,
-        PrimaryKey
+        /// <summary>
+        /// Primary Key
+        /// </summary>
+        PrimaryKey,
+        /// <summary>
+        /// Reference Entity Title
+        /// </summary>
+        ReferenceTitle
     }
 }

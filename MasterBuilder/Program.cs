@@ -19,7 +19,7 @@ namespace MasterBuilder
         static void Main(string[] args)
         {
             Console.WriteLine("Start!");
-            new Program("E:\\Temp\\Generated");
+            new Program("C:\\Temp");
         }
 
 
@@ -47,6 +47,7 @@ namespace MasterBuilder
             if (!project.Validate(out string messages))
             {
                 Console.WriteLine(messages);
+                Console.Read();
                 return;
             }
             var filesToWrite = new List<Task>();
@@ -74,8 +75,7 @@ namespace MasterBuilder
             var propertiesPath = FileHelper.CreateFolder(projectDirectory, "Properties");
             var viewsPath = FileHelper.CreateFolder(projectDirectory, "Views");
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
-            var distPath = FileHelper.CreateFolder(wwwrootPath, "dist");
-            
+
             if (fullBuild)
             {
                 // Artifacts

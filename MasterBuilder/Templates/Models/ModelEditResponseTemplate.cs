@@ -26,18 +26,18 @@ namespace MasterBuilder.Templates.Models
                 }
             }
 
-            return $@"
-using System;
+            return $@"using System;
 
 namespace {project.InternalName}.Models
 {{
+    /// <summary>
+    /// {screen.InternalName} Screen Load
+    /// </summary>
     public class {screen.InternalName}Response
     {{
 {properties}
     }}
 }}";
         }
-
-
     }
 }

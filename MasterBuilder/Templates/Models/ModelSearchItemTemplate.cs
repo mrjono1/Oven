@@ -39,11 +39,13 @@ namespace MasterBuilder.Templates.Models
             {
                 className = $"{screen.InternalName}{screenSection.InternalName}Item";
             }
-            return $@"
-using System;
+            return $@"using System;
 
 namespace {project.InternalName}.Models
 {{
+    /// <summary>
+    /// {screen.InternalName} Screen Search Item
+    /// </summary>
     public class {className}
     {{
 {properties}
