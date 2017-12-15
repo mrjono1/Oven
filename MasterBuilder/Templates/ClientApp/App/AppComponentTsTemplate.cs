@@ -67,8 +67,6 @@ export class AppComponent implements OnInit, OnDestroy {{
 
         this.request = this.injector.get(REQUEST);
 
-        console.log(`What's our REQUEST Object look like?`);
-        console.log(`The Request object only really exists on the Server, but on the Browser we can at least see Cookies`);
         console.log(this.request);
     }}
 

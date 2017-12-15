@@ -1,4 +1,4 @@
-﻿using Humanizer;
+using Humanizer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -157,7 +157,8 @@ namespace MasterBuilder.Request
                 {
                     return;
                 }
-                
+
+                var editScreenId = Guid.NewGuid(); // TODO: The id should be reproduceable I don't like this
                 var screens = new List<Screen>(project.Screens)
                 {
                     new Screen()
@@ -167,11 +168,12 @@ namespace MasterBuilder.Request
                         Title = Title.Pluralize(),
                         InternalName = InternalNamePlural,
                         ScreenType = ScreenTypeEnum.Search,
-                        Path = InternalNamePlural.Kebaberize()
+                        Path = InternalNamePlural.Kebaberize(),
+                        NavigateToScreenId = editScreenId
                     },
                     new Screen()
                     {
-                        Id = Guid.NewGuid(), // TODO: The id should be reproduceable I don't like this
+                        Id = editScreenId,
                         EntityId = Id,
                         Title = Title,
                         InternalName = InternalName,

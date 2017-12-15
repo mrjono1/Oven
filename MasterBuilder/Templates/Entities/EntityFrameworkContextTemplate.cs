@@ -120,6 +120,8 @@ namespace {project.InternalName}.Entities
         public void Initialize()
         {{
             MigrateDatabase();
+
+            Seed().Wait();
         }}
 
         internal void MigrateDatabase()
@@ -174,8 +176,6 @@ namespace {project.InternalName}.Entities
             var commands = sqlGenerator.Generate(operations, currentModel);
             var executor = this.GetService<IMigrationCommandExecutor>();
             executor.ExecuteNonQuery(commands, this.GetService<IRelationalConnection>());
-
-            Seed().Wait();
         }}
 
         internal async Task Seed()

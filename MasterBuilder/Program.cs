@@ -312,7 +312,6 @@ li.link-active a:focus {
             );
 
             await Task.WhenAll(filesToWrite.ToArray());
-            Console.Read();
         }
     }
 }
