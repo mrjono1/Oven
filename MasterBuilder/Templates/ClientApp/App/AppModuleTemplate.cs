@@ -116,7 +116,6 @@ export function createTranslateLoader(http: HttpClient, baseHref) {{
     ],
     providers: [
         LinkService,
-        UserService,
         TranslateModule
     ],
     bootstrap: [AppComponent]

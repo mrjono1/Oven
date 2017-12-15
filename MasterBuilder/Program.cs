@@ -89,7 +89,7 @@ namespace MasterBuilder
 
                     // Create Project Files
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, AngularCliJsonTemplate.FileName()), AngularCliJsonTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, ProjectTemplate.FileName(project)), ProjectTemplate.Evaluate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new ProjectTemplate(project)),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, StartupTemplate.FileName()), StartupTemplate.Evaluate(project)),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, GitIgnoreTemplate.FileName()), GitIgnoreTemplate.Evaluate()),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, AppSettingsTemplate.FileName()), AppSettingsTemplate.Evaluate(project)),

@@ -86,19 +86,6 @@ namespace {project.InternalName}
                 app.UseDeveloperExceptionPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {{
-                    HotModuleReplacement = true
-                }});
-            }}
-            else
-            {{
-                app.UseExceptionHandler(""/Home/Error"");
-            }}
-
-            if (env.IsDevelopment())
-            {{
-                app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {{
                     HotModuleReplacement = true,
                     HotModuleReplacementEndpoint = ""/dist/""
                 }});
