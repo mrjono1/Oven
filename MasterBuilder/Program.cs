@@ -159,6 +159,9 @@ namespace MasterBuilder
             // ClientApp/app/models
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.ClientApp.App.Models.ModelTemplateBuilder(project)));
 
+            // ClientApp/app/shared
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.ClientApp.App.Shared.ServiceTemplateBuilder(project)));
+
             if (project.Entities != null)
             {
                 foreach (var item in project.Entities)

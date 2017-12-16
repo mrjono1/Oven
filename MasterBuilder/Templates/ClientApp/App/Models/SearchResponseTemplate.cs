@@ -36,7 +36,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         {
             return $@"import {{ {ScreenSection.InternalName}Item }} from './{ScreenSection.InternalName}Item';
 
-export interface {ScreenSection.InternalName} {{
+export interface {ScreenSection.InternalName}Response {{
     items: {ScreenSection.InternalName}Item[];
     totalPages: number;
     totalItems: number;
