@@ -161,6 +161,9 @@ namespace MasterBuilder
 
             // ClientApp/app/shared
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.ClientApp.App.Shared.ServiceTemplateBuilder(project)));
+            
+            // ClientApp/app/containers
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.ClientApp.App.Containers.ContainerTsTemplateBuilder(project)));
 
             if (project.Entities != null)
             {
@@ -241,19 +244,6 @@ namespace MasterBuilder
                         filesToWrite.Add(FileHelper.WriteAllText(Templates.ClientApp.Components.ComponentHtml.FileName(clientAppPath, screen), Templates.ClientApp.Components.ComponentHtml.Evaluate(project, screen)));
                     }
                 }
-
-                // TODO: seperate models
-                //foreach (var screen in project.Screens)
-                //{
-                //    if (screen.ScreenSections == null)
-                //    {
-                //        continue;
-                //    }
-                //    foreach (var screenSection in screen.ScreenSections)
-                //    {
-                //        filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.Models.ModelTemplate(project, screen, screenSection)));
-                //    }
-                //}
             }
 
             // Client App
