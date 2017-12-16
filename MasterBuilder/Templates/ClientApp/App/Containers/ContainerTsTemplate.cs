@@ -34,6 +34,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
             var classProperties = new List<string>();
             var constructorBodySections = new List<string>();
             var onNgInitBodySections = new List<string>();
+            var functions = new List<string>();
             var constructorParamerters = new List<string>{
                 "private http: HttpClient",
                 "private router: Router",
@@ -123,6 +124,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
             if (hasForm)
             {
                 imports.Add($"import {{ Operation }} from '../../models/Operation'");
+
+                var form = new BuildForm(Project, Screen);
+                functions.Add(form.GetFunctions());
             }
 
             string cssFile = null;
@@ -152,7 +156,7 @@ export class {Screen.InternalName}Component implements OnInit {{
 {string.Join(Environment.NewLine, onNgInitBodySections.Distinct())}
     }}
 
-
+{string.Join(Environment.NewLine, functions)}
 }}";
         }
     }
