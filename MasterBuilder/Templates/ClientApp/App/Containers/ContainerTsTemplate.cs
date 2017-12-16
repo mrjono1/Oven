@@ -33,6 +33,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
             var imports = new List<string>();
             var classProperties = new List<string>();
             var constructorBodySections = new List<string>();
+            var onNgInitBodySections = new List<string>();
             var constructorParamerters = new List<string>{
                 "private http: HttpClient",
                 "private router: Router",
@@ -42,11 +43,17 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
             var hasForm = false;
             foreach (var screenSection in Screen.ScreenSections)
             {
-                var entity = Project.Entities.SingleOrDefault(e => e.Id == screenSection.EntityId.Value);
+                Entity entity = null;
+                Entity formEntity = null;
+                if (screenSection.EntityId.HasValue) {
+                    entity = Project.Entities.SingleOrDefault(e => e.Id == screenSection.EntityId.Value);
+                }
 
                 switch (screenSection.ScreenSectionType)
                 {
                     case ScreenSectionTypeEnum.Form:
+
+                        formEntity = entity;
 
                         imports.Add($"import {{ {screenSection.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}'");
                         imports.Add("import { FormControl, FormGroup, Validators } from '@angular/forms';");
@@ -54,6 +61,33 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
                         classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}: {screenSection.InternalName};");
                         classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}Form: FormGroup;");
                         classProperties.Add("public new: boolean;");
+
+                        var parentProperty = (from p in entity.Properties
+                                              where p.Type == PropertyTypeEnum.ParentRelationship
+                                              select p).SingleOrDefault();
+                        string setParentProperty = null;
+                        if (parentProperty != null)
+                        {
+                            var parentEnitity = (from e in Project.Entities
+                                                 where e.Id == parentProperty.ParentEntityId
+                                                 select e).SingleOrDefault();
+                            setParentProperty = $"this.{screenSection.InternalName.ToCamlCase()}.{parentProperty.InternalName.ToCamlCase()}Id = params['{parentEnitity.InternalName.ToCamlCase()}Id'];";
+                        }
+
+                        onNgInitBodySections.Add($@"this.route.params.subscribe(params => {{
+            if (params['{Screen.InternalName.ToCamlCase()}Id']) {{
+                this.new = false;
+                this.http.get<{screenSection.InternalName}>('api/{entity.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.ToCamlCase()}Id']).subscribe(result => {{
+                    this.{screenSection.InternalName.ToCamlCase()} = result;
+                    this.setupForm();
+                }}, error => console.error(error));
+            }} else {{
+                this.new = true;
+                this.{screenSection.InternalName.ToCamlCase()} = new {screenSection.InternalName}();
+                {setParentProperty}
+                this.setupForm();
+            }}
+        }});");
 
                         hasForm = true;
                         break;
@@ -63,9 +97,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
                         imports.Add($"import {{ {screenSection.InternalName}Request }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Request'");
                         imports.Add($"import {{ {screenSection.InternalName}Response }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Response'");
 
-                        constructorBodySections.Add($@"    this.{screenSection.InternalName.ToCamlCase()}Request = new {screenSection.InternalName}Request();
-    this.{screenSection.InternalName.ToCamlCase()}Request.page = 1;
-    this.{screenSection.InternalName.ToCamlCase()}Request.pageSize = 20;");
+                        constructorBodySections.Add($@"        this.{screenSection.InternalName.ToCamlCase()}Request = new {screenSection.InternalName}Request();
+        this.{screenSection.InternalName.ToCamlCase()}Request.page = 1;
+        this.{screenSection.InternalName.ToCamlCase()}Request.pageSize = 20;");
 
                         classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}Response: {screenSection.InternalName}Response;");
                         classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}Request: {screenSection.InternalName}Request;");
@@ -108,14 +142,14 @@ import {{ Router, ActivatedRoute }} from '@angular/router';
     templateUrl: './{Screen.InternalName.ToLowerInvariant()}.component.html'{cssFile}
 }})
 export class {Screen.InternalName}Component implements OnInit {{
-{string.Join(string.Concat(Environment.NewLine, "    "), classProperties.Distinct())}
+    {string.Join(string.Concat(Environment.NewLine, "    "), classProperties.Distinct())}
 
-    constructor({string.Join(string.Concat(",", Environment.NewLine), constructorParamerters.Distinct())}){{
+    constructor({string.Join(string.Concat(",", Environment.NewLine, "      "), constructorParamerters.Distinct())}){{
 {string.Join(Environment.NewLine, constructorBodySections)}
     }}
 
     ngOnInit(){{
-
+{string.Join(Environment.NewLine, onNgInitBodySections.Distinct())}
     }}
 
 
