@@ -117,6 +117,16 @@ namespace MasterBuilder
             }
         }
 
+        internal static IEnumerable<Task> WriteTemplates(string baseDirectory, ITemplateBuilder templateBuilder)
+        {
+            var tasks = new List<Task>();
+            foreach (var template in templateBuilder.GetTemplates())
+            {
+                tasks.Add(WriteTemplate(baseDirectory, template));
+            }
+            return tasks;
+        }
+
         internal static Task WriteTemplate(string baseDirectory, ITemplate template)
         {
             var path = Path.Combine(CreateFolder(baseDirectory, template.GetFilePath()), template.GetFileName());

@@ -98,7 +98,6 @@ namespace MasterBuilder
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackAdditionsTemplate.FileName()), WebPackAdditionsTemplate.Evaluate()),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackConfigTemplate.FileName()), WebPackConfigTemplate.Evaluate()),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackConfigVendorTemplate.FileName()), WebPackConfigVendorTemplate.Evaluate()),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, PackageJsonTemplate.FileName()), PackageJsonTemplate.Evaluate(project)),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, WebConfigTemplate.FileName()), WebConfigTemplate.Evaluate(project)),
 
                     // Generic Views & Controllers
@@ -134,7 +133,6 @@ namespace MasterBuilder
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppComponentTsTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleBrowserTemplate()),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleServerTemplate()),
-                    FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleTemplate(project)),
 
                     // ClientApp/App/Shared
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.Shared.LinkServiceTemplate()),
@@ -142,9 +140,25 @@ namespace MasterBuilder
                     // wwwroot/assets/i18n
                     FileHelper.WriteTemplate(projectDirectory, new Templates.WwwRoot.i18n.LanguageTemplate()),
                 });
-
             }
-            
+
+
+            filesToWrite.AddRange(new Task[]
+            {
+                // Create Project Files
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, PackageJsonTemplate.FileName()), PackageJsonTemplate.Evaluate(project)),
+             
+                // ClientApp/App
+                FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleTemplate(project)),
+
+                //
+                
+            });
+
+
+            // ClientApp/app/models
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.ClientApp.App.Models.ModelTemplateBuilder(project)));
+
             if (project.Entities != null)
             {
                 foreach (var item in project.Entities)
