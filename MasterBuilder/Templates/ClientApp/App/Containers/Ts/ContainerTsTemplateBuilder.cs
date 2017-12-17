@@ -3,7 +3,7 @@ using MasterBuilder.Request;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MasterBuilder.Templates.ClientApp.App.Containers
+namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 {
     public class ContainerTsTemplateBuilder : ITemplateBuilder
     {

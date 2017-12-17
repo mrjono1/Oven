@@ -36,12 +36,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         {
             var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
             
-            Property parentProperty = null;
-
             string parentPropertyFilterString = null;
             Entity parentEntity = null;
             if (entity != null)
             {
+                var parentProperty = (from p in entity.Properties
+                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      select p).SingleOrDefault();
                 if (parentProperty != null)
                 {
                     parentEntity = (from s in Project.Entities

@@ -46,7 +46,14 @@ namespace MasterBuilder.Templates.ClientApp.App
             };
             foreach (var screen in Project.Screens)
             {
-                declarations.Add($"{screen.InternalName}Component", $"import {{ {screen.InternalName}Component }} from './components/{screen.InternalName.ToCamlCase()}/{screen.InternalName.ToCamlCase()}.component';");
+                declarations.Add($"{screen.InternalName}Component", $"import {{ {screen.InternalName}Component }} from './containers/{screen.InternalName.ToLowerInvariant()}/{screen.InternalName.ToLowerInvariant()}.component';");
+            }
+
+            // Providers
+            var providers = new Dictionary<string, string>();
+            foreach (var entity in Project.Entities)
+            {
+                providers.Add($"{entity.InternalName}Service", $"import {{ {entity.InternalName}Service }} from './shared/{entity.InternalName.ToCamlCase()}.service'");
             }
             
             return $@"import {{ NgModule, Inject }} from '@angular/core';
@@ -67,6 +74,7 @@ import {{ TranslateHttpLoader }} from '@ngx-translate/http-loader';
 {string.Join(Environment.NewLine, declarations.Values)}
 
 import {{ LinkService }} from './shared/link.service';
+{string.Join(Environment.NewLine, providers.Values)}
 import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine';
 
 export function createTranslateLoader(http: HttpClient, baseHref) {{
@@ -116,6 +124,7 @@ export function createTranslateLoader(http: HttpClient, baseHref) {{
     ],
     providers: [
         LinkService,
+            {string.Join(string.Concat(",", Environment.NewLine, "        "), providers.Keys)},
         TranslateModule
     ],
     bootstrap: [AppComponent]

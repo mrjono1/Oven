@@ -5,7 +5,7 @@ using System.Text;
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.ClientApp.App.Containers
+namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 {
     public class ContainerTsTemplate: ITemplate
     {
@@ -20,7 +20,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
 
         public string GetFileName()
         {
-            return $"{Screen.InternalName.ToLowerInvariant()}.ts";
+            return $"{Screen.InternalName.ToLowerInvariant()}.component.ts";
         }
 
         public string[] GetFilePath()
@@ -50,6 +50,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
                     entity = Project.Entities.SingleOrDefault(e => e.Id == screenSection.EntityId.Value);
                 }
 
+                Property parentProperty = null;
                 switch (screenSection.ScreenSectionType)
                 {
                     case ScreenSectionTypeEnum.Form:
@@ -63,7 +64,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
                         classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}Form: FormGroup;");
                         classProperties.Add("public new: boolean;");
 
-                        var parentProperty = (from p in entity.Properties
+                        parentProperty = (from p in entity.Properties
                                               where p.Type == PropertyTypeEnum.ParentRelationship
                                               select p).SingleOrDefault();
                         string setParentProperty = null;
@@ -104,7 +105,36 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
 
                         classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}Response: {screenSection.InternalName}Response;");
                         classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}Request: {screenSection.InternalName}Request;");
-                        
+
+
+                        string parentPropertyFilterString = null;
+                        Entity parentEntity = null;
+                        if (entity != null)
+                        {
+                            parentProperty = (from p in entity.Properties
+                                                  where p.Type == PropertyTypeEnum.ParentRelationship
+                                                  select p).SingleOrDefault();
+                            if (parentProperty != null)
+                            {
+                                parentEntity = (from s in Project.Entities
+                                                where s.Id == parentProperty.ParentEntityId
+                                                select s).SingleOrDefault();
+                                parentPropertyFilterString = $"this.{screenSection.InternalName.ToCamlCase()}Request.{parentEntity.InternalName.ToCamlCase()}Id = params['{parentEntity.InternalName.ToCamlCase()}Id'];";
+                            }
+                        }
+
+                        onNgInitBodySections.Add($@"      this.route.params.subscribe(params => {{
+            this.{screenSection.InternalName.ToCamlCase()}Request = new {screenSection.InternalName}Request();
+            this.{screenSection.InternalName.ToCamlCase()}Request.page = 1;
+            this.{screenSection.InternalName.ToCamlCase()}Request.pageSize = 20;
+            {parentPropertyFilterString}
+
+             this.{entity.InternalName.ToCamlCase()}Service.get{Screen.InternalName}{screenSection.InternalName}(this.{screenSection.InternalName.ToCamlCase()}Request).subscribe( result => {{
+                this.{screenSection.InternalName.ToCamlCase()}Response = result;
+            }});
+        }});");
+
+
                         break;
                     case ScreenSectionTypeEnum.Grid:
                         break;
@@ -129,13 +159,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers
                 functions.Add(form.GetFunctions());
             }
 
-            string cssFile = null;
-            if (!string.IsNullOrEmpty(Screen.Css))
+            if (Screen.InternalName.Equals("home", StringComparison.OrdinalIgnoreCase))
             {
-                cssFile = $@",
-    styleUrls: ['./{Screen.InternalName.ToLowerInvariant()}.component.css']";
+                imports.Add("import { TranslateService } from '@ngx-translate/core';");
+                classProperties.Add($"title: string = '{Project.Title}'");
+                constructorParamerters.Add("public translate: TranslateService");
+                functions.Add(@"public setLanguage(lang) {
+        this.translate.use(lang);
+    }");
             }
-
+            
             return $@"import {{ HttpClient }} from '@angular/common/http';
 import {{ Component, Inject, OnInit }} from '@angular/core';
 import {{ Router, ActivatedRoute }} from '@angular/router';
@@ -143,7 +176,7 @@ import {{ Router, ActivatedRoute }} from '@angular/router';
 
 @Component({{
     selector: '{Screen.InternalName.ToLowerInvariant()}',
-    templateUrl: './{Screen.InternalName.ToLowerInvariant()}.component.html'{cssFile}
+    templateUrl: './{Screen.InternalName.ToLowerInvariant()}.component.html'
 }})
 export class {Screen.InternalName}Component implements OnInit {{
     {string.Join(string.Concat(Environment.NewLine, "    "), classProperties.Distinct())}
