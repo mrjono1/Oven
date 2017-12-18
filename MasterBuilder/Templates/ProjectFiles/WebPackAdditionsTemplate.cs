@@ -1,16 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MasterBuilder.Helpers;
+using System;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
-    public class WebPackAdditionsTemplate
+    /// <summary>
+    /// Webpack additions
+    /// </summary>
+    public class WebPackAdditionsTemplate : ITemplate
     {
-        public static string FileName()
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
             return "webpack.additions.js";
         }
-        public static string Evaluate()
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return @"/* [ Webpack Additions ]
  *
@@ -29,8 +46,7 @@ const sharedModuleRules = [
 
 module.exports = {
   sharedModuleRules
-};
-";
+};";
         }
     }
 }

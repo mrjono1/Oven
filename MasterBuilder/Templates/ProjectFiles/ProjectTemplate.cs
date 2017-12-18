@@ -1,30 +1,44 @@
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
+    /// <summary>
+    /// Project
+    /// </summary>
     public class ProjectTemplate: ITemplate
     {
         private readonly Project Project;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ProjectTemplate(Project project)
         {
             Project = project;
         }
 
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return $"{Project.InternalName}.csproj";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new string[0];
         }
 
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             string solutionGuid = Guid.NewGuid().ToString();

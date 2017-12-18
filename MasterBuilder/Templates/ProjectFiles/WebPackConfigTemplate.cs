@@ -1,16 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
-    public class WebPackConfigTemplate
+    /// <summary>
+    /// Webpack config
+    /// </summary>
+    public class WebPackConfigTemplate : ITemplate
     {
-        public static string FileName()
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
             return "webpack.config.js";
         }
-        public static string Evaluate()
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return @"/*
  * Webpack (JavaScriptServices) with a few changes & updates

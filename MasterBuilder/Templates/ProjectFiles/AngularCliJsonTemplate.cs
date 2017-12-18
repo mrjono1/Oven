@@ -1,25 +1,49 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
     /// <summary>
     /// angular-cli.json configration
     /// </summary>
-    public class AngularCliJsonTemplate
+    public class AngularCliJsonTemplate: ITemplate
     {
-        public static string FileName()
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public AngularCliJsonTemplate(Project project)
+        {
+            Project = project;
+        }
+
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
             return "angular-cli.json";
         }
-        public static string Evaluate(Project project)
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return $@"{{
   ""$schema"": ""./node_modules/@angular/cli/lib/config/schema.json"",
   ""project"": {{
-    ""name"": ""{project.Title}""
+    ""name"": ""{Project.Title}""
   }},
   ""apps"": [
     {{

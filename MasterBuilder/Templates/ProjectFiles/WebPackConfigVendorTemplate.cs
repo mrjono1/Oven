@@ -1,16 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
-    public class WebPackConfigVendorTemplate
+    /// <summary>
+    /// Webpack config vendor
+    /// </summary>
+    public class WebPackConfigVendorTemplate : ITemplate
     {
-        public static string FileName()
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
             return "webpack.config.vendor.js";
         }
-        public static string Evaluate()
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return @"const path = require('path');
 const webpack = require('webpack');

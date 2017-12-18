@@ -1,17 +1,45 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
-    public class StartupTemplate
+    /// <summary>
+    /// Startup
+    /// </summary>
+    public class StartupTemplate :ITemplate
     {
-        public static string FileName()
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public StartupTemplate(Project project)
+        {
+            Project = project;
+        }
+
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
             return "Startup.cs";
         }
-        public static string Evaluate(Project project)
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return $@"using System;
 using System.IO;
@@ -24,7 +52,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace {project.InternalName}
+namespace {Project.InternalName}
 {{
     public class Startup
     {{
@@ -60,18 +88,18 @@ namespace {project.InternalName}
             services.AddNodeServices();
 
             // Add Entity Framework service
-            services.AddDbContext<Entities.{project.InternalName}Context>(options =>
+            services.AddDbContext<Entities.{Project.InternalName}Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));
 
             // Add Swagger service
             services.AddSwaggerGen(c =>
             {{
-                c.SwaggerDoc(""v1"", new Info {{ Title = ""{project.Title} API"", Version = ""v1"" }});
+                c.SwaggerDoc(""v1"", new Info {{ Title = ""{Project.Title} API"", Version = ""v1"" }});
             }});
         }}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Entities.{project.InternalName}Context context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Entities.{Project.InternalName}Context context)
         {{
             loggerFactory.AddConsole(Configuration.GetSection(""Logging""));
             loggerFactory.AddDebug();
@@ -94,7 +122,7 @@ namespace {project.InternalName}
                 // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
                 app.UseSwaggerUI(c =>
                 {{
-                    c.SwaggerEndpoint(""/swagger/v1/swagger.json"", ""{project.Title} API V1"");
+                    c.SwaggerEndpoint(""/swagger/v1/swagger.json"", ""{Project.Title} API V1"");
                 }});
 
                 app.MapWhen(x => !x.Request.Path.Value.StartsWith(""/swagger"", StringComparison.OrdinalIgnoreCase), builder =>

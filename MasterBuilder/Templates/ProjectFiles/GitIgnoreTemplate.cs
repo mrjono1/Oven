@@ -1,16 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
-    public class GitIgnoreTemplate
+    /// <summary>
+    /// Git ignore
+    /// </summary>
+    public class GitIgnoreTemplate :ITemplate
     {
-        public static string FileName()
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileName()
         {
             return ".gitignore";
         }
-        public static string Evaluate()
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        /// <returns></returns>
+        public string GetFileContent()
         {
             return @"/Properties/launchSettings.json
 

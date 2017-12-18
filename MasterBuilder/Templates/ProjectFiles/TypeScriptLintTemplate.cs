@@ -1,12 +1,32 @@
-﻿namespace MasterBuilder.Templates.ProjectFiles
+using MasterBuilder.Helpers;
+
+namespace MasterBuilder.Templates.ProjectFiles
 {
-    public class TypeScriptLintTemplate
+    /// <summary>
+    /// Type script lint
+    /// </summary>
+    public class TypeScriptLintTemplate : ITemplate
     {
-        public static string FileName()
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
             return "tslist.json";
         }
-        public static string Evaluate()
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return @"{
   ""defaultSeverity"": ""warn"",

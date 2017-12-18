@@ -1,17 +1,32 @@
-﻿using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
-    public class WebConfigTemplate
+    /// <summary>
+    /// Web config
+    /// </summary>
+    public class WebConfigTemplate : ITemplate
     {
-        public static string FileName()
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
             return "web.config";
         }
-        public static string Evaluate(Project project)
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return @"<?xml version=""1.0"" encoding=""utf-8""?>
 <configuration>

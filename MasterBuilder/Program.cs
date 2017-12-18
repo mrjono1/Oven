@@ -1,8 +1,5 @@
 using MasterBuilder.Request;
-using MasterBuilder.Templates.Controllers;
-using MasterBuilder.Templates.Entities;
 using MasterBuilder.Templates.Models;
-using MasterBuilder.Templates.ProjectFiles;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,16 +58,12 @@ namespace MasterBuilder
             }
 
             // Create Directories
-            var binPath = FileHelper.CreateFolder(projectDirectory, "bin");
             var clientAppPath = FileHelper.CreateFolder(projectDirectory, "ClientApp");
             var controllersPath = FileHelper.CreateFolder(projectDirectory, "Controllers");
             var entitiesPath = FileHelper.CreateFolder(projectDirectory, "Entities");
             var extensionsPath = FileHelper.CreateFolder(projectDirectory, "Extensions");
             var entityTypeConfigsPath = FileHelper.CreateFolder(projectDirectory, "EntityTypeConfigurations");
             var modelsPath = FileHelper.CreateFolder(projectDirectory, "Models");
-            var nodeModulesPath = FileHelper.CreateFolder(projectDirectory, "node_modules");
-            var objPath = FileHelper.CreateFolder(projectDirectory, "obj");
-            var propertiesPath = FileHelper.CreateFolder(projectDirectory, "Properties");
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
 
             if (fullBuild)
@@ -85,17 +78,17 @@ namespace MasterBuilder
                     FileHelper.WriteTemplate(projectDirectory, new Templates.SolutionTemplate(project)),
                     
                     // Create Project Files
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, AngularCliJsonTemplate.FileName()), AngularCliJsonTemplate.Evaluate(project)),
-                    FileHelper.WriteTemplate(projectDirectory, new ProjectTemplate(project)),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, StartupTemplate.FileName()), StartupTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, GitIgnoreTemplate.FileName()), GitIgnoreTemplate.Evaluate()),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, AppSettingsTemplate.FileName()), AppSettingsTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, TypeScriptLintTemplate.FileName()), TypeScriptLintTemplate.Evaluate()),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, TypeScriptConfigTemplate.FileName()), TypeScriptConfigTemplate.Evaluate()),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackAdditionsTemplate.FileName()), WebPackAdditionsTemplate.Evaluate()),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackConfigTemplate.FileName()), WebPackConfigTemplate.Evaluate()),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackConfigVendorTemplate.FileName()), WebPackConfigVendorTemplate.Evaluate()),
-                    FileHelper.WriteAllText(Path.Combine(projectDirectory, WebConfigTemplate.FileName()), WebConfigTemplate.Evaluate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.AngularCliJsonTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.ProjectTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.StartupTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.GitIgnoreTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.AppSettingsTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.TypeScriptLintTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.TypeScriptConfigTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.WebPackAdditionsTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.WebPackConfigTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.WebPackConfigVendorTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.WebConfigTemplate()),
 
                     // Views
                     FileHelper.WriteTemplate(projectDirectory, new Templates.Views.ViewImportsTemplate(project)),
@@ -142,7 +135,7 @@ namespace MasterBuilder
             filesToWrite.AddRange(new Task[]
             {
                 // Create Project Files
-                FileHelper.WriteAllText(Path.Combine(projectDirectory, PackageJsonTemplate.FileName()), PackageJsonTemplate.Evaluate(project)),
+                FileHelper.WriteAllText(Path.Combine(projectDirectory, Templates.ProjectFiles.PackageJsonTemplate.FileName()), Templates.ProjectFiles.PackageJsonTemplate.Evaluate(project)),
              
                 // ClientApp/App
                 FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleTemplate(project)),
@@ -169,10 +162,10 @@ namespace MasterBuilder
                     // Create Entity & Map
                     filesToWrite.AddRange(
                         new Task[] {
-                            FileHelper.WriteAllText(EntityTemplate.FileName(entitiesPath, item), EntityTemplate.Evaluate(project, item)),
+                            FileHelper.WriteAllText(Templates.Entities.EntityTemplate.FileName(entitiesPath, item), Templates.Entities.EntityTemplate.Evaluate(project, item)),
                             FileHelper.WriteAllText(Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.FileName(entityTypeConfigsPath, item), Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.Evaluate(project, item)),
 
-                            FileHelper.WriteAllText(ControllerTemplate.FileName(controllersPath, item, null), ControllerTemplate.Evaluate(project, item, null))
+                            FileHelper.WriteAllText(Templates.Controllers.ControllerTemplate.FileName(controllersPath, item, null), Templates.Controllers.ControllerTemplate.Evaluate(project, item, null))
                     });
                     if (project.Screens != null)
                     {
@@ -221,7 +214,7 @@ namespace MasterBuilder
                     }
                 }
             }
-            filesToWrite.Add(FileHelper.WriteAllText(EntityFrameworkContextTemplate.FileName(entitiesPath, project), EntityFrameworkContextTemplate.Evaluate(project)));
+            filesToWrite.Add(FileHelper.WriteAllText(Templates.Entities.EntityFrameworkContextTemplate.FileName(entitiesPath, project), Templates.Entities.EntityFrameworkContextTemplate.Evaluate(project)));
 
 
             if (project.Screens != null)
@@ -231,7 +224,7 @@ namespace MasterBuilder
                     filesToWrite.AddRange(
                         new Task[] {
                             // Create Controller & Models for UI
-                            FileHelper.WriteAllText(ControllerTemplate.FileName(controllersPath, null, screen), ControllerTemplate.Evaluate(project, null, screen)),
+                            FileHelper.WriteAllText(Templates.Controllers.ControllerTemplate.FileName(controllersPath, null, screen), Templates.Controllers.ControllerTemplate.Evaluate(project, null, screen)),
                             //File.WriteAllText(ModelTemplate.FileName(modelsPath, item), ModelTemplate.Evaluate(project, item));                            
                         }
                     );

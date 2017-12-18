@@ -1,24 +1,47 @@
-﻿using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
     /// <summary>
     /// appsettings.json configuration
     /// </summary>
-    public class AppSettingsTemplate
+    public class AppSettingsTemplate: ITemplate
     {
-        public static string FileName()
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public AppSettingsTemplate(Project project)
+        {
+            Project = project;
+        }
+
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
             return "appsettings.json";
         }
-        public static string Evaluate(Project project)
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return $@"{{
   ""ConnectionStrings"": {{
-    ""DefaultConnection"": ""{project.DatabaseConnectionString}""
+    ""DefaultConnection"": ""{Project.DatabaseConnectionString}""
   }},
   ""Logging"": {{
     ""IncludeScopes"": false,
