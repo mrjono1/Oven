@@ -135,13 +135,10 @@ namespace MasterBuilder
             filesToWrite.AddRange(new Task[]
             {
                 // Create Project Files
-                FileHelper.WriteAllText(Path.Combine(projectDirectory, Templates.ProjectFiles.PackageJsonTemplate.FileName()), Templates.ProjectFiles.PackageJsonTemplate.Evaluate(project)),
+                FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.PackageJsonTemplate(project)),
              
                 // ClientApp/App
-                FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleTemplate(project)),
-
-                //
-                
+                FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleTemplate(project))
             });
 
 

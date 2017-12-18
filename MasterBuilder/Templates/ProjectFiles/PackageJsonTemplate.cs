@@ -1,33 +1,51 @@
-﻿using Humanizer;
+using Humanizer;
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
     /// <summary>
     /// package.json configuration
     /// </summary>
-    public class PackageJsonTemplate
+    public class PackageJsonTemplate : ITemplate
     {
+        private readonly Project Project;
+
         /// <summary>
-        /// File Name
+        /// Constructor
         /// </summary>
-        public static string FileName()
+        public PackageJsonTemplate(Project project)
+        {
+            Project = project;
+        }
+
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
             return "package.json";
         }
 
         /// <summary>
-        /// Evaluate the file content
+        /// Get file path
         /// </summary>
-        public static string Evaluate(Project project)
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        /// <returns></returns>
+        public string GetFileContent()
         {
             // 'private: true' ensures that this project will not be published on npm
-            var topSettings = $@"""name"": ""{project.InternalName.Kebaberize()}"",
+            var topSettings = $@"""name"": ""{Project.InternalName.Kebaberize()}"",
   ""private"": true,
-  ""version"": ""{project.Version}""";
+  ""version"": ""{Project.Version}""";
 
             var scripts = @"""scripts"": {
     ""lint"": ""tslint -p tsconfig.json"",
@@ -123,5 +141,6 @@ namespace MasterBuilder.Templates.ProjectFiles
                 string.Join(",", topSettings, scripts, dependencies, devDependencies), 
                 "}");
         }
+        
     }
 }
