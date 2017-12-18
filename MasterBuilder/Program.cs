@@ -1,10 +1,8 @@
 using MasterBuilder.Request;
-using MasterBuilder.Templates;
 using MasterBuilder.Templates.Controllers;
 using MasterBuilder.Templates.Entities;
 using MasterBuilder.Templates.Models;
 using MasterBuilder.Templates.ProjectFiles;
-using MasterBuilder.Templates.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,7 +39,7 @@ namespace MasterBuilder
         public async Task Run(string outputDirectory) {
             var project = new Test().Project;
 
-            var fullBuild = false;
+            var fullBuild = true;
 
             // Validate & Pre Process Project
             if (!project.Validate(out string messages))
@@ -73,7 +71,6 @@ namespace MasterBuilder
             var nodeModulesPath = FileHelper.CreateFolder(projectDirectory, "node_modules");
             var objPath = FileHelper.CreateFolder(projectDirectory, "obj");
             var propertiesPath = FileHelper.CreateFolder(projectDirectory, "Properties");
-            var viewsPath = FileHelper.CreateFolder(projectDirectory, "Views");
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
 
             if (fullBuild)
@@ -85,8 +82,8 @@ namespace MasterBuilder
                 filesToWrite.AddRange(new Task[]
                 {
                     // Create Solution File
-                    FileHelper.WriteAllText(Path.Combine(solutionDirectory, SolutionTemplate.FileName(project)), SolutionTemplate.Evaluate(project)),
-
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.SolutionTemplate(project)),
+                    
                     // Create Project Files
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, AngularCliJsonTemplate.FileName()), AngularCliJsonTemplate.Evaluate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new ProjectTemplate(project)),
@@ -100,19 +97,18 @@ namespace MasterBuilder
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, WebPackConfigVendorTemplate.FileName()), WebPackConfigVendorTemplate.Evaluate()),
                     FileHelper.WriteAllText(Path.Combine(projectDirectory, WebConfigTemplate.FileName()), WebConfigTemplate.Evaluate(project)),
 
-                    // Generic Views & Controllers
-                    //FileHelper.WriteAllText(HomeControllerTemplate.FileName(controllersPath), HomeControllerTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(ViewImportsTemplate.FileName(viewsPath), ViewImportsTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(ViewStartTemplate.FileName(viewsPath), ViewStartTemplate.Evaluate()),
-                    FileHelper.WriteAllText(Templates.Views.Home.IndexTemplate.FileName(viewsPath), Templates.Views.Home.IndexTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Templates.Views.Shared.ErrorTemplate.FileName(viewsPath), Templates.Views.Shared.ErrorTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Templates.Views.Shared.LayoutTemplate.FileName(viewsPath), Templates.Views.Shared.LayoutTemplate.Evaluate(project)),
+                    // Views
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.Views.ViewImportsTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.Views.ViewStartTemplate()),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.Views.Home.IndexTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.Views.Shared.ErrorTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.Views.Shared.LayoutTemplate(project)),
 
                     FileHelper.WriteTemplate(projectDirectory, new Templates.Extensions.HttpRequestExtensionsTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.CoreModels.IRequestTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.CoreModels.TransferDataTemplate(project)),
 
-                    // Client App
+                    // ClientApp
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.BootBrowserTsTemplate()),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.BootServerTsTemplate()),
 

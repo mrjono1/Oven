@@ -1,19 +1,43 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace MasterBuilder.Templates.Views.Shared
 {
-    public class LayoutTemplate
+    /// <summary>
+    /// Layout
+    /// </summary>
+    public class LayoutTemplate : ITemplate
     {
-        public static string FileName(string folder)
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public LayoutTemplate(Project project)
         {
-            return Path.Combine(FileHelper.CreateFolder(folder, "Shared"), "_Layout.cshtml");
+            Project = project;
         }
 
-        public static string Evaluate(Project project)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return "_Layout.cshtml";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "Views", "Shared" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return $@"<!DOCTYPE html>
 <html>

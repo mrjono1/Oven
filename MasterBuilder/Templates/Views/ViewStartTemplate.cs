@@ -1,23 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.Views
 {
-    public class ViewStartTemplate
+    public class ViewStartTemplate : ITemplate
     {
-        public static string FileName(string folder)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
-            return Path.Combine(folder, "_ViewStart.cshtml");
+            return "_ViewStart.cshtml";
         }
 
-        public static string Evaluate()
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "Views" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        /// <returns></returns>
+        public string GetFileContent()
         {
             return @"@{
     Layout = ""_Layout"";
-}
-";
+}";
         }
     }
 }

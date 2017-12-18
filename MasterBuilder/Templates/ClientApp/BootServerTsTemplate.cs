@@ -1,21 +1,31 @@
 using MasterBuilder.Helpers;
-using MasterBuilder.Request;
-using System.IO;
 
 namespace MasterBuilder.Templates.ClientApp
 {
+    /// <summary>
+    /// boot.server.ts
+    /// </summary>
     public class BootServerTsTemplate: ITemplate
     {
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "boot.server.ts";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "ClientApp" };
         }
 
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return @"import 'zone.js/dist/zone-node';

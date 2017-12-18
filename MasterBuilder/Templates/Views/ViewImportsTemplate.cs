@@ -1,21 +1,45 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace MasterBuilder.Templates.Views
 {
-    public class ViewImportsTemplate
+    /// <summary>
+    /// View Imports
+    /// </summary>
+    public class ViewImportsTemplate : ITemplate
     {
-        public static string FileName(string folder)
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ViewImportsTemplate(Project project)
         {
-            return Path.Combine(folder, "_ViewImports.cshtml");
+            Project = project;
         }
 
-        public static string Evaluate(Project project)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
-            return $@"@using {project.InternalName}
+            return "_ViewImports.cshtml";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "Views" };
+        }
+
+        /// <summary>
+        /// Get File Content
+        /// </summary>
+        public string GetFileContent()
+        {
+            return $@"@using {Project.InternalName}
 @addTagHelper *, Microsoft.AspNetCore.SpaServices";
         }
     }

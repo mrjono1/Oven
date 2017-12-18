@@ -1,17 +1,44 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Templates
 {
-    public class SolutionTemplate
+    /// <summary>
+    /// Solution file
+    /// </summary>
+    public class SolutionTemplate: ITemplate
     {
-        public static string FileName(Project project)
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public SolutionTemplate(Project project)
         {
-            return $"{project.InternalName}.sln";
+            Project = project;
         }
-        public static string Evaluate(Project project)
+
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return $"{Project.InternalName}.sln";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             string solutionGuid = Guid.NewGuid().ToString();
             return $@"
@@ -19,7 +46,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project(""{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}"") = ""{project.InternalName}"", ""{project.InternalName}\{project.InternalName}.csproj"", ""{{{project.Id.ToString()}}}""
+Project(""{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}"") = ""{Project.InternalName}"", ""{Project.InternalName}\{Project.InternalName}.csproj"", ""{{{Project.Id.ToString()}}}""
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +54,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{{{project.Id.ToString()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{{{project.Id.ToString()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{{{project.Id.ToString()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {{{project.Id.ToString()}}}.Release|Any CPU.Build.0 = Release|Any CPU
+		{{{Project.Id.ToString()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{{{Project.Id.ToString()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{{{Project.Id.ToString()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {{{Project.Id.ToString()}}}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,8 +65,7 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {{{solutionGuid}}}
 	EndGlobalSection
-EndGlobal
-";
+EndGlobal";
         }
     }
 }

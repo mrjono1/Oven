@@ -1,3 +1,4 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
@@ -6,14 +7,42 @@ using System.Text;
 
 namespace MasterBuilder.Templates.Views.Home
 {
-    public class IndexTemplate
+    /// <summary>
+    /// Index
+    /// </summary>
+    public class IndexTemplate :ITemplate
     {
-        public static string FileName(string folder)
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="project"></param>
+        public IndexTemplate(Project project)
         {
-            return Path.Combine(FileHelper.CreateFolder(folder, "Home"), "Index.cshtml");
+            Project = project;
         }
 
-        public static string Evaluate(Project project)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return "Index.cshtml";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "Views", "Home" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             return $@"@Html.Raw(ViewData[""SpaHtml""])
 
