@@ -152,6 +152,9 @@ namespace MasterBuilder
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.ClientApp.App.Containers.Ts.ContainerTsTemplateBuilder(project)));
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.ClientApp.App.Containers.Html.ContainerHtmlTemplateBuilder(project)));
 
+            // Entities
+            filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.Entities.EntityFrameworkContextTemplate(project)));
+
             if (project.Entities != null)
             {
                 foreach (var item in project.Entities)
@@ -204,9 +207,7 @@ namespace MasterBuilder
                     }
                 }
             }
-            filesToWrite.Add(FileHelper.WriteAllText(Templates.Entities.EntityFrameworkContextTemplate.FileName(entitiesPath, project), Templates.Entities.EntityFrameworkContextTemplate.Evaluate(project)));
-
-
+            
             if (project.Screens != null)
             {
                 foreach (var screen in project.Screens.Where(p => !p.EntityId.HasValue))

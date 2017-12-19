@@ -1,28 +1,55 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.Entities
 {
-    public class EntityFrameworkContextTemplate
+    /// <summary>
+    /// Entity Framework Core Context
+    /// </summary>
+    public class EntityFrameworkContextTemplate : ITemplate
     {
-        public static string FileName(string folder, Project project)
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public EntityFrameworkContextTemplate(Project project)
         {
-            return Path.Combine(folder, $"{project.InternalName}Context.cs");
+            Project = project;
         }
 
-        public static string Evaluate(Project project)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return $"{Project.InternalName}Context.cs";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "Entities" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             StringBuilder properties = null;
             StringBuilder configurations = null;
-            if (project.Entities != null)
+            if (Project.Entities != null)
             {
                 properties = new StringBuilder();
                 configurations = new StringBuilder();
-                foreach (var item in project.Entities)
+                foreach (var item in Project.Entities)
                 {
                     properties.AppendLine($"        public DbSet<{item.InternalName}> {item.InternalNamePlural} {{ get; set; }}");
                     configurations.AppendLine($"            builder.ApplyConfiguration(new {item.InternalName}Config());");
@@ -30,7 +57,7 @@ namespace MasterBuilder.Templates.Entities
             }
 
             var seed = new Dictionary<string, string>();
-            foreach (var entity in project.Entities.Where(e => e.Seed != null))
+            foreach (var entity in Project.Entities.Where(e => e.Seed != null))
             {
                 var content = Newtonsoft.Json.JsonConvert.SerializeObject(entity.Seed.JsonData);
                 
@@ -96,17 +123,17 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
-using {project.InternalName}.EntityTypeConfigurations;
+using {Project.InternalName}.EntityTypeConfigurations;
 using Newtonsoft.Json;
 
-namespace {project.InternalName}.Entities
+namespace {Project.InternalName}.Entities
 {{
     /// <summary>
-    /// {project.InternalName} Entity Framework Database Context
+    /// {Project.InternalName} Entity Framework Database Context
     /// </summary>
-    public class {project.InternalName}Context : DbContext
+    public class {Project.InternalName}Context : DbContext
     {{
-        public {project.InternalName}Context(DbContextOptions<{project.InternalName}Context> options) : base(options)
+        public {Project.InternalName}Context(DbContextOptions<{Project.InternalName}Context> options) : base(options)
         {{
         }}
 {properties}
@@ -164,7 +191,7 @@ namespace {project.InternalName}.Entities
 
             var differ = this.GetService<IMigrationsModelDiffer>();
 
-            var operations = differ.GetDifferences(databaseModel, currentModel);{(!project.AllowDestructiveDatabaseChanges ? @"
+            var operations = differ.GetDifferences(databaseModel, currentModel);{(!Project.AllowDestructiveDatabaseChanges ? @"
 
             if (operations.Any(o => o.IsDestructiveChange))
             {{
@@ -187,7 +214,5 @@ namespace {project.InternalName}.Entities
     }}
 }}";
         }
-
-
     }
 }
