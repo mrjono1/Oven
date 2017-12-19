@@ -36,7 +36,7 @@ namespace MasterBuilder
         public async Task Run(string outputDirectory) {
             var project = new Test().Project;
 
-            var fullBuild = true;
+            var fullBuild = false;
 
             // Validate & Pre Process Project
             if (!project.Validate(out string messages))
@@ -200,13 +200,6 @@ namespace MasterBuilder
                                     }
                                 }
                             }
-
-                            // Client Side
-                            filesToWrite.AddRange(
-                            new Task[] {
-                        FileHelper.WriteAllText(Templates.ClientApp.Components.Screen.ScreenComponentHtmlTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Screen.ScreenComponentHtmlTemplate.Evaluate(project, screen)),
-                        FileHelper.WriteAllText(Templates.ClientApp.Components.Screen.ScreenComponentTsTemplate.FileName(clientAppPath, screen), Templates.ClientApp.Components.Screen.ScreenComponentTsTemplate.Evaluate(project, screen))
-                            });
                         }
                     }
                 }
@@ -225,11 +218,6 @@ namespace MasterBuilder
                             //File.WriteAllText(ModelTemplate.FileName(modelsPath, item), ModelTemplate.Evaluate(project, item));                            
                         }
                     );
-
-                    if (!string.IsNullOrEmpty(screen.Html))
-                    {
-                        filesToWrite.Add(FileHelper.WriteAllText(Templates.ClientApp.Components.ComponentHtml.FileName(clientAppPath, screen), Templates.ClientApp.Components.ComponentHtml.Evaluate(project, screen)));
-                    }
                 }
             }
 
