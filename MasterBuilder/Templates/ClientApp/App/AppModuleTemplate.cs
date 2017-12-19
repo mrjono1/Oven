@@ -53,7 +53,7 @@ namespace MasterBuilder.Templates.ClientApp.App
             var providers = new Dictionary<string, string>();
             foreach (var entity in Project.Entities)
             {
-                providers.Add($"{entity.InternalName}Service", $"import {{ {entity.InternalName}Service }} from './shared/{entity.InternalName.ToCamlCase()}.service'");
+                providers.Add($"{entity.InternalName}Service", $"import {{ {entity.InternalName}Service }} from './shared/{entity.InternalName.ToLowerInvariant()}.service'");
             }
             
             return $@"import {{ NgModule, Inject }} from '@angular/core';

@@ -20,7 +20,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
 
         public string GetFileName()
         {            
-            return $"{Entity.InternalName.ToCamlCase()}.service.ts";
+            return $"{Entity.InternalName.ToLowerInvariant()}.service.ts";
         }
 
         public string[] GetFilePath()
