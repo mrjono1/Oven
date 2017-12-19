@@ -1,37 +1,66 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.Entities
 {
-    public class EntityTemplate
+    /// <summary>
+    /// Entity Template
+    /// </summary>
+    public class EntityTemplate : ITemplate
     {
-        public static string FileName(string folder, Entity entity)
+        private readonly Project Project;
+        private readonly Entity Entity;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public EntityTemplate(Project project, Entity entity)
         {
-            return Path.Combine(folder, $"{entity.InternalName}.cs");
+            Project = project;
+            Entity = entity;
         }
 
-        public static string Evaluate(Project project, Entity entity)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return $"{Entity.InternalName}.cs";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "Entities" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             var properties = new List<string>();
             var navigationProperties = new List<string>();
 
-            if (entity.Properties != null)
+            if (Entity.Properties != null)
             {
-                foreach (var item in entity.Properties)
+                foreach (var item in Entity.Properties)
                 {
-                    properties.Add(EntityPropertyTemplate.Evaluate(project, item));
+                    properties.Add(EntityPropertyTemplate.Evaluate(Project, item));
                 }
             }
 
-            foreach (var item in (from e in project.Entities
+            foreach (var item in (from e in Project.Entities
                 where e.Properties != null
                 from p in e.Properties
                 where (p.Type == PropertyTypeEnum.ParentRelationship || p.Type == PropertyTypeEnum.ReferenceRelationship) &&
-                p.ParentEntityId.Value == entity.Id
+                p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
                 navigationProperties.Add($"        public ICollection<{item.e.InternalName}> {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
@@ -39,17 +68,17 @@ namespace MasterBuilder.Templates.Entities
 
             return $@"using System; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
 
-namespace {project.InternalName}.Entities
+namespace {Project.InternalName}.Entities
 {{
     /// <summary>
-    /// {entity.InternalName} Entity
+    /// {Entity.InternalName} Entity
     /// </summary>
-    public class {entity.InternalName}
+    public class {Entity.InternalName}
     {{
         /// <summary>
-        /// {entity.InternalName} Constructor for defaulting values
+        /// {Entity.InternalName} Constructor for defaulting values
         /// </summary>
-        public {entity.InternalName}()
+        public {Entity.InternalName}()
         {{
             Id = Guid.NewGuid();
         }}
@@ -59,7 +88,5 @@ namespace {project.InternalName}.Entities
     }}
 }}";
         }
-
-
     }
 }

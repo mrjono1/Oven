@@ -154,6 +154,7 @@ namespace MasterBuilder
 
             // Entities
             filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.Entities.EntityFrameworkContextTemplate(project)));
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Entities.EntityTemplateBuilder(project)));
 
             if (project.Entities != null)
             {
@@ -162,7 +163,6 @@ namespace MasterBuilder
                     // Create Entity & Map
                     filesToWrite.AddRange(
                         new Task[] {
-                            FileHelper.WriteAllText(Templates.Entities.EntityTemplate.FileName(entitiesPath, item), Templates.Entities.EntityTemplate.Evaluate(project, item)),
                             FileHelper.WriteAllText(Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.FileName(entityTypeConfigsPath, item), Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.Evaluate(project, item)),
 
                             FileHelper.WriteAllText(Templates.Controllers.ControllerTemplate.FileName(controllersPath, item, null), Templates.Controllers.ControllerTemplate.Evaluate(project, item, null))
