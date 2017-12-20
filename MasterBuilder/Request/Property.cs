@@ -1,7 +1,9 @@
-﻿using System;
+using Humanizer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MasterBuilder.Request
 {
@@ -180,8 +182,24 @@ namespace MasterBuilder.Request
         /// </summary>
         public IEnumerable<Validation> ValidationItems { get; set; }
 
-        internal bool Validate(out string message)
+        internal bool Validate(Entity entity, out string message)
         {
+            var messageList = new List<string>();
+
+            // Title
+            if (string.IsNullOrWhiteSpace(Title))
+            {
+                Title = InternalName;
+            }
+
+            // Internal Name must be valid
+            if (!Regex.IsMatch(InternalName, @"^[a-zA-Z]+$"))
+            {
+                messageList.Add("Entity Internal Name must only contain letters");
+            }
+            // Ensure Internal Name is standard caseing
+            InternalName = InternalName.Pascalize();
+
             // TODO: below validation items are default so fix this so they can be overwritten
             if (PropertyTemplate == PropertyTemplateEnum.ReferenceTitle)
             {
@@ -201,10 +219,16 @@ namespace MasterBuilder.Request
                 };
             }
 
-
-            // Ensure only one validation method of each type
-            message = "";
-            return true;
+            if (messageList.Any())
+            {
+                message = string.Join(", ", messageList);
+                return false;
+            }
+            else
+            {
+                message = "Success";
+                return true;
+            }
         }
     }
 }

@@ -60,9 +60,7 @@ namespace MasterBuilder
             // Create Directories
             var clientAppPath = FileHelper.CreateFolder(projectDirectory, "ClientApp");
             var controllersPath = FileHelper.CreateFolder(projectDirectory, "Controllers");
-            var entitiesPath = FileHelper.CreateFolder(projectDirectory, "Entities");
             var extensionsPath = FileHelper.CreateFolder(projectDirectory, "Extensions");
-            var entityTypeConfigsPath = FileHelper.CreateFolder(projectDirectory, "EntityTypeConfigurations");
             var modelsPath = FileHelper.CreateFolder(projectDirectory, "Models");
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
 
@@ -156,6 +154,9 @@ namespace MasterBuilder
             filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.Entities.EntityFrameworkContextTemplate(project)));
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Entities.EntityTemplateBuilder(project)));
 
+            // Entity Type Config
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project)));
+
             if (project.Entities != null)
             {
                 foreach (var item in project.Entities)
@@ -163,8 +164,6 @@ namespace MasterBuilder
                     // Create Entity & Map
                     filesToWrite.AddRange(
                         new Task[] {
-                            FileHelper.WriteAllText(Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.FileName(entityTypeConfigsPath, item), Templates.EntityTypeConfigurations.EntityTypeConfigTemplate.Evaluate(project, item)),
-
                             FileHelper.WriteAllText(Templates.Controllers.ControllerTemplate.FileName(controllersPath, item, null), Templates.Controllers.ControllerTemplate.Evaluate(project, item, null))
                     });
                     if (project.Screens != null)

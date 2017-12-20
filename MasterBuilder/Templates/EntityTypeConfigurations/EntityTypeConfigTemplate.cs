@@ -1,45 +1,75 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace MasterBuilder.Templates.EntityTypeConfigurations
 {
-    public class EntityTypeConfigTemplate
+    /// <summary>
+    /// Entity Type Config
+    /// </summary>
+    public class EntityTypeConfigTemplate : ITemplate
     {
-        public static string FileName(string folder, Entity entity)
+        private readonly Project Project;
+        private readonly Entity Entity;
+
+        /// <summary>
+        /// Coinstructor
+        /// </summary>
+        public EntityTypeConfigTemplate(Project project, Entity entity)
         {
-            return Path.Combine(folder, $"{entity.InternalName}Config.cs");
+            Project = project;
+            Entity = entity;
         }
 
-        public static string Evaluate(Project project, Entity entity)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return $"{Entity.InternalName}Config.cs";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetFilePath()
+        {
+            return new string[] { "EntityTypeConfigurations" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             var properties = new List<string>();
-            if (entity.Properties != null)
+            if (Entity.Properties != null)
             {
-                foreach (var item in entity.Properties)
+                foreach (var item in Entity.Properties)
                 {
-                    properties.Add(EntityTypeConfigPropertyTemplate.Evaluate(project, entity, item));
+                    properties.Add(EntityTypeConfigPropertyTemplate.Evaluate(Project, Entity, item));
                 }
             }
 
             return $@"using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace {project.InternalName}.EntityTypeConfigurations
+namespace {Project.InternalName}.EntityTypeConfigurations
 {{
     /// <summary>
-    /// Class to configure the {entity.InternalName} database settings
+    /// Class to configure the {Entity.InternalName} database settings
     /// </summary>
-    public class {entity.InternalName}Config : IEntityTypeConfiguration<Entities.{entity.InternalName}>
+    public class {Entity.InternalName}Config : IEntityTypeConfiguration<Entities.{Entity.InternalName}>
     {{
         /// <summary>
-        /// Configure the {entity.InternalName} Entity
+        /// Configure the {Entity.InternalName} Entity
         /// </summary>
-        /// <param name=""builder"">The injected model builder for the {entity.InternalName} entity</param>
-        public void Configure(EntityTypeBuilder<Entities.{entity.InternalName}> builder)
+        /// <param name=""builder"">The injected model builder for the {Entity.InternalName} entity</param>
+        public void Configure(EntityTypeBuilder<Entities.{Entity.InternalName}> builder)
         {{
-            builder.ToTable(""{(project.ImutableDatabase ? entity.Id.ToString() : entity.InternalName)}"");
+            builder.ToTable(""{(Project.ImutableDatabase ? Entity.Id.ToString() : Entity.InternalName)}"");
             builder.HasKey(p => p.Id);
 {string.Join(Environment.NewLine, properties)}
         }}

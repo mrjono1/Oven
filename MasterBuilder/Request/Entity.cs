@@ -127,7 +127,7 @@ namespace MasterBuilder.Request
             {
                 foreach (var property in Properties)
                 {
-                    if (!property.Validate(out string propertyMessage)) {
+                    if (!property.Validate(this, out string propertyMessage)) {
                         messageList.Add(propertyMessage);
                     }
                 }
