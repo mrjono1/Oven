@@ -1,3 +1,4 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
@@ -6,28 +7,62 @@ using System.Linq;
 
 namespace MasterBuilder.Templates.Controllers
 {
-    public class ControllerTemplate
+    /// <summary>
+    /// Controller Template
+    /// </summary>
+    public class ControllerTemplate : ITemplate
     {
-        public static string FileName(string folder, Entity entity, Request.Screen screen)
-        {
-            var controllerName = (entity != null ? entity.InternalName : screen.InternalName);
+        private readonly Project Project;
+        private readonly Entity Entity;
+        private readonly Screen Screen;
 
-            return Path.Combine(folder, $"{controllerName}Controller.cs");
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="project">Required</param>
+        /// <param name="entity">Entity or Screen must be provided</param>
+        /// <param name="screen">Entity or Screen must be provided</param>
+        public ControllerTemplate(Project project, Entity entity, Screen screen)
+        {
+            Project = project;
+            Entity = entity;
+            Screen = screen;
         }
 
-        public static string Evaluate(Project project, Entity entity, Request.Screen screen)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
         {
-            var controllerName = (entity != null ? entity.InternalName : screen.InternalName);
+            var controllerName = (Entity != null ? Entity.InternalName : Screen.InternalName);
+
+            return $"{controllerName}Controller.cs";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "Controllers" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
+        {
+            var controllerName = (Entity != null ? Entity.InternalName : Screen.InternalName);
             var usings = new List<string>();
             var methods = new List<string>();
             var classAttributes = @"[Route(""api/[controller]"")]";
             
-            if (entity != null && project.Screens != null)
+            if (Entity != null && Project.Screens != null)
             {
-                var sections = (from s in project.Screens
+                var sections = (from s in Project.Screens
                                 where s.ScreenSections != null
                                 from ss in s.ScreenSections
-                                where ss.EntityId == entity.Id
+                                where ss.EntityId == Entity.Id
                                 select new
                                 {
                                     Screen = s,
@@ -39,10 +74,10 @@ namespace MasterBuilder.Templates.Controllers
                     {
                         case ScreenSectionTypeEnum.Search:
                             usings.Add("using Microsoft.AspNetCore.JsonPatch;");
-                            methods.Add(ControllerSearchMethodTemplate.Evaluate(project, entity, item.Screen, item.ScreenSection));
+                            methods.Add(ControllerSearchMethodTemplate.Evaluate(Project, Entity, item.Screen, item.ScreenSection));
                             break;
                         case ScreenSectionTypeEnum.Form:
-                            methods.Add(ControllerEditMethodTemplate.Evaluate(project, entity, item.Screen, item.ScreenSection));
+                            methods.Add(ControllerEditMethodTemplate.Evaluate(Project, Entity, item.Screen, item.ScreenSection));
                             break;
                         default:
                             break;
@@ -51,9 +86,9 @@ namespace MasterBuilder.Templates.Controllers
             }
 
             // TODO: Build site map
-            if (screen != null)
+            if (Screen != null)
             {
-                if (screen.TemplateId.HasValue && screen.TemplateId.Value == new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"))
+                if (Screen.TemplateId.HasValue && Screen.TemplateId.Value == new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"))
                 {
                     methods.Add($@"        [HttpGet]
     public async Task<IActionResult> Index()
@@ -95,14 +130,14 @@ namespace MasterBuilder.Templates.Controllers
     {{
         return View();
     }}");
-                    usings.Add($"using {project.InternalName}.CoreModels;");
-                    usings.Add($"using {project.InternalName}.Extensions;");
+                    usings.Add($"using {Project.InternalName}.CoreModels;");
+                    usings.Add($"using {Project.InternalName}.Extensions;");
                     classAttributes = null;
                 }
 
-                if (!string.IsNullOrWhiteSpace(screen.ControllerCode))
+                if (!string.IsNullOrWhiteSpace(Screen.ControllerCode))
                 {
-                    methods.Add(screen.ControllerCode);
+                    methods.Add(Screen.ControllerCode);
                 }
             } 
 
@@ -111,17 +146,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using {project.InternalName}.Models;
-using {project.InternalName}.Entities;
+using {Project.InternalName}.Models;
+using {Project.InternalName}.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 {string.Join(Environment.NewLine, usings.Distinct())}
 
-namespace {project.InternalName}.Controllers
+namespace {Project.InternalName}.Controllers
 {{
 
     /// <summary>
-    /// Controller for the {(entity != null ? string.Concat(entity.InternalName, " Entity") : string.Concat(screen.InternalName, " Screen"))}
+    /// Controller for the {(Entity != null ? string.Concat(Entity.InternalName, " Entity") : string.Concat(Screen.InternalName, " Screen"))}
     /// </summary>
     {classAttributes}
     public class {controllerName}Controller : Controller
@@ -129,12 +164,12 @@ namespace {project.InternalName}.Controllers
         /// <summary>
         /// Database Context
         /// </summary>
-        private readonly {project.InternalName}Context _context;
+        private readonly {Project.InternalName}Context _context;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public {controllerName}Controller({project.InternalName}Context context)
+        public {controllerName}Controller({Project.InternalName}Context context)
         {{
             _context = context;
         }}

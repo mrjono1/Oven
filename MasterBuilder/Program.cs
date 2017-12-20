@@ -161,11 +161,6 @@ namespace MasterBuilder
             {
                 foreach (var item in project.Entities)
                 {
-                    // Create Entity & Map
-                    filesToWrite.AddRange(
-                        new Task[] {
-                            FileHelper.WriteAllText(Templates.Controllers.ControllerTemplate.FileName(controllersPath, item, null), Templates.Controllers.ControllerTemplate.Evaluate(project, item, null))
-                    });
                     if (project.Screens != null)
                     {
                         foreach (var screen in project.Screens)
@@ -204,20 +199,6 @@ namespace MasterBuilder
                             }
                         }
                     }
-                }
-            }
-            
-            if (project.Screens != null)
-            {
-                foreach (var screen in project.Screens.Where(p => !p.EntityId.HasValue))
-                {
-                    filesToWrite.AddRange(
-                        new Task[] {
-                            // Create Controller & Models for UI
-                            FileHelper.WriteAllText(Templates.Controllers.ControllerTemplate.FileName(controllersPath, null, screen), Templates.Controllers.ControllerTemplate.Evaluate(project, null, screen)),
-                            //File.WriteAllText(ModelTemplate.FileName(modelsPath, item), ModelTemplate.Evaluate(project, item));                            
-                        }
-                    );
                 }
             }
 
