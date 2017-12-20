@@ -1,13 +1,16 @@
-﻿using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
+using MasterBuilder.Request;
 using System.Text;
 
 namespace MasterBuilder.Templates.Models
 {
+    /// <summary>
+    /// Model Property Template
+    /// </summary>
     public class ModelPropertyTemplate
     {
-
+        /// <summary>
+        /// Evaluate
+        /// </summary>
         public static string Evaluate(Property property, bool includeValidation = false)
         {
             var result = new StringBuilder();

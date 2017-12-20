@@ -22,7 +22,6 @@ namespace MasterBuilder.Templates.Entities
         /// <summary>
         /// Get entity templates
         /// </summary>
-        /// <returns></returns>
         public IEnumerable<ITemplate> GetTemplates()
         {
             var templates = new List<ITemplate>();

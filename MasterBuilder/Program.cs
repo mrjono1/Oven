@@ -156,54 +156,11 @@ namespace MasterBuilder
 
             // Entity Type Config
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project)));
-
-            if (project.Entities != null)
-            {
-                foreach (var item in project.Entities)
-                {
-                    if (project.Screens != null)
-                    {
-                        foreach (var screen in project.Screens)
-                        {
-                            if (screen.EntityId.HasValue && screen.EntityId.Value == item.Id)
-                            {
-                                foreach (var screenSection in screen.ScreenSections)
-                                {
-                                    switch (screenSection.ScreenSectionType)
-                                    {
-                                        case ScreenSectionTypeEnum.Form:
-                                            filesToWrite.AddRange(
-                                                new Task[] {
-                                            // Server Side
-                                            FileHelper.WriteAllText(ModelEditResponseTemplate.FileName(modelsPath, item, screen, screenSection), ModelEditResponseTemplate.Evaluate(project, item, screen, screenSection)),
-                                            FileHelper.WriteAllText(ModelEditRequestTemplate.FileName(modelsPath, item, screen, screenSection), ModelEditRequestTemplate.Evaluate(project, item, screen, screenSection))
-                                                });
-                                            break;
-                                        case ScreenSectionTypeEnum.Search:
-                                            filesToWrite.AddRange(
-                                                new Task[] {
-                                            // Server Side
-                                            FileHelper.WriteAllText(ModelSearchRequestTemplate.FileName(modelsPath, item, screen, screenSection), ModelSearchRequestTemplate.Evaluate(project, item, screen, screenSection)),
-                                            FileHelper.WriteAllText(ModelSearchResponseTemplate.FileName(modelsPath, item, screen, screenSection), ModelSearchResponseTemplate.Evaluate(project, item, screen, screenSection)),
-                                            FileHelper.WriteAllText(ModelSearchItemTemplate.FileName(modelsPath, item, screen, screenSection), ModelSearchItemTemplate.Evaluate(project, item, screen, screenSection))
-                                                });
-                                            break;
-                                        case ScreenSectionTypeEnum.Grid:
-                                            break;
-                                        case ScreenSectionTypeEnum.Html:
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
+            
+            // Models
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Models.ModelTemplateBuilder(project)));
+            
             // Client App
-
             filesToWrite.AddRange(
                 new Task[] {
 

@@ -58,7 +58,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
 }}");
 
                         methods.Add($@"update{Entity.InternalName}{group.Screen.InternalName}(id: string, operations: Operation[]){{
-    return this.http.post<string>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}/${{id}}`, operations);
+    return this.http.patch<string>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}/${{id}}`, operations);
 }}");
                         hasForm = true;
                         break;

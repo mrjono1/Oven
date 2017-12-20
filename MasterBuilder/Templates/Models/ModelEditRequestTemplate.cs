@@ -1,26 +1,56 @@
-﻿using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.IO;
+using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 using System.Text;
 
 namespace MasterBuilder.Templates.Models
 {
-    public class ModelEditRequestTemplate
+    /// <summary>
+    /// Model Edit Request Template
+    /// </summary>
+    public class ModelEditRequestTemplate : ITemplate
     {
-        public static string FileName(string folder, Entity entity, Screen screen, ScreenSection screenSection)
+        private readonly Project Project;
+        private readonly Entity Entity;
+        private readonly Screen Screen;
+        private readonly ScreenSection ScreenSection;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ModelEditRequestTemplate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
         {
-            var path = FileHelper.CreateFolder(folder, screen.InternalName);
-            return Path.Combine(path, $"{screen.InternalName}Request.cs");
+            Project = project;
+            Entity = entity;
+            Screen = screen;
+            ScreenSection = screenSection;
         }
 
-        public static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return $"{Screen.InternalName}Request.cs";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "Models", Screen.InternalName };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
         {
             StringBuilder properties = null;
-            if (entity.Properties != null)
+            if (Entity.Properties != null)
             {
                 properties = new StringBuilder();
-                foreach (var item in entity.Properties)
+                foreach (var item in Entity.Properties)
                 {
                     properties.AppendLine(ModelPropertyTemplate.Evaluate(item, true));
                 }
@@ -30,12 +60,12 @@ namespace MasterBuilder.Templates.Models
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace {project.InternalName}.Models
+namespace {Project.InternalName}.Models
 {{
     /// <summary>
-    /// {screen.InternalName} Insert/Update Model
+    /// {Screen.InternalName} Insert/Update Model
     /// </summary>
-    public class {screen.InternalName}Request
+    public class {Screen.InternalName}Request
     {{
 {properties}
     }}

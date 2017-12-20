@@ -1,39 +1,68 @@
-﻿using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.IO;
+using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.Models
 {
-    public class ModelSearchRequestTemplate
+    /// <summary>
+    /// Model Search Request Template
+    /// </summary>
+    public class ModelSearchRequestTemplate : ITemplate
     {
-        public static string FileName(string folder, Entity entity, Screen screen, ScreenSection screenSection)
+        private readonly Project Project;
+        private readonly Entity Entity;
+        private readonly Screen Screen;
+        private readonly ScreenSection ScreenSection;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ModelSearchRequestTemplate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
         {
-            var path = FileHelper.CreateFolder(folder, screen.InternalName);
-            if (screen.EntityId.HasValue && screenSection.EntityId.HasValue && screen.EntityId != screenSection.EntityId)
+            Project = project;
+            Entity = entity;
+            Screen = screen;
+            ScreenSection = screenSection;
+        }
+
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            if (Screen.EntityId.HasValue && ScreenSection.EntityId.HasValue && Screen.EntityId != ScreenSection.EntityId)
             {
-                return Path.Combine(path, $"{screen.InternalName}{screenSection.InternalName}Request.cs");
+                return $"{Screen.InternalName}{ScreenSection.InternalName}Request.cs";
             }
             else
             {
-                return Path.Combine(path, $"{screen.InternalName}Request.cs");
+                return $"{Screen.InternalName}Request.cs";
             }
         }
 
-        public static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
         {
-            var className = $"{screen.InternalName}Request";
-            if (screen.EntityId.HasValue && screenSection.EntityId.HasValue && screen.EntityId != screenSection.EntityId)
+            return new string[] { "Models", Screen.InternalName };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
+        {
+            var className = $"{Screen.InternalName}Request";
+            if (Screen.EntityId.HasValue && ScreenSection.EntityId.HasValue && Screen.EntityId != ScreenSection.EntityId)
             {
-                className = $"{screen.InternalName}{screenSection.InternalName}Request";
+                className = $"{Screen.InternalName}{ScreenSection.InternalName}Request";
             }
 
             string parentPropertyString = null;
             Entity parentEntity = null;
-            var sectionEntity = (from e in project.Entities
-                          where e.Id == screenSection.EntityId
+            var sectionEntity = (from e in Project.Entities
+                          where e.Id == ScreenSection.EntityId
                           select e).SingleOrDefault();
             if (sectionEntity != null)
             {
@@ -42,7 +71,7 @@ namespace MasterBuilder.Templates.Models
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {
-                    parentEntity = (from s in project.Entities
+                    parentEntity = (from s in Project.Entities
                                          where s.Id == parentProperty.ParentEntityId
                                          select s).SingleOrDefault();
                     parentPropertyString = $"public Guid? {parentEntity.InternalName}Id {{ get; set; }}";
@@ -53,10 +82,10 @@ namespace MasterBuilder.Templates.Models
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace {project.InternalName}.Models
+namespace {Project.InternalName}.Models
 {{
     /// <summary>
-    /// {screen.InternalName} Search Request
+    /// {Screen.InternalName} Search Request
     /// </summary>
     public class {className}
     {{

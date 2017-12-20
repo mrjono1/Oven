@@ -1,42 +1,71 @@
-﻿using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.Models
 {
-    public class ModelSearchResponseTemplate
+    /// <summary>
+    /// Model Search Response Template
+    /// </summary>
+    public class ModelSearchResponseTemplate : ITemplate
     {
-        public static string FileName(string folder, Entity entity, Screen screen, ScreenSection screenSection)
+        private readonly Project Project;
+        private readonly Entity Entity;
+        private readonly Screen Screen;
+        private readonly ScreenSection ScreenSection;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ModelSearchResponseTemplate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
         {
-            var path = FileHelper.CreateFolder(folder, screen.InternalName);
-            if (screen.EntityId.HasValue && screenSection.EntityId.HasValue && screen.EntityId != screenSection.EntityId)
+            Project = project;
+            Entity = entity;
+            Screen = screen;
+            ScreenSection = screenSection;
+        }
+
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            if (Screen.EntityId.HasValue && ScreenSection.EntityId.HasValue && Screen.EntityId != ScreenSection.EntityId)
             {
-                return Path.Combine(path, $"{screen.InternalName}{screenSection.InternalName}Response.cs");
+                return $"{Screen.InternalName}{ScreenSection.InternalName}Response.cs";
             }
             else
             {
-                return Path.Combine(path, $"{screen.InternalName}Response.cs");
+                return $"{Screen.InternalName}Response.cs";
             }
         }
 
-        public static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
         {
-            var className = $"{screen.InternalName}Response";
-            var itemClassName = $"{screen.InternalName}Item";
-            if (screen.EntityId.HasValue && screenSection.EntityId.HasValue && screen.EntityId != screenSection.EntityId)
+            return new string[] { "Models", Screen.InternalName };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
+        {
+            var className = $"{Screen.InternalName}Response";
+            var itemClassName = $"{Screen.InternalName}Item";
+            if (Screen.EntityId.HasValue && ScreenSection.EntityId.HasValue && Screen.EntityId != ScreenSection.EntityId)
             {
-                className = $"{screen.InternalName}{screenSection.InternalName}Response";
-                itemClassName = $"{screen.InternalName}{screenSection.InternalName}Item";
+                className = $"{Screen.InternalName}{ScreenSection.InternalName}Response";
+                itemClassName = $"{Screen.InternalName}{ScreenSection.InternalName}Item";
             }
 
             return $@"using System;
 
-namespace {project.InternalName}.Models
+namespace {Project.InternalName}.Models
 {{
     /// <summary>
-    /// {screen.InternalName} Screen Search Response
+    /// {Screen.InternalName} Screen Search Response
     /// </summary>
     public class {className}
     {{

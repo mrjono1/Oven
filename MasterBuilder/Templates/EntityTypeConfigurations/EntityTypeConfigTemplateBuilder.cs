@@ -20,9 +20,8 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
         }
 
         /// <summary>
-        /// Get entity templates
+        /// Get entity type config templates
         /// </summary>
-        /// <returns></returns>
         public IEnumerable<ITemplate> GetTemplates()
         {
             var templates = new List<ITemplate>();
