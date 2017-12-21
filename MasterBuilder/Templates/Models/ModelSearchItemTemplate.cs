@@ -70,6 +70,7 @@ namespace MasterBuilder.Templates.Models
                 className = $"{Screen.InternalName}{ScreenSection.InternalName}Item";
             }
             return $@"using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace {Project.InternalName}.Models
 {{

@@ -57,6 +57,7 @@ namespace MasterBuilder.Templates.Models
             }
 
             return $@"using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace {Project.InternalName}.Models
 {{

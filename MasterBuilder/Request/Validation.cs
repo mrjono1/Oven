@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -51,15 +51,20 @@ namespace MasterBuilder.Request
         }
 
         /// <summary>
-        /// Required for validation types: MaximumLength, MinimumLength, MaximumValue, MinimumValue
+        /// Required for data type integer and validation types: MaximumLength, MinimumLength, MaximumValue, MinimumValue
         /// </summary>
         public int? IntegerValue { get; set; }
+
+        /// <summary>
+        /// Required for data type double and validation types: MaximumLength, MinimumLength, MaximumValue, MinimumValue
+        /// </summary>
+        public double? DoubleValue { get; set; }
 
         /// <summary>
         /// Required for validation types: Pattern
         /// </summary>
         public string StringValue { get; set; }
-
+        
         /// <summary>
         /// Optional: Validation Failure Message
         /// </summary>
