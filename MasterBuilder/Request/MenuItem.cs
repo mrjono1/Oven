@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -54,6 +54,40 @@ namespace MasterBuilder.Request
             set
             {
                 MenuItemTypeId = MenuItemTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
+            }
+        }
+
+        /// <summary>
+        /// Validate Menu Item
+        /// </summary>
+        internal bool Validate(Project project, out string message)
+        {
+            var messageList = new List<string>();
+            
+            // Title
+            if (string.IsNullOrWhiteSpace(Title))
+            {
+                messageList.Add("Menu must have a title");
+            }
+
+            if (ScreenId.HasValue)
+            {
+                var screen = project.Screens.SingleOrDefault(a => a.Id == ScreenId.Value);
+                if (screen == null)
+                {
+                    messageList.Add($"Menu item {Title}'s has navigates to a screen that no longer exists");
+                }
+            }
+
+            if (messageList.Any())
+            {
+                message = string.Join(", ", messageList);
+                return false;
+            }
+            else
+            {
+                message = "Success";
+                return true;
             }
         }
     }

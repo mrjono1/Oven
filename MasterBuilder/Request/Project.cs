@@ -158,6 +158,20 @@ namespace MasterBuilder.Request
                 }
             }
 
+            if (MenuItems == null || !MenuItems.Any())
+            {
+                messages.Add("No Menu Items have been defined");
+                message = string.Join(Environment.NewLine, messages);
+                return false;
+            }
+            foreach (var menuItem in MenuItems)
+            {
+                if (!menuItem.Validate(this, out string screenMessage))
+                {
+                    messages.Add(screenMessage);
+                }
+            }
+
             if (messages.Any())
             {
                 message = string.Join(Environment.NewLine, messages);

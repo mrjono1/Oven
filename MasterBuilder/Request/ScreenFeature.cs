@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,7 +28,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Screen Type
         /// </summary>
-        internal FeatureEnum ScreenType
+        internal FeatureEnum Feature
         {
             get
             {

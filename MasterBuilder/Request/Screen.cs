@@ -52,25 +52,10 @@ namespace MasterBuilder.Request
         /// Path segment
         /// </summary>
         public string Path { get; set; }
-        // TODO: possibly get rid of this
-        /// <summary>
-        /// Custom Html
-        /// </summary>
-        public string Html { get; set; }
-        // TODO: possibly get rid of this
-        /// <summary>
-        /// Custom Type Script
-        /// </summary>
-        public string TypeScript { get; set; }
         /// <summary>
         /// Screen Template Id, using a template means the screen will get updated when the template does
         /// </summary>
         public Guid? TemplateId { get; set; }
-        // TODO: possibly get rid of this
-        /// <summary>
-        /// Custom Css
-        /// </summary>
-        public string Css { get; set; }
         /// <summary>
         /// Screen Features
         /// </summary>

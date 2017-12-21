@@ -447,7 +447,15 @@ namespace MasterBuilder
                     InternalName = "Home",
                     Path = "home",
                     TemplateId = new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"),
-                    Html = @"<h1>Hello, world!</h1>
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{532605D4-DCD3-4B5B-AC63-7CC6E90F6792}"),
+                            Title = "Home",
+                            InternalName = "Home",
+                            ScreenSectionType = ScreenSectionTypeEnum.Html,
+                            Html = @"
 <p>Welcome to your new single-page application, built with:</p>
 <ul>
     <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
@@ -463,75 +471,14 @@ namespace MasterBuilder
     <li><strong>Hot module replacement</strong>. In development mode, you don't even need to reload the page after making most changes. Within seconds of saving changes to files, your Angular app will be rebuilt and a new instance injected is into the page.</li>
     <li><strong>Efficient production builds</strong>. In production mode, development-time features are disabled, and the <code>webpack</code> build tool produces minified static CSS and JavaScript files.</li>
 </ul>"
-                },
-                new Screen()
-                {
-                    Id = new Guid("{5AF4DA25-77C4-4DDE-946C-7FF266976E83}"),
-                    ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
-                    Title = "Counter",
-                    InternalName = "Counter",
-                    Path = "counter",
-                    Html = @"<h1>Counter</h1>
-
-<p>This is a simple example of an Angular component.</p>
-
-<p>Current count: <strong>{{ currentCount }}</strong></p>
-
-<button (click)=""incrementCounter()"">Increment</button>"
-                },
-                new Screen()
-                {
-                    Id = new Guid("{13C78359-33E6-4DD1-8E16-2C5D92305FE2}"),
-                    ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
-                    Title = "Fetch Data",
-                    InternalName = "FetchData",
-                    Path = "fetch-data",
-                    Html = @"<h1>Weather forecast</h1>
-
-<p>This component demonstrates fetching data from the server.</p>
-
-<p *ngIf=""!forecasts""><em>Loading...</em></p>
-
-<table class='table' *ngIf=""forecasts"">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor=""let forecast of forecasts"">
-            <td>{{ forecast.dateFormatted }}</td>
-            <td>{{ forecast.temperatureC }}</td>
-            <td>{{ forecast.temperatureF }}</td>
-            <td>{{ forecast.summary }}</td>
-        </tr>
-    </tbody>
-</table>",
-                    ControllerCode = @"private static string[] Summaries = new[]
-        {
-            ""Freezing"", ""Bracing"", ""Chilly"", ""Cool"", ""Mild"", ""Warm"", ""Balmy"", ""Hot"", ""Sweltering"", ""Scorching""
-        };
-
-        [HttpGet(""[action]"")]
-        public IEnumerable<Entities.WeatherForecast> WeatherForecasts()
-        {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new Entities.WeatherForecast
-            {
-                DateFormatted = DateTime.Now.AddDays(index).ToString(""d""),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            });
-        }"
-                },
+                        }
+                    }
+                },         
                 new Screen()
                 {
                     Id = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
-                    ScreenTypeId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), // Search
+                    ScreenType = ScreenTypeEnum.Search,
                     Title = "Projects",
                     InternalName = "Projects",
                     Path = "projects",
@@ -540,7 +487,7 @@ namespace MasterBuilder
                     {
                         new ScreenFeature{
                             Id = new Guid("{00CAB28C-F1CA-4FDC-9184-AC7DDA7FD3C5}"),
-                            FeatureId = new Guid("{6114120E-BD93-4CE4-A673-7DC295F93CFE}") // New
+                            Feature = FeatureEnum.New
                         }
                     }
                 },
@@ -548,7 +495,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
-                    ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
+                    ScreenType = ScreenTypeEnum.Edit,
                     Title = "Project",
                     InternalName = "Project",
                     Path = "project",
@@ -586,7 +533,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
                     EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
-                    ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
+                    ScreenType = ScreenTypeEnum.Edit,
                     Title = "Entity",
                     InternalName = "Entity",
                     Path = "entity",
@@ -624,7 +571,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
                     EntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
-                    ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
+                    ScreenType = ScreenTypeEnum.Edit,
                     Title = "Property",
                     InternalName = "Property",
                     Path = "property",
@@ -643,7 +590,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{8E1A9AB1-799E-46B4-8364-85FB087C643E}"),
                     EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
-                    ScreenTypeId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), // Search
+                    ScreenType = ScreenTypeEnum.Search,
                     Title = "Validation Types",
                     InternalName = "ValidationTypes",
                     Path = "validation-types",
@@ -660,7 +607,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{5D9BA697-C64B-40EE-9DF4-F88BD683713F}"),
                     EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
-                    ScreenTypeId = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), // Edit
+                    ScreenType = ScreenTypeEnum.Edit,
                     Title = "Validation Type",
                     InternalName = "ValidationType",
                     Path = "validation-type",
@@ -684,18 +631,6 @@ namespace MasterBuilder
                     Title = "Home",
                     ScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
                     Icon = "glyphicon glyphicon-home"
-                },
-                new MenuItem
-                {
-                    Title = "Counter",
-                    ScreenId = new Guid("{5AF4DA25-77C4-4DDE-946C-7FF266976E83}"),
-                    Icon = "glyphicon glyphicon-education"
-                },
-                new MenuItem
-                {
-                    Title = "Fetch Data",
-                    ScreenId = new Guid("{13C78359-33E6-4DD1-8E16-2C5D92305FE2}"),
-                    Icon = "glyphicon glyphicon-th-list"
                 },
                 new MenuItem
                 {

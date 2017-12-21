@@ -54,12 +54,10 @@ namespace MasterBuilder
                 FileHelper.CleanProject(projectDirectory, null, project);
 
                 // Create Directories
-                var clientAppPath = FileHelper.CreateFolder(projectDirectory, "ClientApp");
                 var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
 
                 // Artifacts
                 FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "CopyFiles"), wwwrootPath);
-                FileHelper.CopyFolderContent(Path.Combine(GetProjectRootFolder(), "CopyFiles", "ClientApp"), clientAppPath);
 
                 filesToWrite.AddRange(new Task[]
                 {

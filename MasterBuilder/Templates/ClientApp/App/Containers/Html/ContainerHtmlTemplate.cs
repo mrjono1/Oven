@@ -47,13 +47,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     case ScreenSectionTypeEnum.Grid:
                         break;
                     case ScreenSectionTypeEnum.Html:
+                        sections.Add($@"<div class=""screen-type-search"">
+{screenSection.Html}
+</div>");
                         break;
                     default:
                         break;
                 }
             }
 
-            return $@"<div class=""screen"">
+            return $@" <div class=""screen"">
     <h1>{Screen.Title}</h1>
 {string.Join(Environment.NewLine, sections)}
 </div>";

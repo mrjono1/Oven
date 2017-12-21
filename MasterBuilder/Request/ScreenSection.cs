@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,5 +62,9 @@ namespace MasterBuilder.Request
         /// Screen Menu Items
         /// </summary>
         public MenuItem[] MenuItems { get; set; }
+        /// <summary>
+        /// Html Content
+        /// </summary>
+        public string Html { get; set; }
     }
 }
