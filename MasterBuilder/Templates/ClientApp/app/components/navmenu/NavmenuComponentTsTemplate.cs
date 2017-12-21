@@ -1,3 +1,4 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
@@ -6,21 +7,48 @@ using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
 {
-    public class NavmenuComponentTsTemplate
+    /// <summary>
+    /// navmenu component
+    /// </summary>
+    public class NavmenuComponentTsTemplate : ITemplate
     {
-        public static string FileName(string folder)
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public NavmenuComponentTsTemplate(Project project)
         {
-            return Path.Combine(FileHelper.CreateFolder(folder, Path.Combine("app", "components", "navmenu")), "navmenu.component.ts");
+            Project = project;
         }
 
-        public static string Evaluate(Project project)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return "navmenu.component.ts";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "ClientApp", "app", "components", "navmenu" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        /// <returns></returns>
+        public string GetFileContent()
         {
             return $@"import {{ Component }} from '@angular/core';
 
 @Component({{
     selector: 'app-nav-menu',
-    templateUrl: './navmenu.component.html',
-    styleUrls: ['./navmenu.component.css']
+    templateUrl: './navmenu.component.html'
 }})
 export class NavMenuComponent {{
     collapse: string = 'collapse';

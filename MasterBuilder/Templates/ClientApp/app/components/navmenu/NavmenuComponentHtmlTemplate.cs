@@ -1,31 +1,57 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
 {
-    public class NavmenuComponentHtmlTemplate
+    /// <summary>
+    /// navmenu component
+    /// </summary>
+    public class NavmenuComponentHtmlTemplate : ITemplate
     {
-        public static string FileName(string folder)
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public NavmenuComponentHtmlTemplate(Project project)
         {
-            return Path.Combine(FileHelper.CreateFolder(folder, Path.Combine("app", "components", "navmenu")), "navmenu.component.html");
+            Project = project;
         }
 
-        public static string Evaluate(Project project)
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return "navmenu.component.html";
+        }
+
+        /// <summary>
+        /// Get file path
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "ClientApp", "app", "components", "navmenu" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        /// <returns></returns>
+        public string GetFileContent()
         {
             var menuItems = new StringBuilder();
 
-            if (project.MenuItems != null)
+            if (Project.MenuItems != null)
             {
-                foreach (var item in project.MenuItems)
+                foreach (var item in Project.MenuItems)
                 {
                     var path = item.Path;
                     if (item.ScreenId.HasValue)
                     {
-                        path = project.Screens.Where(s => s.Id == item.ScreenId.Value).Select(p => p.Path).FirstOrDefault();
+                        path = Project.Screens.Where(s => s.Id == item.ScreenId.Value).Select(p => p.Path).FirstOrDefault();
                         // todo if url is null error
                     }
                     menuItems.Append($@"<li [routerLinkActive]=""['link-active']"" (click)=""collapseMenu()"">
@@ -46,7 +72,7 @@ namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
                 <span class='icon-bar'></span>
                 <span class='icon-bar'></span>
             </button>
-            <a class='navbar-brand' [routerLink]=""['/home']"">{project.Title}</a>
+            <a class='navbar-brand' [routerLink]=""['/home']"">{Project.Title}</a>
         </div>
         <div class='clearfix'></div>
         <div class='navbar-collapse {{{{collapse}}}}'>
@@ -57,5 +83,6 @@ namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
     </div>
 </div>";
         }
+
     }
 }

@@ -1,9 +1,6 @@
-using MasterBuilder.Request;
-using MasterBuilder.Templates.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace MasterBuilder
@@ -55,17 +52,11 @@ namespace MasterBuilder
             {
                 // Clean out directory
                 FileHelper.CleanProject(projectDirectory, null, project);
-            }
 
-            // Create Directories
-            var clientAppPath = FileHelper.CreateFolder(projectDirectory, "ClientApp");
-            var controllersPath = FileHelper.CreateFolder(projectDirectory, "Controllers");
-            var extensionsPath = FileHelper.CreateFolder(projectDirectory, "Extensions");
-            var modelsPath = FileHelper.CreateFolder(projectDirectory, "Models");
-            var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
+                // Create Directories
+                var clientAppPath = FileHelper.CreateFolder(projectDirectory, "ClientApp");
+                var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
 
-            if (fullBuild)
-            {
                 // Artifacts
                 FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "CopyFiles"), wwwrootPath);
                 FileHelper.CopyFolderContent(Path.Combine(GetProjectRootFolder(), "CopyFiles", "ClientApp"), clientAppPath);
@@ -98,7 +89,7 @@ namespace MasterBuilder
                     FileHelper.WriteTemplate(projectDirectory, new Templates.Extensions.HttpRequestExtensionsTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.CoreModels.IRequestTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.CoreModels.TransferDataTemplate(project)),
-
+                    
                     // ClientApp
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.BootBrowserTsTemplate()),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.BootServerTsTemplate()),
@@ -156,80 +147,18 @@ namespace MasterBuilder
 
             // Entity Type Config
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project)));
-            
+
+            // Controllers
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Controllers.ControllerTemplateBuilder(project)));
+
             // Models
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Models.ModelTemplateBuilder(project)));
-            
-            // Client App
-            filesToWrite.AddRange(
-                new Task[] {
 
-                    #region Nav menu
+            // Components
 
-                    FileHelper.WriteAllText(Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate.FileName(clientAppPath), Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate.Evaluate(project)),
-                    FileHelper.WriteAllText(Path.Combine(clientAppPath, "app", "components", "navmenu", "navmenu.component.css"), @"li .glyphicon {
-    margin-right: 10px;
-}
-
-/* Highlighting rules for nav menu items */
-li.link-active a,
-li.link-active a:hover,
-li.link-active a:focus {
-    background-color: #4189C7;
-    color: white;
-}
-
-/* Keep the nav menu independent of scrolling and on top of other items */
-.main-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
-}
-
-@media (min-width: 768px) {
-    /* On small screens, convert the nav menu to a vertical sidebar */
-    .main-nav {
-        height: 100%;
-        width: calc(25% - 20px);
-    }
-    .navbar {
-        border-radius: 0;
-        border-width: 0;
-        height: 100%;
-    }
-    .navbar-header {
-        float: none;
-    }
-    .navbar-collapse {
-        border-top: 1px solid #444;
-        padding: 0;
-    }
-    .navbar ul {
-        float: none;
-    }
-    .navbar li {
-        float: none;
-        font-size: 15px;
-        margin: 6px;
-    }
-    .navbar li a {
-        padding: 10px 16px;
-        border-radius: 4px;
-    }
-    .navbar a {
-        /* If a menu item's text is too long, truncate it */
-        width: 100%;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-}"),
-                    #endregion
-                }
-            );
+            filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate(project)));
+            filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate(project)));
+         
 
             await Task.WhenAll(filesToWrite.ToArray());
         }
