@@ -40,8 +40,25 @@ namespace MasterBuilder.Templates.Services
         public string GetFileContent()
         {
             var exportFunctions = new List<string>();
-            
-            return $@"using System;
+
+            if (Project.Id == Project.MasterBuilderId)
+            {
+                exportFunctions.Add($@"        public async Task<object> ExportProjectAsJson(Guid id)
+        {{
+            var result = await _context.Projects.Where(project => project.Id == id)
+                          .Include(""ProjectEntities"")
+                          .Include(""ProjectEntities.EntityProperties"")
+                          .SingleOrDefaultAsync();
+
+            return result;
+        }}");
+            }
+
+
+            return $@"using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using {Project.InternalName}.Entities;
 
 namespace {Project.InternalName}.Services

@@ -108,16 +108,45 @@ namespace MasterBuilder
                         new Property()
                         {
                             Id = new Guid("{F1EEF37B-F40D-44D4-832F-ACEC4B63D147}"),
-                            InternalName = "Version",
-                            Type = PropertyTypeEnum.String,
-                            Title = "Version",
+                            InternalName = "MajorVersion",
+                            Type = PropertyTypeEnum.Integer,
+                            Title = "Major Version",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{09ED3A71-3F3A-46BB-B24B-D2796E796A39}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
-                                    IntegerValue = 50
+                                    ValidationType = ValidationTypeEnum.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{97E822CB-7A95-4C14-BED4-6CE19602FEE8}"),
+                            InternalName = "MinorVersion",
+                            Type = PropertyTypeEnum.Integer,
+                            Title = "Minor Version",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{18954CB6-7C4B-42E7-AF4D-F242461D16C2}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{D7E750B0-159D-464C-A88C-6E67673CFAF2}"),
+                            InternalName = "BuildVersion",
+                            Type = PropertyTypeEnum.Integer,
+                            Title = "Build Version",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{B3784D79-72C0-4DC6-86C3-4ECD256821D1}"),
+                                    ValidationType = ValidationTypeEnum.Required
                                 }
                             }
                         },
@@ -134,21 +163,6 @@ namespace MasterBuilder
                                //     Id = new Guid("{20E93766-3D57-4DB1-820C-77C2E0809061}"),
                                //     ValidationType = ValidationTypeEnum.Required
                                // }
-                            }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{D7E750B0-159D-464C-A88C-6E67673CFAF2}"),
-                            InternalName = "BuildNumber",
-                            Type = PropertyTypeEnum.Integer,
-                            Title = "Build Number",
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation
-                                {
-                                    Id = new Guid("{B3784D79-72C0-4DC6-86C3-4ECD256821D1}"),
-                                    ValidationType = ValidationTypeEnum.Required
-                                }
                             }
                         },
                         new Property()

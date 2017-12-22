@@ -143,7 +143,7 @@ namespace MasterBuilder
             filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate(project)));
 
             // Services
-            //filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Services.ServiceTemplateBuilder(project)));
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Services.ServiceTemplateBuilder(project)));
 
             await Task.WhenAll(filesToWrite.ToArray());
         }

@@ -10,6 +10,7 @@ namespace MasterBuilder.Request
     /// </summary>
     public class Project
     {
+        internal static readonly Guid MasterBuilderId = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}");
         /// <summary>
         /// Constructor sets default values
         /// </summary>
