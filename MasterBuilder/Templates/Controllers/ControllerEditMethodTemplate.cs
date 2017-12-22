@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using MasterBuilder.Request;
@@ -42,10 +42,10 @@ namespace MasterBuilder.Templates.Controllers
                         case PropertyTypeEnum.Integer:
                             postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
                             patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
-                        int int32Value;
-                        if (operation.value != null && Int32.TryParse(operation.value.ToString(), out int32Value))
+                        int int32Value{item.InternalName};
+                        if (operation.value != null && Int32.TryParse(operation.value.ToString(), out int32Value{item.InternalName}))
                         {{
-                            entity.{item.InternalName} = int32Value;
+                            entity.{item.InternalName} = int32Value{item.InternalName};
                             entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
                         }}
                         {(item.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
@@ -62,10 +62,10 @@ namespace MasterBuilder.Templates.Controllers
                         case PropertyTypeEnum.DateTime:
                             postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
                             patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
-                        DateTime dateTimeValue;
-                        if (operation.value != null && DateTime.TryParse(operation.value.ToString(), out dateTimeValue))
+                        DateTime dateTimeValue{item.InternalName};
+                        if (operation.value != null && DateTime.TryParse(operation.value.ToString(), out dateTimeValue{item.InternalName}))
                         {{
-                            entity.{item.InternalName} = dateTimeValue;
+                            entity.{item.InternalName} = dateTimeValue{item.InternalName};
                             entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
                         }}
                         {(item.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
@@ -82,10 +82,10 @@ namespace MasterBuilder.Templates.Controllers
                         case PropertyTypeEnum.Boolean:
                             postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
                             patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
-                        bool booleanValue;
-                        if (operation.value != null && Boolean.TryParse(operation.value.ToString(), out booleanValue))
+                        bool booleanValue{item.InternalName};
+                        if (operation.value != null && Boolean.TryParse(operation.value.ToString(), out booleanValue{item.InternalName}))
                         {{
-                            entity.{item.InternalName} = booleanValue;
+                            entity.{item.InternalName} = booleanValue{item.InternalName};
                             entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
                         }}
                         else
