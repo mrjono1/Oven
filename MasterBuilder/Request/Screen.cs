@@ -1,5 +1,7 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -73,7 +75,9 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Screen Type
         /// </summary>
-        internal ScreenTypeEnum ScreenType
+        [JsonIgnore]
+        [NotMapped]
+        public ScreenTypeEnum ScreenType
         {
             get
             {

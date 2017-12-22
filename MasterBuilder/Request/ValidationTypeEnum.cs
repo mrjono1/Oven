@@ -1,9 +1,9 @@
-﻿namespace MasterBuilder.Request
+namespace MasterBuilder.Request
 {
     /// <summary>
     /// Validation Types
     /// </summary>
-    internal enum ValidationTypeEnum
+    public enum ValidationTypeEnum
     {
         /// <summary>
         /// Required

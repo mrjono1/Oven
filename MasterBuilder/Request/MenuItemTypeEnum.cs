@@ -1,9 +1,9 @@
-﻿namespace MasterBuilder.Request
+namespace MasterBuilder.Request
 {
     /// <summary>
     /// Menu Item Type Enum
     /// </summary>
-    internal enum MenuItemTypeEnum
+    public enum MenuItemTypeEnum
     {
         /// <summary>
         /// Application Link

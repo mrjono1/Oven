@@ -1,4 +1,5 @@
 using MasterBuilder.Request;
+using MasterBuilder.Templates.Entities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

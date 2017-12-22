@@ -1,9 +1,9 @@
-﻿namespace MasterBuilder.Request
+namespace MasterBuilder.Request
 {
     /// <summary>
     /// Entity Template Enum
     /// </summary>
-    internal enum EntityTemplateEnum
+    public enum EntityTemplateEnum
     {
         None,
         Reference

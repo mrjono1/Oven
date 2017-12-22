@@ -1,9 +1,9 @@
-﻿namespace MasterBuilder.Request
+namespace MasterBuilder.Request
 {
     /// <summary>
     /// Feature Enum
     /// </summary>
-    internal enum FeatureEnum
+    public enum FeatureEnum
     {
         /// <summary>
         /// New

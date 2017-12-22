@@ -5,35 +5,21 @@ using System.Threading.Tasks;
 
 namespace MasterBuilder
 {
-    class Program
+    public class Builder
     {
-        public string ProjectFilePath { get; }
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Start!");
-            new Program("C:\\Temp");
-        }
-
-
-        public static string GetProjectRootFolder()
+        private string GetProjectRootFolder()
         {
             return Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/../../../");
         }
-
-        public string GetFileContent(string fileName)
-        {
-            return File.ReadAllText(fileName);
-        }
-
-        public Program(string outputDirectory)
-        {
-            Run(outputDirectory).Wait();
-        }
-
-        public async Task Run(string outputDirectory) {
-            var project = new Test().Project;
-
+        
+        public async Task Run(string outputDirectory, Request.Project project) {
+            
             var fullBuild = false;
+
+            if (project == null)
+            {
+                return;
+            }
 
             // Validate & Pre Process Project
             if (!project.Validate(out string messages))
@@ -153,10 +139,11 @@ namespace MasterBuilder
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Models.ModelTemplateBuilder(project)));
 
             // Components
-
             filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate(project)));
             filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.app.components.navmenu.NavmenuComponentTsTemplate(project)));
-         
+
+            // Services
+            //filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Services.ServiceTemplateBuilder(project)));
 
             await Task.WhenAll(filesToWrite.ToArray());
         }

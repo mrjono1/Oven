@@ -1,6 +1,8 @@
 using Humanizer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -71,7 +73,9 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Entity Template
         /// </summary>
-        internal EntityTemplateEnum EntityTemplate
+        [JsonIgnore]
+        [NotMapped]
+        public EntityTemplateEnum EntityTemplate
         {
             get
             {

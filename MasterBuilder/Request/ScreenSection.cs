@@ -1,5 +1,7 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -39,7 +41,9 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Screen Section Type
         /// </summary>
-        internal ScreenSectionTypeEnum ScreenSectionType
+        [JsonIgnore]
+        [NotMapped]
+        public ScreenSectionTypeEnum ScreenSectionType
         {
             get
             {

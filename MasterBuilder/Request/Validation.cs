@@ -1,5 +1,7 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace MasterBuilder.Request
@@ -34,11 +36,13 @@ namespace MasterBuilder.Request
         /// Validation Type Id
         /// </summary>
         public Guid ValidationTypeId { get; set; }
-        
+
         /// <summary>
         /// Validation Type Enum
         /// </summary>
-        internal ValidationTypeEnum ValidationType
+        [JsonIgnore]
+        [NotMapped]
+        public ValidationTypeEnum ValidationType
         {
             get
             {

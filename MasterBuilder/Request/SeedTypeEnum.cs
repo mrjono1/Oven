@@ -1,9 +1,9 @@
-﻿namespace MasterBuilder.Request
+namespace MasterBuilder.Request
 {
     /// <summary>
     /// Seed Type Enum
     /// </summary>
-    internal enum SeedTypeEnum
+    public enum SeedTypeEnum
     {
         /// <summary>
         /// Add records if none in database

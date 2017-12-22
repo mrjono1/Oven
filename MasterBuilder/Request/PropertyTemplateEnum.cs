@@ -1,9 +1,9 @@
-﻿namespace MasterBuilder.Request
+namespace MasterBuilder.Request
 {
     /// <summary>
     /// Property Template Enum
     /// </summary>
-    internal enum PropertyTemplateEnum
+    public enum PropertyTemplateEnum
     {
         /// <summary>
         /// No template

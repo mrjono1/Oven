@@ -1,9 +1,9 @@
-﻿namespace MasterBuilder.Request
+namespace MasterBuilder.Request
 {
     /// <summary>
     /// Screen Type Enum
     /// </summary>
-    internal enum ScreenTypeEnum
+    public enum ScreenTypeEnum
     {
         /// <summary>
         /// Search Screen

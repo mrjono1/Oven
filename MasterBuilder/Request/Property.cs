@@ -1,6 +1,8 @@
 using Humanizer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -58,7 +60,9 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Property Type Enum
         /// </summary>
-        internal PropertyTypeEnum Type
+        [JsonIgnore]
+        [NotMapped]
+        public PropertyTypeEnum Type
         {
             get
             {
@@ -83,7 +87,9 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Property Template Enum
         /// </summary>
-        internal PropertyTemplateEnum PropertyTemplate
+        [JsonIgnore]
+        [NotMapped]
+        public PropertyTemplateEnum PropertyTemplate
         {
             get
             {

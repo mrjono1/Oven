@@ -1,5 +1,7 @@
-﻿using System;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace MasterBuilder.Request
@@ -32,7 +34,9 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Seed Type
         /// </summary>
-        internal SeedTypeEnum SeedType
+        [JsonIgnore]
+        [NotMapped]
+        public SeedTypeEnum SeedType
         {
             get
             {
