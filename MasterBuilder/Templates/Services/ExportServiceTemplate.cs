@@ -59,13 +59,14 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using {Project.InternalName}.Entities;
+using {Project.InternalName}.Services.Contracts;
 
 namespace {Project.InternalName}.Services
 {{
     /// <summary>
     /// Export Service
     /// </summary>
-    public class ExportService
+    public class ExportService : IExportService
     {{
         /// <summary>
         /// Database Context

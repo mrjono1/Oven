@@ -65,13 +65,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using RestSharp;
 using {Project.InternalName}.Entities;
+using {Project.InternalName}.Services.Contracts;
 
 namespace {Project.InternalName}.Services
 {{
     /// <summary>
     /// {WebService.InternalName} Service
     /// </summary>
-    public class {WebService.InternalName}Service
+    public class {WebService.InternalName}Service : I{WebService.InternalName}Service
     {{
         /// <summary>
         /// Database Context

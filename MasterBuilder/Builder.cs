@@ -144,6 +144,8 @@ namespace MasterBuilder
 
             // Services
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Services.ServiceTemplateBuilder(project)));
+            // Services/Contracts
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Services.Contracts.ServiceContractTemplateBuilder(project)));
 
             await Task.WhenAll(filesToWrite.ToArray());
         }
