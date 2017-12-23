@@ -164,6 +164,29 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                     imports.Add($"import {{ {entity.InternalName}Service }} from '../../shared/{entity.InternalName.ToLowerInvariant()}.service'");
                     constructorParamerters.Add($"private {entity.InternalName.Camelize()}Service: {entity.InternalName}Service");
                 }
+
+                if (screenSection.MenuItems != null)
+                {
+                    foreach (var menuItem in screenSection.MenuItems)
+                    {
+                        switch (menuItem.MenuItemType)
+                        {
+                            case MenuItemTypeEnum.ApplicationLink:
+                                break;
+                            case MenuItemTypeEnum.New:
+                                break;
+                            case MenuItemTypeEnum.ServerFunction:
+                                functions.Add($@"public {menuItem.InternalName.Camelize()}(){{
+        this.{entity.InternalName.Camelize()}Service.get{menuItem.InternalName}(this.{Screen.InternalName.Camelize()}.id).subscribe( result => {{
+            alert('publish request sent');
+        }});
+    }}");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
             }
             
             if (hasForm)

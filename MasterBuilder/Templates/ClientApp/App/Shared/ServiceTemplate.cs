@@ -80,6 +80,21 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                     default:
                         break;
                 }
+
+                if (group.ScreenSection.MenuItems != null)
+                {
+                    foreach (var menuItem in group.ScreenSection.MenuItems)
+                    {
+                        switch (menuItem.MenuItemType)
+                        {
+                            case MenuItemTypeEnum.ServerFunction:
+                                methods.Add($@"get{menuItem.InternalName}(id: string){{
+    return this.http.get(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}{menuItem.InternalName}/${{id}}`);
+}}");
+                                break;
+                        }
+                    }
+                }
             }
 
             if (hasForm)

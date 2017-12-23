@@ -72,10 +72,22 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 foreach (var menuItem in ScreenSection.MenuItems)
                 {
-                    var screenTo = Project.Screens.SingleOrDefault(s => s.Id == menuItem.ScreenId);
-                    menuItems.Add($@"<a [routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{screenTo.Path}']"">
+                    switch (menuItem.MenuItemType)
+                    {
+                        case MenuItemTypeEnum.ApplicationLink:
+                            var screenTo = Project.Screens.SingleOrDefault(s => s.Id == menuItem.ScreenId);
+                            menuItems.Add($@"<a [routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{screenTo.Path}']"">
                         <span class='{menuItem.Icon}'></span> {menuItem.Title}
                      </a>");
+                            break;
+                        case MenuItemTypeEnum.New:
+                            break;
+                        case MenuItemTypeEnum.ServerFunction:
+                            menuItems.Add($@"<button type=""button"" class=""btn btn-primary"" (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 

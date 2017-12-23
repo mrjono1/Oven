@@ -18,7 +18,8 @@ namespace MasterBuilder.Request
         internal static readonly Dictionary<Guid, MenuItemTypeEnum> MenuItemTypeDictonary = new Dictionary<Guid, MenuItemTypeEnum>
         {
             { new Guid("{51810E74-59E6-44AF-B6D3-1B8ECF82EE54}"), MenuItemTypeEnum.ApplicationLink },
-            { new Guid("{A7B39F29-3887-4744-A4E3-926607DB15D2}"), MenuItemTypeEnum.New }
+            { new Guid("{A7B39F29-3887-4744-A4E3-926607DB15D2}"), MenuItemTypeEnum.New },
+            { new Guid("{2BB3BFAC-FBA8-4786-A854-193EC73A01AF}"), MenuItemTypeEnum.ServerFunction }
         };
 
         /// <summary>

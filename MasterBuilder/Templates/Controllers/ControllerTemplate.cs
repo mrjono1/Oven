@@ -82,6 +82,27 @@ namespace MasterBuilder.Templates.Controllers
                         default:
                             break;
                     }
+
+                    if (item.ScreenSection.MenuItems != null)
+                    {
+                        foreach (var menuItem in item.ScreenSection.MenuItems)
+                        {
+                            switch (menuItem.MenuItemType)
+                            {
+                                case MenuItemTypeEnum.ServerFunction:
+                                    methods.Add($@"        /// <summary>
+        /// Menu Item {menuItem.Title} called function
+        /// </summary>
+        [HttpGet(""{item.Screen.InternalName}{item.ScreenSection.InternalName}{menuItem.InternalName}/{{id}}"")]
+        public async Task<IActionResult> {item.Screen.InternalName}{item.ScreenSection.InternalName}{menuItem.InternalName}(Guid id)
+        {{
+
+            return Ok();
+        }}");
+                                    break;
+                            }
+                        }
+                    }
                 }
             }
 

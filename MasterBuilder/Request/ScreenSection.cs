@@ -65,7 +65,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Screen Menu Items
         /// </summary>
-        public MenuItem[] MenuItems { get; set; }
+        public IEnumerable<MenuItem> MenuItems { get; set; }
         /// <summary>
         /// Html Content
         /// </summary>

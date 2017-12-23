@@ -142,7 +142,22 @@ namespace MasterBuilder.Request
                     }
                 }
             }
-            
+
+            if (MenuItems != null)
+            {
+                var firstScreenSection = ScreenSections.First();
+                if (firstScreenSection != null) {
+                    var menuItems = new List<MenuItem>();
+                    if (firstScreenSection.MenuItems != null)
+                    {
+                        menuItems.AddRange(firstScreenSection.MenuItems);
+                    }
+                    menuItems.AddRange(MenuItems);
+
+                    firstScreenSection.MenuItems = menuItems;
+                }
+            }
+
             errors = "";
             return true;
         }
