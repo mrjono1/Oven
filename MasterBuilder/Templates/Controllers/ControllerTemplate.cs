@@ -115,7 +115,7 @@ namespace MasterBuilder.Templates.Controllers
         [HttpGet(""{item.Screen.InternalName}{item.ScreenSection.InternalName}{menuItem.InternalName}/{{id}}"")]
         public async Task<IActionResult> {item.Screen.InternalName}{item.ScreenSection.InternalName}{menuItem.InternalName}(Guid id)
         {{
-
+            {menuItem.ServerCode}
             return Ok();
         }}");
                                     break;
@@ -188,11 +188,6 @@ namespace MasterBuilder.Templates.Controllers
                     usings.Add($"using {Project.InternalName}.CoreModels;");
                     usings.Add($"using {Project.InternalName}.Extensions;");
                     classAttributes = null;
-                }
-
-                if (!string.IsNullOrWhiteSpace(Screen.ControllerCode))
-                {
-                    methods.Add(Screen.ControllerCode);
                 }
             } 
 

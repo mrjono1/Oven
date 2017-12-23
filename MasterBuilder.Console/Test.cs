@@ -551,7 +551,8 @@ namespace MasterBuilder
                             Title = "Publish",
                             Icon = "glyphicon glyphicon-cloud-upload",
                             MenuItemType = MenuItemTypeEnum.ServerFunction,
-                            ServerCode = $@""
+                            ServerCode = $@"            var json = await _exportService.ExportProjectAsJsonAsync(id);
+            var result = await _masterBuilderApiService.PublishAsync(json);"
                         }
                     }
                 },

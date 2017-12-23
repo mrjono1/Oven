@@ -43,7 +43,7 @@ namespace MasterBuilder.Templates.Services.Contracts
 
             if (Project.Id == Project.MasterBuilderId)
             {
-                exportFunctions.Add($@"        Task<object> ExportProjectAsJson(Guid id);");
+                exportFunctions.Add($@"        Task<object> ExportProjectAsJsonAsync(Guid id);");
             }
 
             return $@"using System;

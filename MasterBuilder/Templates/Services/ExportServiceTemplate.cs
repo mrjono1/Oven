@@ -43,7 +43,7 @@ namespace MasterBuilder.Templates.Services
 
             if (Project.Id == Project.MasterBuilderId)
             {
-                exportFunctions.Add($@"        public async Task<object> ExportProjectAsJson(Guid id)
+                exportFunctions.Add($@"        public async Task<object> ExportProjectAsJsonAsync(Guid id)
         {{
             var result = await _context.Projects.Where(project => project.Id == id)
                           .Include(""ProjectEntities"")

@@ -32,12 +32,7 @@ namespace MasterBuilder.Request
         /// Internal Name
         /// </summary>
         public string InternalName { get; set; }
-
-        // TODO: remove controller code as its to a setting
-        /// <summary>
-        /// Controller Code
-        /// </summary>
-        public string ControllerCode { get; set; }
+        
         public string MetaDescription { get; set; }
         /// <summary>
         /// Title

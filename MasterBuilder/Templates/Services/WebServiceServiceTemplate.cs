@@ -56,13 +56,13 @@ namespace MasterBuilder.Templates.Services
             {
                 foreach (var operation in WebService.Operations)
                 {
-                    functions.Add($@"        public async Task<IRestResponse> {operation.InternalName}(object body)
+                    functions.Add($@"        public async Task<IRestResponse> {operation.InternalName}Async(object body)
         {{
             var request = new RestRequest(""{operation.RelativeRoute}"", Method.{operation.Verb});
             if (body != null){{
                 request.AddJsonBody(body);
             }}
-            return await _restClient.ExecuteGetTaskAsync(request);
+            return await _restClient.ExecuteTaskAsync(request);
         }}");
                 }
             }
