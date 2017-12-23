@@ -38,6 +38,14 @@ namespace MasterBuilder.Templates.Services
         }
 
         /// <summary>
+        /// Get Class Name
+        /// </summary>
+        public string GetClassName()
+        {
+            return $"{WebService.InternalName}Service";
+        }
+
+        /// <summary>
         /// Get file content
         /// </summary>
         public string GetFileContent()

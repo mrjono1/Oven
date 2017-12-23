@@ -1,6 +1,7 @@
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
+using System.Collections.Generic;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
@@ -41,6 +42,11 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
+            var serviceNames = new List<string>( new Services.ServiceTemplateBuilder(Project).GetServiceNames());
+
+            var services = new List<string>();
+            serviceNames.ForEach(name => services.Add($"services.AddTransient<I{name}, {name}>();"));
+
             return $@"using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
@@ -51,6 +57,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
+using {Project.InternalName}.Services;
+using {Project.InternalName}.Services.Contracts;
 
 namespace {Project.InternalName}
 {{
@@ -96,6 +104,9 @@ namespace {Project.InternalName}
             {{
                 c.SwaggerDoc(""v1"", new Info {{ Title = ""{Project.Title} API"", Version = ""v1"" }});
             }});
+
+            // Services
+            {string.Join(string.Concat(Environment.NewLine, "            "), services)}
         }}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

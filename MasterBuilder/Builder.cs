@@ -53,7 +53,6 @@ namespace MasterBuilder
                     // Create Project Files
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.AngularCliJsonTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.ProjectTemplate(project)),
-                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.StartupTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.GitIgnoreTemplate()),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.AppSettingsTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.TypeScriptLintTemplate()),
@@ -104,15 +103,12 @@ namespace MasterBuilder
                 });
             }
 
+            // Create Project Files
+            filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.PackageJsonTemplate(project)));
+            filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.StartupTemplate(project)));
 
-            filesToWrite.AddRange(new Task[]
-            {
-                // Create Project Files
-                FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.PackageJsonTemplate(project)),
-             
-                // ClientApp/App
-                FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleTemplate(project))
-            });
+            // ClientApp/App
+            filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.App.AppModuleTemplate(project)));
 
 
             // ClientApp/app/models

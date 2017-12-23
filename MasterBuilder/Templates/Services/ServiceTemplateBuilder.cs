@@ -1,8 +1,6 @@
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Templates.Services
 {
@@ -42,6 +40,26 @@ namespace MasterBuilder.Templates.Services
             }
 
             return templates;
+        }
+
+        public IEnumerable<string> GetServiceNames()
+        {
+            var names = new List<string>
+            {
+                "ExportService"
+            };
+
+            // TODO: Create application setting service
+
+            if (Project.WebServices != null)
+            {
+                foreach (var webService in Project.WebServices)
+                {
+                    names.Add(new WebServiceServiceTemplate(Project, webService).GetClassName());
+                }
+            }
+
+            return names;
         }
     }
 }
