@@ -81,13 +81,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             var navigateToScreenPath = (from s in Project.Screens
                                         where s.Id == Screen.NavigateToScreenId
                                         select s.Path).FirstOrDefault();
-
+            if (!string.IsNullOrWhiteSpace(navigateToScreenPath))
+            {
+                menuItems.Add($@"<a [routerLink]=""['/{navigateToScreenPath}']"">New</a>");
+            }
             return $@"<div class=""screen-type-search"">
 <nav>
-    <a [routerLink]=""['/{navigateToScreenPath}']"">New</a>
+    
+{string.Join(Environment.NewLine, menuItems)}
 </nav>
 <div>
-{string.Join(Environment.NewLine, menuItems)}
 <p *ngIf=""!{ScreenSection.InternalName.ToCamlCase()}Response""><em>Loading...</em></p>
 
 <table class='table' *ngIf=""{ScreenSection.InternalName.ToCamlCase()}Response && {ScreenSection.InternalName.ToCamlCase()}Response.items"">
