@@ -1,3 +1,4 @@
+using Humanizer;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
@@ -76,20 +77,20 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
                 if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)
                 {
-                    formControls.Add($@"        '{property.InternalName.ToCamlCase()}Id': new FormControl(this.{Screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}Id{propertyValidatorsString})");
-                    properties.Add($@"    get {property.InternalName.ToCamlCase()}Id() {{ return this.{Screen.InternalName.ToCamlCase()}Form.get('{property.InternalName.ToCamlCase()}Id'); }}");
+                    formControls.Add($@"        '{property.InternalName.Camelize()}Id': new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}Id{propertyValidatorsString})");
+                    properties.Add($@"    get {property.InternalName.Camelize()}Id() {{ return this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}Id'); }}");
                 }
                 else
                 {
-                    formControls.Add($@"        '{property.InternalName.ToCamlCase()}': new FormControl(this.{Screen.InternalName.ToCamlCase()}.{property.InternalName.ToCamlCase()}{propertyValidatorsString})");
-                    properties.Add($@"    get {property.InternalName.ToCamlCase()}() {{ return this.{Screen.InternalName.ToCamlCase()}Form.get('{property.InternalName.ToCamlCase()}'); }}");
+                    formControls.Add($@"        '{property.InternalName.Camelize()}': new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}{propertyValidatorsString})");
+                    properties.Add($@"    get {property.InternalName.Camelize()}() {{ return this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}'); }}");
                 }
             }
 
             return $@" 
 
     setupForm(){{
-        this.{Screen.InternalName.ToCamlCase()}Form = new FormGroup({{
+        this.{Screen.InternalName.Camelize()}Form = new FormGroup({{
 {string.Join(string.Concat(",", Environment.NewLine), formControls)}
         }});
     }}
@@ -99,8 +100,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
     private getPatchOperations(): Operation[] {{
         let operations: Operation[] = [];
 
-        Object.keys(this.{Screen.InternalName.ToCamlCase()}Form.controls).forEach((name) => {{
-            let currentControl = this.{Screen.InternalName.ToCamlCase()}Form.controls[name];
+        Object.keys(this.{Screen.InternalName.Camelize()}Form.controls).forEach((name) => {{
+            let currentControl = this.{Screen.InternalName.Camelize()}Form.controls[name];
 
             if (currentControl.dirty) {{
                 let operation = new Operation();
@@ -115,20 +116,20 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
     onSubmit() {{ 
         // Don't submit if nothing has changed
-        if (this.{Screen.InternalName.ToCamlCase()}Form.pristine || !this.{Screen.InternalName.ToCamlCase()}Form.valid) {{
+        if (this.{Screen.InternalName.Camelize()}Form.pristine || !this.{Screen.InternalName.Camelize()}Form.valid) {{
             return;
         }}
         
         if (this.new){{
             // Post new
-            this.{entity.InternalName.ToCamlCase()}Service.add{entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.ToCamlCase()}Form.getRawValue()).subscribe( id => {{
+            this.{entity.InternalName.Camelize()}Service.add{entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
                 this.router.navigate([this.router.url + '/' + id]);
             }});
         }} else {{
             // Patch existing
             let operations = this.getPatchOperations();
-            this.{entity.InternalName.ToCamlCase()}Service.update{entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.ToCamlCase()}.id, operations).subscribe( result => {{
-                this.{Screen.InternalName.ToCamlCase()}Form.markAsPristine({{ onlySelf: false }});
+            this.{entity.InternalName.Camelize()}Service.update{entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}.id, operations).subscribe( result => {{
+                this.{Screen.InternalName.Camelize()}Form.markAsPristine({{ onlySelf: false }});
             }});
         }}
     }}";

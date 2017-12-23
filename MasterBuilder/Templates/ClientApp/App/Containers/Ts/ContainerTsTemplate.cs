@@ -1,33 +1,48 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Humanizer;
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 {
+    /// <summary>
+    /// Container Ts Template
+    /// </summary>
     public class ContainerTsTemplate: ITemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ContainerTsTemplate(Project project, Screen screen)
         {
             Project = project;
             Screen = screen;
         }
 
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return $"{Screen.InternalName.ToLowerInvariant()}.component.ts";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new string[] { "ClientApp", "app", "containers", Screen.InternalName.ToLowerInvariant() };
         }
 
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             var imports = new List<string>();
@@ -60,8 +75,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         imports.Add($"import {{ {screenSection.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}'");
                         imports.Add("import { FormControl, FormGroup, Validators } from '@angular/forms';");
 
-                        classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}: {screenSection.InternalName};");
-                        classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}Form: FormGroup;");
+                        classProperties.Add($"public {screenSection.InternalName.Camelize()}: {screenSection.InternalName};");
+                        classProperties.Add($"public {screenSection.InternalName.Camelize()}Form: FormGroup;");
                         classProperties.Add("public new: boolean;");
 
                         parentProperty = (from p in entity.Properties
@@ -73,19 +88,19 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                             var parentEnitity = (from e in Project.Entities
                                                  where e.Id == parentProperty.ParentEntityId
                                                  select e).SingleOrDefault();
-                            setParentProperty = $"this.{screenSection.InternalName.ToCamlCase()}.{parentProperty.InternalName.ToCamlCase()}Id = params['{parentEnitity.InternalName.ToCamlCase()}Id'];";
+                            setParentProperty = $"this.{screenSection.InternalName.Camelize()}.{parentProperty.InternalName.Camelize()}Id = params['{parentEnitity.InternalName.Camelize()}Id'];";
                         }
 
                         onNgInitBodySections.Add($@"this.route.params.subscribe(params => {{
-            if (params['{Screen.InternalName.ToCamlCase()}Id']) {{
+            if (params['{Screen.InternalName.Camelize()}Id']) {{
                 this.new = false;
-                this.http.get<{screenSection.InternalName}>('api/{entity.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.ToCamlCase()}Id']).subscribe(result => {{
-                    this.{screenSection.InternalName.ToCamlCase()} = result;
+                this.http.get<{screenSection.InternalName}>('api/{entity.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.Camelize()}Id']).subscribe(result => {{
+                    this.{screenSection.InternalName.Camelize()} = result;
                     this.setupForm();
                 }}, error => console.error(error));
             }} else {{
                 this.new = true;
-                this.{screenSection.InternalName.ToCamlCase()} = new {screenSection.InternalName}();
+                this.{screenSection.InternalName.Camelize()} = new {screenSection.InternalName}();
                 {setParentProperty}
                 this.setupForm();
             }}
@@ -99,12 +114,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         imports.Add($"import {{ {screenSection.InternalName}Request }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Request'");
                         imports.Add($"import {{ {screenSection.InternalName}Response }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Response'");
 
-                        constructorBodySections.Add($@"        this.{screenSection.InternalName.ToCamlCase()}Request = new {screenSection.InternalName}Request();
-        this.{screenSection.InternalName.ToCamlCase()}Request.page = 1;
-        this.{screenSection.InternalName.ToCamlCase()}Request.pageSize = 20;");
+                        constructorBodySections.Add($@"        this.{screenSection.InternalName.Camelize()}Request = new {screenSection.InternalName}Request();
+        this.{screenSection.InternalName.Camelize()}Request.page = 1;
+        this.{screenSection.InternalName.Camelize()}Request.pageSize = 20;");
 
-                        classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}Response: {screenSection.InternalName}Response;");
-                        classProperties.Add($"public {screenSection.InternalName.ToCamlCase()}Request: {screenSection.InternalName}Request;");
+                        classProperties.Add($"public {screenSection.InternalName.Camelize()}Response: {screenSection.InternalName}Response;");
+                        classProperties.Add($"public {screenSection.InternalName.Camelize()}Request: {screenSection.InternalName}Request;");
 
 
                         string parentPropertyFilterString = null;
@@ -119,18 +134,18 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                 parentEntity = (from s in Project.Entities
                                                 where s.Id == parentProperty.ParentEntityId
                                                 select s).SingleOrDefault();
-                                parentPropertyFilterString = $"this.{screenSection.InternalName.ToCamlCase()}Request.{parentEntity.InternalName.ToCamlCase()}Id = params['{parentEntity.InternalName.ToCamlCase()}Id'];";
+                                parentPropertyFilterString = $"this.{screenSection.InternalName.Camelize()}Request.{parentEntity.InternalName.Camelize()}Id = params['{parentEntity.InternalName.Camelize()}Id'];";
                             }
                         }
 
                         onNgInitBodySections.Add($@"      this.route.params.subscribe(params => {{
-            this.{screenSection.InternalName.ToCamlCase()}Request = new {screenSection.InternalName}Request();
-            this.{screenSection.InternalName.ToCamlCase()}Request.page = 1;
-            this.{screenSection.InternalName.ToCamlCase()}Request.pageSize = 20;
+            this.{screenSection.InternalName.Camelize()}Request = new {screenSection.InternalName}Request();
+            this.{screenSection.InternalName.Camelize()}Request.page = 1;
+            this.{screenSection.InternalName.Camelize()}Request.pageSize = 20;
             {parentPropertyFilterString}
 
-             this.{entity.InternalName.ToCamlCase()}Service.get{Screen.InternalName}{screenSection.InternalName}(this.{screenSection.InternalName.ToCamlCase()}Request).subscribe( result => {{
-                this.{screenSection.InternalName.ToCamlCase()}Response = result;
+             this.{entity.InternalName.Camelize()}Service.get{Screen.InternalName}{screenSection.InternalName}(this.{screenSection.InternalName.Camelize()}Request).subscribe( result => {{
+                this.{screenSection.InternalName.Camelize()}Response = result;
             }});
         }});");
 
@@ -147,7 +162,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 if (entity != null)
                 {
                     imports.Add($"import {{ {entity.InternalName}Service }} from '../../shared/{entity.InternalName.ToLowerInvariant()}.service'");
-                    constructorParamerters.Add($"private {entity.InternalName.ToCamlCase()}Service: {entity.InternalName}Service");
+                    constructorParamerters.Add($"private {entity.InternalName.Camelize()}Service: {entity.InternalName}Service");
                 }
             }
             

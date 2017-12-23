@@ -1,3 +1,4 @@
+using Humanizer;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,21 @@ namespace MasterBuilder.Request
         /// Title
         /// </summary>
         public string Title { get; set; }
+        private string _internalName;
+        /// <summary>
+        /// Calculated Internal Name
+        /// </summary>
+        internal string InternalName
+        {
+            get
+            {
+                if (_internalName == null)
+                {
+                    _internalName = Title.Pascalize();
+                }
+                return _internalName;
+            }
+        }
         /// <summary>
         /// Path
         /// </summary>

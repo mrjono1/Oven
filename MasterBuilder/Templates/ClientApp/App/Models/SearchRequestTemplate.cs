@@ -1,12 +1,13 @@
+using Humanizer;
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.App.Models
 {
+    /// <summary>
+    /// Search Request Template
+    /// </summary>
     public class SearchRequestTemplate : ITemplate
     {
         private readonly Project Project;
@@ -15,23 +16,35 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
 
         private readonly ScreenSection ScreenSection;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public SearchRequestTemplate(Project project, Screen screen, ScreenSection screenSection)
         {
             Project = project;
             Screen = screen;
             ScreenSection = screenSection;
         }
-        
+
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return $"{ScreenSection.InternalName}Request.ts";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new string[] { "ClientApp", "app", "models", $"{Screen.InternalName.ToLowerInvariant()}" };
         }
 
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
@@ -48,7 +61,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
                     parentEntity = (from s in Project.Entities
                                     where s.Id == parentProperty.ParentEntityId
                                     select s).SingleOrDefault();
-                    parentPropertyFilterString = $"{parentEntity.InternalName.ToCamlCase()}Id: string;";
+                    parentPropertyFilterString = $"{parentEntity.InternalName.Camelize()}Id: string;";
                 }
             }
 

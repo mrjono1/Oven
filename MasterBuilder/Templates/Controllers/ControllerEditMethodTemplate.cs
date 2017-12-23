@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
+using Humanizer;
 using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.Controllers
@@ -25,7 +25,7 @@ namespace MasterBuilder.Templates.Controllers
                         case PropertyTypeEnum.ParentRelationship:
                         case PropertyTypeEnum.ReferenceRelationship:
                             postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}Id"":
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
                         entity.{item.InternalName}Id = new Guid(operation.value.ToString());
                         entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
                         break;");
@@ -34,14 +34,14 @@ namespace MasterBuilder.Templates.Controllers
                             break;
                         case PropertyTypeEnum.String:
                             postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
                         entity.{item.InternalName} = operation.value.ToString();
                         entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
                         break;");
                             break;
                         case PropertyTypeEnum.Integer:
                             postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
                         int int32Value{item.InternalName};
                         if (operation.value != null && Int32.TryParse(operation.value.ToString(), out int32Value{item.InternalName}))
                         {{
@@ -61,7 +61,7 @@ namespace MasterBuilder.Templates.Controllers
                             break;
                         case PropertyTypeEnum.DateTime:
                             postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
                         DateTime dateTimeValue{item.InternalName};
                         if (operation.value != null && DateTime.TryParse(operation.value.ToString(), out dateTimeValue{item.InternalName}))
                         {{
@@ -81,7 +81,7 @@ namespace MasterBuilder.Templates.Controllers
                             break;
                         case PropertyTypeEnum.Boolean:
                             postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.ToCamlCase()}"":
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
                         bool booleanValue{item.InternalName};
                         if (operation.value != null && Boolean.TryParse(operation.value.ToString(), out booleanValue{item.InternalName}))
                         {{

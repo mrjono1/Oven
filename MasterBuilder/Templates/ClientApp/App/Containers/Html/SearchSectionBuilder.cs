@@ -1,3 +1,4 @@
+using Humanizer;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     continue;
                 }
                 headings.Add($@"             <th data-property-id=""{property.Id}"" >{property.Title}</th>");
-                bindings.Add($"             <td>{{{{ {Screen.InternalName.ToCamlCase()}Item.{property.InternalName.ToCamlCase()} }}}}</td>");
+                bindings.Add($"             <td>{{{{ {Screen.InternalName.Camelize()}Item.{property.InternalName.Camelize()} }}}}</td>");
             }
 
             string navigateToScreen = null;
@@ -63,7 +64,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
                 if (navigateScreen != null)
                 {
-                    navigateToScreen = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}', {Screen.InternalName.ToCamlCase()}Item.id]""";
+                    navigateToScreen = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}', {Screen.InternalName.Camelize()}Item.id]""";
                 }
             }
 
@@ -91,16 +92,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 {string.Join(Environment.NewLine, menuItems)}
 </nav>
 <div>
-<p *ngIf=""!{ScreenSection.InternalName.ToCamlCase()}Response""><em>Loading...</em></p>
+<p *ngIf=""!{ScreenSection.InternalName.Camelize()}Response""><em>Loading...</em></p>
 
-<table class='table' *ngIf=""{ScreenSection.InternalName.ToCamlCase()}Response && {ScreenSection.InternalName.ToCamlCase()}Response.items"">
+<table class='table' *ngIf=""{ScreenSection.InternalName.Camelize()}Response && {ScreenSection.InternalName.Camelize()}Response.items"">
     <thead>
         <tr>
 {string.Join(Environment.NewLine, headings)}
         </tr>
     </thead>
     <tbody>
-        <tr [attr.data-id]=""{Screen.InternalName.ToCamlCase()}Item.id"" *ngFor=""let {Screen.InternalName.ToCamlCase()}Item of {ScreenSection.InternalName.ToCamlCase()}Response.items"" {navigateToScreen}>
+        <tr [attr.data-id]=""{Screen.InternalName.Camelize()}Item.id"" *ngFor=""let {Screen.InternalName.Camelize()}Item of {ScreenSection.InternalName.Camelize()}Response.items"" {navigateToScreen}>
 {string.Join(Environment.NewLine, bindings)}
         </tr>
     </tbody>

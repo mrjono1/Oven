@@ -1,3 +1,4 @@
+using Humanizer;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -178,7 +179,7 @@ namespace MasterBuilder.Request
                 }
             }
 
-            return $"{ancestorsString}{Path}/:{entity.InternalName.ToCamlCase()}Id";
+            return $"{ancestorsString}{Path}/:{entity.InternalName.Camelize()}Id";
         }
 
         /// <summary>
@@ -208,7 +209,7 @@ namespace MasterBuilder.Request
                     var parentEntity = project.Entities.SingleOrDefault(e => e.Id == foundParentScreen.EntityId);
 
                     anc.AddRange(GetAncestors(project, foundParentScreen));
-                    anc.Add(new Tuple<string, string>(foundParentScreen.Path, parentEntity.InternalName.ToCamlCase()));
+                    anc.Add(new Tuple<string, string>(foundParentScreen.Path, parentEntity.InternalName.Camelize()));
                 }
             }
             return anc;

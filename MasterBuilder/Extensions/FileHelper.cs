@@ -3,14 +3,19 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using MasterBuilder.Templates.CoreModels;
 using MasterBuilder.Helpers;
 using System.Collections.Generic;
 
 namespace MasterBuilder
 {
+    /// <summary>
+    /// Functions for interacting with the file system
+    /// </summary>
     public class FileHelper
     {
+        /// <summary>
+        /// Create a folder
+        /// </summary>
         public static string CreateFolder(string basePath, params string[] folder)
         {
             var paths = new List<string>
@@ -26,6 +31,9 @@ namespace MasterBuilder
             return path;
         }
 
+        /// <summary>
+        /// Copy a file
+        /// </summary>
         internal static void CopyFile(string fileName, string fromDirectory, string toDirectory)
         {
             var from = Path.Combine(fromDirectory, fileName);
@@ -105,6 +113,9 @@ namespace MasterBuilder
             return result;
         }
 
+        /// <summary>
+        /// Write text to a file
+        /// </summary>
         public static async Task WriteAllText(string path, string contents)
         {
             try
@@ -117,6 +128,9 @@ namespace MasterBuilder
             }
         }
 
+        /// <summary>
+        /// Write templates to storage
+        /// </summary>
         internal static IEnumerable<Task> WriteTemplates(string baseDirectory, ITemplateBuilder templateBuilder)
         {
             var tasks = new List<Task>();
@@ -127,6 +141,9 @@ namespace MasterBuilder
             return tasks;
         }
 
+        /// <summary>
+        /// Write a template to storage
+        /// </summary>
         internal static Task WriteTemplate(string baseDirectory, ITemplate template)
         {
             var path = Path.Combine(CreateFolder(baseDirectory, template.GetFilePath()), template.GetFileName());
