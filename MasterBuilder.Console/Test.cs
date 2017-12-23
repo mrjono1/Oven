@@ -661,6 +661,28 @@ namespace MasterBuilder
                 }
             };
 
+            project.WebServices = new WebService[]
+            {
+                new WebService
+                {
+                    Id = new Guid("{359525A8-CCA2-4AC1-9348-23057D616A75}"),
+                    Title = "Master Builder Api",
+                    InternalName = "MasterBuilderApi",
+                    DefaultBaseEndpoint = "https://localhost:44398",
+                    Operations = new WebServiceOperation[]
+                    {
+                        new WebServiceOperation
+                        {
+                            Id = new Guid("{99B9358B-2266-47BC-957A-DC6EF459D4A1}"),
+                            Title = "Publish",
+                            InternalName = "Publish",
+                            Verb = "POST",
+                            RelativeRoute = "/api/builder/publish"
+                        }
+                    }
+                }
+            };
+
             var entities = new List<Entity>(project.Entities);
             entities.AddRange(ReferenceEntities());
             project.Entities = entities;

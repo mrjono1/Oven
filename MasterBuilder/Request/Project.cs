@@ -28,13 +28,14 @@ namespace MasterBuilder.Request
 
             DefaultNugetReferences = new Dictionary<string, string>
             {
-                { "Microsoft.AspNetCore.All", "2.0.0" },
-                { "Microsoft.EntityFrameworkCore", "2.0.0"},
-                { "Microsoft.EntityFrameworkCore.SqlServer", "2.0.0"},
+                { "Microsoft.AspNetCore.All", "2.0.3" },
+                { "Microsoft.EntityFrameworkCore", "2.0.1"},
+                { "Microsoft.EntityFrameworkCore.SqlServer", "2.0.1"},
                 { "Microsoft.AspNetCore.JsonPatch", "2.0.0" },
-                { "Swashbuckle.AspNetCore", "1.0.0" },
-                { "Swashbuckle.AspNetCore.Swagger", "1.0.0" },
-                { "Swashbuckle.AspNetCore.SwaggerUi", "1.0.0" }
+                { "Swashbuckle.AspNetCore", "1.1.0" },
+                { "Swashbuckle.AspNetCore.Swagger", "1.1.0" },
+                { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" },
+                { "RestSharp", "106.1.0"}
             };
             ImutableDatabase = true;
         }
@@ -90,6 +91,10 @@ namespace MasterBuilder.Request
         /// Menu Items
         /// </summary>
         public IEnumerable<MenuItem> MenuItems { get; set; }
+        /// <summary>
+        /// Web Service configurations
+        /// </summary>
+        public IEnumerable<WebService> WebServices { get; set; }
 
         /// <summary>
         /// Folders to ignore when cleaning out the directory on build

@@ -31,6 +31,16 @@ namespace MasterBuilder.Templates.Services
                 new ExportServiceTemplate(Project)
             };
 
+            // TODO: Create application setting service
+
+            if (Project.WebServices != null)
+            {
+                foreach (var webService in Project.WebServices)
+                {
+                    templates.Add(new WebServiceServiceTemplate(Project, webService));
+                }
+            }
+
             return templates;
         }
     }

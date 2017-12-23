@@ -54,7 +54,6 @@ namespace MasterBuilder.Templates.Services
         }}");
             }
 
-
             return $@"using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
