@@ -62,6 +62,10 @@ namespace MasterBuilder.Request
         /// Screen Features
         /// </summary>
         public IEnumerable<ScreenFeature> ScreenFeatures { get; set; }
+        /// <summary>
+        /// Screen Menu Items
+        /// </summary>
+        public IEnumerable<MenuItem> MenuItems { get; set; }
         // TODO: possibly get rid of this have it section level only
         /// <summary>
         /// On Screens like search navigate to this screen on an action

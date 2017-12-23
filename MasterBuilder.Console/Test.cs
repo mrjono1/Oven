@@ -504,6 +504,15 @@ namespace MasterBuilder
                             Id = new Guid("{00CAB28C-F1CA-4FDC-9184-AC7DDA7FD3C5}"),
                             Feature = FeatureEnum.New
                         }
+                    },
+                    MenuItems = new MenuItem[]
+                    {
+                        new MenuItem
+                        {
+                            Id = new Guid("{FCB3AFDB-5CEB-41E7-AE2B-6122ECCB966D}"),
+                            Title = "Publish",
+                            Icon = "glyphicon glyphicon-cloud-upload"
+                        }
                     }
                 },
                 new Screen()

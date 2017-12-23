@@ -30,6 +30,9 @@ namespace MasterBuilder.Templates.Services
             return $"{WebService.InternalName}Service.cs";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new string[] { "Services" };
@@ -46,13 +49,13 @@ namespace MasterBuilder.Templates.Services
             {
                 foreach (var operation in WebService.Operations)
                 {
-                    functions.Add($@"        public async Task {operation.InternalName}(object body)
+                    functions.Add($@"        public async Task<IRestResponse> {operation.InternalName}(object body)
         {{
             var request = new RestRequest(""{operation.RelativeRoute}"", Method.{operation.Verb});
             if (body != null){{
                 request.AddJsonBody(body);
             }}
-            await _restClient.ExecuteGetTaskAsync(request);
+            return await _restClient.ExecuteGetTaskAsync(request);
         }}");
                 }
             }
@@ -75,7 +78,9 @@ namespace {Project.InternalName}.Services
         /// Database Context
         /// </summary>
         private readonly {Project.InternalName}Context _context;
-
+        /// <summary>
+        /// Rest Sharp Client
+        /// </summary>
         private readonly RestClient _restClient;
 
         /// <summary>
