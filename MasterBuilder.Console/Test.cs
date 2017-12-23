@@ -550,7 +550,8 @@ namespace MasterBuilder
                             Id = new Guid("{FCB3AFDB-5CEB-41E7-AE2B-6122ECCB966D}"),
                             Title = "Publish",
                             Icon = "glyphicon glyphicon-cloud-upload",
-                            MenuItemType = MenuItemTypeEnum.ServerFunction
+                            MenuItemType = MenuItemTypeEnum.ServerFunction,
+                            ServerCode = $@""
                         }
                     }
                 },

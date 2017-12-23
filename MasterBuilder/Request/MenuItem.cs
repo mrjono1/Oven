@@ -77,6 +77,10 @@ namespace MasterBuilder.Request
                 MenuItemTypeId = MenuItemTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
             }
         }
+        /// <summary>
+        /// Server side C# code
+        /// </summary>
+        public string ServerCode { get; set; }
 
         /// <summary>
         /// Validate Menu Item

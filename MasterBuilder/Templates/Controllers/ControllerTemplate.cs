@@ -1,3 +1,4 @@
+using Humanizer;
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
@@ -56,7 +57,24 @@ namespace MasterBuilder.Templates.Controllers
             var usings = new List<string>();
             var methods = new List<string>();
             var classAttributes = @"[Route(""api/[controller]"")]";
-            
+            var hasServerFunction = false;
+
+            var privateFields = new List<string>
+            {
+                $@"        /// <summary>
+        /// Database Context
+        /// </summary>
+        private readonly {Project.InternalName}Context _context;"
+            };
+            var constructorParameters = new List<string>
+            {
+                $"{Project.InternalName}Context context"
+            };
+            var constructorFielMappings = new List<string>
+            {
+                "_context = context;"
+            };
+
             if (Entity != null && Project.Screens != null)
             {
                 var sections = (from s in Project.Screens
@@ -90,6 +108,7 @@ namespace MasterBuilder.Templates.Controllers
                             switch (menuItem.MenuItemType)
                             {
                                 case MenuItemTypeEnum.ServerFunction:
+                                    hasServerFunction = true;
                                     methods.Add($@"        /// <summary>
         /// Menu Item {menuItem.Title} called function
         /// </summary>
@@ -103,6 +122,21 @@ namespace MasterBuilder.Templates.Controllers
                             }
                         }
                     }
+                }
+            }
+
+            if (hasServerFunction)
+            {
+                var serviceNames = new Services.ServiceTemplateBuilder(Project).GetServiceNames();
+                foreach (var serviceName in serviceNames)
+                {
+                    privateFields.Add($@"        /// <summary>
+        /// {serviceName}
+        /// </summary>
+        private readonly I{serviceName} _{serviceName.Camelize()};");
+
+                    constructorParameters.Add($"I{serviceName} {serviceName.Camelize()}");
+                    constructorFielMappings.Add($"_{serviceName.Camelize()} = {serviceName.Camelize()};");
                 }
             }
 
@@ -169,6 +203,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using {Project.InternalName}.Models;
 using {Project.InternalName}.Entities;
+using {Project.InternalName}.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 {string.Join(Environment.NewLine, usings.Distinct())}
@@ -182,17 +217,14 @@ namespace {Project.InternalName}.Controllers
     {classAttributes}
     public class {controllerName}Controller : Controller
     {{
-        /// <summary>
-        /// Database Context
-        /// </summary>
-        private readonly {Project.InternalName}Context _context;
+{string.Join(Environment.NewLine, privateFields)}
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public {controllerName}Controller({Project.InternalName}Context context)
+        public {controllerName}Controller({string.Join(string.Concat(",", Environment.NewLine, "          "), constructorParameters)})
         {{
-            _context = context;
+            {string.Join(string.Concat(Environment.NewLine, "            "), constructorFielMappings)}
         }}
 {string.Join(Environment.NewLine, methods)}
     }}
