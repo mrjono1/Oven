@@ -1,3 +1,4 @@
+using Humanizer;
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
@@ -48,6 +49,7 @@ namespace MasterBuilder.Templates.Models.Export
         public string GetFileContent()
         {
             var properties = new List<string>();
+            var propertyMappings = new List<string>();
             var navigationProperties = new List<string>();
 
             if (Entity.Properties != null)
@@ -55,6 +57,12 @@ namespace MasterBuilder.Templates.Models.Export
                 foreach (var item in Entity.Properties.Where(p => p.Type != PropertyTypeEnum.ParentRelationship))
                 {
                     properties.Add(ExportModelPropertyTemplate.Evaluate(Project, item));
+
+                    var mapping = ExportModelPropertyTemplate.Mapping(Project, Entity, item);
+                    if (mapping != null)
+                    {
+                        propertyMappings.Add(mapping);
+                    }
                 }
             }
 
@@ -66,9 +74,17 @@ namespace MasterBuilder.Templates.Models.Export
                 select new { e, p }))
             {
                 navigationProperties.Add($"        public {item.e.InternalName}[] {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
+
+                propertyMappings.Add($@"        var {item.e.InternalNamePlural.Camelize()} = new List<{item.e.InternalName}>();
+            if ({Entity.InternalName.Camelize()}.{item.p.InternalName}{item.e.InternalNamePlural} != null)
+            {{
+                {Entity.InternalName.Camelize()}.{item.p.InternalName}{item.e.InternalNamePlural}.ToList().ForEach(a => {item.e.InternalNamePlural.Camelize()}.Add(new {item.e.InternalName}(a)));
+            }}
+            {item.p.InternalName}{item.e.InternalNamePlural} = {item.e.InternalNamePlural.Camelize()}.ToArray();");
             }
 
-            return $@"using System; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
+            return $@"using System;
+using System.Linq; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
 
 namespace {Project.InternalName}.Models.{RootEntity.InternalName}.Export
 {{
@@ -77,7 +93,10 @@ namespace {Project.InternalName}.Models.{RootEntity.InternalName}.Export
     /// </summary>
     public class {Entity.InternalName}
     {{
-
+        public {Entity.InternalName}(Entities.{Entity.InternalName} {Entity.InternalName.Camelize()})
+        {{
+{string.Join(Environment.NewLine, propertyMappings)}            
+        }}
 {string.Join(Environment.NewLine, properties)}
 {string.Join(Environment.NewLine, navigationProperties)}
     }}

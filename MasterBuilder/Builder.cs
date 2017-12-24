@@ -12,21 +12,19 @@ namespace MasterBuilder
             return Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/../../../");
         }
         
-        public async Task Run(string outputDirectory, Request.Project project) {
+        public async Task<string> Run(string outputDirectory, Request.Project project) {
             
             var fullBuild = false;
 
             if (project == null)
             {
-                return;
+                return "null project";
             }
-
+            
             // Validate & Pre Process Project
             if (!project.Validate(out string messages))
             {
-                Console.WriteLine(messages);
-                Console.Read();
-                return;
+                return messages;
             }
             var filesToWrite = new List<Task>();
             
@@ -147,6 +145,8 @@ namespace MasterBuilder
             
 
             await Task.WhenAll(filesToWrite.ToArray());
+
+            return "Success";
         }
     }
 }

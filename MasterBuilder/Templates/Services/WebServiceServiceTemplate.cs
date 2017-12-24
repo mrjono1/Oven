@@ -56,7 +56,7 @@ namespace MasterBuilder.Templates.Services
             {
                 foreach (var operation in WebService.Operations)
                 {
-                    functions.Add($@"        public async Task<IRestResponse> {operation.InternalName}Async(object body)
+                    functions.Add($@"        public async Task<IRestResponse> {operation.InternalName}Async(Models.Project.Export.Project body)
         {{
             var request = new RestRequest(""{operation.RelativeRoute}"", Method.{operation.Verb});
             if (body != null){{

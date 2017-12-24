@@ -1,3 +1,4 @@
+using Humanizer;
 using MasterBuilder.Request;
 using System.Linq;
 
@@ -13,7 +14,7 @@ namespace MasterBuilder.Templates.Models.Export
             {
                 required = property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
             }
-            
+
             if (property.Type == PropertyTypeEnum.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
@@ -46,6 +47,30 @@ namespace MasterBuilder.Templates.Models.Export
              }}
         }}";
             }
+        }
+
+        public static string Mapping(Project project, Entity entity, Property property)
+        {
+            var required = false;
+            if (property.ValidationItems != null)
+            {
+                required = property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
+            }
+
+            if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+            {
+                var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
+                return $@"            {property.InternalName}Id = {entity.InternalName.Camelize()}.{property.InternalName}Id;";
+            }
+            else if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
+            {
+                return $@"            Id = {entity.InternalName.Camelize()}.Id;";
+            }
+            else if (string.IsNullOrWhiteSpace(property.Calculation))
+            {
+                return $@"            {property.InternalName} = {entity.InternalName.Camelize()}.{property.InternalName};";
+            }
+            return null;
         }
     }
 }
