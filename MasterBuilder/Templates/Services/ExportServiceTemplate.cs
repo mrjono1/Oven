@@ -43,11 +43,12 @@ namespace MasterBuilder.Templates.Services
 
             if (Project.Id == Project.MasterBuilderId)
             {
+                // TODO: auto build
                 exportFunctions.Add($@"        public async Task<Models.Project.Export.Project> ExportProjectAsync(Guid id)
         {{
             var data = await _context.Projects.Where(project => project.Id == id)
-                          .Include(""ProjectEntities"")
-                          .Include(""ProjectEntities.EntityProperties"")
+                          .Include(""Entities"")
+                          .Include(""Entities.Properties"")
                           .SingleOrDefaultAsync();
 
             var result = new Models.Project.Export.Project(data);

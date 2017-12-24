@@ -63,7 +63,7 @@ namespace MasterBuilder.Templates.Entities
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
-                navigationProperties.Add($"        public ICollection<{item.e.InternalName}> {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
+                navigationProperties.Add($"        public ICollection<{item.e.InternalName}> {item.e.InternalNamePlural} {{ get; set; }}");
             }
 
             return $@"using System; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}

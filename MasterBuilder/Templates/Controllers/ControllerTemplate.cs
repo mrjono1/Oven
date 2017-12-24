@@ -116,7 +116,6 @@ namespace MasterBuilder.Templates.Controllers
         public async Task<IActionResult> {item.Screen.InternalName}{item.ScreenSection.InternalName}{menuItem.InternalName}(Guid id)
         {{
             {menuItem.ServerCode}
-            return Ok();
         }}");
                                     break;
                             }

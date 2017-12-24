@@ -1,4 +1,4 @@
-﻿using MasterBuilder.Request;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,7 +72,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 value.AppendLine();
                 value.Append($@"            builder.HasOne(p => p.{property.InternalName})
-                .WithMany(p => p.{property.InternalName}{entity.InternalNamePlural})
+                .WithMany(p => p.{entity.InternalNamePlural})
                 .HasForeignKey(p => p.{property.InternalName}Id)");
 
                 if (property.Type == PropertyTypeEnum.ReferenceRelationship)

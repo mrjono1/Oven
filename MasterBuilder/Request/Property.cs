@@ -66,6 +66,10 @@ namespace MasterBuilder.Request
         {
             get
             {
+                if (PropertyTypeId == Guid.Empty)
+                {
+                    return PropertyTypeEnum.String;
+                }
                 return PropertyTypeDictonary[PropertyTypeId];
             }
             set
@@ -191,6 +195,11 @@ namespace MasterBuilder.Request
         internal bool Validate(Entity entity, out string message)
         {
             var messageList = new List<string>();
+
+            if (PropertyTypeId == Guid.Empty)
+            {
+                messageList.Add("Empty Guid is not a valid Property Type");
+            }
 
             // Title
             if (string.IsNullOrWhiteSpace(Title))

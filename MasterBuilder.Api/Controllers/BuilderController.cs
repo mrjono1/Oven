@@ -12,11 +12,28 @@ namespace MasterBuilder.Api.Controllers
     {
         // POST api/values
         [HttpPost("publish")]
-        public async Task<string> Post([FromBody]Project project)
+        public async Task<IActionResult> Post([FromBody]Project project)
         {
             var builder = new MasterBuilder.Builder();
-            
-            return await builder.Run("C:\\Temp", project);
+
+            string result = null;
+            try
+            {
+                result = await builder.Run("C:\\Temp", project);
+            }
+            catch (Exception ex)
+            {
+                result = ex.ToString();
+            }
+
+            if (result.Equals("Success"))
+            {
+                return Ok("Success");
+            }
+            else
+            {
+                return BadRequest(result);
+            }
         }
     }
 }

@@ -73,14 +73,14 @@ namespace MasterBuilder.Templates.Models.Export
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
-                navigationProperties.Add($"        public {item.e.InternalName}[] {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
+                navigationProperties.Add($"        public {item.e.InternalName}[] {item.e.InternalNamePlural} {{ get; set; }}");
 
                 propertyMappings.Add($@"        var {item.e.InternalNamePlural.Camelize()} = new List<{item.e.InternalName}>();
-            if ({Entity.InternalName.Camelize()}.{item.p.InternalName}{item.e.InternalNamePlural} != null)
+            if ({Entity.InternalName.Camelize()}.{item.e.InternalNamePlural} != null)
             {{
-                {Entity.InternalName.Camelize()}.{item.p.InternalName}{item.e.InternalNamePlural}.ToList().ForEach(a => {item.e.InternalNamePlural.Camelize()}.Add(new {item.e.InternalName}(a)));
+                {Entity.InternalName.Camelize()}.{item.e.InternalNamePlural}.ToList().ForEach(a => {item.e.InternalNamePlural.Camelize()}.Add(new {item.e.InternalName}(a)));
             }}
-            {item.p.InternalName}{item.e.InternalNamePlural} = {item.e.InternalNamePlural.Camelize()}.ToArray();");
+            {item.e.InternalNamePlural} = {item.e.InternalNamePlural.Camelize()}.ToArray();");
             }
 
             return $@"using System;

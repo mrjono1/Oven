@@ -178,7 +178,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                             case MenuItemTypeEnum.ServerFunction:
                                 functions.Add($@"public {menuItem.InternalName.Camelize()}(){{
         this.{entity.InternalName.Camelize()}Service.get{menuItem.InternalName}(this.{Screen.InternalName.Camelize()}.id).subscribe( result => {{
-            alert('publish request sent');
+            alert(result);
         }});
     }}");
                                 break;
