@@ -398,7 +398,7 @@ namespace MasterBuilder
                             InternalName = "ValidationType",
                             Type = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Validation Type",
-                            ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                            ParentEntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
@@ -406,47 +406,6 @@ namespace MasterBuilder
                                     ValidationType = ValidationTypeEnum.Required
                                 },
                             }
-                        }
-                    }
-                },
-                new Entity()
-                {
-                    Id = new Guid("{B833CE8A-1877-45A6-9FC3-161266524082}"),
-                    InternalName = "WeatherForecast",
-                    Title = "Weather Forecast",
-                    Properties = new Property[]
-                    {
-                        new Property()
-                        {
-                            Id = new Guid("{ABC2AA1F-903E-4D9E-BF5B-9BBD73575F6C}"),
-                            InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{7A3B9922-ECCC-40F4-BD4D-96C130F5149C}"),
-                            InternalName = "DateFormatted",
-                            Type = PropertyTypeEnum.String
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{01D31925-FC89-4067-888C-DB8B7FB9FA5F}"),
-                            InternalName = "TemperatureC",
-                            Type = PropertyTypeEnum.Integer
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{DAA3D69A-339B-48E5-983B-319FBB2F0B1F}"),
-                            InternalName = "Summary",
-                            Type = PropertyTypeEnum.String
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{18D635F4-2B8C-4D1F-A609-6E586D48E468}"),
-                            InternalName = "TemperatureF",
-                            Type = PropertyTypeEnum.Integer,
-                            Calculation = "32 + (int)(TemperatureC / 0.5556)"
                         }
                     }
                 }

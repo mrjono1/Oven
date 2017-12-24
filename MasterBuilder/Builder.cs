@@ -133,6 +133,8 @@ namespace MasterBuilder
 
             // Models
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Models.ModelTemplateBuilder(project)));
+            // Models/Export
+            filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Models.Export.ModelTemplateBuilder(project)));
 
             // Components
             filesToWrite.Add(FileHelper.WriteTemplate(projectDirectory, new Templates.ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate(project)));
@@ -142,6 +144,7 @@ namespace MasterBuilder
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Services.ServiceTemplateBuilder(project)));
             // Services/Contracts
             filesToWrite.AddRange(FileHelper.WriteTemplates(projectDirectory, new Templates.Services.Contracts.ServiceContractTemplateBuilder(project)));
+            
 
             await Task.WhenAll(filesToWrite.ToArray());
         }

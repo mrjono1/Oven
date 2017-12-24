@@ -1,12 +1,9 @@
 using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace MasterBuilder.Templates.Entities
+namespace MasterBuilder.Templates.Models.Export
 {
-    public class EntityPropertyTemplate
+    public class ExportModelPropertyTemplate
     {
 
         public static string Evaluate(Project project, Property property)
@@ -17,11 +14,10 @@ namespace MasterBuilder.Templates.Entities
                 required = property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
             }
             
-            if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)
+            if (property.Type == PropertyTypeEnum.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
-                return $@"        public Guid{(required ? "" : "?")} {property.InternalName}Id {{ get; set; }}
-        public {relationshipEntity.InternalName} {property.InternalName} {{ get; set; }}";
+                return $@"        public Guid{(required ? "" : "?")} {property.InternalName}Id {{ get; set; }}";
             }
             else if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
             {
