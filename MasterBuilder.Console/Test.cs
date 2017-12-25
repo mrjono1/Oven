@@ -15,9 +15,9 @@ namespace MasterBuilder
             var project = new Project
             {
                 Id = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}"),
-                InternalName = "TestReference",
+                InternalName = "MasterBuilderUi",
                 BuildVersion = 1,
-                Title = "Test Reference",
+                Title = "Master Builder",
                 DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MasterBuilder;Integrated Security=True",
                 ImutableDatabase = false,
                 DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
@@ -167,6 +167,36 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
+                            Id = new Guid("{46267989-1DE4-40E6-9491-96FAF07E42AE}"),
+                            InternalName = "CleanDirectory",
+                            Type = PropertyTypeEnum.Boolean,
+                            Title = "Clean Directory",
+                            ValidationItems = new Validation[]
+                            {
+                               // new Validation
+                               // {
+                               //     Id = new Guid("{B2F34450-25F9-4A33-B1E9-9F8CED6853A7}"),
+                               //     ValidationType = ValidationTypeEnum.Required
+                               // }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{82072EF0-3CCE-4E67-A09A-89EE59283ADD}"),
+                            InternalName = "ImutableDatabase",
+                            Type = PropertyTypeEnum.Boolean,
+                            Title = "Imutable Database",
+                            ValidationItems = new Validation[]
+                            {
+                               // new Validation
+                               // {
+                               //     Id = new Guid("{B2F34450-25F9-4A33-B1E9-9F8CED6853A7}"),
+                               //     ValidationType = ValidationTypeEnum.Required
+                               // }
+                            }
+                        },
+                        new Property()
+                        {
                             Id = new Guid("{0FBD3AA3-E6DD-4CCB-9FAA-E8AA8C8009F8}"),
                             InternalName = "CreatedDate",
                             Type = PropertyTypeEnum.DateTime,
@@ -179,6 +209,14 @@ namespace MasterBuilder
                                     ValidationType = ValidationTypeEnum.Required
                                 }
                             }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{6C22EF44-E5C0-4E3F-B315-A03703AB9D97}"),
+                            InternalName = "DefaultScreen",
+                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            Title = "Default Screen",
+                            ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
                         }
                     }
                 },
@@ -195,7 +233,7 @@ namespace MasterBuilder
                             InternalName = "Id",
                             Type = PropertyTypeEnum.Uniqueidentifier,
                             Title = "Id",
-                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
                         },
                         new Property()
                         {
@@ -244,6 +282,13 @@ namespace MasterBuilder
                                     ValidationType = ValidationTypeEnum.Required
                                 },
                             }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{271ACB06-23C1-47A0-B660-C658D8E35655}"),
+                            InternalName = "Seed",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Seed"
                         },
                         new Property()
                         {
@@ -403,6 +448,425 @@ namespace MasterBuilder
                             {
                                 new Validation{
                                     Id = new Guid("{707BD4C0-7ED4-4865-9168-176B4E843E72}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        }
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
+                    InternalName = "MenuItem",
+                    Title = "Menu Item",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{3A849E52-28FA-4CAF-908D-BD2D65C0FAFA}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                    InternalName = "Screen",
+                    Title = "Screen",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{CCDFE624-33F8-4B38-9871-E051A301B73B}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
+                            InternalName = "Project",
+                            Type = PropertyTypeEnum.ParentRelationship,
+                            Title = "Project",
+                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{253608F3-0E63-4F67-B7C4-940D2472D3F7}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        }
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{F6C0ADDF-CBE3-48F1-8B9E-51C91EEC534F}"),
+                    InternalName = "ScreenFeature",
+                    Title = "Screen Feature",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{2D145AAC-C180-462E-8837-FD769BE7E5FE}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                    InternalName = "ScreenSection",
+                    Title = "Screen Section",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{0727AAE6-EA99-4456-95C1-07E9115A54EC}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{61E1AAE0-315E-4BBB-B622-0E3D91B9959A}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{BDE68972-A781-45C9-8A92-D1C3AE8C8E98}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{E95C3F08-F572-42BB-9FD9-F7BD2663D514}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{A83F2125-A810-43CC-8FFD-C6E91BF3DD13}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{17FAC43C-9ED4-4D2B-ADA6-B59DA4D10C61}"),
+                            InternalName = "InternalName",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Internal Name",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{BB5110E0-04AC-421B-A180-C9F111962C48}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{D377A570-990A-471D-B3BE-F6D46C590210}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{D5C76B55-96B8-41DD-9055-485A8614E34F}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                            InternalName = "ScreenSectionType",
+                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            Title = "Screen Section Type",
+                            ParentEntityId = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{83F70DAD-02EB-42CB-8002-6671E33A0B49}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{D6BB1A68-8C2A-4251-8EA0-B3AC6C9362AD}"),
+                            InternalName = "Entity",
+                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            Title = "Entity",
+                            ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{872BB43B-C432-4EFA-AABE-4908E96EA1FB}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        }
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}"),
+                    InternalName = "Seed",
+                    Title = "Seed",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{AC0AF908-F0A7-44B4-AFBB-DCB8CEABD782}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{503A6F65-87A0-453A-B0CC-880F171D65F8}"),
+                            InternalName = "JsonData",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Json Data",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{3BC3CC2D-42D1-4CCD-BD94-22CFD28078FC}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{445099D8-864E-447F-A60C-13F501A02C46}"),
+                            InternalName = "SeedType",
+                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            Title = "Seed Type",
+                            ParentEntityId = new Guid("{EA6A9786-573A-4821-824C-3FB5322D2A51}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{1CDD43FA-D63E-441A-A4FB-6B25A47D30AE}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        }
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
+                    InternalName = "WebService",
+                    Title = "Web Service",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{9BCAC6AB-8A56-46DC-8CBD-1B25AD3EE2AC}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{69A7B2AB-AEB2-48A7-BEA1-223D34D4B925}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{AE412C45-CF05-4275-84BA-C22D41BBA5BB}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{BF23F3C1-F3D2-463D-A3DB-95CD190CA9DD}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{74A08FB6-2CDB-4E88-BE8B-087103C29074}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{E2422CFE-AA47-4DD8-A5D7-69F45174E39A}"),
+                            InternalName = "InternalName",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Internal Name",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{36739390-DEDA-409D-91DB-57BCED9DE91B}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{09271B7B-3F02-4B4E-9CDF-734A3B584A6F}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{48DEBB0A-C55F-4975-926C-D476F4E415DF}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{CB83CA7F-B62D-48E4-9833-54B1B07A7E70}"),
+                            InternalName = "DefaultBaseEndpoint",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Default Base Endpoint",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{41363BA5-4AE5-4EAE-9608-1398836D23F1}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{66B86E99-9AA5-4890-81BA-1FBF9CADBCC6}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{D6D616EB-E922-4782-BC9D-D68F1F07DB60}"),
+                            InternalName = "Project",
+                            Type = PropertyTypeEnum.ParentRelationship,
+                            Title = "Project",
+                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{1EF431AF-E3D0-4510-93E0-58FD49D602D0}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        }
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{9878D52D-9962-4131-BE6C-1CED4004C8C4}"),
+                    InternalName = "WebServiceOperation",
+                    Title = "Web Service Operation",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{B9CCBA2A-7AD2-42F0-9F86-37C8D086EA1D}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{9FB3FA12-C979-4015-847C-EB8E52C8FBD0}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{1A6E8D1E-E0D1-401F-B56E-9AFCF350E6D0}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{A710F453-B259-42AB-8A2A-BAF31144C1AF}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{00D2823B-ABB9-4912-9712-434EB63B92A5}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{E0982E44-7604-4E35-BE71-598A3A536870}"),
+                            InternalName = "InternalName",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Internal Name",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{7FB08064-1D72-4A03-B356-B867AA3D211E}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{7606E365-FB07-4348-92D0-8B28AB9D246B}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{B8D83508-9AC9-4F26-94AB-2F75F63A2763}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{EE1E832A-A9A1-4152-B7B5-A4D23914F6A7}"),
+                            InternalName = "RelativeRoute",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Relative Route",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{56755225-7577-45E1-8AC0-E97A2654F355}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{E32BF54A-E604-4E97-81B9-CECF9BA5D32D}"),
+                            InternalName = "Verb",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Verb",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{15722367-9BD8-4E35-B9F0-7DA5C3182452}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{A619FE2D-DEDA-430F-BBF4-E1F7A919F95F}"),
+                            InternalName = "WebService",
+                            Type = PropertyTypeEnum.ParentRelationship,
+                            Title = "Web Service",
+                            ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{80F8E11E-925F-4A0A-83BD-9232EF939916}"),
                                     ValidationType = ValidationTypeEnum.Required
                                 },
                             }
