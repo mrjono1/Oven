@@ -14,7 +14,7 @@ namespace MasterBuilder
         
         public async Task<string> Run(string outputDirectory, Request.Project project) {
             
-            var fullBuild = false;
+            var fullBuild = true;
 
             if (project == null)
             {
@@ -26,10 +26,19 @@ namespace MasterBuilder
             {
                 return messages;
             }
+
+            var topProjectDirectory = FileHelper.CreateFolder(outputDirectory, project.InternalName);
+
+            var metaDirectory = FileHelper.CreateFolder(topProjectDirectory, "Json");
+
+            var rtf = new SourceControl.RequestToFileSystem(metaDirectory, project);
+            await rtf.Write();
+
             var filesToWrite = new List<Task>();
-            
+
+
             // Create Solution Directory
-            var solutionDirectory = FileHelper.CreateFolder(outputDirectory, project.InternalName);
+            var solutionDirectory = FileHelper.CreateFolder(topProjectDirectory, "Application", project.InternalName);
             var projectDirectory = FileHelper.CreateFolder(solutionDirectory, project.InternalName);
 
             if (fullBuild)
@@ -41,7 +50,7 @@ namespace MasterBuilder
                 var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
 
                 // Artifacts
-                FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "CopyFiles"), wwwrootPath);
+                //FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "CopyFiles"), wwwrootPath);
 
                 filesToWrite.AddRange(new Task[]
                 {

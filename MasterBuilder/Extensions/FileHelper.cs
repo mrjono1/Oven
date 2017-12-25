@@ -102,6 +102,27 @@ namespace MasterBuilder
             }
         }
 
+        /// <summary>
+        /// Delete files in a directory
+        /// </summary>
+        public static void DeleteFilesInDirectory(string directory, params string[] folder)
+        {
+            var paths = new List<string>
+            {
+                directory
+            };
+            paths.AddRange(folder);
+            var path = Path.Combine(paths.ToArray());
+            var info = new DirectoryInfo(path);
+            if (info.Exists)
+            {
+                foreach (FileInfo file in info.GetFiles())
+                {
+                    file.Delete();
+                }
+            }
+        }
+
         public static string TrimStart(string target, string trimString)
         {
             string result = target;
