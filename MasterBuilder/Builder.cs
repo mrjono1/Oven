@@ -31,8 +31,10 @@ namespace MasterBuilder
 
             var metaDirectory = FileHelper.CreateFolder(topProjectDirectory, "Json");
 
-            var rtf = new SourceControl.RequestToFileSystem(metaDirectory, project);
+            var rtf = new SourceControl.RequestToFileSystem(metaDirectory, project, "jonoclarnette", "jonoclarnette@gmail.com","bmk3zhisghpxfuygqy2mfhqarleuacyr63sigwdzkeoigdtzewca");
             await rtf.Write();
+            await rtf.SetupAndGetRepos();
+            rtf.LocalGit();
 
             var filesToWrite = new List<Task>();
 

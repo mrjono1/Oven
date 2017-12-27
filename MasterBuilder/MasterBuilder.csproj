@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <PackageReference Include="Humanizer.Core" Version="2.2.0" />
+    <PackageReference Include="LibGit2Sharp" Version="0.25.0-preview-0073" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1-beta1" />
     <PackageReference Include="RestSharp" Version="106.1.0" />
   </ItemGroup>
