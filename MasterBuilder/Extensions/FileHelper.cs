@@ -105,7 +105,7 @@ namespace MasterBuilder
         /// <summary>
         /// Delete files in a directory
         /// </summary>
-        public static void DeleteFilesInDirectory(string directory, params string[] folder)
+        public static void DeleteFilesInDirectory(string fileExtension, string directory, params string[] folder)
         {
             var paths = new List<string>
             {
@@ -116,7 +116,16 @@ namespace MasterBuilder
             var info = new DirectoryInfo(path);
             if (info.Exists)
             {
-                foreach (FileInfo file in info.GetFiles())
+                FileInfo[] files = null;
+                if (string.IsNullOrEmpty(fileExtension))
+                {
+                    files = info.GetFiles();
+                }
+                else
+                {
+                    files = info.GetFiles($"*.{fileExtension}");
+                }
+                foreach (FileInfo file in files)
                 {
                     file.Delete();
                 }
