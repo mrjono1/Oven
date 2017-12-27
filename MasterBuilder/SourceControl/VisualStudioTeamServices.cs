@@ -14,6 +14,8 @@ namespace MasterBuilder.SourceControl
         private readonly RestClient _restClient;
         private readonly string _project;
 
+        public Guid? ProjectId { get; set; }
+
         public VisualStudioTeamServices(string account, string project, string personalAccessToken)
         {
             _restClient = new RestClient($"https://{account}.visualstudio.com/DefaultCollection/")
@@ -33,6 +35,7 @@ namespace MasterBuilder.SourceControl
 
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
             {
+                ProjectId = result.Data.Id;
                 return result.Data;
             }
             else if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -65,28 +68,64 @@ namespace MasterBuilder.SourceControl
 
             var result = await _restClient.ExecuteTaskAsync<Models.GetProject>(request);
 
-            if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            if (result.StatusCode == System.Net.HttpStatusCode.Accepted)
             {
                 return result.Data;
             }
-            return null;
+            else
+            {
+                throw new Exception(result.Content);
+            }
         }
-        public async Task<Models.GetProject> GetProjectRepositories()
+
+        public async Task<Models.GetRepository[]> GetProjectRepositories()
         {
             var request = new RestRequest($"{_project}/_apis/git/repositories", Method.GET);
             request.AddQueryParameter("api-version", "1.0");
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
 
-            var result = await _restClient.ExecuteTaskAsync<Models.GetProject>(request);
+            var result = await _restClient.ExecuteTaskAsync(request);
 
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                return result.Data;
+                var data = JsonConvert.DeserializeObject<Models.VssJsonCollectionWrapper>(result.Content);
+                return data.Value;
             }
             else if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 return null;
+            }
+            else
+            {
+                throw new Exception(result.Content);
+            }
+        }
+        public async Task<Models.GetRepository> CreateRepository(string name)
+        {
+            var request = new RestRequest($"{_project}/_apis/git/repositories", Method.POST);
+            request.AddQueryParameter("api-version", "1.0");
+            request.RequestFormat = DataFormat.Json;
+            request.AddHeader("Content-Type", "application/json");
+            var body = new Models.CreateRepository
+            {
+                Name = name,
+                Project = new Models.CreateRepository.RepoProject()
+                {
+                    Id = ProjectId.Value
+                }
+            };
+            var bodyString = JsonConvert.SerializeObject(body, new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            });
+            request.AddParameter("application/json", bodyString, ParameterType.RequestBody);
+
+            var result = await _restClient.ExecuteTaskAsync<Models.GetRepository>(request);
+
+            if (result.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                return result.Data;
             }
             else
             {

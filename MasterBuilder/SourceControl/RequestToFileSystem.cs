@@ -61,7 +61,7 @@ namespace MasterBuilder.SourceControl
             }
         }
 
-        internal async Task Push()
+        internal async Task SetupAndGetRepos()
         {
             var path = Path.Combine(_baseDirectory, "json");
 
@@ -71,6 +71,29 @@ namespace MasterBuilder.SourceControl
             if (project == null)
             {
                 project = await vsts.CreateProject(_project.InternalName, _project.Title);
+            }
+            if (project == null)
+            {
+                return;
+            }
+
+            var repositories = await vsts.GetProjectRepositories();
+
+            Guid? jsonRepoId = null;
+            if (repositories != null)
+            {
+                foreach (var repo in repositories)
+                {
+                    if (repo.Name.Equals("Json", StringComparison.OrdinalIgnoreCase))
+                    {
+                        jsonRepoId = repo.Id;
+                    }
+                }
+            }
+
+            if (!jsonRepoId.HasValue)
+            {
+                await vsts.CreateRepository("Json");
             }
         }
 
