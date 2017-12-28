@@ -162,7 +162,7 @@ namespace MasterBuilder.Request
                     return;
                 }
 
-                var editScreenId = Guid.NewGuid(); // TODO: The id should be reproduceable I don't like this
+                var editScreenId = Properties.SingleOrDefault(p => p.PropertyTemplate == PropertyTemplateEnum.PrimaryKey).Id; // Just grabing a reproduceable id
                 var screens = new List<Screen>(project.Screens)
                 {
                     new Screen()
