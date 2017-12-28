@@ -1,6 +1,6 @@
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -28,34 +28,36 @@ namespace MasterBuilder.Templates.Models
         {
             var templates = new List<ITemplate>();
 
-            foreach (var item in Project.Entities)
+            foreach (var group in (from screen in Project.Screens
+                                   where screen.ScreenSections != null
+                                   from section in screen.ScreenSections
+                                   where section.EntityId != null
+                                   select new
+                                   {
+                                       ScreenSection = section,
+                                       Screen = screen,
+                                       Entity = Project.Entities.SingleOrDefault(a => a.Id == section.EntityId)
+                                   }
+                                   ))
             {
-                foreach (var screen in Project.Screens)
+
+                switch (group.ScreenSection.ScreenSectionType)
                 {
-                    if (screen.EntityId.HasValue && screen.EntityId.Value == item.Id)
-                    {
-                        foreach (var screenSection in screen.ScreenSections)
-                        {
-                            switch (screenSection.ScreenSectionType)
-                            {
-                                case ScreenSectionTypeEnum.Form:
-                                    templates.Add(new ModelEditResponseTemplate(Project, item, screen, screenSection));
-                                    templates.Add(new ModelEditRequestTemplate(Project, item, screen, screenSection));
-                                    break;
-                                case ScreenSectionTypeEnum.Search:
-                                    templates.Add(new ModelSearchRequestTemplate(Project, item, screen, screenSection));
-                                    templates.Add(new ModelSearchResponseTemplate(Project, item, screen, screenSection));
-                                    templates.Add(new ModelSearchItemTemplate(Project, item, screen, screenSection));
-                                    break;
-                                case ScreenSectionTypeEnum.Grid:
-                                    break;
-                                case ScreenSectionTypeEnum.Html:
-                                    break;
-                                default:
-                                    break;
-                            }
-                        }
-                    }
+                    case ScreenSectionTypeEnum.Form:
+                        templates.Add(new ModelEditResponseTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
+                        templates.Add(new ModelEditRequestTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
+                        break;
+                    case ScreenSectionTypeEnum.Search:
+                        templates.Add(new ModelSearchRequestTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
+                        templates.Add(new ModelSearchResponseTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
+                        templates.Add(new ModelSearchItemTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
+                        break;
+                    case ScreenSectionTypeEnum.Grid:
+                        break;
+                    case ScreenSectionTypeEnum.Html:
+                        break;
+                    default:
+                        break;
                 }
             }
 
