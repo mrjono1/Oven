@@ -108,44 +108,39 @@ namespace MasterBuilder.SourceControl
         /// <summary>
         /// Stage, Commit, and Push
         /// </summary>
-        internal void StageCommitPush(Models.GetRepository getRepository)
+        internal void StageCommitPush(Models.GetRepository getRepository, string message)
         {
             var path = Path.Combine(_baseDirectory, getRepository.Name);
-            try
+
+            using (var repository = new Repository(path))
             {
-                using (var repository = new Repository(path))
+                if (!repository.RetrieveStatus().IsDirty)
                 {
-                    if (!repository.RetrieveStatus().IsDirty)
-                    {
-                        return;
-                    }
-
-                    Commands.Stage(repository, "*");
-
-                    // Create the committer's signature and commit
-                    Signature author = new Signature(_username, _email, DateTime.Now);
-                    Signature committer = author;
-
-                    // Commit to the repository
-                    Commit commit = repository.Commit("Here's a commit i made!", author, committer);
-
-                    var remote = repository.Network.Remotes["origin"];
-                    var options = new PushOptions
-                    {
-                        CredentialsProvider = new LibGit2Sharp.Handlers.CredentialsHandler(
-                        (url, usernameFromUrl, types) =>
-                            new UsernamePasswordCredentials()
-                            {
-                                Username = "Basic",
-                                Password = _personalAccessToken
-                            })
-                    };
-                    var pushRefSpec = @"refs/heads/master";
-                    repository.Network.Push(remote, pushRefSpec, options);
+                    return;
                 }
-            } catch (Exception ex)
-            {
-                var ss = ex;
+
+                Commands.Stage(repository, "*");
+
+                // Create the committer's signature and commit
+                Signature author = new Signature(_username, _email, DateTime.Now);
+                Signature committer = author;
+
+                // Commit to the repository
+                Commit commit = repository.Commit(message, author, committer);
+
+                var remote = repository.Network.Remotes["origin"];
+                var options = new PushOptions
+                {
+                    CredentialsProvider = new LibGit2Sharp.Handlers.CredentialsHandler(
+                    (url, usernameFromUrl, types) =>
+                        new UsernamePasswordCredentials()
+                        {
+                            Username = "Basic",
+                            Password = _personalAccessToken
+                        })
+                };
+                var pushRefSpec = @"refs/heads/master";
+                repository.Network.Push(remote, pushRefSpec, options);
             }
         }
     }

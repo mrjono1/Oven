@@ -36,7 +36,7 @@ namespace MasterBuilder
             var rtf = new SourceControl.RequestToFileSystem(topProjectDirectory, project);
             await rtf.Write();
 
-            git.StageCommitPush(repos["Json"]);
+            git.StageCommitPush(repos["Json"], "Build");
 
             var filesToWrite = new List<Task>();
 
@@ -159,7 +159,7 @@ namespace MasterBuilder
 
             await Task.WhenAll(filesToWrite.ToArray());
 
-            git.StageCommitPush(repos[project.InternalName]);
+            git.StageCommitPush(repos[project.InternalName], "Build");
 
             return "Success";
         }
