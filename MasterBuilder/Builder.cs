@@ -29,18 +29,20 @@ namespace MasterBuilder
 
             var topProjectDirectory = FileHelper.CreateFolder(outputDirectory, project.InternalName);
 
-            var metaDirectory = FileHelper.CreateFolder(topProjectDirectory, "Json");
+            var git = new SourceControl.Git(topProjectDirectory, project, "jonoclarnette", "jonoclarnette@gmail.com", "bmk3zhisghpxfuygqy2mfhqarleuacyr63sigwdzkeoigdtzewca");
+            var repos = await git.SetupAndGetRepos();
+            
 
-            var rtf = new SourceControl.RequestToFileSystem(metaDirectory, project, "jonoclarnette", "jonoclarnette@gmail.com","bmk3zhisghpxfuygqy2mfhqarleuacyr63sigwdzkeoigdtzewca");
+            var rtf = new SourceControl.RequestToFileSystem(topProjectDirectory, project);
             await rtf.Write();
-            await rtf.SetupAndGetRepos();
-            rtf.LocalGit();
+
+            git.StageCommitPush(repos["Json"]);
 
             var filesToWrite = new List<Task>();
 
 
             // Create Solution Directory
-            var solutionDirectory = FileHelper.CreateFolder(topProjectDirectory, "Application", project.InternalName);
+            var solutionDirectory = FileHelper.CreateFolder(topProjectDirectory, project.InternalName);
             var projectDirectory = FileHelper.CreateFolder(solutionDirectory, project.InternalName);
 
             if (fullBuild)
@@ -57,7 +59,7 @@ namespace MasterBuilder
                 filesToWrite.AddRange(new Task[]
                 {
                     // Create Solution File
-                    FileHelper.WriteTemplate(projectDirectory, new Templates.SolutionTemplate(project)),
+                    FileHelper.WriteTemplate(solutionDirectory, new Templates.SolutionTemplate(project)),
                     
                     // Create Project Files
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.AngularCliJsonTemplate(project)),
@@ -156,6 +158,8 @@ namespace MasterBuilder
             
 
             await Task.WhenAll(filesToWrite.ToArray());
+
+            git.StageCommitPush(repos[project.InternalName]);
 
             return "Success";
         }

@@ -14,6 +14,18 @@ namespace MasterBuilder
     public class FileHelper
     {
         /// <summary>
+        /// Is Directory Empty
+        /// </summary>
+        public static bool IsDirectoryEmpty(string path)
+        {
+            IEnumerable<string> items = Directory.EnumerateFileSystemEntries(path);
+            using (IEnumerator<string> en = items.GetEnumerator())
+            {
+                return !en.MoveNext();
+            }
+        }
+
+        /// <summary>
         /// Create a folder
         /// </summary>
         public static string CreateFolder(string basePath, params string[] folder)
