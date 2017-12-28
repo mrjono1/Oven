@@ -69,7 +69,7 @@ namespace MasterBuilder.Templates.Models.Export
             foreach (var item in (from e in Project.Entities
                 where e.Properties != null
                 from p in e.Properties
-                where (p.Type == PropertyTypeEnum.ParentRelationship || p.Type == PropertyTypeEnum.ReferenceRelationship) &&
+                where p.Type == PropertyTypeEnum.ParentRelationship &&
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
