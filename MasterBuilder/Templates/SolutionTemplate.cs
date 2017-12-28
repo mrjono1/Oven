@@ -40,7 +40,6 @@ namespace MasterBuilder.Templates
         /// </summary>
         public string GetFileContent()
         {
-            string solutionGuid = Guid.NewGuid().ToString();
             return $@"
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
@@ -63,7 +62,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {{{solutionGuid}}}
+		SolutionGuid = {{{Project.Id.ToString()}}}
 	EndGlobalSection
 EndGlobal";
         }

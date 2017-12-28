@@ -62,7 +62,7 @@ namespace MasterBuilder.Templates.ProjectFiles
   }";
 
             var dependencies = @"""dependencies"": {
-                ""@angular/animations"": ""^5.0.0"",
+    ""@angular/animations"": ""^5.0.0"",
     ""@angular/common"": ""^5.0.0"",
     ""@angular/compiler"": ""^5.0.0"",
     ""@angular/compiler-cli"": ""^5.0.0"",

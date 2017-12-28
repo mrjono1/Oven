@@ -15,6 +15,7 @@ namespace MasterBuilder
         public async Task<string> Run(string outputDirectory, Request.Project project) {
             
             var fullBuild = true;
+            var gitOn = true;
 
             if (project == null)
             {
@@ -29,15 +30,19 @@ namespace MasterBuilder
 
             var topProjectDirectory = FileHelper.CreateFolder(outputDirectory, project.InternalName);
 
-            var git = new SourceControl.Git(topProjectDirectory, project, "jonoclarnette", "jonoclarnette@gmail.com", "bmk3zhisghpxfuygqy2mfhqarleuacyr63sigwdzkeoigdtzewca");
-            var repos = await git.SetupAndGetRepos();
-            
+            SourceControl.Git git = null;
+            Dictionary<string, SourceControl.Models.GetRepository> repos = null;
+            if (gitOn)
+            {
+                git = new SourceControl.Git(topProjectDirectory, project, "jonoclarnette", "jonoclarnette@gmail.com", "bmk3zhisghpxfuygqy2mfhqarleuacyr63sigwdzkeoigdtzewca");
+                repos = await git.SetupAndGetRepos();
 
-            var rtf = new SourceControl.RequestToFileSystem(topProjectDirectory, project);
-            await rtf.Write();
 
-            git.StageCommitPush(repos["Json"], "Build");
+                var rtf = new SourceControl.RequestToFileSystem(topProjectDirectory, project);
+                await rtf.Write();
 
+                git.StageCommitPush(repos["Json"], "Build");
+            }
             var filesToWrite = new List<Task>();
 
 
@@ -159,8 +164,10 @@ namespace MasterBuilder
 
             await Task.WhenAll(filesToWrite.ToArray());
 
-            git.StageCommitPush(repos[project.InternalName], "Build");
-
+            if (gitOn)
+            {
+                git.StageCommitPush(repos[project.InternalName], "Build");
+            }
             return "Success";
         }
     }
