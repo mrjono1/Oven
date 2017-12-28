@@ -88,22 +88,22 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     case PropertyTypeEnum.String:
                         control = $@"{new String(' ', 20)}<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
 {new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""text"" class=""form-control"" id=""{property.Id}""
-{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}>";
+{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
                         break;
                     case PropertyTypeEnum.Integer:
                         control = $@"{new String(' ', 20)}<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
 {new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" class=""form-control"" id=""{property.Id}""
-{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}>";
+{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
                         break;
                     case PropertyTypeEnum.DateTime:
                         control = $@"{new String(' ', 20)}<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
 {new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""datetime"" class=""form-control"" id=""{property.Id}""
-{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}>";
+{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
                         break;
                     case PropertyTypeEnum.Boolean:
                         control = $@"{new String(' ', 20)}<label>
 {new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""checkbox"" id=""{property.Id}""
-{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any() ? "required" : "")}>{property.Title}
+{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>{property.Title}
 {new String(' ', 20)}</label>";
                         break;
                     default:
