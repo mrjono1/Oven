@@ -55,7 +55,27 @@ namespace MasterBuilder.Templates.Controllers
                         }}")}
                         else
                         {{
-                            throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid boolean value"");
+                            throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid integer value"");
+                        }}
+                        break;");
+                            break;
+                        case PropertyTypeEnum.Double:
+                            postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
+                        int doubleValue{item.InternalName};
+                        if (operation.value != null && Double.TryParse(operation.value.ToString(), out doubleValue{item.InternalName}))
+                        {{
+                            entity.{item.InternalName} = doubleValue{item.InternalName};
+                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                        }}
+                        {(item.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
+                        {{
+                            entity.{item.InternalName} = null;
+                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                        }}")}
+                        else
+                        {{
+                            throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid double value"");
                         }}
                         break;");
                             break;

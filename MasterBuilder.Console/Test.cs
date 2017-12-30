@@ -285,10 +285,11 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{271ACB06-23C1-47A0-B660-C658D8E35655}"),
-                            InternalName = "Seed",
-                            Type = PropertyTypeEnum.String,
-                            Title = "Seed"
+                            Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
+                            InternalName = "EntityTemplate",
+                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            Title = "Entity Template",
+                            ParentEntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}")
                         },
                         new Property()
                         {
@@ -385,6 +386,22 @@ namespace MasterBuilder
                                 },
                             }
                         },
+                        new Property()
+                        {
+                            Id = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                            InternalName = "PropertyType",
+                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            Title = "Property Type",
+                            ParentEntityId = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}"),
+                            InternalName = "ParentEntity",
+                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            Title = "ParentEntity",
+                            ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
+                        },
                     }
                 },
                 new Entity()
@@ -451,7 +468,35 @@ namespace MasterBuilder
                                     ValidationType = ValidationTypeEnum.Required
                                 },
                             }
-                        }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{37E3DBC5-1B98-446D-B46B-1BD530CAD376}"),
+                            InternalName = "IntegerValue",
+                            Type = PropertyTypeEnum.Integer,
+                            Title = "Integer Value"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{8E35139C-E60C-4432-B1F7-62CEA1451593}"),
+                            InternalName = "DoubleValue",
+                            Type = PropertyTypeEnum.Double,
+                            Title = "Double Value"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{E2F53C95-BA38-47E1-93CD-38F4B04F44D0}"),
+                            InternalName = "StringValue",
+                            Type = PropertyTypeEnum.String,
+                            Title = "String Value"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{640B7178-5C6D-4265-9ADE-EDC606FC3362}"),
+                            InternalName = "Message",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Message"
+                        },
                     }
                 },
                 new Entity()

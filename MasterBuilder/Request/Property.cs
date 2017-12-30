@@ -22,6 +22,7 @@ namespace MasterBuilder.Request
             { new Guid("{2C1D2E2A-3531-41D9-90D3-3632C368B12A}"), PropertyTypeEnum.Boolean },
             { new Guid("{25E3A798-5F63-4A1E-93B3-A0BCE69836BC}"), PropertyTypeEnum.DateTime },
             { new Guid("{F126388B-8A6E-41DB-A98A-A0E511016441}"), PropertyTypeEnum.Integer },
+            { new Guid("{B967BF8D-0722-43F0-9945-CBEB4160822F}"), PropertyTypeEnum.Double },
             { new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"), PropertyTypeEnum.ParentRelationship },
             { new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"), PropertyTypeEnum.ReferenceRelationship },
             { new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}"), PropertyTypeEnum.String },
@@ -152,6 +153,8 @@ namespace MasterBuilder.Request
                         return "string";
                     case PropertyTypeEnum.Integer:
                         return $"int{(!Required ? "?" : string.Empty)}";
+                    case PropertyTypeEnum.Double:
+                        return $"double{(!Required ? "?" : string.Empty)}";
                     case PropertyTypeEnum.DateTime:
                         return "DateTime";
                     case PropertyTypeEnum.Boolean:
@@ -176,6 +179,8 @@ namespace MasterBuilder.Request
                     case PropertyTypeEnum.String:
                         return "string";
                     case PropertyTypeEnum.Integer:
+                        return "number";
+                    case PropertyTypeEnum.Double:
                         return "number";
                     case PropertyTypeEnum.DateTime:
                         return "string";

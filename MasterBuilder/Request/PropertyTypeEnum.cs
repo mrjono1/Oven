@@ -1,4 +1,4 @@
-﻿namespace MasterBuilder.Request
+namespace MasterBuilder.Request
 {
     /// <summary>
     /// Property Types
@@ -32,6 +32,10 @@
         /// <summary>
         /// Relatoinship to a reference entity
         /// </summary>
-        ReferenceRelationship
+        ReferenceRelationship,
+        /// <summary>
+        /// Double
+        /// </summary>
+        Double
     }
 }

@@ -63,7 +63,21 @@ namespace MasterBuilder.Templates.Entities
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
-                navigationProperties.Add($"        public ICollection<{item.e.InternalName}> {item.e.InternalNamePlural} {{ get; set; }}");
+                // can currently only have 1 parent relationship but can have multiple reference relationships
+                if (item.p.Type == PropertyTypeEnum.ParentRelationship)
+                {
+                    navigationProperties.Add($@"        /// <summary>
+        /// Foreign Key (Via Parent Relationship) to {item.e.InternalName}.{item.p.InternalName}
+        /// </summary>
+        public ICollection<{item.e.InternalName}> {item.e.InternalNamePlural} {{ get; set; }}");
+                }
+                else
+                {
+                    navigationProperties.Add($@"        /// <summary>
+        /// Foreign Key (Via Reference Relationship) to {item.e.InternalName}.{item.p.InternalName}
+        /// </summary>
+        public ICollection<{item.e.InternalName}> {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
+                }
             }
 
             return $@"using System; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}

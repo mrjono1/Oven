@@ -71,14 +71,19 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             {
                 var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 value.AppendLine();
-                value.Append($@"            builder.HasOne(p => p.{property.InternalName})
-                .WithMany(p => p.{entity.InternalNamePlural})
-                .HasForeignKey(p => p.{property.InternalName}Id)");
 
-                if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+                if (property.Type == PropertyTypeEnum.ParentRelationship)
                 {
-                    value.Append(@"
-                 .OnDelete(DeleteBehavior.Restrict)");
+                    value.Append($@"            builder.HasOne(p => p.{property.InternalName})
+                    .WithMany(p => p.{entity.InternalNamePlural})
+                    .HasForeignKey(p => p.{property.InternalName}Id)");
+                }
+                else if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+                {
+                    value.Append($@"            builder.HasOne(p => p.{property.InternalName})
+                    .WithMany(p => p.{property.InternalName}{entity.InternalNamePlural})
+                    .HasForeignKey(p => p.{property.InternalName}Id)
+                    .OnDelete(DeleteBehavior.Restrict)");
                 }
                 value.Append(";");
             }

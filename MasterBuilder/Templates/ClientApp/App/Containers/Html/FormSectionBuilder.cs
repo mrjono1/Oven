@@ -95,6 +95,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 {new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" class=""form-control"" id=""{property.Id}""
 {new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
                         break;
+                    case PropertyTypeEnum.Double:
+                        control = $@"{new String(' ', 20)}<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
+{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" class=""form-control"" id=""{property.Id}""
+{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
+                        break;
                     case PropertyTypeEnum.DateTime:
                         control = $@"{new String(' ', 20)}<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
 {new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""datetime"" class=""form-control"" id=""{property.Id}""
@@ -105,6 +110,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 {new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""checkbox"" id=""{property.Id}""
 {new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>{property.Title}
 {new String(' ', 20)}</label>";
+                        break;
+                    case PropertyTypeEnum.ReferenceRelationship:
+                        control = $@"<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
+<select *ngIf=""{Screen.InternalName.Camelize()}"" class=""form-control"" id=""{property.Id}""
+formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>
+<option *ngFor=""let option of {property.InternalName.Camelize()}Options"" [value]=""option.id"">{{{{option.title}}}}</option>
+</select>";
                         break;
                     default:
                         break;

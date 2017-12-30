@@ -20,7 +20,13 @@ namespace MasterBuilder.Templates.Entities
             if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
-                return $@"        public Guid{(required ? "" : "?")} {property.InternalName}Id {{ get; set; }}
+                return $@"        /// <summary>
+        /// Foreign Key (Parent Relationship) to {relationshipEntity.InternalName}
+        /// </summary>
+        public Guid{(required ? "" : "?")} {property.InternalName}Id {{ get; set; }}
+        /// <summary>
+        /// Foreign Key navigation object (Parent Relationship) to {relationshipEntity.InternalName}
+        /// </summary>
         public {relationshipEntity.InternalName} {property.InternalName} {{ get; set; }}";
             }
             else if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
@@ -40,7 +46,7 @@ namespace MasterBuilder.Templates.Entities
             else
             {
                 return $@"        /// <summary>
-        /// {property.Title}
+        /// {property.Title} - Calculated
         /// </summary>
         public {property.CsType} {property.InternalName} 
         {{ 
