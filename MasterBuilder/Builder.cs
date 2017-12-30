@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace MasterBuilder
 {
+    /// <summary>
+    /// Master Builder Entry point
+    /// </summary>
     public class Builder
     {
-        private string GetProjectRootFolder()
-        {
-            return Path.GetFullPath($"{AppDomain.CurrentDomain.BaseDirectory}/../../../");
-        }
-        
+        /// <summary>
+        /// Run Master Builder
+        /// </summary>
         public async Task<string> Run(string outputDirectory, Request.Project project) {
             
             var fullBuild = true;

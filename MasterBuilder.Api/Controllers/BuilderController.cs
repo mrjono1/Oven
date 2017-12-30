@@ -14,6 +14,10 @@ namespace MasterBuilder.Api.Controllers
         [HttpPost("publish")]
         public async Task<IActionResult> Post([FromBody]Project project)
         {
+            if (!ModelState.IsValid)
+            {
+                return new BadRequestObjectResult(ModelState);
+            }
             var builder = new MasterBuilder.Builder();
 
             string result = null;

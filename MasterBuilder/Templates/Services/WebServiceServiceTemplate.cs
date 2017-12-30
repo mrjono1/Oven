@@ -56,11 +56,23 @@ namespace MasterBuilder.Templates.Services
             {
                 foreach (var operation in WebService.Operations)
                 {
-                    functions.Add($@"        public async Task<IRestResponse> {operation.InternalName}Async(Models.Project.Export.Project body)
+                    functions.Add($@"
+        /// <summary>
+        /// {operation.Title}
+        /// </summary>
+        public async Task<IRestResponse> {operation.InternalName}Async(Models.Project.Export.Project body)
         {{
-            var request = new RestRequest(""{operation.RelativeRoute}"", Method.{operation.Verb});
+            var request = new RestRequest(""{operation.RelativeRoute}"", Method.{operation.Verb})
+            {{
+                RequestFormat = DataFormat.Json
+            }};
+            request.AddHeader(""Content-Type"", ""application/json"");
             if (body != null){{
-                request.AddJsonBody(body);
+                var jsonString = JsonConvert.SerializeObject(body, new JsonSerializerSettings
+                {{
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                }});
+                request.AddParameter(""application/json"", jsonString, ParameterType.RequestBody);
             }}
             return await _restClient.ExecuteTaskAsync(request);
         }}");
@@ -72,6 +84,8 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using RestSharp;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using {Project.InternalName}.Entities;
 using {Project.InternalName}.Services.Contracts;
 

@@ -63,7 +63,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             {
 
                 properties.Add($@"            builder.Property(p => p.{item.p.InternalName}{item.e.InternalName}Id)
-                .HasColumnName(""{(Project.ImutableDatabase ? item.p.Id.ToString() : string.Concat(item.p.InternalName, item.e.InternalName, "Id"))}""){(item.p.Required ? string.Join(Environment.NewLine, ".IsRequired();") : ";")}");
+                .HasColumnName(""{(Project.ImutableDatabase.Value ? item.p.Id.ToString() : string.Concat(item.p.InternalName, item.e.InternalName, "Id"))}""){(item.p.Required ? string.Join(Environment.NewLine, ".IsRequired();") : ";")}");
             }
 
             return $@"using Microsoft.EntityFrameworkCore;
@@ -82,7 +82,7 @@ namespace {Project.InternalName}.EntityTypeConfigurations
         /// <param name=""builder"">The injected model builder for the {Entity.InternalName} entity</param>
         public void Configure(EntityTypeBuilder<Entities.{Entity.InternalName}> builder)
         {{
-            builder.ToTable(""{(Project.ImutableDatabase ? Entity.Id.ToString() : Entity.InternalName)}"");
+            builder.ToTable(""{(Project.ImutableDatabase.Value ? Entity.Id.ToString() : Entity.InternalName)}"");
             builder.HasKey(p => p.Id);
 {string.Join(Environment.NewLine, properties)}
         }}

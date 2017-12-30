@@ -2,6 +2,7 @@ using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Templates.Services
@@ -43,17 +44,8 @@ namespace MasterBuilder.Templates.Services
 
             if (Project.Id == Project.MasterBuilderId)
             {
-                // TODO: auto build
-                exportFunctions.Add($@"        public async Task<Models.Project.Export.Project> ExportProjectAsync(Guid id)
-        {{
-            var data = await _context.Projects.Where(project => project.Id == id)
-                          .Include(""Entities"")
-                          .Include(""Entities.Properties"")
-                          .SingleOrDefaultAsync();
-
-            var result = new Models.Project.Export.Project(data);
-            return result;
-        }}");
+                var projectEntity = Project.Entities.SingleOrDefault(a => a.Id == new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"));
+                exportFunctions.Add(new ExportFunctionTemplate(Project, projectEntity).Function());
             }
 
             return $@"using Microsoft.EntityFrameworkCore;

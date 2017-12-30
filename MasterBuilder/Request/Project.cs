@@ -47,7 +47,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Clean the output directory before build
         /// </summary>
-        public bool CleanDirectory { get; set; }
+        public bool? CleanDirectory { get; set; }
         /// <summary>
         /// Internal Name
         /// </summary>
@@ -109,11 +109,11 @@ namespace MasterBuilder.Request
         /// If true database tables and columns are all uniqueidentifiers making database 
         /// hard to use but less chance of needing to change database columns which can result in data loss
         /// </summary>
-        public bool ImutableDatabase { get; set; }
+        public bool? ImutableDatabase { get; set; }
         /// <summary>
         /// Default Screen to load
         /// </summary>
-        public Guid DefaultScreenId { get; set; }
+        public Guid? DefaultScreenId { get; set; }
         /// <summary>
         /// The List of Default Nuget Packages
         /// </summary>
@@ -177,6 +177,24 @@ namespace MasterBuilder.Request
                 {
                     messages.Add(screenMessage);
                 }
+            }
+
+
+            // Set Default Values for nullable fields
+
+            if (!ImutableDatabase.HasValue)
+            {
+                ImutableDatabase = true;
+            }
+
+            if (!DefaultScreenId.HasValue)
+            {
+                DefaultScreenId = Screens.FirstOrDefault().Id;
+            }
+
+            if (!CleanDirectory.HasValue)
+            {
+                CleanDirectory = true;
             }
 
             if (messages.Any())

@@ -73,7 +73,11 @@ namespace MasterBuilder.Templates.Models.Export
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
-                navigationProperties.Add($"        public {item.e.InternalName}[] {item.e.InternalNamePlural} {{ get; set; }}");
+                navigationProperties.Add($@"
+        /// <summary>
+        /// {item.p.Title}
+        /// </summary>
+        public {item.e.InternalName}[] {item.e.InternalNamePlural} {{ get; set; }}");
 
                 propertyMappings.Add($@"            var {item.e.InternalNamePlural.Camelize()} = new List<{item.e.InternalName}>();
             if ({Entity.InternalName.Camelize()}.{item.e.InternalNamePlural} != null)
@@ -93,6 +97,13 @@ namespace {Project.InternalName}.Models.{RootEntity.InternalName}.Export
     /// </summary>
     public class {Entity.InternalName}
     {{
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public {Entity.InternalName}(){{}}
+        /// <summary>
+        /// Constructor defaults values from an entity
+        /// </summary>
         public {Entity.InternalName}(Entities.{Entity.InternalName} {Entity.InternalName.Camelize()})
         {{
 {string.Join(Environment.NewLine, propertyMappings)}            

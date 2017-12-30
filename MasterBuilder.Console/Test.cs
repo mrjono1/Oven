@@ -400,7 +400,14 @@ namespace MasterBuilder
                             InternalName = "PropertyType",
                             Type = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Property Type",
-                            ParentEntityId = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}")
+                            ParentEntityId = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{674C76ED-B47D-425B-BF6D-9C606FE58217}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
                         },
                         new Property()
                         {

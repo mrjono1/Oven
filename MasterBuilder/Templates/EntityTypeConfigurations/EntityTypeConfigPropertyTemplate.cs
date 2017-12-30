@@ -38,7 +38,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             }
             if (value.Length != 0)
             {
-                value.Append($@"                .HasColumnName(""{(project.ImutableDatabase ? property.Id.ToString() : dbColumnName)}"")");
+                value.Append($@"                .HasColumnName(""{(project.ImutableDatabase.Value ? property.Id.ToString() : dbColumnName)}"")");
 
                 if (property.ValidationItems != null)
                 {

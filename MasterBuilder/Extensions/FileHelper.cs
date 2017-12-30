@@ -84,7 +84,7 @@ namespace MasterBuilder
 
         public static void CleanProject(string baseDirectory, Project project)
         {
-            if (!project.CleanDirectory)
+            if (!project.CleanDirectory.Value)
             {
                 return;
             }
