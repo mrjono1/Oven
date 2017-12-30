@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using MasterBuilder.Request;
@@ -20,9 +20,14 @@ namespace MasterBuilder.Templates.Controllers
                 if (item.Type == PropertyTypeEnum.ParentRelationship)
                 {
                     continue;
-                } else if (item.Type == PropertyTypeEnum.ReferenceRelationship)
+                }
+                else if (item.Type == PropertyTypeEnum.ReferenceRelationship)
                 {
                     // todo reference relationship
+                    continue;
+                }
+                else if (item.Type == PropertyTypeEnum.OneToOneRelationship)
+                {
                     continue;
                 }
                 propertyMapping.Add($"                        {item.InternalName} = item.{item.InternalName}");

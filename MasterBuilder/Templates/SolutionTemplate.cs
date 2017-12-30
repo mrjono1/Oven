@@ -1,6 +1,5 @@
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
-using System;
 
 namespace MasterBuilder.Templates
 {

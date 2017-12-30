@@ -25,6 +25,7 @@ namespace MasterBuilder.Request
             { new Guid("{B967BF8D-0722-43F0-9945-CBEB4160822F}"), PropertyTypeEnum.Double },
             { new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"), PropertyTypeEnum.ParentRelationship },
             { new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"), PropertyTypeEnum.ReferenceRelationship },
+            { new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}"), PropertyTypeEnum.OneToOneRelationship },
             { new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}"), PropertyTypeEnum.String },
             { new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"), PropertyTypeEnum.Uniqueidentifier }
         };
@@ -197,6 +198,9 @@ namespace MasterBuilder.Request
         /// </summary>
         public IEnumerable<Validation> ValidationItems { get; set; }
 
+        /// <summary>
+        /// Validate and perform data fixes
+        /// </summary>
         internal bool Validate(Entity entity, out string message)
         {
             var messageList = new List<string>();

@@ -36,6 +36,10 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Double
         /// </summary>
-        Double
+        Double,
+        /// <summary>
+        /// One to One Relationship to another entity
+        /// </summary>
+        OneToOneRelationship
     }
 }

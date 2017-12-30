@@ -14,7 +14,9 @@ namespace MasterBuilder.Templates.Controllers
             var patchEntityOperations = new List<string>();
             foreach (var item in entity.Properties)
             {
-                if (item.Type != PropertyTypeEnum.ParentRelationship && item.Type != PropertyTypeEnum.ReferenceRelationship)
+                if (item.Type != PropertyTypeEnum.ParentRelationship &&
+                    item.Type != PropertyTypeEnum.ReferenceRelationship &&
+                    item.Type != PropertyTypeEnum.OneToOneRelationship)
                 {
                     getPropertyMapping.Add($"                           {item.InternalName} = item.{item.InternalName}");
                 }

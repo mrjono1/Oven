@@ -2,6 +2,7 @@ using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MasterBuilder.Templates.EntityTypeConfigurations
 {
@@ -51,6 +52,18 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 {
                     properties.Add(EntityTypeConfigPropertyTemplate.Evaluate(Project, Entity, item));
                 }
+            }
+
+            foreach (var item in (from e in Project.Entities
+                                  where e.Properties != null
+                                  from p in e.Properties
+                                  where p.Type == PropertyTypeEnum.OneToOneRelationship &&
+                                  p.ParentEntityId.Value == Entity.Id
+                                  select new { e, p }))
+            {
+
+                properties.Add($@"            builder.Property(p => p.{item.p.InternalName}{item.e.InternalName}Id)
+                .HasColumnName(""{(Project.ImutableDatabase ? item.p.Id.ToString() : string.Concat(item.p.InternalName, item.e.InternalName, "Id"))}""){(item.p.Required ? string.Join(Environment.NewLine, ".IsRequired();") : ";")}");
             }
 
             return $@"using Microsoft.EntityFrameworkCore;

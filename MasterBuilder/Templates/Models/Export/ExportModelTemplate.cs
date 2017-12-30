@@ -54,7 +54,7 @@ namespace MasterBuilder.Templates.Models.Export
 
             if (Entity.Properties != null)
             {
-                foreach (var item in Entity.Properties.Where(p => p.Type != PropertyTypeEnum.ParentRelationship))
+                foreach (var item in Entity.Properties.Where(p => p.Type != PropertyTypeEnum.ParentRelationship && p.Type != PropertyTypeEnum.OneToOneRelationship))
                 {
                     properties.Add(ExportModelPropertyTemplate.Evaluate(Project, item));
 
@@ -75,7 +75,7 @@ namespace MasterBuilder.Templates.Models.Export
             {
                 navigationProperties.Add($"        public {item.e.InternalName}[] {item.e.InternalNamePlural} {{ get; set; }}");
 
-                propertyMappings.Add($@"        var {item.e.InternalNamePlural.Camelize()} = new List<{item.e.InternalName}>();
+                propertyMappings.Add($@"            var {item.e.InternalNamePlural.Camelize()} = new List<{item.e.InternalName}>();
             if ({Entity.InternalName.Camelize()}.{item.e.InternalNamePlural} != null)
             {{
                 {Entity.InternalName.Camelize()}.{item.e.InternalNamePlural}.ToList().ForEach(a => {item.e.InternalNamePlural.Camelize()}.Add(new {item.e.InternalName}(a)));

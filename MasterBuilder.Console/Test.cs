@@ -305,7 +305,15 @@ namespace MasterBuilder
                                     ValidationType = ValidationTypeEnum.Required
                                 },
                             }
-                        }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
+                            InternalName = "Seed",
+                            Type = PropertyTypeEnum.OneToOneRelationship,
+                            Title = "Seed",
+                            ParentEntityId = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}")
+                        },
                     }
                 },
                 new Entity()

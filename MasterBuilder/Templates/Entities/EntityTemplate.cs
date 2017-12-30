@@ -59,24 +59,42 @@ namespace MasterBuilder.Templates.Entities
             foreach (var item in (from e in Project.Entities
                 where e.Properties != null
                 from p in e.Properties
-                where (p.Type == PropertyTypeEnum.ParentRelationship || p.Type == PropertyTypeEnum.ReferenceRelationship) &&
+                where (p.Type == PropertyTypeEnum.ParentRelationship ||
+                p.Type == PropertyTypeEnum.ReferenceRelationship ||
+                p.Type == PropertyTypeEnum.OneToOneRelationship) &&
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
                 // can currently only have 1 parent relationship but can have multiple reference relationships
-                if (item.p.Type == PropertyTypeEnum.ParentRelationship)
+                switch (item.p.Type)
                 {
-                    navigationProperties.Add($@"        /// <summary>
+                    case PropertyTypeEnum.ParentRelationship:
+
+                        navigationProperties.Add($@"        /// <summary>
         /// Foreign Key (Via Parent Relationship) to {item.e.InternalName}.{item.p.InternalName}
         /// </summary>
         public ICollection<{item.e.InternalName}> {item.e.InternalNamePlural} {{ get; set; }}");
-                }
-                else
-                {
-                    navigationProperties.Add($@"        /// <summary>
+                        break;
+                    case PropertyTypeEnum.ReferenceRelationship:
+
+                        navigationProperties.Add($@"        /// <summary>
         /// Foreign Key (Via Reference Relationship) to {item.e.InternalName}.{item.p.InternalName}
         /// </summary>
         public ICollection<{item.e.InternalName}> {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
+                        break;
+                    case PropertyTypeEnum.OneToOneRelationship:
+
+                        navigationProperties.Add($@"         /// <summary>
+        /// Foreign Key (Parent Relationship)
+        /// </summary>
+        public Guid{(item.p.Required ? "" : "?")} {item.p.InternalName}{item.e.InternalName}Id {{ get; set; }}
+        /// <summary>
+        /// Foreign Key (Via Reference Relationship)
+        /// </summary>
+        public {item.e.InternalName} {item.p.InternalName}{item.e.InternalName} {{ get; set; }}");
+                        break;
+                    default:
+                        break;
                 }
             }
 
