@@ -34,10 +34,9 @@ namespace MasterBuilder
             Dictionary<string, SourceControl.Models.GetRepository> repos = null;
             if (gitOn)
             {
-                git = new SourceControl.Git(topProjectDirectory, project, "jonoclarnette", "jonoclarnette@gmail.com", "bmk3zhisghpxfuygqy2mfhqarleuacyr63sigwdzkeoigdtzewca");
+                git = new SourceControl.Git(topProjectDirectory, project, "master-builder", "jonoclarnette@gmail.com", "wynpvam2lj24cvtw6y3vgghio32x5u5pwnyxiyg5zrmowntm4fwa");
                 repos = await git.SetupAndGetRepos();
-
-
+                
                 var rtf = new SourceControl.RequestToFileSystem(topProjectDirectory, project);
                 await rtf.Write();
 
@@ -53,7 +52,7 @@ namespace MasterBuilder
             if (fullBuild)
             {
                 // Clean out directory
-                FileHelper.CleanProject(projectDirectory, null, project);
+                FileHelper.CleanProject(projectDirectory, project);
 
                 // Create Directories
                 var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
@@ -69,6 +68,7 @@ namespace MasterBuilder
                     // Create Project Files
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.AngularCliJsonTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.ProjectTemplate(project)),
+                    FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.GitIgnoreTemplate()),
                     FileHelper.WriteTemplate(solutionDirectory, new Templates.ProjectFiles.GitIgnoreTemplate()),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.AppSettingsTemplate(project)),
                     FileHelper.WriteTemplate(projectDirectory, new Templates.ProjectFiles.TypeScriptLintTemplate()),

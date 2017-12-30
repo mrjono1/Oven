@@ -82,37 +82,39 @@ namespace MasterBuilder
             }
         }
 
-        public static void CleanProject(string baseDirectory, string subDirectory, Project project)
+        public static void CleanProject(string baseDirectory, Project project)
         {
             if (!project.CleanDirectory)
             {
                 return;
             }
-            var source = new DirectoryInfo(baseDirectory);
+            DeleteFiles(baseDirectory, project.CleanDirectoryIgnoreDirectories);
+        }
 
-            // Delete Folders each subdirectory using recursion.
-            foreach (DirectoryInfo directory in source.GetDirectories())
+        private static void DeleteFiles(string directory, string[] excludeFolders)
+        {
+            var directoryInfo = new DirectoryInfo(directory);
+
+            if (!excludeFolders.Contains(directoryInfo.Name))
             {
-                var relativePath = TrimStart(directory.FullName, baseDirectory + "\\");
-                if (!project.CleanDirectoryIgnoreDirectories.Contains(relativePath))
+                try
                 {
-                    try
+                    foreach (FileInfo file in directoryInfo.GetFiles())
                     {
-                        foreach (FileInfo file in directory.GetFiles())
-                        {
-                            file.Delete();
-                        }
-                        foreach (DirectoryInfo dir in directory.GetDirectories())
-                        {
-                            dir.Delete(true);
-                        }
-                    }catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
+                        file.Delete();
                     }
+                    foreach (DirectoryInfo dir in directoryInfo.GetDirectories())
+                    {
+                        DeleteFiles(dir.FullName, excludeFolders);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
                 }
             }
         }
+
 
         /// <summary>
         /// Delete files in a directory

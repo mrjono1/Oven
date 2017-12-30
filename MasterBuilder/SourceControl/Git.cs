@@ -129,6 +129,11 @@ namespace MasterBuilder.SourceControl
                 Commit commit = repository.Commit(message, author, committer);
 
                 var remote = repository.Network.Remotes["origin"];
+                if (!remote.Url.Equals(getRepository.RemoteUrl, StringComparison.OrdinalIgnoreCase))
+                {
+                    repository.Network.Remotes.Update("origin", r => r.Url = getRepository.RemoteUrl);
+                    remote = repository.Network.Remotes["origin"];
+                }
                 var options = new PushOptions
                 {
                     CredentialsProvider = new LibGit2Sharp.Handlers.CredentialsHandler(
