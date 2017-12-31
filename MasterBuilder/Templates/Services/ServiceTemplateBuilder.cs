@@ -31,11 +31,20 @@ namespace MasterBuilder.Templates.Services
 
             // TODO: Create application setting service
 
-            if (Project.WebServices != null)
+            if (Project.Services != null)
             {
-                foreach (var webService in Project.WebServices)
+                foreach (var service in Project.Services)
                 {
-                    templates.Add(new WebServiceServiceTemplate(Project, webService));
+                    switch (service.ServiceType)
+                    {
+                        case ServiceTypeEnum.WebService:
+                            templates.Add(new WebServiceServiceTemplate(Project, service, service.WebService));
+                            break;
+                        case ServiceTypeEnum.ExportService:
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -51,11 +60,20 @@ namespace MasterBuilder.Templates.Services
 
             // TODO: Create application setting service
 
-            if (Project.WebServices != null)
+            if (Project.Services != null)
             {
-                foreach (var webService in Project.WebServices)
+                foreach (var service in Project.Services)
                 {
-                    names.Add(new WebServiceServiceTemplate(Project, webService).GetClassName());
+                    switch (service.ServiceType)
+                    {
+                        case ServiceTypeEnum.WebService:
+                            names.Add(new WebServiceServiceTemplate(Project, service, service.WebService).GetClassName());
+                            break;
+                        case ServiceTypeEnum.ExportService:
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 

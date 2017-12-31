@@ -11,14 +11,16 @@ namespace MasterBuilder.Templates.Services.Contracts
     public class WebServiceServiceContractTemplate : ITemplate
     {
         private readonly Project Project;
+        private readonly Service Service;
         private readonly WebService WebService;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public WebServiceServiceContractTemplate(Project project, WebService webService)
+        public WebServiceServiceContractTemplate(Project project, Service service, WebService webService)
         {
             Project = project;
+            Service = service;
             WebService = webService;
         }
         /// <summary>
@@ -26,7 +28,7 @@ namespace MasterBuilder.Templates.Services.Contracts
         /// </summary>
         public string GetFileName()
         {
-            return $"I{WebService.InternalName}Service.cs";
+            return $"I{Service.InternalName}Service.cs";
         }
 
         /// <summary>
@@ -60,9 +62,9 @@ using {Project.InternalName}.Entities;
 namespace {Project.InternalName}.Services.Contracts
 {{
     /// <summary>
-    /// {WebService.InternalName} Service Contract
+    /// {Service.InternalName} Service Contract
     /// </summary>
-    public interface I{WebService.InternalName}Service
+    public interface I{Service.InternalName}Service
     {{
 {string.Join(Environment.NewLine, functions)}
     }}

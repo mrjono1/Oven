@@ -88,9 +88,9 @@ namespace MasterBuilder.Request
         /// </summary>
         public IEnumerable<MenuItem> MenuItems { get; set; }
         /// <summary>
-        /// Web Service configurations
+        /// Service configurations
         /// </summary>
-        public IEnumerable<WebService> WebServices { get; set; }
+        public IEnumerable<Service> Services { get; set; }
 
         /// <summary>
         /// Folders to ignore when cleaning out the directory on build
@@ -245,7 +245,7 @@ namespace MasterBuilder.Request
             if (administrationSection == null)
             {
                 var links = new List<string>();
-                foreach (var screen in Screens.Where(a => a.TemplateId == new Guid("{142B82E8-471B-47E5-A13F-158D2B06874B}")))
+                foreach (var screen in Screens.Where(a => a.Template == ScreenTemplateEnum.Reference))
                 {
                     links.Add($@"<a [routerLink]=""['/{screen.Path}']"">
                         <span class='glyphicon glyphicon-th-list'></span> {screen.Title}

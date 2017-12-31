@@ -13,14 +13,6 @@ namespace MasterBuilder.Request
         /// </summary>
         public Guid Id { get; set; }
         /// <summary>
-        /// Title
-        /// </summary>
-        public string Title { get; set; }
-        /// <summary>
-        /// Internal Name
-        /// </summary>
-        public string InternalName { get; set; }
-        /// <summary>
         /// Default Base Endpoint: This can be overriden for each environment
         /// </summary>
         public string DefaultBaseEndpoint { get; set; }

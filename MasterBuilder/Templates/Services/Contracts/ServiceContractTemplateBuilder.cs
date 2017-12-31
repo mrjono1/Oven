@@ -33,11 +33,20 @@ namespace MasterBuilder.Templates.Services.Contracts
 
             // TODO: Create application setting service
 
-            if (Project.WebServices != null)
+            if (Project.Services != null)
             {
-                foreach (var webService in Project.WebServices)
+                foreach (var service in Project.Services)
                 {
-                    templates.Add(new WebServiceServiceContractTemplate(Project, webService));
+                    switch (service.ServiceType)
+                    {
+                        case ServiceTypeEnum.WebService:
+                            templates.Add(new WebServiceServiceContractTemplate(Project, service, service.WebService));
+                            break;
+                        case ServiceTypeEnum.ExportService:
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 

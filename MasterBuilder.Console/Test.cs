@@ -708,14 +708,14 @@ namespace MasterBuilder
                 },
                 new Entity()
                 {
-                    Id = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
-                    InternalName = "WebService",
-                    Title = "Web Service",
+                    Id = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}"),
+                    InternalName = "Service",
+                    Title = "Service",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{9BCAC6AB-8A56-46DC-8CBD-1B25AD3EE2AC}"),
+                            Id = new Guid("{19152CE0-B2AC-4267-A5E1-D06B1D7DFC01}"),
                             InternalName = "Id",
                             Type = PropertyTypeEnum.Uniqueidentifier,
                             Title = "Id",
@@ -723,24 +723,24 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{69A7B2AB-AEB2-48A7-BEA1-223D34D4B925}"),
+                            Id = new Guid("{6E11DECD-0526-4BC1-91C8-A7F1AA338635}"),
                             InternalName = "Title",
                             Type = PropertyTypeEnum.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{AE412C45-CF05-4275-84BA-C22D41BBA5BB}"),
+                                    Id = new Guid("{712013B0-E02A-46AE-9282-2610A0D25FEE}"),
                                     ValidationType = ValidationTypeEnum.Unique
                                 },
                                 new Validation
                                 {
-                                    Id = new Guid("{BF23F3C1-F3D2-463D-A3DB-95CD190CA9DD}"),
+                                    Id = new Guid("{7688B9DF-576E-40C5-B752-D0F31A5660F7}"),
                                     ValidationType = ValidationTypeEnum.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{74A08FB6-2CDB-4E88-BE8B-087103C29074}"),
+                                    Id = new Guid("{AAD3E008-8EAD-4A22-84E8-E15A9157603C}"),
                                     ValidationType = ValidationTypeEnum.Required
                                 },
                             }
@@ -771,6 +771,46 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
+                            Id = new Guid("{D6D616EB-E922-4782-BC9D-D68F1F07DB60}"),
+                            InternalName = "Project",
+                            Type = PropertyTypeEnum.ParentRelationship,
+                            Title = "Project",
+                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{1EF431AF-E3D0-4510-93E0-58FD49D602D0}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{ACD4EA5B-644F-4DFD-9082-A0E58402B11D}"),
+                            InternalName = "WebService",
+                            Type = PropertyTypeEnum.OneToOneRelationship,
+                            Title = "WebService",
+                            ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}")
+                        }
+                    }
+                },
+                new Entity()
+                {
+                    Id = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
+                    InternalName = "WebService",
+                    Title = "Web Service",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{A13AA1B4-127A-4316-B05B-BFFCCB8B7BF6}"),
+                            InternalName = "Id",
+                            Type = PropertyTypeEnum.Uniqueidentifier,
+                            Title = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                        },
+                        new Property()
+                        {
                             Id = new Guid("{CB83CA7F-B62D-48E4-9833-54B1B07A7E70}"),
                             InternalName = "DefaultBaseEndpoint",
                             Type = PropertyTypeEnum.String,
@@ -785,21 +825,6 @@ namespace MasterBuilder
                                 },
                                 new Validation{
                                     Id = new Guid("{66B86E99-9AA5-4890-81BA-1FBF9CADBCC6}"),
-                                    ValidationType = ValidationTypeEnum.Required
-                                },
-                            }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{D6D616EB-E922-4782-BC9D-D68F1F07DB60}"),
-                            InternalName = "Project",
-                            Type = PropertyTypeEnum.ParentRelationship,
-                            Title = "Project",
-                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation{
-                                    Id = new Guid("{1EF431AF-E3D0-4510-93E0-58FD49D602D0}"),
                                     ValidationType = ValidationTypeEnum.Required
                                 },
                             }
@@ -929,7 +954,7 @@ namespace MasterBuilder
                     Title = "Home",
                     InternalName = "Home",
                     Path = "home",
-                    TemplateId = new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"),
+                    Template = ScreenTemplateEnum.Home,
                     ScreenSections = new ScreenSection[]
                     {
                         new ScreenSection
@@ -1142,23 +1167,26 @@ namespace MasterBuilder
                 }
             };
 
-            project.WebServices = new WebService[]
+            project.Services = new Service[]
             {
-                new WebService
-                {
+                new Service(){
                     Id = new Guid("{359525A8-CCA2-4AC1-9348-23057D616A75}"),
                     Title = "Master Builder Api",
                     InternalName = "MasterBuilderApi",
-                    DefaultBaseEndpoint = "https://localhost:44398",
-                    Operations = new WebServiceOperation[]
+                    ServiceType = ServiceTypeEnum.WebService,
+                    WebService = new WebService
                     {
-                        new WebServiceOperation
+                        DefaultBaseEndpoint = "https://localhost:44398",
+                        Operations = new WebServiceOperation[]
                         {
-                            Id = new Guid("{99B9358B-2266-47BC-957A-DC6EF459D4A1}"),
-                            Title = "Publish",
-                            InternalName = "Publish",
-                            Verb = "POST",
-                            RelativeRoute = "/api/builder/publish"
+                            new WebServiceOperation
+                            {
+                                Id = new Guid("{99B9358B-2266-47BC-957A-DC6EF459D4A1}"),
+                                Title = "Publish",
+                                InternalName = "Publish",
+                                Verb = "POST",
+                                RelativeRoute = "/api/builder/publish"
+                            }
                         }
                     }
                 }

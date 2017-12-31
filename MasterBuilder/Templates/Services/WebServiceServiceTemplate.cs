@@ -11,14 +11,16 @@ namespace MasterBuilder.Templates.Services
     public class WebServiceServiceTemplate : ITemplate
     {
         private readonly Project Project;
+        private readonly Service Service;
         private readonly WebService WebService;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public WebServiceServiceTemplate(Project project, WebService webService)
+        public WebServiceServiceTemplate(Project project, Service service, WebService webService)
         {
             Project = project;
+            Service = service;
             WebService = webService;
         }
         /// <summary>
@@ -26,7 +28,7 @@ namespace MasterBuilder.Templates.Services
         /// </summary>
         public string GetFileName()
         {
-            return $"{WebService.InternalName}Service.cs";
+            return $"{Service.InternalName}Service.cs";
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace MasterBuilder.Templates.Services
         /// </summary>
         public string GetClassName()
         {
-            return $"{WebService.InternalName}Service";
+            return $"{Service.InternalName}Service";
         }
 
         /// <summary>
@@ -92,9 +94,9 @@ using {Project.InternalName}.Services.Contracts;
 namespace {Project.InternalName}.Services
 {{
     /// <summary>
-    /// {WebService.InternalName} Service
+    /// {Service.InternalName} Service
     /// </summary>
-    public class {WebService.InternalName}Service : I{WebService.InternalName}Service
+    public class {Service.InternalName}Service : I{Service.InternalName}Service
     {{
         /// <summary>
         /// Database Context
@@ -108,7 +110,7 @@ namespace {Project.InternalName}.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public {WebService.InternalName}Service({Project.InternalName}Context context)
+        public {Service.InternalName}Service({Project.InternalName}Context context)
         {{
             _context = context;
             _restClient = new RestClient(""{WebService.DefaultBaseEndpoint}"");

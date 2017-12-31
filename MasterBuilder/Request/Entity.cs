@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MasterBuilder.Request
@@ -131,7 +130,7 @@ namespace MasterBuilder.Request
             {
                 foreach (var property in Properties)
                 {
-                    if (!property.Validate(this, out string propertyMessage)) {
+                    if (!property.Validate(project, this, out string propertyMessage)) {
                         messageList.Add(propertyMessage);
                     }
                 }
@@ -174,7 +173,7 @@ namespace MasterBuilder.Request
                         ScreenType = ScreenTypeEnum.Search,
                         Path = InternalNamePlural.Kebaberize(),
                         NavigateToScreenId = editScreenId,
-                        TemplateId = new Guid("{142B82E8-471B-47E5-A13F-158D2B06874B}")
+                        Template = ScreenTemplateEnum.Reference
                     },
                     new Screen()
                     {

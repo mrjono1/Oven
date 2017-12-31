@@ -25,6 +25,16 @@ namespace MasterBuilder.Request
         };
 
         /// <summary>
+        /// Register of all Screen Template Ids to Enum for easy use
+        /// </summary>
+        internal static readonly Dictionary<Guid, ScreenTemplateEnum> ScreenTemplateDictonary = new Dictionary<Guid, ScreenTemplateEnum>
+        {
+            { Guid.Empty, ScreenTemplateEnum.None},
+            { new Guid("{142B82E8-471B-47E5-A13F-158D2B06874B}"), ScreenTemplateEnum.Reference },
+            { new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"), ScreenTemplateEnum.Home }
+        };
+
+        /// <summary>
         /// Identifier
         /// </summary>
         public Guid Id { get; set; }
@@ -54,6 +64,31 @@ namespace MasterBuilder.Request
         /// Screen Template Id, using a template means the screen will get updated when the template does
         /// </summary>
         public Guid? TemplateId { get; set; }
+        /// <summary>
+        /// Screen Template, using a template means the screen will get updated when the template does
+        /// </summary>
+        [JsonIgnore]
+        [NotMapped]
+        public ScreenTemplateEnum Template
+        {
+            get
+            {
+                var id = TemplateId ?? Guid.Empty;
+                return ScreenTemplateDictonary[id];
+            }
+            set
+            {
+                var id = ScreenTemplateDictonary.SingleOrDefault(v => v.Value == value).Key;
+                if (id == Guid.Empty)
+                {
+                    TemplateId = null;
+                }
+                else
+                {
+                    TemplateId = id;
+                }
+            }
+        }
         /// <summary>
         /// Screen Features
         /// </summary>

@@ -201,7 +201,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Validate and perform data fixes
         /// </summary>
-        internal bool Validate(Entity entity, out string message)
+        internal bool Validate(Project project, Entity entity, out string message)
         {
             var messageList = new List<string>();
 
@@ -241,6 +241,15 @@ namespace MasterBuilder.Request
                         ValidationType = ValidationTypeEnum.Required
                     },
                 };
+            }
+
+            if (ParentEntityId.HasValue)
+            {
+                var parentEntity = project.Entities.Any(a => a.Id == ParentEntityId.Value);
+                if (!parentEntity)
+                {
+                    messageList.Add($"Entity:{entity.InternalName}, Property:{InternalName} contains an invalid ParentEntitId:{ParentEntityId.Value}");
+                }
             }
 
             if (messageList.Any())

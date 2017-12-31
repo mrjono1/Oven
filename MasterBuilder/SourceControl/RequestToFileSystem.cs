@@ -48,12 +48,12 @@ namespace MasterBuilder.SourceControl
                     await WriteObject($"{menuItem.Id}.json", menuItem, true, "MenuItems");
                 }
             }
-            FileHelper.DeleteFilesInDirectory("json", _baseDirectory, "WebServices");
-            if (_project.WebServices != null)
+            FileHelper.DeleteFilesInDirectory("json", _baseDirectory, "Services");
+            if (_project.Services != null)
             {
-                foreach (var webService in _project.WebServices)
+                foreach (var service in _project.Services)
                 {
-                    await WriteObject($"{webService.Id}.json", webService, true, "WebServices");
+                    await WriteObject($"{service.Id}.json", service, true, "Services");
                 }
             }
         }

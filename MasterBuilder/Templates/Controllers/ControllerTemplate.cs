@@ -142,7 +142,7 @@ namespace MasterBuilder.Templates.Controllers
             // TODO: Build site map
             if (Screen != null)
             {
-                if (Screen.TemplateId.HasValue && Screen.TemplateId.Value == new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"))
+                if (Screen.Template == ScreenTemplateEnum.Home)
                 {
                     methods.Add($@"        [HttpGet]
     public async Task<IActionResult> Index()
