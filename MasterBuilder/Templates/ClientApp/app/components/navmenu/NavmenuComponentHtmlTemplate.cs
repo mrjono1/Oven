@@ -64,7 +64,7 @@ namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
             }
 
             return $@"<div class='main-nav'>
-    <div class='navbar navbar-inverse'>
+    <nav class='navbar navbar-inverse'>
         <div class='navbar-header'>
             <button type='button' class='navbar-toggle' (click)=""collapseNavbar()"">
                 <span class='sr-only'>Toggle navigation</span>
@@ -74,13 +74,12 @@ namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
             </button>
             <a class='navbar-brand' [routerLink]=""['/home']"">{Project.Title}</a>
         </div>
-        <div class='clearfix'></div>
         <div class='navbar-collapse {{{{collapse}}}}'>
             <ul class='nav navbar-nav'>
 {menuItems}
             </ul>
         </div>
-    </div>
+    </nav>
 </div>";
         }
 

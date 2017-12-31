@@ -39,8 +39,7 @@ namespace MasterBuilder.Templates
         /// </summary>
         public string GetFileContent()
         {
-            return $@"
-Microsoft Visual Studio Solution File, Format Version 12.00
+            return $@"Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -52,18 +51,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{{{Project.Id.ToString()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{{{Project.Id.ToString()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{{{Project.Id.ToString()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {{{Project.Id.ToString()}}}.Release|Any CPU.Build.0 = Release|Any CPU
+		{{{Project.Id.ToString().ToLowerInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{{{Project.Id.ToString().ToLowerInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{{{Project.Id.ToString().ToLowerInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {{{Project.Id.ToString().ToLowerInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {{{Project.Id.ToString()}}}
+		SolutionGuid = {{{Project.Id.ToString().ToLowerInvariant()}}}
 	EndGlobalSection
-EndGlobal";
+EndGlobal
+";
         }
     }
 }

@@ -28,11 +28,11 @@ namespace MasterBuilder.Templates.ClientApp.App
         /// </summary>
         public string GetFileContent()
         {
-            return @"<div class=""col-sm-3"">
+            return @"<div>
     <app-nav-menu></app-nav-menu>
-</div>
-<div class=""col-sm-9 body-content"">
-    <router-outlet></router-outlet>
+    <div class=""container"">
+        <router-outlet></router-outlet>
+    </div>
 </div>";
         }
     }
