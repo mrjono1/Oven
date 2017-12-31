@@ -60,6 +60,8 @@ namespace MasterBuilder
             projectWriter.AddTemplate(solutionDirectory, new Templates.SolutionTemplate(project));
 
             // Create Project Files
+            projectWriter.AddTemplate(new Templates.ProjectFiles.PackageJsonTemplate(project));
+            projectWriter.AddTemplate(new Templates.ProjectFiles.StartupTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.AngularCliJsonTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.ProjectTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.GitIgnoreTemplate());
@@ -82,7 +84,10 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.Extensions.HttpRequestExtensionsTemplate(project));
             projectWriter.AddTemplate(new Templates.CoreModels.IRequestTemplate(project));
             projectWriter.AddTemplate(new Templates.CoreModels.TransferDataTemplate(project));
-                    
+            
+            // wwwroot/assets/i18n
+            projectWriter.AddTemplate(new Templates.WwwRoot.i18n.LanguageTemplate());
+
             // ClientApp
             projectWriter.AddTemplate(new Templates.ClientApp.BootBrowserTsTemplate());
             projectWriter.AddTemplate(new Templates.ClientApp.BootServerTsTemplate());
@@ -99,6 +104,7 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ClientApp.Polyfills.ServerPolyfillsTemplate());
 
             // ClientApp/App
+            projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleTemplate(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentHtmlTemplate());
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentScssTemplate());
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentTsTemplate(project));
@@ -107,23 +113,11 @@ namespace MasterBuilder
 
             // ClientApp/App/Shared
             projectWriter.AddTemplate(new Templates.ClientApp.App.Shared.LinkServiceTemplate());
-
-            // wwwroot/assets/i18n
-            projectWriter.AddTemplate(new Templates.WwwRoot.i18n.LanguageTemplate());
-            
-            // Create Project Files
-            projectWriter.AddTemplate(new Templates.ProjectFiles.PackageJsonTemplate(project));
-            projectWriter.AddTemplate(new Templates.ProjectFiles.StartupTemplate(project));
-
-            // ClientApp/App
-            projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleTemplate(project));
+            projectWriter.AddTemplate(new Templates.ClientApp.App.Shared.ServiceTemplateBuilder(project));
             
             // ClientApp/app/models
             projectWriter.AddTemplate(new Templates.ClientApp.App.Models.ModelTemplateBuilder(project));
-
-            // ClientApp/app/shared
-            projectWriter.AddTemplate(new Templates.ClientApp.App.Shared.ServiceTemplateBuilder(project));
-
+            
             // ClientApp/app/containers
             projectWriter.AddTemplate(new Templates.ClientApp.App.Containers.Ts.ContainerTsTemplateBuilder(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.Containers.Html.ContainerHtmlTemplateBuilder(project));
