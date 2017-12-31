@@ -51,16 +51,16 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{{{Project.Id.ToString().ToLowerInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{{{Project.Id.ToString().ToLowerInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{{{Project.Id.ToString().ToLowerInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
-        {{{Project.Id.ToString().ToLowerInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
+		{{{Project.Id.ToString().ToUpperInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{{{Project.Id.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{{{Project.Id.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {{{Project.Id.ToString().ToUpperInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {{{Project.Id.ToString().ToLowerInvariant()}}}
+		SolutionGuid = {{{Project.Id.ToString().ToUpperInvariant()}}}
 	EndGlobalSection
 EndGlobal
 ";
