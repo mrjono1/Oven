@@ -81,16 +81,7 @@ namespace MasterBuilder
                 Console.WriteLine(ex.ToString());
             }
         }
-
-        public static void CleanProject(string baseDirectory, Project project)
-        {
-            if (!project.CleanDirectory.Value)
-            {
-                return;
-            }
-            DeleteFiles(baseDirectory, project.CleanDirectoryIgnoreDirectories);
-        }
-
+        
         private static void DeleteFiles(string directory, string[] excludeFolders)
         {
             var directoryInfo = new DirectoryInfo(directory);

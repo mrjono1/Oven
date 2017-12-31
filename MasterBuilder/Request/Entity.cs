@@ -173,7 +173,8 @@ namespace MasterBuilder.Request
                         InternalName = InternalNamePlural,
                         ScreenType = ScreenTypeEnum.Search,
                         Path = InternalNamePlural.Kebaberize(),
-                        NavigateToScreenId = editScreenId
+                        NavigateToScreenId = editScreenId,
+                        TemplateId = new Guid("{142B82E8-471B-47E5-A13F-158D2B06874B}")
                     },
                     new Screen()
                     {
@@ -186,17 +187,6 @@ namespace MasterBuilder.Request
                     }
                 };
                 project.Screens = screens;
-
-                var menus = new List<MenuItem>(project.MenuItems)
-                {
-                    new MenuItem()
-                    {
-                        ScreenId = Id,
-                        Title = Title.Pluralize(),
-                        Icon = "glyphicon glyphicon-th-list"
-                    }
-                };
-                project.MenuItems = menus;
             }
         }
     }

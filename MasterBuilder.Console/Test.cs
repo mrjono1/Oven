@@ -167,21 +167,6 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{46267989-1DE4-40E6-9491-96FAF07E42AE}"),
-                            InternalName = "CleanDirectory",
-                            Type = PropertyTypeEnum.Boolean,
-                            Title = "Clean Directory",
-                            ValidationItems = new Validation[]
-                            {
-                               // new Validation
-                               // {
-                               //     Id = new Guid("{B2F34450-25F9-4A33-B1E9-9F8CED6853A7}"),
-                               //     ValidationType = ValidationTypeEnum.Required
-                               // }
-                            }
-                        },
-                        new Property()
-                        {
                             Id = new Guid("{82072EF0-3CCE-4E67-A09A-89EE59283ADD}"),
                             InternalName = "ImutableDatabase",
                             Type = PropertyTypeEnum.Boolean,

@@ -16,7 +16,6 @@ namespace MasterBuilder.Request
         /// </summary>
         public Project()
         {
-            CleanDirectory = true;
             CleanDirectoryIgnoreDirectories = new string[]
             {
                 "bin",
@@ -44,10 +43,6 @@ namespace MasterBuilder.Request
         /// Uniqueidentifier
         /// </summary>
         public Guid Id { get; set; }
-        /// <summary>
-        /// Clean the output directory before build
-        /// </summary>
-        public bool? CleanDirectory { get; set; }
         /// <summary>
         /// Internal Name
         /// </summary>
@@ -145,7 +140,7 @@ namespace MasterBuilder.Request
                     messages.Add(entityMessage);
                 }
             }
-
+            
             // Validate Screens
             if (Screens == null || !Screens.Any())
             {
@@ -165,6 +160,7 @@ namespace MasterBuilder.Request
                 }
             }
 
+
             if (MenuItems == null || !MenuItems.Any())
             {
                 messages.Add("No Menu Items have been defined");
@@ -179,6 +175,7 @@ namespace MasterBuilder.Request
                 }
             }
 
+            GenerateAdminScreenAndMenu();
 
             // Set Default Values for nullable fields
 
@@ -191,12 +188,7 @@ namespace MasterBuilder.Request
             {
                 DefaultScreenId = Screens.FirstOrDefault().Id;
             }
-
-            if (!CleanDirectory.HasValue)
-            {
-                CleanDirectory = true;
-            }
-
+            
             if (messages.Any())
             {
                 message = string.Join(Environment.NewLine, messages);
@@ -206,6 +198,79 @@ namespace MasterBuilder.Request
             {
                 message = "Success";
                 return true;
+            }
+        }
+
+        private void GenerateAdminScreenAndMenu()
+        {
+            //TODO this is the wrong place for this code
+
+            var administrationScreen = Screens.Where(s => s.InternalName.Equals("Administration", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+            
+            if (administrationScreen == null)
+            {
+                administrationScreen = new Screen()
+                {
+                    Id = new Guid("{43037072-42F2-4B5C-A72E-1A08F149709A}"),
+                    InternalName = "Administration",
+                    Title = "Administration",
+                    ScreenType = ScreenTypeEnum.Html,
+                    Path = "administration"
+                };
+
+                var screens = new List<Screen>(Screens)
+                {
+                    administrationScreen
+                };
+                Screens = screens.ToArray();
+
+                var menus = new List<MenuItem>(MenuItems)
+                {
+                    new MenuItem()
+                    {
+                        ScreenId = administrationScreen.Id,
+                        Title = "Administration"
+                    }
+                };
+                MenuItems = menus;
+            }
+
+            ScreenSection administrationSection = null;
+
+            if (administrationScreen.ScreenSections != null)
+            {
+                administrationSection = administrationScreen.ScreenSections.Where(s => s.InternalName.Equals("Administration", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
+            }
+
+            if (administrationSection == null)
+            {
+                var links = new List<string>();
+                foreach (var screen in Screens.Where(a => a.TemplateId == new Guid("{142B82E8-471B-47E5-A13F-158D2B06874B}")))
+                {
+                    links.Add($@"<a [routerLink]=""['/{screen.Path}']"">
+                        <span class='glyphicon glyphicon-th-list'></span> {screen.Title}
+                    </a>");
+                }
+
+                var html = $@"{string.Join(Environment.NewLine, links)}";
+
+                administrationSection = new ScreenSection()
+                {
+                    Id = new Guid("{0F93AE3B-930D-4F6B-B73F-2EB63F225FAD}"),
+                    InternalName = "Administration",
+                    Title = "Administration",
+                    ScreenSectionType = ScreenSectionTypeEnum.Html,
+                    Html = html
+                };
+
+                var sections = new List<ScreenSection>(){
+                    administrationSection
+                };
+                if (administrationScreen.ScreenSections != null)
+                {
+                    sections.AddRange(administrationScreen.ScreenSections);
+                }
+                administrationScreen.ScreenSections = sections.ToArray();
             }
         }
     }
