@@ -6,7 +6,7 @@ namespace MasterBuilder.Helpers
     /// <summary>
     /// Standard way of builing mutiple templates
     /// </summary>
-    interface ITemplateBuilder
+    internal interface ITemplateBuilder
     {
         /// <summary>
         /// Get Templates

@@ -160,7 +160,7 @@ namespace MasterBuilder
         /// <summary>
         /// Write text to a file
         /// </summary>
-        public static async Task WriteAllText(string path, string contents)
+        public static async Task<string> WriteAllText(string path, string contents)
         {
             try
             {
@@ -170,25 +170,13 @@ namespace MasterBuilder
             {
                 Console.WriteLine(ex.ToString());
             }
+            return path;
         }
-
-        /// <summary>
-        /// Write templates to storage
-        /// </summary>
-        internal static IEnumerable<Task> WriteTemplates(string baseDirectory, ITemplateBuilder templateBuilder)
-        {
-            var tasks = new List<Task>();
-            foreach (var template in templateBuilder.GetTemplates())
-            {
-                tasks.Add(WriteTemplate(baseDirectory, template));
-            }
-            return tasks;
-        }
-
+        
         /// <summary>
         /// Write a template to storage
         /// </summary>
-        internal static Task WriteTemplate(string baseDirectory, ITemplate template)
+        internal static Task<string> WriteTemplate(string baseDirectory, ITemplate template)
         {
             var path = Path.Combine(CreateFolder(baseDirectory, template.GetFilePath()), template.GetFileName());
 
