@@ -543,7 +543,55 @@ namespace MasterBuilder
                                 new Validation{
                                     Id = new Guid("{253608F3-0E63-4F67-B7C4-940D2472D3F7}"),
                                     ValidationType = ValidationTypeEnum.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{34B85ED2-3B10-4974-9451-7B87203F1E0F}"),
+                            InternalName = "Title",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{0831351A-5DC3-4601-A3A6-D2416E194829}"),
+                                    ValidationType = ValidationTypeEnum.Unique
                                 },
+                                new Validation
+                                {
+                                    Id = new Guid("{5E707736-477F-46FF-977C-3030A2FC45EC}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{5F6980CE-0E4B-4FCB-AC99-228FD14CDB0E}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{7019CFDF-D883-48CF-808B-2DCBCC776980}"),
+                            InternalName = "InternalName",
+                            Type = PropertyTypeEnum.String,
+                            Title = "Internal Name",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{DEE62BB1-A8C3-4B8A-8615-DE2768B0A6BB}"),
+                                    ValidationType = ValidationTypeEnum.Unique
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{48048DEC-F844-4379-9D97-59F0691FDF12}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{7FA4F554-407B-41B2-A8E3-1E30500C031C}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                }
                             }
                         }
                     }
@@ -1149,20 +1197,8 @@ namespace MasterBuilder
             {
                 new MenuItem
                 {
-                    Title = "Home",
-                    ScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
-                    Icon = "glyphicon glyphicon-home"
-                },
-                new MenuItem
-                {
                     Title = "Projects",
                     ScreenId = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
-                    Icon = "glyphicon glyphicon-th-list"
-                },
-                new MenuItem
-                {
-                    Title = "Validation Types",
-                    ScreenId = new Guid("{8E1A9AB1-799E-46B4-8364-85FB087C643E}"),
                     Icon = "glyphicon glyphicon-th-list"
                 }
             };
