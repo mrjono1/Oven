@@ -75,6 +75,13 @@ namespace MasterBuilder.Templates.Controllers
                 "_context = context;"
             };
 
+
+            var lookupMethod = ControllerReferenceMethodTemplate.Evaluate(Project, Entity);
+            if (!string.IsNullOrEmpty(lookupMethod))
+            {
+                methods.Add(lookupMethod);
+            }
+
             if (Entity != null && Project.Screens != null)
             {
                 var sections = (from s in Project.Screens

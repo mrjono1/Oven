@@ -60,6 +60,24 @@ namespace MasterBuilder.Templates.Models
                         break;
                 }
             }
+            
+            var entityReferencesNeeded = (from e in Project.Entities
+                                   where e.Properties != null
+                                   from property in e.Properties
+                                   where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                   property.ParentEntityId.HasValue
+                                   from entity in Project.Entities
+                                   where entity.Id == property.ParentEntityId
+                                   select entity).Distinct().ToArray();
+            if (entityReferencesNeeded != null)
+            {
+                foreach (var entityLookup in entityReferencesNeeded)
+                {
+                    templates.Add(new Reference.ModelReferenceItemTemplate(Project, entityLookup));
+                    templates.Add(new Reference.ModelReferenceRequestTemplate(Project, entityLookup));
+                    templates.Add(new Reference.ModelReferenceResponseTemplate(Project, entityLookup));
+                }
+            }
 
             return templates;
         }
