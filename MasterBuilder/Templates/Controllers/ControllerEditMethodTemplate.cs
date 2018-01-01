@@ -5,6 +5,9 @@ using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.Controllers
 {
+    /// <summary>
+    /// Contoller Edit Method Template
+    /// </summary>
     public class ControllerEditMethodTemplate
     {
         internal static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)

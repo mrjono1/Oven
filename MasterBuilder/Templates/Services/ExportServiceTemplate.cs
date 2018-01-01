@@ -3,7 +3,6 @@ using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.Services
 {
@@ -30,6 +29,9 @@ namespace MasterBuilder.Templates.Services
             return "ExportService.cs";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new string[] { "Services" };

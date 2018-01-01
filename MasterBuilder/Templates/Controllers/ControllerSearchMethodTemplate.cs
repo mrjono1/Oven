@@ -6,8 +6,14 @@ using System.Linq;
 
 namespace MasterBuilder.Templates.Controllers
 {
+    /// <summary>
+    /// Controller Search Method Template
+    /// </summary>
     public class ControllerSearchMethodTemplate
     {
+        /// <summary>
+        /// Evaluate
+        /// </summary>
         internal static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
         {
             var method = new StringBuilder();

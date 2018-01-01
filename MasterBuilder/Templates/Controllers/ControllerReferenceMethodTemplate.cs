@@ -1,13 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using MasterBuilder.Request;
 using System.Linq;
 
 namespace MasterBuilder.Templates.Controllers
 {
+    /// <summary>
+    /// Controller Reference Method Template
+    /// </summary>
     public class ControllerReferenceMethodTemplate
     {
+        /// <summary>
+        /// Evaluate
+        /// </summary>
         internal static string Evaluate(Project project, Entity entity)
         {
             if (entity == null)

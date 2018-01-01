@@ -3,21 +3,29 @@ using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 {
+    /// <summary>
+    /// Build Form
+    /// </summary>
     public class BuildForm
     {
         private readonly Project Project;
         private readonly Screen Screen;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public BuildForm(Project project, Screen screen)
         {
             Project = project;
             Screen = screen;
         }
 
+        /// <summary>
+        /// Get functions
+        /// </summary>
         public string GetFunctions()
         {
             var entity = Project.Entities.SingleOrDefault(p => p.Id == Screen.EntityId);

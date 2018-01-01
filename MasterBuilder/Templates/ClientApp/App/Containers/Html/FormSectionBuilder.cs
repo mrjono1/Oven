@@ -3,16 +3,21 @@ using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 {
+    /// <summary>
+    /// Form Section Builder
+    /// </summary>
     public class FormSectionBuilder
     {
         private readonly Project Project;
         private readonly Screen Screen;
         private readonly ScreenSection ScreenSection;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public FormSectionBuilder(Project project, Screen screen, ScreenSection screenSection)
         {
             Project = project;
@@ -20,6 +25,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             ScreenSection = screenSection;
         }
 
+        /// <summary>
+        /// Evaluate
+        /// </summary>
         public string Evaluate()
         {
             var formGroups = new List<string>();

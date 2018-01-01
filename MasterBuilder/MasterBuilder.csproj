@@ -7,6 +7,14 @@
     <StartupObject />
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.0\MasterBuilder.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp2.0\MasterBuilder.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="CopyFiles\favicon.ico" />
   </ItemGroup>

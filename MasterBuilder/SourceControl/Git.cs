@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace MasterBuilder.SourceControl
 {
+    /// <summary>
+    /// Git Integration
+    /// </summary>
     public class Git
     {
         private readonly string _baseDirectory;
@@ -16,6 +19,9 @@ namespace MasterBuilder.SourceControl
         private readonly string _email;
         private readonly string _personalAccessToken;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Git(string baseDirectory, Project project, string username, string email, string personalAccessToken)
         {
             _baseDirectory = baseDirectory;
@@ -25,7 +31,9 @@ namespace MasterBuilder.SourceControl
             _personalAccessToken = personalAccessToken;
         }
 
-
+        /// <summary>
+        /// Setup and Get Repositories
+        /// </summary>
         internal async Task<Dictionary<string, Models.GetRepository>> SetupAndGetRepos()
         {
             var vsts = new VisualStudioTeamServices(_username, _project.InternalName, _personalAccessToken);
@@ -69,6 +77,9 @@ namespace MasterBuilder.SourceControl
             return repositoriesCreated;
         }
 
+        /// <summary>
+        /// Ensure Repository is Intitialised
+        /// </summary>
         internal async Task<Models.GetRepository> EnsureRepoistoryIsInitialised(string name, string directory, Models.GetRepository repo, VisualStudioTeamServices vsts)
         {
             if (repo == null)

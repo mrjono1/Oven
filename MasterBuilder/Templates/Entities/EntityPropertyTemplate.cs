@@ -1,14 +1,16 @@
 using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.Entities
 {
+    /// <summary>
+    /// Entity Property Template
+    /// </summary>
     public class EntityPropertyTemplate
     {
-
+        /// <summary>
+        /// Evaluate
+        /// </summary>
         public static string Evaluate(Project project, Property property)
         {            
             if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)

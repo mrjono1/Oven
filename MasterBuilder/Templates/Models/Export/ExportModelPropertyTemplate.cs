@@ -4,9 +4,14 @@ using System.Linq;
 
 namespace MasterBuilder.Templates.Models.Export
 {
+    /// <summary>
+    /// Export Model Property Template
+    /// </summary>
     public class ExportModelPropertyTemplate
     {
-
+        /// <summary>
+        /// Evaluate
+        /// </summary>
         public static string Evaluate(Project project, Property property)
         {
             var required = false;
@@ -49,6 +54,9 @@ namespace MasterBuilder.Templates.Models.Export
             }
         }
 
+        /// <summary>
+        /// Property Mapping
+        /// </summary>
         public static string Mapping(Project project, Entity entity, Property property)
         {
             var required = false;

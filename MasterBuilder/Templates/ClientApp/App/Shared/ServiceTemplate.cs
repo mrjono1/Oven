@@ -3,31 +3,45 @@ using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.App.Shared
 {
+    /// <summary>
+    /// Service Template
+    /// </summary>
     public class ServiceTemplate : ITemplate
     {
         private readonly Project Project;
         private readonly Entity Entity;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ServiceTemplate(Project project, Entity entity)
         {
             Project = project;
             Entity = entity;
         }
 
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {            
             return $"{Entity.InternalName.ToLowerInvariant()}.service.ts";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new string[] { "ClientApp", "app", "shared"};
         }
 
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             var imports = new List<string>();

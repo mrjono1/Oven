@@ -98,8 +98,6 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Validate this object and reslove any issues if possible
         /// </summary>
-        /// <param name="message">Issue messages</param>
-        /// <returns>'true' for success or 'false' for failing to validate</returns>
         internal bool Validate(Project project, out string message)
         {
             var messageList = new List<string>();

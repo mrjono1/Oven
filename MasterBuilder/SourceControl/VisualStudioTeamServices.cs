@@ -3,19 +3,26 @@ using Newtonsoft.Json.Serialization;
 using RestSharp;
 using RestSharp.Authenticators;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace MasterBuilder.SourceControl
 {
+    /// <summary>
+    /// Visual Studio Team Services Integration
+    /// </summary>
     public class VisualStudioTeamServices
     {
         private readonly RestClient _restClient;
         private readonly string _project;
 
+        /// <summary>
+        /// Returned project id
+        /// </summary>
         public Guid? ProjectId { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public VisualStudioTeamServices(string account, string project, string personalAccessToken)
         {
             _restClient = new RestClient($"https://{account}.visualstudio.com/DefaultCollection/")
@@ -24,6 +31,10 @@ namespace MasterBuilder.SourceControl
             };
             _project = project;
         }
+
+        /// <summary>
+        /// Get project
+        /// </summary>
         public async Task<Models.GetProject> GetProject()
         {
             var request = new RestRequest($"_apis/projects/{_project}", Method.GET);
@@ -48,7 +59,9 @@ namespace MasterBuilder.SourceControl
             }
         }
 
-
+        /// <summary>
+        /// Create project
+        /// </summary>
         public async Task<Models.GetProject> CreateProject(string name, string description)
         {
             var request = new RestRequest($"_apis/projects", Method.POST);
@@ -78,6 +91,9 @@ namespace MasterBuilder.SourceControl
             }
         }
 
+        /// <summary>
+        /// Get project repositories
+        /// </summary>
         public async Task<Models.GetRepository[]> GetProjectRepositories()
         {
             var request = new RestRequest($"{_project}/_apis/git/repositories", Method.GET);
@@ -101,6 +117,10 @@ namespace MasterBuilder.SourceControl
                 throw new Exception(result.Content);
             }
         }
+
+        /// <summary>
+        /// Create Repository
+        /// </summary>
         public async Task<Models.GetRepository> CreateRepository(string name)
         {
             var request = new RestRequest($"{_project}/_apis/git/repositories", Method.POST);

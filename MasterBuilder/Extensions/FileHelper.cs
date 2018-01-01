@@ -136,18 +136,7 @@ namespace MasterBuilder
                 }
             }
         }
-
-        public static string TrimStart(string target, string trimString)
-        {
-            string result = target;
-            while (result.StartsWith(trimString))
-            {
-                result = result.Substring(trimString.Length);
-            }
-
-            return result;
-        }
-
+        
         /// <summary>
         /// Write text to a file
         /// </summary>

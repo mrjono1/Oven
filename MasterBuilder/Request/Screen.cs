@@ -42,7 +42,9 @@ namespace MasterBuilder.Request
         /// Internal Name
         /// </summary>
         public string InternalName { get; set; }
-        
+        /// <summary>
+        /// SEO Meta description
+        /// </summary>
         public string MetaDescription { get; set; }
         /// <summary>
         /// Title

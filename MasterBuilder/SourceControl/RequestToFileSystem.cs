@@ -1,3 +1,4 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -8,17 +9,26 @@ using System.Threading.Tasks;
 
 namespace MasterBuilder.SourceControl
 {
+    /// <summary>
+    /// Save request as json
+    /// </summary>
     public class RequestToFileSystem
     {
         private readonly string _baseDirectory;
         private readonly Project _project;
-        
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public RequestToFileSystem(string topProjectDirectory, Project project)
         {
             _baseDirectory = FileHelper.CreateFolder(topProjectDirectory, "Json");
             _project = project;
         }
 
+        /// <summary>
+        /// Write files
+        /// </summary>
         public async Task Write()
         {
             FileHelper.DeleteFilesInDirectory("json", _baseDirectory);
@@ -58,7 +68,9 @@ namespace MasterBuilder.SourceControl
             }
         }
 
-
+        /// <summary>
+        /// Write Object
+        /// </summary>
         private async Task WriteObject(string fileName, object obj, bool includeCollections, params string[] folder)
         {
             string jsonString = null;
@@ -74,7 +86,10 @@ namespace MasterBuilder.SourceControl
             await FileHelper.WriteAllText(Path.Combine(directory, fileName), jsonString);
         }
 
-        public string SerializeObjectWithoutCollections(object obj)
+        /// <summary>
+        /// Seralize object
+        /// </summary>
+        private string SerializeObjectWithoutCollections(object obj)
         {
             using (var strWriter = new StringWriter())
             {
@@ -88,38 +103,6 @@ namespace MasterBuilder.SourceControl
                 
                 return strWriter.ToString();
             }
-        }
-    }
-
-    public class CustomContractResolver : DefaultContractResolver
-    {
-        protected override JsonProperty CreateProperty(
-            MemberInfo member, MemberSerialization memberSerialization)
-        {
-            var property = base.CreateProperty(member, memberSerialization);
-
-            if (property.PropertyType != typeof(string) &&
-                typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
-            {
-                property.ShouldSerialize = instance =>
-                {
-                    // this value could be in apublic property
-                    if (member.MemberType ==  MemberTypes.Property)
-                    {
-                        IEnumerable enumerable = instance
-                                .GetType()
-                                .GetProperty(member.Name)
-                                .GetValue(instance, null) as IEnumerable;
-                        return enumerable == null;
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                };
-            }
-
-            return property;
         }
     }
 }

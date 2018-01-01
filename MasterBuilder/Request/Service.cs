@@ -20,6 +20,7 @@ namespace MasterBuilder.Request
             { new Guid("{DD6A4434-16E1-41BF-B75B-C78E3A8D46BF}"), ServiceTypeEnum.ExportService }
         };
 
+        /// <summary>
         /// Uniqueidentifier
         /// </summary>
         public Guid Id { get; set; }

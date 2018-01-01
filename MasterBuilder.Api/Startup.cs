@@ -35,13 +35,15 @@ namespace MasterBuilder.Api
 
             // Add Swagger service
 
-            var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "MasterBuilder.Api.xml");
+            var apiXmlfilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "MasterBuilder.Api.xml");
+            var classLibraryXmlfilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "MasterBuilder.xml");
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "Master Builder API", Version = "v1" });
 
-                c.IncludeXmlComments(filePath);
+                c.IncludeXmlComments(apiXmlfilePath);
+                c.IncludeXmlComments(classLibraryXmlfilePath);
             });
         }
 

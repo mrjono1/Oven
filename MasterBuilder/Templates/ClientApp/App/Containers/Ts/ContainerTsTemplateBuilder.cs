@@ -1,19 +1,27 @@
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 {
+    /// <summary>
+    /// Container Ts Template Builder
+    /// </summary>
     public class ContainerTsTemplateBuilder : ITemplateBuilder
     {
         private readonly Project Project;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ContainerTsTemplateBuilder(Project project)
         {
             Project = project;
         }
 
+        /// <summary>
+        /// Get templates
+        /// </summary>
         public IEnumerable<ITemplate> GetTemplates()
         {
             var templates = new List<ITemplate>();

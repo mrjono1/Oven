@@ -151,6 +151,9 @@ export class AppModuleShared {{
 }}";
         }
 
+        /// <summary>
+        /// Build Routes
+        /// </summary>
         public IEnumerable<string> BuildRoutes(Screen screen, Screen parentScreen = null)
         {
             // TODO: Add meta and links
