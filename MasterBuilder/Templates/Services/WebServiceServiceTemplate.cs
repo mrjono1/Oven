@@ -72,7 +72,8 @@ namespace MasterBuilder.Templates.Services
             if (body != null){{
                 var jsonString = JsonConvert.SerializeObject(body, new JsonSerializerSettings
                 {{
-                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                    ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                    NullValueHandling = NullValueHandling.Ignore
                 }});
                 request.AddParameter(""application/json"", jsonString, ParameterType.RequestBody);
             }}

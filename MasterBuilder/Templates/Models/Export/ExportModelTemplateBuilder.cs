@@ -36,12 +36,22 @@ namespace MasterBuilder.Templates.Models.Export
                 new ExportModelTemplate(Project, RootEntity, Entity)
             };
 
-            var childEntities = (from entity in Project.Entities
+            var childEntities = new List<Entity>();
+
+            // Parent relationships
+            childEntities.AddRange((from entity in Project.Entities
                                  from property in entity.Properties
                                  where property.Type == PropertyTypeEnum.ParentRelationship &&
                                  property.ParentEntityId.HasValue &&
                                  property.ParentEntityId == Entity.Id
-                                 select entity).ToArray();
+                                 select entity).ToArray());
+
+            // One to One relationships
+            childEntities.AddRange((from property in Entity.Properties
+                                    where property.Type == PropertyTypeEnum.OneToOneRelationship
+                                    from entity in Project.Entities
+                                    where entity.Id == property.ParentEntityId.Value
+                                    select entity).ToArray());
 
             foreach (var childEntity in childEntities)
             {

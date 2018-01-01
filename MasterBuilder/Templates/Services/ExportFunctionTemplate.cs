@@ -52,28 +52,46 @@ namespace MasterBuilder.Templates.Services
         /// </summary>
         public IEnumerable<IEnumerable<string>> GetIncludePaths(Entity entity)
         {
+            //var childEntities = new List<Entity>();
+
+            // Parent relationships
             var childEntities = (from e in Project.Entities
-                                 from property in e.Properties
-                                 where property.Type == PropertyTypeEnum.ParentRelationship &&
-                                 property.ParentEntityId.HasValue &&
-                                 property.ParentEntityId == entity.Id
-                                 select e).Distinct().ToArray();
+                                    from property in e.Properties
+                                    where property.Type == PropertyTypeEnum.ParentRelationship &&
+                                    property.ParentEntityId.HasValue &&
+                                    property.ParentEntityId == entity.Id
+                                    select new
+                                    {
+                                        Entity = e,
+                                        Collection = true
+                                    }).ToList();
+
+            // One to One relationships
+            childEntities.AddRange((from property in entity.Properties
+                                    where property.Type == PropertyTypeEnum.OneToOneRelationship
+                                    from e in Project.Entities
+                                    where e.Id == property.ParentEntityId.Value
+                                    select new
+                                    {
+                                        Entity = e,
+                                        Collection = false
+                                    }).ToList());
 
             var paths = new List<List<string>>();
             foreach (var childEntity in childEntities)
             {
                 var subPath = new List<string>
                 {
-                    childEntity.InternalNamePlural
+                    (childEntity.Collection ? childEntity.Entity.InternalNamePlural : childEntity.Entity.InternalName)
                 };
                 paths.Add(subPath);
 
-                var returnedPaths = GetIncludePaths(childEntity);
+                var returnedPaths = GetIncludePaths(childEntity.Entity);
                 foreach (var returnedPath in returnedPaths)
                 {
                     var subSubPath = new List<string>
                     {
-                        childEntity.InternalNamePlural
+                        (childEntity.Collection ? childEntity.Entity.InternalNamePlural : childEntity.Entity.InternalName)
                     };
                     subSubPath.AddRange(returnedPath);
                     paths.Add(subSubPath);
