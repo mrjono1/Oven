@@ -7,10 +7,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MasterBuilder.Api.Controllers
 {
+    /// <summary>
+    /// Builder Controller
+    /// </summary>
     [Route("api/[controller]")]
     public class BuilderController : Controller
     {
-        // POST api/values
+        /// <summary>
+        /// Publish a project
+        /// </summary>
         [HttpPost("publish")]
         public async Task<IActionResult> Post([FromBody]Project project)
         {
