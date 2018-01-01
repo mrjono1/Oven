@@ -111,12 +111,19 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 {new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>{property.Title}
 {new String(' ', 20)}</label>";
                         break;
+
+
+
                     case PropertyTypeEnum.ReferenceRelationship:
-                        control = $@"<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
-<select *ngIf=""{Screen.InternalName.Camelize()}"" class=""form-control"" id=""{property.Id}""
-formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>
-<option *ngFor=""let option of {property.InternalName.Camelize()}Options"" [value]=""option.id"">{{{{option.title}}}}</option>
-</select>";
+                        control = $@"<label for=""{property.Id}"">{property.Title}</label>
+<input formControlName=""{property.InternalName.Camelize()}Id""
+        [typeahead] = ""{property.InternalName.Camelize()}Options""
+        [typeaheadOptionsLimit] = ""7""
+        [typeaheadMinLength] = ""0""
+        typeaheadOptionField=""title""
+        class=""form-control"" id=""{property.Id}"">";
+
+
                         break;
                     default:
                         break;

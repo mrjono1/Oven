@@ -74,6 +74,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
                         imports.Add($"import {{ {screenSection.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}'");
                         imports.Add("import { FormControl, FormGroup, Validators } from '@angular/forms';");
+                        imports.Add("import { Observable } from 'rxjs/Observable';");
+                        imports.Add("import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';");
 
                         classProperties.Add($"public {screenSection.InternalName.Camelize()}: {screenSection.InternalName};");
                         classProperties.Add($"public {screenSection.InternalName.Camelize()}Form: FormGroup;");

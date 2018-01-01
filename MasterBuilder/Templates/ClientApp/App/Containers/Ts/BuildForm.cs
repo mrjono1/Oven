@@ -84,7 +84,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 {
                     formControls.Add($@"        '{property.InternalName.Camelize()}Id': new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}Id{propertyValidatorsString})");
                     properties.Add($@"    get {property.InternalName.Camelize()}Id() {{ return this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}Id'); }}");
-                    properties.Add($@"    {property.InternalName.Camelize()}Options: any[];");
+                    properties.Add($@"    {property.InternalName.Camelize()}Options: any[] = [];");
                 }
                 else
                 {
