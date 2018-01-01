@@ -16,7 +16,11 @@ namespace MasterBuilder.Api.Controllers
         /// <summary>
         /// Publish a project
         /// </summary>
+        /// <response code="200">Project published</response>
+        /// <response code="400">Project settings invalid</response>
         [HttpPost("publish")]
+        [ProducesResponseType(typeof(string), 200)]
+        [ProducesResponseType(typeof(string), 400)]
         public async Task<IActionResult> Post([FromBody]Project project)
         {
             if (!ModelState.IsValid)
