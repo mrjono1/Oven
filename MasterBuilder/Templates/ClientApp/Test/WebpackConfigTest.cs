@@ -1,21 +1,31 @@
 using MasterBuilder.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.Test
 {
+    /// <summary>
+    /// Webpack Config
+    /// </summary>
     public class WebpackConfigTest : ITemplate
     {
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "webpack.config.test.js";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "ClientApp", "test" };
         }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return @"const ContextReplacementPlugin = require('webpack/lib/ContextReplacementPlugin');

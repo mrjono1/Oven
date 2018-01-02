@@ -13,6 +13,9 @@ namespace MasterBuilder.Request
         ///  New Record
         /// </summary>
         New,
+        /// <summary>
+        /// Server Function
+        /// </summary>
         ServerFunction
     }
 }

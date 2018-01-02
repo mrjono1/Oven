@@ -51,6 +51,10 @@ namespace MasterBuilder.Templates.Services
             return templates;
         }
 
+        /// <summary>
+        /// Get service names
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<string> GetServiceNames()
         {
             var names = new List<string>

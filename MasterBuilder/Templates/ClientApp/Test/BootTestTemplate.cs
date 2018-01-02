@@ -2,17 +2,30 @@ using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.ClientApp.Test
 {
+    /// <summary>
+    /// Boot test template
+    /// </summary>
     public class BootTestTemplate : ITemplate
     {
+        /// <summary>
+        /// get file name
+        /// </summary>
         public string GetFileName()
         {
             return "boot-test.js";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "ClientApp", "test" };
         }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return @"Error.stackTraceLimit = Infinity;

@@ -1,21 +1,31 @@
 using MasterBuilder.Helpers;
-using MasterBuilder.Request;
-using System.IO;
 
 namespace MasterBuilder.Templates.ClientApp.App.Shared
 {
+    /// <summary>
+    /// Link service template
+    /// </summary>
     public class LinkServiceTemplate : ITemplate
     {
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "link.service.ts";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "ClientApp", "app", "shared" };
         }
 
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return @"/* 

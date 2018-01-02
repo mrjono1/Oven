@@ -5,7 +5,13 @@ namespace MasterBuilder.Request
     /// </summary>
     public enum EntityTemplateEnum
     {
+        /// <summary>
+        /// No template
+        /// </summary>
         None,
+        /// <summary>
+        /// Reference template
+        /// </summary>
         Reference
     }
 }

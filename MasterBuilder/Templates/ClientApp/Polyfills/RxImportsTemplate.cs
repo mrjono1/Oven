@@ -2,17 +2,30 @@ using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.ClientApp.Polyfills
 {
+    /// <summary>
+    /// RX Imports Template
+    /// </summary>
     public class RxImportsTemplate : ITemplate
     {
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "rx-imports.ts";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "ClientApp", "polyfills" };
         }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return @"/* -=- RxJs imports -=-

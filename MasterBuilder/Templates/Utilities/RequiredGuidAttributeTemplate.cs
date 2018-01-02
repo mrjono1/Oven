@@ -1,16 +1,23 @@
-﻿using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.Utilities
 {
+    /// <summary>
+    /// Required Guid Attribute Template
+    /// </summary>
     public class RequiredGuidAttributeTemplate
     {
+        /// <summary>
+        /// File name
+        /// </summary>
         public static string FileName()
         {
             return "RequiredGuidAttribute.cs";
         }
+
+        /// <summary>
+        /// Evaluate
+        /// </summary>
         public static string Evaluate(Project project)
         {
             return $@"using System;

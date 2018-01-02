@@ -1,21 +1,31 @@
 using MasterBuilder.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.Test
 {
+    /// <summary>
+    /// Karma Config Template
+    /// </summary>
     public class KarmaConfigTemplate : ITemplate
     {
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "karma.conf.js";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "ClientApp", "test" };
         }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return @"// Karma configuration file, see link for more information

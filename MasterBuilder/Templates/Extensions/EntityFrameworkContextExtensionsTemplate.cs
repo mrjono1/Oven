@@ -1,16 +1,23 @@
-﻿using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.Utilities
 {
+    /// <summary>
+    /// Entity Framework Context Extensions Template
+    /// </summary>
     public class EntityFrameworkContextExtensionsTemplate
     {
+        /// <summary>
+        /// File name
+        /// </summary>
         public static string FileName()
         {
             return "EntityFrameworkContextExtensions.cs";
         }
+
+        /// <summary>
+        /// Evaluate
+        /// </summary>
         public static string Evaluate(Project project)
         {
             return $@"

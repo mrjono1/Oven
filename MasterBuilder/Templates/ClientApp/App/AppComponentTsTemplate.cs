@@ -3,24 +3,40 @@ using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.ClientApp.App
 {
+    /// <summary>
+    /// App component ts template
+    /// </summary>
     public class AppComponentTsTemplate : ITemplate
     {
         private readonly Project Project;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public AppComponentTsTemplate(Project project)
         {
             Project = project;
         }
 
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "app.component.ts";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "ClientApp", "app" };
         }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return $@"import {{ Component, OnInit, OnDestroy, Inject, ViewEncapsulation, RendererFactory2, PLATFORM_ID, Injector }} from '@angular/core';

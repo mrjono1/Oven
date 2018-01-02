@@ -1,30 +1,42 @@
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Templates.Extensions
 {
+    /// <summary>
+    /// Http Request Extensions Template
+    /// </summary>
     public class HttpRequestExtensionsTemplate: ITemplate
     {
         private readonly Project Project;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public HttpRequestExtensionsTemplate(Project project)
         {
             Project = project;
         }
 
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "HttpRequestExtensions.cs";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "Extensions" };
         }
 
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return $@"using {Project.InternalName}.CoreModels;

@@ -2,7 +2,6 @@ using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Templates.Services.Contracts
 {
@@ -29,6 +28,9 @@ namespace MasterBuilder.Templates.Services.Contracts
             return "IExportService.cs";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new string[] { "Services", "Contracts" };

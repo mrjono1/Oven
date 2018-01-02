@@ -2,17 +2,30 @@ using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.ClientApp.Polyfills
 {
+    /// <summary>
+    /// Polyfills Template
+    /// </summary>
     public class PolyfillsTemplate : ITemplate
     {
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "polyfills.ts";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "ClientApp", "polyfills" };
         }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return @"/***************************************************************************************************

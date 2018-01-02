@@ -2,17 +2,30 @@ using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.ClientApp.App
 {
+    /// <summary>
+    /// App module browser template
+    /// </summary>
     public class AppModuleBrowserTemplate : ITemplate
     {
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "app.module.browser.ts";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new[] { "ClientApp", "app" };
         }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             return @"import { NgModule } from '@angular/core';

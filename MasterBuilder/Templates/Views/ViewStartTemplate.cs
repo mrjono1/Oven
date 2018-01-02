@@ -2,6 +2,9 @@ using MasterBuilder.Helpers;
 
 namespace MasterBuilder.Templates.Views
 {
+    /// <summary>
+    /// View Start Template
+    /// </summary>
     public class ViewStartTemplate : ITemplate
     {
         /// <summary>
