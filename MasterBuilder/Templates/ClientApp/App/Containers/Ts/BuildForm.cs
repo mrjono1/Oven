@@ -13,7 +13,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
     {
         private readonly Project Project;
         private readonly Screen Screen;
-
+        private Entity _entity;
+        
         /// <summary>
         /// Constructor
         /// </summary>
@@ -21,6 +22,45 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         {
             Project = project;
             Screen = screen;
+
+            _entity = Project.Entities.SingleOrDefault(p => p.Id == Screen.EntityId);
+        }
+
+        /// <summary>
+        /// Imports
+        /// </summary>
+        public IEnumerable<string> GetImports()
+        {
+            var imports = new List<string>();
+            if (_entity == null)
+            {
+                return imports;
+            }
+
+            imports.Add("import { Operation } from '../../models/Operation';");
+            imports.Add("import { FormControl, FormGroup, Validators } from '@angular/forms';");
+            imports.Add("import { Observable } from 'rxjs/Observable';");
+            imports.Add("import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';");
+
+            var referenceEntities = (from property in _entity.Properties
+                                     where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                     property.ParentEntityId.HasValue
+                                     from entity in Project.Entities
+                                     where entity.Id == property.ParentEntityId.Value
+                                     select entity).Distinct().ToArray();
+
+            if (referenceEntities.Any())
+            {
+                imports.Add("import { ReferenceRequest } from '../../models/ReferenceRequest';");
+                foreach (var entity in referenceEntities)
+                {
+                    imports.Add($"import {{ {entity.InternalName}Service }} from '../../shared/{entity.InternalName.ToLowerInvariant()}.service';");
+                    imports.Add($"import {{ {entity.InternalName}ReferenceItem }} from '../../models/{entity.InternalName.ToLowerInvariant()}/{entity.InternalName}ReferenceItem';");
+                    imports.Add($"import {{ {entity.InternalName}ReferenceResponse }} from '../../models/{entity.InternalName.ToLowerInvariant()}/{entity.InternalName}ReferenceResponse';");
+                }
+            }
+
+            return imports;
         }
 
         /// <summary>
@@ -28,14 +68,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         /// </summary>
         public string GetFunctions()
         {
-            var entity = Project.Entities.SingleOrDefault(p => p.Id == Screen.EntityId);
 
             var sectionImports = new List<string>();
             var sections = new List<string>();
             var properties = new List<string>();
 
             var formControls = new List<string>();
-            foreach (var property in entity.Properties)
+            foreach (var property in _entity.Properties)
             {
                 if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
                 {
@@ -136,13 +175,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         
         if (this.new){{
             // Post new
-            this.{entity.InternalName.Camelize()}Service.add{entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
+            this.{_entity.InternalName.Camelize()}Service.add{_entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
                 this.router.navigate([this.router.url + '/' + id]);
             }});
         }} else {{
             // Patch existing
             let operations = this.getPatchOperations();
-            this.{entity.InternalName.Camelize()}Service.update{entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}.id, operations).subscribe( result => {{
+            this.{_entity.InternalName.Camelize()}Service.update{_entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}.id, operations).subscribe( result => {{
                 this.{Screen.InternalName.Camelize()}Form.markAsPristine({{ onlySelf: false }});
             }});
         }}

@@ -29,7 +29,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                             where property.Type == PropertyTypeEnum.ReferenceRelationship &&
                             property.ParentEntityId.HasValue &&
                             property.ParentEntityId.Value == Entity.Id
-                            select entity).Any();
+                            select property).Any();
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
         {
             if (_generateMethod)
             {
-                return $@"  get{Entity.InternalName}Reference(request: ReferenceRequest){{
+                return $@"    get{Entity.InternalName}Reference(request: ReferenceRequest){{
         return this.http.post<{Entity.InternalName}ReferenceResponse>(`${{this.baseUrl}}/api/{Entity.InternalName}/{Entity.InternalName}Reference`, request);
     }}";
             }

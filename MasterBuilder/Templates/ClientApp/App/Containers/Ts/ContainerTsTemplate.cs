@@ -72,10 +72,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
                         formEntity = entity;
 
-                        imports.Add($"import {{ {screenSection.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}'");
-                        imports.Add("import { FormControl, FormGroup, Validators } from '@angular/forms';");
-                        imports.Add("import { Observable } from 'rxjs/Observable';");
-                        imports.Add("import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';");
+                        imports.Add($"import {{ {screenSection.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}';");
 
                         classProperties.Add($"public {screenSection.InternalName.Camelize()}: {screenSection.InternalName};");
                         classProperties.Add($"public {screenSection.InternalName.Camelize()}Form: FormGroup;");
@@ -93,7 +90,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                             setParentProperty = $"this.{screenSection.InternalName.Camelize()}.{parentProperty.InternalName.Camelize()}Id = params['{parentEnitity.InternalName.Camelize()}Id'];";
                         }
 
-                        onNgInitBodySections.Add($@"this.route.params.subscribe(params => {{
+                        onNgInitBodySections.Add($@"        this.route.params.subscribe(params => {{
             if (params['{Screen.InternalName.Camelize()}Id']) {{
                 this.new = false;
                 this.http.get<{screenSection.InternalName}>('api/{entity.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.Camelize()}Id']).subscribe(result => {{
@@ -112,9 +109,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         break;
                     case ScreenSectionTypeEnum.Search:
 
-                        imports.Add($"import {{ {screenSection.InternalName}Item }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Item'");
-                        imports.Add($"import {{ {screenSection.InternalName}Request }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Request'");
-                        imports.Add($"import {{ {screenSection.InternalName}Response }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Response'");
+                        imports.Add($"import {{ {screenSection.InternalName}Item }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Item';");
+                        imports.Add($"import {{ {screenSection.InternalName}Request }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Request';");
+                        imports.Add($"import {{ {screenSection.InternalName}Response }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Response';");
 
                         constructorBodySections.Add($@"        this.{screenSection.InternalName.Camelize()}Request = new {screenSection.InternalName}Request();
         this.{screenSection.InternalName.Camelize()}Request.page = 1;
@@ -140,7 +137,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                             }
                         }
 
-                        onNgInitBodySections.Add($@"      this.route.params.subscribe(params => {{
+                        onNgInitBodySections.Add($@"        this.route.params.subscribe(params => {{
             this.{screenSection.InternalName.Camelize()}Request = new {screenSection.InternalName}Request();
             this.{screenSection.InternalName.Camelize()}Request.page = 1;
             this.{screenSection.InternalName.Camelize()}Request.pageSize = 20;
@@ -163,7 +160,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
                 if (entity != null)
                 {
-                    imports.Add($"import {{ {entity.InternalName}Service }} from '../../shared/{entity.InternalName.ToLowerInvariant()}.service'");
+                    imports.Add($"import {{ {entity.InternalName}Service }} from '../../shared/{entity.InternalName.ToLowerInvariant()}.service';");
                     constructorParamerters.Add($"private {entity.InternalName.Camelize()}Service: {entity.InternalName}Service");
                 }
 
@@ -193,10 +190,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             
             if (hasForm)
             {
-                imports.Add($"import {{ Operation }} from '../../models/Operation'");
-
                 var form = new BuildForm(Project, Screen);
                 functions.Add(form.GetFunctions());
+                imports.AddRange(form.GetImports());
             }
 
             if (Screen.InternalName.Equals("home", StringComparison.OrdinalIgnoreCase))
