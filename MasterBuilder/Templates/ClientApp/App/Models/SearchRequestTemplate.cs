@@ -11,9 +11,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
     public class SearchRequestTemplate : ITemplate
     {
         private readonly Project Project;
-
         private readonly Screen Screen;
-
         private readonly ScreenSection ScreenSection;
 
         /// <summary>

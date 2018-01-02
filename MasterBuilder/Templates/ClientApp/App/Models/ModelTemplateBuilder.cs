@@ -5,15 +5,25 @@ using System.Linq;
 
 namespace MasterBuilder.Templates.ClientApp.App.Models
 {
+    /// <summary>
+    /// Client app model template builder
+    /// </summary>
     public class ModelTemplateBuilder : ITemplateBuilder
     {
         private readonly Project Project;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="project"></param>
         public ModelTemplateBuilder(Project project)
         {
             Project = project;
         }
 
+        /// <summary>
+        /// Get templates
+        /// </summary>
         public IEnumerable<ITemplate> GetTemplates()
         {
             var templates = new List<ITemplate>();
@@ -50,6 +60,25 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             }
 
             templates.Add(new OperationTemplate());
+            
+            var entityReferencesNeeded = (from e in Project.Entities
+                                          where e.Properties != null
+                                          from property in e.Properties
+                                          where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                          property.ParentEntityId.HasValue
+                                          from entity in Project.Entities
+                                          where entity.Id == property.ParentEntityId
+                                          select entity).Distinct().ToArray();
+            if (entityReferencesNeeded != null)
+            {
+                foreach (var entityLookup in entityReferencesNeeded)
+                {
+                    templates.Add(new Reference.ReferenceItemTemplate(Project, entityLookup));
+                    templates.Add(new Reference.ReferenceResponseTemplate(Project, entityLookup));
+                }
+
+                templates.Add(new Reference.ReferenceRequestTemplate());
+            }
 
             return templates;
         }

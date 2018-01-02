@@ -1,18 +1,19 @@
 using MasterBuilder.Helpers;
+using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.ClientApp.App.Models
+namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
 {
     /// <summary>
-    /// Patch Operation Template
+    /// Reference Request Template
     /// </summary>
-    public class OperationTemplate : ITemplate
+    public class ReferenceRequestTemplate : ITemplate
     {
         /// <summary>
         /// Get file name
         /// </summary>
         public string GetFileName()
         {
-            return "Operation.ts";
+            return $"ReferenceRequest.ts";
         }
 
         /// <summary>
@@ -28,11 +29,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         /// </summary>
         public string GetFileContent()
         {
-            return @"export class Operation {
-    op: string;
-    path: string;
-    value: any;
-}";
+            return $@"export class ReferenceRequest {{
+    page: number;
+    pageSize: number;
+    query: string;
+}}";
         }
     }
 }

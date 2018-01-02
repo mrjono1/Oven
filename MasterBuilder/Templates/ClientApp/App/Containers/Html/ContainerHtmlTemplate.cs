@@ -1,33 +1,46 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 {
+    /// <summary>
+    /// Container html template
+    /// </summary>
     public class ContainerHtmlTemplate: ITemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ContainerHtmlTemplate(Project project, Screen screen)
         {
             Project = project;
             Screen = screen;
         }
 
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return $"{Screen.InternalName.ToLowerInvariant()}.component.html";
         }
 
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new string[] { "ClientApp", "app", "containers", Screen.InternalName.ToLowerInvariant() };
         }
 
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             var sections = new List<string>();
