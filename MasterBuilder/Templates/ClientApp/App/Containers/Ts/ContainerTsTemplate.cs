@@ -104,7 +104,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 this.setupForm();
             }}
         }});");
-
                         hasForm = true;
                         break;
                     case ScreenSectionTypeEnum.Search:
@@ -193,6 +192,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 var form = new BuildForm(Project, Screen);
                 functions.Add(form.GetFunctions());
                 imports.AddRange(form.GetImports());
+                constructorParamerters.AddRange(form.GetConstructorParamerters());
             }
 
             if (Screen.InternalName.Equals("home", StringComparison.OrdinalIgnoreCase))

@@ -42,9 +42,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
         public string GetFileContent()
         {
             return $@"import {{ {Entity.InternalName}ReferenceItem }} from './{Entity.InternalName}ReferenceItem';
+import {{ Observable }} from 'rxjs/Observable';
 
-export interface {Entity.InternalName}ReferenceResponse {{
-    items: {Entity.InternalName}ReferenceItem[];
+export class {Entity.InternalName}ReferenceResponse {{
+    items: Observable<{Entity.InternalName}ReferenceItem>;
     totalPages: number;
     totalItems: number;
 }}";

@@ -58,8 +58,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
         {
             if (_generateMethod)
             {
-                return $@"    get{Entity.InternalName}Reference(request: ReferenceRequest){{
-        return this.http.post<{Entity.InternalName}ReferenceResponse>(`${{this.baseUrl}}/api/{Entity.InternalName}/{Entity.InternalName}Reference`, request);
+                return $@"    get{Entity.InternalName}References(query: string, page: number, pageSize: number){{
+        let request = new ReferenceRequest();
+        request.query = query;
+        request.pageSize = pageSize;
+        request.page = page;
+        return this.http.post<{Entity.InternalName}ReferenceResponse>(`${{this.baseUrl}}/api/{Entity.InternalName}/{Entity.InternalName}References`, request);
     }}";
             }
             else

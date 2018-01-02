@@ -124,8 +124,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
                     case PropertyTypeEnum.ReferenceRelationship:
                         control = $@"<label for=""{property.Id}"">{property.Title}</label>
-<input formControlName=""{property.InternalName.Camelize()}Id""
-        [typeahead] = ""{property.InternalName.Camelize()}Options""
+<input *ngIf=""{property.InternalName.Camelize()}Reference""
+        formControlName=""{property.InternalName.Camelize()}Id""
+        [typeahead] = ""{property.InternalName.Camelize()}Reference.items""
         [typeaheadOptionsLimit] = ""7""
         [typeaheadMinLength] = ""0""
         typeaheadOptionField=""title""

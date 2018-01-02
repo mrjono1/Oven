@@ -64,16 +64,52 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         }
 
         /// <summary>
+        /// Get constructor parameters
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<string> GetConstructorParamerters()
+        {
+            var imports = new List<string>();
+            if (_entity == null)
+            {
+                return imports;
+            }
+            
+            var referenceEntities = (from property in _entity.Properties
+                                     where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                     property.ParentEntityId.HasValue
+                                     from entity in Project.Entities
+                                     where entity.Id == property.ParentEntityId.Value
+                                     select entity).Distinct().ToArray();
+
+            if (referenceEntities.Any())
+            {
+                foreach (var entity in referenceEntities)
+                {
+                    imports.Add($"private {entity.InternalName.Camelize()}Service: {entity.InternalName}Service");
+                }
+            }
+
+            return imports;
+        }
+
+        /// <summary>
         /// Get functions
         /// </summary>
         public string GetFunctions()
         {
+            if (_entity == null)
+            {
+                return string.Empty;
+            }
 
             var sectionImports = new List<string>();
             var sections = new List<string>();
             var properties = new List<string>();
 
             var formControls = new List<string>();
+            var formCode = new List<string>();
+
             foreach (var property in _entity.Properties)
             {
                 if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
@@ -131,7 +167,19 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 {
                     formControls.Add($@"        '{property.InternalName.Camelize()}Id': new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}Id{propertyValidatorsString})");
                     properties.Add($@"    get {property.InternalName.Camelize()}Id() {{ return this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}Id'); }}");
-                    properties.Add($@"    {property.InternalName.Camelize()}Options: any[] = [];");
+                    
+                    var parentEntity = (from e in Project.Entities
+                                        where e.Id == property.ParentEntityId.Value
+                                        select e).SingleOrDefault();
+                    properties.Add($"public {property.InternalName.Camelize()}Reference: {parentEntity.InternalName}ReferenceResponse = new {parentEntity.InternalName}ReferenceResponse();");
+
+                    formCode.Add($@"        this.{property.InternalName.Camelize()}Reference.items = Observable.create((observer: any) => {{
+            this.{parentEntity.InternalName.Camelize()}Service.get{parentEntity.InternalName}References(this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}Id').value, 1, 10).subscribe((result: any) => {{
+                if (result != null) {{
+                    observer.next(result.items);
+                }}
+            }})
+        }});");
                 }
                 else
                 {
@@ -146,6 +194,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         this.{Screen.InternalName.Camelize()}Form = new FormGroup({{
 {string.Join(string.Concat(",", Environment.NewLine), formControls)}
         }});
+{string.Join(Environment.NewLine, formCode)}
     }}
 
 {string.Join(Environment.NewLine, properties)}
