@@ -62,29 +62,29 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                 {
                     case ScreenSectionTypeEnum.Form:
 
-                        imports.Add($"import {{ {group.ScreenSection.InternalName} }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}'");
+                        imports.Add($"import {{ {group.ScreenSection.InternalName} }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}';");
 
-                        methods.Add($@"get{group.Screen.InternalName}{group.ScreenSection.InternalName}(id: string){{
-    return this.http.get<{group.ScreenSection.InternalName}>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}/${{id}}`);
-}}");
-                        methods.Add($@"add{Entity.InternalName}{group.Screen.InternalName}(request: any){{
-    return this.http.post<string>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}`, request);
-}}");
+                        methods.Add($@"    get{group.Screen.InternalName}{group.ScreenSection.InternalName}(id: string){{
+        return this.http.get<{group.ScreenSection.InternalName}>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}/${{id}}`);
+    }}");
+                        methods.Add($@"    add{Entity.InternalName}{group.Screen.InternalName}(request: any){{
+        return this.http.post<string>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}`, request);
+    }}");
 
-                        methods.Add($@"update{Entity.InternalName}{group.Screen.InternalName}(id: string, operations: Operation[]){{
-    return this.http.patch<string>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}/${{id}}`, operations);
-}}");
+                        methods.Add($@"    update{Entity.InternalName}{group.Screen.InternalName}(id: string, operations: Operation[]){{
+        return this.http.patch<string>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}/${{id}}`, operations);
+    }}");
                         hasForm = true;
                         break;
                     case ScreenSectionTypeEnum.Search:
 
-                        imports.Add($"import {{ {group.ScreenSection.InternalName}Item }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}Item'");
-                        imports.Add($"import {{ {group.ScreenSection.InternalName}Request }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}Request'");
-                        imports.Add($"import {{ {group.ScreenSection.InternalName}Response }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}Response'");
+                        imports.Add($"import {{ {group.ScreenSection.InternalName}Item }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}Item';");
+                        imports.Add($"import {{ {group.ScreenSection.InternalName}Request }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}Request';");
+                        imports.Add($"import {{ {group.ScreenSection.InternalName}Response }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}Response';");
 
-                        methods.Add($@"get{group.Screen.InternalName}{group.ScreenSection.InternalName}(request: {group.ScreenSection.InternalName}Request){{
-    return this.http.post<{group.ScreenSection.InternalName}Response>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}`, request);
-}}");
+                        methods.Add($@"    get{group.Screen.InternalName}{group.ScreenSection.InternalName}(request: {group.ScreenSection.InternalName}Request){{
+        return this.http.post<{group.ScreenSection.InternalName}Response>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}`, request);
+    }}");
 
                         break;
                     case ScreenSectionTypeEnum.Grid:
@@ -102,9 +102,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                         switch (menuItem.MenuItemType)
                         {
                             case MenuItemTypeEnum.ServerFunction:
-                                methods.Add($@"get{menuItem.InternalName}(id: string){{
-    return this.http.get(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}{menuItem.InternalName}/${{id}}`);
-}}");
+                                methods.Add($@"    get{menuItem.InternalName}(id: string){{
+        return this.http.get(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}{menuItem.InternalName}/${{id}}`);
+    }}");
                                 break;
                         }
                     }
@@ -113,9 +113,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
 
             if (hasForm)
             {
-                imports.Add($"import {{ Operation }} from '../models/Operation'");
+                imports.Add($"import {{ Operation }} from '../models/Operation';");
             }
-            
+
+            var serviceReferenceMethodTemplate = new ServiceReferenceMethodTemplate(Project, Entity);
+            imports.AddRange(serviceReferenceMethodTemplate.Imports());
+            methods.Add(serviceReferenceMethodTemplate.Method());
 
             return $@"import {{ Injectable, Inject, Injector }} from '@angular/core';
 import {{ HttpClient }} from '@angular/common/http';
@@ -138,7 +141,6 @@ export class {Entity.InternalName}Service {{
     }}
 
 {string.Join(Environment.NewLine, methods.Distinct())}
-
 }}
 ";   
         }

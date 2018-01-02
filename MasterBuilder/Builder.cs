@@ -112,7 +112,6 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleServerTemplate());
 
             // ClientApp/App/Shared
-            projectWriter.AddTemplate(new Templates.ClientApp.App.Shared.LinkServiceTemplate());
             projectWriter.AddTemplate(new Templates.ClientApp.App.Shared.ServiceTemplateBuilder(project));
             
             // ClientApp/app/models

@@ -30,9 +30,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
             {
                 templates.Add(new ServiceTemplate(Project, entity));
             }
-
-            // Link Service template currently added elsewhere for speed reasons
-            //templates.Add(new LinkServiceTemplate());
+            
+            templates.Add(new LinkServiceTemplate());
 
             return templates;
         }

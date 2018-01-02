@@ -36,7 +36,7 @@ namespace MasterBuilder.Templates.Controllers
             
             return $@"
         [HttpPost(""{entity.InternalName}References"")]
-        public async Task<IActionResult> {entity.InternalName}Lookup([FromBody]{requestClassName} request)
+        public async Task<IActionResult> {entity.InternalName}Reference([FromBody]{requestClassName} request)
         {{
             if (request == null)
             {{
