@@ -49,6 +49,8 @@ namespace MasterBuilder.Templates.Controllers
             }}
 
             var query = from item in _context.{entity.InternalNamePlural}
+                        where request.Query == null || request.Query == "" ||
+                        item.Title.Contains(request.Query)
                         select new
                         {{
                             item.Id,

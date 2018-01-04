@@ -74,16 +74,28 @@ namespace MasterBuilder.Templates.Models
                 }
             }
 
-            if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)
+            switch (property.Type)
             {
-                result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
+                case PropertyTypeEnum.ParentRelationship:
+                    result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
         public {property.CsType} {property.InternalName}Id {{ get; set; }}");
-            }
-            else
-            {
-                result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
+                    break;
+
+                case PropertyTypeEnum.ReferenceRelationship:
+                    // Foreign Key
+                    result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
+        public {property.CsType} {property.InternalName}Id {{ get; set; }}");
+                    // Foreign Title
+                    result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
+        public string {property.InternalName}Title {{ get; set; }}");
+                    break;
+
+                default:
+                    result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
         public {property.CsType} {property.InternalName} {{ get; set; }}");
+                    break;
             }
+            
             return result.ToString();
         }
     }

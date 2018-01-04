@@ -28,13 +28,44 @@ namespace MasterBuilder.Templates.Controllers
                     switch (item.Type)
                     {
                         case PropertyTypeEnum.ParentRelationship:
-                        case PropertyTypeEnum.ReferenceRelationship:
                             postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
                             patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
-                        entity.{item.InternalName}Id = new Guid(operation.value.ToString());
+                        if (operation.value != null && string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
+                        {{
+                            entity.{item.InternalName}Id = {item.InternalName.Camelize()}Id;
+                        }}
+                        else
+                        {{
+                            entity.{item.InternalName}Id = null;
+                        }}
                         entityEntry.Property(p => p.{item.InternalName}Id).IsModified = true;
                         break;");
+
+                            getPropertyMapping.Add($"                           {item.InternalName}Id = item.{item.InternalName}Id");
                             break;
+
+                        case PropertyTypeEnum.ReferenceRelationship:
+                            postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
+
+                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
+                        if (operation.value != null && string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
+                        {{
+                            entity.{item.InternalName}Id = {item.InternalName.Camelize()}Id;
+                        }}
+                        else
+                        {{
+                            entity.{item.InternalName}Id = null;
+                        }}
+                        entityEntry.Property(p => p.{item.InternalName}Id).IsModified = true;
+                        break;");
+
+                            getPropertyMapping.Add($"                           {item.InternalName}Id = item.{item.InternalName}Id");
+
+                            // TODO: Title should be configurable
+                            // TODO: is it faster to do the bool check on the key instead of object?
+                            getPropertyMapping.Add($"                           {item.InternalName}Title = item.{item.InternalName} != null ? item.{item.InternalName}.Title : null");
+                            break;
+
                         case PropertyTypeEnum.Uniqueidentifier:
                             break;
                         case PropertyTypeEnum.String:
