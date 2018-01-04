@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.Controllers
                             postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
                             patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
                         entity.{item.InternalName}Id = new Guid(operation.value.ToString());
-                        entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                        entityEntry.Property(p => p.{item.InternalName}Id).IsModified = true;
                         break;");
                             break;
                         case PropertyTypeEnum.Uniqueidentifier:
