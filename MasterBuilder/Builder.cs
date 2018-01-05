@@ -73,7 +73,7 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigTemplate());
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigVendorTemplate());
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebConfigTemplate());
-
+ 
             // Views
             projectWriter.AddTemplate(new Templates.Views.ViewImportsTemplate(project));
             projectWriter.AddTemplate(new Templates.Views.ViewStartTemplate());
@@ -110,6 +110,7 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentTsTemplate(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleBrowserTemplate());
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleServerTemplate());
+            projectWriter.AddTemplate(new Templates.ClientApp.App.MaterialModuleTemplate(project));
 
             // ClientApp/App/Shared
             projectWriter.AddTemplate(new Templates.ClientApp.App.Shared.ServiceTemplateBuilder(project));

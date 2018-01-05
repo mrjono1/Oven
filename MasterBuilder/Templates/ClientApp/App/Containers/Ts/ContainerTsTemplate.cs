@@ -193,6 +193,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 functions.Add(form.GetFunctions());
                 imports.AddRange(form.GetImports());
                 constructorParamerters.AddRange(form.GetConstructorParamerters());
+                onNgInitBodySections.AddRange(form.GetngOnInit());
             }
 
             if (Screen.InternalName.Equals("home", StringComparison.OrdinalIgnoreCase))

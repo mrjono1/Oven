@@ -30,7 +30,12 @@ namespace MasterBuilder.Templates.ClientApp.App
         {
             return @"/* Import Bootstrap & Fonts */
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
-@import ""~bootstrap-sass/assets/stylesheets/bootstrap"";";
+@import ""~bootstrap-sass/assets/stylesheets/bootstrap"";
+
+// Material UI Theme
+@import ""~@angular/material/prebuilt-themes/deeppurple-amber.css"";
+
+// Below is bootstrap to be removed";
         }
     }
 }

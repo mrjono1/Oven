@@ -82,7 +82,6 @@ import {{ BrowserModule, BrowserTransferStateModule }} from '@angular/platform-b
 import {{ TransferHttpCacheModule }} from '@nguniversal/common';
 
 import {{ Ng2BootstrapModule }} from 'ngx-bootstrap';
-import {{ TypeaheadModule }} from 'ngx-bootstrap/typeahead';
 
 // i18n support
 import {{ TranslateModule, TranslateLoader }} from '@ngx-translate/core';
@@ -93,6 +92,9 @@ import {{ TranslateHttpLoader }} from '@ngx-translate/http-loader';
 import {{ LinkService }} from './shared/link.service';
 {string.Join(Environment.NewLine, providers.Values)}
 import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine';
+//material
+import {{ BrowserAnimationsModule }} from '@angular/platform-browser/animations';
+import {{ MaterialModule }} from './material.module';
 
 export function createTranslateLoader(http: HttpClient, baseHref) {{
     // Temporary Azure hack
@@ -119,7 +121,10 @@ export function createTranslateLoader(http: HttpClient, baseHref) {{
         FormsModule,
         ReactiveFormsModule,
         Ng2BootstrapModule.forRoot(), // You could also split this up if you don't want the Entire Module imported
-        TypeaheadModule.forRoot(),
+
+        // material
+        BrowserAnimationsModule,
+        MaterialModule,
 
         // i18n support
         TranslateModule.forRoot({{

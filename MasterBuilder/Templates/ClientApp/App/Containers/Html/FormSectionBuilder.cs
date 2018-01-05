@@ -123,16 +123,19 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
 
                     case PropertyTypeEnum.ReferenceRelationship:
-                        control = $@"<label for=""{property.Id}"">{property.Title}</label>
-<input *ngIf=""{property.InternalName.Camelize()}Reference""
-        formControlName=""{property.InternalName.Camelize()}Id""
-        [typeahead] = ""{property.InternalName.Camelize()}Reference.items""
-        [typeaheadOptionsLimit] = ""7""
-        [typeaheadMinLength] = ""0""
-        typeaheadOptionField=""title""
-        class=""form-control"" id=""{property.Id}"">";
+                        var parentEntity = (from e in Project.Entities
+                                            where e.Id == property.ParentEntityId.Value
+                                            select e).SingleOrDefault();
 
-
+                        control = $@"{new String(' ', 20)}<label for=""{property.Id}"">{property.Title}</label>
+                    <mat-form-field id=""{property.Id}"">
+                        <mat-select [compareWith]=""referenceCompare"" [formControl]=""{property.InternalName.Camelize()}Id"">
+                           {(property.Required ? string.Empty : "<mat-option>--</mat-option>")}
+                           <mat-option *ngFor=""let option of {parentEntity.InternalName.Camelize()}Reference.items"" [value]=""option.id"">
+                                <span>{{{{ option.title }}}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>";
                         break;
                     default:
                         break;

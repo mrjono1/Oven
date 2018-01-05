@@ -52,13 +52,18 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             var properties = new List<string>();
             foreach (var property in entity.Properties)
             {
-                if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)
+                switch (property.Type)
                 {
-                    properties.Add($"   {property.InternalName.Camelize()}Id: {property.TsType};");
-                }
-                else
-                {
-                    properties.Add($"   {property.InternalName.Camelize()}: {property.TsType};");
+                    case PropertyTypeEnum.ParentRelationship:
+                        properties.Add($"   {property.InternalName.Camelize()}Id: {property.TsType};");
+                        break;
+                    case PropertyTypeEnum.ReferenceRelationship:
+                        properties.Add($"   {property.InternalName.Camelize()}Id: {property.TsType};");
+                        properties.Add($"   {property.InternalName.Camelize()}Title: string;");
+                        break;
+                    default:
+                        properties.Add($"   {property.InternalName.Camelize()}: {property.TsType};");
+                        break;
                 }
             }
 

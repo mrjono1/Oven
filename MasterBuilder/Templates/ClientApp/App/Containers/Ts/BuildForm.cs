@@ -40,7 +40,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             imports.Add("import { Operation } from '../../models/Operation';");
             imports.Add("import { FormControl, FormGroup, Validators } from '@angular/forms';");
             imports.Add("import { Observable } from 'rxjs/Observable';");
-            imports.Add("import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';");
 
             var referenceEntities = (from property in _entity.Properties
                                      where property.Type == PropertyTypeEnum.ReferenceRelationship &&
@@ -61,6 +60,36 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             }
 
             return imports;
+        }
+
+        /// <summary>
+        /// ngOnInit
+        /// </summary>
+        public IEnumerable<string> GetngOnInit()
+        {
+            var lines = new List<string>();
+            if (_entity == null)
+            {
+                return lines;
+            }
+
+            var referenceEntities = (from property in _entity.Properties
+                                     where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                     property.ParentEntityId.HasValue
+                                     from entity in Project.Entities
+                                     where entity.Id == property.ParentEntityId.Value
+                                     select entity).Distinct().ToArray();
+
+            foreach (var entity in referenceEntities)
+            {
+                lines.Add($@"        this.{entity.InternalName.Camelize()}Service.get{entity.InternalName}References(null , 1, 100).subscribe((result: any) => {{
+                if (result != null) {{
+                    this.{entity.InternalName.Camelize()}Reference.items = result.items;
+                }}
+            }});");
+            }
+
+            return lines;
         }
 
         /// <summary>
@@ -160,30 +189,24 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
                 if (property.Type == PropertyTypeEnum.ParentRelationship)
                 {
-                    formControls.Add($@"        '{property.InternalName.Camelize()}Id': new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}Id{propertyValidatorsString})");
+                    formControls.Add($@"        this.{Screen.InternalName.Camelize()}Form.addControl('{property.InternalName.Camelize()}Id', new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}Id{propertyValidatorsString}));");
                     properties.Add($@"    get {property.InternalName.Camelize()}Id() {{ return this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}Id'); }}");
                 }
                 else if (property.Type == PropertyTypeEnum.ReferenceRelationship)
                 {
-                    formControls.Add($@"        '{property.InternalName.Camelize()}Id': new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}Id{propertyValidatorsString})");
+                    formControls.Add($@"         let {property.InternalName.Camelize()}Control: FormControl = new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}Id{propertyValidatorsString});
+        this.{Screen.InternalName.Camelize()}Form.addControl('{property.InternalName.Camelize()}Id', {property.InternalName.Camelize()}Control);");
+
                     properties.Add($@"    get {property.InternalName.Camelize()}Id() {{ return this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}Id'); }}");
                     
                     var parentEntity = (from e in Project.Entities
                                         where e.Id == property.ParentEntityId.Value
                                         select e).SingleOrDefault();
-                    properties.Add($"public {property.InternalName.Camelize()}Reference: {parentEntity.InternalName}ReferenceResponse = new {parentEntity.InternalName}ReferenceResponse();");
-
-                    formCode.Add($@"        this.{property.InternalName.Camelize()}Reference.items = Observable.create((observer: any) => {{
-            this.{parentEntity.InternalName.Camelize()}Service.get{parentEntity.InternalName}References(this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}Id').value, 1, 10).subscribe((result: any) => {{
-                if (result != null) {{
-                    observer.next(result.items);
-                }}
-            }})
-        }});");
+                    properties.Add($"public {parentEntity.InternalName.Camelize()}Reference: {parentEntity.InternalName}ReferenceResponse = new {parentEntity.InternalName}ReferenceResponse();");   
                 }
                 else
                 {
-                    formControls.Add($@"        '{property.InternalName.Camelize()}': new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}{propertyValidatorsString})");
+                    formControls.Add($@"         this.{Screen.InternalName.Camelize()}Form.addControl('{property.InternalName.Camelize()}', new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}{propertyValidatorsString}));");
                     properties.Add($@"    get {property.InternalName.Camelize()}() {{ return this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}'); }}");
                 }
             }
@@ -192,12 +215,17 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
     setupForm(){{
         this.{Screen.InternalName.Camelize()}Form = new FormGroup({{
-{string.Join(string.Concat(",", Environment.NewLine), formControls)}
         }});
+{string.Join(Environment.NewLine, formControls)}
+
 {string.Join(Environment.NewLine, formCode)}
     }}
 
 {string.Join(Environment.NewLine, properties)}
+
+    referenceCompare(referenceItem1: any, referenceItem2: any): boolean {{
+        return referenceItem1 && referenceItem2 ? referenceItem1.id === referenceItem2.id : referenceItem1 === referenceItem2;
+    }}
 
     private getPatchOperations(): Operation[] {{
         let operations: Operation[] = [];
@@ -209,7 +237,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 let operation = new Operation();
                 operation.op = 'replace';
                 operation.path = '/' + name;
-                operation.value = currentControl.value;
+                if (currentControl.value instanceof Object) {{
+                    operation.value = currentControl.value.id;
+                }} else {{
+                    operation.value = currentControl.value;
+                }}
                 operations.push(operation);
             }}
         }});

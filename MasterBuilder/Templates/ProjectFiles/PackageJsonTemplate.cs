@@ -62,6 +62,9 @@ namespace MasterBuilder.Templates.ProjectFiles
   }";
 
             var dependencies = @"""dependencies"": {
+    ""@angular/material"": ""^5.0.2"",
+    ""hammerjs"": ""^2.0.8"",
+    ""@angular/cdk"": ""^5.0.2"",
     ""@angular/animations"": ""^5.0.0"",
     ""@angular/common"": ""^5.0.0"",
     ""@angular/compiler"": ""^5.0.0"",
