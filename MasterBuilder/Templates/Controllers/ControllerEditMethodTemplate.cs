@@ -30,13 +30,13 @@ namespace MasterBuilder.Templates.Controllers
                         case PropertyTypeEnum.ParentRelationship:
                             postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
                             patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
-                        if (operation.value != null && string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
+                        if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
                         {{
                             entity.{item.InternalName}Id = {item.InternalName.Camelize()}Id;
                         }}
                         else
                         {{
-                            entity.{item.InternalName}Id = null;
+                            throw new Exception(""{item.InternalName.Camelize()}Id value is invalid"");
                         }}
                         entityEntry.Property(p => p.{item.InternalName}Id).IsModified = true;
                         break;");
@@ -48,13 +48,13 @@ namespace MasterBuilder.Templates.Controllers
                             postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
 
                             patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
-                        if (operation.value != null && string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
+                        if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
                         {{
                             entity.{item.InternalName}Id = {item.InternalName.Camelize()}Id;
                         }}
                         else
                         {{
-                            entity.{item.InternalName}Id = null;
+                            {(item.Required ? $@"throw new Exception(""{item.InternalName.Camelize()}Id value is invalid"");" : $"entity.{item.InternalName}Id = null;")}
                         }}
                         entityEntry.Property(p => p.{item.InternalName}Id).IsModified = true;
                         break;");
