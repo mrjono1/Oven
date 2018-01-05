@@ -35,7 +35,16 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 // Material UI Theme
 @import ""~@angular/material/prebuilt-themes/deeppurple-amber.css"";
 
-// Below is bootstrap to be removed";
+// below material testing css to be removed
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}";
         }
     }
 }

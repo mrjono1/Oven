@@ -91,51 +91,46 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 }
 
                 string control = null;
+                bool dontWrap = false;
                 switch (property.Type)
                 {
                     case PropertyTypeEnum.String:
-                        control = $@"{new String(' ', 20)}<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
-{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""text"" class=""form-control"" id=""{property.Id}""
-{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
+                        control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""text"" matInput id=""{property.Id}"" placeholder=""{property.Title}""
+{new String(' ', 22)}[formControl]=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
                         break;
+
                     case PropertyTypeEnum.Integer:
-                        control = $@"{new String(' ', 20)}<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
-{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" class=""form-control"" id=""{property.Id}""
-{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
+                        control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{property.Id}"" placeholder=""{property.Title}""
+{new String(' ', 22)}[formControl]=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
                         break;
+
                     case PropertyTypeEnum.Double:
-                        control = $@"{new String(' ', 20)}<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
-{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" class=""form-control"" id=""{property.Id}""
-{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
+                        control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{property.Id}"" placeholder=""{property.Title}""
+{new String(' ', 22)}[formControl]=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
                         break;
+
                     case PropertyTypeEnum.DateTime:
-                        control = $@"{new String(' ', 20)}<label for=""{property.InternalName.Camelize()}"">{property.Title}</label>
-{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""datetime"" class=""form-control"" id=""{property.Id}""
-{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
+                        control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""datetime"" matInput id=""{property.Id}"" placeholder=""{property.Title}""
+{new String(' ', 22)}[formControl]=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>";
                         break;
+
                     case PropertyTypeEnum.Boolean:
-                        control = $@"{new String(' ', 20)}<label>
-{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""checkbox"" id=""{property.Id}""
-{new String(' ', 22)}formControlName=""{property.InternalName.Camelize()}"" name=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>{property.Title}
-{new String(' ', 20)}</label>";
+                        dontWrap = true;
+                        control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{Screen.InternalName.Camelize()}"" id=""{property.Id}""
+{new String(' ', 22)}[formControl]=""{property.InternalName.Camelize()}"" {(property.Required ? "required" : "")}>{property.Title}</mat-checkbox>";
                         break;
-
-
-
+                        
                     case PropertyTypeEnum.ReferenceRelationship:
                         var parentEntity = (from e in Project.Entities
                                             where e.Id == property.ParentEntityId.Value
                                             select e).SingleOrDefault();
 
-                        control = $@"{new String(' ', 20)}<label for=""{property.Id}"">{property.Title}</label>
-                    <mat-form-field id=""{property.Id}"">
-                        <mat-select [compareWith]=""referenceCompare"" [formControl]=""{property.InternalName.Camelize()}Id"">
+                        control = $@"{new String(' ', 20)}<mat-select placeholder=""{property.Title}"" [compareWith]=""referenceCompare"" [formControl]=""{property.InternalName.Camelize()}Id"" {(property.Required ? "required" : "")}>
                            {(property.Required ? string.Empty : "<mat-option>--</mat-option>")}
                            <mat-option *ngFor=""let option of {parentEntity.InternalName.Camelize()}Reference.items"" [value]=""option.id"">
                                 <span>{{{{ option.title }}}}</span>
                             </mat-option>
-                        </mat-select>
-                    </mat-form-field>";
+                        </mat-select>";
                         break;
                     default:
                         break;
@@ -143,9 +138,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
                 if (control != null)
                 {
-                    formGroups.Add($@"{new String(' ', 16)}<div class=""form-group"">
+                    if (dontWrap)
+                    {
+                        formGroups.Add(string.Join(Environment.NewLine, control, validationDiv));
+                    }
+                    else
+                    {
+                        formGroups.Add($@"{new String(' ', 16)}<mat-form-field class=""example-full-width"">
 {string.Join(Environment.NewLine, control, validationDiv)}
-{new String(' ', 16)}</div>");
+{new String(' ', 16)}</mat-form-field>");
+                    }
                 }
             }
 
