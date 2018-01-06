@@ -153,21 +153,23 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
             var menuItems = new List<string>
             {
-                @"<button type=""submit"" class=""btn btn-success"">Submit</button>"
+                @"<button type=""submit"" mat-raised-button>Submit</button>"
             };
             if (Screen.MenuItems != null)
             {
                 foreach (var menuItem in Screen.MenuItems)
                 {
-                    menuItems.Add($@"<button type=""button"" class=""btn btn-primary"" (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
+                    menuItems.Add($@"<button mat-raised-button (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
                 }
             }
 
             return $@"{new String(' ', 4)}<div class=""screen-section-form"">
 {new String(' ', 8)}<form *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
-{new String(' ', 12)}<nav>
-{new String(' ', 16)}{ string.Join(Environment.NewLine, menuItems)}
-{new String(' ', 12)}</nav>
+    <mat-toolbar class=""primary"">
+        <mat-toolbar-row>
+{string.Join(Environment.NewLine, menuItems)}
+        </mat-toolbar-row>
+    </mat-toolbar>
 {new String(' ', 12)}<fieldset>
 { string.Join(Environment.NewLine, formGroups)}
 {new String(' ', 12)}</fieldset>
