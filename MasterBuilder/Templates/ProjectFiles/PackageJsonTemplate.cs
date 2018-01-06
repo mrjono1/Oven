@@ -42,6 +42,8 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// <returns></returns>
         public string GetFileContent()
         {
+            var angularVersion = "^5.0.0"; //same version used by multiple angular packages
+
             // 'private: true' ensures that this project will not be published on npm
             var topSettings = $@"""name"": ""{Project.InternalName.Kebaberize()}"",
   ""private"": true,
@@ -61,21 +63,22 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""clean"": ""rimraf wwwroot/dist clientapp/dist""
   }";
 
-            var dependencies = @"""dependencies"": {
+            var dependencies = $@"""dependencies"": {{
     ""@angular/material"": ""^5.0.2"",
     ""hammerjs"": ""^2.0.8"",
     ""@angular/cdk"": ""^5.0.2"",
-    ""@angular/animations"": ""^5.0.0"",
-    ""@angular/common"": ""^5.0.0"",
-    ""@angular/compiler"": ""^5.0.0"",
-    ""@angular/compiler-cli"": ""^5.0.0"",
-    ""@angular/core"": ""^5.0.0"",
-    ""@angular/forms"": ""^5.0.0"",
-    ""@angular/http"": ""^5.0.0"",
-    ""@angular/platform-browser"": ""^5.0.0"",
-    ""@angular/platform-browser-dynamic"": ""^5.0.0"",
-    ""@angular/platform-server"": ""^5.0.0"",
-    ""@angular/router"": ""^5.0.0"",
+    ""@angular/animations"": ""{angularVersion}"",
+    ""@angular/common"": ""{angularVersion}"",
+    ""@angular/compiler"": ""{angularVersion}"",
+    ""@angular/compiler-cli"": ""{angularVersion}"",
+    ""@angular/core"": ""{angularVersion}"",
+    ""@angular/forms"": ""{angularVersion}"",
+    ""@angular/http"": ""{angularVersion}"",
+    ""@angular/platform-browser"": ""{angularVersion}"",
+    ""@angular/platform-browser-dynamic"": ""{angularVersion}"",
+    ""@angular/platform-server"": ""{angularVersion}"",
+    ""@angular/router"": ""{angularVersion}"",
+    ""@angular/flex-layout"": ""^2.0.0-rc.1"",
     ""@nguniversal/aspnetcore-engine"": ""^5.0.0-beta.5"",
     ""@nguniversal/common"": ""^5.0.0-beta.5"",
     ""@ngx-translate/core"": ""^8.0.0"",
@@ -115,7 +118,7 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""webpack-hot-middleware"": ""^2.19.1"",
     ""webpack-merge"": ""^4.1.0"",
     ""zone.js"": ""^0.8.17""
-  }";
+  }}";
 
             var devDependencies = @"""devDependencies"": {
     ""@angular/cli"": ""^1.5.0"",

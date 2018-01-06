@@ -54,33 +54,19 @@ namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
                         path = Project.Screens.Where(s => s.Id == item.ScreenId.Value).Select(p => p.Path).FirstOrDefault();
                         // todo if url is null error
                     }
-                    menuItems.Append($@"<li [routerLinkActive]=""['link-active']"" (click)=""collapseMenu()"">
-                    <a [routerLink]=""['/{path}']"">
-                        <span class='{item.Icon}'></span> {item.Title}
-                    </a>
-                </li>");
+                    menuItems.Append($@"<a mat-button [routerLinkActive]=""['link-active']"" [routerLink]=""['/{path}']"">{item.Title}</a>");
                 }
 
             }
 
-            return $@"<div class='main-nav'>
-    <nav class='navbar navbar-inverse'>
-        <div class='navbar-header'>
-            <button type='button' class='navbar-toggle' (click)=""collapseNavbar()"">
-                <span class='sr-only'>Toggle navigation</span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-                <span class='icon-bar'></span>
-            </button>
-            <a class='navbar-brand' [routerLink]=""['/home']"">{Project.Title}</a>
-        </div>
-        <div class='navbar-collapse {{{{collapse}}}}'>
-            <ul class='nav navbar-nav'>
+            return $@"<nav>
+    <mat-toolbar color=""primary"">
+        <mat-toolbar-row>
+            <a mat-button [routerLinkActive]=""['link-active']"" [routerLink]=""['/home']"">{Project.Title}</a>
 {menuItems}
-            </ul>
-        </div>
-    </nav>
-</div>";
+        </mat-toolbar-row>
+    </mat-toolbar>
+</nav>";
         }
 
     }

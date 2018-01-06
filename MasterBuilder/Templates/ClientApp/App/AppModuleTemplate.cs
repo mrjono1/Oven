@@ -95,6 +95,7 @@ import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine';
 //material
 import {{ BrowserAnimationsModule }} from '@angular/platform-browser/animations';
 import {{ MaterialModule }} from './material.module';
+import {{ FlexLayoutModule }} from '@angular/flex-layout';
 
 export function createTranslateLoader(http: HttpClient, baseHref) {{
     // Temporary Azure hack
