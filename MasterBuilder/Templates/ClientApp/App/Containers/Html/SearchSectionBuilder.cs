@@ -62,7 +62,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 </ng-container>");
             }
 
-            string navigateToScreen = null;
+            string rowClickRouterLink = null;
+            string newRouterLink = null;
+
             Request.Screen foundParentScreen = null;
             if (ScreenSection.NavigateToScreenId.HasValue)
             {
@@ -84,7 +86,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
                 if (navigateScreen != null)
                 {
-                    navigateToScreen = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}', row.id]""";
+                    rowClickRouterLink = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}', row.id]""";
+                    newRouterLink = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}']""";
                 }
             }
 
@@ -96,39 +99,37 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     {
                         case MenuItemTypeEnum.ApplicationLink:
                             var screenTo = Project.Screens.SingleOrDefault(s => s.Id == menuItem.ScreenId);
-                            menuItems.Add($@"<a [routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{screenTo.Path}']"">
+                            menuItems.Add($@"<a mat-raised-button [routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{screenTo.Path}']"">
                         <span class='{menuItem.Icon}'></span> {menuItem.Title}
                      </a>");
                             break;
                         case MenuItemTypeEnum.New:
                             break;
                         case MenuItemTypeEnum.ServerFunction:
-                            menuItems.Add($@"<button type=""button"" class=""btn btn-primary"" (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
+                            menuItems.Add($@"<button mat-raised-button (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
                             break;
                         default:
                             break;
                     }
                 }
             }
-
-            var navigateToScreenPath = (from s in Project.Screens
-                                        where s.Id == Screen.NavigateToScreenId
-                                        select s.Path).FirstOrDefault();
-            if (!string.IsNullOrWhiteSpace(navigateToScreenPath))
+            
+            if (!string.IsNullOrWhiteSpace(newRouterLink))
             {
-                menuItems.Add($@"<a [routerLink]=""['/{navigateToScreenPath}']"">New</a>");
+                menuItems.Add($@"<a mat-raised-button {newRouterLink}>New</a>");
             }
-            return $@"<div class=""screen-type-search"">
-<nav>
-    
+            return $@"<div class=""screen-section-search"">
+    <mat-toolbar class=""primary"">
+        <mat-toolbar-row>
 {string.Join(Environment.NewLine, menuItems)}
-</nav>
+        </mat-toolbar-row>
+    </mat-toolbar>
     <div  class=""mat-elevation-z8"">
         <mat-table #table [dataSource]=""{ScreenSection.InternalName.Camelize()}DataSource"">
 {string.Join(Environment.NewLine, columns)}
 
             <mat-header-row *matHeaderRowDef=""{ScreenSection.InternalName.Camelize()}Columns""></mat-header-row>
-            <mat-row *matRowDef=""let row; columns: {ScreenSection.InternalName.Camelize()}Columns;"" {navigateToScreen}></mat-row>
+            <mat-row *matRowDef=""let row; columns: {ScreenSection.InternalName.Camelize()}Columns;"" {rowClickRouterLink}></mat-row>
         </mat-table>
     </div>
 </div>";

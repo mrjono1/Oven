@@ -163,7 +163,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 }
             }
 
-            return $@"{new String(' ', 4)}<div class=""screen-type-edit"">
+            return $@"{new String(' ', 4)}<div class=""screen-section-form"">
 {new String(' ', 8)}<form *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
 {new String(' ', 12)}<nav>
 {new String(' ', 16)}{ string.Join(Environment.NewLine, menuItems)}

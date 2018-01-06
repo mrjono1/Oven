@@ -60,7 +60,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     case ScreenSectionTypeEnum.Grid:
                         break;
                     case ScreenSectionTypeEnum.Html:
-                        sections.Add($@"<div class=""screen-type-search"">
+                        sections.Add($@"<div class=""screen-section-html"">
 {screenSection.Html}
 </div>");
                         break;
@@ -70,7 +70,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             }
 
             return $@" <div class=""screen"">
-    <h1>{Screen.Title}</h1>
+    <mat-toolbar class=""primary"">
+        <mat-toolbar-row>
+            <span>{Screen.Title}</span>
+        </mat-toolbar-row>
+    </mat-toolbar>
 {string.Join(Environment.NewLine, sections)}
 </div>";
         }

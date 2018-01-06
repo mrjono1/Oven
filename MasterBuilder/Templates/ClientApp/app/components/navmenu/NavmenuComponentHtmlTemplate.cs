@@ -59,7 +59,7 @@ namespace MasterBuilder.Templates.ClientApp.app.components.navmenu
 
             }
 
-            return $@"<nav>
+            return $@"<nav class=""mat-elevation-z6"">
     <mat-toolbar color=""primary"">
         <mat-toolbar-row>
             <a mat-button [routerLinkActive]=""['link-active']"" [routerLink]=""['/home']"">{Project.Title}</a>
