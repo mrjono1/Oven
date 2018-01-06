@@ -30,14 +30,14 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
         /// </summary>
         public string Evaluate()
         {
-            var headings = new List<string>();
-            var bindings = new List<string>();
             var menuItems = new List<string>();
 
+            var columns = new List<string>();
             var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
 
             foreach (var property in entity.Properties)
             {
+                string columnName = null;
                 if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
                 {
                     continue;
@@ -46,8 +46,20 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 {
                     continue;
                 }
-                headings.Add($@"             <th data-property-id=""{property.Id}"" >{property.Title}</th>");
-                bindings.Add($"             <td>{{{{ {Screen.InternalName.Camelize()}Item.{property.InternalName.Camelize()} }}}}</td>");
+                else if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+                {
+                    columnName = $"{property.InternalName.Camelize()}Title";
+                }
+                else
+                {
+                    columnName = property.InternalName.Camelize();
+                }
+
+                columns.Add($@"                <!-- {property.Title} Column -->
+                <ng-container matColumnDef=""{columnName}"">
+                    <mat-header-cell *matHeaderCellDef> {property.Title} </mat-header-cell>
+                    <mat-cell *matCellDef=""let element""> {{{{element.{columnName}}}}} </mat-cell>
+                </ng-container>");
             }
 
             string navigateToScreen = null;
@@ -72,7 +84,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
                 if (navigateScreen != null)
                 {
-                    navigateToScreen = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}', {Screen.InternalName.Camelize()}Item.id]""";
+                    navigateToScreen = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}', row.id]""";
                 }
             }
 
@@ -111,22 +123,14 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
     
 {string.Join(Environment.NewLine, menuItems)}
 </nav>
-<div>
-<p *ngIf=""!{ScreenSection.InternalName.Camelize()}Response""><em>Loading...</em></p>
+    <div  class=""mat-elevation-z8"">
+        <mat-table #table [dataSource]=""{ScreenSection.InternalName.Camelize()}DataSource"">
+{string.Join(Environment.NewLine, columns)}
 
-<table class='table' *ngIf=""{ScreenSection.InternalName.Camelize()}Response && {ScreenSection.InternalName.Camelize()}Response.items"">
-    <thead>
-        <tr>
-{string.Join(Environment.NewLine, headings)}
-        </tr>
-    </thead>
-    <tbody>
-        <tr [attr.data-id]=""{Screen.InternalName.Camelize()}Item.id"" *ngFor=""let {Screen.InternalName.Camelize()}Item of {ScreenSection.InternalName.Camelize()}Response.items"" {navigateToScreen}>
-{string.Join(Environment.NewLine, bindings)}
-        </tr>
-    </tbody>
-</table>
-</div>
+            <mat-header-row *matHeaderRowDef=""{ScreenSection.InternalName.Camelize()}Columns""></mat-header-row>
+            <mat-row *matRowDef=""let row; columns: {ScreenSection.InternalName.Camelize()}Columns;"" {navigateToScreen}></mat-row>
+        </mat-table>
+    </div>
 </div>";
         }
         }

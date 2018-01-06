@@ -111,6 +111,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         imports.Add($"import {{ {screenSection.InternalName}Item }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Item';");
                         imports.Add($"import {{ {screenSection.InternalName}Request }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Request';");
                         imports.Add($"import {{ {screenSection.InternalName}Response }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Response';");
+                        imports.Add("import { MatTableDataSource } from '@angular/material';");
 
                         constructorBodySections.Add($@"        this.{screenSection.InternalName.Camelize()}Request = new {screenSection.InternalName}Request();
         this.{screenSection.InternalName.Camelize()}Request.page = 1;
@@ -119,6 +120,27 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         classProperties.Add($"public {screenSection.InternalName.Camelize()}Response: {screenSection.InternalName}Response;");
                         classProperties.Add($"public {screenSection.InternalName.Camelize()}Request: {screenSection.InternalName}Request;");
 
+                        var propertiesToDisplay = new List<string>();
+                        foreach (var property in entity.Properties)
+                        {
+                            switch (property.Type)
+                            {
+                                case PropertyTypeEnum.Uniqueidentifier:
+                                    break;
+                                case PropertyTypeEnum.ParentRelationship:
+                                    break;
+                                case PropertyTypeEnum.ReferenceRelationship:
+                                    propertiesToDisplay.Add($"'{property.InternalName.Camelize()}Title'");
+                                    break;
+                                default:
+                                    propertiesToDisplay.Add($"'{property.InternalName.Camelize()}'");
+                                    break;
+                            }
+                        }
+                        
+
+                        classProperties.Add($"{screenSection.InternalName.Camelize()}Columns = [{string.Join(",", propertiesToDisplay)}];");
+                        classProperties.Add($"{screenSection.InternalName.Camelize()}DataSource = new MatTableDataSource<{screenSection.InternalName}Item>();");
 
                         string parentPropertyFilterString = null;
                         Entity parentEntity = null;
@@ -144,6 +166,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
              this.{entity.InternalName.Camelize()}Service.get{Screen.InternalName}{screenSection.InternalName}(this.{screenSection.InternalName.Camelize()}Request).subscribe( result => {{
                 this.{screenSection.InternalName.Camelize()}Response = result;
+                this.{screenSection.InternalName.Camelize()}DataSource = new MatTableDataSource<{screenSection.InternalName}Item>(result.items);
             }});
         }});");
 

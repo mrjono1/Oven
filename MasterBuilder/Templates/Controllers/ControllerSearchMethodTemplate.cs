@@ -29,14 +29,17 @@ namespace MasterBuilder.Templates.Controllers
                 }
                 else if (item.Type == PropertyTypeEnum.ReferenceRelationship)
                 {
-                    // todo reference relationship
+                    propertyMapping.Add($"                        {item.InternalName}Title = (item.{item.InternalName} != null ? item.{item.InternalName}.Title : null)");
                     continue;
                 }
                 else if (item.Type == PropertyTypeEnum.OneToOneRelationship)
                 {
                     continue;
                 }
-                propertyMapping.Add($"                        {item.InternalName} = item.{item.InternalName}");
+                else
+                {
+                    propertyMapping.Add($"                        {item.InternalName} = item.{item.InternalName}");
+                }
             }
 
             var itemClassName = $"{screen.InternalName}Item";

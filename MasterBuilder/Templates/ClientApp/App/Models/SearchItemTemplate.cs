@@ -53,12 +53,18 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             Property parentProperty = null;
             foreach (var property in entity.Properties)
             {
-                if (property.Type == PropertyTypeEnum.ParentRelationship)
+                switch (property.Type)
                 {
-                    parentProperty = property;
-                    continue;
+                    case PropertyTypeEnum.ParentRelationship:
+                        parentProperty = property;
+                        continue;
+                    case PropertyTypeEnum.ReferenceRelationship:
+                        properties.Add($"   {property.InternalName.Camelize()}Title: string;");
+                        break;
+                    default:
+                        properties.Add($"   {property.InternalName.Camelize()}: {property.TsType};");
+                        break;
                 }
-                properties.Add($"   {property.InternalName.Camelize()}: {property.TsType};");
             }
             
             return $@"export interface {ScreenSection.InternalName}Item {{

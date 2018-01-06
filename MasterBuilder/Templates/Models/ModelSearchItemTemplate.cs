@@ -64,7 +64,7 @@ namespace MasterBuilder.Templates.Models
                     {
                         continue;
                     }
-                    properties.AppendLine(ModelPropertyTemplate.Evaluate(item));
+                    properties.AppendLine(ModelSearchItemPropertyTemplate.Evaluate(item));
                 }
             }
 
