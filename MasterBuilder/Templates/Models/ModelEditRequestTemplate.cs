@@ -52,7 +52,7 @@ namespace MasterBuilder.Templates.Models
                 properties = new StringBuilder();
                 foreach (var item in Entity.Properties)
                 {
-                    properties.AppendLine(ModelPropertyTemplate.Evaluate(item, true));
+                    properties.AppendLine(ModelEditRequestPropertyTemplate.Evaluate(item, true));
                 }
             }
 

@@ -30,7 +30,7 @@ namespace MasterBuilder.Templates.ClientApp.App
         {
             return @"<div>
     <app-nav-menu></app-nav-menu>
-    <div class=""container"">
+    <div>
         <router-outlet></router-outlet>
     </div>
 </div>";

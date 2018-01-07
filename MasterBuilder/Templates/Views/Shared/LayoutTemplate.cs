@@ -50,7 +50,8 @@ namespace MasterBuilder.Templates.Views.Shared
     @Html.Raw(ViewData[""Meta""])
     @Html.Raw(ViewData[""Links""])
 
-    <link rel=""stylesheet"" href=""https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/0.8.2/css/flag-icon.min.css"" />
+    <link href=""https://fonts.googleapis.com/icon?family=Material+Icons"" rel=""stylesheet"">
+    <link href=""https://fonts.googleapis.com/css?family=Roboto:300,400,500|Roboto+Mono:300"" rel=""stylesheet"">
     <!-- <link rel=""stylesheet"" href=""~/dist/vendor.css"" asp-append-version=""true"" /> -->
 
     @Html.Raw(ViewData[""Styles""])

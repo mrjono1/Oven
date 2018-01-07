@@ -42,7 +42,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// <returns></returns>
         public string GetFileContent()
         {
-            var angularVersion = "^5.0.0"; //same version used by multiple angular packages
+            var angularVersion = "^5.1.3"; //same version used by multiple angular packages
 
             // 'private: true' ensures that this project will not be published on npm
             var topSettings = $@"""name"": ""{Project.InternalName.Kebaberize()}"",
@@ -64,9 +64,9 @@ namespace MasterBuilder.Templates.ProjectFiles
   }";
 
             var dependencies = $@"""dependencies"": {{
-    ""@angular/material"": ""^5.0.2"",
+    ""@angular/material"": ""^5.0.3"",
     ""hammerjs"": ""^2.0.8"",
-    ""@angular/cdk"": ""^5.0.2"",
+    ""@angular/cdk"": ""^5.0.3"",
     ""@angular/animations"": ""{angularVersion}"",
     ""@angular/common"": ""{angularVersion}"",
     ""@angular/compiler"": ""{angularVersion}"",
@@ -78,7 +78,7 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""@angular/platform-browser-dynamic"": ""{angularVersion}"",
     ""@angular/platform-server"": ""{angularVersion}"",
     ""@angular/router"": ""{angularVersion}"",
-    ""@angular/flex-layout"": ""^2.0.0-rc.1"",
+    ""@angular/flex-layout"": ""^2.0.0-beta.12"",
     ""@nguniversal/aspnetcore-engine"": ""^5.0.0-beta.5"",
     ""@nguniversal/common"": ""^5.0.0-beta.5"",
     ""@ngx-translate/core"": ""^8.0.0"",
@@ -121,8 +121,8 @@ namespace MasterBuilder.Templates.ProjectFiles
   }}";
 
             var devDependencies = @"""devDependencies"": {
-    ""@angular/cli"": ""^1.5.0"",
-    ""@ngtools/webpack"": ""^1.8.0"",
+    ""@angular/cli"": ""^1.6.3"",
+    ""@ngtools/webpack"": ""^1.9.3"",
     ""@types/chai"": ""^3.4.34"",
     ""@types/jasmine"": ""^2.5.37"",
     ""chai"": ""^3.5.0"",

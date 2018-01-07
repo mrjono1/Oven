@@ -127,6 +127,8 @@ export function createTranslateLoader(http: HttpClient, baseHref) {{
         BrowserAnimationsModule,
         MaterialModule,
 
+        FlexLayoutModule,
+
         // i18n support
         TranslateModule.forRoot({{
             loader: {{
