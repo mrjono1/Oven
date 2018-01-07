@@ -56,6 +56,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
         <form *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
     <mat-toolbar class=""primary"">
         <mat-toolbar-row>
+        <span>{ScreenSection.Title}</span>
 {string.Join(Environment.NewLine, menuItems)}
         </mat-toolbar-row>
     </mat-toolbar>

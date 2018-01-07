@@ -121,6 +121,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             return $@"<div class=""screen-section-search"">
     <mat-toolbar class=""primary"">
         <mat-toolbar-row>
+        <span>{ScreenSection.Title}</span>
 {string.Join(Environment.NewLine, menuItems)}
         </mat-toolbar-row>
     </mat-toolbar>

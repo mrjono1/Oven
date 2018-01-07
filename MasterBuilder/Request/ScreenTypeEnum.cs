@@ -20,6 +20,10 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Html Screen
         /// </summary>
-        Html
+        Html,
+        /// <summary>
+        /// None, TODO remove Screen type
+        /// </summary>
+        None
     }
 }

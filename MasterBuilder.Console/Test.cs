@@ -678,6 +678,21 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
+                            Id = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}"),
+                            InternalName = "Screen",
+                            Type = PropertyTypeEnum.ParentRelationship,
+                            Title = "Screen",
+                            ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{78C27422-D703-404C-8446-F46E655EAF01}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
                             Id = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
                             InternalName = "ScreenSectionType",
                             Type = PropertyTypeEnum.ReferenceRelationship,
@@ -1054,14 +1069,14 @@ namespace MasterBuilder
                             Id = new Guid("{BCB84DAB-B0AD-45B9-975D-5C07DE4F8990}"),
                             Title = "Project",
                             InternalName = "Project",
-                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
+                            ScreenSectionType = ScreenSectionTypeEnum.Form
                         },
                         new ScreenSection
                         {
                             Id = new Guid("{903FEB8F-DC3C-49AA-AB1F-BB5C82F20DC5}"),
                             Title = "Entities",
                             InternalName = "Entities",
-                            ScreenSectionTypeId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), // Search
+                            ScreenSectionType = ScreenSectionTypeEnum.Search,
                             EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                             NavigateToScreenId = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
                             MenuItems = new MenuItem[]
@@ -1071,6 +1086,25 @@ namespace MasterBuilder
                                     Id = new Guid("{AE228BBC-8A38-4D7D-B3B0-7964A281B7A5}"),
                                     MenuItemType = MenuItemTypeEnum.New,
                                     ScreenId = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
+                                    Title = "New"
+                                }
+                            }
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{DC2C45E5-1965-4D44-8B66-0A72E45BB720}"),
+                            Title = "Screens",
+                            InternalName = "Screens",
+                            ScreenSectionType = ScreenSectionTypeEnum.Search,
+                            EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                            NavigateToScreenId = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
+                            MenuItems = new MenuItem[]
+                            {
+                                new MenuItem
+                                {
+                                    Id = new Guid("{1B08D6F7-28E7-4FBD-86A6-E1BAAE655585}"),
+                                    MenuItemType = MenuItemTypeEnum.New,
+                                    ScreenId = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
                                     Title = "New"
                                 }
                             }
@@ -1105,7 +1139,7 @@ namespace MasterBuilder
                             Id = new Guid("{8130C0F4-F8F7-4A7A-9793-85B8939589EB}"),
                             Title = "Entity",
                             InternalName = "Entity",
-                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
+                            ScreenSectionType = ScreenSectionTypeEnum.Form
                         },
                         new ScreenSection
                         {
@@ -1125,6 +1159,65 @@ namespace MasterBuilder
                                     Title = "New"
                                 }
                             }
+                        }
+                    }
+                },
+                new Screen()
+                {
+                    Id = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
+                    EntityId =new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                    ScreenType = ScreenTypeEnum.Edit,
+                    Title = "Screen",
+                    InternalName = "Screen",
+                    Path = "screen",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
+                            Title = "Screen",
+                            InternalName = "Screen",
+                            ScreenSectionType = ScreenSectionTypeEnum.Form,
+                            EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{CDC681CF-6298-43D7-8A14-B360D12E287D}"),
+                            Title = "Screen Sections",
+                            InternalName = "ScreenSections",
+                            ScreenSectionType = ScreenSectionTypeEnum.Search,
+                            EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                            NavigateToScreenId = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
+                            MenuItems = new MenuItem[]
+                            {
+                                new MenuItem
+                                {
+                                    Id = new Guid("{9F917C0A-D82E-40C7-AB5A-A81772AF8A70}"),
+                                    MenuItemType = MenuItemTypeEnum.New,
+                                    ScreenId = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
+                                    Title = "New"
+                                }
+                            }
+                        }
+                    }
+                },
+                new Screen()
+                {
+                    Id = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
+                    EntityId =new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                    ScreenType = ScreenTypeEnum.Edit,
+                    Title = "Screen Section",
+                    InternalName = "ScreenSection",
+                    Path = "screen-section",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
+                            Title = "Screen Section",
+                            InternalName = "ScreenSection",
+                            ScreenSectionType = ScreenSectionTypeEnum.Form,
+                            EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}")
                         }
                     }
                 },
