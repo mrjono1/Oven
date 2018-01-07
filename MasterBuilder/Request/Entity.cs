@@ -134,7 +134,7 @@ namespace MasterBuilder.Request
                 }
             }
 
-            GenerateScreen(project);
+            GenerateScreen(project, this);
             
             if (messageList.Any())
             {
@@ -148,7 +148,7 @@ namespace MasterBuilder.Request
             }
         }
 
-        private void GenerateScreen(Project project)
+        private void GenerateScreen(Project project, Entity entity)
         {
             if (EntityTemplate == EntityTemplateEnum.Reference)
             {
@@ -157,6 +157,26 @@ namespace MasterBuilder.Request
                 if (screenFound)
                 {
                     return;
+                }
+                
+                if (Properties == null || !Properties.Any() || !Properties.Any(p => p.PropertyTemplate == PropertyTemplateEnum.PrimaryKey))
+                {
+                    var properties = new List<Property>
+                    {
+                        new Property()
+                        {
+                            Id = entity.Id,
+                            Title = "Id",
+                            InternalName = "Id",
+                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey,
+                            Type = PropertyTypeEnum.Uniqueidentifier
+                        }
+                    };
+                    if (Properties != null)
+                    {
+                        properties.AddRange(Properties);
+                    }
+                    Properties = properties;
                 }
 
                 var editScreenId = Properties.SingleOrDefault(p => p.PropertyTemplate == PropertyTemplateEnum.PrimaryKey).Id; // Just grabing a reproduceable id
