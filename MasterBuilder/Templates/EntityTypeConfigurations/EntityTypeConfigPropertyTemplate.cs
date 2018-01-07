@@ -21,7 +21,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             
             var value = new StringBuilder();
             string dbColumnName = null;
-            switch (property.Type)
+            switch (property.PropertyType)
             {
                 case PropertyTypeEnum.ParentRelationship:
                 case PropertyTypeEnum.ReferenceRelationship:
@@ -80,27 +80,27 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 }
             }
             
-            if (property.Type == PropertyTypeEnum.ParentRelationship ||
-                property.Type == PropertyTypeEnum.ReferenceRelationship ||
-                property.Type == PropertyTypeEnum.OneToOneRelationship)
+            if (property.PropertyType == PropertyTypeEnum.ParentRelationship ||
+                property.PropertyType == PropertyTypeEnum.ReferenceRelationship ||
+                property.PropertyType == PropertyTypeEnum.OneToOneRelationship)
             {
                 var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 value.AppendLine();
 
-                if (property.Type == PropertyTypeEnum.ParentRelationship)
+                if (property.PropertyType == PropertyTypeEnum.ParentRelationship)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
                     .WithMany(p => p.{entity.InternalNamePlural})
                     .HasForeignKey(p => p.{property.InternalName}Id)");
                 }
-                else if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+                else if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
                     .WithMany(p => p.{property.InternalName}{entity.InternalNamePlural})
                     .HasForeignKey(p => p.{property.InternalName}Id)
                     .OnDelete(DeleteBehavior.Restrict)");
                 }
-                else if (property.Type == PropertyTypeEnum.OneToOneRelationship)
+                else if (property.PropertyType == PropertyTypeEnum.OneToOneRelationship)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
                     .WithOne(p => p.{property.InternalName}{entity.InternalName})

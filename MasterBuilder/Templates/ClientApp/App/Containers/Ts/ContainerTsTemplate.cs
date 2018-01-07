@@ -79,7 +79,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         classProperties.Add("public new: boolean;");
 
                         parentProperty = (from p in entity.Properties
-                                              where p.Type == PropertyTypeEnum.ParentRelationship
+                                              where p.PropertyType == PropertyTypeEnum.ParentRelationship
                                               select p).SingleOrDefault();
                         string setParentProperty = null;
                         if (parentProperty != null)
@@ -123,9 +123,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         var propertiesToDisplay = new List<string>();
                         foreach (var property in entity.Properties)
                         {
-                            switch (property.Type)
+                            switch (property.PropertyType)
                             {
-                                case PropertyTypeEnum.Uniqueidentifier:
+                                case PropertyTypeEnum.PrimaryKey:
                                     break;
                                 case PropertyTypeEnum.ParentRelationship:
                                     break;
@@ -147,7 +147,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         if (entity != null)
                         {
                             parentProperty = (from p in entity.Properties
-                                                  where p.Type == PropertyTypeEnum.ParentRelationship
+                                                  where p.PropertyType == PropertyTypeEnum.ParentRelationship
                                                   select p).SingleOrDefault();
                             if (parentProperty != null)
                             {

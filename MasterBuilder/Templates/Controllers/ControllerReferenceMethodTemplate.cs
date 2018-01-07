@@ -21,7 +21,7 @@ namespace MasterBuilder.Templates.Controllers
             var doesHaveReferences = (from e in project.Entities
                                    where e.Properties != null
                                    from property in e.Properties
-                                   where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                   where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
                                    property.ParentEntityId.HasValue &&
                                    property.ParentEntityId == entity.Id
                                    select property).Any();

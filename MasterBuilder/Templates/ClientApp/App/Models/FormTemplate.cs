@@ -52,7 +52,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             var properties = new List<string>();
             foreach (var property in entity.Properties)
             {
-                switch (property.Type)
+                switch (property.PropertyType)
                 {
                     case PropertyTypeEnum.ParentRelationship:
                         properties.Add($"   {property.InternalName.Camelize()}Id: {property.TsType};");

@@ -42,7 +42,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             imports.Add("import { Observable } from 'rxjs/Observable';");
 
             var referenceEntities = (from property in _entity.Properties
-                                     where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                     where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
                                      property.ParentEntityId.HasValue
                                      from entity in Project.Entities
                                      where entity.Id == property.ParentEntityId.Value
@@ -74,7 +74,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             }
 
             var referenceEntities = (from property in _entity.Properties
-                                     where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                     where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
                                      property.ParentEntityId.HasValue
                                      from entity in Project.Entities
                                      where entity.Id == property.ParentEntityId.Value
@@ -105,7 +105,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             }
             
             var referenceEntities = (from property in _entity.Properties
-                                     where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                     where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
                                      property.ParentEntityId.HasValue
                                      from entity in Project.Entities
                                      where entity.Id == property.ParentEntityId.Value
@@ -141,7 +141,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
             foreach (var property in _entity.Properties)
             {
-                if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
+                if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
                 {
                     continue;
                 }
@@ -187,12 +187,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
                 var propertyValidatorsString = (propertyValidators.Any() ? $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" : string.Empty);
 
-                if (property.Type == PropertyTypeEnum.ParentRelationship)
+                if (property.PropertyType == PropertyTypeEnum.ParentRelationship)
                 {
                     formControls.Add($@"        this.{Screen.InternalName.Camelize()}Form.addControl('{property.InternalName.Camelize()}Id', new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}Id{propertyValidatorsString}));");
                     properties.Add($@"    get {property.InternalName.Camelize()}Id() {{ return this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}Id'); }}");
                 }
-                else if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+                else if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
                 {
                     formControls.Add($@"         let {property.InternalName.Camelize()}Control: FormControl = new FormControl(this.{Screen.InternalName.Camelize()}.{property.InternalName.Camelize()}Id{propertyValidatorsString});
         this.{Screen.InternalName.Camelize()}Form.addControl('{property.InternalName.Camelize()}Id', {property.InternalName.Camelize()}Control);");

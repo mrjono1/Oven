@@ -53,7 +53,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             Property parentProperty = null;
             foreach (var property in entity.Properties)
             {
-                switch (property.Type)
+                switch (property.PropertyType)
                 {
                     case PropertyTypeEnum.ParentRelationship:
                         parentProperty = property;

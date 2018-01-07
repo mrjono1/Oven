@@ -36,15 +36,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{C3E14B66-FF43-478A-95D0-39524F6555B5}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{CB6D802C-1F26-4D23-9272-6396E6268D72}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
@@ -68,7 +67,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{883DB867-2098-4CA0-AE63-87DE09FDEF76}"),
                             InternalName = "InternalName",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
@@ -93,7 +92,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{527365A6-D0BF-4239-85DF-BF8647B6F372}"),
                             InternalName = "DatabaseConnectionString",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Database Connection String",
                             ValidationItems = new Validation[]
                             {
@@ -109,7 +108,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{F1EEF37B-F40D-44D4-832F-ACEC4B63D147}"),
                             InternalName = "MajorVersion",
-                            Type = PropertyTypeEnum.Integer,
+                            PropertyType = PropertyTypeEnum.Integer,
                             Title = "Major Version",
                             ValidationItems = new Validation[]
                             {
@@ -124,7 +123,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{97E822CB-7A95-4C14-BED4-6CE19602FEE8}"),
                             InternalName = "MinorVersion",
-                            Type = PropertyTypeEnum.Integer,
+                            PropertyType = PropertyTypeEnum.Integer,
                             Title = "Minor Version",
                             ValidationItems = new Validation[]
                             {
@@ -139,7 +138,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{D7E750B0-159D-464C-A88C-6E67673CFAF2}"),
                             InternalName = "BuildVersion",
-                            Type = PropertyTypeEnum.Integer,
+                            PropertyType = PropertyTypeEnum.Integer,
                             Title = "Build Version",
                             ValidationItems = new Validation[]
                             {
@@ -154,7 +153,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{62C6E4B9-5164-4A36-B90B-DC8129E09D2B}"),
                             InternalName = "AllowDestructiveDatabaseChanges",
-                            Type = PropertyTypeEnum.Boolean,
+                            PropertyType = PropertyTypeEnum.Boolean,
                             Title = "Allow Destructive Database Changes",
                             ValidationItems = new Validation[]
                             {
@@ -169,7 +168,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{82072EF0-3CCE-4E67-A09A-89EE59283ADD}"),
                             InternalName = "ImutableDatabase",
-                            Type = PropertyTypeEnum.Boolean,
+                            PropertyType = PropertyTypeEnum.Boolean,
                             Title = "Imutable Database",
                             ValidationItems = new Validation[]
                             {
@@ -184,7 +183,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{0FBD3AA3-E6DD-4CCB-9FAA-E8AA8C8009F8}"),
                             InternalName = "CreatedDate",
-                            Type = PropertyTypeEnum.DateTime,
+                            PropertyType = PropertyTypeEnum.DateTime,
                             Title = "Created Date",
                             ValidationItems = new Validation[]
                             {
@@ -199,7 +198,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{6C22EF44-E5C0-4E3F-B315-A03703AB9D97}"),
                             InternalName = "DefaultScreen",
-                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Default Screen",
                             ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
                         }
@@ -216,15 +215,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{4B5077DA-1516-44C4-81CC-D0CE25BBBCF0}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{6D09DE04-2FDA-4091-A4DA-B3448ABA1A52}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
@@ -248,7 +246,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{1CB8E873-07C7-461A-8859-672CE66C8513}"),
                             InternalName = "InternalName",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
@@ -272,7 +270,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
                             InternalName = "EntityTemplate",
-                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Entity Template",
                             ParentEntityId = new Guid("{E20337EA-37F3-48D1-96F7-3CF2A40A7F52}")
                         },
@@ -280,7 +278,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}"),
                             InternalName = "Project",
-                            Type = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyTypeEnum.ParentRelationship,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
@@ -295,7 +293,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
                             InternalName = "Seed",
-                            Type = PropertyTypeEnum.OneToOneRelationship,
+                            PropertyType = PropertyTypeEnum.OneToOneRelationship,
                             Title = "Seed",
                             ParentEntityId = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}")
                         },
@@ -312,15 +310,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{D34BF79B-F052-4090-BBDD-8FAE69A256C4}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}"),
                             InternalName = "Entity",
-                            Type = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyTypeEnum.ParentRelationship,
                             Title = "Entity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                             ValidationItems = new Validation[]
@@ -335,7 +332,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
@@ -359,7 +356,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{C52F7B8E-CAD0-40FF-8E89-B313A290A96E}"),
                             InternalName = "InternalName",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
@@ -383,7 +380,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
                             InternalName = "PropertyType",
-                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Property Type",
                             ParentEntityId = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
                             ValidationItems = new Validation[]
@@ -398,7 +395,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}"),
                             InternalName = "ParentEntity",
-                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
                             Title = "ParentEntity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
                         },
@@ -415,15 +412,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{B9E9AC32-5942-4DFF-8AFD-DEDC26795824}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplateId = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}")
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{3690A6AE-0573-40F3-8680-0BCE13931EE3}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
@@ -443,7 +439,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{BA0702F8-6F26-4A25-9300-31B44F14B3A8}"),
                             InternalName = "Property",
-                            Type = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyTypeEnum.ParentRelationship,
                             Title = "Property",
                             ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
                             ValidationItems = new Validation[]
@@ -458,7 +454,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
                             InternalName = "ValidationType",
-                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Validation Type",
                             ParentEntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
                             ValidationItems = new Validation[]
@@ -473,28 +469,28 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{37E3DBC5-1B98-446D-B46B-1BD530CAD376}"),
                             InternalName = "IntegerValue",
-                            Type = PropertyTypeEnum.Integer,
+                            PropertyType = PropertyTypeEnum.Integer,
                             Title = "Integer Value"
                         },
                         new Property()
                         {
                             Id = new Guid("{8E35139C-E60C-4432-B1F7-62CEA1451593}"),
                             InternalName = "DoubleValue",
-                            Type = PropertyTypeEnum.Double,
+                            PropertyType = PropertyTypeEnum.Double,
                             Title = "Double Value"
                         },
                         new Property()
                         {
                             Id = new Guid("{E2F53C95-BA38-47E1-93CD-38F4B04F44D0}"),
                             InternalName = "StringValue",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "String Value"
                         },
                         new Property()
                         {
                             Id = new Guid("{640B7178-5C6D-4265-9ADE-EDC606FC3362}"),
                             InternalName = "Message",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Message"
                         },
                     }
@@ -510,9 +506,8 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{3A849E52-28FA-4CAF-908D-BD2D65C0FAFA}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                     }
                 },
@@ -527,15 +522,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{CCDFE624-33F8-4B38-9871-E051A301B73B}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
                             InternalName = "Project",
-                            Type = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyTypeEnum.ParentRelationship,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
@@ -550,7 +544,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{34B85ED2-3B10-4974-9451-7B87203F1E0F}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
@@ -574,7 +568,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{7019CFDF-D883-48CF-808B-2DCBCC776980}"),
                             InternalName = "InternalName",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
@@ -607,9 +601,8 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{2D145AAC-C180-462E-8837-FD769BE7E5FE}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                     }
                 },
@@ -624,15 +617,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{0727AAE6-EA99-4456-95C1-07E9115A54EC}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{61E1AAE0-315E-4BBB-B622-0E3D91B9959A}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
@@ -656,7 +648,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{17FAC43C-9ED4-4D2B-ADA6-B59DA4D10C61}"),
                             InternalName = "InternalName",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
@@ -680,7 +672,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}"),
                             InternalName = "Screen",
-                            Type = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyTypeEnum.ParentRelationship,
                             Title = "Screen",
                             ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
                             ValidationItems = new Validation[]
@@ -695,7 +687,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
                             InternalName = "ScreenSectionType",
-                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Screen Section Type",
                             ParentEntityId = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
                             ValidationItems = new Validation[]
@@ -710,7 +702,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{D6BB1A68-8C2A-4251-8EA0-B3AC6C9362AD}"),
                             InternalName = "Entity",
-                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Entity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                             ValidationItems = new Validation[]
@@ -734,15 +726,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{AC0AF908-F0A7-44B4-AFBB-DCB8CEABD782}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{503A6F65-87A0-453A-B0CC-880F171D65F8}"),
                             InternalName = "JsonData",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Json Data",
                             ValidationItems = new Validation[]
                             {
@@ -756,7 +747,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{445099D8-864E-447F-A60C-13F501A02C46}"),
                             InternalName = "SeedType",
-                            Type = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
                             Title = "Seed Type",
                             ParentEntityId = new Guid("{EA6A9786-573A-4821-824C-3FB5322D2A51}"),
                             ValidationItems = new Validation[]
@@ -780,15 +771,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{19152CE0-B2AC-4267-A5E1-D06B1D7DFC01}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{6E11DECD-0526-4BC1-91C8-A7F1AA338635}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
@@ -812,7 +802,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E2422CFE-AA47-4DD8-A5D7-69F45174E39A}"),
                             InternalName = "InternalName",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
@@ -836,7 +826,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{D6D616EB-E922-4782-BC9D-D68F1F07DB60}"),
                             InternalName = "Project",
-                            Type = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyTypeEnum.ParentRelationship,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
@@ -851,7 +841,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{ACD4EA5B-644F-4DFD-9082-A0E58402B11D}"),
                             InternalName = "WebService",
-                            Type = PropertyTypeEnum.OneToOneRelationship,
+                            PropertyType = PropertyTypeEnum.OneToOneRelationship,
                             Title = "WebService",
                             ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}")
                         }
@@ -868,15 +858,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{A13AA1B4-127A-4316-B05B-BFFCCB8B7BF6}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{CB83CA7F-B62D-48E4-9833-54B1B07A7E70}"),
                             InternalName = "DefaultBaseEndpoint",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Default Base Endpoint",
                             ValidationItems = new Validation[]
                             {
@@ -905,15 +894,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{B9CCBA2A-7AD2-42F0-9F86-37C8D086EA1D}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{9FB3FA12-C979-4015-847C-EB8E52C8FBD0}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
@@ -937,7 +925,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E0982E44-7604-4E35-BE71-598A3A536870}"),
                             InternalName = "InternalName",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
@@ -961,7 +949,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{EE1E832A-A9A1-4152-B7B5-A4D23914F6A7}"),
                             InternalName = "RelativeRoute",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Relative Route",
                             ValidationItems = new Validation[]
                             {
@@ -977,7 +965,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E32BF54A-E604-4E97-81B9-CECF9BA5D32D}"),
                             InternalName = "Verb",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Verb",
                             ValidationItems = new Validation[]
                             {
@@ -993,7 +981,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{A619FE2D-DEDA-430F-BBF4-E1F7A919F95F}"),
                             InternalName = "WebService",
-                            Type = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyTypeEnum.ParentRelationship,
                             Title = "Web Service",
                             ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
                             ValidationItems = new Validation[]
@@ -1337,15 +1325,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{03020776-6F7E-41CD-9475-6E2CA72E92B4}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{771B57F0-F3D8-4E12-AA93-C801447BDB83}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }
@@ -1407,15 +1394,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }
@@ -1445,15 +1431,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{543BCF58-4929-4386-8B01-FBF4C1680430}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{7D223CCB-41AF-4888-B441-61B3BDBBE56B}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }
@@ -1487,15 +1472,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{ACEF7F12-2CF4-46AC-BFCC-60EA3E017E9F}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }
@@ -1529,15 +1513,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{2E259BAE-F1E8-4B10-8672-8FDEC3061C80}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{8B61C0F2-9800-483C-A33E-0EFEDA6482BB}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }
@@ -1591,15 +1574,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{4BBA98F7-4C6F-4E60-BE3F-06180D8A6141}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{4A67B6BF-99A0-4446-A61C-AF3EB857099C}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }
@@ -1641,15 +1623,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{C9DBA086-ACC8-4BD9-8EEB-2B2AAF38CC78}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{749ACD4D-1873-4314-B0A1-E61EED934D3C}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }
@@ -1691,15 +1672,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{623C2ADB-9FAD-43F6-8DDD-970B21D49CCE}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{E67EC40A-C1B6-4465-BA91-D40A488317BC}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }
@@ -1737,15 +1717,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{5D0BEB0A-4B91-4B40-83F0-8EAE7426CCF6}"),
                             InternalName = "Id",
-                            Type = PropertyTypeEnum.Uniqueidentifier,
-                            Title = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey
+                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{83CFE967-1FEF-44F1-A3DC-C03FC2F0B167}"),
                             InternalName = "Title",
-                            Type = PropertyTypeEnum.String,
+                            PropertyType = PropertyTypeEnum.String,
                             Title = "Title",
                             PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
                         }

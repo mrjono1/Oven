@@ -20,12 +20,12 @@ namespace MasterBuilder.Templates.Models.Export
                 required = property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
             }
 
-            if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+            if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 return $@"        public Guid{(required ? "" : "?")} {property.InternalName}Id {{ get; set; }}";
             }
-            else if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
+            else if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
             {
                 return @"        /// <summary>
         /// Primary Key
@@ -65,12 +65,12 @@ namespace MasterBuilder.Templates.Models.Export
                 required = property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
             }
 
-            if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+            if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 return $@"            {property.InternalName}Id = {entity.InternalName.Camelize()}.{property.InternalName}Id;";
             }
-            else if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
+            else if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
             {
                 return $@"            Id = {entity.InternalName.Camelize()}.Id;";
             }

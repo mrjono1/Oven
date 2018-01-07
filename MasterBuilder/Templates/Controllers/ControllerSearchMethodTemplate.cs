@@ -23,16 +23,16 @@ namespace MasterBuilder.Templates.Controllers
             var sectionEntity = project.Entities.FirstOrDefault(e => e.Id == screenSection.EntityId);
             foreach (var item in sectionEntity.Properties)
             {
-                if (item.Type == PropertyTypeEnum.ParentRelationship)
+                if (item.PropertyType == PropertyTypeEnum.ParentRelationship)
                 {
                     continue;
                 }
-                else if (item.Type == PropertyTypeEnum.ReferenceRelationship)
+                else if (item.PropertyType == PropertyTypeEnum.ReferenceRelationship)
                 {
                     propertyMapping.Add($"                        {item.InternalName}Title = (item.{item.InternalName} != null ? item.{item.InternalName}.Title : null)");
                     continue;
                 }
-                else if (item.Type == PropertyTypeEnum.OneToOneRelationship)
+                else if (item.PropertyType == PropertyTypeEnum.OneToOneRelationship)
                 {
                     continue;
                 }
@@ -57,7 +57,7 @@ namespace MasterBuilder.Templates.Controllers
             if (sectionEntity != null)
             {
                 var parentProperty = (from p in sectionEntity.Properties
-                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {

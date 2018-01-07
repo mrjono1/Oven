@@ -8,7 +8,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier not human readable
         /// </summary>
-        Uniqueidentifier,
+        PrimaryKey,
         /// <summary>
         /// String
         /// </summary>

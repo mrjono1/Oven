@@ -159,7 +159,7 @@ namespace MasterBuilder.Request
                     return;
                 }
                 
-                if (Properties == null || !Properties.Any() || !Properties.Any(p => p.PropertyTemplate == PropertyTemplateEnum.PrimaryKey))
+                if (Properties == null || !Properties.Any() || !Properties.Any(p => p.PropertyType == PropertyTypeEnum.PrimaryKey))
                 {
                     var properties = new List<Property>
                     {
@@ -168,8 +168,7 @@ namespace MasterBuilder.Request
                             Id = entity.Id,
                             Title = "Id",
                             InternalName = "Id",
-                            PropertyTemplate = PropertyTemplateEnum.PrimaryKey,
-                            Type = PropertyTypeEnum.Uniqueidentifier
+                            PropertyType = PropertyTypeEnum.PrimaryKey
                         }
                     };
                     if (Properties != null)
@@ -179,7 +178,7 @@ namespace MasterBuilder.Request
                     Properties = properties;
                 }
 
-                var editScreenId = Properties.SingleOrDefault(p => p.PropertyTemplate == PropertyTemplateEnum.PrimaryKey).Id; // Just grabing a reproduceable id
+                var editScreenId = Properties.SingleOrDefault(p => p.PropertyType == PropertyTypeEnum.PrimaryKey).Id; // Just grabing a reproduceable id
                 var screens = new List<Screen>(project.Screens)
                 {
                     new Screen()

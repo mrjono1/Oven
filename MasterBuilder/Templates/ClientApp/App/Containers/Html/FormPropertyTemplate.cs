@@ -29,7 +29,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
         internal string FormField()
         {
             string propertyName = null;
-            switch (Property.Type)
+            switch (Property.PropertyType)
             {
                 case PropertyTypeEnum.ReferenceRelationship:
                     propertyName = $"{Property.InternalName.Camelize()}Id";
@@ -96,7 +96,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             string control = null;
             string wrapAttributes = null;
             bool dontWrap = false;
-            switch (Property.Type)
+            switch (Property.PropertyType)
             {
                 case PropertyTypeEnum.String:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""text"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""

@@ -60,7 +60,7 @@ namespace MasterBuilder.Templates.Models
                 properties = new StringBuilder();
                 foreach (var item in Entity.Properties)
                 {
-                    if (item.Type == PropertyTypeEnum.OneToOneRelationship)
+                    if (item.PropertyType == PropertyTypeEnum.OneToOneRelationship)
                     {
                         continue;
                     }

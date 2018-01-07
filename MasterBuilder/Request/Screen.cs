@@ -244,7 +244,7 @@ namespace MasterBuilder.Request
             if (entity != null)
             {
                 var parentProperty = (from p in entity.Properties
-                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {

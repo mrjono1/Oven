@@ -64,7 +64,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             var entityReferencesNeeded = (from e in Project.Entities
                                           where e.Properties != null
                                           from property in e.Properties
-                                          where property.Type == PropertyTypeEnum.ReferenceRelationship &&
+                                          where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
                                           property.ParentEntityId.HasValue
                                           from entity in Project.Entities
                                           where entity.Id == property.ParentEntityId

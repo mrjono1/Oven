@@ -67,7 +67,7 @@ namespace MasterBuilder.Templates.Models
             if (sectionEntity != null)
             {
                 var parentProperty = (from p in sectionEntity.Properties
-                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {

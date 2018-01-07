@@ -27,7 +27,7 @@ namespace MasterBuilder.Request
             { new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"), PropertyTypeEnum.ReferenceRelationship },
             { new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}"), PropertyTypeEnum.OneToOneRelationship },
             { new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}"), PropertyTypeEnum.String },
-            { new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"), PropertyTypeEnum.Uniqueidentifier }
+            { new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"), PropertyTypeEnum.PrimaryKey }
         };
 
         /// <summary>
@@ -36,7 +36,6 @@ namespace MasterBuilder.Request
         internal static readonly Dictionary<Guid, PropertyTemplateEnum> PropertyTemplateDictonary = new Dictionary<Guid, PropertyTemplateEnum>
         {
             { Guid.Empty, PropertyTemplateEnum.None },
-            { new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), PropertyTemplateEnum.PrimaryKey },
             { new Guid("{1B966A14-45B9-4E34-92BB-E2D46D97C5C3}"), PropertyTemplateEnum.ReferenceTitle }
         };
 
@@ -64,7 +63,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public PropertyTypeEnum Type
+        public PropertyTypeEnum PropertyType
         {
             get
             {
@@ -144,11 +143,11 @@ namespace MasterBuilder.Request
             get
             {
 
-                switch (Type)
+                switch (PropertyType)
                 {
                     case PropertyTypeEnum.ParentRelationship:
                     case PropertyTypeEnum.ReferenceRelationship:
-                    case PropertyTypeEnum.Uniqueidentifier:
+                    case PropertyTypeEnum.PrimaryKey:
                         return $"Guid{(!Required ? "?": string.Empty)}";
                     case PropertyTypeEnum.String:
                         return "string";
@@ -173,9 +172,9 @@ namespace MasterBuilder.Request
         {
             get
             {
-                switch (Type)
+                switch (PropertyType)
                 {
-                    case PropertyTypeEnum.Uniqueidentifier:
+                    case PropertyTypeEnum.PrimaryKey:
                         return "string";
                     case PropertyTypeEnum.String:
                         return "string";

@@ -38,15 +38,15 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             foreach (var property in entity.Properties)
             {
                 string columnName = null;
-                if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
+                if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
                 {
                     continue;
                 }
-                else if (property.Type == PropertyTypeEnum.ParentRelationship)
+                else if (property.PropertyType == PropertyTypeEnum.ParentRelationship)
                 {
                     continue;
                 }
-                else if (property.Type == PropertyTypeEnum.ReferenceRelationship)
+                else if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
                 {
                     columnName = $"{property.InternalName.Camelize()}Title";
                 }
@@ -74,7 +74,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
 
                 var parentProperty = (from p in entity.Properties
-                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {

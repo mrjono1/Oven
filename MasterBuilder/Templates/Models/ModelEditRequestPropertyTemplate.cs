@@ -74,7 +74,7 @@ namespace MasterBuilder.Templates.Models
                 }
             }
 
-            switch (property.Type)
+            switch (property.PropertyType)
             {
                 case PropertyTypeEnum.ParentRelationship:
                     result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}

@@ -52,7 +52,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             if (entity != null)
             {
                 var parentProperty = (from p in entity.Properties
-                                      where p.Type == PropertyTypeEnum.ParentRelationship
+                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {

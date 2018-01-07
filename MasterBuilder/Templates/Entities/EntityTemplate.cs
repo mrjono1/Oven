@@ -59,14 +59,14 @@ namespace MasterBuilder.Templates.Entities
             foreach (var item in (from e in Project.Entities
                 where e.Properties != null
                 from p in e.Properties
-                where (p.Type == PropertyTypeEnum.ParentRelationship ||
-                p.Type == PropertyTypeEnum.ReferenceRelationship ||
-                p.Type == PropertyTypeEnum.OneToOneRelationship) &&
+                where (p.PropertyType == PropertyTypeEnum.ParentRelationship ||
+                p.PropertyType == PropertyTypeEnum.ReferenceRelationship ||
+                p.PropertyType == PropertyTypeEnum.OneToOneRelationship) &&
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
                 // can currently only have 1 parent relationship but can have multiple reference relationships
-                switch (item.p.Type)
+                switch (item.p.PropertyType)
                 {
                     case PropertyTypeEnum.ParentRelationship:
 

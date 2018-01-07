@@ -13,7 +13,7 @@ namespace MasterBuilder.Templates.Entities
         /// </summary>
         public static string Evaluate(Project project, Property property)
         {            
-            if (property.Type == PropertyTypeEnum.ParentRelationship || property.Type == PropertyTypeEnum.ReferenceRelationship)
+            if (property.PropertyType == PropertyTypeEnum.ParentRelationship || property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 return $@"        /// <summary>
@@ -25,7 +25,7 @@ namespace MasterBuilder.Templates.Entities
         /// </summary>
         public {relationshipEntity.InternalName} {property.InternalName} {{ get; set; }}";
             }
-            else if (property.Type == PropertyTypeEnum.OneToOneRelationship)
+            else if (property.PropertyType == PropertyTypeEnum.OneToOneRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 return $@"        /// <summary>
@@ -33,7 +33,7 @@ namespace MasterBuilder.Templates.Entities
         /// </summary>
         public {relationshipEntity.InternalName} {property.InternalName} {{ get; set; }}";
             }
-            else if (property.PropertyTemplate == PropertyTemplateEnum.PrimaryKey)
+            else if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
             {
                 return @"        /// <summary>
         /// Primary Key

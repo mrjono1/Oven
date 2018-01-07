@@ -10,10 +10,6 @@ namespace MasterBuilder.Request
         /// </summary>
         None,
         /// <summary>
-        /// Primary Key
-        /// </summary>
-        PrimaryKey,
-        /// <summary>
         /// Reference Entity Title
         /// </summary>
         ReferenceTitle

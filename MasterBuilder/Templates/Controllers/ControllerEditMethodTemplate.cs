@@ -17,19 +17,17 @@ namespace MasterBuilder.Templates.Controllers
             var patchEntityOperations = new List<string>();
             foreach (var item in entity.Properties)
             {
-                if (item.Type != PropertyTypeEnum.ParentRelationship &&
-                    item.Type != PropertyTypeEnum.ReferenceRelationship &&
-                    item.Type != PropertyTypeEnum.OneToOneRelationship)
+                if (item.PropertyType != PropertyTypeEnum.ParentRelationship &&
+                    item.PropertyType != PropertyTypeEnum.ReferenceRelationship &&
+                    item.PropertyType != PropertyTypeEnum.OneToOneRelationship)
                 {
                     getPropertyMapping.Add($"                           {item.InternalName} = item.{item.InternalName}");
                 }
-                if (item.PropertyTemplate != PropertyTemplateEnum.PrimaryKey)
+                switch (item.PropertyType)
                 {
-                    switch (item.Type)
-                    {
-                        case PropertyTypeEnum.ParentRelationship:
-                            postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
+                    case PropertyTypeEnum.ParentRelationship:
+                        postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
+                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
                         if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
                         {{
                             entity.{item.InternalName}Id = {item.InternalName.Camelize()}Id;
@@ -41,13 +39,13 @@ namespace MasterBuilder.Templates.Controllers
                         entityEntry.Property(p => p.{item.InternalName}Id).IsModified = true;
                         break;");
 
-                            getPropertyMapping.Add($"                           {item.InternalName}Id = item.{item.InternalName}Id");
-                            break;
+                        getPropertyMapping.Add($"                           {item.InternalName}Id = item.{item.InternalName}Id");
+                        break;
 
-                        case PropertyTypeEnum.ReferenceRelationship:
-                            postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
+                    case PropertyTypeEnum.ReferenceRelationship:
+                        postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
 
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
+                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
                         if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
                         {{
                             entity.{item.InternalName}Id = {item.InternalName.Camelize()}Id;
@@ -59,25 +57,25 @@ namespace MasterBuilder.Templates.Controllers
                         entityEntry.Property(p => p.{item.InternalName}Id).IsModified = true;
                         break;");
 
-                            getPropertyMapping.Add($"                           {item.InternalName}Id = item.{item.InternalName}Id");
+                        getPropertyMapping.Add($"                           {item.InternalName}Id = item.{item.InternalName}Id");
 
-                            // TODO: Title should be configurable
-                            // TODO: is it faster to do the bool check on the key instead of object?
-                            getPropertyMapping.Add($"                           {item.InternalName}Title = item.{item.InternalName} != null ? item.{item.InternalName}.Title : null");
-                            break;
+                        // TODO: Title should be configurable
+                        // TODO: is it faster to do the bool check on the key instead of object?
+                        getPropertyMapping.Add($"                           {item.InternalName}Title = item.{item.InternalName} != null ? item.{item.InternalName}.Title : null");
+                        break;
 
-                        case PropertyTypeEnum.Uniqueidentifier:
-                            break;
-                        case PropertyTypeEnum.String:
-                            postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
+                    case PropertyTypeEnum.PrimaryKey:
+                        break;
+                    case PropertyTypeEnum.String:
+                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
                         entity.{item.InternalName} = operation.value.ToString();
                         entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
                         break;");
-                            break;
-                        case PropertyTypeEnum.Integer:
-                            postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
+                        break;
+                    case PropertyTypeEnum.Integer:
+                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
                         int int32Value{item.InternalName};
                         if (operation.value != null && Int32.TryParse(operation.value.ToString(), out int32Value{item.InternalName}))
                         {{
@@ -94,10 +92,10 @@ namespace MasterBuilder.Templates.Controllers
                             throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid integer value"");
                         }}
                         break;");
-                            break;
-                        case PropertyTypeEnum.Double:
-                            postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
+                        break;
+                    case PropertyTypeEnum.Double:
+                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
                         int doubleValue{item.InternalName};
                         if (operation.value != null && Double.TryParse(operation.value.ToString(), out doubleValue{item.InternalName}))
                         {{
@@ -114,10 +112,10 @@ namespace MasterBuilder.Templates.Controllers
                             throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid double value"");
                         }}
                         break;");
-                            break;
-                        case PropertyTypeEnum.DateTime:
-                            postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
+                        break;
+                    case PropertyTypeEnum.DateTime:
+                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
                         DateTime dateTimeValue{item.InternalName};
                         if (operation.value != null && DateTime.TryParse(operation.value.ToString(), out dateTimeValue{item.InternalName}))
                         {{
@@ -134,10 +132,10 @@ namespace MasterBuilder.Templates.Controllers
                             throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid boolean value"");
                         }}
                         break;");
-                            break;
-                        case PropertyTypeEnum.Boolean:
-                            postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                            patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
+                        break;
+                    case PropertyTypeEnum.Boolean:
+                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
+                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
                         bool booleanValue{item.InternalName};
                         if (operation.value != null && Boolean.TryParse(operation.value.ToString(), out booleanValue{item.InternalName}))
                         {{
@@ -149,10 +147,9 @@ namespace MasterBuilder.Templates.Controllers
                             throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid boolean value"");
                         }}
                         break;");
-                            break;
-                        default:
-                            break;
-                    }
+                        break;
+                    default:
+                        break;
                 }
             }
 
