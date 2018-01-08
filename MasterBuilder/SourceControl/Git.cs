@@ -112,8 +112,49 @@ namespace MasterBuilder.SourceControl
                 };
                 Repository.Clone(repo.RemoteUrl, directory, cloneOptions);
             }
+            else
+            {
+                Pull(repo);
+            }
 
             return repo;
+        }
+
+        /// <summary>
+        /// Pull
+        /// </summary>
+        internal void Pull(Models.GetRepository getRepository)
+        {
+            var path = Path.Combine(_baseDirectory, getRepository.Name);
+
+            using (var repository = new Repository(path))
+            {
+                if (repository.RetrieveStatus().IsDirty)
+                {
+                    var masterBranch = repository.Branches["master"];
+                    Commands.Checkout(repository, masterBranch, new CheckoutOptions()
+                    {
+                        CheckoutModifiers = CheckoutModifiers.Force
+                    });
+                }
+                
+                Commands.Pull(repository,
+                    new Signature(_username, _email, DateTime.Now),
+                    new PullOptions()
+                    {
+                        FetchOptions = new FetchOptions()
+                        {
+                            CredentialsProvider = new LibGit2Sharp.Handlers.CredentialsHandler(
+                                (url, usernameFromUrl, types) =>
+                            new UsernamePasswordCredentials()
+                            {
+                                Username = "Basic",
+                                Password = _personalAccessToken
+                            })
+                        }
+                    }
+                );
+            }
         }
 
         /// <summary>
