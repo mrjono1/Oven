@@ -509,6 +509,57 @@ namespace MasterBuilder
                             PropertyType = PropertyTypeEnum.PrimaryKey,
                             Title = "Id"
                         },
+                        new Property()
+                        {
+                            Id = new Guid("{51B87800-E2AC-48E6-917F-36B9E46F209E}"),
+                            InternalName = "Project",
+                            PropertyType = PropertyTypeEnum.ParentRelationship,
+                            Title = "Project",
+                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{768E1FAE-3617-4641-AC0F-B8AB3A52BF85}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{72267B8D-5004-4065-B4DC-882706185284}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyTypeEnum.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{D049B0D9-B488-4F18-A832-8549348FDA56}"),
+                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation{
+                                    Id = new Guid("{6D39BDE7-2E3C-4A1A-82D6-FD7750245B67}"),
+                                    ValidationType = ValidationTypeEnum.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{62ECF628-B217-4800-A8AF-AC3E62F01203}"),
+                            InternalName = "MenuItemType",
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            Title = "Type",
+                            ParentEntityId = new Guid("{092F60B1-EE1E-4451-A771-013376C93E65}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{94202D7E-D704-4C89-B4B1-AB720C976762}"),
+                            InternalName = "Screen",
+                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            Title = "Screen",
+                            ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
+                        },
                     }
                 },
                 new Entity()
@@ -1096,6 +1147,25 @@ namespace MasterBuilder
                                     Title = "New"
                                 }
                             }
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{09D4859E-BAC7-4BEA-9F4C-14690AEE01F6}"),
+                            Title = "Menu Items",
+                            InternalName = "MenuItems",
+                            ScreenSectionType = ScreenSectionTypeEnum.Search,
+                            EntityId = new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
+                            NavigateToScreenId = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
+                            MenuItems = new MenuItem[]
+                            {
+                                new MenuItem
+                                {
+                                    Id = new Guid("{CE3A30D9-6091-4D01-BCBB-ACE9EAD5D3F5}"),
+                                    MenuItemType = MenuItemTypeEnum.New,
+                                    ScreenId = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
+                                    Title = "New"
+                                }
+                            }
                         }
                     },
                     MenuItems = new MenuItem[]
@@ -1206,6 +1276,26 @@ namespace MasterBuilder
                             InternalName = "ScreenSection",
                             ScreenSectionType = ScreenSectionTypeEnum.Form,
                             EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}")
+                        }
+                    }
+                },
+                new Screen()
+                {
+                    Id = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
+                    EntityId =new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
+                    ScreenType = ScreenTypeEnum.Edit,
+                    Title = "Menu Item",
+                    InternalName = "MenuItem",
+                    Path = "menu-item",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{DDD8CB45-FCDD-4C24-AEB5-2CBB80836AC2}"),
+                            Title = "Menu Item",
+                            InternalName = "MenuItem",
+                            ScreenSectionType = ScreenSectionTypeEnum.Form,
+                            EntityId = new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}")
                         }
                     }
                 },
