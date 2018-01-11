@@ -11,7 +11,7 @@ namespace MasterBuilder.Helpers
     /// </summary>
     internal class ProjectWriter
     {
-        private List<Task<string>> _filesToWrite;
+        private List<Task<TemplateResult>> _filesToWrite;
         private string[] _cleanDirectoryIngnoreList;
         private string _projectDirectory;
         private string[] _filePaths;
@@ -21,7 +21,7 @@ namespace MasterBuilder.Helpers
         /// </summary>
         public ProjectWriter(string projectDirectory, string[] cleanDirectoryIngnoreList)
         {
-            _filesToWrite = new List<Task<string>>();
+            _filesToWrite = new List<Task<TemplateResult>>();
             _projectDirectory = projectDirectory;
             _cleanDirectoryIngnoreList = cleanDirectoryIngnoreList;
         }
@@ -62,11 +62,23 @@ namespace MasterBuilder.Helpers
         /// <summary>
         /// Final Step
         /// </summary>
-        internal async Task WriteAndClean()
+        internal async Task<string> WriteAndClean()
         {
-            _filePaths = await Task.WhenAll(_filesToWrite.ToArray());
+            var result = await Task.WhenAll(_filesToWrite.ToArray());
 
-            DeleteFiles(_projectDirectory);
+            if (result.Any(a => a.HasError))
+            {
+                return string.Join(Environment.NewLine, (from r in result
+                                                         where r.HasError
+                                                         select r.Error));
+            }
+            else
+            {
+                _filePaths = result.Select(a => a.FilePath).ToArray();
+
+                DeleteFiles(_projectDirectory);
+            }
+            return null;
         }
 
 

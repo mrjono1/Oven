@@ -129,9 +129,15 @@ namespace MasterBuilder.SourceControl
 
             using (var repository = new Repository(path))
             {
+                var masterBranch = repository.Branches["master"];
+                if (masterBranch == null)
+                {
+                    // nothing to pull
+                    return;
+                }
+
                 if (repository.RetrieveStatus().IsDirty)
                 {
-                    var masterBranch = repository.Branches["master"];
                     Commands.Checkout(repository, masterBranch, new CheckoutOptions()
                     {
                         CheckoutModifiers = CheckoutModifiers.Force

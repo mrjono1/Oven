@@ -146,7 +146,12 @@ namespace MasterBuilder
             // Services/Contracts
             projectWriter.AddTemplate(new Templates.Services.Contracts.ServiceContractTemplateBuilder(project));
 
-            await projectWriter.WriteAndClean();
+            var errors = await projectWriter.WriteAndClean();
+
+            if (!string.IsNullOrEmpty(errors))
+            {
+                return errors;
+            }
 
             if (gitOn)
             {

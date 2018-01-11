@@ -57,6 +57,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             };
 
             var hasForm = false;
+            if (Screen.ScreenSections == null)
+            {
+                Screen.ScreenSections = new ScreenSection[] { };
+            }
             foreach (var screenSection in Screen.ScreenSections)
             {
                 Entity entity = null;

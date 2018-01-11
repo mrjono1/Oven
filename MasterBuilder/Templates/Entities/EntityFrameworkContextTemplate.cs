@@ -109,7 +109,17 @@ namespace MasterBuilder.Templates.Entities
         }");
                 seed.Add($"            await {entity.InternalName}Seed();", seedStringBuilder.ToString());
             }
-            
+            string seedData = null;
+            if (seed.Any())
+            {
+                seedData = $@"        internal async Task Seed()
+        {{
+{string.Join(Environment.NewLine, seed.Keys)}
+        }}
+
+{string.Join(Environment.NewLine, seed.Values)}";
+            }
+
             return $@"using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -148,7 +158,7 @@ namespace {Project.InternalName}.Entities
         {{
             MigrateDatabase();
 
-            Seed().Wait();
+            {(seed.Any() ? "Seed().Wait();" : string.Empty)}
         }}
 
         internal void MigrateDatabase()
@@ -204,13 +214,7 @@ namespace {Project.InternalName}.Entities
             var executor = this.GetService<IMigrationCommandExecutor>();
             executor.ExecuteNonQuery(commands, this.GetService<IRelationalConnection>());
         }}
-
-        internal async Task Seed()
-        {{
-{string.Join(Environment.NewLine, seed.Keys)}
-        }}
-
-{string.Join(Environment.NewLine, seed.Values)}
+{seedData}
     }}
 }}";
         }

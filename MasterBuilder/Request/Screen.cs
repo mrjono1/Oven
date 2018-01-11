@@ -134,23 +134,26 @@ namespace MasterBuilder.Request
         {
             if (ScreenSections == null || !ScreenSections.Any())
             {
-                var screenSectionType = ScreenSectionTypeEnum.Form;
-                switch (ScreenType)
+                var screenSectionType = ScreenSectionTypeEnum.Html;
+                if (EntityId.HasValue)
                 {
-                    case ScreenTypeEnum.Search:
-                        screenSectionType = ScreenSectionTypeEnum.Search;
-                        break;
-                    case ScreenTypeEnum.Edit:
-                        screenSectionType = ScreenSectionTypeEnum.Form;
-                        break;
-                    case ScreenTypeEnum.View:
-                        screenSectionType = ScreenSectionTypeEnum.Form;
-                        break;
-                    case ScreenTypeEnum.Html:
-                        screenSectionType = ScreenSectionTypeEnum.Html;
-                        break;
-                    default:
-                        break;
+                    switch (ScreenType)
+                    {
+                        case ScreenTypeEnum.Search:
+                            screenSectionType = ScreenSectionTypeEnum.Search;
+                            break;
+                        case ScreenTypeEnum.Edit:
+                            screenSectionType = ScreenSectionTypeEnum.Form;
+                            break;
+                        case ScreenTypeEnum.View:
+                            screenSectionType = ScreenSectionTypeEnum.Form;
+                            break;
+                        case ScreenTypeEnum.Html:
+                            screenSectionType = ScreenSectionTypeEnum.Html;
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 ScreenSections = new ScreenSection[]
                 {
@@ -174,6 +177,11 @@ namespace MasterBuilder.Request
                         screenSection.EntityId = EntityId;
                     }
                 }
+            }
+
+            if (string.IsNullOrEmpty(Path))
+            {
+                Path = Title.Kebaberize();
             }
 
             if (MenuItems != null)
@@ -253,11 +261,13 @@ namespace MasterBuilder.Request
                                          s.ScreenType == ScreenTypeEnum.Edit &&
                                          s.Id != screen.Id
                                          select s).SingleOrDefault();
+                    if (foundParentScreen != null)
+                    {
+                        var parentEntity = project.Entities.SingleOrDefault(e => e.Id == foundParentScreen.EntityId);
 
-                    var parentEntity = project.Entities.SingleOrDefault(e => e.Id == foundParentScreen.EntityId);
-
-                    anc.AddRange(GetAncestors(project, foundParentScreen));
-                    anc.Add(new Tuple<string, string>(foundParentScreen.Path, parentEntity.InternalName.Camelize()));
+                        anc.AddRange(GetAncestors(project, foundParentScreen));
+                        anc.Add(new Tuple<string, string>(foundParentScreen.Path, parentEntity.InternalName.Camelize()));
+                    }
                 }
             }
             return anc;

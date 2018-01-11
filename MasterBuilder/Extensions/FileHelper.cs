@@ -140,25 +140,35 @@ namespace MasterBuilder
         /// <summary>
         /// Write text to a file
         /// </summary>
-        public static async Task<string> WriteAllText(string path, string contents)
+        internal static async Task<TemplateResult> WriteAllText(string path, string contents)
         {
+            var result = new TemplateResult
+            {
+                FilePath = path
+            };
             try
             {
                 await File.WriteAllTextAsync(path, contents);
             }
             catch (Exception ex)
             {
+                result.Error = ex.ToString();
+                result.HasError = true;
+
                 Console.WriteLine(ex.ToString());
             }
-            return path;
+            return result;
         }
         
         /// <summary>
         /// Write a template to storage
         /// </summary>
-        internal static Task<string> WriteTemplate(string baseDirectory, ITemplate template)
+        internal static async Task<TemplateResult> WriteTemplate(string baseDirectory, ITemplate template)
         {
-            var path = Path.Combine(CreateFolder(baseDirectory, template.GetFilePath()), template.GetFileName());
+            var result = new TemplateResult
+            {
+                FilePath = Path.Combine(CreateFolder(baseDirectory, template.GetFilePath()), template.GetFileName())
+            };
 
             string content = null;
             try
@@ -167,14 +177,24 @@ namespace MasterBuilder
             }
             catch (Exception ex)
             {
-                content = ex.ToString();
+                result.Error = ex.ToString();
+                result.HasError = true;
+                
                 Console.WriteLine(ex.ToString());
+
+                return result;
             }
-            if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(path))
+            if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(result.FilePath))
             {
-                return null;
+                result.Error = "Empty Template result";
+                result.HasError = true;
             }
-            return WriteAllText(path, content);
+            else
+            {
+                result = await WriteAllText(result.FilePath, content);
+            }
+
+            return result;
         }
     }
 }
