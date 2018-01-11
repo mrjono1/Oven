@@ -244,23 +244,25 @@ namespace MasterBuilder.Request
 
             if (administrationSection == null)
             {
-                var links = new List<string>();
+                var menuItems = new List<MenuItem>();
+
                 foreach (var screen in Screens.Where(a => a.Template == ScreenTemplateEnum.Reference))
                 {
-                    links.Add($@"<a [routerLink]=""['/{screen.Path}']"">
-                        <span class='glyphicon glyphicon-th-list'></span> {screen.Title}
-                    </a>");
+                    var menuItem = new MenuItem
+                    {
+                        ScreenId = screen.Id,
+                        MenuItemType = MenuItemTypeEnum.ApplicationLink
+                    };
+                    menuItems.Add(menuItem);
                 }
-
-                var html = $@"{string.Join(Environment.NewLine, links)}";
-
+                
                 administrationSection = new ScreenSection()
                 {
                     Id = new Guid("{0F93AE3B-930D-4F6B-B73F-2EB63F225FAD}"),
                     InternalName = "Administration",
                     Title = "Administration",
-                    ScreenSectionType = ScreenSectionTypeEnum.Html,
-                    Html = html
+                    ScreenSectionType = ScreenSectionTypeEnum.MenuList,
+                    MenuListMenuItems = menuItems
                 };
 
                 var sections = new List<ScreenSection>(){

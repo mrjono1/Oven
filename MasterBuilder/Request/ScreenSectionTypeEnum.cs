@@ -1,4 +1,4 @@
-﻿namespace MasterBuilder.Request
+namespace MasterBuilder.Request
 {
     /// <summary>
     /// Screen Section Type Enum
@@ -14,9 +14,9 @@
         /// </summary>
         Search,
         /// <summary>
-        /// Grid of data, possibly editable
+        /// List of menu options
         /// </summary>
-        Grid,
+        MenuList,
         /// <summary>
         /// Static Html sectoin
         /// </summary>

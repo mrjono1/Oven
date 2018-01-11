@@ -52,9 +52,11 @@ namespace MasterBuilder.Templates.Models
                         templates.Add(new ModelSearchResponseTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
                         templates.Add(new ModelSearchItemTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
                         break;
-                    case ScreenSectionTypeEnum.Grid:
+                    case ScreenSectionTypeEnum.MenuList:
+                        // None
                         break;
                     case ScreenSectionTypeEnum.Html:
+                        // None
                         break;
                     default:
                         break;

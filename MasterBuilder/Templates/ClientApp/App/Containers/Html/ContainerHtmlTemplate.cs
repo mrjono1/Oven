@@ -57,7 +57,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                         var searchSection = new SearchSectionBuilder(Project, Screen, screenSection);
                         sections.Add(searchSection.Evaluate());
                         break;
-                    case ScreenSectionTypeEnum.Grid:
+                    case ScreenSectionTypeEnum.MenuList:
+                        var menuListSection = new MenuListSectionBuilder(Project, Screen, screenSection);
+                        sections.Add(menuListSection.Evaluate());
                         break;
                     case ScreenSectionTypeEnum.Html:
                         sections.Add($@"<div class=""screen-section-html"">

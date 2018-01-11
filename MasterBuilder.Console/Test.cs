@@ -1667,7 +1667,7 @@ namespace MasterBuilder
                             },
                             new {
                                 Id = new Guid("{4270A420-64CB-4A2C-B718-2C645DB2B57B}"),
-                                Title = "Grid"
+                                Title = "List of Menu Items"
                             },
                             new {
                                 Id = new Guid("{38EF9B44-A993-479B-91EC-1FE436E91556}"),

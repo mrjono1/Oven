@@ -48,11 +48,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
                                 templates.Add(new SearchItemTemplate(Project, screen, screenSection));
 
                                 break;
-                            case ScreenSectionTypeEnum.Grid:
+                            case ScreenSectionTypeEnum.MenuList:
+                                // None
                                 break;
                             case ScreenSectionTypeEnum.Html:
-                                break;
-                            default:
+                                // None
                                 break;
                         }
                     }

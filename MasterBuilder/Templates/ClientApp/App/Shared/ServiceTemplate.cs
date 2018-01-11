@@ -87,9 +87,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
     }}");
 
                         break;
-                    case ScreenSectionTypeEnum.Grid:
+                    case ScreenSectionTypeEnum.MenuList:
+                        // None
                         break;
                     case ScreenSectionTypeEnum.Html:
+                        // None
                         break;
                     default:
                         break;

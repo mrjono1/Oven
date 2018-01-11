@@ -176,7 +176,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
 
                         break;
-                    case ScreenSectionTypeEnum.Grid:
+                    case ScreenSectionTypeEnum.MenuList:
+                        // Nothing at the moment
                         break;
                     case ScreenSectionTypeEnum.Html:
                         break;
