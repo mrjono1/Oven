@@ -38,11 +38,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     propertyName = Property.InternalName.Camelize();
                     break;
             }
-            
-            string validationDiv = null;
+
+            var propertyValidators = new List<string>();
             if (Property.ValidationItems != null && Property.ValidationItems.Any())
             {
-                var propertyValidators = new List<string>();
                 foreach (var validationItem in Property.ValidationItems)
                 {
                     string selector = null;
@@ -79,17 +78,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     }
                     if (selector != null)
                     {
-                        propertyValidators.Add($@"{new String(' ', 24)}<div *ngIf=""{propertyName}.errors.{selector}"">
-{new String(' ', 28)}{validationItem.GetMessage(Property.Title)}
-{new String(' ', 24)}</div>");
+                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{propertyName}.hasError('{selector}')"">
+{new String(' ', 24)}{validationItem.GetMessage(Property.Title)}
+{new String(' ', 20)}</mat-error>");
                     }
-                }
-
-                if (propertyValidators.Any())
-                {
-                    validationDiv = $@"{new String(' ', 20)}<div *ngIf=""{propertyName}.invalid && ({propertyName}.touched)"" class=""alert alert-danger"">
-{string.Join(Environment.NewLine, propertyValidators)}
-{new String(' ', 20)}</div>";
                 }
             }
 
@@ -146,12 +138,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 if (dontWrap)
                 {
-                    return string.Join(Environment.NewLine, control, validationDiv);
+                    return $@"{control}{string.Join(Environment.NewLine, propertyValidators)}";
                 }
                 else
                 {
                     return $@"{new String(' ', 16)}<mat-form-field class=""example-full-width"" {wrapAttributes}>
-{string.Join(Environment.NewLine, control, validationDiv)}
+{control}
+{string.Join(Environment.NewLine, propertyValidators)}
 {new String(' ', 16)}</mat-form-field>";
                 }
             }

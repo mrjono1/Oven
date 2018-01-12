@@ -224,7 +224,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 {string.Join(Environment.NewLine, properties)}
 
     referenceCompare(referenceItem1: any, referenceItem2: any): boolean {{
-        return referenceItem1 && referenceItem2 ? referenceItem1.id === referenceItem2.id : referenceItem1 === referenceItem2;
+        return referenceItem1 === referenceItem2;
     }}
 
     private getPatchOperations(): Operation[] {{
