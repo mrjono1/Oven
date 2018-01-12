@@ -52,17 +52,17 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 }
             }
 
-            return $@"    <div class=""screen-section-form"">
-        <form *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
-    <mat-toolbar class=""primary"">
-        <mat-toolbar-row>
-        <span>{ScreenSection.Title}</span>
+            return $@"        <div class=""screen-section-form"">
+            <form *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
+        <mat-toolbar class=""primary"">
+            <mat-toolbar-row>
+            <span>{ScreenSection.Title}</span>
 {string.Join(Environment.NewLine, menuItems)}
-        </mat-toolbar-row>
-    </mat-toolbar>
+            </mat-toolbar-row>
+        </mat-toolbar>
 { string.Join(Environment.NewLine, formGroups)}
-        </form>
-    </div>";
+            </form>
+        </div>";
         }
         }
 }

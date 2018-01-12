@@ -118,22 +118,22 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 menuItems.Add($@"<a mat-raised-button {newRouterLink}>New</a>");
             }
-            return $@"<div class=""screen-section-search"">
-    <mat-toolbar class=""primary"">
-        <mat-toolbar-row>
-        <span>{ScreenSection.Title}</span>
+            return $@"        <div class=""screen-section-search"">
+            <mat-toolbar class=""primary"">
+                <mat-toolbar-row>
+                <span>{ScreenSection.Title}</span>
 {string.Join(Environment.NewLine, menuItems)}
-        </mat-toolbar-row>
-    </mat-toolbar>
-    <div  class=""mat-elevation-z8"">
-        <mat-table #table [dataSource]=""{ScreenSection.InternalName.Camelize()}DataSource"">
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <div  class=""mat-elevation-z8"">
+                <mat-table #table [dataSource]=""{ScreenSection.InternalName.Camelize()}DataSource"">
 {string.Join(Environment.NewLine, columns)}
 
-            <mat-header-row *matHeaderRowDef=""{ScreenSection.InternalName.Camelize()}Columns""></mat-header-row>
-            <mat-row *matRowDef=""let row; columns: {ScreenSection.InternalName.Camelize()}Columns;"" {rowClickRouterLink}></mat-row>
-        </mat-table>
-    </div>
-</div>";
+                    <mat-header-row *matHeaderRowDef=""{ScreenSection.InternalName.Camelize()}Columns""></mat-header-row>
+                    <mat-row *matRowDef=""let row; columns: {ScreenSection.InternalName.Camelize()}Columns;"" {rowClickRouterLink}></mat-row>
+                </mat-table>
+            </div>
+        </div>";
         }
         }
 }

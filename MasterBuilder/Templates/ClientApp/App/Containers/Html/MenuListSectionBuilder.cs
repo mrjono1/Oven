@@ -41,9 +41,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 }
             }
 
-            return $@"    <mat-nav-list>
+            return $@"    <div class=""screen-section-menu"" flex>
+        <mat-nav-list>
 {string.Join(Environment.NewLine, menuListItems)}
-    </mat-nav-list>";
+        </mat-nav-list>
+    </div>";
         }
     }
 }

@@ -31,6 +31,11 @@ namespace MasterBuilder.Templates.ClientApp.App
             return @"// Material UI Theme
 @import ""~@angular/material/prebuilt-themes/deeppurple-amber.css"";
 
+body {
+    margin: 0;
+}
+
+
 // below material testing css to be removed
 .example-form {
   min-width: 150px;
