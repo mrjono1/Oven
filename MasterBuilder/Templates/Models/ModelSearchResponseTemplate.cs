@@ -69,8 +69,17 @@ namespace {Project.InternalName}.Models
     /// </summary>
     public class {className}
     {{
+        /// <summary>
+        /// Total Pages
+        /// </summary>
         public int TotalPages {{ get; internal set; }}
+        /// <summary>
+        /// Total Items
+        /// </summary>
         public int TotalItems {{ get; internal set; }}
+        /// <summary>
+        /// {itemClassName}
+        /// </summary>
         public {itemClassName}[] Items {{ get; internal set; }}
     }}
 }}";

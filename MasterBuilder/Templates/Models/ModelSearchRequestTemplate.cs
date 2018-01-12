@@ -74,7 +74,10 @@ namespace MasterBuilder.Templates.Models
                     parentEntity = (from s in Project.Entities
                                          where s.Id == parentProperty.ParentEntityId
                                          select s).SingleOrDefault();
-                    parentPropertyString = $"public Guid? {parentEntity.InternalName}Id {{ get; set; }}";
+                    parentPropertyString = $@"        /// <summary>
+        /// {parentEntity.Title} Id
+        /// </summary>
+        public Guid? {parentEntity.InternalName}Id {{ get; set; }}";
                 }
             }
 
@@ -89,9 +92,15 @@ namespace {Project.InternalName}.Models
     /// </summary>
     public class {className}
     {{
+        /// <summary>
+        /// Page
+        /// </summary>
         [Required]
         [DefaultValue(1)]
         public int Page {{ get; set; }}
+        /// <summary>
+        /// Page Size
+        /// </summary>
         [Required]
         [DefaultValue(10)]
         public int PageSize {{ get; set; }}

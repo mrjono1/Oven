@@ -53,12 +53,21 @@ namespace {Project.InternalName}.Models.{Entity.InternalName}.Reference
     /// </summary>
     public class {Entity.InternalName}ReferenceRequest
     {{
+        /// <summary>
+        /// Page
+        /// </summary>
         [Required]
         [DefaultValue(1)]
         public int Page {{ get; set; }}
+        /// <summary>
+        /// Page Size
+        /// </summary>
         [Required]
         [DefaultValue(10)]
         public int PageSize {{ get; set; }}
+        /// <summary>
+        /// Query
+        /// </summary>
         public string Query {{ get; set; }}
     }}
 }}";
