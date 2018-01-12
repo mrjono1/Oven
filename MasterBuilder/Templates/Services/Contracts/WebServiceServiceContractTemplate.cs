@@ -50,7 +50,10 @@ namespace MasterBuilder.Templates.Services.Contracts
             {
                 foreach (var operation in WebService.Operations)
                 {
-                    functions.Add($@"        Task<IRestResponse> {operation.InternalName}Async(Models.Project.Export.Project body);");
+                    functions.Add($@"        /// <summary>
+        /// {operation.Title} Async
+        /// </summary>
+        Task<IRestResponse> {operation.InternalName}Async(Models.Project.Export.Project body);");
                 }
             }
 

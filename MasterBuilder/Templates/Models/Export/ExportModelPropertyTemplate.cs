@@ -23,7 +23,10 @@ namespace MasterBuilder.Templates.Models.Export
             if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
-                return $@"        public Guid{(required ? "" : "?")} {property.InternalName}Id {{ get; set; }}";
+                return $@"        /// <summary>
+        /// {property.Title}
+        /// </summary>
+        public Guid{(required ? "" : "?")} {property.InternalName}Id {{ get; set; }}";
             }
             else if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
             {

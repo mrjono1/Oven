@@ -62,8 +62,15 @@ using {Project.InternalName}.Services.Contracts;
 
 namespace {Project.InternalName}
 {{
+    
+    /// <summary>
+    /// Startup
+    /// </summary>
     public class Startup
     {{
+        /// <summary>
+        /// Main
+        /// </summary>
         public static void Main(string[] args)
         {{
             var host = new WebHostBuilder()
@@ -76,6 +83,9 @@ namespace {Project.InternalName}
             host.Run();
         }}
 
+        /// <summary>
+        /// Startup
+        /// </summary>
         public Startup(IHostingEnvironment env)
         {{
             var builder = new ConfigurationBuilder()
@@ -86,9 +96,14 @@ namespace {Project.InternalName}
             Configuration = builder.Build();
         }}
 
+        /// <summary>
+        /// Configuration
+        /// </summary>
         public IConfigurationRoot Configuration {{ get; }}
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
         public void ConfigureServices(IServiceCollection services)
         {{
             // Add framework services.
@@ -109,7 +124,9 @@ namespace {Project.InternalName}
             {string.Join(string.Concat(Environment.NewLine, "            "), services)}
         }}
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, Entities.{Project.InternalName}Context context)
         {{
             loggerFactory.AddConsole(Configuration.GetSection(""Logging""));

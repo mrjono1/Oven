@@ -151,7 +151,10 @@ namespace MasterBuilder.Templates.Controllers
             {
                 if (Screen.Template == ScreenTemplateEnum.Home)
                 {
-                    methods.Add($@"        [HttpGet]
+                    methods.Add($@"                /// <summary>
+    /// Home Index
+    /// </summary>
+    [HttpGet]
     public async Task<IActionResult> Index()
     {{
         var prerenderResult = await Request.BuildPrerender();
@@ -167,6 +170,9 @@ namespace MasterBuilder.Templates.Controllers
         return View();
     }}
 
+    /// <summary>
+    /// Sitemap Xml
+    /// </summary>
     [HttpGet]
     [Route(""sitemap.xml"")]
     public IActionResult SitemapXml()
@@ -187,6 +193,9 @@ namespace MasterBuilder.Templates.Controllers
 
     }}
 
+    /// <summary>
+    /// Error page
+    /// </summary>
     public IActionResult Error()
     {{
         return View();

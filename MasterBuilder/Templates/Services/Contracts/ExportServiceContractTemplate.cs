@@ -45,7 +45,10 @@ namespace MasterBuilder.Templates.Services.Contracts
 
             if (Project.Id == Project.MasterBuilderId)
             {
-                exportFunctions.Add($@"        Task<Models.Project.Export.Project> ExportProjectAsync(Guid id);");
+                exportFunctions.Add($@"        /// <summary>
+        /// Export Project Async
+        /// </summary>
+        Task<Models.Project.Export.Project> ExportProjectAsync(Guid id);");
             }
 
             return $@"using System;

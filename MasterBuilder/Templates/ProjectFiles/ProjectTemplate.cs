@@ -57,6 +57,13 @@ namespace MasterBuilder.Templates.ProjectFiles
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"">
+    <DocumentationFile>bin\Debug\netcoreapp2.0\{Project.InternalName}.xml</DocumentationFile>
+  </PropertyGroup> 
+  <PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='Release|AnyCPU'"">
+    <DocumentationFile>bin\Release\netcoreapp2.0\{Project.InternalName}.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     {packageReferences}
   </ItemGroup>

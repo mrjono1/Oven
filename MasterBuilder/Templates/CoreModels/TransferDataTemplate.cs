@@ -41,12 +41,20 @@ namespace MasterBuilder.Templates.CoreModels
         {
             return $@"namespace {Project.InternalName}.CoreModels
 {{
+    /// <summary>
+    /// Transfer Data
+    /// </summary>
     public class TransferData
     {{
-        public dynamic request {{ get; set; }}
+        /// <summary>
+        /// Request
+        /// </summary>
+        public dynamic Request {{ get; set; }}
       
-        // Your data here ?
-        public object thisCameFromDotNET {{ get; set; }}
+        /// <summary>
+        /// Your data here ?
+        /// </summary>
+        public object ThisCameFromDotNET {{ get; set; }}
     }}
 }}";
         }

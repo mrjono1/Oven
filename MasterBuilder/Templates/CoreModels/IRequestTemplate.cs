@@ -41,11 +41,23 @@ namespace MasterBuilder.Templates.CoreModels
         {
             return $@"namespace {Project.InternalName}.CoreModels
 {{
+    /// <summary>
+    /// IRequest
+    /// </summary>
     public class IRequest
     {{
-        public object cookies {{ get; set; }}
-        public object headers {{ get; set; }}
-        public object host {{ get; set; }}
+        /// <summary>
+        /// Cookies
+        /// </summary>
+        public object Cookies {{ get; set; }}
+        /// <summary>
+        /// Headers
+        /// </summary>
+        public object Headers {{ get; set; }}
+        /// <summary>
+        /// Host
+        /// </summary>
+        public object Host {{ get; set; }}
     }}
 }}";
         }

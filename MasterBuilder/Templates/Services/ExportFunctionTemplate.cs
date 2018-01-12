@@ -36,7 +36,10 @@ namespace MasterBuilder.Templates.Services
                 includes.Add($@"                          .Include(""{string.Join(".", childEntity)}"")");
             }
 
-            return $@"        public async Task<Models.{Entity.InternalName}.Export.{Entity.InternalName}> Export{Entity.InternalName}Async(Guid id)
+            return $@"        /// <summary>
+        /// Export Full {Entity.Title}
+        /// </summary>
+        public async Task<Models.{Entity.InternalName}.Export.{Entity.InternalName}> Export{Entity.InternalName}Async(Guid id)
         {{
             var data = await _context.{Entity.InternalNamePlural}.Where(p => p.Id == id)
 {string.Join(Environment.NewLine, includes)}
