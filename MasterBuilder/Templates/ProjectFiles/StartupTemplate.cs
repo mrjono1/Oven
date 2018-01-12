@@ -55,6 +55,7 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using {Project.InternalName}.Services;
@@ -114,10 +115,13 @@ namespace {Project.InternalName}
             services.AddDbContext<Entities.{Project.InternalName}Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));
 
+            var xmlfilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, ""{Project.InternalName}.xml"");
+
             // Add Swagger service
             services.AddSwaggerGen(c =>
             {{
                 c.SwaggerDoc(""v1"", new Info {{ Title = ""{Project.Title} API"", Version = ""v1"" }});
+                c.IncludeXmlComments(xmlfilePath);
             }});
 
             // Services

@@ -39,9 +39,12 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
+
+            var connectionString = $"Data Source=.\\\\SQLEXPRESS;Initial Catalog={Project.InternalName};Integrated Security=True";
+
             return $@"{{
   ""ConnectionStrings"": {{
-    ""DefaultConnection"": ""{Project.DatabaseConnectionString}""
+    ""DefaultConnection"": ""{connectionString}""
   }},
   ""Logging"": {{
     ""IncludeScopes"": false,

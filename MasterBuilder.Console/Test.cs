@@ -18,8 +18,6 @@ namespace MasterBuilder
                 InternalName = "MasterBuilderUi",
                 BuildVersion = 1,
                 Title = "Master Builder",
-                DatabaseConnectionString = "Data Source=.\\\\SQLEXPRESS;Initial Catalog=MasterBuilder;Integrated Security=True",
-                ImutableDatabase = false,
                 DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
                 AllowDestructiveDatabaseChanges = true
             };
@@ -90,22 +88,6 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{527365A6-D0BF-4239-85DF-BF8647B6F372}"),
-                            InternalName = "DatabaseConnectionString",
-                            PropertyType = PropertyTypeEnum.String,
-                            Title = "Database Connection String",
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation
-                                {
-                                    Id = new Guid("{09ED3A71-3F3A-46BB-B24B-D2796E796A39}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
-                                    IntegerValue = 500
-                                }
-                            }
-                        },
-                        new Property()
-                        {
                             Id = new Guid("{F1EEF37B-F40D-44D4-832F-ACEC4B63D147}"),
                             InternalName = "MajorVersion",
                             PropertyType = PropertyTypeEnum.Integer,
@@ -160,21 +142,6 @@ namespace MasterBuilder
                                // new Validation
                                // {
                                //     Id = new Guid("{20E93766-3D57-4DB1-820C-77C2E0809061}"),
-                               //     ValidationType = ValidationTypeEnum.Required
-                               // }
-                            }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{82072EF0-3CCE-4E67-A09A-89EE59283ADD}"),
-                            InternalName = "ImutableDatabase",
-                            PropertyType = PropertyTypeEnum.Boolean,
-                            Title = "Imutable Database",
-                            ValidationItems = new Validation[]
-                            {
-                               // new Validation
-                               // {
-                               //     Id = new Guid("{B2F34450-25F9-4A33-B1E9-9F8CED6853A7}"),
                                //     ValidationType = ValidationTypeEnum.Required
                                // }
                             }

@@ -37,7 +37,7 @@ namespace MasterBuilder.Request
                 { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" },
                 { "RestSharp", "106.1.0"}
             };
-            ImutableDatabase = true;
+            ImutableDatabase = false;
         }
         /// <summary>
         /// Uniqueidentifier
@@ -97,14 +97,10 @@ namespace MasterBuilder.Request
         /// </summary>
         public string[] CleanDirectoryIgnoreDirectories { get; set; }
         /// <summary>
-        /// SQL Database Connection String
-        /// </summary>
-        public string DatabaseConnectionString { get; set; }
-        /// <summary>
         /// If true database tables and columns are all uniqueidentifiers making database 
         /// hard to use but less chance of needing to change database columns which can result in data loss
         /// </summary>
-        public bool? ImutableDatabase { get; set; }
+        internal bool? ImutableDatabase { get; set; }
         /// <summary>
         /// Default Screen to load
         /// </summary>
