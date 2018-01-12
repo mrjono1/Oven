@@ -69,6 +69,9 @@ namespace MasterBuilder.Templates.Controllers
             }
 
             return $@"
+        /// <summary>
+        /// {screenSection.Title} Search
+        /// </summary>
         [HttpPost(""{screen.InternalName}{screenSection.InternalName}"")]
         public async Task<IActionResult> {screen.InternalName}{screenSection.InternalName}([FromBody]{requestClassName} request)
         {{

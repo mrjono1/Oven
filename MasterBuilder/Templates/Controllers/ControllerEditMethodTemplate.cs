@@ -154,6 +154,9 @@ namespace MasterBuilder.Templates.Controllers
             }
 
             var get = $@"
+        /// <summary>
+        /// {screenSection.Title} Get
+        /// </summary>
         [HttpGet(""{screen.InternalName}/{{id}}"")]
         public async Task<IActionResult> {screen.InternalName}(Guid id)
         {{
@@ -184,6 +187,9 @@ namespace MasterBuilder.Templates.Controllers
 
 
             var post = $@"
+        /// <summary>
+        /// {screenSection.Title} Add
+        /// </summary>
         [HttpPost(""{screen.InternalName}"")]
         public async Task<IActionResult> {screen.InternalName}([FromBody]{screen.InternalName}Request post)
         {{
@@ -209,6 +215,9 @@ namespace MasterBuilder.Templates.Controllers
 
             //http://benfoster.io/blog/aspnet-core-json-patch-partial-api-updates
             var patch = $@"
+        /// <summary>
+        /// {screenSection.Title} Update
+        /// </summary>
         [HttpPatch(""{screen.InternalName}/{{id}}"")]
         public async Task<IActionResult> {screen.InternalName}([FromRoute]Guid id, [FromBody]JsonPatchDocument<{screen.InternalName}Request> patch)
         {{

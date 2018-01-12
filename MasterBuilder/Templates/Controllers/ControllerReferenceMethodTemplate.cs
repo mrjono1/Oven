@@ -35,6 +35,9 @@ namespace MasterBuilder.Templates.Controllers
             var requestClassName = $"Models.{entity.InternalName}.Reference.{entity.InternalName}ReferenceRequest";
             
             return $@"
+        /// <summary>
+        /// {entity.Title} Reference Search
+        /// </summary>
         [HttpPost(""{entity.InternalName}References"")]
         public async Task<IActionResult> {entity.InternalName}Reference([FromBody]{requestClassName} request)
         {{

@@ -49,10 +49,13 @@ namespace MasterBuilder.Templates.Entities
             {
                 properties = new StringBuilder();
                 configurations = new StringBuilder();
-                foreach (var item in Project.Entities)
+                foreach (var entity in Project.Entities)
                 {
-                    properties.AppendLine($"        public DbSet<{item.InternalName}> {item.InternalNamePlural} {{ get; set; }}");
-                    configurations.AppendLine($"            builder.ApplyConfiguration(new {item.InternalName}Config());");
+                    properties.AppendLine($@"            /// <summary>
+        /// {entity.Title}
+        /// </summary>
+        public DbSet<{entity.InternalName}> {entity.InternalNamePlural} {{ get; set; }}");
+                    configurations.AppendLine($"            builder.ApplyConfiguration(new {entity.InternalName}Config());");
                 }
             }
 
@@ -143,17 +146,27 @@ namespace {Project.InternalName}.Entities
     /// </summary>
     public class {Project.InternalName}Context : DbContext
     {{
+
+        /// <summary>
+        /// {Project.InternalName} Entity Framework Database Context
+        /// </summary>
         public {Project.InternalName}Context(DbContextOptions<{Project.InternalName}Context> options) : base(options)
         {{
         }}
 {properties}
 
+        /// <summary>
+        /// On Model Creating
+        /// </summary>
         protected override void OnModelCreating(ModelBuilder builder)
         {{
             base.OnModelCreating(builder);
 {configurations}
         }}
 
+        /// <summary>
+        /// Initialize Database
+        /// </summary>
         public void Initialize()
         {{
             MigrateDatabase();
@@ -161,6 +174,9 @@ namespace {Project.InternalName}.Entities
             {(seed.Any() ? "Seed().Wait();" : string.Empty)}
         }}
 
+        /// <summary>
+        /// Migrate Database (not supported by EF Core)
+        /// </summary>
         internal void MigrateDatabase()
         {{
             if (Database.EnsureCreated())
