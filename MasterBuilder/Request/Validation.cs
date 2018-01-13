@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -35,6 +36,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Validation Type Id
         /// </summary>
+        [RequiredNonDefault]
         public Guid ValidationTypeId { get; set; }
 
         /// <summary>

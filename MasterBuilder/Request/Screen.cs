@@ -39,6 +39,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Identifier
         /// </summary>
+        [RequiredNonDefault]
         public Guid Id { get; set; }
         private string _internalName;
         /// <summary>
@@ -70,6 +71,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Screen Type Id
         /// </summary>
+        [RequiredNonDefault]
         public Guid ScreenTypeId { get; set; }
         /// <summary>
         /// Path segment

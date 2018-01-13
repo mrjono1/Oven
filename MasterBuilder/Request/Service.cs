@@ -2,6 +2,7 @@ using Humanizer;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -24,6 +25,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier
         /// </summary>
+        [RequiredNonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Title
@@ -47,6 +49,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Service Type
         /// </summary>
+        [RequiredNonDefault]
         public Guid ServiceTypeId { get; set; }
         /// <summary>
         /// Service Type

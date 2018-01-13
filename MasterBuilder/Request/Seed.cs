@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -25,10 +26,11 @@ namespace MasterBuilder.Request
         /// JSON Array of JSON objects that represent seed data for this entity
         /// </summary>
         public string JsonData { get; set; }
-        
+
         /// <summary>
         /// Seed Type Id
         /// </summary>
+        [RequiredNonDefault]
         public Guid SeedTypeId { get; set; }
 
         /// <summary>
