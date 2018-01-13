@@ -35,16 +35,11 @@ body {
     margin: 0;
 }
 
-
-// below material testing css to be removed
-.example-form {
-  min-width: 150px;
-  max-width: 500px;
-  width: 100%;
-}
-
-.example-full-width {
-  width: 100%;
+.container {
+    max-width: 992px;
+    width: 100%;
+    padding: 20px;
+    margin: 8px;
 }";
         }
     }

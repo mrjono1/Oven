@@ -118,7 +118,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 menuItems.Add($@"<a mat-raised-button {newRouterLink}>New</a>");
             }
-            return $@"        <div class=""screen-section-search"">
+            return $@"        <div class=""screen-section-search container mat-elevation-z6"" fxFlex>
             <mat-toolbar class=""primary"">
                 <mat-toolbar-row>
                 <span>{ScreenSection.Title}</span>

@@ -52,8 +52,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 }
             }
 
-            return $@"        <div class=""screen-section-form"">
-            <form *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate>
+            return $@"        <div class=""screen-section-form container mat-elevation-z6"" fxFlex>
+            <form *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate fxLayout=""column"">
         <mat-toolbar class=""primary"">
             <mat-toolbar-row>
             <span>{ScreenSection.Title}</span>

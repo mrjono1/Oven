@@ -128,7 +128,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                             </mat-option>
                         </mat-select>";
 
-                    wrapAttributes = $@"*ngIf=""{parentEntity.InternalName.Camelize()}Reference && {parentEntity.InternalName.Camelize()}Reference.items""";
+                    wrapAttributes = $@" *ngIf=""{parentEntity.InternalName.Camelize()}Reference && {parentEntity.InternalName.Camelize()}Reference.items""";
                     break;
                 default:
                     break;
@@ -142,7 +142,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 }
                 else
                 {
-                    return $@"{new String(' ', 16)}<mat-form-field class=""example-full-width"" {wrapAttributes}>
+                    return $@"{new String(' ', 16)}<mat-form-field{wrapAttributes}>
 {control}
 {string.Join(Environment.NewLine, propertyValidators)}
 {new String(' ', 16)}</mat-form-field>";

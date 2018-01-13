@@ -41,7 +41,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 }
             }
 
-            return $@"    <div class=""screen-section-menu"" flex>
+            return $@"    <div class=""screen-section-menu container mat-elevation-z6"" fxFlex>
         <mat-nav-list>
 {string.Join(Environment.NewLine, menuListItems)}
         </mat-nav-list>

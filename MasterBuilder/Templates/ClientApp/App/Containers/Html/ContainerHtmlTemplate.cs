@@ -62,7 +62,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                         sections.Add(menuListSection.Evaluate());
                         break;
                     case ScreenSectionTypeEnum.Html:
-                        sections.Add($@"        <div class=""screen-section-html"">
+                        sections.Add($@"        <div class=""screen-section-html container mat-elevation-z6"" fxFlex>
 { screenSection.Html}
         </div>");
                         break;
@@ -77,7 +77,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             <span>{Screen.Title}</span>
         </mat-toolbar-row>
     </mat-toolbar>
-    <div fxLayout=""column"" fxLayoutGap=""20px"">
+    <div fxLayout=""column"" fxLayoutGap=""20px"" fxLayoutAlign=""start center"">
 {string.Join(Environment.NewLine, sections)}
     </div>
 </div>";
