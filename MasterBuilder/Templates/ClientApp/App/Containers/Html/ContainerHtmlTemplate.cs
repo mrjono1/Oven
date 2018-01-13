@@ -62,7 +62,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                         sections.Add(menuListSection.Evaluate());
                         break;
                     case ScreenSectionTypeEnum.Html:
-                        sections.Add($@"        <div class=""screen-section-html container mat-elevation-z6"" fxFlex>
+                        sections.Add($@"        <div class=""screen-section-html container mat-elevation-z2"" fxFlex>
 { screenSection.Html}
         </div>");
                         break;

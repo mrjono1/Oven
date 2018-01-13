@@ -99,14 +99,14 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     {
                         case MenuItemTypeEnum.ApplicationLink:
                             var screenTo = Project.Screens.SingleOrDefault(s => s.Id == menuItem.ScreenId);
-                            menuItems.Add($@"<a mat-raised-button [routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{screenTo.Path}']"">
+                            menuItems.Add($@"                <a mat-raised-button [routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{screenTo.Path}']"">
                         <span class='{menuItem.Icon}'></span> {menuItem.Title}
                      </a>");
                             break;
                         case MenuItemTypeEnum.New:
                             break;
                         case MenuItemTypeEnum.ServerFunction:
-                            menuItems.Add($@"<button mat-raised-button (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
+                            menuItems.Add($@"                <button mat-raised-button (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
                             break;
                         default:
                             break;
@@ -116,24 +116,21 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             
             if (!string.IsNullOrWhiteSpace(newRouterLink))
             {
-                menuItems.Add($@"<a mat-raised-button {newRouterLink}>New</a>");
+                menuItems.Add($@"                <a mat-raised-button {newRouterLink}>New</a>");
             }
-            return $@"        <div class=""screen-section-search container mat-elevation-z6"" fxFlex>
-            <mat-toolbar class=""primary"">
-                <mat-toolbar-row>
-                <span>{ScreenSection.Title}</span>
+            return $@"        <mat-card class=""screen-section-search container"" fxFlex>
+            <mat-card-header>
+                <mat-card-title>{ScreenSection.Title}</mat-card-title>
 {string.Join(Environment.NewLine, menuItems)}
-                </mat-toolbar-row>
-            </mat-toolbar>
-            <div  class=""mat-elevation-z8"">
+            </mat-card-header>
+            <mat-card-content>
                 <mat-table #table [dataSource]=""{ScreenSection.InternalName.Camelize()}DataSource"">
 {string.Join(Environment.NewLine, columns)}
-
                     <mat-header-row *matHeaderRowDef=""{ScreenSection.InternalName.Camelize()}Columns""></mat-header-row>
                     <mat-row *matRowDef=""let row; columns: {ScreenSection.InternalName.Camelize()}Columns;"" {rowClickRouterLink}></mat-row>
                 </mat-table>
-            </div>
-        </div>";
+            </mat-card-content>
+        </mat-card>";
         }
         }
 }
