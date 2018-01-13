@@ -564,26 +564,6 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{7019CFDF-D883-48CF-808B-2DCBCC776980}"),
-                            InternalName = "InternalName",
-                            PropertyType = PropertyTypeEnum.String,
-                            Title = "Internal Name",
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation
-                                {
-                                    Id = new Guid("{48048DEC-F844-4379-9D97-59F0691FDF12}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
-                                    IntegerValue = 200
-                                },
-                                new Validation{
-                                    Id = new Guid("{7FA4F554-407B-41B2-A8E3-1E30500C031C}"),
-                                    ValidationType = ValidationTypeEnum.Required
-                                }
-                            }
-                        },
-                        new Property()
-                        {
                             Id = new Guid("{A02115B5-4E6A-4D7B-AB80-9E58516B1E3A}"),
                             InternalName = "Entity",
                             PropertyType = PropertyTypeEnum.ReferenceRelationship,
@@ -997,7 +977,6 @@ namespace MasterBuilder
                     Id = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
                     ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
                     Title = "Home",
-                    InternalName = "Home",
                     Path = "home",
                     Template = ScreenTemplateEnum.Home,
                     ScreenSections = new ScreenSection[]
@@ -1025,7 +1004,6 @@ namespace MasterBuilder
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                     ScreenType = ScreenTypeEnum.Search,
                     Title = "Projects",
-                    InternalName = "Projects",
                     Path = "projects",
                     NavigateToScreenId = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
                     ScreenFeatures = new ScreenFeature[]
@@ -1042,7 +1020,6 @@ namespace MasterBuilder
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                     ScreenType = ScreenTypeEnum.Edit,
                     Title = "Project",
-                    InternalName = "Project",
                     Path = "project",
                     ScreenSections = new ScreenSection[]
                     {
@@ -1131,7 +1108,6 @@ namespace MasterBuilder
                     EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                     ScreenType = ScreenTypeEnum.Edit,
                     Title = "Entity",
-                    InternalName = "Entity",
                     Path = "entity",
                     ScreenSections = new ScreenSection[]
                     {
@@ -1169,7 +1145,6 @@ namespace MasterBuilder
                     EntityId =new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
                     ScreenType = ScreenTypeEnum.Edit,
                     Title = "Screen",
-                    InternalName = "Screen",
                     Path = "screen",
                     ScreenSections = new ScreenSection[]
                     {
@@ -1208,7 +1183,6 @@ namespace MasterBuilder
                     EntityId =new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
                     ScreenType = ScreenTypeEnum.Edit,
                     Title = "Screen Section",
-                    InternalName = "ScreenSection",
                     Path = "screen-section",
                     ScreenSections = new ScreenSection[]
                     {
@@ -1228,7 +1202,6 @@ namespace MasterBuilder
                     EntityId =new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
                     ScreenType = ScreenTypeEnum.Edit,
                     Title = "Menu Item",
-                    InternalName = "MenuItem",
                     Path = "menu-item",
                     ScreenSections = new ScreenSection[]
                     {
@@ -1248,7 +1221,6 @@ namespace MasterBuilder
                     EntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
                     ScreenType = ScreenTypeEnum.Edit,
                     Title = "Property",
-                    InternalName = "Property",
                     Path = "property",
                     ScreenSections = new ScreenSection[]
                     {
@@ -1267,7 +1239,6 @@ namespace MasterBuilder
                     EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
                     ScreenType = ScreenTypeEnum.Search,
                     Title = "Validation Types",
-                    InternalName = "ValidationTypes",
                     Path = "validation-types",
                     NavigateToScreenId = new Guid("{5D9BA697-C64B-40EE-9DF4-F88BD683713F}"),
                     ScreenFeatures = new ScreenFeature[]
@@ -1284,7 +1255,6 @@ namespace MasterBuilder
                     EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
                     ScreenType = ScreenTypeEnum.Edit,
                     Title = "Validation Type",
-                    InternalName = "ValidationType",
                     Path = "validation-type",
                     ScreenSections = new ScreenSection[]
                     {
@@ -1314,7 +1284,6 @@ namespace MasterBuilder
                 new Service(){
                     Id = new Guid("{359525A8-CCA2-4AC1-9348-23057D616A75}"),
                     Title = "Master Builder Api",
-                    InternalName = "MasterBuilderApi",
                     ServiceType = ServiceTypeEnum.WebService,
                     WebService = new WebService
                     {
@@ -1325,7 +1294,6 @@ namespace MasterBuilder
                             {
                                 Id = new Guid("{99B9358B-2266-47BC-957A-DC6EF459D4A1}"),
                                 Title = "Publish",
-                                InternalName = "Publish",
                                 Verb = "POST",
                                 RelativeRoute = "/api/builder/publish"
                             }

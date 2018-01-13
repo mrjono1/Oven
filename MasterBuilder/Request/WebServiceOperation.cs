@@ -1,3 +1,4 @@
+using Humanizer;
 using System;
 
 namespace MasterBuilder.Request
@@ -15,10 +16,21 @@ namespace MasterBuilder.Request
         /// Title
         /// </summary>
         public string Title { get; set; }
+        private string _internalName;
         /// <summary>
-        /// Internal Name
+        /// Calculated Internal Name
         /// </summary>
-        public string InternalName { get; set; }
+        internal string InternalName
+        {
+            get
+            {
+                if (_internalName == null)
+                {
+                    _internalName = Title.Dehumanize();
+                }
+                return _internalName;
+            }
+        }
         /// <summary>
         /// Relative Route
         /// </summary>

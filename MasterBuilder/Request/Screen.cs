@@ -2,6 +2,7 @@ using Humanizer;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -39,10 +40,21 @@ namespace MasterBuilder.Request
         /// Identifier
         /// </summary>
         public Guid Id { get; set; }
+        private string _internalName;
         /// <summary>
-        /// Internal Name
+        /// Calculated Internal Name
         /// </summary>
-        public string InternalName { get; set; }
+        internal string InternalName
+        {
+            get
+            {
+                if (_internalName == null)
+                {
+                    _internalName = Title.Dehumanize();
+                }
+                return _internalName;
+            }
+        }
         /// <summary>
         /// SEO Meta description
         /// </summary>

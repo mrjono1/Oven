@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -42,27 +43,39 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier
         /// </summary>
+        [RequiredNonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Internal Name
         /// </summary>
+        [MaxLength(100)]
+        [MinLength(5)]
+        [PascalString]
         public string InternalName { get; set; }
-
         /// <summary>
         /// Title
         /// </summary>
+        [Required]
+        [MinLength(5)]
+        [MaxLength(200)]
         public string Title { get; set; }
         /// <summary>
         /// Major version
         /// </summary>
+        [Required]
+        [Range(0, 999999)]
         public int MajorVersion { get; set; }
         /// <summary>
         /// Minor Version
         /// </summary>
+        [Required]
+        [Range(0, 999999)]
         public int MinorVersion { get; set; }
         /// <summary>
         /// Build Version
         /// </summary>
+        [Required]
+        [Range(0, 99999999)]
         public int BuildVersion { get; set; }
 
         /// <summary>
@@ -78,14 +91,17 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Entities
         /// </summary>
+        [MustHaveOneElement]
         public IEnumerable<Entity> Entities { get; set; }
         /// <summary>
         /// Screens
         /// </summary>
+        [MustHaveOneElement]
         public IEnumerable<Screen> Screens { get; set; }
         /// <summary>
         /// Menu Items
         /// </summary>
+        [MustHaveOneElement]
         public IEnumerable<MenuItem> MenuItems { get; set; }
         /// <summary>
         /// Service configurations
@@ -95,7 +111,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Folders to ignore when cleaning out the directory on build
         /// </summary>
-        public string[] CleanDirectoryIgnoreDirectories { get; set; }
+        internal string[] CleanDirectoryIgnoreDirectories { get; set; }
         /// <summary>
         /// If true database tables and columns are all uniqueidentifiers making database 
         /// hard to use but less chance of needing to change database columns which can result in data loss
@@ -208,7 +224,6 @@ namespace MasterBuilder.Request
                 administrationScreen = new Screen()
                 {
                     Id = new Guid("{43037072-42F2-4B5C-A72E-1A08F149709A}"),
-                    InternalName = "Administration",
                     Title = "Administration",
                     ScreenType = ScreenTypeEnum.Html,
                     Path = "administration"

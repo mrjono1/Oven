@@ -2,6 +2,7 @@ using Humanizer;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -25,16 +26,23 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier of an Entity
         /// </summary>
+        [RequiredNonDefault]
         public Guid Id { get; set; }
 
         /// <summary>
         /// Title of and Entity
         /// </summary>
+        [Required]
+        [MinLength(2)]
+        [MaxLength(200)]
         public string Title { get; set; }
 
         /// <summary>
         /// Internal name of an Entity
         /// </summary>
+        [MinLength(2)]
+        [MaxLength(100)]
+        [PascalString]
         public string InternalName { get; set; }
 
         /// <summary>
@@ -102,35 +110,16 @@ namespace MasterBuilder.Request
         {
             var messageList = new List<string>();
 
-            // Id must not be empty
-            if (Id == Guid.Empty)
+            var parentPropertyCount = Properties.Count(p => p.PropertyType == PropertyTypeEnum.ParentRelationship);
+            if (parentPropertyCount > 1)
             {
-                messageList.Add("Entity must have an Id");
-            }
-            
-            // Title
-            if (string.IsNullOrWhiteSpace(Title))
-            {
-                messageList.Add("Entity must have a title");
+                messageList.Add($"Entity:{Title} can only contain one parent properties it contains {parentPropertyCount}");
             }
 
-            // Internal Name must be valid
-            if (!Regex.IsMatch(InternalName, @"^[a-zA-Z]+$"))
+            foreach (var property in Properties)
             {
-                messageList.Add("Entity Internal Name must only contain letters");
-            }
-            // Ensure Internal Name is standard caseing
-            InternalName = InternalName.Pascalize();
-
-            // TODO: do more validation in model validation
-
-            if (Properties != null)
-            {
-                foreach (var property in Properties)
-                {
-                    if (!property.Validate(project, this, out string propertyMessage)) {
-                        messageList.Add(propertyMessage);
-                    }
+                if (!property.Validate(project, this, out string propertyMessage)) {
+                    messageList.Add(propertyMessage);
                 }
             }
 
@@ -186,7 +175,6 @@ namespace MasterBuilder.Request
                         Id = Id, // TODO: The id should be reproduceable I don't like this
                         EntityId = Id,
                         Title = Title.Pluralize(),
-                        InternalName = InternalNamePlural,
                         ScreenType = ScreenTypeEnum.Search,
                         Path = InternalNamePlural.Kebaberize(),
                         NavigateToScreenId = editScreenId,
@@ -197,7 +185,6 @@ namespace MasterBuilder.Request
                         Id = editScreenId,
                         EntityId = Id,
                         Title = Title,
-                        InternalName = InternalName,
                         ScreenType = ScreenTypeEnum.Edit,
                         Path = InternalName.Kebaberize()
                     }

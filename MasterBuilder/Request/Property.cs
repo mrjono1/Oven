@@ -2,6 +2,7 @@ using Humanizer;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -42,19 +43,27 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier of an Entity
         /// </summary>
+        [RequiredNonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Title
         /// </summary>
+        [Required]
+        [MinLength(2)]
+        [MaxLength(200)]
         public string Title { get; set; }
         /// <summary>
         /// Internal Name
         /// </summary>
+        [MinLength(2)]
+        [MaxLength(100)]
+        [PascalString]
         public string InternalName { get; set; }
 
         /// <summary>
         /// Property Type Identifier
         /// </summary>
+        [RequiredNonDefault]
         public Guid PropertyTypeId { get; set; }
 
         //TODO: Change this property to PropertyType
