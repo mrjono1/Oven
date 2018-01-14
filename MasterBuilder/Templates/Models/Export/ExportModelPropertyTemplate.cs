@@ -35,25 +35,12 @@ namespace MasterBuilder.Templates.Models.Export
         /// </summary>
         public Guid Id { get; set; }";
             }
-            else if (string.IsNullOrWhiteSpace(property.Calculation))
-            {
-                return $@"        /// <summary>
-        /// {property.Title}
-        /// </summary>
-        public {property.CsType} {property.InternalName} {{ get; set; }}";
-            }
             else
             {
                 return $@"        /// <summary>
         /// {property.Title}
         /// </summary>
-        public {property.CsType} {property.InternalName} 
-        {{ 
-             get
-             {{
-                 return {property.Calculation};
-             }}
-        }}";
+        public {property.CsType} {property.InternalName} {{ get; set; }}";
             }
         }
 
@@ -77,11 +64,10 @@ namespace MasterBuilder.Templates.Models.Export
             {
                 return $@"            Id = {entity.InternalName.Camelize()}.Id;";
             }
-            else if (string.IsNullOrWhiteSpace(property.Calculation))
+            else
             {
                 return $@"            {property.InternalName} = {entity.InternalName.Camelize()}.{property.InternalName};";
             }
-            return null;
         }
     }
 }

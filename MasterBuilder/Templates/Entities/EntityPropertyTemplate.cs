@@ -40,26 +40,14 @@ namespace MasterBuilder.Templates.Entities
         /// </summary>
         public Guid Id { get; set; }";
             }
-            else if (string.IsNullOrWhiteSpace(property.Calculation))
+            else
             {
                 return $@"        /// <summary>
         /// {property.Title}
         /// </summary>
         public {property.CsType} {property.InternalName} {{ get; set; }}";
             }
-            else
-            {
-                return $@"        /// <summary>
-        /// {property.Title} - Calculated
-        /// </summary>
-        public {property.CsType} {property.InternalName} 
-        {{ 
-             get
-             {{
-                 return {property.Calculation};
-             }}
-        }}";
-            }
+
         }
     }
 }

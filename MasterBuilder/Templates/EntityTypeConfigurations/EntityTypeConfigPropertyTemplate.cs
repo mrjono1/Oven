@@ -13,12 +13,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
         /// Evaluate
         /// </summary>
         public static string Evaluate(Project project, Entity entity, Property property)
-        {
-            if (!string.IsNullOrWhiteSpace(property.Calculation))
-            {
-                return $"            builder.Ignore(p => p.{property.InternalName});";
-            }
-            
+        {            
             var value = new StringBuilder();
             string dbColumnName = null;
             switch (property.PropertyType)

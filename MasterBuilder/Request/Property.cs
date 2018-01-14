@@ -89,11 +89,6 @@ namespace MasterBuilder.Request
         }
 
         /// <summary>
-        /// Server Calculation
-        /// </summary>
-        public string Calculation { get; set; }
-
-        /// <summary>
         /// Property Template Identifier, setting this will case future upgrades to update this field
         /// </summary>
         public Guid? PropertyTemplateId { get; set; }
