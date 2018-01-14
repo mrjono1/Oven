@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder.Request
 {
@@ -28,11 +27,9 @@ namespace MasterBuilder.Request
                 }
             }
 
-            GenerateScreen(project, this);
-
             if (messageList.Any())
             {
-                message = string.Join(", ", messageList);
+                message = string.Join(Environment.NewLine, messageList);
                 return false;
             }
             else

@@ -2,7 +2,6 @@ using Humanizer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Request
 {
@@ -16,7 +15,16 @@ namespace MasterBuilder.Request
             var errors = new List<string>();
 
             GenerateScreen(project, this);
-            
+
+            // Resolve child records
+            foreach (var properties in Properties)
+            {
+                if (!properties.Resolve(project, this, out string propertyMessage))
+                {
+                    errors.Add(propertyMessage);
+                }
+            }
+
             if (errors.Any())
             {
                 message = string.Join(Environment.NewLine, errors);

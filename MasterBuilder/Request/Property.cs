@@ -5,15 +5,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MasterBuilder.Request
 {
     /// <summary>
-    /// Property/Field
+    /// Property
     /// </summary>
-    public class Property
+    public partial class Property
     {
         /// <summary>
         /// Register of all Property Type Ids to Enum for easy use
@@ -200,71 +199,5 @@ namespace MasterBuilder.Request
         /// Validation Items
         /// </summary>
         public IEnumerable<Validation> ValidationItems { get; set; }
-
-        /// <summary>
-        /// Validate and perform data fixes
-        /// </summary>
-        internal bool Validate(Project project, Entity entity, out string message)
-        {
-            var messageList = new List<string>();
-
-            if (PropertyTypeId == Guid.Empty)
-            {
-                messageList.Add("Empty Guid is not a valid Property Type");
-            }
-
-            // Title
-            if (string.IsNullOrWhiteSpace(Title))
-            {
-                Title = InternalName;
-            }
-
-            // Internal Name must be valid
-            if (!Regex.IsMatch(InternalName, @"^[a-zA-Z]+$"))
-            {
-                messageList.Add("Entity Internal Name must only contain letters");
-            }
-            // Ensure Internal Name is standard caseing
-            InternalName = InternalName.Pascalize();
-
-            // TODO: below validation items are default so fix this so they can be overwritten
-            if (PropertyTemplate == PropertyTemplateEnum.ReferenceTitle)
-            {
-                ValidationItems = new Validation[]
-                {
-                    new Validation{
-                        ValidationType = ValidationTypeEnum.Unique
-                    },
-                    new Validation
-                    {
-                        ValidationType = ValidationTypeEnum.MaximumLength,
-                        IntegerValue = 200
-                    },
-                    new Validation{
-                        ValidationType = ValidationTypeEnum.Required
-                    },
-                };
-            }
-
-            if (ParentEntityId.HasValue)
-            {
-                var parentEntity = project.Entities.Any(a => a.Id == ParentEntityId.Value);
-                if (!parentEntity)
-                {
-                    messageList.Add($"Entity:{entity.InternalName}, Property:{InternalName} contains an invalid ParentEntitId:{ParentEntityId.Value}");
-                }
-            }
-
-            if (messageList.Any())
-            {
-                message = string.Join(", ", messageList);
-                return false;
-            }
-            else
-            {
-                message = "Success";
-                return true;
-            }
-        }
     }
 }

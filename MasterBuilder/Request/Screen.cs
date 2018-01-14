@@ -12,7 +12,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Screen
     /// </summary>
-    public class Screen
+    public partial class Screen
     {
         /// <summary>
         /// Register of all Screen Type Ids to Enum for easy use
@@ -140,83 +140,7 @@ namespace MasterBuilder.Request
                 ScreenTypeId = ScreenTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
             }
         }
-
-        /// <summary>
-        /// Validate the screen and fix a few values
-        /// </summary>
-        internal bool Validate(out string errors)
-        {
-            if (ScreenSections == null || !ScreenSections.Any())
-            {
-                var screenSectionType = ScreenSectionTypeEnum.Html;
-                if (EntityId.HasValue)
-                {
-                    switch (ScreenType)
-                    {
-                        case ScreenTypeEnum.Search:
-                            screenSectionType = ScreenSectionTypeEnum.Search;
-                            break;
-                        case ScreenTypeEnum.Edit:
-                            screenSectionType = ScreenSectionTypeEnum.Form;
-                            break;
-                        case ScreenTypeEnum.View:
-                            screenSectionType = ScreenSectionTypeEnum.Form;
-                            break;
-                        case ScreenTypeEnum.Html:
-                            screenSectionType = ScreenSectionTypeEnum.Html;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                ScreenSections = new ScreenSection[]
-                {
-                    new ScreenSection
-                    {
-                        Id = Id,
-                        Title = Title,
-                        EntityId = EntityId,
-                        InternalName = InternalName,
-                        ScreenSectionType = screenSectionType,
-                        NavigateToScreenId = NavigateToScreenId
-                    }
-                };
-            }
-            else
-            {
-                foreach (var screenSection in ScreenSections)
-                {
-                    if (!screenSection.EntityId.HasValue)
-                    {
-                        screenSection.EntityId = EntityId;
-                    }
-                }
-            }
-
-            if (string.IsNullOrEmpty(Path))
-            {
-                Path = Title.Kebaberize();
-            }
-
-            if (MenuItems != null)
-            {
-                var firstScreenSection = ScreenSections.First();
-                if (firstScreenSection != null) {
-                    var menuItems = new List<MenuItem>();
-                    if (firstScreenSection.MenuItems != null)
-                    {
-                        menuItems.AddRange(firstScreenSection.MenuItems);
-                    }
-                    menuItems.AddRange(MenuItems);
-
-                    firstScreenSection.MenuItems = menuItems;
-                }
-            }
-
-            errors = "";
-            return true;
-        }
-
+        
         /// <summary>
         /// Get the edit path
         /// </summary>

@@ -16,8 +16,6 @@ namespace MasterBuilder.Request
         {
             var errors = new List<string>();
 
-            GenerateAdminScreenAndMenu();
-
             // Set Default Values for nullable fields
             if (!ImutableDatabase.HasValue)
             {
@@ -36,6 +34,15 @@ namespace MasterBuilder.Request
                     errors.Add(entityMessage);
                 }
             }
+            foreach (var screen in Screens)
+            {
+                if (!screen.Resolve(this, out string screenMessage))
+                {
+                    errors.Add(screenMessage);
+                }
+            }
+
+            GenerateAdminScreenAndMenu();
 
             if (errors.Any())
             {

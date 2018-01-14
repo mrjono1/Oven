@@ -39,7 +39,7 @@ namespace MasterBuilder.Request
             }
             foreach (var screen in Screens)
             {
-                if (!screen.Validate(out string screenMessage))
+                if (!screen.Validate(this, out string screenMessage))
                 {
                     errors.Add(screenMessage);
                 }
