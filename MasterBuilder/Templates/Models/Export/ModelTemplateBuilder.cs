@@ -1,9 +1,8 @@
-using MasterBuilder.Helpers;
+using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.Models.Export
 {

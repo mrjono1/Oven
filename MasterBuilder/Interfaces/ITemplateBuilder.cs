@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace MasterBuilder.Helpers
+namespace MasterBuilder.Interfaces
 {
     /// <summary>
     /// Standard way of builing mutiple templates

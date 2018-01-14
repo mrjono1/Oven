@@ -1,8 +1,7 @@
-using MasterBuilder.Helpers;
+using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace MasterBuilder.Templates.Entities

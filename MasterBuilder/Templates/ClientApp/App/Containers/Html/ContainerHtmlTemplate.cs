@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MasterBuilder.Helpers;
+using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.ClientApp.App.Containers.Html

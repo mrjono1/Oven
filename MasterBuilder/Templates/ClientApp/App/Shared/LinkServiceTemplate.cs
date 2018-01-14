@@ -1,4 +1,4 @@
-using MasterBuilder.Helpers;
+using MasterBuilder.Interfaces;
 
 namespace MasterBuilder.Templates.ClientApp.App.Shared
 {

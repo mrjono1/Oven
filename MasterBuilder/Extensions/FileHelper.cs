@@ -1,10 +1,10 @@
-using MasterBuilder.Request;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MasterBuilder.Helpers;
 using System.Collections.Generic;
+using MasterBuilder.Interfaces;
 
 namespace MasterBuilder
 {

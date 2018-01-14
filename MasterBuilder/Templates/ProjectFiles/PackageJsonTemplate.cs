@@ -1,7 +1,6 @@
 using Humanizer;
-using MasterBuilder.Helpers;
+using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
-using System;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {

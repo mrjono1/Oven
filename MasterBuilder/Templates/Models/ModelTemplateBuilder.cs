@@ -1,8 +1,7 @@
-using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
+using MasterBuilder.Interfaces;
 
 namespace MasterBuilder.Templates.Models
 {

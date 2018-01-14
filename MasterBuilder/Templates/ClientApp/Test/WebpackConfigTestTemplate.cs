@@ -1,11 +1,11 @@
-using MasterBuilder.Helpers;
+using MasterBuilder.Interfaces;
 
 namespace MasterBuilder.Templates.ClientApp.Test
 {
     /// <summary>
     /// Webpack Config
     /// </summary>
-    public class WebpackConfigTest : ITemplate
+    public class WebpackConfigTestTemplate : ITemplate
     {
         /// <summary>
         /// Get file name

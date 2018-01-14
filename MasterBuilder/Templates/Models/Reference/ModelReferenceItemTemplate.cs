@@ -1,7 +1,5 @@
-using MasterBuilder.Helpers;
+using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
-using System.IO;
-using System.Text;
 
 namespace MasterBuilder.Templates.Models.Reference
 {

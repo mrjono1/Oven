@@ -2,14 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Request
 {
     /// <summary>
     /// Project
     /// </summary>
-    public class Project
+    public partial class Project
     {
         internal static readonly Guid MasterBuilderId = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}");
         /// <summary>
@@ -129,161 +128,34 @@ namespace MasterBuilder.Request
         /// Allow Destructive Database Change, things like dropping columns, tables, keys
         /// </summary>
         public bool AllowDestructiveDatabaseChanges { get; set; }
-        
         /// <summary>
-        /// Validate a whole project, also may resolve some issues or perform upgrades
+        /// Validate and Resolve this and child objects
         /// </summary>
-        /// <param name="message">returns "Success" or details an issue found</param>
-        internal bool Validate(out string message)
+        /// <param name="message">Error messages</param>
+        /// <returns>true for no errors</returns>
+        internal bool ValidateAndResolve(out string message)
         {
-            var messages = new List<string>();
+            var errors = new List<string>();
 
-            // Validate Entities
-            if (Entities == null || !Entities.Any())
+            if (!Validate(out string validateError))
             {
-                messages.Add("No Entities have been defined");
-                message = string.Join(Environment.NewLine, messages);
-                return false;
+                errors.Add(validateError);
             }
-            foreach (var entity in Entities)
+
+            if (!Resolve(out string resolveError))
             {
-                if (!entity.Validate(this, out string entityMessage))
-                {
-                    messages.Add(entityMessage);
-                }
+                errors.Add(resolveError);
             }
             
-            // Validate Screens
-            if (Screens == null || !Screens.Any())
+            if (errors.Any())
             {
-                messages.Add("No Screens have been defined");
-                message = string.Join(Environment.NewLine, messages);
-                return false;
-            }
-            if (Screens.Select(i => i.Id).Distinct().Count() != Screens.Count())
-            {
-                messages.Add("Duplicate screen ids defined");
-            }
-            foreach (var screen in Screens)
-            {
-                if (!screen.Validate(out string screenMessage))
-                {
-                    messages.Add(screenMessage);
-                }
-            }
-
-
-            if (MenuItems == null || !MenuItems.Any())
-            {
-                messages.Add("No Menu Items have been defined");
-                message = string.Join(Environment.NewLine, messages);
-                return false;
-            }
-            foreach (var menuItem in MenuItems)
-            {
-                if (!menuItem.Validate(this, out string screenMessage))
-                {
-                    messages.Add(screenMessage);
-                }
-            }
-
-            GenerateAdminScreenAndMenu();
-
-            // Set Default Values for nullable fields
-
-            if (!ImutableDatabase.HasValue)
-            {
-                ImutableDatabase = true;
-            }
-
-            if (!DefaultScreenId.HasValue)
-            {
-                DefaultScreenId = Screens.FirstOrDefault().Id;
-            }
-            
-            if (messages.Any())
-            {
-                message = string.Join(Environment.NewLine, messages);
+                message = string.Join(Environment.NewLine, errors);
                 return false;
             }
             else
             {
-                message = "Success";
+                message = null;
                 return true;
-            }
-        }
-
-        private void GenerateAdminScreenAndMenu()
-        {
-            //TODO this is the wrong place for this code
-
-            var administrationScreen = Screens.Where(s => s.InternalName.Equals("Administration", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
-            
-            if (administrationScreen == null)
-            {
-                administrationScreen = new Screen()
-                {
-                    Id = new Guid("{43037072-42F2-4B5C-A72E-1A08F149709A}"),
-                    Title = "Administration",
-                    ScreenType = ScreenTypeEnum.Html,
-                    Path = "administration"
-                };
-
-                var screens = new List<Screen>(Screens)
-                {
-                    administrationScreen
-                };
-                Screens = screens.ToArray();
-
-                var menus = new List<MenuItem>(MenuItems)
-                {
-                    new MenuItem()
-                    {
-                        ScreenId = administrationScreen.Id,
-                        Title = "Administration"
-                    }
-                };
-                MenuItems = menus;
-            }
-
-            ScreenSection administrationSection = null;
-
-            if (administrationScreen.ScreenSections != null)
-            {
-                administrationSection = administrationScreen.ScreenSections.Where(s => s.InternalName.Equals("Administration", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
-            }
-
-            if (administrationSection == null)
-            {
-                var menuItems = new List<MenuItem>();
-
-                foreach (var screen in Screens.Where(a => a.Template == ScreenTemplateEnum.Reference))
-                {
-                    var menuItem = new MenuItem
-                    {
-                        ScreenId = screen.Id,
-                        MenuItemType = MenuItemTypeEnum.ApplicationLink
-                    };
-                    menuItems.Add(menuItem);
-                }
-                
-                administrationSection = new ScreenSection()
-                {
-                    Id = new Guid("{0F93AE3B-930D-4F6B-B73F-2EB63F225FAD}"),
-                    InternalName = "Administration",
-                    Title = "Administration",
-                    ScreenSectionType = ScreenSectionTypeEnum.MenuList,
-                    MenuListMenuItems = menuItems
-                };
-
-                var sections = new List<ScreenSection>(){
-                    administrationSection
-                };
-                if (administrationScreen.ScreenSections != null)
-                {
-                    sections.AddRange(administrationScreen.ScreenSections);
-                }
-                administrationScreen.ScreenSections = sections.ToArray();
             }
         }
     }

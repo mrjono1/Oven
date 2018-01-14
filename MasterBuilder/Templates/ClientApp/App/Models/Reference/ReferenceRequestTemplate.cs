@@ -1,5 +1,4 @@
-using MasterBuilder.Helpers;
-using MasterBuilder.Request;
+using MasterBuilder.Interfaces;
 
 namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
 {

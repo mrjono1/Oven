@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace MasterBuilder
@@ -23,7 +21,7 @@ namespace MasterBuilder
             }
             
             // Validate & Pre Process Project
-            if (!project.Validate(out string messages))
+            if (!project.ValidateAndResolve(out string messages))
             {
                 return messages;
             }
@@ -95,7 +93,7 @@ namespace MasterBuilder
             // ClientApp/Test
             projectWriter.AddTemplate(new Templates.ClientApp.Test.BootTestTemplate());
             projectWriter.AddTemplate(new Templates.ClientApp.Test.KarmaConfigTemplate());
-            projectWriter.AddTemplate(new Templates.ClientApp.Test.WebpackConfigTest());
+            projectWriter.AddTemplate(new Templates.ClientApp.Test.WebpackConfigTestTemplate());
 
             // ClientApp/Polyfills
             projectWriter.AddTemplate(new Templates.ClientApp.Polyfills.BrowserPolyfillsTemplate());

@@ -1,4 +1,4 @@
-using MasterBuilder.Helpers;
+using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System.Collections.Generic;
 using System.Linq;

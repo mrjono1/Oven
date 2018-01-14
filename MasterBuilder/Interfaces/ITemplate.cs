@@ -1,4 +1,4 @@
-namespace MasterBuilder.Helpers
+namespace MasterBuilder.Interfaces
 {
     /// <summary>
     /// Interface for templates

@@ -1,5 +1,4 @@
-using MasterBuilder.Helpers;
-using System;
+using MasterBuilder.Interfaces;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {

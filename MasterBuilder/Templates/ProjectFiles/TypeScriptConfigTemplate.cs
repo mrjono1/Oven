@@ -1,11 +1,11 @@
-using MasterBuilder.Helpers;
+using MasterBuilder.Interfaces;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
     /// <summary>
     /// Type script config
     /// </summary>
-    public class TypeScriptConfigTemplate :ITemplate
+    public class TypeScriptConfigTemplate: ITemplate
     {
         /// <summary>
         /// Get file name
