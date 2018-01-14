@@ -12,7 +12,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// The configuration for an entity
     /// </summary>
-    public class Entity
+    public partial class Entity
     {
         /// <summary>
         /// Register of all Entity Template Ids to Enum for easy use
@@ -100,96 +100,6 @@ namespace MasterBuilder.Request
                 {
                     EntityTemplateId = id;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Validate this object and reslove any issues if possible
-        /// </summary>
-        internal bool Validate(Project project, out string message)
-        {
-            var messageList = new List<string>();
-
-            var parentPropertyCount = Properties.Count(p => p.PropertyType == PropertyTypeEnum.ParentRelationship);
-            if (parentPropertyCount > 1)
-            {
-                messageList.Add($"Entity:{Title} can only contain one parent properties it contains {parentPropertyCount}");
-            }
-
-            foreach (var property in Properties)
-            {
-                if (!property.Validate(project, this, out string propertyMessage)) {
-                    messageList.Add(propertyMessage);
-                }
-            }
-
-            GenerateScreen(project, this);
-            
-            if (messageList.Any())
-            {
-                message = string.Join(", ", messageList);
-                return false;
-            }
-            else
-            {
-                message = "Success";
-                return true;
-            }
-        }
-
-        private void GenerateScreen(Project project, Entity entity)
-        {
-            if (EntityTemplate == EntityTemplateEnum.Reference)
-            {
-                var screenFound = project.Screens.Where(s => s.EntityId == Id).Any();
-
-                if (screenFound)
-                {
-                    return;
-                }
-                
-                if (Properties == null || !Properties.Any() || !Properties.Any(p => p.PropertyType == PropertyTypeEnum.PrimaryKey))
-                {
-                    var properties = new List<Property>
-                    {
-                        new Property()
-                        {
-                            Id = entity.Id,
-                            Title = "Id",
-                            InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey
-                        }
-                    };
-                    if (Properties != null)
-                    {
-                        properties.AddRange(Properties);
-                    }
-                    Properties = properties;
-                }
-
-                var editScreenId = Properties.SingleOrDefault(p => p.PropertyType == PropertyTypeEnum.PrimaryKey).Id; // Just grabing a reproduceable id
-                var screens = new List<Screen>(project.Screens)
-                {
-                    new Screen()
-                    {
-                        Id = Id, // TODO: The id should be reproduceable I don't like this
-                        EntityId = Id,
-                        Title = Title.Pluralize(),
-                        ScreenType = ScreenTypeEnum.Search,
-                        Path = InternalNamePlural.Kebaberize(),
-                        NavigateToScreenId = editScreenId,
-                        Template = ScreenTemplateEnum.Reference
-                    },
-                    new Screen()
-                    {
-                        Id = editScreenId,
-                        EntityId = Id,
-                        Title = Title,
-                        ScreenType = ScreenTypeEnum.Edit,
-                        Path = InternalName.Kebaberize()
-                    }
-                };
-                project.Screens = screens;
             }
         }
     }

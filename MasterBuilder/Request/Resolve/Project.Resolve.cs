@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using MasterBuilder.Request;
 
 namespace MasterBuilder.Request
 {
@@ -14,22 +12,29 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Fills in any missing values and records it can to assist templating
         /// </summary>
-        protected bool Resolve(out string message)
+        internal bool Resolve(out string message)
         {
             var errors = new List<string>();
 
             GenerateAdminScreenAndMenu();
 
             // Set Default Values for nullable fields
-
             if (!ImutableDatabase.HasValue)
             {
                 ImutableDatabase = true;
             }
-
             if (!DefaultScreenId.HasValue)
             {
                 DefaultScreenId = Screens.FirstOrDefault().Id;
+            }
+
+            // Resolve child records
+            foreach (var entity in Entities)
+            {
+                if (!entity.Resolve(this, out string entityMessage))
+                {
+                    errors.Add(entityMessage);
+                }
             }
 
             if (errors.Any())
@@ -47,8 +52,6 @@ namespace MasterBuilder.Request
 
         private void GenerateAdminScreenAndMenu()
         {
-            //TODO this is the wrong place for this code
-
             var administrationScreen = Screens.Where(s => s.InternalName.Equals("Administration", StringComparison.OrdinalIgnoreCase)).SingleOrDefault();
 
             if (administrationScreen == null)

@@ -20,6 +20,10 @@ namespace MasterBuilder.Request
             {
                 errors.Add("Duplicate entity ids defined");
             }
+            if (Entities.Select(i => i.InternalName).Distinct().Count() != Entities.Count())
+            {
+                errors.Add("Duplicate entity Internal Name defined");
+            }
             foreach (var entity in Entities)
             {
                 if (!entity.Validate(this, out string entityMessage))
