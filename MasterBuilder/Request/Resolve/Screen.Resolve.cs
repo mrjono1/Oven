@@ -83,6 +83,15 @@ namespace MasterBuilder.Request
                 }
             }
 
+            // Resolve child records
+            foreach (var screenSection in ScreenSections)
+            {
+                if (!screenSection.Resolve(project, this, out string screenSectionMessage))
+                {
+                    errors.Add(screenSectionMessage);
+                }
+            }
+
             if (errors.Any())
             {
                 message = string.Join(Environment.NewLine, errors);

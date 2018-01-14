@@ -47,9 +47,9 @@ namespace MasterBuilder.Templates.Models
                         templates.Add(new ModelEditRequestTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
                         break;
                     case ScreenSectionTypeEnum.Search:
-                        templates.Add(new ModelSearchRequestTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
-                        templates.Add(new ModelSearchResponseTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
-                        templates.Add(new ModelSearchItemTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
+                        templates.Add(new ModelSearchRequestTemplate(Project, group.Screen, group.ScreenSection));
+                        templates.Add(new ModelSearchResponseTemplate(Project, group.Screen, group.ScreenSection));
+                        templates.Add(new ModelSearchItemTemplate(Project, group.Screen, group.ScreenSection));
                         break;
                     case ScreenSectionTypeEnum.MenuList:
                         // None

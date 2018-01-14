@@ -9,17 +9,15 @@ namespace MasterBuilder.Templates.Models
     public class ModelSearchResponseTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
         private readonly Screen Screen;
         private readonly ScreenSection ScreenSection;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelSearchResponseTemplate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
+        public ModelSearchResponseTemplate(Project project, Screen screen, ScreenSection screenSection)
         {
             Project = project;
-            Entity = entity;
             Screen = screen;
             ScreenSection = screenSection;
         }
@@ -29,13 +27,13 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            if (Screen.EntityId.HasValue && ScreenSection.EntityId.HasValue && Screen.EntityId != ScreenSection.EntityId)
+            if (Screen.ScreenType == ScreenTypeEnum.Search)
             {
-                return $"{Screen.InternalName}{ScreenSection.InternalName}Response.cs";
+                return $"{Screen.InternalName}Response.cs";
             }
             else
             {
-                return $"{Screen.InternalName}Response.cs";
+                return $"{Screen.InternalName}{ScreenSection.InternalName}Response.cs";
             }
         }
 
@@ -54,7 +52,7 @@ namespace MasterBuilder.Templates.Models
         {
             var className = $"{Screen.InternalName}Response";
             var itemClassName = $"{Screen.InternalName}Item";
-            if (Screen.EntityId.HasValue && ScreenSection.EntityId.HasValue && Screen.EntityId != ScreenSection.EntityId)
+            if (Screen.ScreenType != ScreenTypeEnum.Search)
             {
                 className = $"{Screen.InternalName}{ScreenSection.InternalName}Response";
                 itemClassName = $"{Screen.InternalName}{ScreenSection.InternalName}Item";

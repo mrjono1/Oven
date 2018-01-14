@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Request
 {
     /// <summary>
     /// Screen Section
     /// </summary>
-    public class ScreenSection
+    public partial class ScreenSection
     {
         /// <summary>
         /// Register of all Screen Section Type Ids to Enum for easy use
@@ -76,5 +75,9 @@ namespace MasterBuilder.Request
         /// Required only for Menu List Type
         /// </summary>
         public IEnumerable<MenuItem> MenuListMenuItems { get; set; }
+        /// <summary>
+        /// Only populate when Screen Section Type = Search
+        /// </summary>
+        public SearchSection SearchSection { get; set; }
     }
 }

@@ -10,17 +10,15 @@ namespace MasterBuilder.Templates.Models
     public class ModelSearchRequestTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
         private readonly Screen Screen;
         private readonly ScreenSection ScreenSection;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelSearchRequestTemplate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
+        public ModelSearchRequestTemplate(Project project, Screen screen, ScreenSection screenSection)
         {
             Project = project;
-            Entity = entity;
             Screen = screen;
             ScreenSection = screenSection;
         }
@@ -30,13 +28,13 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            if (Screen.EntityId.HasValue && ScreenSection.EntityId.HasValue && Screen.EntityId != ScreenSection.EntityId)
+            if (Screen.ScreenType == ScreenTypeEnum.Search)
             {
-                return $"{Screen.InternalName}{ScreenSection.InternalName}Request.cs";
+                return $"{Screen.InternalName}Request.cs";
             }
             else
             {
-                return $"{Screen.InternalName}Request.cs";
+                return $"{Screen.InternalName}{ScreenSection.InternalName}Request.cs";
             }
         }
 
@@ -54,7 +52,7 @@ namespace MasterBuilder.Templates.Models
         public string GetFileContent()
         {
             var className = $"{Screen.InternalName}Request";
-            if (Screen.EntityId.HasValue && ScreenSection.EntityId.HasValue && Screen.EntityId != ScreenSection.EntityId)
+            if (Screen.ScreenType != ScreenTypeEnum.Search)
             {
                 className = $"{Screen.InternalName}{ScreenSection.InternalName}Request";
             }
