@@ -53,9 +53,9 @@ namespace MasterBuilder.Templates.Controllers
         /// {screenSection.Title} Search
         /// </summary>
         [HttpPost(""{screen.InternalName}{screenSection.InternalName}"")]
-        [ProducesResponseType(typeof({screenSection.SearchSection.SearchResponseClassCSharp}), 200)]
+        [ProducesResponseType(typeof({screenSection.SearchSection.SearchResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> {screen.InternalName}{screenSection.InternalName}([FromBody]{screenSection.SearchSection.SearchRequestClassCSharp} request)
+        public async Task<IActionResult> {screen.InternalName}{screenSection.InternalName}([FromBody]{screenSection.SearchSection.SearchRequestClass} request)
         {{
             if (request == null)
             {{
@@ -73,7 +73,7 @@ namespace MasterBuilder.Templates.Controllers
 
             var totalItems = query.Count();
             int totalPages = 0;
-            var items = new {screenSection.SearchSection.SearchItemClassCSharp}[0];
+            var items = new {screenSection.SearchSection.SearchItemClass}[0];
 
             if (totalItems != 0 && request.PageSize != 0)
             {{
@@ -83,7 +83,7 @@ namespace MasterBuilder.Templates.Controllers
                     .OrderBy(p => p.Title) //TODO: From Setting
                     .Skip((request.Page - 1) * request.PageSize)
                     .Take(request.PageSize)
-                    .Select(item => new {screenSection.SearchSection.SearchItemClassCSharp}
+                    .Select(item => new {screenSection.SearchSection.SearchItemClass}
                     {{
 {string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
                     }})
@@ -91,7 +91,7 @@ namespace MasterBuilder.Templates.Controllers
     
             }}
             
-            var result = new {screenSection.SearchSection.SearchResponseClassCSharp}
+            var result = new {screenSection.SearchSection.SearchResponseClass}
             {{
                 TotalItems = totalItems,
                 TotalPages = totalPages,

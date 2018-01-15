@@ -3,7 +3,6 @@ using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MasterBuilder.Templates.ClientApp.App.Models
 {
@@ -31,7 +30,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{ScreenSection.InternalName}Item.ts";
+            return $"{ScreenSection.SearchSection.SearchItemClass}.ts";
         }
 
         /// <summary>
@@ -47,27 +46,14 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         /// </summary>
         public string GetFileContent()
         {
-            var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
-
             var properties = new List<string>();
-            Property parentProperty = null;
-            foreach (var property in entity.Properties)
+
+            foreach (var searchColumn in ScreenSection.SearchSection.SearchColumns)
             {
-                switch (property.PropertyType)
-                {
-                    case PropertyTypeEnum.ParentRelationship:
-                        parentProperty = property;
-                        continue;
-                    case PropertyTypeEnum.ReferenceRelationship:
-                        properties.Add($"   {property.InternalName.Camelize()}Title: string;");
-                        break;
-                    default:
-                        properties.Add($"   {property.InternalName.Camelize()}: {property.TsType};");
-                        break;
-                }
+                properties.Add($"    {searchColumn.InternalNameCSharp.Camelize()}: {searchColumn.TypeTs};");
             }
             
-            return $@"export interface {ScreenSection.InternalName}Item {{
+            return $@"export interface {ScreenSection.SearchSection.SearchItemClass} {{
 {string.Join(Environment.NewLine, properties)}
 }}";
         }

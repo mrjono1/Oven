@@ -112,69 +112,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         break;
                     case ScreenSectionTypeEnum.Search:
 
-                        imports.Add($"import {{ {screenSection.InternalName}Item }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Item';");
-                        imports.Add($"import {{ {screenSection.InternalName}Request }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Request';");
-                        imports.Add($"import {{ {screenSection.InternalName}Response }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}Response';");
-                        imports.Add("import { MatTableDataSource } from '@angular/material';");
-
-                        constructorBodySections.Add($@"        this.{screenSection.InternalName.Camelize()}Request = new {screenSection.InternalName}Request();
-        this.{screenSection.InternalName.Camelize()}Request.page = 1;
-        this.{screenSection.InternalName.Camelize()}Request.pageSize = 20;");
-
-                        classProperties.Add($"public {screenSection.InternalName.Camelize()}Response: {screenSection.InternalName}Response;");
-                        classProperties.Add($"public {screenSection.InternalName.Camelize()}Request: {screenSection.InternalName}Request;");
-
-                        var propertiesToDisplay = new List<string>();
-                        foreach (var property in entity.Properties)
-                        {
-                            switch (property.PropertyType)
-                            {
-                                case PropertyTypeEnum.PrimaryKey:
-                                    break;
-                                case PropertyTypeEnum.ParentRelationship:
-                                    break;
-                                case PropertyTypeEnum.ReferenceRelationship:
-                                    propertiesToDisplay.Add($"'{property.InternalName.Camelize()}Title'");
-                                    break;
-                                default:
-                                    propertiesToDisplay.Add($"'{property.InternalName.Camelize()}'");
-                                    break;
-                            }
-                        }
+                        var searchSectionPartial = new SearchSectionPartial(Screen, screenSection);
+                        imports.AddRange(searchSectionPartial.GetImports());
+                        constructorBodySections.AddRange(searchSectionPartial.GetConstructorBodySections());
+                        classProperties.AddRange(searchSectionPartial.GetClassProperties());
+                        onNgInitBodySections.AddRange(searchSectionPartial.GetOnNgInitBodySections(Project));
                         
-
-                        classProperties.Add($"{screenSection.InternalName.Camelize()}Columns = [{string.Join(",", propertiesToDisplay)}];");
-                        classProperties.Add($"{screenSection.InternalName.Camelize()}DataSource = new MatTableDataSource<{screenSection.InternalName}Item>();");
-
-                        string parentPropertyFilterString = null;
-                        Entity parentEntity = null;
-                        if (entity != null)
-                        {
-                            parentProperty = (from p in entity.Properties
-                                                  where p.PropertyType == PropertyTypeEnum.ParentRelationship
-                                                  select p).SingleOrDefault();
-                            if (parentProperty != null)
-                            {
-                                parentEntity = (from s in Project.Entities
-                                                where s.Id == parentProperty.ParentEntityId
-                                                select s).SingleOrDefault();
-                                parentPropertyFilterString = $"this.{screenSection.InternalName.Camelize()}Request.{parentEntity.InternalName.Camelize()}Id = params['{parentEntity.InternalName.Camelize()}Id'];";
-                            }
-                        }
-
-                        onNgInitBodySections.Add($@"        this.route.params.subscribe(params => {{
-            this.{screenSection.InternalName.Camelize()}Request = new {screenSection.InternalName}Request();
-            this.{screenSection.InternalName.Camelize()}Request.page = 1;
-            this.{screenSection.InternalName.Camelize()}Request.pageSize = 20;
-            {parentPropertyFilterString}
-
-             this.{entity.InternalName.Camelize()}Service.get{Screen.InternalName}{screenSection.InternalName}(this.{screenSection.InternalName.Camelize()}Request).subscribe( result => {{
-                this.{screenSection.InternalName.Camelize()}Response = result;
-                this.{screenSection.InternalName.Camelize()}DataSource = new MatTableDataSource<{screenSection.InternalName}Item>(result.items);
-            }});
-        }});");
-
-
                         break;
                     case ScreenSectionTypeEnum.MenuList:
                         // Nothing at the moment

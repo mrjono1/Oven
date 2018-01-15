@@ -29,7 +29,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Search Item C#
         /// </summary>
-        internal string SearchItemClassCSharp
+        internal string SearchItemClass
         {
             get
             {
@@ -46,7 +46,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Search Request C#
         /// </summary>
-        internal string SearchRequestClassCSharp
+        internal string SearchRequestClass
         {
             get
             {
@@ -63,7 +63,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Search Response C#
         /// </summary>
-        internal string SearchResponseClassCSharp
+        internal string SearchResponseClass
         {
             get
             {

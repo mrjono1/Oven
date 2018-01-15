@@ -78,12 +78,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                         break;
                     case ScreenSectionTypeEnum.Search:
 
-                        imports.Add($"import {{ {group.ScreenSection.InternalName}Item }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}Item';");
-                        imports.Add($"import {{ {group.ScreenSection.InternalName}Request }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}Request';");
-                        imports.Add($"import {{ {group.ScreenSection.InternalName}Response }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}Response';");
+                        imports.Add($"import {{ {group.ScreenSection.SearchSection.SearchItemClass} }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.SearchSection.SearchItemClass}';");
+                        imports.Add($"import {{ {group.ScreenSection.SearchSection.SearchRequestClass} }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.SearchSection.SearchRequestClass}';");
+                        imports.Add($"import {{ {group.ScreenSection.SearchSection.SearchResponseClass} }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.SearchSection.SearchResponseClass}';");
 
-                        methods.Add($@"    get{group.Screen.InternalName}{group.ScreenSection.InternalName}(request: {group.ScreenSection.InternalName}Request){{
-        return this.http.post<{group.ScreenSection.InternalName}Response>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}`, request);
+                        methods.Add($@"    get{group.Screen.InternalName}{group.ScreenSection.InternalName}(request: {group.ScreenSection.SearchSection.SearchRequestClass}){{
+        return this.http.post<{group.ScreenSection.SearchSection.SearchResponseClass}>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}`, request);
     }}");
 
                         break;

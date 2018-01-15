@@ -27,7 +27,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{ScreenSection.InternalName}Response.ts";
+            return $"{ScreenSection.SearchSection.SearchResponseClass}.ts";
         }
 
         /// <summary>
@@ -43,10 +43,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         /// </summary>
         public string GetFileContent()
         {
-            return $@"import {{ {ScreenSection.InternalName}Item }} from './{ScreenSection.InternalName}Item';
+            return $@"import {{ {ScreenSection.SearchSection.SearchItemClass} }} from './{ScreenSection.SearchSection.SearchItemClass}';
 
-export interface {ScreenSection.InternalName}Response {{
-    items: {ScreenSection.InternalName}Item[];
+export interface {ScreenSection.SearchSection.SearchResponseClass} {{
+    items: {ScreenSection.SearchSection.SearchItemClass}[];
     totalPages: number;
     totalItems: number;
 }}";

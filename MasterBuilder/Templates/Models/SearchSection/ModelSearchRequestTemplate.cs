@@ -28,7 +28,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{ScreenSection.SearchSection.SearchRequestClassCSharp}.cs";
+            return $"{ScreenSection.SearchSection.SearchRequestClass}.cs";
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Search Request
     /// </summary>
-    public class {ScreenSection.SearchSection.SearchRequestClassCSharp}
+    public class {ScreenSection.SearchSection.SearchRequestClass}
     {{
         /// <summary>
         /// Page

@@ -17,7 +17,10 @@ namespace MasterBuilder.Request
         /// Optional: Title, Defaulted from Entity if not provided
         /// </summary>
         public string Title { get; set; }
-        
+        /// <summary>
+        /// The column order
+        /// </summary>
+        public int Ordinal { get; set; }
         #region Internal Helper Properties
         /// <summary>
         /// Property
@@ -86,6 +89,13 @@ namespace MasterBuilder.Request
                     default:
                         return Property.CsType;
                 }
+            }
+        }
+        internal string TypeTs
+        {
+            get
+            {
+                return Property.TsType;
             }
         }
         #endregion

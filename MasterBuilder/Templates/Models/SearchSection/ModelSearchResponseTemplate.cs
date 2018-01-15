@@ -27,7 +27,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{ScreenSection.SearchSection.SearchResponseClassCSharp}.cs";
+            return $"{ScreenSection.SearchSection.SearchResponseClass}.cs";
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Screen Search Response
     /// </summary>
-    public class {ScreenSection.SearchSection.SearchResponseClassCSharp}
+    public class {ScreenSection.SearchSection.SearchResponseClass}
     {{
         /// <summary>
         /// Total Pages
@@ -61,9 +61,9 @@ namespace {Project.InternalName}.Models
         /// </summary>
         public int TotalItems {{ get; internal set; }}
         /// <summary>
-        /// {ScreenSection.SearchSection.SearchItemClassCSharp}
+        /// {ScreenSection.SearchSection.SearchItemClass}
         /// </summary>
-        public {ScreenSection.SearchSection.SearchItemClassCSharp}[] Items {{ get; internal set; }}
+        public {ScreenSection.SearchSection.SearchItemClass}[] Items {{ get; internal set; }}
     }}
 }}";
         }

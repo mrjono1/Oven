@@ -30,7 +30,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{ScreenSection.SearchSection.SearchItemClassCSharp}.cs";
+            return $"{ScreenSection.SearchSection.SearchItemClass}.cs";
         }
 
         /// <summary>

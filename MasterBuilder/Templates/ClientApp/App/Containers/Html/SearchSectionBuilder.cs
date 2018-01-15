@@ -31,35 +31,23 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
         public string Evaluate()
         {
             var menuItems = new List<string>();
-
             var columns = new List<string>();
-            var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
 
-            foreach (var property in entity.Properties)
+            foreach (var column in ScreenSection.SearchSection.SearchColumns)
             {
-                string columnName = null;
-                if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
+                switch (column.PropertyType)
                 {
-                    continue;
-                }
-                else if (property.PropertyType == PropertyTypeEnum.ParentRelationship)
-                {
-                    continue;
-                }
-                else if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
-                {
-                    columnName = $"{property.InternalName.Camelize()}Title";
-                }
-                else
-                {
-                    columnName = property.InternalName.Camelize();
-                }
-
-                columns.Add($@"                <!-- {property.Title} Column -->
-                <ng-container matColumnDef=""{columnName}"">
-                    <mat-header-cell *matHeaderCellDef> {property.Title} </mat-header-cell>
-                    <mat-cell *matCellDef=""let element""> {{{{element.{columnName}}}}} </mat-cell>
+                    case PropertyTypeEnum.ParentRelationship:
+                    case PropertyTypeEnum.PrimaryKey:
+                        continue;
+                    default:
+                        columns.Add($@"                <!-- {column.TitleValue} Column -->
+                <ng-container matColumnDef=""{column.InternalNameCSharp.Camelize()}"">
+                    <mat-header-cell *matHeaderCellDef> {column.TitleValue} </mat-header-cell>
+                    <mat-cell *matCellDef=""let element""> {{{{element.{column.InternalNameCSharp.Camelize()}}}}} </mat-cell>
                 </ng-container>");
+                        break;
+                }
             }
 
             string rowClickRouterLink = null;
@@ -73,7 +61,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                                       select s).FirstOrDefault();
 
 
-                var parentProperty = (from p in entity.Properties
+                var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
                                       where p.PropertyType == PropertyTypeEnum.ParentRelationship
                                       select p).SingleOrDefault();
                 if (parentProperty != null)

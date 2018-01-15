@@ -29,7 +29,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{ScreenSection.InternalName}Request.ts";
+            return $"{ScreenSection.SearchSection.SearchRequestClass}.ts";
         }
 
         /// <summary>
@@ -45,25 +45,21 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         /// </summary>
         public string GetFileContent()
         {
-            var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
             
             string parentPropertyFilterString = null;
             Entity parentEntity = null;
-            if (entity != null)
+            var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
+                                    where p.PropertyType == PropertyTypeEnum.ParentRelationship
+                                    select p).SingleOrDefault();
+            if (parentProperty != null)
             {
-                var parentProperty = (from p in entity.Properties
-                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
-                                      select p).SingleOrDefault();
-                if (parentProperty != null)
-                {
-                    parentEntity = (from s in Project.Entities
-                                    where s.Id == parentProperty.ParentEntityId
-                                    select s).SingleOrDefault();
-                    parentPropertyFilterString = $"{parentEntity.InternalName.Camelize()}Id: string;";
-                }
+                parentEntity = (from s in Project.Entities
+                                where s.Id == parentProperty.ParentEntityId
+                                select s).SingleOrDefault();
+                parentPropertyFilterString = $"{parentEntity.InternalName.Camelize()}Id: string;";
             }
 
-            return $@"export class {ScreenSection.InternalName}Request {{
+            return $@"export class {ScreenSection.SearchSection.SearchRequestClass} {{
     page: number;
     pageSize: number;
     {parentPropertyFilterString}
