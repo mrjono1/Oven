@@ -98,7 +98,7 @@ namespace MasterBuilder.Templates.Controllers
                     {
                         case ScreenSectionTypeEnum.Search:
                             usings.Add("using Microsoft.AspNetCore.JsonPatch;");
-                            methods.Add(ControllerSearchMethodTemplate.Evaluate(Project, Entity, item.Screen, item.ScreenSection));
+                            methods.Add(ControllerSearchMethodTemplate.Evaluate(Project, item.Screen, item.ScreenSection));
                             break;
                         case ScreenSectionTypeEnum.Form:
                             methods.Add(ControllerEditMethodTemplate.Evaluate(Project, Entity, item.Screen, item.ScreenSection));

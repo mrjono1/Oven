@@ -14,66 +14,48 @@ namespace MasterBuilder.Templates.Controllers
         /// <summary>
         /// Evaluate
         /// </summary>
-        internal static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
-        {
-            var method = new StringBuilder();
-
-
+        internal static string Evaluate(Project project, Screen screen, ScreenSection screenSection)
+        {            
             var propertyMapping = new List<string>();
-            var sectionEntity = project.Entities.FirstOrDefault(e => e.Id == screenSection.EntityId);
-            foreach (var item in sectionEntity.Properties)
+            
+            foreach (var searchColumn in screenSection.SearchSection.SearchColumns)
             {
-                if (item.PropertyType == PropertyTypeEnum.ParentRelationship)
+                switch (searchColumn.PropertyType)
                 {
-                    continue;
-                }
-                else if (item.PropertyType == PropertyTypeEnum.ReferenceRelationship)
-                {
-                    propertyMapping.Add($"                        {item.InternalName}Title = (item.{item.InternalName} != null ? item.{item.InternalName}.Title : null)");
-                    continue;
-                }
-                else if (item.PropertyType == PropertyTypeEnum.OneToOneRelationship)
-                {
-                    continue;
-                }
-                else
-                {
-                    propertyMapping.Add($"                        {item.InternalName} = item.{item.InternalName}");
+                    case PropertyTypeEnum.ParentRelationship:
+                    case PropertyTypeEnum.OneToOneRelationship:
+                        break;
+                    case PropertyTypeEnum.ReferenceRelationship:
+                        propertyMapping.Add($"                        {searchColumn.InternalNameCSharp} = (item.{searchColumn.Property.InternalName} != null ? item.{searchColumn.Property.InternalName}.Title : null)");
+                        break;
+                    default:
+                        propertyMapping.Add($"                        {searchColumn.InternalNameCSharp} = item.{searchColumn.Property.InternalName}");
+                        break;
                 }
             }
-
-            var itemClassName = $"{screen.InternalName}Item";
-            var responseClassName = $"{screen.InternalName}Response";
-            var requestClassName = $"{screen.InternalName}Request";
-            if (screen.EntityId.HasValue && screenSection.EntityId.HasValue && screen.EntityId != screenSection.EntityId)
-            {
-                itemClassName = $"{screen.InternalName}{screenSection.InternalName}Item";
-                responseClassName = $"{screen.InternalName}{screenSection.InternalName}Response";
-                requestClassName = $"{screen.InternalName}{screenSection.InternalName}Request";
-            }
-
+            
             string parentPropertyWhereString = null;
             Entity parentEntity = null;
-            if (sectionEntity != null)
-            {
-                var parentProperty = (from p in sectionEntity.Properties
-                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
-                                      select p).SingleOrDefault();
-                if (parentProperty != null)
-                {
-                    parentEntity = (from s in project.Entities
-                                    where s.Id == parentProperty.ParentEntityId
-                                    select s).SingleOrDefault();
-                    parentPropertyWhereString = $"where !request.{parentEntity.InternalName}Id.HasValue || (request.{parentEntity.InternalName}Id.HasValue &&  request.{parentEntity.InternalName}Id.Value == item.{parentEntity.InternalName}Id)";
-                }
-            }
 
+            var parentProperty = (from p in screenSection.SearchSection.Entity.Properties
+                                    where p.PropertyType == PropertyTypeEnum.ParentRelationship
+                                    select p).SingleOrDefault();
+            if (parentProperty != null)
+            {
+                parentEntity = (from s in project.Entities
+                                where s.Id == parentProperty.ParentEntityId
+                                select s).SingleOrDefault();
+                parentPropertyWhereString = $"where !request.{parentEntity.InternalName}Id.HasValue || (request.{parentEntity.InternalName}Id.HasValue &&  request.{parentEntity.InternalName}Id.Value == item.{parentEntity.InternalName}Id)";
+            }
+            
             return $@"
         /// <summary>
         /// {screenSection.Title} Search
         /// </summary>
         [HttpPost(""{screen.InternalName}{screenSection.InternalName}"")]
-        public async Task<IActionResult> {screen.InternalName}{screenSection.InternalName}([FromBody]{requestClassName} request)
+        [ProducesResponseType(typeof({screenSection.SearchSection.SearchResponseClassCSharp}), 200)]
+        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+        public async Task<IActionResult> {screen.InternalName}{screenSection.InternalName}([FromBody]{screenSection.SearchSection.SearchRequestClassCSharp} request)
         {{
             if (request == null)
             {{
@@ -85,13 +67,13 @@ namespace MasterBuilder.Templates.Controllers
                 return new BadRequestObjectResult(ModelState);
             }}
 
-            var query = from item in _context.{entity.InternalNamePlural}
+            var query = from item in _context.{screenSection.SearchSection.Entity.InternalNamePlural}
             {parentPropertyWhereString}
                         select item;            
 
             var totalItems = query.Count();
             int totalPages = 0;
-            var items = new {itemClassName}[0];
+            var items = new {screenSection.SearchSection.SearchItemClassCSharp}[0];
 
             if (totalItems != 0 && request.PageSize != 0)
             {{
@@ -101,7 +83,7 @@ namespace MasterBuilder.Templates.Controllers
                     .OrderBy(p => p.Title) //TODO: From Setting
                     .Skip((request.Page - 1) * request.PageSize)
                     .Take(request.PageSize)
-                    .Select(item => new {itemClassName}
+                    .Select(item => new {screenSection.SearchSection.SearchItemClassCSharp}
                     {{
 {string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
                     }})
@@ -109,7 +91,7 @@ namespace MasterBuilder.Templates.Controllers
     
             }}
             
-            var result = new {responseClassName}
+            var result = new {screenSection.SearchSection.SearchResponseClassCSharp}
             {{
                 TotalItems = totalItems,
                 TotalPages = totalPages,

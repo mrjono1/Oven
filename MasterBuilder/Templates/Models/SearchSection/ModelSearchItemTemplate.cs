@@ -30,14 +30,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            if (Screen.ScreenType == ScreenTypeEnum.Search)
-            {
-                return $"{Screen.InternalName}Item.cs";
-            }
-            else
-            {
-                return $"{Screen.InternalName}{ScreenSection.InternalName}Item.cs";
-            }
+            return $"{ScreenSection.SearchSection.SearchItemClassCSharp}.cs";
         }
 
         /// <summary>

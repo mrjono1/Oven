@@ -27,14 +27,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            if (Screen.ScreenType == ScreenTypeEnum.Search)
-            {
-                return $"{Screen.InternalName}Response.cs";
-            }
-            else
-            {
-                return $"{Screen.InternalName}{ScreenSection.InternalName}Response.cs";
-            }
+            return $"{ScreenSection.SearchSection.SearchResponseClassCSharp}.cs";
         }
 
         /// <summary>
@@ -50,14 +43,6 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileContent()
         {
-            var className = $"{Screen.InternalName}Response";
-            var itemClassName = $"{Screen.InternalName}Item";
-            if (Screen.ScreenType != ScreenTypeEnum.Search)
-            {
-                className = $"{Screen.InternalName}{ScreenSection.InternalName}Response";
-                itemClassName = $"{Screen.InternalName}{ScreenSection.InternalName}Item";
-            }
-
             return $@"using System;
 
 namespace {Project.InternalName}.Models
@@ -65,7 +50,7 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Screen Search Response
     /// </summary>
-    public class {className}
+    public class {ScreenSection.SearchSection.SearchResponseClassCSharp}
     {{
         /// <summary>
         /// Total Pages
@@ -76,9 +61,9 @@ namespace {Project.InternalName}.Models
         /// </summary>
         public int TotalItems {{ get; internal set; }}
         /// <summary>
-        /// {itemClassName}
+        /// {ScreenSection.SearchSection.SearchItemClassCSharp}
         /// </summary>
-        public {itemClassName}[] Items {{ get; internal set; }}
+        public {ScreenSection.SearchSection.SearchItemClassCSharp}[] Items {{ get; internal set; }}
     }}
 }}";
         }

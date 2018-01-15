@@ -22,7 +22,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Property
         /// </summary>
-        internal Property Property { private get; set; }
+        internal Property Property { get; set; }
         /// <summary>
         /// Use Title specifed or if blank used Property Title
         /// </summary>

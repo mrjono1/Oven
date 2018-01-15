@@ -18,7 +18,7 @@ namespace MasterBuilder.Request
                 case ScreenSectionTypeEnum.Form:
                     break;
                 case ScreenSectionTypeEnum.Search:
-                    ResolveSearchSection(project);
+                    ResolveSearchSection(project, screen);
                     break;
                 case ScreenSectionTypeEnum.MenuList:
                     break;
@@ -40,13 +40,16 @@ namespace MasterBuilder.Request
             }
         }
 
-        private void ResolveSearchSection(Project project)
+        private void ResolveSearchSection(Project project, Screen screen)
         {
             var entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
 
             // Populate Property property for helper functions to work
             if (SearchSection != null && SearchSection.SearchColumns != null)
             {
+                SearchSection.Screen = screen;
+                SearchSection.ScreenSection = this;
+                SearchSection.Entity = entity;
                 foreach (var searchColumn in SearchSection.SearchColumns)
                 {
                     searchColumn.Property = entity.Properties.SingleOrDefault(p => p.Id == searchColumn.EntityPropertyId);
@@ -75,7 +78,10 @@ namespace MasterBuilder.Request
 
             SearchSection = new SearchSection
             {
-                SearchColumns = searchColumns
+                SearchColumns = searchColumns,
+                Screen = screen,
+                ScreenSection = this,
+                Entity = entity
             };
         }
     }

@@ -28,14 +28,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            if (Screen.ScreenType == ScreenTypeEnum.Search)
-            {
-                return $"{Screen.InternalName}Request.cs";
-            }
-            else
-            {
-                return $"{Screen.InternalName}{ScreenSection.InternalName}Request.cs";
-            }
+            return $"{ScreenSection.SearchSection.SearchRequestClassCSharp}.cs";
         }
 
         /// <summary>
@@ -51,33 +44,22 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileContent()
         {
-            var className = $"{Screen.InternalName}Request";
-            if (Screen.ScreenType != ScreenTypeEnum.Search)
-            {
-                className = $"{Screen.InternalName}{ScreenSection.InternalName}Request";
-            }
-
             string parentPropertyString = null;
             Entity parentEntity = null;
-            var sectionEntity = (from e in Project.Entities
-                          where e.Id == ScreenSection.EntityId
-                          select e).SingleOrDefault();
-            if (sectionEntity != null)
+            var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
+                                    where p.PropertyType == PropertyTypeEnum.ParentRelationship
+                                    select p).SingleOrDefault();
+            if (parentProperty != null)
             {
-                var parentProperty = (from p in sectionEntity.Properties
-                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
-                                      select p).SingleOrDefault();
-                if (parentProperty != null)
-                {
-                    parentEntity = (from s in Project.Entities
-                                         where s.Id == parentProperty.ParentEntityId
-                                         select s).SingleOrDefault();
-                    parentPropertyString = $@"        /// <summary>
+                parentEntity = (from s in Project.Entities
+                                where s.Id == parentProperty.ParentEntityId
+                                select s).SingleOrDefault();
+                parentPropertyString = $@"        /// <summary>
         /// {parentEntity.Title} Id
         /// </summary>
         public Guid? {parentEntity.InternalName}Id {{ get; set; }}";
-                }
             }
+            
 
             return $@"using System;
 using System.ComponentModel;
@@ -88,7 +70,7 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Search Request
     /// </summary>
-    public class {className}
+    public class {ScreenSection.SearchSection.SearchRequestClassCSharp}
     {{
         /// <summary>
         /// Page
