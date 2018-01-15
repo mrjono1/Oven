@@ -16,6 +16,7 @@ namespace MasterBuilder.Request
             switch (ScreenSectionType)
             {
                 case ScreenSectionTypeEnum.Form:
+                    ResolveFormSection(project, screen);
                     break;
                 case ScreenSectionTypeEnum.Search:
                     ResolveSearchSection(project, screen);
@@ -40,6 +41,57 @@ namespace MasterBuilder.Request
             }
         }
 
+        /// <summary>
+        /// Resolve Form Section
+        /// </summary>
+        private void ResolveFormSection(Project project, Screen screen)
+        {
+            var entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
+
+            // Populate Property property for helper functions to work
+            if (FormSection != null && FormSection.FormFields != null)
+            {
+                FormSection.Screen = screen;
+                FormSection.ScreenSection = this;
+                FormSection.Entity = entity;
+                foreach (var formField in FormSection.FormFields)
+                {
+                    formField.Property = entity.Properties.SingleOrDefault(p => p.Id == formField.EntityPropertyId);
+                }
+
+                return;
+            }
+
+            // Create Default Search Screens
+            var formFields = new List<FormField>();
+            foreach (var property in entity.Properties)
+            {
+                switch (property.PropertyType)
+                {
+                    case PropertyTypeEnum.OneToOneRelationship:
+                        continue;
+                    default:
+                        formFields.Add(new FormField
+                        {
+                            EntityPropertyId = property.Id,
+                            Property = property
+                        });
+                        break;
+                }
+            }
+
+            FormSection = new FormSection
+            {
+                FormFields = formFields,
+                Screen = screen,
+                ScreenSection = this,
+                Entity = entity
+            };
+        }
+
+        /// <summary>
+        /// Resolve Search Section
+        /// </summary>
         private void ResolveSearchSection(Project project, Screen screen)
         {
             var entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);

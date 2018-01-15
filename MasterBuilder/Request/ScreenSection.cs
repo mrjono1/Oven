@@ -79,5 +79,9 @@ namespace MasterBuilder.Request
         /// Only populate when Screen Section Type = Search
         /// </summary>
         public SearchSection SearchSection { get; set; }
+        /// <summary>
+        /// Only populate when Screen Section Type = Form
+        /// </summary>
+        public FormSection FormSection { get; set; }
     }
 }
