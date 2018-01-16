@@ -1,26 +1,26 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
+using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace MasterBuilder.Templates.Models
 {
     /// <summary>
-    /// Model Entity Response Template
+    /// Model Form Response Template
     /// </summary>
-    public class ModelEditResponseTemplate : ITemplate
+    public class ModelFormResponseTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
         private readonly Screen Screen;
         private readonly ScreenSection ScreenSection;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelEditResponseTemplate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
+        public ModelFormResponseTemplate(Project project, Screen screen, ScreenSection screenSection)
         {
             Project = project;
-            Entity = entity;
             Screen = screen;
             ScreenSection = screenSection;
         }
@@ -30,7 +30,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{Screen.InternalName}Response.cs";
+            return $"{ScreenSection.FormSection.FormResponseClass}.cs";
         }
 
         /// <summary>
@@ -46,14 +46,11 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileContent()
         {
-            StringBuilder properties = null;
-            if (Entity.Properties != null)
+            var properties = new List<string>();
+            
+            foreach (var formField in ScreenSection.FormSection.FormFields)
             {
-                properties = new StringBuilder();
-                foreach (var item in Entity.Properties)
-                {
-                    properties.AppendLine(ModelPropertyTemplate.Evaluate(item));
-                }
+                properties.Add(ModelFormResponsePropertyTemplate.Evaluate(formField));
             }
 
             return $@"using System;
@@ -64,9 +61,9 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Screen Load
     /// </summary>
-    public class {Screen.InternalName}Response
+    public class {ScreenSection.FormSection.FormResponseClass}
     {{
-{properties}
+{string.Join(Environment.NewLine ,properties)}
     }}
 }}";
         }

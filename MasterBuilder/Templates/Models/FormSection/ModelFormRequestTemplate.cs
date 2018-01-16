@@ -1,26 +1,26 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
+using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace MasterBuilder.Templates.Models
 {
     /// <summary>
-    /// Model Edit Request Template
+    /// Model Form Request Template
     /// </summary>
-    public class ModelEditRequestTemplate : ITemplate
+    public class ModelFormRequestTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
         private readonly Screen Screen;
         private readonly ScreenSection ScreenSection;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelEditRequestTemplate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
+        public ModelFormRequestTemplate(Project project, Screen screen, ScreenSection screenSection)
         {
             Project = project;
-            Entity = entity;
             Screen = screen;
             ScreenSection = screenSection;
         }
@@ -30,7 +30,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{Screen.InternalName}Request.cs";
+            return $"{ScreenSection.FormSection.FormRequestClass}.cs";
         }
 
         /// <summary>
@@ -46,15 +46,13 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileContent()
         {
-            StringBuilder properties = null;
-            if (Entity.Properties != null)
+            var properties = new List<string>();
+            
+            foreach (var formField in ScreenSection.FormSection.FormFields)
             {
-                properties = new StringBuilder();
-                foreach (var item in Entity.Properties)
-                {
-                    properties.AppendLine(ModelEditRequestPropertyTemplate.Evaluate(item, true));
-                }
+                properties.Add(ModelFormRequestPropertyTemplate.Evaluate(formField));
             }
+            
 
             return $@"using System;
 using System.ComponentModel;
@@ -65,9 +63,9 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Insert/Update Model
     /// </summary>
-    public class {Screen.InternalName}Request
+    public class {ScreenSection.FormSection.FormRequestClass}
     {{
-{properties}
+{string.Join(Environment.NewLine, properties)}
     }}
 }}";
         }

@@ -80,10 +80,6 @@ namespace MasterBuilder.Request
             {
                 switch (Property.PropertyType)
                 {
-                    case PropertyTypeEnum.PrimaryKey:
-                        return "Guid";
-                    case PropertyTypeEnum.ParentRelationship:
-                        return Property.CsType;
                     case PropertyTypeEnum.ReferenceRelationship:
                         return "string";
                     default:

@@ -30,12 +30,10 @@ namespace MasterBuilder.Templates.Models
             foreach (var group in (from screen in Project.Screens
                                    where screen.ScreenSections != null
                                    from section in screen.ScreenSections
-                                   where section.EntityId != null
                                    select new
                                    {
                                        ScreenSection = section,
-                                       Screen = screen,
-                                       Entity = Project.Entities.SingleOrDefault(a => a.Id == section.EntityId)
+                                       Screen = screen
                                    }
                                    ))
             {
@@ -43,8 +41,8 @@ namespace MasterBuilder.Templates.Models
                 switch (group.ScreenSection.ScreenSectionType)
                 {
                     case ScreenSectionTypeEnum.Form:
-                        templates.Add(new ModelEditResponseTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
-                        templates.Add(new ModelEditRequestTemplate(Project, group.Entity, group.Screen, group.ScreenSection));
+                        templates.Add(new ModelFormResponseTemplate(Project, group.Screen, group.ScreenSection));
+                        templates.Add(new ModelFormRequestTemplate(Project, group.Screen, group.ScreenSection));
                         break;
                     case ScreenSectionTypeEnum.Search:
                         templates.Add(new ModelSearchRequestTemplate(Project, group.Screen, group.ScreenSection));

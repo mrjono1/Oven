@@ -148,9 +148,10 @@ namespace MasterBuilder.Request
 
                 switch (PropertyType)
                 {
+                    case PropertyTypeEnum.PrimaryKey:
+                        return "Guid";
                     case PropertyTypeEnum.ParentRelationship:
                     case PropertyTypeEnum.ReferenceRelationship:
-                    case PropertyTypeEnum.PrimaryKey:
                         return $"Guid{(!Required ? "?": string.Empty)}";
                     case PropertyTypeEnum.String:
                         return "string";

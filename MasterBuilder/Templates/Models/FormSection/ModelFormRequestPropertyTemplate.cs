@@ -7,26 +7,25 @@ using System.Text;
 namespace MasterBuilder.Templates.Models
 {
     /// <summary>
-    /// Model Property Template
+    /// Model Form Request Property Template
     /// </summary>
-    public class ModelPropertyTemplate
+    public class ModelFormRequestPropertyTemplate
     {
         /// <summary>
         /// Evaluate
         /// </summary>
-        public static string Evaluate(Property property, bool includeValidation = false)
+        public static string Evaluate(FormField formField)
         {
-            var result = new StringBuilder();
             var attributes = new List<string>
             {
                 $@"/// <summary>
-        /// {property.Title}
+        /// {formField.TitleValue}
         /// </summary>
-        [Display(Name = ""{property.Title}"")]"
+        [Display(Name = ""{formField.TitleValue}"")]"
             };
 
-            if (includeValidation && property.ValidationItems != null){
-                foreach (var item in property.ValidationItems)
+            if (formField.Property.ValidationItems != null){
+                foreach (var item in formField.Property.ValidationItems)
                 {
                     switch (item.ValidationType)
                     {
@@ -43,7 +42,7 @@ namespace MasterBuilder.Templates.Models
                             // Min value picks this one up
                             break;
                         case ValidationTypeEnum.MinimumValue:
-                            var maxValue = property.ValidationItems.SingleOrDefault(a => a.ValidationType == ValidationTypeEnum.MaximumValue);
+                            var maxValue = formField.Property.ValidationItems.SingleOrDefault(a => a.ValidationType == ValidationTypeEnum.MaximumValue);
                             if (maxValue != null)
                             {
                                 if (item.IntegerValue.HasValue)
@@ -73,30 +72,9 @@ namespace MasterBuilder.Templates.Models
                     }
                 }
             }
-
-            switch (property.PropertyType)
-            {
-                case PropertyTypeEnum.ParentRelationship:
-                    result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
-        public {property.CsType} {property.InternalName}Id {{ get; set; }}");
-                    break;
-
-                case PropertyTypeEnum.ReferenceRelationship:
-                    // Foreign Key
-                    result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
-        public {property.CsType} {property.InternalName}Id {{ get; set; }}");
-                    // Foreign Title
-                    result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
-        public string {property.InternalName}Title {{ get; set; }}");
-                    break;
-
-                default:
-                    result.Append($@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
-        public {property.CsType} {property.InternalName} {{ get; set; }}");
-                    break;
-            }
             
-            return result.ToString();
+            return $@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
+        public {formField.TypeCSharp} {formField.InternalNameCSharp} {{ get; set; }}";
         }
     }
 }
