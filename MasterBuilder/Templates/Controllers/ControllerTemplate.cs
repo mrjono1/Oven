@@ -13,19 +13,14 @@ namespace MasterBuilder.Templates.Controllers
     public class ControllerTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
         private readonly Screen Screen;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="project">Required</param>
-        /// <param name="entity">Entity or Screen must be provided</param>
-        /// <param name="screen">Entity or Screen must be provided</param>
-        public ControllerTemplate(Project project, Entity entity, Screen screen)
+        public ControllerTemplate(Project project, Screen screen)
         {
             Project = project;
-            Entity = entity;
             Screen = screen;
         }
 
@@ -34,9 +29,7 @@ namespace MasterBuilder.Templates.Controllers
         /// </summary>
         public string GetFileName()
         {
-            var controllerName = (Entity != null ? Entity.InternalName : Screen.InternalName);
-
-            return $"{controllerName}Controller.cs";
+            return $"{Screen.InternalName}Controller.cs";
         }
 
         /// <summary>
@@ -52,7 +45,6 @@ namespace MasterBuilder.Templates.Controllers
         /// </summary>
         public string GetFileContent()
         {
-            var controllerName = (Entity != null ? Entity.InternalName : Screen.InternalName);
             var usings = new List<string>();
             var methods = new List<string>();
             var classAttributes = @"[Route(""api/[controller]"")]";
@@ -69,66 +61,63 @@ namespace MasterBuilder.Templates.Controllers
             {
                 $"{Project.InternalName}Context context"
             };
-            var constructorFielMappings = new List<string>
+            var constructorFieldMappings = new List<string>
             {
                 "_context = context;"
             };
 
 
-            var lookupMethod = ControllerReferenceMethodTemplate.Evaluate(Project, Entity);
+            // TODO: put this back in
+            /*var lookupMethod = ControllerReferenceMethodTemplate.Evaluate(Project, Entity);
             if (!string.IsNullOrEmpty(lookupMethod))
             {
                 methods.Add(lookupMethod);
-            }
-
-            if (Entity != null && Project.Screens != null)
+            }*/
+            var referenceFormFields = new List<FormField>();
+            foreach (var screenSection in Screen.ScreenSections)
             {
-                var sections = (from s in Project.Screens
-                                where s.ScreenSections != null
-                                from ss in s.ScreenSections
-                                where ss.EntityId == Entity.Id
-                                select new
-                                {
-                                    Screen = s,
-                                    ScreenSection = ss
-                                });
-                foreach (var item in sections)
+                switch (screenSection.ScreenSectionType)
                 {
-                    switch (item.ScreenSection.ScreenSectionType)
-                    {
-                        case ScreenSectionTypeEnum.Search:
-                            usings.Add("using Microsoft.AspNetCore.JsonPatch;");
-                            methods.Add(ControllerSearchMethodTemplate.Evaluate(Project, item.Screen, item.ScreenSection));
-                            break;
-                        case ScreenSectionTypeEnum.Form:
-                            methods.Add(ControllerEditMethodTemplate.Evaluate(Project, Entity, item.Screen, item.ScreenSection));
-                            break;
-                        default:
-                            break;
-                    }
+                    case ScreenSectionTypeEnum.Search:
+                        usings.Add("using Microsoft.AspNetCore.JsonPatch;");
+                        methods.Add(ControllerSearchMethodTemplate.Evaluate(Project, Screen, screenSection));
+                        break;
+                    case ScreenSectionTypeEnum.Form:
+                        methods.Add(ControllerEditMethodTemplate.Evaluate(Project, Screen, screenSection));
 
-                    if (item.ScreenSection.MenuItems != null)
+                        referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship));
+                        break;
+                    default:
+                        break;
+                }
+
+                if (screenSection.MenuItems != null)
+                {
+                    foreach (var menuItem in screenSection.MenuItems)
                     {
-                        foreach (var menuItem in item.ScreenSection.MenuItems)
+                        switch (menuItem.MenuItemType)
                         {
-                            switch (menuItem.MenuItemType)
-                            {
-                                case MenuItemTypeEnum.ServerFunction:
-                                    hasServerFunction = true;
-                                    methods.Add($@"        /// <summary>
+                            case MenuItemTypeEnum.ServerFunction:
+                                hasServerFunction = true;
+                                methods.Add($@"        /// <summary>
         /// Menu Item {menuItem.Title} called function
         /// </summary>
-        [HttpGet(""{item.Screen.InternalName}{item.ScreenSection.InternalName}{menuItem.InternalName}/{{id}}"")]
-        public async Task<IActionResult> {item.Screen.InternalName}{item.ScreenSection.InternalName}{menuItem.InternalName}(Guid id)
+        [HttpGet(""{Screen.InternalName}{screenSection.InternalName}{menuItem.InternalName}/{{id}}"")]
+        public async Task<IActionResult> {Screen.InternalName}{screenSection.InternalName}{menuItem.InternalName}(Guid id)
         {{
             {menuItem.ServerCode}
         }}");
-                                    break;
-                            }
+                                break;
                         }
                     }
                 }
             }
+
+            foreach (var referenceFormField in referenceFormFields)
+            {
+
+            }
+
 
             if (hasServerFunction)
             {
@@ -141,7 +130,7 @@ namespace MasterBuilder.Templates.Controllers
         private readonly I{serviceName} _{serviceName.Camelize()};");
 
                     constructorParameters.Add($"I{serviceName} {serviceName.Camelize()}");
-                    constructorFielMappings.Add($"_{serviceName.Camelize()} = {serviceName.Camelize()};");
+                    constructorFieldMappings.Add($"_{serviceName.Camelize()} = {serviceName.Camelize()};");
                 }
             }
 
@@ -221,19 +210,19 @@ namespace {Project.InternalName}.Controllers
 {{
 
     /// <summary>
-    /// Controller for the {(Entity != null ? string.Concat(Entity.InternalName, " Entity") : string.Concat(Screen.InternalName, " Screen"))}
+    /// Controller for the {Screen.Title} Screen
     /// </summary>
     {classAttributes}
-    public class {controllerName}Controller : Controller
+    public class {Screen.InternalName}Controller : Controller
     {{
 {string.Join(Environment.NewLine, privateFields)}
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public {controllerName}Controller({string.Join(string.Concat(",", Environment.NewLine, "          "), constructorParameters)})
+        public {Screen.InternalName}Controller({string.Join(string.Concat(",", Environment.NewLine, "          "), constructorParameters)})
         {{
-            {string.Join(string.Concat(Environment.NewLine, "            "), constructorFielMappings)}
+            {string.Join(string.Concat(Environment.NewLine, "            "), constructorFieldMappings)}
         }}
 {string.Join(Environment.NewLine, methods)}
     }}

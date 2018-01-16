@@ -10,141 +10,142 @@ namespace MasterBuilder.Templates.Controllers
     /// </summary>
     public class ControllerEditMethodTemplate
     {
-        internal static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
+        internal static string Evaluate(Project project, Screen screen, ScreenSection screenSection)
         {
             var getPropertyMapping = new List<string>();
             var postPropertyMapping = new List<string>();
             var patchEntityOperations = new List<string>();
-            foreach (var item in entity.Properties)
+            foreach (var formField in screenSection.FormSection.FormFields)
             {
-                if (item.PropertyType != PropertyTypeEnum.ParentRelationship &&
-                    item.PropertyType != PropertyTypeEnum.ReferenceRelationship &&
-                    item.PropertyType != PropertyTypeEnum.OneToOneRelationship)
+                if (formField.PropertyType != PropertyTypeEnum.ParentRelationship &&
+                    formField.PropertyType != PropertyTypeEnum.ReferenceRelationship &&
+                    formField.PropertyType != PropertyTypeEnum.OneToOneRelationship)
                 {
-                    getPropertyMapping.Add($"                           {item.InternalName} = item.{item.InternalName}");
+                    getPropertyMapping.Add($"                           {formField.InternalNameCSharp} = item.{formField.InternalNameCSharp}");
                 }
-                switch (item.PropertyType)
+
+                switch (formField.PropertyType)
                 {
                     case PropertyTypeEnum.ParentRelationship:
-                        postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
-                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
-                        if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
+                        postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
+                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+                        if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
                         {{
-                            entity.{item.InternalName}Id = {item.InternalName.Camelize()}Id;
+                            entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
                         }}
                         else
                         {{
-                            throw new Exception(""{item.InternalName.Camelize()}Id value is invalid"");
+                            throw new Exception(""{formField.InternalNameCSharp.Camelize()} value is invalid"");
                         }}
-                        entityEntry.Property(p => p.{item.InternalName}Id).IsModified = true;
+                        entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         break;");
 
-                        getPropertyMapping.Add($"                           {item.InternalName}Id = item.{item.InternalName}Id");
+                        getPropertyMapping.Add($"                           {formField.InternalNameCSharp} = item.{formField.InternalNameCSharp}");
                         break;
 
                     case PropertyTypeEnum.ReferenceRelationship:
-                        postPropertyMapping.Add($"                {item.InternalName}Id = post.{item.InternalName}Id");
+                        postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
 
-                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}Id"":
-                        if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {item.InternalName.Camelize()}Id))
+                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+                        if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
                         {{
-                            entity.{item.InternalName}Id = {item.InternalName.Camelize()}Id;
+                            entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
                         }}
                         else
                         {{
-                            {(item.Required ? $@"throw new Exception(""{item.InternalName.Camelize()}Id value is invalid"");" : $"entity.{item.InternalName}Id = null;")}
+                            {(formField.Property.Required ? $@"throw new Exception(""{formField.InternalNameCSharp.Camelize()} value is invalid"");" : $"entity.{formField.InternalNameCSharp} = null;")}
                         }}
-                        entityEntry.Property(p => p.{item.InternalName}Id).IsModified = true;
+                        entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         break;");
 
-                        getPropertyMapping.Add($"                           {item.InternalName}Id = item.{item.InternalName}Id");
+                        getPropertyMapping.Add($"                           {formField.InternalNameCSharp} = item.{formField.InternalNameCSharp}");
 
                         // TODO: Title should be configurable
                         // TODO: is it faster to do the bool check on the key instead of object?
-                        getPropertyMapping.Add($"                           {item.InternalName}Title = item.{item.InternalName} != null ? item.{item.InternalName}.Title : null");
+                        getPropertyMapping.Add($"                           {formField.InternalNameAlternateCSharp} = item.{formField.Property.InternalName} != null ? item.{formField.Property.InternalName}.Title : null");
                         break;
 
                     case PropertyTypeEnum.PrimaryKey:
                         break;
                     case PropertyTypeEnum.String:
-                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
-                        entity.{item.InternalName} = operation.value.ToString();
-                        entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                        postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
+                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+                        entity.{formField.InternalNameCSharp} = operation.value.ToString();
+                        entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         break;");
                         break;
                     case PropertyTypeEnum.Integer:
-                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
-                        int int32Value{item.InternalName};
-                        if (operation.value != null && Int32.TryParse(operation.value.ToString(), out int32Value{item.InternalName}))
+                        postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
+                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+                        int int32Value{formField.InternalNameCSharp};
+                        if (operation.value != null && Int32.TryParse(operation.value.ToString(), out int32Value{formField.InternalNameCSharp}))
                         {{
-                            entity.{item.InternalName} = int32Value{item.InternalName};
-                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                            entity.{formField.InternalNameCSharp} = int32Value{formField.InternalNameCSharp};
+                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         }}
-                        {(item.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
+                        {(formField.Property.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
                         {{
-                            entity.{item.InternalName} = null;
-                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                            entity.{formField.InternalNameCSharp} = null;
+                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         }}")}
                         else
                         {{
-                            throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid integer value"");
+                            throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid integer value"");
                         }}
                         break;");
                         break;
                     case PropertyTypeEnum.Double:
-                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
-                        int doubleValue{item.InternalName};
-                        if (operation.value != null && Double.TryParse(operation.value.ToString(), out doubleValue{item.InternalName}))
+                        postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
+                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+                        int doubleValue{formField.InternalNameCSharp};
+                        if (operation.value != null && Double.TryParse(operation.value.ToString(), out doubleValue{formField.InternalNameCSharp}))
                         {{
-                            entity.{item.InternalName} = doubleValue{item.InternalName};
-                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                            entity.{formField.InternalNameCSharp} = doubleValue{formField.InternalNameCSharp};
+                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         }}
-                        {(item.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
+                        {(formField.Property.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
                         {{
-                            entity.{item.InternalName} = null;
-                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                            entity.{formField.InternalNameCSharp} = null;
+                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         }}")}
                         else
                         {{
-                            throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid double value"");
+                            throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid double value"");
                         }}
                         break;");
                         break;
                     case PropertyTypeEnum.DateTime:
-                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
-                        DateTime dateTimeValue{item.InternalName};
-                        if (operation.value != null && DateTime.TryParse(operation.value.ToString(), out dateTimeValue{item.InternalName}))
+                        postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
+                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+                        DateTime dateTimeValue{formField.InternalNameCSharp};
+                        if (operation.value != null && DateTime.TryParse(operation.value.ToString(), out dateTimeValue{formField.InternalNameCSharp}))
                         {{
-                            entity.{item.InternalName} = dateTimeValue{item.InternalName};
-                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                            entity.{formField.InternalNameCSharp} = dateTimeValue{formField.InternalNameCSharp};
+                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         }}
-                        {(item.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
+                        {(formField.Property.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
                         {{
-                            entity.{item.InternalName} = null;
-                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                            entity.{formField.InternalNameCSharp} = null;
+                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         }}")}
                         else
                         {{
-                            throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid boolean value"");
+                            throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid boolean value"");
                         }}
                         break;");
                         break;
                     case PropertyTypeEnum.Boolean:
-                        postPropertyMapping.Add($"                {item.InternalName} = post.{item.InternalName}");
-                        patchEntityOperations.Add($@"                     case ""/{item.InternalName.Camelize()}"":
-                        bool booleanValue{item.InternalName};
-                        if (operation.value != null && Boolean.TryParse(operation.value.ToString(), out booleanValue{item.InternalName}))
+                        postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
+                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+                        bool booleanValue{formField.InternalNameCSharp};
+                        if (operation.value != null && Boolean.TryParse(operation.value.ToString(), out booleanValue{formField.InternalNameCSharp}))
                         {{
-                            entity.{item.InternalName} = booleanValue{item.InternalName};
-                            entityEntry.Property(p => p.{item.InternalName}).IsModified = true;
+                            entity.{formField.InternalNameCSharp} = booleanValue{formField.InternalNameCSharp};
+                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         }}
                         else
                         {{
-                            throw new Exception(""Property: {item.InternalName}, Value:"" + operation.value + "" is not a valid boolean value"");
+                            throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid boolean value"");
                         }}
                         break;");
                         break;
@@ -170,7 +171,7 @@ namespace MasterBuilder.Templates.Controllers
                 return NotFound();
             }}
             
-            var result = await _context.{entity.InternalNamePlural}
+            var result = await _context.{screenSection.FormSection.Entity.InternalNamePlural}
                             .AsNoTracking()
                             .Select(item => new Models.{screen.InternalName}Response
                             {{
@@ -203,11 +204,11 @@ namespace MasterBuilder.Templates.Controllers
                 return new BadRequestObjectResult(ModelState);
             }}
             
-            var newRecord = new {entity.InternalName}{{
+            var newRecord = new {screenSection.FormSection.Entity.InternalName}{{
 {string.Join(string.Concat(",", Environment.NewLine), postPropertyMapping)}
             }};            
 
-            _context.{entity.InternalNamePlural}.Add(newRecord);
+            _context.{screenSection.FormSection.Entity.InternalNamePlural}.Add(newRecord);
             await _context.SaveChangesAsync();
 
             return Ok(newRecord.Id);
@@ -236,8 +237,8 @@ namespace MasterBuilder.Templates.Controllers
                 return Ok();
             }}
 
-            var entity = new Entities.{entity.InternalName}() {{ Id = id }};
-            var entityEntry = _context.{entity.InternalNamePlural}.Attach(entity);
+            var entity = new Entities.{screenSection.FormSection.Entity.InternalName}() {{ Id = id }};
+            var entityEntry = _context.{screenSection.FormSection.Entity.InternalNamePlural}.Attach(entity);
             
             // do stuff
             foreach(var operation in patch.Operations)
