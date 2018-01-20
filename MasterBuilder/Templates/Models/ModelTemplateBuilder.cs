@@ -27,54 +27,39 @@ namespace MasterBuilder.Templates.Models
         {
             var templates = new List<ITemplate>();
 
-            foreach (var group in (from screen in Project.Screens
-                                   where screen.ScreenSections != null
-                                   from section in screen.ScreenSections
-                                   select new
-                                   {
-                                       ScreenSection = section,
-                                       Screen = screen
-                                   }
-                                   ))
+            foreach (var screen in Project.Screens)
             {
-
-                switch (group.ScreenSection.ScreenSectionType)
+                var referenceFormFields = new List<FormField>();
+                foreach (var screenSection in screen.ScreenSections)
                 {
-                    case ScreenSectionTypeEnum.Form:
-                        templates.Add(new ModelFormResponseTemplate(Project, group.Screen, group.ScreenSection));
-                        templates.Add(new ModelFormRequestTemplate(Project, group.Screen, group.ScreenSection));
-                        break;
-                    case ScreenSectionTypeEnum.Search:
-                        templates.Add(new ModelSearchRequestTemplate(Project, group.Screen, group.ScreenSection));
-                        templates.Add(new ModelSearchResponseTemplate(Project, group.Screen, group.ScreenSection));
-                        templates.Add(new ModelSearchItemTemplate(Project, group.Screen, group.ScreenSection));
-                        break;
-                    case ScreenSectionTypeEnum.MenuList:
-                        // None
-                        break;
-                    case ScreenSectionTypeEnum.Html:
-                        // None
-                        break;
-                    default:
-                        break;
+                    switch (screenSection.ScreenSectionType)
+                    {
+                        case ScreenSectionTypeEnum.Form:
+                            referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship));
+                            templates.Add(new ModelFormResponseTemplate(Project, screen, screenSection));
+                            templates.Add(new ModelFormRequestTemplate(Project, screen, screenSection));
+                            break;
+                        case ScreenSectionTypeEnum.Search:
+                            templates.Add(new ModelSearchRequestTemplate(Project, screen, screenSection));
+                            templates.Add(new ModelSearchResponseTemplate(Project, screen, screenSection));
+                            templates.Add(new ModelSearchItemTemplate(Project, screen, screenSection));
+                            break;
+                        case ScreenSectionTypeEnum.MenuList:
+                            // None
+                            break;
+                        case ScreenSectionTypeEnum.Html:
+                            // None
+                            break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            
-            var entityReferencesNeeded = (from e in Project.Entities
-                                   where e.Properties != null
-                                   from property in e.Properties
-                                   where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
-                                   property.ParentEntityId.HasValue
-                                   from entity in Project.Entities
-                                   where entity.Id == property.ParentEntityId
-                                   select entity).Distinct().ToArray();
-            if (entityReferencesNeeded != null)
-            {
-                foreach (var entityLookup in entityReferencesNeeded)
+
+                foreach (var referenceFormField in referenceFormFields)
                 {
-                    templates.Add(new Reference.ModelReferenceItemTemplate(Project, entityLookup));
-                    templates.Add(new Reference.ModelReferenceRequestTemplate(Project, entityLookup));
-                    templates.Add(new Reference.ModelReferenceResponseTemplate(Project, entityLookup));
+                    templates.Add(new Reference.ModelReferenceItemTemplate(Project, screen, referenceFormField));
+                    templates.Add(new Reference.ModelReferenceRequestTemplate(Project, screen, referenceFormField));
+                    templates.Add(new Reference.ModelReferenceResponseTemplate(Project, screen, referenceFormField));
                 }
             }
 

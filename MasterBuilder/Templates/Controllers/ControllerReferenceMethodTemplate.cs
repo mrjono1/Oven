@@ -11,35 +11,23 @@ namespace MasterBuilder.Templates.Controllers
         /// <summary>
         /// Evaluate
         /// </summary>
-        internal static string Evaluate(Project project, Entity entity)
+        internal static string Evaluate(Project project, Screen screen, FormField formField)
         {
-            if (entity == null)
-            {
-                return null;
-            }
 
-            var doesHaveReferences = (from e in project.Entities
-                                   where e.Properties != null
-                                   from property in e.Properties
-                                   where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
-                                   property.ParentEntityId.HasValue &&
-                                   property.ParentEntityId == entity.Id
-                                   select property).Any();
-            if (!doesHaveReferences)
-            {
-                return null;
-            }
+            var entity = project.Entities.SingleOrDefault(e => e.Id == formField.Property.ParentEntityId);
                         
-            var itemClassName = $"Models.{entity.InternalName}.Reference.{entity.InternalName}ReferenceItem";
-            var responseClassName = $"Models.{entity.InternalName}.Reference.{entity.InternalName}ReferenceResponse";
-            var requestClassName = $"Models.{entity.InternalName}.Reference.{entity.InternalName}ReferenceRequest";
-            
+            var itemClassName = $"Models.{screen.InternalName}.Reference.{formField.ReferenceItemClass}";
+            var responseClassName = $"Models.{screen.InternalName}.Reference.{formField.ReferenceResponseClass}";
+            var requestClassName = $"Models.{screen.InternalName}.Reference.{formField.ReferenceRequestClass}";
+
+            // TODO: this url needs to be formField specific
+
             return $@"
         /// <summary>
-        /// {entity.Title} Reference Search
+        /// {formField.Title} Reference Search
         /// </summary>
-        [HttpPost(""{entity.InternalName}References"")]
-        public async Task<IActionResult> {entity.InternalName}Reference([FromBody]{requestClassName} request)
+        [HttpPost(""{formField.Property.InternalName}References"")]
+        public async Task<IActionResult> {formField.Property.InternalName}Reference([FromBody]{requestClassName} request)
         {{
             if (request == null)
             {{

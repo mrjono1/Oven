@@ -97,7 +97,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         onNgInitBodySections.Add($@"        this.route.params.subscribe(params => {{
             if (params['{Screen.InternalName.Camelize()}Id']) {{
                 this.new = false;
-                this.http.get<{screenSection.InternalName}>('api/{entity.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.Camelize()}Id']).subscribe(result => {{
+                this.http.get<{screenSection.InternalName}>('api/{Screen.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.Camelize()}Id']).subscribe(result => {{
                     this.{screenSection.InternalName.Camelize()} = result;
                     this.setupForm();
                 }}, error => console.error(error));
@@ -128,10 +128,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         break;
                 }
 
+                // Service imports
                 if (entity != null)
                 {
-                    imports.Add($"import {{ {entity.InternalName}Service }} from '../../shared/{entity.InternalName.ToLowerInvariant()}.service';");
-                    constructorParamerters.Add($"private {entity.InternalName.Camelize()}Service: {entity.InternalName}Service");
+                    imports.Add($"import {{ {Screen.InternalName}Service }} from '../../shared/{Screen.InternalName.ToLowerInvariant()}.service';");
+                    constructorParamerters.Add($"private {Screen.InternalName.Camelize()}Service: {Screen.InternalName}Service");
                 }
 
                 if (screenSection.MenuItems != null)
@@ -146,7 +147,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                 break;
                             case MenuItemTypeEnum.ServerFunction:
                                 functions.Add($@"public {menuItem.InternalName.Camelize()}(){{
-        this.{entity.InternalName.Camelize()}Service.get{menuItem.InternalName}(this.{Screen.InternalName.Camelize()}.id).subscribe( result => {{
+        this.{Screen.InternalName.Camelize()}Service.get{menuItem.InternalName}(this.{Screen.InternalName.Camelize()}.id).subscribe( result => {{
             alert(result);
         }});
     }}");

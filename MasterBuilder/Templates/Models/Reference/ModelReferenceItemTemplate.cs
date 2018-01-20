@@ -9,15 +9,17 @@ namespace MasterBuilder.Templates.Models.Reference
     public class ModelReferenceItemTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
+        private readonly Screen Screen;
+        private readonly FormField FormField;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelReferenceItemTemplate(Project project, Entity entity)
+        public ModelReferenceItemTemplate(Project project, Screen screen, FormField formField)
         {
             Project = project;
-            Entity = entity;
+            Screen = screen;
+            FormField = formField;
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace MasterBuilder.Templates.Models.Reference
         /// </summary>
         public string GetFileName()
         {
-            return $"{Entity.InternalName}ReferenceItem.cs";
+            return $"{FormField.ReferenceItemClass}.cs";
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace MasterBuilder.Templates.Models.Reference
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "Models", Entity.InternalName, "Reference" };
+            return new string[] { "Models", Screen.InternalName, "Reference" };
         }
 
         /// <summary>
@@ -43,12 +45,12 @@ namespace MasterBuilder.Templates.Models.Reference
         {
             return $@"using System;
 
-namespace {Project.InternalName}.Models.{Entity.InternalName}.Reference
+namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
 {{
     /// <summary>
-    /// {Entity.InternalName} Reference Item
+    /// {FormField.TitleValue} Reference Item
     /// </summary>
-    public class {Entity.InternalName}ReferenceItem
+    public class {FormField.ReferenceItemClass}
     {{
         /// <summary>
         /// Id

@@ -9,27 +9,17 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
     public class ServiceReferenceMethodTemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
-
-        private bool _generateMethod;
+        private readonly Screen Screen;
+        private readonly FormField FormField;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="project"></param>
-        /// <param name="entity"></param>
-        public ServiceReferenceMethodTemplate(Project project, Entity entity)
+        public ServiceReferenceMethodTemplate(Project project, Screen screen, FormField formField)
         {
             Project = project;
-            Entity = entity;
-            
-            _generateMethod = (from e in Project.Entities
-                            where e.Properties != null
-                            from property in e.Properties
-                            where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
-                            property.ParentEntityId.HasValue &&
-                            property.ParentEntityId.Value == Entity.Id
-                            select property).Any();
+            Screen = screen;
+            FormField = formField;
         }
 
         /// <summary>
@@ -37,39 +27,26 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
         /// </summary>
         public string[] Imports()
         {
-            if (_generateMethod)
-            {
-                return new string[] {
-                    $"import {{ {Entity.InternalName}ReferenceItem }} from '../models/{Entity.InternalName.ToLowerInvariant()}/{Entity.InternalName}ReferenceItem';",
-                    $"import {{ ReferenceRequest }} from '../models/ReferenceRequest';",
-                    $"import {{ {Entity.InternalName}ReferenceResponse }} from '../models/{Entity.InternalName.ToLowerInvariant()}/{Entity.InternalName}ReferenceResponse';"
-                };
-            }
-            else
-            {
-                return new string[] { };
-            }
+            return new string[] {
+                $"import {{ {FormField.ReferenceItemClass} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{FormField.ReferenceItemClass}';",
+                $"import {{ ReferenceRequest }} from '../models/ReferenceRequest';",
+                $"import {{ {FormField.ReferenceResponseClass} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{FormField.ReferenceResponseClass}';"
+            };
         }
 
         /// <summary>
         /// Method
         /// </summary>
         internal string Method()
-        {
-            if (_generateMethod)
-            {
-                return $@"    get{Entity.InternalName}References(query: string, page: number, pageSize: number){{
+        { 
+            return $@"    get{FormField.Property.InternalName}References(query: string, page: number, pageSize: number){{
         let request = new ReferenceRequest();
         request.query = query;
         request.pageSize = pageSize;
         request.page = page;
-        return this.http.post<{Entity.InternalName}ReferenceResponse>(`${{this.baseUrl}}/api/{Entity.InternalName}/{Entity.InternalName}References`, request);
+        return this.http.post<{FormField.ReferenceResponseClass}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{FormField.Property.InternalName}References`, request);
     }}";
-            }
-            else
-            {
-                return string.Empty;
-            }
+
         }
     }
 }

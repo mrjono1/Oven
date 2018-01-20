@@ -9,15 +9,17 @@ namespace MasterBuilder.Templates.Models.Reference
     public class ModelReferenceResponseTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
+        private readonly Screen Screen;
+        private readonly FormField FormField;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelReferenceResponseTemplate(Project project, Entity entity)
+        public ModelReferenceResponseTemplate(Project project, Screen screen, FormField formField)
         {
             Project = project;
-            Entity = entity;
+            Screen = screen;
+            FormField = formField;
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace MasterBuilder.Templates.Models.Reference
         /// </summary>
         public string GetFileName()
         {
-            return $"{Entity.InternalName}ReferenceResponse.cs";
+            return $"{FormField.ReferenceResponseClass}.cs";
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace MasterBuilder.Templates.Models.Reference
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "Models", Entity.InternalName, "Reference" };
+            return new string[] { "Models", Screen.InternalName, "Reference" };
         }
 
         /// <summary>
@@ -41,16 +43,14 @@ namespace MasterBuilder.Templates.Models.Reference
         /// </summary>
         public string GetFileContent()
         {
-            var itemClassName = $"{Entity.InternalName}.Reference.{Entity.InternalName}ReferenceItem";
-
             return $@"using System;
 
-namespace {Project.InternalName}.Models.{Entity.InternalName}.Reference
+namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
 {{
     /// <summary>
-    /// {Entity.InternalName} Reference Response
+    /// {FormField.TitleValue} Reference Response
     /// </summary>
-    public class {Entity.InternalName}ReferenceResponse
+    public class {FormField.ReferenceResponseClass}
     {{
         /// <summary>
         /// Total Pages
@@ -61,9 +61,9 @@ namespace {Project.InternalName}.Models.{Entity.InternalName}.Reference
         /// </summary>
         public int TotalItems {{ get; internal set; }}
         /// <summary>
-        /// {itemClassName}
+        /// {FormField.ReferenceItemClass} Array
         /// </summary>
-        public {itemClassName}[] Items {{ get; internal set; }}
+        public {Screen.InternalName}.Reference.{FormField.ReferenceItemClass}[] Items {{ get; internal set; }}
     }}
 }}";
         }

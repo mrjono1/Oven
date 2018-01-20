@@ -13,7 +13,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
     {
         private readonly Project Project;
         private readonly Screen Screen;
-        private Entity _entity;
+        private readonly Entity Entity;
         
         /// <summary>
         /// Constructor
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             Project = project;
             Screen = screen;
 
-            _entity = Project.Entities.SingleOrDefault(p => p.Id == Screen.EntityId);
+            Entity = Project.Entities.Single(p => p.Id == Screen.EntityId);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         public IEnumerable<string> GetImports()
         {
             var imports = new List<string>();
-            if (_entity == null)
+            if (Entity == null)
             {
                 return imports;
             }
@@ -41,24 +41,25 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             imports.Add("import { FormControl, FormGroup, Validators } from '@angular/forms';");
             imports.Add("import { Observable } from 'rxjs/Observable';");
 
-            var referenceEntities = (from property in _entity.Properties
-                                     where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
-                                     property.ParentEntityId.HasValue
-                                     from entity in Project.Entities
-                                     where entity.Id == property.ParentEntityId.Value
-                                     select entity).Distinct().ToArray();
-
-            if (referenceEntities.Any())
+            var hasReferenceFormField = false;
+            foreach (var screenSection in Screen.ScreenSections)
             {
-                imports.Add("import { ReferenceRequest } from '../../models/ReferenceRequest';");
-                foreach (var entity in referenceEntities)
+                if (screenSection.ScreenSectionType == ScreenSectionTypeEnum.Form)
                 {
-                    imports.Add($"import {{ {entity.InternalName}Service }} from '../../shared/{entity.InternalName.ToLowerInvariant()}.service';");
-                    imports.Add($"import {{ {entity.InternalName}ReferenceItem }} from '../../models/{entity.InternalName.ToLowerInvariant()}/{entity.InternalName}ReferenceItem';");
-                    imports.Add($"import {{ {entity.InternalName}ReferenceResponse }} from '../../models/{entity.InternalName.ToLowerInvariant()}/{entity.InternalName}ReferenceResponse';");
+                    foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship))
+                    {
+                        imports.Add($"import {{ {referenceFormField.ReferenceItemClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{referenceFormField.ReferenceItemClass}';");
+                        imports.Add($"import {{ {referenceFormField.ReferenceResponseClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{referenceFormField.ReferenceResponseClass}';");
+                    }
                 }
             }
 
+            if (hasReferenceFormField)
+            {
+                imports.Add("import { ReferenceRequest } from '../../models/ReferenceRequest';");
+                imports.Add($"import {{ {Screen.InternalName}Service }} from '../../shared/{Screen.InternalName.ToLowerInvariant()}.service';");
+            }
+                        
             return imports;
         }
 
@@ -68,25 +69,24 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         public IEnumerable<string> GetngOnInit()
         {
             var lines = new List<string>();
-            if (_entity == null)
+            if (Entity == null)
             {
                 return lines;
             }
 
-            var referenceEntities = (from property in _entity.Properties
-                                     where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
-                                     property.ParentEntityId.HasValue
-                                     from entity in Project.Entities
-                                     where entity.Id == property.ParentEntityId.Value
-                                     select entity).Distinct().ToArray();
-
-            foreach (var entity in referenceEntities)
+            foreach (var screenSection in Screen.ScreenSections)
             {
-                lines.Add($@"        this.{entity.InternalName.Camelize()}Service.get{entity.InternalName}References(null , 1, 100).subscribe((result: any) => {{
+                if (screenSection.ScreenSectionType == ScreenSectionTypeEnum.Form)
+                {
+                    foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship))
+                    {
+                        lines.Add($@"        this.{Screen.InternalName.Camelize()}Service.get{referenceFormField.Property.InternalName}References(null , 1, 100).subscribe((result: any) => {{
                 if (result != null) {{
-                    this.{entity.InternalName.Camelize()}Reference.items = result.items;
+                    this.{referenceFormField.Property.InternalName.Camelize()}Reference.items = result.items;
                 }}
             }});");
+                    }
+                }
             }
 
             return lines;
@@ -99,12 +99,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         public IEnumerable<string> GetConstructorParamerters()
         {
             var imports = new List<string>();
-            if (_entity == null)
+            if (Entity == null)
             {
                 return imports;
             }
             
-            var referenceEntities = (from property in _entity.Properties
+            var referenceEntities = (from property in Entity.Properties
                                      where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
                                      property.ParentEntityId.HasValue
                                      from entity in Project.Entities
@@ -127,7 +127,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         /// </summary>
         public string GetFunctions()
         {
-            if (_entity == null)
+            if (Entity == null)
             {
                 return string.Empty;
             }
@@ -139,7 +139,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             var formControls = new List<string>();
             var formCode = new List<string>();
 
-            foreach (var property in _entity.Properties)
+            foreach (var property in Entity.Properties)
             {
                 if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
                 {
@@ -256,13 +256,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         
         if (this.new){{
             // Post new
-            this.{_entity.InternalName.Camelize()}Service.add{_entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
+            this.{Entity.InternalName.Camelize()}Service.add{Entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
                 this.router.navigate([this.router.url + '/' + id]);
             }});
         }} else {{
             // Patch existing
             let operations = this.getPatchOperations();
-            this.{_entity.InternalName.Camelize()}Service.update{_entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}.id, operations).subscribe( result => {{
+            this.{Entity.InternalName.Camelize()}Service.update{Entity.InternalName}{Screen.InternalName}(this.{Screen.InternalName.Camelize()}.id, operations).subscribe( result => {{
                 this.{Screen.InternalName.Camelize()}Form.markAsPristine({{ onlySelf: false }});
             }});
         }}

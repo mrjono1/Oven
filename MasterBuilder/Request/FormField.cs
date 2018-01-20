@@ -99,6 +99,36 @@ namespace MasterBuilder.Request
                 }
             }
         }
+        /// <summary>
+        /// Reference Request Class
+        /// </summary>
+        internal string ReferenceRequestClass
+        {
+            get
+            {
+                return $"{Property.InternalName}ReferenceRequest";
+            }
+        }
+        /// <summary>
+        /// Reference Item Class
+        /// </summary>
+        internal string ReferenceItemClass
+        {
+            get
+            {
+                return $"{Property.InternalName}ReferenceItem";
+            }
+        }
+        /// <summary>
+        /// Reference Response Class
+        /// </summary>
+        internal string ReferenceResponseClass
+        {
+            get
+            {
+                return $"{Property.InternalName}ReferenceResponse";
+            }
+        }
         #endregion
     }
 }

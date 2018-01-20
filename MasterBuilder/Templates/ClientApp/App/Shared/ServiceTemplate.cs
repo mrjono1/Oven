@@ -12,15 +12,15 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
     public class ServiceTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
+        private readonly Screen Screen;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ServiceTemplate(Project project, Entity entity)
+        public ServiceTemplate(Project project, Screen screen)
         {
             Project = project;
-            Entity = entity;
+            Screen = screen;
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
         /// </summary>
         public string GetFileName()
         {            
-            return $"{Entity.InternalName.ToLowerInvariant()}.service.ts";
+            return $"{Screen.InternalName.ToLowerInvariant()}.service.ts";
         }
 
         /// <summary>
@@ -46,44 +46,40 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
         {
             var imports = new List<string>();
             var methods = new List<string>();
+            var referenceFormFields = new List<FormField>();
 
             var hasForm = false;
 
-            foreach (var group in (from s in Project.Screens
-                                           from ss in s.ScreenSections
-                                           where ss.EntityId == Entity.Id
-                                           select new
-                                           {
-                                               Screen = s,
-                                               ScreenSection = ss
-                                           }))
+            foreach (var screenSection in Screen.ScreenSections.Where(e => e.EntityId.HasValue))
             {
-                switch (group.ScreenSection.ScreenSectionType)
+                switch (screenSection.ScreenSectionType)
                 {
                     case ScreenSectionTypeEnum.Form:
 
-                        imports.Add($"import {{ {group.ScreenSection.InternalName} }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.InternalName}';");
+                        imports.Add($"import {{ {screenSection.InternalName} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}';");
 
-                        methods.Add($@"    get{group.Screen.InternalName}{group.ScreenSection.InternalName}(id: string){{
-        return this.http.get<{group.ScreenSection.InternalName}>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}/${{id}}`);
+                        methods.Add($@"    get{Screen.InternalName}{screenSection.InternalName}(id: string){{
+        return this.http.get<{screenSection.InternalName}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`);
     }}");
-                        methods.Add($@"    add{Entity.InternalName}{group.Screen.InternalName}(request: any){{
-        return this.http.post<string>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}`, request);
+                        methods.Add($@"    add{Screen.InternalName}{Screen.InternalName}(request: any){{
+        return this.http.post<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}`, request);
     }}");
 
-                        methods.Add($@"    update{Entity.InternalName}{group.Screen.InternalName}(id: string, operations: Operation[]){{
-        return this.http.patch<string>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}/${{id}}`, operations);
+                        methods.Add($@"    update{Screen.InternalName}{Screen.InternalName}(id: string, operations: Operation[]){{
+        return this.http.patch<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`, operations);
     }}");
                         hasForm = true;
+                        referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship));
+
                         break;
                     case ScreenSectionTypeEnum.Search:
 
-                        imports.Add($"import {{ {group.ScreenSection.SearchSection.SearchItemClass} }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.SearchSection.SearchItemClass}';");
-                        imports.Add($"import {{ {group.ScreenSection.SearchSection.SearchRequestClass} }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.SearchSection.SearchRequestClass}';");
-                        imports.Add($"import {{ {group.ScreenSection.SearchSection.SearchResponseClass} }} from '../models/{group.Screen.InternalName.ToLowerInvariant()}/{group.ScreenSection.SearchSection.SearchResponseClass}';");
+                        imports.Add($"import {{ {screenSection.SearchSection.SearchItemClass} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.SearchSection.SearchItemClass}';");
+                        imports.Add($"import {{ {screenSection.SearchSection.SearchRequestClass} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.SearchSection.SearchRequestClass}';");
+                        imports.Add($"import {{ {screenSection.SearchSection.SearchResponseClass} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.SearchSection.SearchResponseClass}';");
 
-                        methods.Add($@"    get{group.Screen.InternalName}{group.ScreenSection.InternalName}(request: {group.ScreenSection.SearchSection.SearchRequestClass}){{
-        return this.http.post<{group.ScreenSection.SearchSection.SearchResponseClass}>(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}`, request);
+                        methods.Add($@"    get{Screen.InternalName}{screenSection.InternalName}(request: {screenSection.SearchSection.SearchRequestClass}){{
+        return this.http.post<{screenSection.SearchSection.SearchResponseClass}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}{screenSection.InternalName}`, request);
     }}");
 
                         break;
@@ -97,15 +93,15 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                         break;
                 }
 
-                if (group.ScreenSection.MenuItems != null)
+                if (screenSection.MenuItems != null)
                 {
-                    foreach (var menuItem in group.ScreenSection.MenuItems)
+                    foreach (var menuItem in screenSection.MenuItems)
                     {
                         switch (menuItem.MenuItemType)
                         {
                             case MenuItemTypeEnum.ServerFunction:
                                 methods.Add($@"    get{menuItem.InternalName}(id: string){{
-        return this.http.get(`${{this.baseUrl}}/api/{Entity.InternalName}/{group.Screen.InternalName}{group.ScreenSection.InternalName}{menuItem.InternalName}/${{id}}`);
+        return this.http.get(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}{screenSection.InternalName}{menuItem.InternalName}/${{id}}`);
     }}");
                                 break;
                         }
@@ -118,9 +114,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                 imports.Add($"import {{ Operation }} from '../models/Operation';");
             }
 
-            var serviceReferenceMethodTemplate = new ServiceReferenceMethodTemplate(Project, Entity);
-            imports.AddRange(serviceReferenceMethodTemplate.Imports());
-            methods.Add(serviceReferenceMethodTemplate.Method());
+            foreach (var referenceFormField in referenceFormFields)
+            {
+                var serviceReferenceMethodTemplate = new ServiceReferenceMethodTemplate(Project, Screen, referenceFormField);
+                imports.AddRange(serviceReferenceMethodTemplate.Imports());
+                methods.Add(serviceReferenceMethodTemplate.Method());
+            }
+
 
             return $@"import {{ Injectable, Inject, Injector }} from '@angular/core';
 import {{ HttpClient }} from '@angular/common/http';
@@ -131,7 +131,7 @@ import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine';
 import {{ Observable }} from 'rxjs/Observable';
 
 @Injectable()
-export class {Entity.InternalName}Service {{
+export class {Screen.InternalName}Service {{
 
     private baseUrl: string;
 

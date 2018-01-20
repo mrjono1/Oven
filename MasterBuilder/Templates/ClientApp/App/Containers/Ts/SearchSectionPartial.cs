@@ -95,7 +95,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.pageSize = 20;
             {parentPropertyFilterString}
 
-             this.{ScreenSection.SearchSection.Entity.InternalName.Camelize()}Service.get{Screen.InternalName}{ScreenSection.InternalName}(this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}).subscribe( result => {{
+             this.{Screen.InternalName.Camelize()}Service.get{Screen.InternalName}{ScreenSection.InternalName}(this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}).subscribe( result => {{
                 this.{ScreenSection.SearchSection.SearchResponseClass.Camelize()} = result;
                 this.{ScreenSection.InternalName.Camelize()}DataSource = new MatTableDataSource<{ScreenSection.SearchSection.SearchItemClass}>(result.items);
             }});

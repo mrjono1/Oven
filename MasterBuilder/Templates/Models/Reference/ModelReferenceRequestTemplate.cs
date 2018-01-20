@@ -9,15 +9,17 @@ namespace MasterBuilder.Templates.Models.Reference
     public class ModelReferenceRequestTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
+        private readonly Screen Screen;
+        private readonly FormField FormField;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelReferenceRequestTemplate(Project project, Entity entity)
+        public ModelReferenceRequestTemplate(Project project, Screen screen, FormField formField)
         {
             Project = project;
-            Entity = entity;
+            Screen = screen;
+            FormField = formField;
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace MasterBuilder.Templates.Models.Reference
         /// </summary>
         public string GetFileName()
         {
-            return $"{Entity.InternalName}ReferenceRequest.cs";
+            return $"{FormField.ReferenceRequestClass}.cs";
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace MasterBuilder.Templates.Models.Reference
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "Models", Entity.InternalName, "Reference" };
+            return new string[] { "Models", Screen.InternalName, "Reference" };
         }
 
         /// <summary>
@@ -45,12 +47,12 @@ namespace MasterBuilder.Templates.Models.Reference
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace {Project.InternalName}.Models.{Entity.InternalName}.Reference
+namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
 {{
     /// <summary>
-    /// {Entity.InternalName} Reference Request
+    /// {FormField.TitleValue} Reference Request
     /// </summary>
-    public class {Entity.InternalName}ReferenceRequest
+    public class {FormField.ReferenceRequestClass}
     {{
         /// <summary>
         /// Page

@@ -26,9 +26,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
         {
             var templates = new List<ITemplate>();
 
-            foreach (var entity in Project.Entities)
+            foreach (var screen in Project.Screens)
             {
-                templates.Add(new ServiceTemplate(Project, entity));
+                templates.Add(new ServiceTemplate(Project, screen));
             }
             
             templates.Add(new LinkServiceTemplate());

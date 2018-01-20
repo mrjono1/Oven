@@ -66,27 +66,21 @@ namespace MasterBuilder.Templates.Controllers
                 "_context = context;"
             };
 
-
-            // TODO: put this back in
-            /*var lookupMethod = ControllerReferenceMethodTemplate.Evaluate(Project, Entity);
-            if (!string.IsNullOrEmpty(lookupMethod))
-            {
-                methods.Add(lookupMethod);
-            }*/
             var referenceFormFields = new List<FormField>();
             foreach (var screenSection in Screen.ScreenSections)
             {
                 switch (screenSection.ScreenSectionType)
                 {
                     case ScreenSectionTypeEnum.Search:
-                        usings.Add("using Microsoft.AspNetCore.JsonPatch;");
                         methods.Add(ControllerSearchMethodTemplate.Evaluate(Project, Screen, screenSection));
                         break;
-                    case ScreenSectionTypeEnum.Form:
-                        methods.Add(ControllerEditMethodTemplate.Evaluate(Project, Screen, screenSection));
 
+                    case ScreenSectionTypeEnum.Form:
+                        usings.Add("using Microsoft.AspNetCore.JsonPatch;");
+                        methods.Add(ControllerEditMethodTemplate.Evaluate(Project, Screen, screenSection));
                         referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship));
                         break;
+
                     default:
                         break;
                 }
@@ -115,7 +109,11 @@ namespace MasterBuilder.Templates.Controllers
 
             foreach (var referenceFormField in referenceFormFields)
             {
-
+                var referenceMethod = ControllerReferenceMethodTemplate.Evaluate(Project, Screen, referenceFormField);
+                if (!string.IsNullOrEmpty(referenceMethod))
+                {
+                    methods.Add(referenceMethod);
+                }
             }
 
 
