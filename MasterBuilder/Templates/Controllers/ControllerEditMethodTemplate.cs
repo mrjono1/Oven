@@ -159,6 +159,8 @@ namespace MasterBuilder.Templates.Controllers
         /// {screenSection.Title} Get
         /// </summary>
         [HttpGet(""{screen.InternalName}/{{id}}"")]
+        [ProducesResponseType(typeof(Models.{screen.InternalName}Response), 200)]
+        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> {screen.InternalName}(Guid id)
         {{
             if (!ModelState.IsValid)
@@ -192,6 +194,8 @@ namespace MasterBuilder.Templates.Controllers
         /// {screenSection.Title} Add
         /// </summary>
         [HttpPost(""{screen.InternalName}"")]
+        [ProducesResponseType(typeof(Guid), 200)]
+        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> {screen.InternalName}([FromBody]{screen.InternalName}Request post)
         {{
             if (post == null)
@@ -220,6 +224,8 @@ namespace MasterBuilder.Templates.Controllers
         /// {screenSection.Title} Update
         /// </summary>
         [HttpPatch(""{screen.InternalName}/{{id}}"")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> {screen.InternalName}([FromRoute]Guid id, [FromBody]JsonPatchDocument<{screen.InternalName}Request> patch)
         {{
             if (patch == null)

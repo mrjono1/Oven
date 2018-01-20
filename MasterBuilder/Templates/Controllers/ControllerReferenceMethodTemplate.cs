@@ -27,6 +27,8 @@ namespace MasterBuilder.Templates.Controllers
         /// {formField.Title} Reference Search
         /// </summary>
         [HttpPost(""{formField.Property.InternalName}References"")]
+        [ProducesResponseType(typeof({responseClassName}), 200)]
+        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> {formField.Property.InternalName}Reference([FromBody]{requestClassName} request)
         {{
             if (request == null)

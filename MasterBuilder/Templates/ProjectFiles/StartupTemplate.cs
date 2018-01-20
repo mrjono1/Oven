@@ -120,6 +120,7 @@ namespace {Project.InternalName}
             // Add Swagger service
             services.AddSwaggerGen(c =>
             {{
+                c.CustomSchemaIds(x => x.FullName);
                 c.SwaggerDoc(""v1"", new Info {{ Title = ""{Project.Title} API"", Version = ""v1"" }});
                 c.IncludeXmlComments(xmlfilePath);
             }});
