@@ -97,7 +97,6 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""file-loader"": ""^0.11.2"",
     ""html-loader"": ""^0.5.1"",
     ""isomorphic-fetch"": ""^2.2.1"",
-    ""jquery"": ""^2.2.1"",
     ""json-loader"": ""^0.5.4"",
     ""moment"": ""2.18.1"",
     ""node-sass"": ""^4.5.2"",
