@@ -34,20 +34,20 @@ namespace MasterBuilder.Templates.Models
                 {
                     switch (screenSection.ScreenSectionType)
                     {
-                        case ScreenSectionTypeEnum.Form:
-                            referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship));
+                        case ScreenSectionType.Form:
+                            referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
                             templates.Add(new ModelFormResponseTemplate(Project, screen, screenSection));
                             templates.Add(new ModelFormRequestTemplate(Project, screen, screenSection));
                             break;
-                        case ScreenSectionTypeEnum.Search:
+                        case ScreenSectionType.Search:
                             templates.Add(new ModelSearchRequestTemplate(Project, screen, screenSection));
                             templates.Add(new ModelSearchResponseTemplate(Project, screen, screenSection));
                             templates.Add(new ModelSearchItemTemplate(Project, screen, screenSection));
                             break;
-                        case ScreenSectionTypeEnum.MenuList:
+                        case ScreenSectionType.MenuList:
                             // None
                             break;
-                        case ScreenSectionTypeEnum.Html:
+                        case ScreenSectionType.Html:
                             // None
                             break;
                         default:

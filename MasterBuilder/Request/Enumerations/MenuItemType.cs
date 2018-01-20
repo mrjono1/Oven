@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Menu Item Type Enum
     /// </summary>
-    public enum MenuItemTypeEnum
+    public enum MenuItemType
     {
         /// <summary>
         /// Application Link

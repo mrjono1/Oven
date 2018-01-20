@@ -15,15 +15,15 @@ namespace MasterBuilder.Request
 
             switch (ScreenSectionType)
             {
-                case ScreenSectionTypeEnum.Form:
+                case ScreenSectionType.Form:
                     ResolveFormSection(project, screen);
                     break;
-                case ScreenSectionTypeEnum.Search:
+                case ScreenSectionType.Search:
                     ResolveSearchSection(project, screen);
                     break;
-                case ScreenSectionTypeEnum.MenuList:
+                case ScreenSectionType.MenuList:
                     break;
-                case ScreenSectionTypeEnum.Html:
+                case ScreenSectionType.Html:
                     break;
                 default:
                     break;
@@ -68,7 +68,7 @@ namespace MasterBuilder.Request
             {
                 switch (property.PropertyType)
                 {
-                    case PropertyTypeEnum.OneToOneRelationship:
+                    case PropertyType.OneToOneRelationship:
                         continue;
                     default:
                         formFields.Add(new FormField
@@ -116,7 +116,7 @@ namespace MasterBuilder.Request
             {
                 switch (property.PropertyType)
                 {
-                    case PropertyTypeEnum.OneToOneRelationship:
+                    case PropertyType.OneToOneRelationship:
                         continue;
                     default:
                         searchColumns.Add(new SearchColumn

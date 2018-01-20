@@ -13,22 +13,22 @@ namespace MasterBuilder.SourceControl
     /// </summary>
     public class Git
     {
-        private readonly string _baseDirectory;
-        private readonly Project _project;
-        private readonly string _username;
-        private readonly string _email;
-        private readonly string _personalAccessToken;
+        private readonly string BaseDirectory;
+        private readonly Project Project;
+        private readonly string Username;
+        private readonly string Email;
+        private readonly string PersonalAccessToken;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public Git(string baseDirectory, Project project, string username, string email, string personalAccessToken)
         {
-            _baseDirectory = baseDirectory;
-            _project = project;
-            _username = username;
-            _email = email;
-            _personalAccessToken = personalAccessToken;
+            BaseDirectory = baseDirectory;
+            Project = project;
+            Username = username;
+            Email = email;
+            PersonalAccessToken = personalAccessToken;
         }
 
         /// <summary>
@@ -36,11 +36,11 @@ namespace MasterBuilder.SourceControl
         /// </summary>
         internal async Task<Dictionary<string, Models.GetRepository>> SetupAndGetRepos()
         {
-            var vsts = new VisualStudioTeamServices(_username, _project.InternalName, _personalAccessToken);
+            var vsts = new VisualStudioTeamServices(Username, Project.InternalName, PersonalAccessToken);
             var project = await vsts.GetProject();
             if (project == null)
             {
-                project = await vsts.CreateProject(_project.InternalName, _project.Title);
+                project = await vsts.CreateProject(Project.InternalName, Project.Title);
             }
             if (project == null)
             {
@@ -50,7 +50,7 @@ namespace MasterBuilder.SourceControl
             var repositoriesNeeded = new Dictionary<string, Models.GetRepository>
             {
                 { "Json", null },
-                { _project.InternalName, null}
+                { Project.InternalName, null}
             };
 
             // Get repositories from VSTS
@@ -70,7 +70,7 @@ namespace MasterBuilder.SourceControl
             // Double check each repository is setup correctly
             foreach (var repositoryNeeded in repositoriesNeeded)
             {
-                var path = Path.Combine(_baseDirectory, repositoryNeeded.Key);
+                var path = Path.Combine(BaseDirectory, repositoryNeeded.Key);
                 repositoriesCreated.Add(repositoryNeeded.Key, await EnsureRepoistoryIsInitialised(repositoryNeeded.Key, path, repositoryNeeded.Value, vsts));
             }
 
@@ -107,7 +107,7 @@ namespace MasterBuilder.SourceControl
                     (_url, _user, _cred) => new UsernamePasswordCredentials
                     {
                         Username = "Basic",
-                        Password = _personalAccessToken
+                        Password = PersonalAccessToken
                     }
                 };
                 Repository.Clone(repo.RemoteUrl, directory, cloneOptions);
@@ -125,7 +125,7 @@ namespace MasterBuilder.SourceControl
         /// </summary>
         internal void Pull(Models.GetRepository getRepository)
         {
-            var path = Path.Combine(_baseDirectory, getRepository.Name);
+            var path = Path.Combine(BaseDirectory, getRepository.Name);
 
             using (var repository = new Repository(path))
             {
@@ -145,7 +145,7 @@ namespace MasterBuilder.SourceControl
                 }
                 
                 Commands.Pull(repository,
-                    new Signature(_username, _email, DateTime.Now),
+                    new Signature(Username, Email, DateTime.Now),
                     new PullOptions()
                     {
                         FetchOptions = new FetchOptions()
@@ -155,7 +155,7 @@ namespace MasterBuilder.SourceControl
                             new UsernamePasswordCredentials()
                             {
                                 Username = "Basic",
-                                Password = _personalAccessToken
+                                Password = PersonalAccessToken
                             })
                         }
                     }
@@ -168,7 +168,7 @@ namespace MasterBuilder.SourceControl
         /// </summary>
         internal void StageCommitPush(Models.GetRepository getRepository, string message)
         {
-            var path = Path.Combine(_baseDirectory, getRepository.Name);
+            var path = Path.Combine(BaseDirectory, getRepository.Name);
 
             using (var repository = new Repository(path))
             {
@@ -180,7 +180,7 @@ namespace MasterBuilder.SourceControl
                 Commands.Stage(repository, "*");
 
                 // Create the committer's signature and commit
-                Signature author = new Signature(_username, _email, DateTime.Now);
+                Signature author = new Signature(Username, Email, DateTime.Now);
                 Signature committer = author;
 
                 // Commit to the repository
@@ -199,7 +199,7 @@ namespace MasterBuilder.SourceControl
                         new UsernamePasswordCredentials()
                         {
                             Username = "Basic",
-                            Password = _personalAccessToken
+                            Password = PersonalAccessToken
                         })
                 };
                 var pushRefSpec = @"refs/heads/master";

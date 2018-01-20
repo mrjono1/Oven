@@ -28,20 +28,20 @@ namespace MasterBuilder.Templates.Models
                 {
                     switch (item.ValidationType)
                     {
-                        case ValidationTypeEnum.Required:
+                        case ValidationType.Required:
                             attributes.Add("[Required]");
                             break;
-                        case ValidationTypeEnum.MaximumLength:
+                        case ValidationType.MaximumLength:
                             attributes.Add($"[MaxLength({item.IntegerValue})]");
                             break;
-                        case ValidationTypeEnum.MinimumLength:
+                        case ValidationType.MinimumLength:
                             attributes.Add($"[MinLength({item.IntegerValue})]");
                             break;
-                        case ValidationTypeEnum.MaximumValue:
+                        case ValidationType.MaximumValue:
                             // Min value picks this one up
                             break;
-                        case ValidationTypeEnum.MinimumValue:
-                            var maxValue = formField.Property.ValidationItems.SingleOrDefault(a => a.ValidationType == ValidationTypeEnum.MaximumValue);
+                        case ValidationType.MinimumValue:
+                            var maxValue = formField.Property.ValidationItems.SingleOrDefault(a => a.ValidationType == ValidationType.MaximumValue);
                             if (maxValue != null)
                             {
                                 if (item.IntegerValue.HasValue)
@@ -54,16 +54,16 @@ namespace MasterBuilder.Templates.Models
                                 }
                             }
                             break;
-                        case ValidationTypeEnum.Unique:
+                        case ValidationType.Unique:
                             // TODO: server side unique, currently will fail on db upate
                             break;
-                        case ValidationTypeEnum.Email:
+                        case ValidationType.Email:
                             attributes.Add("[EmailAddress]");
                             break;
-                        case ValidationTypeEnum.RequiredTrue:
+                        case ValidationType.RequiredTrue:
                             // TODO: custom attribute
                             break;
-                        case ValidationTypeEnum.Pattern:
+                        case ValidationType.Pattern:
                             attributes.Add($@"[RegularExpression(""{item.StringValue}"")]");
                             break;
                         default:

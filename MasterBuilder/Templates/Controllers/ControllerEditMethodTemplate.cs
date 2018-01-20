@@ -17,16 +17,16 @@ namespace MasterBuilder.Templates.Controllers
             var patchEntityOperations = new List<string>();
             foreach (var formField in screenSection.FormSection.FormFields)
             {
-                if (formField.PropertyType != PropertyTypeEnum.ParentRelationship &&
-                    formField.PropertyType != PropertyTypeEnum.ReferenceRelationship &&
-                    formField.PropertyType != PropertyTypeEnum.OneToOneRelationship)
+                if (formField.PropertyType != PropertyType.ParentRelationship &&
+                    formField.PropertyType != PropertyType.ReferenceRelationship &&
+                    formField.PropertyType != PropertyType.OneToOneRelationship)
                 {
                     getPropertyMapping.Add($"                           {formField.InternalNameCSharp} = item.{formField.InternalNameCSharp}");
                 }
 
                 switch (formField.PropertyType)
                 {
-                    case PropertyTypeEnum.ParentRelationship:
+                    case PropertyType.ParentRelationship:
                         postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
                         patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
                         if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
@@ -43,7 +43,7 @@ namespace MasterBuilder.Templates.Controllers
                         getPropertyMapping.Add($"                           {formField.InternalNameCSharp} = item.{formField.InternalNameCSharp}");
                         break;
 
-                    case PropertyTypeEnum.ReferenceRelationship:
+                    case PropertyType.ReferenceRelationship:
                         postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
 
                         patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
@@ -65,16 +65,16 @@ namespace MasterBuilder.Templates.Controllers
                         getPropertyMapping.Add($"                           {formField.InternalNameAlternateCSharp} = item.{formField.Property.InternalName} != null ? item.{formField.Property.InternalName}.Title : null");
                         break;
 
-                    case PropertyTypeEnum.PrimaryKey:
+                    case PropertyType.PrimaryKey:
                         break;
-                    case PropertyTypeEnum.String:
+                    case PropertyType.String:
                         postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
                         patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
                         entity.{formField.InternalNameCSharp} = operation.value.ToString();
                         entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
                         break;");
                         break;
-                    case PropertyTypeEnum.Integer:
+                    case PropertyType.Integer:
                         postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
                         patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
                         int int32Value{formField.InternalNameCSharp};
@@ -94,7 +94,7 @@ namespace MasterBuilder.Templates.Controllers
                         }}
                         break;");
                         break;
-                    case PropertyTypeEnum.Double:
+                    case PropertyType.Double:
                         postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
                         patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
                         int doubleValue{formField.InternalNameCSharp};
@@ -114,7 +114,7 @@ namespace MasterBuilder.Templates.Controllers
                         }}
                         break;");
                         break;
-                    case PropertyTypeEnum.DateTime:
+                    case PropertyType.DateTime:
                         postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
                         patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
                         DateTime dateTimeValue{formField.InternalNameCSharp};
@@ -134,7 +134,7 @@ namespace MasterBuilder.Templates.Controllers
                         }}
                         break;");
                         break;
-                    case PropertyTypeEnum.Boolean:
+                    case PropertyType.Boolean:
                         postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
                         patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
                         bool booleanValue{formField.InternalNameCSharp};

@@ -35,23 +35,23 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
                 {
                     switch (screenSection.ScreenSectionType)
                     {
-                        case ScreenSectionTypeEnum.Form:
+                        case ScreenSectionType.Form:
 
-                            referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship));
+                            referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
                             templates.Add(new FormTemplate(Project, screen, screenSection));
 
                             break;
-                        case ScreenSectionTypeEnum.Search:
+                        case ScreenSectionType.Search:
 
                             templates.Add(new SearchRequestTemplate(Project, screen, screenSection));
                             templates.Add(new SearchResponseTemplate(Project, screen, screenSection));
                             templates.Add(new SearchItemTemplate(Project, screen, screenSection));
 
                             break;
-                        case ScreenSectionTypeEnum.MenuList:
+                        case ScreenSectionType.MenuList:
                             // None
                             break;
-                        case ScreenSectionTypeEnum.Html:
+                        case ScreenSectionType.Html:
                             // None
                             break;
                     }

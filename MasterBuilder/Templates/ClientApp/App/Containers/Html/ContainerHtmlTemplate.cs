@@ -49,19 +49,19 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 switch (screenSection.ScreenSectionType)
                 {
-                    case ScreenSectionTypeEnum.Form:
+                    case ScreenSectionType.Form:
                         var formSection = new FormSectionBuilder(Project, Screen, screenSection);
                         sections.Add(formSection.Evaluate());
                         break;
-                    case ScreenSectionTypeEnum.Search:
+                    case ScreenSectionType.Search:
                         var searchSection = new SearchSectionBuilder(Project, Screen, screenSection);
                         sections.Add(searchSection.Evaluate());
                         break;
-                    case ScreenSectionTypeEnum.MenuList:
+                    case ScreenSectionType.MenuList:
                         var menuListSection = new MenuListSectionBuilder(Project, Screen, screenSection);
                         sections.Add(menuListSection.Evaluate());
                         break;
-                    case ScreenSectionTypeEnum.Html:
+                    case ScreenSectionType.Html:
                         sections.Add($@"        <div class=""screen-section-html container mat-elevation-z2"" fxFlex>
 { screenSection.Html}
         </div>");

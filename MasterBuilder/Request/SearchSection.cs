@@ -33,7 +33,7 @@ namespace MasterBuilder.Request
         {
             get
             {
-                if (Screen.ScreenType == ScreenTypeEnum.Search)
+                if (Screen.ScreenType == ScreenType.Search)
                 {
                     return $"{Screen.InternalName}Item";
                 }
@@ -50,7 +50,7 @@ namespace MasterBuilder.Request
         {
             get
             {
-                if (Screen.ScreenType == ScreenTypeEnum.Search)
+                if (Screen.ScreenType == ScreenType.Search)
                 {
                     return $"{Screen.InternalName}Request";
                 }
@@ -67,7 +67,7 @@ namespace MasterBuilder.Request
         {
             get
             {
-                if (Screen.ScreenType == ScreenTypeEnum.Search)
+                if (Screen.ScreenType == ScreenType.Search)
                 {
                     return $"{Screen.InternalName}Response";
                 }

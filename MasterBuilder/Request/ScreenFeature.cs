@@ -15,9 +15,9 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Register of all Feature Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, FeatureEnum> FeatureDictonary = new Dictionary<Guid, FeatureEnum>
+        internal static readonly Dictionary<Guid, Feature> FeatureDictonary = new Dictionary<Guid, Feature>
         {
-            { new Guid("{6114120E-BD93-4CE4-A673-7DC295F93CFE}"), FeatureEnum.New }
+            { new Guid("{6114120E-BD93-4CE4-A673-7DC295F93CFE}"), Feature.New }
         };
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public FeatureEnum Feature
+        public Feature Feature
         {
             get
             {

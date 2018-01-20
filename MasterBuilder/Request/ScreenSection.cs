@@ -15,12 +15,12 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Register of all Screen Section Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ScreenSectionTypeEnum> ScreenSectionTypeDictonary = new Dictionary<Guid, ScreenSectionTypeEnum>
+        internal static readonly Dictionary<Guid, ScreenSectionType> ScreenSectionTypeDictonary = new Dictionary<Guid, ScreenSectionType>
         {
-            { new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), ScreenSectionTypeEnum.Search },
-            { new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}"), ScreenSectionTypeEnum.Form },
-            { new Guid("{4270A420-64CB-4A2C-B718-2C645DB2B57B}"), ScreenSectionTypeEnum.MenuList },
-            { new Guid("{38EF9B44-A993-479B-91EC-1FE436E91556}"), ScreenSectionTypeEnum.Html }
+            { new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), ScreenSectionType.Search },
+            { new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}"), ScreenSectionType.Form },
+            { new Guid("{4270A420-64CB-4A2C-B718-2C645DB2B57B}"), ScreenSectionType.MenuList },
+            { new Guid("{38EF9B44-A993-479B-91EC-1FE436E91556}"), ScreenSectionType.Html }
         };
         /// <summary>
         /// Identifier
@@ -44,7 +44,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public ScreenSectionTypeEnum ScreenSectionType
+        public ScreenSectionType ScreenSectionType
         {
             get
             {

@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Screen Type Enum
     /// </summary>
-    public enum ScreenTypeEnum
+    public enum ScreenType
     {
         /// <summary>
         /// Search Screen

@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Entity Template Enum
     /// </summary>
-    public enum EntityTemplateEnum
+    public enum EntityTemplate
     {
         /// <summary>
         /// No template

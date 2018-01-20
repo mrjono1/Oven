@@ -54,10 +54,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             {
                 switch (property.PropertyType)
                 {
-                    case PropertyTypeEnum.ParentRelationship:
+                    case PropertyType.ParentRelationship:
                         properties.Add($"   {property.InternalName.Camelize()}Id: {property.TsType};");
                         break;
-                    case PropertyTypeEnum.ReferenceRelationship:
+                    case PropertyType.ReferenceRelationship:
                         properties.Add($"   {property.InternalName.Camelize()}Id: {property.TsType};");
                         properties.Add($"   {property.InternalName.Camelize()}Title: string;");
                         break;

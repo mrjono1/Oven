@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 foreach (var menuItem in ScreenSection.MenuListMenuItems)
                 {
-                    if (menuItem.MenuItemType == MenuItemTypeEnum.ApplicationLink)
+                    if (menuItem.MenuItemType == MenuItemType.ApplicationLink)
                     {
                         var screen = Project.Screens.SingleOrDefault(a => a.Id == menuItem.ScreenId);
 

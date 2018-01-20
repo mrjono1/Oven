@@ -15,11 +15,11 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Register of all Seed Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, SeedTypeEnum> SeedTypeDictonary = new Dictionary<Guid, SeedTypeEnum>
+        internal static readonly Dictionary<Guid, SeedType> SeedTypeDictonary = new Dictionary<Guid, SeedType>
         {
-            { new Guid("{8A07A94D-4A5F-420F-B02A-4B2223B1213B}"), SeedTypeEnum.AddIfNone },
-            { new Guid("{2729F45B-269F-42B1-BBA9-3E76DC9D1CBB}"), SeedTypeEnum.EnsureAllAdded },
-            { new Guid("{6989AE9F-D5BD-4861-ABE6-0142EDDE6130}"), SeedTypeEnum.EnsureAllUpdated }
+            { new Guid("{8A07A94D-4A5F-420F-B02A-4B2223B1213B}"), SeedType.AddIfNone },
+            { new Guid("{2729F45B-269F-42B1-BBA9-3E76DC9D1CBB}"), SeedType.EnsureAllAdded },
+            { new Guid("{6989AE9F-D5BD-4861-ABE6-0142EDDE6130}"), SeedType.EnsureAllUpdated }
         };
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public SeedTypeEnum SeedType
+        public SeedType SeedType
         {
             get
             {

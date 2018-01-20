@@ -57,7 +57,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             foreach (var item in (from e in Project.Entities
                                   where e.Properties != null
                                   from p in e.Properties
-                                  where p.PropertyType == PropertyTypeEnum.OneToOneRelationship &&
+                                  where p.PropertyType == PropertyType.OneToOneRelationship &&
                                   p.ParentEntityId.Value == Entity.Id
                                   select new { e, p }))
             {

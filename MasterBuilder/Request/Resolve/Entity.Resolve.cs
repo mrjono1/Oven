@@ -39,7 +39,7 @@ namespace MasterBuilder.Request
 
         private void GenerateScreen(Project project, Entity entity)
         {
-            if (EntityTemplate == EntityTemplateEnum.Reference)
+            if (EntityTemplate == EntityTemplate.Reference)
             {
                 var screenFound = project.Screens.Where(s => s.EntityId == Id).Any();
 
@@ -48,7 +48,7 @@ namespace MasterBuilder.Request
                     return;
                 }
 
-                if (Properties == null || !Properties.Any() || !Properties.Any(p => p.PropertyType == PropertyTypeEnum.PrimaryKey))
+                if (Properties == null || !Properties.Any() || !Properties.Any(p => p.PropertyType == PropertyType.PrimaryKey))
                 {
                     var properties = new List<Property>
                     {
@@ -57,7 +57,7 @@ namespace MasterBuilder.Request
                             Id = entity.Id,
                             Title = "Id",
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey
+                            PropertyType = PropertyType.PrimaryKey
                         }
                     };
                     if (Properties != null)
@@ -67,7 +67,7 @@ namespace MasterBuilder.Request
                     Properties = properties;
                 }
 
-                var editScreenId = Properties.SingleOrDefault(p => p.PropertyType == PropertyTypeEnum.PrimaryKey).Id; // Just grabing a reproduceable id
+                var editScreenId = Properties.SingleOrDefault(p => p.PropertyType == PropertyType.PrimaryKey).Id; // Just grabing a reproduceable id
                 var screens = new List<Screen>(project.Screens)
                 {
                     new Screen()
@@ -75,17 +75,17 @@ namespace MasterBuilder.Request
                         Id = Id, // TODO: The id should be reproduceable I don't like this
                         EntityId = Id,
                         Title = Title.Pluralize(),
-                        ScreenType = ScreenTypeEnum.Search,
+                        ScreenType = ScreenType.Search,
                         Path = InternalNamePlural.Kebaberize(),
                         NavigateToScreenId = editScreenId,
-                        Template = ScreenTemplateEnum.Reference
+                        Template = ScreenTemplate.Reference
                     },
                     new Screen()
                     {
                         Id = editScreenId,
                         EntityId = Id,
                         Title = Title,
-                        ScreenType = ScreenTypeEnum.Edit,
+                        ScreenType = ScreenType.Edit,
                         Path = InternalName.Kebaberize()
                     }
                 };

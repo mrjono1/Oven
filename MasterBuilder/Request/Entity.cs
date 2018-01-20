@@ -17,10 +17,10 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Register of all Entity Template Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, EntityTemplateEnum> EntityTemplateDictonary = new Dictionary<Guid, EntityTemplateEnum>
+        internal static readonly Dictionary<Guid, EntityTemplate> EntityTemplateDictonary = new Dictionary<Guid, EntityTemplate>
         {
-            { Guid.Empty, EntityTemplateEnum.None },
-            { new Guid("{B79D1C90-6320-4A07-9753-2A41110611C8}"), EntityTemplateEnum.Reference }
+            { Guid.Empty, EntityTemplate.None },
+            { new Guid("{B79D1C90-6320-4A07-9753-2A41110611C8}"), EntityTemplate.Reference }
         };
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Cached version of the internal name pluralised for use in collections
         /// </summary>
-        private string _internalNamePlural = null;
+        private string internalNamePlural = null;
         /// <summary>
         /// Pluralised version of the internal name for use in collections
         /// </summary>
@@ -61,11 +61,11 @@ namespace MasterBuilder.Request
         {
             get
             {
-                if (_internalNamePlural == null)
+                if (internalNamePlural == null)
                 {
-                    _internalNamePlural = InternalName.Pluralize();
+                    internalNamePlural = InternalName.Pluralize();
                 }
-                return _internalNamePlural;
+                return internalNamePlural;
             }
         }
         
@@ -82,7 +82,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public EntityTemplateEnum EntityTemplate
+        public EntityTemplate EntityTemplate
         {
             get
             {

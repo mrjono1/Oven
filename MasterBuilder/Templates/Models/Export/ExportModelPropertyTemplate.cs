@@ -17,10 +17,10 @@ namespace MasterBuilder.Templates.Models.Export
             var required = false;
             if (property.ValidationItems != null)
             {
-                required = property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
+                required = property.ValidationItems.Where(v => v.ValidationType == ValidationType.Required).Any();
             }
 
-            if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
+            if (property.PropertyType == PropertyType.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 return $@"        /// <summary>
@@ -28,7 +28,7 @@ namespace MasterBuilder.Templates.Models.Export
         /// </summary>
         public Guid{(required ? "" : "?")} {property.InternalName}Id {{ get; set; }}";
             }
-            else if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
+            else if (property.PropertyType == PropertyType.PrimaryKey)
             {
                 return @"        /// <summary>
         /// Primary Key
@@ -52,15 +52,15 @@ namespace MasterBuilder.Templates.Models.Export
             var required = false;
             if (property.ValidationItems != null)
             {
-                required = property.ValidationItems.Where(v => v.ValidationType == ValidationTypeEnum.Required).Any();
+                required = property.ValidationItems.Where(v => v.ValidationType == ValidationType.Required).Any();
             }
 
-            if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
+            if (property.PropertyType == PropertyType.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 return $@"            {property.InternalName}Id = {entity.InternalName.Camelize()}.{property.InternalName}Id;";
             }
-            else if (property.PropertyType == PropertyTypeEnum.PrimaryKey)
+            else if (property.PropertyType == PropertyType.PrimaryKey)
             {
                 return $@"            Id = {entity.InternalName.Camelize()}.Id;";
             }

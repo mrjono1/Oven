@@ -71,14 +71,14 @@ namespace MasterBuilder.Templates.Controllers
             {
                 switch (screenSection.ScreenSectionType)
                 {
-                    case ScreenSectionTypeEnum.Search:
+                    case ScreenSectionType.Search:
                         methods.Add(ControllerSearchMethodTemplate.Evaluate(Project, Screen, screenSection));
                         break;
 
-                    case ScreenSectionTypeEnum.Form:
+                    case ScreenSectionType.Form:
                         usings.Add("using Microsoft.AspNetCore.JsonPatch;");
                         methods.Add(ControllerEditMethodTemplate.Evaluate(Project, Screen, screenSection));
-                        referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship));
+                        referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
                         break;
 
                     default:
@@ -91,7 +91,7 @@ namespace MasterBuilder.Templates.Controllers
                     {
                         switch (menuItem.MenuItemType)
                         {
-                            case MenuItemTypeEnum.ServerFunction:
+                            case MenuItemType.ServerFunction:
                                 hasServerFunction = true;
                                 methods.Add($@"        /// <summary>
         /// Menu Item {menuItem.Title} called function
@@ -135,7 +135,7 @@ namespace MasterBuilder.Templates.Controllers
             // TODO: Build site map
             if (Screen != null)
             {
-                if (Screen.Template == ScreenTemplateEnum.Home)
+                if (Screen.Template == ScreenTemplate.Home)
                 {
                     methods.Add($@"                /// <summary>
     /// Home Index

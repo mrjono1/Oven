@@ -16,10 +16,10 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Register of all Entity Template Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ServiceTypeEnum> ServiceTypeDictonary = new Dictionary<Guid, ServiceTypeEnum>
+        internal static readonly Dictionary<Guid, ServiceType> ServiceTypeDictonary = new Dictionary<Guid, ServiceType>
         {
-            { new Guid("{87D5B4C5-9862-4282-8BB2-E2707A17036A}"), ServiceTypeEnum.WebService },
-            { new Guid("{DD6A4434-16E1-41BF-B75B-C78E3A8D46BF}"), ServiceTypeEnum.ExportService }
+            { new Guid("{87D5B4C5-9862-4282-8BB2-E2707A17036A}"), ServiceType.WebService },
+            { new Guid("{DD6A4434-16E1-41BF-B75B-C78E3A8D46BF}"), ServiceType.ExportService }
         };
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Request
         /// Title
         /// </summary>
         public string Title { get; set; }
-        private string _internalName;
+        private string internalName;
         /// <summary>
         /// Calculated Internal Name
         /// </summary>
@@ -39,11 +39,11 @@ namespace MasterBuilder.Request
         {
             get
             {
-                if (_internalName == null)
+                if (internalName == null)
                 {
-                    _internalName = Title.Dehumanize();
+                    internalName = Title.Dehumanize();
                 }
-                return _internalName;
+                return internalName;
             }
         }
         /// <summary>
@@ -56,7 +56,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public ServiceTypeEnum ServiceType
+        public ServiceType ServiceType
         {
             get
             {

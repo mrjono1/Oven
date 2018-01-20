@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Service Type
     /// </summary>
-    public enum ServiceTypeEnum
+    public enum ServiceType
     {
         /// <summary>
         /// Web Service

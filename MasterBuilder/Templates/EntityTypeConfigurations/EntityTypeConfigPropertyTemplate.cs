@@ -18,12 +18,12 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             string dbColumnName = null;
             switch (property.PropertyType)
             {
-                case PropertyTypeEnum.ParentRelationship:
-                case PropertyTypeEnum.ReferenceRelationship:
+                case PropertyType.ParentRelationship:
+                case PropertyType.ReferenceRelationship:
                     dbColumnName = $"{property.InternalName}Id";
                     value.AppendLine($"            builder.Property(p => p.{property.InternalName}Id)");
                     break;
-                case PropertyTypeEnum.OneToOneRelationship:
+                case PropertyType.OneToOneRelationship:
                     // no property
                     break;
                 default:
@@ -41,11 +41,11 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                     {
                         switch (item.ValidationType)
                         {
-                            case ValidationTypeEnum.Required:
+                            case ValidationType.Required:
                                 value.AppendLine();
                                 value.Append("                .IsRequired()");
                                 break;
-                            case ValidationTypeEnum.MaximumLength:
+                            case ValidationType.MaximumLength:
                                 value.AppendLine();
                                 value.Append($"             .HasMaxLength({item.IntegerValue.Value})");
                                 break;
@@ -63,7 +63,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                     {
                         switch (item.ValidationType)
                         {
-                            case ValidationTypeEnum.Unique:
+                            case ValidationType.Unique:
                                 value.AppendLine();
                                 value.Append($@"            builder.HasIndex(p => p.{property.InternalName})
                   .IsUnique();");
@@ -75,27 +75,27 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 }
             }
             
-            if (property.PropertyType == PropertyTypeEnum.ParentRelationship ||
-                property.PropertyType == PropertyTypeEnum.ReferenceRelationship ||
-                property.PropertyType == PropertyTypeEnum.OneToOneRelationship)
+            if (property.PropertyType == PropertyType.ParentRelationship ||
+                property.PropertyType == PropertyType.ReferenceRelationship ||
+                property.PropertyType == PropertyType.OneToOneRelationship)
             {
                 var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 value.AppendLine();
 
-                if (property.PropertyType == PropertyTypeEnum.ParentRelationship)
+                if (property.PropertyType == PropertyType.ParentRelationship)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
                     .WithMany(p => p.{entity.InternalNamePlural})
                     .HasForeignKey(p => p.{property.InternalName}Id)");
                 }
-                else if (property.PropertyType == PropertyTypeEnum.ReferenceRelationship)
+                else if (property.PropertyType == PropertyType.ReferenceRelationship)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
                     .WithMany(p => p.{property.InternalName}{entity.InternalNamePlural})
                     .HasForeignKey(p => p.{property.InternalName}Id)
                     .OnDelete(DeleteBehavior.Restrict)");
                 }
-                else if (property.PropertyType == PropertyTypeEnum.OneToOneRelationship)
+                else if (property.PropertyType == PropertyType.OneToOneRelationship)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
                     .WithOne(p => p.{property.InternalName}{entity.InternalName})

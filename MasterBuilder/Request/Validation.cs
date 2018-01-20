@@ -15,17 +15,17 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Register of all Validation Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ValidationTypeEnum> ValidationTypeDictonary = new Dictionary<Guid, ValidationTypeEnum>
+        internal static readonly Dictionary<Guid, ValidationType> ValidationTypeDictonary = new Dictionary<Guid, ValidationType>
         {
-            { new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"), ValidationTypeEnum.Email },
-            { new Guid("{F7788E3D-7753-4491-98B1-AE78E16CDD0E}"), ValidationTypeEnum.MaximumLength },
-            { new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"), ValidationTypeEnum.MaximumValue },
-            { new Guid("{35D78EB6-F5DE-4E7B-AE79-B69A1D3DC7C9}"), ValidationTypeEnum.MinimumLength },
-            { new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}"), ValidationTypeEnum.MinimumValue },
-            { new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}"), ValidationTypeEnum.Pattern },
-            { new Guid("{BD110234-F05D-42AB-BF2E-382B83093D0C}"), ValidationTypeEnum.Required },
-            { new Guid("{CB9A60D3-42B3-411F-8FCE-2FC36C812A16}"), ValidationTypeEnum.RequiredTrue },
-            { new Guid("{890C7A9E-09AE-4BB8-970E-85C564F753F1}"), ValidationTypeEnum.Unique }
+            { new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"), ValidationType.Email },
+            { new Guid("{F7788E3D-7753-4491-98B1-AE78E16CDD0E}"), ValidationType.MaximumLength },
+            { new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"), ValidationType.MaximumValue },
+            { new Guid("{35D78EB6-F5DE-4E7B-AE79-B69A1D3DC7C9}"), ValidationType.MinimumLength },
+            { new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}"), ValidationType.MinimumValue },
+            { new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}"), ValidationType.Pattern },
+            { new Guid("{BD110234-F05D-42AB-BF2E-382B83093D0C}"), ValidationType.Required },
+            { new Guid("{CB9A60D3-42B3-411F-8FCE-2FC36C812A16}"), ValidationType.RequiredTrue },
+            { new Guid("{890C7A9E-09AE-4BB8-970E-85C564F753F1}"), ValidationType.Unique }
         };
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public ValidationTypeEnum ValidationType
+        public ValidationType ValidationType
         {
             get
             {
@@ -87,23 +87,23 @@ namespace MasterBuilder.Request
             {
                 switch (ValidationType)
                 {
-                    case ValidationTypeEnum.Required:
+                    case ValidationType.Required:
                         return $"{propertyTitle} is requried";
-                    case ValidationTypeEnum.MaximumLength:
+                    case ValidationType.MaximumLength:
                         return $"{propertyTitle} must be at less than {IntegerValue} characters in length";
-                    case ValidationTypeEnum.MinimumLength:
+                    case ValidationType.MinimumLength:
                         return $"{propertyTitle} must be at least {IntegerValue} characters in length";
-                    case ValidationTypeEnum.MaximumValue:
+                    case ValidationType.MaximumValue:
                         return $"{propertyTitle} must be less than {IntegerValue}";
-                    case ValidationTypeEnum.MinimumValue:
+                    case ValidationType.MinimumValue:
                         return $"{propertyTitle} must be greater than {IntegerValue}";
-                    case ValidationTypeEnum.Unique:
+                    case ValidationType.Unique:
                         return $"{propertyTitle} must be unique";
-                    case ValidationTypeEnum.Email:
+                    case ValidationType.Email:
                         return $"{propertyTitle} must be a valid email";
-                    case ValidationTypeEnum.RequiredTrue:
+                    case ValidationType.RequiredTrue:
                         return $"{propertyTitle} must be true";
-                    case ValidationTypeEnum.Pattern:
+                    case ValidationType.Pattern:
                         return $"{propertyTitle} does not match the complexity";
                     default:
                         return "Invalid";

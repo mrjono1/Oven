@@ -16,7 +16,7 @@ namespace MasterBuilder.Request
         /// Title
         /// </summary>
         public string Title { get; set; }
-        private string _internalName;
+        private string internalName;
         /// <summary>
         /// Calculated Internal Name
         /// </summary>
@@ -24,11 +24,11 @@ namespace MasterBuilder.Request
         {
             get
             {
-                if (_internalName == null)
+                if (internalName == null)
                 {
-                    _internalName = Title.Dehumanize();
+                    internalName = Title.Dehumanize();
                 }
-                return _internalName;
+                return internalName;
             }
         }
         /// <summary>

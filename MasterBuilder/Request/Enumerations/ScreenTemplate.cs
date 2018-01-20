@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Screen Template
     /// </summary>
-    public enum ScreenTemplateEnum
+    public enum ScreenTemplate
     {
         /// <summary>
         /// Default

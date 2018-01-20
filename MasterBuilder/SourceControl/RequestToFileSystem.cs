@@ -14,16 +14,16 @@ namespace MasterBuilder.SourceControl
     /// </summary>
     public class RequestToFileSystem
     {
-        private readonly string _baseDirectory;
-        private readonly Project _project;
+        private readonly string BaseDirectory;
+        private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public RequestToFileSystem(string topProjectDirectory, Project project)
         {
-            _baseDirectory = FileHelper.CreateFolder(topProjectDirectory, "Json");
-            _project = project;
+            BaseDirectory = FileHelper.CreateFolder(topProjectDirectory, "Json");
+            Project = project;
         }
 
         /// <summary>
@@ -31,37 +31,37 @@ namespace MasterBuilder.SourceControl
         /// </summary>
         public async Task Write()
         {
-            FileHelper.DeleteFilesInDirectory("json", _baseDirectory);
-            await WriteObject("project.json", _project, false);
+            FileHelper.DeleteFilesInDirectory("json", BaseDirectory);
+            await WriteObject("project.json", Project, false);
 
-            FileHelper.DeleteFilesInDirectory("json", _baseDirectory, "Entities");
-            if (_project.Entities != null)
+            FileHelper.DeleteFilesInDirectory("json", BaseDirectory, "Entities");
+            if (Project.Entities != null)
             {
-                foreach (var entity in _project.Entities)
+                foreach (var entity in Project.Entities)
                 {
                     await WriteObject($"{entity.Id}.json", entity, true, "Entities");
                 }
             }
-            FileHelper.DeleteFilesInDirectory("json", _baseDirectory, "Screens");
-            if (_project.Screens != null)
+            FileHelper.DeleteFilesInDirectory("json", BaseDirectory, "Screens");
+            if (Project.Screens != null)
             {
-                foreach (var screen in _project.Screens)
+                foreach (var screen in Project.Screens)
                 {
                     await WriteObject($"{screen.Id}.json", screen, true, "Screens");
                 }
             }
-            FileHelper.DeleteFilesInDirectory("json", _baseDirectory, "MenuItems");
-            if (_project.MenuItems != null)
+            FileHelper.DeleteFilesInDirectory("json", BaseDirectory, "MenuItems");
+            if (Project.MenuItems != null)
             {
-                foreach (var menuItem in _project.MenuItems)
+                foreach (var menuItem in Project.MenuItems)
                 {
                     await WriteObject($"{menuItem.Id}.json", menuItem, true, "MenuItems");
                 }
             }
-            FileHelper.DeleteFilesInDirectory("json", _baseDirectory, "Services");
-            if (_project.Services != null)
+            FileHelper.DeleteFilesInDirectory("json", BaseDirectory, "Services");
+            if (Project.Services != null)
             {
-                foreach (var service in _project.Services)
+                foreach (var service in Project.Services)
                 {
                     await WriteObject($"{service.Id}.json", service, true, "Services");
                 }
@@ -82,7 +82,7 @@ namespace MasterBuilder.SourceControl
             {
                 jsonString = SerializeObjectWithoutCollections(obj);
             }
-            var directory = FileHelper.CreateFolder(_baseDirectory, folder);
+            var directory = FileHelper.CreateFolder(BaseDirectory, folder);
             await FileHelper.WriteAllText(Path.Combine(directory, fileName), jsonString);
         }
 

@@ -77,7 +77,7 @@ namespace MasterBuilder.Templates.Entities
 
                 switch (entity.Seed.SeedType)
                 {
-                    case SeedTypeEnum.EnsureAllAdded:
+                    case SeedType.EnsureAllAdded:
                         // TODO: can this be done better with AttachRange?
                 seedStringBuilder.AppendLine($@"           else
             {{
@@ -90,7 +90,7 @@ namespace MasterBuilder.Templates.Entities
                 }}
             }}");
                         break;
-                    case SeedTypeEnum.EnsureAllUpdated:
+                    case SeedType.EnsureAllUpdated:
                         seedStringBuilder.AppendLine($@"            else
             {{
                 foreach (var item in items)

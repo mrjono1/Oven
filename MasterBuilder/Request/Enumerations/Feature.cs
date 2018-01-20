@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Feature Enum
     /// </summary>
-    public enum FeatureEnum
+    public enum Feature
     {
         /// <summary>
         /// New

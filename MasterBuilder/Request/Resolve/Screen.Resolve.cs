@@ -17,22 +17,22 @@ namespace MasterBuilder.Request
             
             if (ScreenSections == null || !ScreenSections.Any())
             {
-                var screenSectionType = ScreenSectionTypeEnum.Html;
+                var screenSectionType = ScreenSectionType.Html;
                 if (EntityId.HasValue)
                 {
                     switch (ScreenType)
                     {
-                        case ScreenTypeEnum.Search:
-                            screenSectionType = ScreenSectionTypeEnum.Search;
+                        case ScreenType.Search:
+                            screenSectionType = ScreenSectionType.Search;
                             break;
-                        case ScreenTypeEnum.Edit:
-                            screenSectionType = ScreenSectionTypeEnum.Form;
+                        case ScreenType.Edit:
+                            screenSectionType = ScreenSectionType.Form;
                             break;
-                        case ScreenTypeEnum.View:
-                            screenSectionType = ScreenSectionTypeEnum.Form;
+                        case ScreenType.View:
+                            screenSectionType = ScreenSectionType.Form;
                             break;
-                        case ScreenTypeEnum.Html:
-                            screenSectionType = ScreenSectionTypeEnum.Html;
+                        case ScreenType.Html:
+                            screenSectionType = ScreenSectionType.Html;
                             break;
                         default:
                             break;

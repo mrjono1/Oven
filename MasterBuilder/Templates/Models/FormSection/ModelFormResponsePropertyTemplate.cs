@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.Models
 
             switch (formField.PropertyType)
             {
-                case PropertyTypeEnum.ReferenceRelationship:
+                case PropertyType.ReferenceRelationship:
                     // Foreign Title
                     result.Append($@"        /// <summary>
         /// {formField.TitleValue}

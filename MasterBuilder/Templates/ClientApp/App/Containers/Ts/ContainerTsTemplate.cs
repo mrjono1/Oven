@@ -62,7 +62,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             {
                 switch (screenSection.ScreenSectionType)
                 {
-                    case ScreenSectionTypeEnum.Form:
+                    case ScreenSectionType.Form:
 
                         var formSectionPartial = new FormSectionPartial(Project, Screen, screenSection);
                         imports.AddRange(formSectionPartial.GetImports());
@@ -75,7 +75,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         formControls.AddRange(formSectionPartial.GetFormControls());
                         
                         break;
-                    case ScreenSectionTypeEnum.Search:
+                    case ScreenSectionType.Search:
 
                         var searchSectionPartial = new SearchSectionPartial(Project, Screen, screenSection);
                         imports.AddRange(searchSectionPartial.GetImports());
@@ -85,10 +85,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         onNgInitBodySections.AddRange(searchSectionPartial.GetOnNgInitBodySections());
                         
                         break;
-                    case ScreenSectionTypeEnum.MenuList:
+                    case ScreenSectionType.MenuList:
                         // Nothing at the moment
                         break;
-                    case ScreenSectionTypeEnum.Html:
+                    case ScreenSectionType.Html:
                         // Probably never anything
                         break;
                     default:
@@ -101,11 +101,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                     {
                         switch (menuItem.MenuItemType)
                         {
-                            case MenuItemTypeEnum.ApplicationLink:
+                            case MenuItemType.ApplicationLink:
                                 break;
-                            case MenuItemTypeEnum.New:
+                            case MenuItemType.New:
                                 break;
-                            case MenuItemTypeEnum.ServerFunction:
+                            case MenuItemType.ServerFunction:
                                 functions.Add($@"public {menuItem.InternalName.Camelize()}(){{
         this.{Screen.InternalName.Camelize()}Service.get{menuItem.InternalName}(this.{Screen.InternalName.Camelize()}.id).subscribe( result => {{
             alert(result);

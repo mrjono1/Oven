@@ -34,30 +34,30 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{C3E14B66-FF43-478A-95D0-39524F6555B5}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{CB6D802C-1F26-4D23-9272-6396E6268D72}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{8D5A78EB-B24D-4789-A498-1D37B57BF63D}"),
-                                    ValidationType = ValidationTypeEnum.Unique
+                                    ValidationType = ValidationType.Unique
                                 },
                                 new Validation
                                 {
                                     Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -65,24 +65,24 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{883DB867-2098-4CA0-AE63-87DE09FDEF76}"),
                             InternalName = "InternalName",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{F60F66AC-F6AD-45E2-9850-9A474CC43C4E}"),
-                                    ValidationType = ValidationTypeEnum.Unique
+                                    ValidationType = ValidationType.Unique
                                 },
                                 new Validation
                                 {
                                     Id = new Guid("{FF3EF7FD-7A8F-45A5-ACB0-C0A2F97C816B}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation
                                 {
                                     Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -90,14 +90,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{F1EEF37B-F40D-44D4-832F-ACEC4B63D147}"),
                             InternalName = "MajorVersion",
-                            PropertyType = PropertyTypeEnum.Integer,
+                            PropertyType = PropertyType.Integer,
                             Title = "Major Version",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{09ED3A71-3F3A-46BB-B24B-D2796E796A39}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 }
                             }
                         },
@@ -105,14 +105,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{97E822CB-7A95-4C14-BED4-6CE19602FEE8}"),
                             InternalName = "MinorVersion",
-                            PropertyType = PropertyTypeEnum.Integer,
+                            PropertyType = PropertyType.Integer,
                             Title = "Minor Version",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{18954CB6-7C4B-42E7-AF4D-F242461D16C2}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 }
                             }
                         },
@@ -120,14 +120,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{D7E750B0-159D-464C-A88C-6E67673CFAF2}"),
                             InternalName = "BuildVersion",
-                            PropertyType = PropertyTypeEnum.Integer,
+                            PropertyType = PropertyType.Integer,
                             Title = "Build Version",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{B3784D79-72C0-4DC6-86C3-4ECD256821D1}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 }
                             }
                         },
@@ -135,7 +135,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{62C6E4B9-5164-4A36-B90B-DC8129E09D2B}"),
                             InternalName = "AllowDestructiveDatabaseChanges",
-                            PropertyType = PropertyTypeEnum.Boolean,
+                            PropertyType = PropertyType.Boolean,
                             Title = "Allow Destructive Database Changes",
                             ValidationItems = new Validation[]
                             {
@@ -150,14 +150,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{0FBD3AA3-E6DD-4CCB-9FAA-E8AA8C8009F8}"),
                             InternalName = "CreatedDate",
-                            PropertyType = PropertyTypeEnum.DateTime,
+                            PropertyType = PropertyType.DateTime,
                             Title = "Created Date",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{E9625AE5-85A7-42FF-95D1-D39265F35628}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 }
                             }
                         },
@@ -165,7 +165,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{6C22EF44-E5C0-4E3F-B315-A03703AB9D97}"),
                             InternalName = "DefaultScreen",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Default Screen",
                             ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
                         }
@@ -182,26 +182,26 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{4B5077DA-1516-44C4-81CC-D0CE25BBBCF0}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{6D09DE04-2FDA-4091-A4DA-B3448ABA1A52}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -209,19 +209,19 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{1CB8E873-07C7-461A-8859-672CE66C8513}"),
                             InternalName = "InternalName",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{FF3EF7FD-7A8F-45A5-ACB0-C0A2F97C816B}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -229,7 +229,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
                             InternalName = "EntityTemplate",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity Template",
                             ParentEntityId = new Guid("{E20337EA-37F3-48D1-96F7-3CF2A40A7F52}")
                         },
@@ -237,14 +237,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}"),
                             InternalName = "Project",
-                            PropertyType = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationship,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -252,7 +252,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
                             InternalName = "Seed",
-                            PropertyType = PropertyTypeEnum.OneToOneRelationship,
+                            PropertyType = PropertyType.OneToOneRelationship,
                             Title = "Seed",
                             ParentEntityId = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}")
                         },
@@ -269,21 +269,21 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{D34BF79B-F052-4090-BBDD-8FAE69A256C4}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}"),
                             InternalName = "Entity",
-                            PropertyType = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationship,
                             Title = "Entity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{D69A337F-7171-4CAE-9E9D-492FE9578D89}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -291,19 +291,19 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{ACB68BF7-5842-42C7-B77A-88AC71CA22B1}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{1EACE07B-FD49-4B18-AA3F-36DF87D63B6E}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -311,19 +311,19 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{C52F7B8E-CAD0-40FF-8E89-B313A290A96E}"),
                             InternalName = "InternalName",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{74789541-1939-4F0F-9098-EBDF0AE70A1C}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{035339EF-C09F-4412-8779-BD2088387757}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -331,14 +331,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
                             InternalName = "PropertyType",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Property Type",
                             ParentEntityId = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{674C76ED-B47D-425B-BF6D-9C606FE58217}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -346,7 +346,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}"),
                             InternalName = "ParentEntity",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "ParentEntity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
                         },
@@ -363,26 +363,26 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{B9E9AC32-5942-4DFF-8AFD-DEDC26795824}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{3690A6AE-0573-40F3-8680-0BCE13931EE3}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{D7C58A33-816E-45D7-8E8A-E7FCC44C270E}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{07CC8E0F-E69A-4B93-892A-2795B8E34C48}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -390,14 +390,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{BA0702F8-6F26-4A25-9300-31B44F14B3A8}"),
                             InternalName = "Property",
-                            PropertyType = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationship,
                             Title = "Property",
                             ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{FC73C9C5-953A-414F-9C20-4B5C57F4F709}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -405,14 +405,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
                             InternalName = "ValidationType",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Validation Type",
                             ParentEntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{707BD4C0-7ED4-4865-9168-176B4E843E72}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -420,28 +420,28 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{37E3DBC5-1B98-446D-B46B-1BD530CAD376}"),
                             InternalName = "IntegerValue",
-                            PropertyType = PropertyTypeEnum.Integer,
+                            PropertyType = PropertyType.Integer,
                             Title = "Integer Value"
                         },
                         new Property()
                         {
                             Id = new Guid("{8E35139C-E60C-4432-B1F7-62CEA1451593}"),
                             InternalName = "DoubleValue",
-                            PropertyType = PropertyTypeEnum.Double,
+                            PropertyType = PropertyType.Double,
                             Title = "Double Value"
                         },
                         new Property()
                         {
                             Id = new Guid("{E2F53C95-BA38-47E1-93CD-38F4B04F44D0}"),
                             InternalName = "StringValue",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "String Value"
                         },
                         new Property()
                         {
                             Id = new Guid("{640B7178-5C6D-4265-9ADE-EDC606FC3362}"),
                             InternalName = "Message",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Message"
                         },
                     }
@@ -457,21 +457,21 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{3A849E52-28FA-4CAF-908D-BD2D65C0FAFA}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{51B87800-E2AC-48E6-917F-36B9E46F209E}"),
                             InternalName = "Project",
-                            PropertyType = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationship,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{768E1FAE-3617-4641-AC0F-B8AB3A52BF85}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 }
                             }
                         },
@@ -479,19 +479,19 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{72267B8D-5004-4065-B4DC-882706185284}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{D049B0D9-B488-4F18-A832-8549348FDA56}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{6D39BDE7-2E3C-4A1A-82D6-FD7750245B67}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 }
                             }
                         },
@@ -499,7 +499,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{62ECF628-B217-4800-A8AF-AC3E62F01203}"),
                             InternalName = "MenuItemType",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Type",
                             ParentEntityId = new Guid("{092F60B1-EE1E-4451-A771-013376C93E65}")
                         },
@@ -507,7 +507,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{94202D7E-D704-4C89-B4B1-AB720C976762}"),
                             InternalName = "Screen",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Screen",
                             ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
                         },
@@ -524,21 +524,21 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{CCDFE624-33F8-4B38-9871-E051A301B73B}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
                             InternalName = "Project",
-                            PropertyType = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationship,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{253608F3-0E63-4F67-B7C4-940D2472D3F7}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 }
                             }
                         },
@@ -546,19 +546,19 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{34B85ED2-3B10-4974-9451-7B87203F1E0F}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{5E707736-477F-46FF-977C-3030A2FC45EC}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{5F6980CE-0E4B-4FCB-AC99-228FD14CDB0E}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 }
                             }
                         },
@@ -566,7 +566,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{A02115B5-4E6A-4D7B-AB80-9E58516B1E3A}"),
                             InternalName = "Entity",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
                         },
@@ -574,7 +574,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{92AD26A8-FECE-4AE0-809B-8CBE42AA7E6A}"),
                             InternalName = "Template",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Template",
                             ParentEntityId = new Guid("{564E3EC4-59E0-4EEB-A9E5-F1367E1FEB29}")
                         },
@@ -582,7 +582,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}"),
                             InternalName = "ScreenType",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Screen Type",
                             ParentEntityId = new Guid("{C04282DB-CB85-445D-BB4B-AEBB3801DAC7}")
                         }
@@ -599,7 +599,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{2D145AAC-C180-462E-8837-FD769BE7E5FE}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                     }
@@ -615,26 +615,26 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{0727AAE6-EA99-4456-95C1-07E9115A54EC}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{61E1AAE0-315E-4BBB-B622-0E3D91B9959A}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{E95C3F08-F572-42BB-9FD9-F7BD2663D514}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{A83F2125-A810-43CC-8FFD-C6E91BF3DD13}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -642,19 +642,19 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{17FAC43C-9ED4-4D2B-ADA6-B59DA4D10C61}"),
                             InternalName = "InternalName",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{D377A570-990A-471D-B3BE-F6D46C590210}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{D5C76B55-96B8-41DD-9055-485A8614E34F}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -662,14 +662,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}"),
                             InternalName = "Screen",
-                            PropertyType = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationship,
                             Title = "Screen",
                             ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{78C27422-D703-404C-8446-F46E655EAF01}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -677,14 +677,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
                             InternalName = "ScreenSectionType",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Screen Section Type",
                             ParentEntityId = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{83F70DAD-02EB-42CB-8002-6671E33A0B49}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -692,14 +692,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{D6BB1A68-8C2A-4251-8EA0-B3AC6C9362AD}"),
                             InternalName = "Entity",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{872BB43B-C432-4EFA-AABE-4908E96EA1FB}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         }
@@ -716,20 +716,20 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{AC0AF908-F0A7-44B4-AFBB-DCB8CEABD782}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{503A6F65-87A0-453A-B0CC-880F171D65F8}"),
                             InternalName = "JsonData",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Json Data",
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{3BC3CC2D-42D1-4CCD-BD94-22CFD28078FC}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 }
                             }
                         },
@@ -737,14 +737,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{445099D8-864E-447F-A60C-13F501A02C46}"),
                             InternalName = "SeedType",
-                            PropertyType = PropertyTypeEnum.ReferenceRelationship,
+                            PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Seed Type",
                             ParentEntityId = new Guid("{EA6A9786-573A-4821-824C-3FB5322D2A51}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{1CDD43FA-D63E-441A-A4FB-6B25A47D30AE}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         }
@@ -761,26 +761,26 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{19152CE0-B2AC-4267-A5E1-D06B1D7DFC01}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{6E11DECD-0526-4BC1-91C8-A7F1AA338635}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{7688B9DF-576E-40C5-B752-D0F31A5660F7}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{AAD3E008-8EAD-4A22-84E8-E15A9157603C}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -788,19 +788,19 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E2422CFE-AA47-4DD8-A5D7-69F45174E39A}"),
                             InternalName = "InternalName",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{09271B7B-3F02-4B4E-9CDF-734A3B584A6F}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{48DEBB0A-C55F-4975-926C-D476F4E415DF}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -808,14 +808,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{D6D616EB-E922-4782-BC9D-D68F1F07DB60}"),
                             InternalName = "Project",
-                            PropertyType = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationship,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{1EF431AF-E3D0-4510-93E0-58FD49D602D0}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -823,7 +823,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{ACD4EA5B-644F-4DFD-9082-A0E58402B11D}"),
                             InternalName = "WebService",
-                            PropertyType = PropertyTypeEnum.OneToOneRelationship,
+                            PropertyType = PropertyType.OneToOneRelationship,
                             Title = "WebService",
                             ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}")
                         }
@@ -840,26 +840,26 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{A13AA1B4-127A-4316-B05B-BFFCCB8B7BF6}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{CB83CA7F-B62D-48E4-9833-54B1B07A7E70}"),
                             InternalName = "DefaultBaseEndpoint",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Default Base Endpoint",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{41363BA5-4AE5-4EAE-9608-1398836D23F1}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{66B86E99-9AA5-4890-81BA-1FBF9CADBCC6}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         }
@@ -876,26 +876,26 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{B9CCBA2A-7AD2-42F0-9F86-37C8D086EA1D}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{9FB3FA12-C979-4015-847C-EB8E52C8FBD0}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{A710F453-B259-42AB-8A2A-BAF31144C1AF}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{00D2823B-ABB9-4912-9712-434EB63B92A5}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -903,19 +903,19 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E0982E44-7604-4E35-BE71-598A3A536870}"),
                             InternalName = "InternalName",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{7606E365-FB07-4348-92D0-8B28AB9D246B}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
                                     Id = new Guid("{B8D83508-9AC9-4F26-94AB-2F75F63A2763}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         },
@@ -923,14 +923,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{EE1E832A-A9A1-4152-B7B5-A4D23914F6A7}"),
                             InternalName = "RelativeRoute",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Relative Route",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{56755225-7577-45E1-8AC0-E97A2654F355}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 }
                             }
@@ -939,14 +939,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E32BF54A-E604-4E97-81B9-CECF9BA5D32D}"),
                             InternalName = "Verb",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Verb",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
                                     Id = new Guid("{15722367-9BD8-4E35-B9F0-7DA5C3182452}"),
-                                    ValidationType = ValidationTypeEnum.MaximumLength,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 }
                             }
@@ -955,14 +955,14 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{A619FE2D-DEDA-430F-BBF4-E1F7A919F95F}"),
                             InternalName = "WebService",
-                            PropertyType = PropertyTypeEnum.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationship,
                             Title = "Web Service",
                             ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
                                     Id = new Guid("{80F8E11E-925F-4A0A-83BD-9232EF939916}"),
-                                    ValidationType = ValidationTypeEnum.Required
+                                    ValidationType = ValidationType.Required
                                 },
                             }
                         }
@@ -978,7 +978,7 @@ namespace MasterBuilder
                     ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
                     Title = "Home",
                     Path = "home",
-                    Template = ScreenTemplateEnum.Home,
+                    Template = ScreenTemplate.Home,
                     ScreenSections = new ScreenSection[]
                     {
                         new ScreenSection
@@ -986,7 +986,7 @@ namespace MasterBuilder
                             Id = new Guid("{532605D4-DCD3-4B5B-AC63-7CC6E90F6792}"),
                             Title = "Home",
                             InternalName = "Home",
-                            ScreenSectionType = ScreenSectionTypeEnum.Html,
+                            ScreenSectionType = ScreenSectionType.Html,
                             Html = @"
 <p>Welcome to your new single-page application, built with:</p>
 <ul>
@@ -1002,7 +1002,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
-                    ScreenType = ScreenTypeEnum.Search,
+                    ScreenType = ScreenType.Search,
                     Title = "Projects",
                     Path = "projects",
                     NavigateToScreenId = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
@@ -1010,7 +1010,7 @@ namespace MasterBuilder
                     {
                         new ScreenFeature{
                             Id = new Guid("{00CAB28C-F1CA-4FDC-9184-AC7DDA7FD3C5}"),
-                            Feature = FeatureEnum.New
+                            Feature = Feature.New
                         }
                     }
                 },
@@ -1018,7 +1018,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
-                    ScreenType = ScreenTypeEnum.Edit,
+                    ScreenType = ScreenType.Edit,
                     Title = "Project",
                     Path = "project",
                     ScreenSections = new ScreenSection[]
@@ -1028,14 +1028,14 @@ namespace MasterBuilder
                             Id = new Guid("{BCB84DAB-B0AD-45B9-975D-5C07DE4F8990}"),
                             Title = "Project",
                             InternalName = "Project",
-                            ScreenSectionType = ScreenSectionTypeEnum.Form
+                            ScreenSectionType = ScreenSectionType.Form
                         },
                         new ScreenSection
                         {
                             Id = new Guid("{903FEB8F-DC3C-49AA-AB1F-BB5C82F20DC5}"),
                             Title = "Entities",
                             InternalName = "Entities",
-                            ScreenSectionType = ScreenSectionTypeEnum.Search,
+                            ScreenSectionType = ScreenSectionType.Search,
                             EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                             NavigateToScreenId = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
                             MenuItems = new MenuItem[]
@@ -1043,7 +1043,7 @@ namespace MasterBuilder
                                 new MenuItem
                                 {
                                     Id = new Guid("{AE228BBC-8A38-4D7D-B3B0-7964A281B7A5}"),
-                                    MenuItemType = MenuItemTypeEnum.New,
+                                    MenuItemType = MenuItemType.New,
                                     ScreenId = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
                                     Title = "New"
                                 }
@@ -1054,7 +1054,7 @@ namespace MasterBuilder
                             Id = new Guid("{DC2C45E5-1965-4D44-8B66-0A72E45BB720}"),
                             Title = "Screens",
                             InternalName = "Screens",
-                            ScreenSectionType = ScreenSectionTypeEnum.Search,
+                            ScreenSectionType = ScreenSectionType.Search,
                             EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
                             NavigateToScreenId = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
                             MenuItems = new MenuItem[]
@@ -1062,7 +1062,7 @@ namespace MasterBuilder
                                 new MenuItem
                                 {
                                     Id = new Guid("{1B08D6F7-28E7-4FBD-86A6-E1BAAE655585}"),
-                                    MenuItemType = MenuItemTypeEnum.New,
+                                    MenuItemType = MenuItemType.New,
                                     ScreenId = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
                                     Title = "New"
                                 }
@@ -1073,7 +1073,7 @@ namespace MasterBuilder
                             Id = new Guid("{09D4859E-BAC7-4BEA-9F4C-14690AEE01F6}"),
                             Title = "Menu Items",
                             InternalName = "MenuItems",
-                            ScreenSectionType = ScreenSectionTypeEnum.Search,
+                            ScreenSectionType = ScreenSectionType.Search,
                             EntityId = new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
                             NavigateToScreenId = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
                             MenuItems = new MenuItem[]
@@ -1081,7 +1081,7 @@ namespace MasterBuilder
                                 new MenuItem
                                 {
                                     Id = new Guid("{CE3A30D9-6091-4D01-BCBB-ACE9EAD5D3F5}"),
-                                    MenuItemType = MenuItemTypeEnum.New,
+                                    MenuItemType = MenuItemType.New,
                                     ScreenId = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
                                     Title = "New"
                                 }
@@ -1095,7 +1095,7 @@ namespace MasterBuilder
                             Id = new Guid("{FCB3AFDB-5CEB-41E7-AE2B-6122ECCB966D}"),
                             Title = "Publish",
                             Icon = "glyphicon glyphicon-cloud-upload",
-                            MenuItemType = MenuItemTypeEnum.ServerFunction,
+                            MenuItemType = MenuItemType.ServerFunction,
                             ServerCode = $@"var data = await _exportService.ExportProjectAsync(id);
             var result = await _masterBuilderApiService.PublishAsync(data);
             return Ok(result.Content);"
@@ -1106,7 +1106,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
                     EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
-                    ScreenType = ScreenTypeEnum.Edit,
+                    ScreenType = ScreenType.Edit,
                     Title = "Entity",
                     Path = "entity",
                     ScreenSections = new ScreenSection[]
@@ -1116,7 +1116,7 @@ namespace MasterBuilder
                             Id = new Guid("{8130C0F4-F8F7-4A7A-9793-85B8939589EB}"),
                             Title = "Entity",
                             InternalName = "Entity",
-                            ScreenSectionType = ScreenSectionTypeEnum.Form
+                            ScreenSectionType = ScreenSectionType.Form
                         },
                         new ScreenSection
                         {
@@ -1131,7 +1131,7 @@ namespace MasterBuilder
                                 new MenuItem
                                 {
                                     Id = new Guid("{C236C6DC-A21A-44DF-B125-FFA46E1810FC}"),
-                                    MenuItemType = MenuItemTypeEnum.New,
+                                    MenuItemType = MenuItemType.New,
                                     ScreenId = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
                                     Title = "New"
                                 }
@@ -1143,7 +1143,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
                     EntityId =new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
-                    ScreenType = ScreenTypeEnum.Edit,
+                    ScreenType = ScreenType.Edit,
                     Title = "Screen",
                     Path = "screen",
                     ScreenSections = new ScreenSection[]
@@ -1153,7 +1153,7 @@ namespace MasterBuilder
                             Id = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
                             Title = "Screen",
                             InternalName = "Screen",
-                            ScreenSectionType = ScreenSectionTypeEnum.Form,
+                            ScreenSectionType = ScreenSectionType.Form,
                             EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
                         },
                         new ScreenSection
@@ -1161,7 +1161,7 @@ namespace MasterBuilder
                             Id = new Guid("{CDC681CF-6298-43D7-8A14-B360D12E287D}"),
                             Title = "Screen Sections",
                             InternalName = "ScreenSections",
-                            ScreenSectionType = ScreenSectionTypeEnum.Search,
+                            ScreenSectionType = ScreenSectionType.Search,
                             EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
                             NavigateToScreenId = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
                             MenuItems = new MenuItem[]
@@ -1169,7 +1169,7 @@ namespace MasterBuilder
                                 new MenuItem
                                 {
                                     Id = new Guid("{9F917C0A-D82E-40C7-AB5A-A81772AF8A70}"),
-                                    MenuItemType = MenuItemTypeEnum.New,
+                                    MenuItemType = MenuItemType.New,
                                     ScreenId = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
                                     Title = "New"
                                 }
@@ -1181,7 +1181,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
                     EntityId =new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
-                    ScreenType = ScreenTypeEnum.Edit,
+                    ScreenType = ScreenType.Edit,
                     Title = "Screen Section",
                     Path = "screen-section",
                     ScreenSections = new ScreenSection[]
@@ -1191,7 +1191,7 @@ namespace MasterBuilder
                             Id = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
                             Title = "Screen Section",
                             InternalName = "ScreenSection",
-                            ScreenSectionType = ScreenSectionTypeEnum.Form,
+                            ScreenSectionType = ScreenSectionType.Form,
                             EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}")
                         }
                     }
@@ -1200,7 +1200,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
                     EntityId =new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
-                    ScreenType = ScreenTypeEnum.Edit,
+                    ScreenType = ScreenType.Edit,
                     Title = "Menu Item",
                     Path = "menu-item",
                     ScreenSections = new ScreenSection[]
@@ -1210,7 +1210,7 @@ namespace MasterBuilder
                             Id = new Guid("{DDD8CB45-FCDD-4C24-AEB5-2CBB80836AC2}"),
                             Title = "Menu Item",
                             InternalName = "MenuItem",
-                            ScreenSectionType = ScreenSectionTypeEnum.Form,
+                            ScreenSectionType = ScreenSectionType.Form,
                             EntityId = new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}")
                         }
                     }
@@ -1219,7 +1219,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
                     EntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
-                    ScreenType = ScreenTypeEnum.Edit,
+                    ScreenType = ScreenType.Edit,
                     Title = "Property",
                     Path = "property",
                     ScreenSections = new ScreenSection[]
@@ -1237,7 +1237,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{8E1A9AB1-799E-46B4-8364-85FB087C643E}"),
                     EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
-                    ScreenType = ScreenTypeEnum.Search,
+                    ScreenType = ScreenType.Search,
                     Title = "Validation Types",
                     Path = "validation-types",
                     NavigateToScreenId = new Guid("{5D9BA697-C64B-40EE-9DF4-F88BD683713F}"),
@@ -1253,7 +1253,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{5D9BA697-C64B-40EE-9DF4-F88BD683713F}"),
                     EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
-                    ScreenType = ScreenTypeEnum.Edit,
+                    ScreenType = ScreenType.Edit,
                     Title = "Validation Type",
                     Path = "validation-type",
                     ScreenSections = new ScreenSection[]
@@ -1284,7 +1284,7 @@ namespace MasterBuilder
                 new Service(){
                     Id = new Guid("{359525A8-CCA2-4AC1-9348-23057D616A75}"),
                     Title = "Master Builder Api",
-                    ServiceType = ServiceTypeEnum.WebService,
+                    ServiceType = ServiceType.WebService,
                     WebService = new WebService
                     {
                         DefaultBaseEndpoint = "https://localhost:44398",
@@ -1319,28 +1319,28 @@ namespace MasterBuilder
                     Id = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
                     InternalName = "ValidationType",
                     Title = "Validation Type",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{03020776-6F7E-41CD-9475-6E2CA72E92B4}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{771B57F0-F3D8-4E12-AA93-C801447BDB83}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
@@ -1388,28 +1388,28 @@ namespace MasterBuilder
                     Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
                     InternalName = "Feature",
                     Title = "Feature",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
@@ -1425,28 +1425,28 @@ namespace MasterBuilder
                     Id = new Guid("{092F60B1-EE1E-4451-A771-013376C93E65}"),
                     InternalName = "MenuItemType",
                     Title = "Menu Item Type",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{543BCF58-4929-4386-8B01-FBF4C1680430}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{7D223CCB-41AF-4888-B441-61B3BDBBE56B}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
@@ -1466,28 +1466,28 @@ namespace MasterBuilder
                     Id = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}"),
                     InternalName = "PropertyTemplate",
                     Title = "Property Template",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{ACEF7F12-2CF4-46AC-BFCC-60EA3E017E9F}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
@@ -1507,28 +1507,28 @@ namespace MasterBuilder
                     Id = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
                     InternalName = "PropertyType",
                     Title = "Property Type",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{2E259BAE-F1E8-4B10-8672-8FDEC3061C80}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{8B61C0F2-9800-483C-A33E-0EFEDA6482BB}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
@@ -1568,28 +1568,28 @@ namespace MasterBuilder
                     Id = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
                     InternalName = "ScreenSectionType",
                     Title = "Screen Section Type",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{4BBA98F7-4C6F-4E60-BE3F-06180D8A6141}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{4A67B6BF-99A0-4446-A61C-AF3EB857099C}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
@@ -1617,28 +1617,28 @@ namespace MasterBuilder
                     Id = new Guid("{C04282DB-CB85-445D-BB4B-AEBB3801DAC7}"),
                     InternalName = "ScreenType",
                     Title = "Screen Type",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{C9DBA086-ACC8-4BD9-8EEB-2B2AAF38CC78}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{749ACD4D-1873-4314-B0A1-E61EED934D3C}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
@@ -1666,28 +1666,28 @@ namespace MasterBuilder
                     Id = new Guid("{564E3EC4-59E0-4EEB-A9E5-F1367E1FEB29}"),
                     InternalName = "ScreenTemplate",
                     Title = "Screen Template",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{C76EBB7F-2830-43B5-8A02-3F27825BD1C1}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{9B383F17-C149-470A-BF58-47C8057B74FF}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
@@ -1707,28 +1707,28 @@ namespace MasterBuilder
                     Id = new Guid("{EA6A9786-573A-4821-824C-3FB5322D2A51}"),
                     InternalName = "SeedType",
                     Title = "Seed Type",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{623C2ADB-9FAD-43F6-8DDD-970B21D49CCE}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{E67EC40A-C1B6-4465-BA91-D40A488317BC}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
@@ -1752,28 +1752,28 @@ namespace MasterBuilder
                     Id = new Guid("{E20337EA-37F3-48D1-96F7-3CF2A40A7F52}"),
                     InternalName = "EntityTemplate",
                     Title = "Entity Template",
-                    EntityTemplate = EntityTemplateEnum.Reference,
+                    EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
                             Id = new Guid("{5D0BEB0A-4B91-4B40-83F0-8EAE7426CCF6}"),
                             InternalName = "Id",
-                            PropertyType = PropertyTypeEnum.PrimaryKey,
+                            PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
                             Id = new Guid("{83CFE967-1FEF-44F1-A3DC-C03FC2F0B167}"),
                             InternalName = "Title",
-                            PropertyType = PropertyTypeEnum.String,
+                            PropertyType = PropertyType.String,
                             Title = "Title",
-                            PropertyTemplate = PropertyTemplateEnum.ReferenceTitle
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
                         }
                     },
                     Seed = new Seed
                     {
-                        SeedType = SeedTypeEnum.EnsureAllUpdated,
+                        SeedType = SeedType.EnsureAllUpdated,
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {

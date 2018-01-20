@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Screen Section Type Enum
     /// </summary>
-    public enum ScreenSectionTypeEnum
+    public enum ScreenSectionType
     {
         /// <summary>
         /// Form for creating and editing data

@@ -54,7 +54,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
             {
                 switch (screenSection.ScreenSectionType)
                 {
-                    case ScreenSectionTypeEnum.Form:
+                    case ScreenSectionType.Form:
 
                         imports.Add($"import {{ {screenSection.InternalName} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}';");
 
@@ -69,10 +69,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
         return this.http.patch<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`, operations);
     }}");
                         hasForm = true;
-                        referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship));
+                        referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
 
                         break;
-                    case ScreenSectionTypeEnum.Search:
+                    case ScreenSectionType.Search:
 
                         imports.Add($"import {{ {screenSection.SearchSection.SearchItemClass} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.SearchSection.SearchItemClass}';");
                         imports.Add($"import {{ {screenSection.SearchSection.SearchRequestClass} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.SearchSection.SearchRequestClass}';");
@@ -83,10 +83,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
     }}");
 
                         break;
-                    case ScreenSectionTypeEnum.MenuList:
+                    case ScreenSectionType.MenuList:
                         // None
                         break;
-                    case ScreenSectionTypeEnum.Html:
+                    case ScreenSectionType.Html:
                         // None
                         break;
                     default:
@@ -99,7 +99,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                     {
                         switch (menuItem.MenuItemType)
                         {
-                            case MenuItemTypeEnum.ServerFunction:
+                            case MenuItemType.ServerFunction:
                                 methods.Add($@"    get{menuItem.InternalName}(id: string){{
         return this.http.get(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}{screenSection.InternalName}{menuItem.InternalName}/${{id}}`);
     }}");

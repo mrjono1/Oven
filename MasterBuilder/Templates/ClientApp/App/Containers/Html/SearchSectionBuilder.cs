@@ -37,8 +37,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 switch (column.PropertyType)
                 {
-                    case PropertyTypeEnum.ParentRelationship:
-                    case PropertyTypeEnum.PrimaryKey:
+                    case PropertyType.ParentRelationship:
+                    case PropertyType.PrimaryKey:
                         continue;
                     default:
                         columns.Add($@"                <!-- {column.TitleValue} Column -->
@@ -62,13 +62,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
 
                 var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
-                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
+                                      where p.PropertyType == PropertyType.ParentRelationship
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {
                     foundParentScreen = (from s in Project.Screens
                                          where s.EntityId == parentProperty.ParentEntityId &&
-                                         s.ScreenType == ScreenTypeEnum.Edit
+                                         s.ScreenType == ScreenType.Edit
                                          select s).SingleOrDefault();
                 }
 
@@ -85,15 +85,15 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 {
                     switch (menuItem.MenuItemType)
                     {
-                        case MenuItemTypeEnum.ApplicationLink:
+                        case MenuItemType.ApplicationLink:
                             var screenTo = Project.Screens.SingleOrDefault(s => s.Id == menuItem.ScreenId);
                             menuItems.Add($@"                <a mat-raised-button [routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{screenTo.Path}']"">
                         <span class='{menuItem.Icon}'></span> {menuItem.Title}
                      </a>");
                             break;
-                        case MenuItemTypeEnum.New:
+                        case MenuItemType.New:
                             break;
-                        case MenuItemTypeEnum.ServerFunction:
+                        case MenuItemType.ServerFunction:
                             menuItems.Add($@"                <button mat-raised-button (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
                             break;
                         default:

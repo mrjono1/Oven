@@ -54,7 +54,7 @@ namespace MasterBuilder.Templates.Models
             }
 
             var className = $"{Screen.InternalName}Item";
-            if (Screen.ScreenType != ScreenTypeEnum.Search)
+            if (Screen.ScreenType != ScreenType.Search)
             {
                 className = $"{Screen.InternalName}{ScreenSection.InternalName}Item";
             }

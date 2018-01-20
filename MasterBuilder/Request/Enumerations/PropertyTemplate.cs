@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Property Template Enum
     /// </summary>
-    public enum PropertyTemplateEnum
+    public enum PropertyTemplate
     {
         /// <summary>
         /// No template

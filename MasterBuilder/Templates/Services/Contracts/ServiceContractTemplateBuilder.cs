@@ -38,10 +38,10 @@ namespace MasterBuilder.Templates.Services.Contracts
                 {
                     switch (service.ServiceType)
                     {
-                        case ServiceTypeEnum.WebService:
+                        case ServiceType.WebService:
                             templates.Add(new WebServiceServiceContractTemplate(Project, service, service.WebService));
                             break;
-                        case ServiceTypeEnum.ExportService:
+                        case ServiceType.ExportService:
                             break;
                         default:
                             break;

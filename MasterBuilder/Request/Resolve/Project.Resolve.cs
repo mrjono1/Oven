@@ -67,7 +67,7 @@ namespace MasterBuilder.Request
                 {
                     Id = new Guid("{43037072-42F2-4B5C-A72E-1A08F149709A}"),
                     Title = "Administration",
-                    ScreenType = ScreenTypeEnum.Html,
+                    ScreenType = ScreenType.Html,
                     Path = "administration"
                 };
 
@@ -99,12 +99,12 @@ namespace MasterBuilder.Request
             {
                 var menuItems = new List<MenuItem>();
 
-                foreach (var screen in Screens.Where(a => a.Template == ScreenTemplateEnum.Reference))
+                foreach (var screen in Screens.Where(a => a.Template == ScreenTemplate.Reference))
                 {
                     var menuItem = new MenuItem
                     {
                         ScreenId = screen.Id,
-                        MenuItemType = MenuItemTypeEnum.ApplicationLink
+                        MenuItemType = MenuItemType.ApplicationLink
                     };
                     menuItems.Add(menuItem);
                 }
@@ -114,7 +114,7 @@ namespace MasterBuilder.Request
                     Id = new Guid("{0F93AE3B-930D-4F6B-B73F-2EB63F225FAD}"),
                     InternalName = "Administration",
                     Title = "Administration",
-                    ScreenSectionType = ScreenSectionTypeEnum.MenuList,
+                    ScreenSectionType = ScreenSectionType.MenuList,
                     MenuListMenuItems = menuItems
                 };
 

@@ -58,30 +58,30 @@ namespace MasterBuilder.Templates.Entities
             foreach (var item in (from e in Project.Entities
                 where e.Properties != null
                 from p in e.Properties
-                where (p.PropertyType == PropertyTypeEnum.ParentRelationship ||
-                p.PropertyType == PropertyTypeEnum.ReferenceRelationship ||
-                p.PropertyType == PropertyTypeEnum.OneToOneRelationship) &&
+                where (p.PropertyType == PropertyType.ParentRelationship ||
+                p.PropertyType == PropertyType.ReferenceRelationship ||
+                p.PropertyType == PropertyType.OneToOneRelationship) &&
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
                 // can currently only have 1 parent relationship but can have multiple reference relationships
                 switch (item.p.PropertyType)
                 {
-                    case PropertyTypeEnum.ParentRelationship:
+                    case PropertyType.ParentRelationship:
 
                         navigationProperties.Add($@"        /// <summary>
         /// Foreign Key (Via Parent Relationship) to {item.e.InternalName}.{item.p.InternalName}
         /// </summary>
         public ICollection<{item.e.InternalName}> {item.e.InternalNamePlural} {{ get; set; }}");
                         break;
-                    case PropertyTypeEnum.ReferenceRelationship:
+                    case PropertyType.ReferenceRelationship:
 
                         navigationProperties.Add($@"        /// <summary>
         /// Foreign Key (Via Reference Relationship) to {item.e.InternalName}.{item.p.InternalName}
         /// </summary>
         public ICollection<{item.e.InternalName}> {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
                         break;
-                    case PropertyTypeEnum.OneToOneRelationship:
+                    case PropertyType.OneToOneRelationship:
 
                         navigationProperties.Add($@"         /// <summary>
         /// Foreign Key (One to One Relationship)

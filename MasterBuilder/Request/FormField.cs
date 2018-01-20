@@ -43,7 +43,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Property Type
         /// </summary>
-        internal PropertyTypeEnum PropertyType
+        internal PropertyType PropertyType
         {
             get
             {
@@ -59,8 +59,8 @@ namespace MasterBuilder.Request
             {
                 switch (Property.PropertyType)
                 {
-                    case PropertyTypeEnum.ParentRelationship:
-                    case PropertyTypeEnum.ReferenceRelationship:
+                    case PropertyType.ParentRelationship:
+                    case PropertyType.ReferenceRelationship:
                         return $"{Property.InternalName}Id";
                     default:
                         return Property.InternalName;
@@ -76,7 +76,7 @@ namespace MasterBuilder.Request
             {
                 switch (Property.PropertyType)
                 {
-                    case PropertyTypeEnum.ReferenceRelationship:
+                    case PropertyType.ReferenceRelationship:
                         return $"{Property.InternalName}Title";
                     default:
                         return null;
@@ -92,7 +92,7 @@ namespace MasterBuilder.Request
             {
                 switch (Property.PropertyType)
                 {
-                    case PropertyTypeEnum.PrimaryKey:
+                    case PropertyType.PrimaryKey:
                         return $"{Property.CsType}?";
                     default:
                         return Property.CsType;

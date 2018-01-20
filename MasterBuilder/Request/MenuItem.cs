@@ -15,11 +15,11 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Register of all Menu Item Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, MenuItemTypeEnum> MenuItemTypeDictonary = new Dictionary<Guid, MenuItemTypeEnum>
+        internal static readonly Dictionary<Guid, MenuItemType> MenuItemTypeDictonary = new Dictionary<Guid, MenuItemType>
         {
-            { new Guid("{51810E74-59E6-44AF-B6D3-1B8ECF82EE54}"), MenuItemTypeEnum.ApplicationLink },
-            { new Guid("{A7B39F29-3887-4744-A4E3-926607DB15D2}"), MenuItemTypeEnum.New },
-            { new Guid("{2BB3BFAC-FBA8-4786-A854-193EC73A01AF}"), MenuItemTypeEnum.ServerFunction }
+            { new Guid("{51810E74-59E6-44AF-B6D3-1B8ECF82EE54}"), MenuItemType.ApplicationLink },
+            { new Guid("{A7B39F29-3887-4744-A4E3-926607DB15D2}"), MenuItemType.New },
+            { new Guid("{2BB3BFAC-FBA8-4786-A854-193EC73A01AF}"), MenuItemType.ServerFunction }
         };
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace MasterBuilder.Request
         /// Title
         /// </summary>
         public string Title { get; set; }
-        private string _internalName;
+        private string internalName;
         /// <summary>
         /// Calculated Internal Name
         /// </summary>
@@ -38,11 +38,11 @@ namespace MasterBuilder.Request
         {
             get
             {
-                if (_internalName == null)
+                if (internalName == null)
                 {
-                    _internalName = Title.Pascalize();
+                    internalName = Title.Pascalize();
                 }
-                return _internalName;
+                return internalName;
             }
         }
         /// <summary>
@@ -66,7 +66,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public MenuItemTypeEnum MenuItemType
+        public MenuItemType MenuItemType
         {
             get
             {

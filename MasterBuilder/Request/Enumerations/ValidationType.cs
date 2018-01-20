@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Validation Types
     /// </summary>
-    public enum ValidationTypeEnum
+    public enum ValidationType
     {
         /// <summary>
         /// Required

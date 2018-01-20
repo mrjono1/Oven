@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Seed Type Enum
     /// </summary>
-    public enum SeedTypeEnum
+    public enum SeedType
     {
         /// <summary>
         /// Add records if none in database

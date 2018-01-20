@@ -37,10 +37,10 @@ namespace MasterBuilder.Templates.Services
                 {
                     switch (service.ServiceType)
                     {
-                        case ServiceTypeEnum.WebService:
+                        case ServiceType.WebService:
                             templates.Add(new WebServiceServiceTemplate(Project, service, service.WebService));
                             break;
-                        case ServiceTypeEnum.ExportService:
+                        case ServiceType.ExportService:
                             break;
                         default:
                             break;
@@ -70,10 +70,10 @@ namespace MasterBuilder.Templates.Services
                 {
                     switch (service.ServiceType)
                     {
-                        case ServiceTypeEnum.WebService:
+                        case ServiceType.WebService:
                             names.Add(new WebServiceServiceTemplate(Project, service, service.WebService).GetClassName());
                             break;
-                        case ServiceTypeEnum.ExportService:
+                        case ServiceType.ExportService:
                             break;
                         default:
                             break;

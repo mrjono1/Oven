@@ -3,7 +3,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Property Types
     /// </summary>
-    public enum PropertyTypeEnum
+    public enum PropertyType
     {
         /// <summary>
         /// Uniqueidentifier not human readable

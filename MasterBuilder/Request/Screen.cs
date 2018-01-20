@@ -17,23 +17,23 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Register of all Screen Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ScreenTypeEnum> ScreenTypeDictonary = new Dictionary<Guid, ScreenTypeEnum>
+        internal static readonly Dictionary<Guid, ScreenType> ScreenTypeDictonary = new Dictionary<Guid, ScreenType>
         {
-            { Guid.Empty, ScreenTypeEnum.None},
-            { new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), ScreenTypeEnum.Search },
-            { new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), ScreenTypeEnum.Edit },
-            { new Guid("{ACE5A965-7005-4E34-9C66-AF0F0CD15AE9}"), ScreenTypeEnum.View },
-            { new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), ScreenTypeEnum.Html }
+            { Guid.Empty, ScreenType.None},
+            { new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), ScreenType.Search },
+            { new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), ScreenType.Edit },
+            { new Guid("{ACE5A965-7005-4E34-9C66-AF0F0CD15AE9}"), ScreenType.View },
+            { new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), ScreenType.Html }
         };
 
         /// <summary>
         /// Register of all Screen Template Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ScreenTemplateEnum> ScreenTemplateDictonary = new Dictionary<Guid, ScreenTemplateEnum>
+        internal static readonly Dictionary<Guid, ScreenTemplate> ScreenTemplateDictonary = new Dictionary<Guid, ScreenTemplate>
         {
-            { Guid.Empty, ScreenTemplateEnum.None},
-            { new Guid("{142B82E8-471B-47E5-A13F-158D2B06874B}"), ScreenTemplateEnum.Reference },
-            { new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"), ScreenTemplateEnum.Home }
+            { Guid.Empty, ScreenTemplate.None},
+            { new Guid("{142B82E8-471B-47E5-A13F-158D2B06874B}"), ScreenTemplate.Reference },
+            { new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"), ScreenTemplate.Home }
         };
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [RequiredNonDefault]
         public Guid Id { get; set; }
-        private string _internalName;
+        private string internalName;
         /// <summary>
         /// Calculated Internal Name
         /// </summary>
@@ -49,11 +49,11 @@ namespace MasterBuilder.Request
         {
             get
             {
-                if (_internalName == null)
+                if (internalName == null)
                 {
-                    _internalName = Title.Dehumanize();
+                    internalName = Title.Dehumanize();
                 }
-                return _internalName;
+                return internalName;
             }
         }
         /// <summary>
@@ -86,7 +86,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public ScreenTemplateEnum Template
+        public ScreenTemplate Template
         {
             get
             {
@@ -129,7 +129,7 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public ScreenTypeEnum ScreenType
+        public ScreenType ScreenType
         {
             get
             {
@@ -151,7 +151,7 @@ namespace MasterBuilder.Request
                 return null;
             }
 
-            if (ScreenType != ScreenTypeEnum.Edit)
+            if (ScreenType != ScreenType.Edit)
             {
                 return null;
             }
@@ -190,13 +190,13 @@ namespace MasterBuilder.Request
             if (entity != null)
             {
                 var parentProperty = (from p in entity.Properties
-                                      where p.PropertyType == PropertyTypeEnum.ParentRelationship
+                                      where p.PropertyType == PropertyType.ParentRelationship
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {
                     foundParentScreen = (from s in project.Screens
                                          where s.EntityId == parentProperty.ParentEntityId &&
-                                         s.ScreenType == ScreenTypeEnum.Edit &&
+                                         s.ScreenType == ScreenType.Edit &&
                                          s.Id != screen.Id
                                          select s).SingleOrDefault();
                     if (foundParentScreen != null)

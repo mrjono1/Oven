@@ -44,9 +44,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             var hasReferenceFormField = false;
             foreach (var screenSection in Screen.ScreenSections)
             {
-                if (screenSection.ScreenSectionType == ScreenSectionTypeEnum.Form)
+                if (screenSection.ScreenSectionType == ScreenSectionType.Form)
                 {
-                    foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship))
+                    foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
                     {
                         hasReferenceFormField = true;
                         imports.Add($"import {{ {referenceFormField.ReferenceItemClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{referenceFormField.ReferenceItemClass}';");
@@ -98,7 +98,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 "public new: boolean;"
             };
 
-            foreach (var referenceFormField in ScreenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship))
+            foreach (var referenceFormField in ScreenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
             {
                 classProperties.Add($"public {referenceFormField.Property.InternalName.Camelize()}Reference: {referenceFormField.ReferenceResponseClass} = new {referenceFormField.ReferenceResponseClass}();");
             }
@@ -115,7 +115,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
             Property parentProperty = null;
             parentProperty = (from p in ScreenSection.FormSection.Entity.Properties
-                              where p.PropertyType == PropertyTypeEnum.ParentRelationship
+                              where p.PropertyType == PropertyType.ParentRelationship
                               select p).SingleOrDefault();
             string setParentProperty = null;
             if (parentProperty != null)
@@ -143,9 +143,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
             foreach (var screenSection in Screen.ScreenSections)
             {
-                if (screenSection.ScreenSectionType == ScreenSectionTypeEnum.Form)
+                if (screenSection.ScreenSectionType == ScreenSectionType.Form)
                 {
-                    foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship))
+                    foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
                     {
                         lines.Add($@"        this.{Screen.InternalName.Camelize()}Service.get{referenceFormField.Property.InternalName}References(null , 1, 100).subscribe((result: any) => {{
             if (result != null) {{
@@ -224,7 +224,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             {
                 switch (formField.PropertyType)
                 {
-                    case PropertyTypeEnum.PrimaryKey:
+                    case PropertyType.PrimaryKey:
                         break;
                     default:
                         properties.Add($@"    get {formField.InternalNameCSharp.Camelize()}() {{ return this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameCSharp.Camelize()}'); }}");
@@ -241,7 +241,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
             foreach (var formField in ScreenSection.FormSection.FormFields)
             {
-                if (formField.PropertyType == PropertyTypeEnum.PrimaryKey)
+                if (formField.PropertyType == PropertyType.PrimaryKey)
                 {
                     continue;
                 }
@@ -253,31 +253,31 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                     {
                         switch (validationItem.ValidationType)
                         {
-                            case ValidationTypeEnum.Required:
+                            case ValidationType.Required:
                                 propertyValidators.Add("            Validators.required");
                                 break;
-                            case ValidationTypeEnum.MaximumLength:
+                            case ValidationType.MaximumLength:
                                 propertyValidators.Add($"            Validators.maxLength({validationItem.IntegerValue.Value})");
                                 break;
-                            case ValidationTypeEnum.MinimumLength:
+                            case ValidationType.MinimumLength:
                                 propertyValidators.Add($"            Validators.minLength({validationItem.IntegerValue.Value})");
                                 break;
-                            case ValidationTypeEnum.MaximumValue:
+                            case ValidationType.MaximumValue:
                                 propertyValidators.Add($"            Validators.max({validationItem.IntegerValue.Value})");
                                 break;
-                            case ValidationTypeEnum.MinimumValue:
+                            case ValidationType.MinimumValue:
                                 propertyValidators.Add($"            Validators.min({validationItem.IntegerValue.Value})");
                                 break;
-                            case ValidationTypeEnum.Unique:
+                            case ValidationType.Unique:
                                 // TODO async validator or just let database let you know of the error?
                                 break;
-                            case ValidationTypeEnum.Email:
+                            case ValidationType.Email:
                                 propertyValidators.Add($"            Validators.email");
                                 break;
-                            case ValidationTypeEnum.RequiredTrue:
+                            case ValidationType.RequiredTrue:
                                 propertyValidators.Add($"            Validators.requiredTrue");
                                 break;
-                            case ValidationTypeEnum.Pattern:
+                            case ValidationType.Pattern:
                                 propertyValidators.Add($"            Validators.pattern({validationItem.StringValue})");
                                 break;
                             default:
@@ -292,7 +292,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
                 switch (formField.PropertyType)
                 {
-                    case PropertyTypeEnum.ReferenceRelationship:
+                    case PropertyType.ReferenceRelationship:
                         formControls.Add($@"        let {formField.InternalNameCSharp.Camelize()}Control: FormControl = new FormControl(this.{Screen.InternalName.Camelize()}.{formField.InternalNameCSharp.Camelize()}{propertyValidatorsString});
         this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameCSharp.Camelize()}', {formField.InternalNameCSharp.Camelize()}Control);");
                         break;

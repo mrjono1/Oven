@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             string propertyName = null;
             switch (Property.PropertyType)
             {
-                case PropertyTypeEnum.ReferenceRelationship:
+                case PropertyType.ReferenceRelationship:
                     propertyName = $"{Property.InternalName.Camelize()}Id";
                     break;
                 default:
@@ -47,30 +47,30 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     string selector = null;
                     switch (validationItem.ValidationType)
                     {
-                        case ValidationTypeEnum.Required:
+                        case ValidationType.Required:
                             selector = "required";
                             break;
-                        case ValidationTypeEnum.MaximumLength:
+                        case ValidationType.MaximumLength:
                             selector = "maxlength";
                             break;
-                        case ValidationTypeEnum.MinimumLength:
+                        case ValidationType.MinimumLength:
                             selector = "minlength";
                             break;
-                        case ValidationTypeEnum.MaximumValue:
+                        case ValidationType.MaximumValue:
                             selector = "max";
                             break;
-                        case ValidationTypeEnum.MinimumValue:
+                        case ValidationType.MinimumValue:
                             selector = "min";
                             break;
-                        case ValidationTypeEnum.Unique:
+                        case ValidationType.Unique:
                             break;
-                        case ValidationTypeEnum.Email:
+                        case ValidationType.Email:
                             selector = "email";
                             break;
-                        case ValidationTypeEnum.RequiredTrue:
+                        case ValidationType.RequiredTrue:
                             selector = "requiredtrue";
                             break;
-                        case ValidationTypeEnum.Pattern:
+                        case ValidationType.Pattern:
                             selector = "pattern";
                             break;
                         default:
@@ -90,33 +90,33 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             bool dontWrap = false;
             switch (Property.PropertyType)
             {
-                case PropertyTypeEnum.String:
+                case PropertyType.String:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""text"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>";
                     break;
 
-                case PropertyTypeEnum.Integer:
+                case PropertyType.Integer:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>";
                     break;
 
-                case PropertyTypeEnum.Double:
+                case PropertyType.Double:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>";
                     break;
 
-                case PropertyTypeEnum.DateTime:
+                case PropertyType.DateTime:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""datetime"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>";
                     break;
 
-                case PropertyTypeEnum.Boolean:
+                case PropertyType.Boolean:
                     dontWrap = true;
                     control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{Screen.InternalName.Camelize()}"" id=""{Property.Id}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>{Property.Title}</mat-checkbox>";
                     break;
 
-                case PropertyTypeEnum.ReferenceRelationship:
+                case PropertyType.ReferenceRelationship:
                     var parentEntity = (from e in Project.Entities
                                         where e.Id == Property.ParentEntityId.Value
                                         select e).SingleOrDefault();

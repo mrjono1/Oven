@@ -13,7 +13,7 @@ namespace MasterBuilder.Request
         {
             var messageList = new List<string>();
 
-            var parentPropertyCount = Properties.Count(p => p.PropertyType == PropertyTypeEnum.ParentRelationship);
+            var parentPropertyCount = Properties.Count(p => p.PropertyType == PropertyType.ParentRelationship);
             if (parentPropertyCount > 1)
             {
                 messageList.Add($"Entity:{Title} can only contain one parent properties it contains {parentPropertyCount}");

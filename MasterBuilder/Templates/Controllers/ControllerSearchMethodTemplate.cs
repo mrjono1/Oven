@@ -22,10 +22,10 @@ namespace MasterBuilder.Templates.Controllers
             {
                 switch (searchColumn.PropertyType)
                 {
-                    case PropertyTypeEnum.ParentRelationship:
-                    case PropertyTypeEnum.OneToOneRelationship:
+                    case PropertyType.ParentRelationship:
+                    case PropertyType.OneToOneRelationship:
                         break;
-                    case PropertyTypeEnum.ReferenceRelationship:
+                    case PropertyType.ReferenceRelationship:
                         propertyMapping.Add($"                        {searchColumn.InternalNameCSharp} = (item.{searchColumn.Property.InternalName} != null ? item.{searchColumn.Property.InternalName}.Title : null)");
                         break;
                     default:
@@ -38,7 +38,7 @@ namespace MasterBuilder.Templates.Controllers
             Entity parentEntity = null;
 
             var parentProperty = (from p in screenSection.SearchSection.Entity.Properties
-                                    where p.PropertyType == PropertyTypeEnum.ParentRelationship
+                                    where p.PropertyType == PropertyType.ParentRelationship
                                     select p).SingleOrDefault();
             if (parentProperty != null)
             {

@@ -12,19 +12,19 @@ namespace MasterBuilder.Helpers
     /// </summary>
     internal class ProjectWriter
     {
-        private List<Task<TemplateResult>> _filesToWrite;
-        private string[] _cleanDirectoryIngnoreList;
-        private string _projectDirectory;
-        private string[] _filePaths;
+        private List<Task<TemplateResult>> FilesToWrite;
+        private string[] CleanDirectoryIngnoreList;
+        private string ProjectDirectory;
+        private string[] FilePaths;
 
         /// <summary>
         /// Constructor
         /// </summary>
         public ProjectWriter(string projectDirectory, string[] cleanDirectoryIngnoreList)
         {
-            _filesToWrite = new List<Task<TemplateResult>>();
-            _projectDirectory = projectDirectory;
-            _cleanDirectoryIngnoreList = cleanDirectoryIngnoreList;
+            FilesToWrite = new List<Task<TemplateResult>>();
+            ProjectDirectory = projectDirectory;
+            CleanDirectoryIngnoreList = cleanDirectoryIngnoreList;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace MasterBuilder.Helpers
         {
             foreach (var template in templates)
             {
-                _filesToWrite.Add(FileHelper.WriteTemplate(_projectDirectory, template));
+                FilesToWrite.Add(FileHelper.WriteTemplate(ProjectDirectory, template));
             }
         }
 
@@ -45,7 +45,7 @@ namespace MasterBuilder.Helpers
         {
             foreach (var template in templates)
             {
-                _filesToWrite.Add(FileHelper.WriteTemplate(customDirectory, template));
+                FilesToWrite.Add(FileHelper.WriteTemplate(customDirectory, template));
             }
         }
 
@@ -56,7 +56,7 @@ namespace MasterBuilder.Helpers
         {
             foreach (var template in templateBuilder.GetTemplates())
             {
-                _filesToWrite.Add(FileHelper.WriteTemplate(_projectDirectory, template));
+                FilesToWrite.Add(FileHelper.WriteTemplate(ProjectDirectory, template));
             }
         }
 
@@ -65,7 +65,7 @@ namespace MasterBuilder.Helpers
         /// </summary>
         internal async Task<string> WriteAndClean()
         {
-            var result = await Task.WhenAll(_filesToWrite.ToArray());
+            var result = await Task.WhenAll(FilesToWrite.ToArray());
 
             if (result.Any(a => a.HasError))
             {
@@ -75,9 +75,9 @@ namespace MasterBuilder.Helpers
             }
             else
             {
-                _filePaths = result.Select(a => a.FilePath).ToArray();
+                FilePaths = result.Select(a => a.FilePath).ToArray();
 
-                DeleteFiles(_projectDirectory);
+                DeleteFiles(ProjectDirectory);
             }
             return null;
         }
@@ -90,13 +90,13 @@ namespace MasterBuilder.Helpers
         {
             var directoryInfo = new DirectoryInfo(directory);
 
-            if (!_cleanDirectoryIngnoreList.Contains(directoryInfo.Name))
+            if (!CleanDirectoryIngnoreList.Contains(directoryInfo.Name))
             {
                 try
                 {
                     foreach (FileInfo file in directoryInfo.GetFiles())
                     {
-                        if (!_filePaths.Contains(file.FullName))
+                        if (!FilePaths.Contains(file.FullName))
                         {
                             file.Delete();
                         }

@@ -12,8 +12,8 @@ namespace MasterBuilder.SourceControl
     /// </summary>
     public class VisualStudioTeamServices
     {
-        private readonly RestClient _restClient;
-        private readonly string _project;
+        private readonly RestClient RestClient;
+        private readonly string Project;
 
         /// <summary>
         /// Returned project id
@@ -25,11 +25,11 @@ namespace MasterBuilder.SourceControl
         /// </summary>
         public VisualStudioTeamServices(string account, string project, string personalAccessToken)
         {
-            _restClient = new RestClient($"https://{account}.visualstudio.com/DefaultCollection/")
+            RestClient = new RestClient($"https://{account}.visualstudio.com/DefaultCollection/")
             {
                 Authenticator = new HttpBasicAuthenticator("Basic", personalAccessToken)
             };
-            _project = project;
+            Project = project;
         }
 
         /// <summary>
@@ -37,12 +37,12 @@ namespace MasterBuilder.SourceControl
         /// </summary>
         public async Task<Models.GetProject> GetProject()
         {
-            var request = new RestRequest($"_apis/projects/{_project}", Method.GET);
+            var request = new RestRequest($"_apis/projects/{Project}", Method.GET);
             request.AddQueryParameter("api-version", "1.0");
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
             
-            var result = await _restClient.ExecuteTaskAsync<Models.GetProject>(request);
+            var result = await RestClient.ExecuteTaskAsync<Models.GetProject>(request);
 
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -79,7 +79,7 @@ namespace MasterBuilder.SourceControl
             });
             request.AddParameter("application/json", bodyString, ParameterType.RequestBody);
 
-            var result = await _restClient.ExecuteTaskAsync<Models.GetProject>(request);
+            var result = await RestClient.ExecuteTaskAsync<Models.GetProject>(request);
 
             if (result.StatusCode == System.Net.HttpStatusCode.Accepted)
             {
@@ -96,12 +96,12 @@ namespace MasterBuilder.SourceControl
         /// </summary>
         public async Task<Models.GetRepository[]> GetProjectRepositories()
         {
-            var request = new RestRequest($"{_project}/_apis/git/repositories", Method.GET);
+            var request = new RestRequest($"{Project}/_apis/git/repositories", Method.GET);
             request.AddQueryParameter("api-version", "1.0");
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
 
-            var result = await _restClient.ExecuteTaskAsync(request);
+            var result = await RestClient.ExecuteTaskAsync(request);
 
             if (result.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -123,7 +123,7 @@ namespace MasterBuilder.SourceControl
         /// </summary>
         public async Task<Models.GetRepository> CreateRepository(string name)
         {
-            var request = new RestRequest($"{_project}/_apis/git/repositories", Method.POST);
+            var request = new RestRequest($"{Project}/_apis/git/repositories", Method.POST);
             request.AddQueryParameter("api-version", "1.0");
             request.RequestFormat = DataFormat.Json;
             request.AddHeader("Content-Type", "application/json");
@@ -141,7 +141,7 @@ namespace MasterBuilder.SourceControl
             });
             request.AddParameter("application/json", bodyString, ParameterType.RequestBody);
 
-            var result = await _restClient.ExecuteTaskAsync<Models.GetRepository>(request);
+            var result = await RestClient.ExecuteTaskAsync<Models.GetRepository>(request);
 
             if (result.StatusCode == System.Net.HttpStatusCode.Created)
             {

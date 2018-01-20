@@ -18,20 +18,20 @@ namespace MasterBuilder.Request
             var errors = new List<string>();
             
             // TODO: below validation items are default so fix this so they can be overwritten
-            if (PropertyTemplate == PropertyTemplateEnum.ReferenceTitle)
+            if (PropertyTemplate == PropertyTemplate.ReferenceTitle)
             {
                 ValidationItems = new Validation[]
                 {
                     new Validation{
-                        ValidationType = ValidationTypeEnum.Unique
+                        ValidationType = ValidationType.Unique
                     },
                     new Validation
                     {
-                        ValidationType = ValidationTypeEnum.MaximumLength,
+                        ValidationType = ValidationType.MaximumLength,
                         IntegerValue = 200
                     },
                     new Validation{
-                        ValidationType = ValidationTypeEnum.Required
+                        ValidationType = ValidationType.Required
                     },
                 };
             }
