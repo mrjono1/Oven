@@ -55,86 +55,46 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 "private router: Router",
                 "private route: ActivatedRoute"
             };
-
-            var hasForm = false;
-            if (Screen.ScreenSections == null)
-            {
-                Screen.ScreenSections = new ScreenSection[] { };
-            }
+            var properties = new List<string>();
+            var formControls = new List<string>();
+            
             foreach (var screenSection in Screen.ScreenSections)
             {
-                Entity entity = null;
-                Entity formEntity = null;
-                if (screenSection.EntityId.HasValue) {
-                    entity = Project.Entities.SingleOrDefault(e => e.Id == screenSection.EntityId.Value);
-                }
-
-                Property parentProperty = null;
                 switch (screenSection.ScreenSectionType)
                 {
                     case ScreenSectionTypeEnum.Form:
 
-                        formEntity = entity;
-
-                        imports.Add($"import {{ {screenSection.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}';");
-
-                        classProperties.Add($"public {screenSection.InternalName.Camelize()}: {screenSection.InternalName};");
-                        classProperties.Add($"public {screenSection.InternalName.Camelize()}Form: FormGroup;");
-                        classProperties.Add("public new: boolean;");
-
-                        parentProperty = (from p in entity.Properties
-                                              where p.PropertyType == PropertyTypeEnum.ParentRelationship
-                                              select p).SingleOrDefault();
-                        string setParentProperty = null;
-                        if (parentProperty != null)
-                        {
-                            var parentEnitity = (from e in Project.Entities
-                                                 where e.Id == parentProperty.ParentEntityId
-                                                 select e).SingleOrDefault();
-                            setParentProperty = $"this.{screenSection.InternalName.Camelize()}.{parentProperty.InternalName.Camelize()}Id = params['{parentEnitity.InternalName.Camelize()}Id'];";
-                        }
-
-                        onNgInitBodySections.Add($@"        this.route.params.subscribe(params => {{
-            if (params['{Screen.InternalName.Camelize()}Id']) {{
-                this.new = false;
-                this.http.get<{screenSection.InternalName}>('api/{Screen.InternalName}/{screenSection.InternalName}/' + params['{entity.InternalName.Camelize()}Id']).subscribe(result => {{
-                    this.{screenSection.InternalName.Camelize()} = result;
-                    this.setupForm();
-                }}, error => console.error(error));
-            }} else {{
-                this.new = true;
-                this.{screenSection.InternalName.Camelize()} = new {screenSection.InternalName}();
-                {setParentProperty}
-                this.setupForm();
-            }}
-        }});");
-                        hasForm = true;
+                        var formSectionPartial = new FormSectionPartial(Project, Screen, screenSection);
+                        imports.AddRange(formSectionPartial.GetImports());
+                        constructorParamerters.AddRange(formSectionPartial.GetConstructorParameters());
+                        constructorBodySections.AddRange(formSectionPartial.GetConstructorBodySections());
+                        classProperties.AddRange(formSectionPartial.GetClassProperties());
+                        onNgInitBodySections.AddRange(formSectionPartial.GetOnNgInitBodySections());
+                        functions.AddRange(formSectionPartial.GetFunctions());
+                        properties.AddRange(formSectionPartial.GetProperties());
+                        formControls.AddRange(formSectionPartial.GetFormControls());
+                        
                         break;
                     case ScreenSectionTypeEnum.Search:
 
-                        var searchSectionPartial = new SearchSectionPartial(Screen, screenSection);
+                        var searchSectionPartial = new SearchSectionPartial(Project, Screen, screenSection);
                         imports.AddRange(searchSectionPartial.GetImports());
+                        constructorParamerters.AddRange(searchSectionPartial.GetConstructorParameters());
                         constructorBodySections.AddRange(searchSectionPartial.GetConstructorBodySections());
                         classProperties.AddRange(searchSectionPartial.GetClassProperties());
-                        onNgInitBodySections.AddRange(searchSectionPartial.GetOnNgInitBodySections(Project));
+                        onNgInitBodySections.AddRange(searchSectionPartial.GetOnNgInitBodySections());
                         
                         break;
                     case ScreenSectionTypeEnum.MenuList:
                         // Nothing at the moment
                         break;
                     case ScreenSectionTypeEnum.Html:
+                        // Probably never anything
                         break;
                     default:
                         break;
                 }
-
-                // Service imports
-                if (entity != null)
-                {
-                    imports.Add($"import {{ {Screen.InternalName}Service }} from '../../shared/{Screen.InternalName.ToLowerInvariant()}.service';");
-                    constructorParamerters.Add($"private {Screen.InternalName.Camelize()}Service: {Screen.InternalName}Service");
-                }
-
+                
                 if (screenSection.MenuItems != null)
                 {
                     foreach (var menuItem in screenSection.MenuItems)
@@ -159,13 +119,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 }
             }
             
-            if (hasForm)
+            if (formControls.Any())
             {
-                var form = new BuildForm(Project, Screen);
-                functions.Add(form.GetFunctions());
-                imports.AddRange(form.GetImports());
-                constructorParamerters.AddRange(form.GetConstructorParamerters());
-                onNgInitBodySections.AddRange(form.GetngOnInit());
+                functions.Add($@"    setupForm(){{
+        this.{Screen.InternalName.Camelize()}Form = new FormGroup({{}});
+{string.Join(Environment.NewLine, formControls)}
+    }}");
             }
 
             if (Screen.InternalName.Equals("home", StringComparison.OrdinalIgnoreCase))
@@ -191,14 +150,16 @@ export class {Screen.InternalName}Component implements OnInit {{
     {string.Join(string.Concat(Environment.NewLine, "    "), classProperties.Distinct())}
 
     constructor({string.Join(string.Concat(",", Environment.NewLine, "      "), constructorParamerters.Distinct())}){{
-{string.Join(Environment.NewLine, constructorBodySections)}
+{string.Join(Environment.NewLine, constructorBodySections.Distinct())}
     }}
 
     ngOnInit(){{
 {string.Join(Environment.NewLine, onNgInitBodySections.Distinct())}
     }}
 
-{string.Join(Environment.NewLine, functions)}
+{string.Join(Environment.NewLine, properties.Distinct())}
+
+{string.Join(Environment.NewLine, functions.Distinct())}
 }}";
         }
     }

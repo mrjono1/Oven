@@ -12,6 +12,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
     /// </summary>
     public class SearchSectionPartial
     {
+        private readonly Project Project;
         private readonly Screen Screen;
         private readonly ScreenSection ScreenSection;
 
@@ -19,8 +20,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         /// <summary>
         /// Constructor
         /// </summary>
-        public SearchSectionPartial(Screen screen, ScreenSection screenSection)
+        public SearchSectionPartial(Project project, Screen screen, ScreenSection screenSection)
         {
+            Project = project;
             Screen = screen;
             ScreenSection = screenSection;
         }
@@ -32,7 +34,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 $"import {{ {ScreenSection.SearchSection.SearchItemClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{ScreenSection.SearchSection.SearchItemClass}';",
                 $"import {{ {ScreenSection.SearchSection.SearchRequestClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{ScreenSection.SearchSection.SearchRequestClass}';",
                 $"import {{ {ScreenSection.SearchSection.SearchResponseClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{ScreenSection.SearchSection.SearchResponseClass}';",
-                "import { MatTableDataSource } from '@angular/material';"
+                "import { MatTableDataSource } from '@angular/material';",
+                $"import {{ {Screen.InternalName}Service }} from '../../shared/{Screen.InternalName.ToLowerInvariant()}.service';"
+            };
+        }
+
+        internal IEnumerable<string> GetConstructorParameters()
+        {
+            return new string[]
+            {
+                $"private {Screen.InternalName.Camelize()}Service: {Screen.InternalName}Service"
             };
         }
 
@@ -72,7 +83,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         };
         }
 
-        internal IEnumerable<string> GetOnNgInitBodySections(Project project)
+        internal IEnumerable<string> GetOnNgInitBodySections()
         {
             string parentPropertyFilterString = null;
             Entity parentEntity = null;
@@ -81,7 +92,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                   select p).SingleOrDefault();
             if (parentProperty != null)
             {
-                parentEntity = (from s in project.Entities
+                parentEntity = (from s in Project.Entities
                                 where s.Id == parentProperty.ParentEntityId
                                 select s).SingleOrDefault();
                 parentPropertyFilterString = $"this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = params['{parentEntity.InternalName.Camelize()}Id'];";

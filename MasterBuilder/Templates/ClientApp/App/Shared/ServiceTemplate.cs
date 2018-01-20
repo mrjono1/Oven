@@ -58,14 +58,14 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
 
                         imports.Add($"import {{ {screenSection.InternalName} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}';");
 
-                        methods.Add($@"    get{Screen.InternalName}{screenSection.InternalName}(id: string){{
+                        methods.Add($@"    get{screenSection.InternalName}(id: string){{
         return this.http.get<{screenSection.InternalName}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`);
     }}");
-                        methods.Add($@"    add{Screen.InternalName}{Screen.InternalName}(request: any){{
+                        methods.Add($@"    add{Screen.InternalName}(request: any){{
         return this.http.post<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}`, request);
     }}");
 
-                        methods.Add($@"    update{Screen.InternalName}{Screen.InternalName}(id: string, operations: Operation[]){{
+                        methods.Add($@"    update{Screen.InternalName}(id: string, operations: Operation[]){{
         return this.http.patch<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`, operations);
     }}");
                         hasForm = true;
