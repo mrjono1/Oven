@@ -1,4 +1,5 @@
 using MasterBuilder.Interfaces;
+using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
@@ -7,6 +8,16 @@ namespace MasterBuilder.Templates.ProjectFiles
     /// </summary>
     public class WebPackConfigVendorTemplate : ITemplate
     {
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="project"></param>
+        public WebPackConfigVendorTemplate(Project project)
+        {
+            Project = project;
+        }
         /// <summary>
         /// Get file name
         /// </summary>
@@ -43,17 +54,13 @@ const treeShakableModules = [
     '@angular/platform-browser',
     '@angular/platform-browser-dynamic',
     '@angular/router',
-    'ngx-bootstrap',
     'zone.js',
 ];
 const nonTreeShakableModules = [
-    // 'bootstrap',
-    // 'bootstrap/dist/css/bootstrap.css',
     'core-js',
     // 'es6-promise',
     // 'es6-shim',
-    'event-source-polyfill',
-    // 'jquery',
+    'event-source-polyfill'
 ];
 const allModules = treeShakableModules.concat(nonTreeShakableModules);
 
@@ -75,7 +82,6 @@ module.exports = (env) => {
             library: '[name]_[hash]'
         },
         plugins: [
-            // new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }), // Maps these identifiers to the jQuery package (because Bootstrap expects it to be a global variable)
             new webpack.ContextReplacementPlugin(/\@angular\b.*\b(bundles|linker)/, path.join(__dirname, './ClientApp')), // Workaround for https://github.com/angular/angular/issues/11580
             new webpack.ContextReplacementPlugin(/(.+)?angular(\\|\/)core(.+)?/, path.join(__dirname, './ClientApp')), // Workaround for https://github.com/angular/angular/issues/14898
             new webpack.IgnorePlugin(/^vertx$/) // Workaround for https://github.com/stefanpenner/es6-promise/issues/100

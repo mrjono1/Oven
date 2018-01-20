@@ -73,7 +73,7 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ProjectFiles.TypeScriptConfigTemplate());
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackAdditionsTemplate());
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigTemplate());
-            projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigVendorTemplate());
+            projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigVendorTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebConfigTemplate());
  
             // Views
