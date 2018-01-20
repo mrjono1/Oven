@@ -82,10 +82,13 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.Views.Home.IndexTemplate(project));
             projectWriter.AddTemplate(new Templates.Views.Shared.ErrorTemplate(project));
             projectWriter.AddTemplate(new Templates.Views.Shared.LayoutTemplate(project));
-                
-            projectWriter.AddTemplate(new Templates.Extensions.HttpRequestExtensionsTemplate(project));
-            projectWriter.AddTemplate(new Templates.CoreModels.IRequestTemplate(project));
-            projectWriter.AddTemplate(new Templates.CoreModels.TransferDataTemplate(project));
+
+            if (project.ServerSideRendering)
+            {
+                projectWriter.AddTemplate(new Templates.Extensions.HttpRequestExtensionsTemplate(project));
+                projectWriter.AddTemplate(new Templates.CoreModels.IRequestTemplate(project));
+                projectWriter.AddTemplate(new Templates.CoreModels.TransferDataTemplate(project));
+            }
             
             // wwwroot/assets/i18n
             projectWriter.AddTemplate(new Templates.WwwRoot.i18n.LanguageTemplate());

@@ -40,7 +40,7 @@ namespace MasterBuilder.Templates.Views.Home
         /// </summary>
         public string GetFileContent()
         {
-            return $@"@Html.Raw(ViewData[""SpaHtml""])
+            return $@"{(Project.ServerSideRendering ? $@"@Html.Raw(ViewData[""SpaHtml""])" : "<app-root></app-root>")}
 
 <script src=""~/dist/vendor.js"" asp-append-version=""true""></script>
 @section scripts {{

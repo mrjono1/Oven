@@ -137,57 +137,67 @@ namespace MasterBuilder.Templates.Controllers
             {
                 if (Screen.Template == ScreenTemplate.Home)
                 {
-                    methods.Add($@"                /// <summary>
-    /// Home Index
-    /// </summary>
-    [HttpGet]
-    public async Task<IActionResult> Index()
-    {{
-        var prerenderResult = await Request.BuildPrerender();
-
-        ViewData[""SpaHtml""] = prerenderResult.Html; // our <app-root /> from Angular
-        ViewData[""Styles""] = prerenderResult.Globals[""styles""]; // put styles in the correct place
-        ViewData[""Scripts""] = prerenderResult.Globals[""scripts""]; // scripts (that were in our header)
-        ViewData[""Meta""] = prerenderResult.Globals[""meta""]; // set our <meta> SEO tags
-        ViewData[""Links""] = prerenderResult.Globals[""links""]; // set our <link rel=""canonical""> etc SEO tags
-        ViewData[""TransferData""] = prerenderResult.Globals[""transferData""]; // our transfer data set to window.TRANSFER_CACHE = {{}};
-        ViewData[""Title""] = prerenderResult.Globals[""title""]; // set our <title> from Angular
+                    if (Project.ServerSideRendering)
+                    {
+                        methods.Add($@"                /// <summary>
+        /// Home Index
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {{
+            
+            var prerenderResult = await Request.BuildPrerender();
         
-        return View();
-    }}
+            ViewData[""SpaHtml""] = prerenderResult.Html; // our <app-root /> from Angular
+            ViewData[""Styles""] = prerenderResult.Globals[""styles""]; // put styles in the correct place
+            ViewData[""Scripts""] = prerenderResult.Globals[""scripts""]; // scripts (that were in our header)
+            ViewData[""Meta""] = prerenderResult.Globals[""meta""]; // set our <meta> SEO tags
+            ViewData[""Links""] = prerenderResult.Globals[""links""]; // set our <link rel=""canonical""> etc SEO tags
+            ViewData[""TransferData""] = prerenderResult.Globals[""transferData""]; // our transfer data set to window.TRANSFER_CACHE = {{}};
+            ViewData[""Title""] = prerenderResult.Globals[""title""]; // set our <title> from Angular
+            
+            return View();
+        }}");
+                    }
+                    else
+                    {
+                        methods.Add($@"        /// <summary>
+        /// Home Index
+        /// </summary>
+        [HttpGet]
+        public IActionResult Index()
+        {{
+            return View();
+        }}");
+                    }
 
-    /// <summary>
-    /// Sitemap Xml
-    /// </summary>
-    [HttpGet]
-    [Route(""sitemap.xml"")]
-    public IActionResult SitemapXml()
-    {{
-        var xml = $@""<?xml version=\""""1.0\"""" encoding=\""""utf-8\""""?>
+                     methods.Add($@"
+        /// <summary>
+        /// Sitemap Xml
+        /// </summary>
+        [HttpGet]
+        [Route(""sitemap.xml"")]
+        public IActionResult SitemapXml()
+        {{
+            var xml = $@""<?xml version=\""""1.0\"""" encoding=\""""utf-8\""""?>
 <sitemapindex xmlns=\""""http://www.sitemaps.org/schemas/sitemap/0.9\"""">
-    <sitemap>
-        <loc>http://localhost:4251/home</loc>
-        <lastmod>{{DateTime.Now.ToString(""yyyy-MM-dd"")}}</lastmod>
-    </sitemap>
-    <sitemap>
-        <loc>http://localhost:4251/counter</loc>
-        <lastmod>{{DateTime.Now.ToString(""yyyy-MM-dd"")}}</lastmod>
-    </sitemap>
 </sitemapindex>"";
 
-        return Content(xml, ""text/xml"");
-
-    }}
-
-    /// <summary>
-    /// Error page
-    /// </summary>
-    public IActionResult Error()
-    {{
-        return View();
-    }}");
-                    usings.Add($"using {Project.InternalName}.CoreModels;");
-                    usings.Add($"using {Project.InternalName}.Extensions;");
+            return Content(xml, ""text/xml"");
+        }}
+        
+        /// <summary>
+        /// Error page
+        /// </summary>
+        public IActionResult Error()
+        {{
+            return View();
+        }}");
+                    if (Project.ServerSideRendering)
+                    {
+                        usings.Add($"using {Project.InternalName}.CoreModels;");
+                        usings.Add($"using {Project.InternalName}.Extensions;");
+                    }
                     classAttributes = null;
                 }
             } 

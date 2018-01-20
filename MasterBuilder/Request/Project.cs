@@ -106,16 +106,6 @@ namespace MasterBuilder.Request
         /// Service configurations
         /// </summary>
         public IEnumerable<Service> Services { get; set; }
-
-        /// <summary>
-        /// Folders to ignore when cleaning out the directory on build
-        /// </summary>
-        internal string[] CleanDirectoryIgnoreDirectories { get; set; }
-        /// <summary>
-        /// If true database tables and columns are all uniqueidentifiers making database 
-        /// hard to use but less chance of needing to change database columns which can result in data loss
-        /// </summary>
-        internal bool? ImutableDatabase { get; set; }
         /// <summary>
         /// Default Screen to load
         /// </summary>
@@ -128,6 +118,22 @@ namespace MasterBuilder.Request
         /// Allow Destructive Database Change, things like dropping columns, tables, keys
         /// </summary>
         public bool AllowDestructiveDatabaseChanges { get; set; }
+
+        #region Internal Settings
+        /// <summary>
+        /// Folders to ignore when cleaning out the directory on build
+        /// </summary>
+        internal string[] CleanDirectoryIgnoreDirectories { get; set; }
+        /// <summary>
+        /// If true database tables and columns are all uniqueidentifiers making database 
+        /// hard to use but less chance of needing to change database columns which can result in data loss
+        /// </summary>
+        internal bool? ImutableDatabase { get; set; }
+        /// <summary>
+        /// Enable Server side rendering
+        /// </summary>
+        internal bool ServerSideRendering { get; set; }
+        #endregion
         /// <summary>
         /// Validate and Resolve this and child objects
         /// </summary>
