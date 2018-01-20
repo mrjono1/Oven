@@ -15,6 +15,10 @@ namespace MasterBuilder
         {
             var gitOn = true;
 
+#if DEBUG
+            gitOn = false;
+#endif
+
             if (project == null)
             {
                 return "null project";

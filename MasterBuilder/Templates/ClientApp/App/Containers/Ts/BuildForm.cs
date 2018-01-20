@@ -181,11 +181,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         this.{Screen.InternalName.Camelize()}Form.addControl('{property.InternalName.Camelize()}Id', {property.InternalName.Camelize()}Control);");
 
                     properties.Add($@"    get {property.InternalName.Camelize()}Id() {{ return this.{Screen.InternalName.Camelize()}Form.get('{property.InternalName.Camelize()}Id'); }}");
-                    
-                    var parentEntity = (from e in Project.Entities
-                                        where e.Id == property.ParentEntityId.Value
-                                        select e).SingleOrDefault();
-                    properties.Add($"public {parentEntity.InternalName.Camelize()}Reference: {parentEntity.InternalName}ReferenceResponse = new {parentEntity.InternalName}ReferenceResponse();");   
+
+                    properties.Add($"public {property.InternalName.Camelize()}Reference: {property.InternalName}ReferenceResponse = new {property.InternalName}ReferenceResponse();");   
                 }
                 else
                 {
