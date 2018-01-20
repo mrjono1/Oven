@@ -67,9 +67,9 @@ namespace MasterBuilder.Templates.ClientApp.App
 
             // Providers
             var providers = new Dictionary<string, string>();
-            foreach (var entity in Project.Entities)
+            foreach (var screen in Project.Screens)
             {
-                providers.Add($"{entity.InternalName}Service", $"import {{ {entity.InternalName}Service }} from './shared/{entity.InternalName.ToLowerInvariant()}.service'");
+                providers.Add($"{screen.InternalName}Service", $"import {{ {screen.InternalName}Service }} from './shared/{screen.InternalName.ToLowerInvariant()}.service'");
             }
             
             return $@"import {{ NgModule, Inject }} from '@angular/core';

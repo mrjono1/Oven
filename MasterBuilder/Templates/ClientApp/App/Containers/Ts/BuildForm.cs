@@ -48,6 +48,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 {
                     foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship))
                     {
+                        hasReferenceFormField = true;
                         imports.Add($"import {{ {referenceFormField.ReferenceItemClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{referenceFormField.ReferenceItemClass}';");
                         imports.Add($"import {{ {referenceFormField.ReferenceResponseClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{referenceFormField.ReferenceResponseClass}';");
                     }
@@ -98,28 +99,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         /// <returns></returns>
         public IEnumerable<string> GetConstructorParamerters()
         {
-            var imports = new List<string>();
-            if (Entity == null)
+            return new List<string>
             {
-                return imports;
-            }
-            
-            var referenceEntities = (from property in Entity.Properties
-                                     where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
-                                     property.ParentEntityId.HasValue
-                                     from entity in Project.Entities
-                                     where entity.Id == property.ParentEntityId.Value
-                                     select entity).Distinct().ToArray();
-
-            if (referenceEntities.Any())
-            {
-                foreach (var entity in referenceEntities)
-                {
-                    imports.Add($"private {entity.InternalName.Camelize()}Service: {entity.InternalName}Service");
-                }
-            }
-
-            return imports;
+                $"private {Screen.InternalName.Camelize()}Service: {Screen.InternalName}Service"
+            };
         }
 
         /// <summary>

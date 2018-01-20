@@ -27,59 +27,50 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         public IEnumerable<ITemplate> GetTemplates()
         {
             var templates = new List<ITemplate>();
-            
-            foreach (var entity in Project.Entities)
+            var hasReference = false;
+            foreach (var screen in Project.Screens)
             {
-                foreach (var screen in Project.Screens.Where(s => s.EntityId == entity.Id))
+                var referenceFormFields = new List<FormField>();
+                foreach (var screenSection in screen.ScreenSections)
                 {
-                    foreach (var screenSection in screen.ScreenSections)
+                    switch (screenSection.ScreenSectionType)
                     {
-                        switch (screenSection.ScreenSectionType)
-                        {
-                            case ScreenSectionTypeEnum.Form:
-                                
-                                templates.Add(new FormTemplate(Project, screen, screenSection));
+                        case ScreenSectionTypeEnum.Form:
 
-                                break;
-                            case ScreenSectionTypeEnum.Search:
+                            referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyTypeEnum.ReferenceRelationship));
+                            templates.Add(new FormTemplate(Project, screen, screenSection));
 
-                                templates.Add(new SearchRequestTemplate(Project, screen, screenSection));
-                                templates.Add(new SearchResponseTemplate(Project, screen, screenSection));
-                                templates.Add(new SearchItemTemplate(Project, screen, screenSection));
+                            break;
+                        case ScreenSectionTypeEnum.Search:
 
-                                break;
-                            case ScreenSectionTypeEnum.MenuList:
-                                // None
-                                break;
-                            case ScreenSectionTypeEnum.Html:
-                                // None
-                                break;
-                        }
+                            templates.Add(new SearchRequestTemplate(Project, screen, screenSection));
+                            templates.Add(new SearchResponseTemplate(Project, screen, screenSection));
+                            templates.Add(new SearchItemTemplate(Project, screen, screenSection));
+
+                            break;
+                        case ScreenSectionTypeEnum.MenuList:
+                            // None
+                            break;
+                        case ScreenSectionTypeEnum.Html:
+                            // None
+                            break;
                     }
                 }
+
+                foreach (var referenceFormField in referenceFormFields)
+                {
+                    hasReference = true;
+                    templates.Add(new Reference.ReferenceItemTemplate(Project, screen, referenceFormField));
+                    templates.Add(new Reference.ReferenceResponseTemplate(Project, screen, referenceFormField));
+                }
             }
 
-            templates.Add(new OperationTemplate());
-            
-            var entityReferencesNeeded = (from e in Project.Entities
-                                          where e.Properties != null
-                                          from property in e.Properties
-                                          where property.PropertyType == PropertyTypeEnum.ReferenceRelationship &&
-                                          property.ParentEntityId.HasValue
-                                          from entity in Project.Entities
-                                          where entity.Id == property.ParentEntityId
-                                          select entity).Distinct().ToArray();
-            if (entityReferencesNeeded != null)
+            if (hasReference)
             {
-                foreach (var entityLookup in entityReferencesNeeded)
-                {
-                    templates.Add(new Reference.ReferenceItemTemplate(Project, entityLookup));
-                    templates.Add(new Reference.ReferenceResponseTemplate(Project, entityLookup));
-                }
-
                 templates.Add(new Reference.ReferenceRequestTemplate());
             }
-
+            templates.Add(new OperationTemplate());
+            
             return templates;
         }
     }

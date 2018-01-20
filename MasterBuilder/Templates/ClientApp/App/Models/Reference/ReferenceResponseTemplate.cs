@@ -9,15 +9,17 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
     public class ReferenceResponseTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
+        private readonly Screen Screen;
+        private readonly FormField FormField;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ReferenceResponseTemplate(Project project, Entity entity)
+        public ReferenceResponseTemplate(Project project, Screen screen, FormField formField)
         {
             Project = project;
-            Entity = entity;
+            Screen = screen;
+            FormField = formField;
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
         /// </summary>
         public string GetFileName()
         {
-            return $"{Entity.InternalName}ReferenceResponse.ts";
+            return $"{FormField.ReferenceResponseClass}.ts";
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "ClientApp", "app", "models", $"{Entity.InternalName.ToLowerInvariant()}" };
+            return new string[] { "ClientApp", "app", "models", $"{Screen.InternalName.ToLowerInvariant()}" };
         }
 
         /// <summary>
@@ -41,11 +43,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
         /// </summary>
         public string GetFileContent()
         {
-            return $@"import {{ {Entity.InternalName}ReferenceItem }} from './{Entity.InternalName}ReferenceItem';
+            return $@"import {{ {FormField.ReferenceItemClass} }} from './{FormField.ReferenceItemClass}';
 import {{ Observable }} from 'rxjs/Observable';
 
-export class {Entity.InternalName}ReferenceResponse {{
-    items: Observable<{Entity.InternalName}ReferenceItem>;
+export class {FormField.ReferenceResponseClass} {{
+    items: Observable<{FormField.ReferenceItemClass}>;
     totalPages: number;
     totalItems: number;
 }}";

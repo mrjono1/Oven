@@ -9,15 +9,17 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
     public class ReferenceItemTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Entity Entity;
+        private readonly Screen Screen;
+        private readonly FormField FormField;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ReferenceItemTemplate(Project project, Entity entity)
+        public ReferenceItemTemplate(Project project, Screen screen, FormField formField)
         {
             Project = project;
-            Entity = entity;
+            Screen = screen;
+            FormField = formField;
         }
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
         /// </summary>
         public string GetFileName()
         {
-            return $"{Entity.InternalName}ReferenceItem.ts";
+            return $"{FormField.ReferenceItemClass}.ts";
         }
 
         /// <summary>
@@ -33,7 +35,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "ClientApp", "app", "models", $"{Entity.InternalName.ToLowerInvariant()}" };
+            return new string[] { "ClientApp", "app", "models", $"{Screen.InternalName.ToLowerInvariant()}" };
         }
 
         /// <summary>
@@ -41,7 +43,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
         /// </summary>
         public string GetFileContent()
         {
-            return $@"export interface {Entity.InternalName}ReferenceItem {{
+            return $@"export interface {FormField.ReferenceItemClass} {{
     id: string;
     title: string;
 }}";
