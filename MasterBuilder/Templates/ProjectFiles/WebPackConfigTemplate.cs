@@ -1,4 +1,5 @@
 using MasterBuilder.Interfaces;
+using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
@@ -7,6 +8,16 @@ namespace MasterBuilder.Templates.ProjectFiles
     /// </summary>
     public class WebPackConfigTemplate : ITemplate
     {
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="project"></param>
+        public WebPackConfigTemplate(Project project)
+        {
+            Project = project;
+        }
         /// <summary>
         /// Get file name
         /// </summary>
@@ -28,7 +39,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            return @"/*
+            var topSection = @"/*
  * Webpack (JavaScriptServices) with a few changes & updates
  * - This is to keep us inline with JSServices, and help those using that template to add things from this one
  *
@@ -100,7 +111,9 @@ module.exports = (env) => {
         node: {
           fs: ""empty""
         }
-    });
+    });";
+
+            var serverSection = @"
 
     // Configuration for server-side (prerendering) bundle suitable for running in Node
     const serverBundleConfig = merge(sharedConfig, {
@@ -148,6 +161,19 @@ module.exports = (env) => {
 
     return [clientBundleConfig, serverBundleConfig];
 };";
+
+            var clientOnlySection = @"
+    return [clientBundleConfig];
+};";
+
+            if (Project.ServerSideRendering)
+            {
+                return string.Concat(topSection, serverSection);
+            }
+            else
+            {
+                return string.Concat(topSection, clientOnlySection);
+            }
         }
     }
 }

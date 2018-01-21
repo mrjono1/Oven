@@ -40,7 +40,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            return @"const path = require('path');
+            var topSection = @"const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const merge = require('webpack-merge');
@@ -109,8 +109,9 @@ module.exports = (env) => {
         ].concat(isDevBuild ? [] : [
             new webpack.optimize.UglifyJsPlugin()
         ])
-    });
+    });";
 
+            var serverSection = @"   
     const serverBundleConfig = merge(sharedConfig, {
         target: 'node',
         resolve: { mainFields: ['main'] },
@@ -134,6 +135,18 @@ module.exports = (env) => {
 
     return [clientBundleConfig, serverBundleConfig];
 }";
+
+            var clientOnlySection = @" return [clientBundleConfig];
+}";
+
+            if (Project.ServerSideRendering)
+            {
+                return string.Concat(topSection, serverSection);
+            }
+            else
+            {
+                return string.Concat(topSection, clientOnlySection);
+            }
         }
     }
 }

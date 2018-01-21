@@ -84,8 +84,8 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""@ngx-translate/http-loader"": ""^2.0.0"",
     ""@types/node"": ""^7.0.12"",
     ""angular2-router-loader"": ""^0.3.5"",
-    ""angular2-template-loader"": ""^0.6.2"",
-    ""aspnet-prerendering"": ""^3.0.1"",
+    ""angular2-template-loader"": ""^0.6.2"",{(Project.ServerSideRendering ? $@"
+    ""aspnet-prerendering"": ""^3.0.1""," : string.Empty )}
     ""aspnet-webpack"": ""^2.0.1"",
     ""awesome-typescript-loader"": ""^3.0.0"",
     ""core-js"": ""^2.5.1"",

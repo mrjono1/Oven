@@ -72,7 +72,7 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ProjectFiles.TypeScriptLintTemplate());
             projectWriter.AddTemplate(new Templates.ProjectFiles.TypeScriptConfigTemplate());
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackAdditionsTemplate());
-            projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigTemplate());
+            projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigVendorTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebConfigTemplate());
  
@@ -95,7 +95,10 @@ namespace MasterBuilder
 
             // ClientApp
             projectWriter.AddTemplate(new Templates.ClientApp.BootBrowserTsTemplate());
-            projectWriter.AddTemplate(new Templates.ClientApp.BootServerTsTemplate());
+            if (project.ServerSideRendering)
+            {
+                projectWriter.AddTemplate(new Templates.ClientApp.BootServerTsTemplate());
+            }
 
             // ClientApp/Test
             projectWriter.AddTemplate(new Templates.ClientApp.Test.BootTestTemplate());
@@ -106,7 +109,10 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ClientApp.Polyfills.BrowserPolyfillsTemplate());
             projectWriter.AddTemplate(new Templates.ClientApp.Polyfills.PolyfillsTemplate());
             projectWriter.AddTemplate(new Templates.ClientApp.Polyfills.RxImportsTemplate());
-            projectWriter.AddTemplate(new Templates.ClientApp.Polyfills.ServerPolyfillsTemplate());
+            if (project.ServerSideRendering)
+            {
+                projectWriter.AddTemplate(new Templates.ClientApp.Polyfills.ServerPolyfillsTemplate());
+            }
 
             // ClientApp/App
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleTemplate(project));
@@ -114,7 +120,10 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentScssTemplate());
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentTsTemplate(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleBrowserTemplate());
-            projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleServerTemplate());
+            if (project.ServerSideRendering)
+            {
+                projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleServerTemplate());
+            }
             projectWriter.AddTemplate(new Templates.ClientApp.App.MaterialModuleTemplate(project));
 
             // ClientApp/App/Shared
