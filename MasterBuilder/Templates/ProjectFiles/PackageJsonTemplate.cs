@@ -41,7 +41,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// <returns></returns>
         public string GetFileContent()
         {
-            var angularVersion = "^5.1.3"; //same version used by multiple angular packages
+            var angularVersion = "^5.2.1"; //same version used by multiple angular packages
 
             // 'private: true' ensures that this project will not be published on npm
             var topSettings = $@"""name"": ""{Project.InternalName.Kebaberize()}"",
@@ -63,9 +63,9 @@ namespace MasterBuilder.Templates.ProjectFiles
   }";
 
             var dependencies = $@"""dependencies"": {{
-    ""@angular/material"": ""^5.0.3"",
+    ""@angular/material"": ""^5.1.0"",
     ""hammerjs"": ""^2.0.8"",
-    ""@angular/cdk"": ""^5.0.3"",
+    ""@angular/cdk"": ""^5.1.0"",
     ""@angular/animations"": ""{angularVersion}"",
     ""@angular/common"": ""{angularVersion}"",
     ""@angular/compiler"": ""{angularVersion}"",
@@ -80,8 +80,8 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""@angular/flex-layout"": ""^2.0.0-beta.12"",
     ""@nguniversal/aspnetcore-engine"": ""^5.0.0-beta.5"",
     ""@nguniversal/common"": ""^5.0.0-beta.5"",
-    ""@ngx-translate/core"": ""^8.0.0"",
-    ""@ngx-translate/http-loader"": ""^2.0.0"",
+    ""@ngx-translate/core"": ""^9.1.1"",
+    ""@ngx-translate/http-loader"": ""^2.0.1"",
     ""@types/node"": ""^7.0.12"",
     ""angular2-router-loader"": ""^0.3.5"",
     ""angular2-template-loader"": ""^0.6.2"",{(Project.ServerSideRendering ? $@"
@@ -98,7 +98,7 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""html-loader"": ""^0.5.1"",
     ""isomorphic-fetch"": ""^2.2.1"",
     ""json-loader"": ""^0.5.4"",
-    ""moment"": ""2.18.1"",
+    ""moment"": ""^2.20.1"",
     ""node-sass"": ""^4.5.2"",
     ""preboot"": ""^5.0.0"",
     ""raw-loader"": ""^0.5.1"",
@@ -107,21 +107,21 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""sass-loader"": ""^6.0.6"",
     ""style-loader"": ""^0.18.2"",
     ""to-string-loader"": ""^1.1.5"",
-    ""typescript"": ""2.5.3"",
-    ""url-loader"": ""^0.5.7"",
-    ""webpack"": ""^3.6.0"",
-    ""webpack-hot-middleware"": ""^2.19.1"",
-    ""webpack-merge"": ""^4.1.0"",
-    ""zone.js"": ""^0.8.17""
+    ""typescript"": ""2.6.2"",
+    ""url-loader"": ""^0.6.2"",
+    ""webpack"": ""^3.10.0"",
+    ""webpack-hot-middleware"": ""^2.21.0"",
+    ""webpack-merge"": ""^4.1.1"",
+    ""zone.js"": ""^0.8.20""
   }}";
 
             var devDependencies = @"""devDependencies"": {
-    ""@angular/cli"": ""^1.6.3"",
+    ""@angular/cli"": ""^1.6.5"",
     ""@ngtools/webpack"": ""^1.9.3"",
     ""@types/chai"": ""^3.4.34"",
     ""@types/jasmine"": ""^2.5.37"",
     ""chai"": ""^3.5.0"",
-    ""codelyzer"": ""^3.0.0"",
+    ""codelyzer"": ""^4.1.0"",
     ""istanbul-instrumenter-loader"": ""^3.0.0"",
     ""jasmine-core"": ""^2.5.2"",
     ""karma"": ""^1.7.1"",
@@ -134,8 +134,8 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""karma-remap-coverage"": ""^0.1.4"",
     ""karma-sourcemap-loader"": ""^0.3.7"",
     ""karma-webpack"": ""^2.0.3"",
-    ""tslint"": ""^5.7.0"",
-    ""webpack-bundle-analyzer"": ""^2.9.0""
+    ""tslint"": ""^5.9.1"",
+    ""webpack-bundle-analyzer"": ""^2.9.2""
   }";
 
             return string.Concat("{", 

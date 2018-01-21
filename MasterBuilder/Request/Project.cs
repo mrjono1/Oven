@@ -37,7 +37,10 @@ namespace MasterBuilder.Request
                 { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" },
                 { "RestSharp", "106.1.0"}
             };
+
             ImutableDatabase = false;
+            AllowDestructiveDatabaseChanges = true;
+            ServerSideRendering = false;
         }
         /// <summary>
         /// Uniqueidentifier
@@ -114,12 +117,12 @@ namespace MasterBuilder.Request
         /// The List of Default Nuget Packages
         /// </summary>
         internal Dictionary<string, string> DefaultNugetReferences { get; set; }
+
+        #region Internal Settings
         /// <summary>
         /// Allow Destructive Database Change, things like dropping columns, tables, keys
         /// </summary>
-        public bool AllowDestructiveDatabaseChanges { get; set; }
-
-        #region Internal Settings
+        internal bool AllowDestructiveDatabaseChanges { get; set; }
         /// <summary>
         /// Folders to ignore when cleaning out the directory on build
         /// </summary>

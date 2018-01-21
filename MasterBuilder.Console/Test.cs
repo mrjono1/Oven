@@ -18,8 +18,7 @@ namespace MasterBuilder
                 InternalName = "MasterBuilderUi",
                 BuildVersion = 1,
                 Title = "Master Builder",
-                DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
-                AllowDestructiveDatabaseChanges = true
+                DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}")
             };
             project.Entities = new Entity[]
             {
@@ -129,21 +128,6 @@ namespace MasterBuilder
                                     Id = new Guid("{B3784D79-72C0-4DC6-86C3-4ECD256821D1}"),
                                     ValidationType = ValidationType.Required
                                 }
-                            }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{62C6E4B9-5164-4A36-B90B-DC8129E09D2B}"),
-                            InternalName = "AllowDestructiveDatabaseChanges",
-                            PropertyType = PropertyType.Boolean,
-                            Title = "Allow Destructive Database Changes",
-                            ValidationItems = new Validation[]
-                            {
-                               // new Validation
-                               // {
-                               //     Id = new Guid("{20E93766-3D57-4DB1-820C-77C2E0809061}"),
-                               //     ValidationType = ValidationTypeEnum.Required
-                               // }
                             }
                         },
                         new Property()
