@@ -167,6 +167,7 @@ namespace MasterBuilder.Templates.Controllers
         [HttpGet]
         public IActionResult Index()
         {{
+            ViewData[""Title""] = ""{Project.Title}"";
             return View();
         }}");
                     }

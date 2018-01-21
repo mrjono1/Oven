@@ -40,7 +40,7 @@ namespace MasterBuilder.Templates.Views.Shared
         public string GetFileContent()
         {
             return $@"<!DOCTYPE html>
-<html>
+<html lang=""en"">
   <head>
     <base href=""@(Url.Content(""~/""))"" />
     <title>@ViewData[""Title""]</title>
@@ -58,11 +58,12 @@ namespace MasterBuilder.Templates.Views.Shared
 
   </head>
   <body>
+    <noscript><p>Please enable javascript to use this site</p></noscript>
     @RenderBody()
-
+    {(Project.ServerSideRendering ? $@"
     <!-- Here we're passing down any data to be used by grabbed and parsed by Angular -->
     @Html.Raw(ViewData[""TransferData""])
-    @Html.Raw(ViewData[""Scripts""])
+    @Html.Raw(ViewData[""Scripts""])" : string.Empty )}
 
     @RenderSection(""scripts"", required: false)
 
