@@ -49,7 +49,10 @@ namespace MasterBuilder.Request
         /// List of Properties
         /// </summary>
         public IEnumerable<Property> Properties { get; set; }
-
+        /// <summary>
+        /// Default is blank which is dbo schema
+        /// </summary>
+        public string DatabaseSchema { get; set; }
         /// <summary>
         /// Cached version of the internal name pluralised for use in collections
         /// </summary>

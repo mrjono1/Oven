@@ -66,6 +66,18 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
                 .HasColumnName(""{(Project.ImutableDatabase.Value ? item.p.Id.ToString() : string.Concat(item.p.InternalName, item.e.InternalName, "Id"))}""){(item.p.Required ? string.Join(Environment.NewLine, ".IsRequired();") : ";")}");
             }
 
+            var tableName = Entity.InternalName;
+            if (Project.ImutableDatabase.HasValue && Project.ImutableDatabase.Value)
+            {
+                tableName = Entity.Id.ToString();
+            }
+
+            var toTable = $@"builder.ToTable(""{tableName}"");";
+            if (!string.IsNullOrWhiteSpace(Entity.DatabaseSchema))
+            {
+                toTable = $@"builder.ToTable(""{tableName}"", ""{Entity.DatabaseSchema}"");";
+            }
+
             return $@"using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -82,7 +94,7 @@ namespace {Project.InternalName}.EntityTypeConfigurations
         /// <param name=""builder"">The injected model builder for the {Entity.InternalName} entity</param>
         public void Configure(EntityTypeBuilder<Entities.{Entity.InternalName}> builder)
         {{
-            builder.ToTable(""{(Project.ImutableDatabase.Value ? Entity.Id.ToString() : Entity.InternalName)}"");
+            {toTable}
             builder.HasKey(p => p.Id);
 {string.Join(Environment.NewLine, properties)}
         }}
