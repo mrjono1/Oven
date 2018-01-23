@@ -56,7 +56,8 @@ namespace MasterBuilder
             var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
 
             // Artifacts
-            //FileHelper.CopyFile("favicon.ico", Path.Combine(GetProjectRootFolder(), "CopyFiles"), wwwrootPath);
+            projectWriter.AddFolder(new string[] { "CopyFiles", "assets", "favicons" }, new string[] { "wwwroot", "assets", "favicons" });
+            projectWriter.AddTemplate(new Templates.Assets.Favicons.ManifestTemplate(project));
             
             // Create Solution File
             projectWriter.AddTemplate(solutionDirectory, new Templates.SolutionTemplate(project));

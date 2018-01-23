@@ -46,7 +46,8 @@ namespace MasterBuilder.Templates.ProjectFiles
   }},
   ""apps"": [
     {{
-      ""root"": ""ClientApp""
+      ""root"": ""ClientApp"",
+      ""serviceWorker"": true
     }}
   ],
   ""defaults"": {{

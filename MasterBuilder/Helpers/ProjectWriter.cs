@@ -15,7 +15,7 @@ namespace MasterBuilder.Helpers
         private List<Task<TemplateResult>> FilesToWrite;
         private string[] CleanDirectoryIngnoreList;
         private string ProjectDirectory;
-        private string[] FilePaths;
+        private List<string> FilePaths;
 
         /// <summary>
         /// Constructor
@@ -25,6 +25,7 @@ namespace MasterBuilder.Helpers
             FilesToWrite = new List<Task<TemplateResult>>();
             ProjectDirectory = projectDirectory;
             CleanDirectoryIngnoreList = cleanDirectoryIngnoreList;
+            FilePaths = new List<string>();
         }
 
         /// <summary>
@@ -75,11 +76,27 @@ namespace MasterBuilder.Helpers
             }
             else
             {
-                FilePaths = result.Select(a => a.FilePath).ToArray();
+                FilePaths.AddRange(result.Select(a => a.FilePath));
 
                 DeleteFiles(ProjectDirectory);
             }
             return null;
+        }
+
+        internal void AddFolder(string[] sourceDirectory, string[] destinationDirectory)
+        {
+            var rootPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6);
+
+            var directory = new DirectoryInfo(Path.Combine(rootPath, Path.Combine(sourceDirectory)));
+            foreach (var file in directory.EnumerateFiles())
+            {
+                var destinationPath = Path.Combine(ProjectDirectory, Path.Combine(destinationDirectory), file.Name);
+                if (!new FileInfo(destinationPath).Exists)
+                {
+                    file.CopyTo(destinationPath);
+                }
+                FilePaths.Add(destinationPath);
+            }
         }
 
 
