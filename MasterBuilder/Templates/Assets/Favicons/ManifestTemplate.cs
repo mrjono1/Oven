@@ -44,8 +44,13 @@ namespace MasterBuilder.Templates.Assets.Favicons
     ""short_name"": ""{Project.Title}"",
     ""icons"": [
         {{
-            ""src"": ""/android-chrome-72x72.png"",
-            ""sizes"": ""72x72"",
+            ""src"": ""/android-chrome-192x192.png"",
+            ""sizes"": ""192x192"",
+            ""type"": ""image/png""
+        }},
+        {{
+            ""src"": ""/android-chrome-256x256.png"",
+            ""sizes"": ""256x256"",
             ""type"": ""image/png""
         }}
     ],
