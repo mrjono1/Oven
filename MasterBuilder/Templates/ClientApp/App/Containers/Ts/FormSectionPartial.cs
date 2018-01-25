@@ -198,7 +198,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         if (this.new){{
             // Post new
             this.{Screen.InternalName.Camelize()}Service.add{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
-                this.router.navigate([this.router.url + '/' + id]);
+                this.router.navigate([this.router.url + '/' + id], {{ replaceUrl: true }});
             }});
         }} else {{
             // Patch existing
