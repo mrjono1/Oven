@@ -16,7 +16,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CopyFiles\assets\favicons\" />
     <Folder Include="Templates\Helpers\" />
   </ItemGroup>
 
@@ -28,6 +27,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="CopyFiles\assets\favicons\android-chrome-192x192.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CopyFiles\assets\favicons\android-chrome-256x256.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CopyFiles\assets\favicons\android-chrome-512x512.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="CopyFiles\assets\favicons\android-chrome-72x72.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
