@@ -81,6 +81,10 @@ import {{ FormsModule, ReactiveFormsModule }} from '@angular/forms';
 import {{ BrowserModule, BrowserTransferStateModule }} from '@angular/platform-browser';
 import {{ TransferHttpCacheModule }} from '@nguniversal/common';
 
+// Date format
+import {{ MAT_MOMENT_DATE_FORMATS,MomentDateAdapter }} from '@angular/material-moment-adapter';
+import {{ DateAdapter,MAT_DATE_FORMATS, MAT_DATE_LOCALE }} from '@angular/material/core';
+
 // i18n support
 import {{ TranslateModule, TranslateLoader }} from '@ngx-translate/core';
 import {{ TranslateHttpLoader }} from '@ngx-translate/http-loader';
@@ -149,6 +153,11 @@ export function createTranslateLoader(http: HttpClient, baseHref) {{
         LinkService,
             {string.Join(string.Concat(",", Environment.NewLine, "        "), providers.Keys)},
         TranslateModule
+
+        // Date format
+        {{ provide: MAT_DATE_LOCALE, useValue: 'en-au' }},
+        {{ provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] }},
+        {{ provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS }}
     ],
     bootstrap: [AppComponent]
 }})
