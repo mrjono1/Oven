@@ -278,7 +278,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                 propertyValidators.Add($"            Validators.requiredTrue");
                                 break;
                             case ValidationType.Pattern:
-                                propertyValidators.Add($"            Validators.pattern({validationItem.StringValue})");
+                                propertyValidators.Add($@"            Validators.pattern(""{validationItem.StringValue}"")");
                                 break;
                             default:
                                 break;

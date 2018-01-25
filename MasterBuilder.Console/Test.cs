@@ -57,7 +57,7 @@ namespace MasterBuilder
                                 new Validation{
                                     Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
                                     ValidationType = ValidationType.Required
-                                },
+                                }
                             }
                         },
                         new Property()
@@ -83,6 +83,11 @@ namespace MasterBuilder
                                     Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
                                     ValidationType = ValidationType.Required
                                 },
+                                new Validation{
+                                    Id = new Guid("{E1FA289D-B336-4C79-983E-77A1D733B078}"),
+                                    ValidationType = ValidationType.Pattern,
+                                    StringValue = "^[a-zA-Z]+$"
+                                }
                             }
                         },
                         new Property()
@@ -207,6 +212,10 @@ namespace MasterBuilder
                                     Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
                                     ValidationType = ValidationType.Required
                                 },
+                                new Validation{
+                                    ValidationType = ValidationType.Pattern,
+                                    StringValue = "^[a-zA-Z]+$"
+                                }
                             }
                         },
                         new Property()
@@ -309,6 +318,10 @@ namespace MasterBuilder
                                     Id = new Guid("{035339EF-C09F-4412-8779-BD2088387757}"),
                                     ValidationType = ValidationType.Required
                                 },
+                                new Validation{
+                                    ValidationType = ValidationType.Pattern,
+                                    StringValue = "^[a-zA-Z]+$"
+                                }
                             }
                         },
                         new Property()
@@ -640,6 +653,10 @@ namespace MasterBuilder
                                     Id = new Guid("{D5C76B55-96B8-41DD-9055-485A8614E34F}"),
                                     ValidationType = ValidationType.Required
                                 },
+                                new Validation{
+                                    ValidationType = ValidationType.Pattern,
+                                    StringValue = "^[a-zA-Z]+$"
+                                }
                             }
                         },
                         new Property()
@@ -786,6 +803,10 @@ namespace MasterBuilder
                                     Id = new Guid("{48DEBB0A-C55F-4975-926C-D476F4E415DF}"),
                                     ValidationType = ValidationType.Required
                                 },
+                                new Validation{
+                                    ValidationType = ValidationType.Pattern,
+                                    StringValue = "^[a-zA-Z]+$"
+                                }
                             }
                         },
                         new Property()
@@ -901,6 +922,10 @@ namespace MasterBuilder
                                     Id = new Guid("{B8D83508-9AC9-4F26-94AB-2F75F63A2763}"),
                                     ValidationType = ValidationType.Required
                                 },
+                                new Validation{
+                                    ValidationType = ValidationType.Pattern,
+                                    StringValue = "^[a-zA-Z]+$"
+                                }
                             }
                         },
                         new Property()
