@@ -997,12 +997,12 @@ namespace MasterBuilder
                             InternalName = "Home",
                             ScreenSectionType = ScreenSectionType.Html,
                             Html = @"
-<p>Welcome to your new single-page application, built with:</p>
+<p>Welcome to Master Builder an application builder that you configure and we handle the rest</p>
 <ul>
     <li><a href='https://get.asp.net/'>ASP.NET Core</a> and <a href='https://msdn.microsoft.com/en-us/library/67ef8sbd.aspx'>C#</a> for cross-platform server-side code</li>
     <li><a href='https://angular.io/'>Angular</a> and <a href='http://www.typescriptlang.org/'>TypeScript</a> for client-side code</li>
     <li><a href='https://webpack.github.io/'>Webpack</a> for building and bundling client-side resources</li>
-    <li>Angular Material</li>
+    <li><a href='https://material.angular.io/'>Angular Material</a></li>
 </ul>"
                         }
                     }

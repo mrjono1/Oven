@@ -42,6 +42,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         public string GetFileContent()
         {
             var angularVersion = "^5.2.1"; //same version used by multiple angular packages
+            var angularMaterialVersion = "^5.1.0";  //same version used by multiple angular material packages
 
             // 'private: true' ensures that this project will not be published on npm
             var topSettings = $@"  ""name"": ""{Project.InternalName.Kebaberize()}"",
@@ -63,7 +64,8 @@ namespace MasterBuilder.Templates.ProjectFiles
     }";
 
             var dependencies = $@"    ""dependencies"": {{
-        ""@angular/material"": ""^5.1.0"",
+        ""@angular/material"": ""{angularMaterialVersion}"",
+        ""@angular/material-moment-adapter"": ""{angularMaterialVersion}"",
         ""hammerjs"": ""^2.0.8"",
         ""@angular/cdk"": ""^5.1.0"",
         ""@angular/animations"": ""{angularVersion}"",

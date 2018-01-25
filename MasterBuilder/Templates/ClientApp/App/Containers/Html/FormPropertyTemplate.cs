@@ -125,8 +125,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     break;
 
                 case PropertyType.DateTime:
-                    control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""datetime"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+                    control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" matInput [matDatepicker]=""{propertyName}Control"" id=""{Property.Id}"" placeholder=""{Property.Title}""
+{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
+                    <mat-datepicker-toggle matSuffix [for]=""{propertyName}Control""></mat-datepicker-toggle>
+                    <mat-datepicker #{propertyName}Control></mat-datepicker>";
                     break;
 
                 case PropertyType.Boolean:

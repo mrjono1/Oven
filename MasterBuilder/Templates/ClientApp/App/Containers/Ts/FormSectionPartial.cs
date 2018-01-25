@@ -180,7 +180,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 operation.op = 'replace';
                 operation.path = '/' + name;
                 if (currentControl.value instanceof Object) {{
-                    operation.value = currentControl.value.id;
+                    if (currentControl.value._isAMomentObject) {{
+                        operation.value = currentControl.value.toISOString();
+                    }} else {{
+                        operation.value = currentControl.value.id;
+                    }}
                 }} else {{
                     operation.value = currentControl.value;
                 }}
