@@ -39,6 +39,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     break;
             }
 
+            var attributes = new List<string>();
             var propertyValidators = new List<string>();
             if (Property.ValidationItems != null && Property.ValidationItems.Any())
             {
@@ -49,18 +50,36 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     {
                         case ValidationType.Required:
                             selector = "required";
+                            attributes.Add("required");
                             break;
                         case ValidationType.MaximumLength:
                             selector = "maxlength";
+                            attributes.Add($@"maxlength=""{validationItem.IntegerValue}""");
                             break;
                         case ValidationType.MinimumLength:
                             selector = "minlength";
                             break;
                         case ValidationType.MaximumValue:
                             selector = "max";
+                            if (Property.PropertyType == PropertyType.Integer)
+                            {
+                                attributes.Add($@"max=""{validationItem.IntegerValue}""");
+                            }
+                            else if (Property.PropertyType == PropertyType.Double)
+                            {
+                                attributes.Add($@"max=""{validationItem.DoubleValue}""");
+                            }
                             break;
                         case ValidationType.MinimumValue:
                             selector = "min";
+                            if (Property.PropertyType == PropertyType.Integer)
+                            {
+                                attributes.Add($@"min=""{validationItem.IntegerValue}""");
+                            }
+                            else if (Property.PropertyType == PropertyType.Double)
+                            {
+                                attributes.Add($@"min=""{validationItem.DoubleValue}""");
+                            }
                             break;
                         case ValidationType.Unique:
                             break;
@@ -92,28 +111,28 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 case PropertyType.String:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""text"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>";
+{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Integer:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>";
+{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Double:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>";
+{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.DateTime:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""datetime"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>";
+{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Boolean:
                     dontWrap = true;
                     control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{Screen.InternalName.Camelize()}"" id=""{Property.Id}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>{Property.Title}</mat-checkbox>";
+{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{Property.Title}</mat-checkbox>";
                     break;
 
                 case PropertyType.ReferenceRelationship:
@@ -121,7 +140,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                                         where e.Id == Property.ParentEntityId.Value
                                         select e).SingleOrDefault();
 
-                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{Property.Title}"" [compareWith]=""referenceCompare"" [formControl]=""{propertyName}"" {(Property.Required ? "required" : "")}>
+                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{Property.Title}"" [compareWith]=""referenceCompare"" [formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
                            {(Property.Required ? string.Empty : "<mat-option>--</mat-option>")}
                            <mat-option *ngFor=""let option of {parentEntity.InternalName.Camelize()}Reference.items"" [value]=""option.id"">
                                 <span>{{{{ option.title }}}}</span>
