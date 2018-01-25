@@ -44,14 +44,50 @@ namespace MasterBuilder.Templates.Entities
         /// </summary>
         public string GetFileContent()
         {
+            var constructorDefaultValues = new List<string>
+            {
+                "            Id = Guid.NewGuid();"
+            };
             var properties = new List<string>();
             var navigationProperties = new List<string>();
 
             if (Entity.Properties != null)
             {
-                foreach (var item in Entity.Properties)
+                foreach (var property in Entity.Properties)
                 {
-                    properties.Add(EntityPropertyTemplate.Evaluate(Project, item));
+                    properties.Add(EntityPropertyTemplate.Evaluate(Project, property));
+                    
+                    switch (property.PropertyType)
+                    {
+                        case PropertyType.String:
+                            if (!string.IsNullOrEmpty(property.DefaultStringValue))
+                            {
+                                constructorDefaultValues.Add($@"            {property.InternalName} = ""{property.DefaultStringValue}"";");
+                            }
+                            break;
+                        case PropertyType.Integer:
+                            if (property.DefaultIntegerValue.HasValue)
+                            {
+                                constructorDefaultValues.Add($@"            {property.InternalName} = {property.DefaultIntegerValue.Value};");
+                            }
+                            break;
+                        case PropertyType.DateTime:
+                            break;
+                        case PropertyType.Boolean:
+                            if (property.DefaultBooleanValue.HasValue)
+                            {
+                                constructorDefaultValues.Add($@"            {property.InternalName} = {property.DefaultBooleanValue.Value.ToString().ToLowerInvariant()};");
+                            }
+                            break;
+                        case PropertyType.Double:
+                            if (property.DefaultDoubleValue.HasValue)
+                            {
+                                constructorDefaultValues.Add($@"            {property.InternalName} = {property.DefaultDoubleValue.Value};");
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
@@ -111,7 +147,7 @@ namespace {Project.InternalName}.Entities
         /// </summary>
         public {Entity.InternalName}()
         {{
-            Id = Guid.NewGuid();
+{string.Join(Environment.NewLine, constructorDefaultValues)}
         }}
 
 {string.Join(Environment.NewLine, properties)}

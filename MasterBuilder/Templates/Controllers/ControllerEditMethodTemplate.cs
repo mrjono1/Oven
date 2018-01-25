@@ -97,7 +97,7 @@ namespace MasterBuilder.Templates.Controllers
                     case PropertyType.Double:
                         postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
                         patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-                        int doubleValue{formField.InternalNameCSharp};
+                        double doubleValue{formField.InternalNameCSharp};
                         if (operation.value != null && Double.TryParse(operation.value.ToString(), out doubleValue{formField.InternalNameCSharp}))
                         {{
                             entity.{formField.InternalNameCSharp} = doubleValue{formField.InternalNameCSharp};

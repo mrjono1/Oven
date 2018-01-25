@@ -200,5 +200,22 @@ namespace MasterBuilder.Request
         /// Validation Items
         /// </summary>
         public IEnumerable<Validation> ValidationItems { get; set; }
+        /// <summary>
+        /// Default String Value
+        /// </summary>
+        public string DefaultStringValue { get; set; }
+        /// <summary>
+        /// Default Integer Value
+        /// </summary>
+        public int? DefaultIntegerValue { get; set; }
+        /// <summary>
+        /// Default Double Value
+        /// </summary>
+        public double? DefaultDoubleValue { get; set; }
+        /// <summary>
+        /// Default Boolean Value
+        /// </summary>
+        public bool? DefaultBooleanValue { get; set; }
+
     }
 }

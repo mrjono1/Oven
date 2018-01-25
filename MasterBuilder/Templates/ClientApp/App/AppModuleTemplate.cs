@@ -152,7 +152,7 @@ export function createTranslateLoader(http: HttpClient, baseHref) {{
     providers: [
         LinkService,
             {string.Join(string.Concat(",", Environment.NewLine, "        "), providers.Keys)},
-        TranslateModule
+        TranslateModule,
 
         // Date format
         {{ provide: MAT_DATE_LOCALE, useValue: 'en-au' }},

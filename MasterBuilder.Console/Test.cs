@@ -103,7 +103,8 @@ namespace MasterBuilder
                                     Id = new Guid("{09ED3A71-3F3A-46BB-B24B-D2796E796A39}"),
                                     ValidationType = ValidationType.Required
                                 }
-                            }
+                            },
+                            DefaultIntegerValue = 1
                         },
                         new Property()
                         {
@@ -347,6 +348,35 @@ namespace MasterBuilder
                             Title = "ParentEntity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
                         },
+                        new Property()
+                        {
+                            Id = new Guid("{62FE9985-98A3-4D40-BC68-8AF641FDABFC}"),
+                            InternalName = "DefaultIntegerValue",
+                            PropertyType = PropertyType.Integer,
+                            Title = "Default Integer Value"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{61862CC1-DFD4-4578-BF6E-FFA195D6F6A1}"),
+                            InternalName = "DefaultDoubleValue",
+                            PropertyType = PropertyType.Double,
+                            Title = "Default Double Value"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{63935FCA-CC40-4A78-A21C-F76FD761701B}"),
+                            InternalName = "DefaultStringValue",
+                            PropertyType = PropertyType.String,
+                            Title = "Default String Value"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{836DA351-CCCF-4269-89CA-98E7CD67E77E}"),
+                            InternalName = "DefaultBooleanValue",
+                            PropertyType = PropertyType.Boolean,
+                            Title = "Default Boolean Value",
+                            DefaultBooleanValue = false
+                        }
                     }
                 },
                 new Entity()
