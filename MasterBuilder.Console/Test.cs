@@ -52,7 +52,7 @@ namespace MasterBuilder
                                 {
                                     Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
                                     ValidationType = ValidationType.MaximumLength,
-                                    IntegerValue = 200
+                                    IntegerValue = 100
                                 },
                                 new Validation{
                                     Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
@@ -76,7 +76,7 @@ namespace MasterBuilder
                                 {
                                     Id = new Guid("{FF3EF7FD-7A8F-45A5-ACB0-C0A2F97C816B}"),
                                     ValidationType = ValidationType.MaximumLength,
-                                    IntegerValue = 200
+                                    IntegerValue = 100
                                 },
                                 new Validation
                                 {
@@ -186,7 +186,7 @@ namespace MasterBuilder
                                 {
                                     Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
                                     ValidationType = ValidationType.MaximumLength,
-                                    IntegerValue = 200
+                                    IntegerValue = 100
                                 },
                                 new Validation{
                                     Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
@@ -206,7 +206,7 @@ namespace MasterBuilder
                                 {
                                     Id = new Guid("{FF3EF7FD-7A8F-45A5-ACB0-C0A2F97C816B}"),
                                     ValidationType = ValidationType.MaximumLength,
-                                    IntegerValue = 200
+                                    IntegerValue = 100
                                 },
                                 new Validation{
                                     Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
