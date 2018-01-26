@@ -76,8 +76,19 @@ namespace MasterBuilder.Templates.Controllers
                         break;
 
                     case ScreenSectionType.Form:
-                        usings.Add("using Microsoft.AspNetCore.JsonPatch;");
-                        methods.Add(ControllerEditMethodTemplate.Evaluate(Project, Screen, screenSection));
+                        var controllerFormSectionMethodsPartial = new ControllerFormSectionMethodsPartial(Project, Screen, screenSection);
+                        methods.Add(controllerFormSectionMethodsPartial.GetMethod());
+                        methods.Add(controllerFormSectionMethodsPartial.PostMethod());
+
+                        if (Project.UsePutForUpdate)
+                        {
+                            methods.Add(controllerFormSectionMethodsPartial.PutMethod());
+                        }
+                        else
+                        {
+                            usings.Add("using Microsoft.AspNetCore.JsonPatch;");
+                            methods.Add(controllerFormSectionMethodsPartial.PatchMethod());
+                        }
                         referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
                         break;
 

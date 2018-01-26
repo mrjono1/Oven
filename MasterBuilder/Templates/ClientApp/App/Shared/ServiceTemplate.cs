@@ -64,10 +64,18 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                         methods.Add($@"    add{Screen.InternalName}(request: any){{
         return this.http.post<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}`, request);
     }}");
-
-                        methods.Add($@"    update{Screen.InternalName}(id: string, operations: Operation[]){{
+                        if (Project.UsePutForUpdate)
+                        {
+                            methods.Add($@"    update{Screen.InternalName}(id: string, request: any){{
+        return this.http.put<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`, request);
+    }}");
+                        }
+                        else
+                        {
+                            methods.Add($@"    update{Screen.InternalName}(id: string, operations: Operation[]){{
         return this.http.patch<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`, operations);
     }}");
+                        }
                         hasForm = true;
                         referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
 

@@ -16,6 +16,11 @@ namespace MasterBuilder.Request
         /// </summary>
         public Project()
         {
+            ImutableDatabase = false;
+            AllowDestructiveDatabaseChanges = true;
+            ServerSideRendering = false;
+            UsePutForUpdate = true;
+            
             CleanDirectoryIgnoreDirectories = new string[]
             {
                 "bin",
@@ -31,16 +36,16 @@ namespace MasterBuilder.Request
                 { "Microsoft.AspNetCore.All", "2.0.3" },
                 { "Microsoft.EntityFrameworkCore", "2.0.1"},
                 { "Microsoft.EntityFrameworkCore.SqlServer", "2.0.1"},
-                { "Microsoft.AspNetCore.JsonPatch", "2.0.0" },
                 { "Swashbuckle.AspNetCore", "1.1.0" },
                 { "Swashbuckle.AspNetCore.Swagger", "1.1.0" },
                 { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" },
                 { "RestSharp", "106.1.0"}
             };
 
-            ImutableDatabase = false;
-            AllowDestructiveDatabaseChanges = true;
-            ServerSideRendering = false;
+            if (!UsePutForUpdate)
+            {
+                DefaultNugetReferences.Add("Microsoft.AspNetCore.JsonPatch", "2.0.0" );
+            }
         }
         /// <summary>
         /// Uniqueidentifier
@@ -136,6 +141,10 @@ namespace MasterBuilder.Request
         /// Enable Server side rendering
         /// </summary>
         internal bool ServerSideRendering { get; set; }
+        /// <summary>
+        /// Use Put for update instead of patch
+        /// </summary>
+        internal bool UsePutForUpdate { get; set; }
         #endregion
         /// <summary>
         /// Validate and Resolve this and child objects

@@ -162,14 +162,61 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         /// <summary>
         /// Get Functions
         /// </summary>
-        internal string[] GetFunctions()
+        internal IEnumerable<string> GetFunctions()
         {
-            var methods = new string[]
+            var methods = new List<string>
             {
                 @"    referenceCompare(referenceItem1: any, referenceItem2: any): boolean {{
         return referenceItem1 === referenceItem2;
-    }}",
-                $@"    private getPatchOperations(): Operation[] {{
+    }}"
+            };
+
+            if (Project.UsePutForUpdate)
+            {
+                methods.Add($@"    onSubmit() {{ 
+        // Don't submit if nothing has changed
+        if (this.{Screen.InternalName.Camelize()}Form.pristine || !this.{Screen.InternalName.Camelize()}Form.valid) {{
+            return;
+        }}
+        
+        if (this.new){{
+            // Post new
+            this.{Screen.InternalName.Camelize()}Service.add{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
+                this.router.navigate([this.router.url + '/' + id], {{ replaceUrl: true }});
+            }});
+        }} else {{
+            // Put existing
+            this.{Screen.InternalName.Camelize()}Service.update{Screen.InternalName}(this.{Screen.InternalName.Camelize()}.id, this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( result => {{
+                this.{Screen.InternalName.Camelize()}Form.markAsPristine({{ onlySelf: false }});
+            }});
+        }}
+    }}");
+            }
+            else
+            {
+                // Patch on submit
+                methods.Add($@"    onSubmit() {{ 
+        // Don't submit if nothing has changed
+        if (this.{Screen.InternalName.Camelize()}Form.pristine || !this.{Screen.InternalName.Camelize()}Form.valid) {{
+            return;
+        }}
+        
+        if (this.new){{
+            // Post new
+            this.{Screen.InternalName.Camelize()}Service.add{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
+                this.router.navigate([this.router.url + '/' + id], {{ replaceUrl: true }});
+            }});
+        }} else {{
+            // Patch existing
+            let operations = this.getPatchOperations();
+            this.{Screen.InternalName.Camelize()}Service.update{Screen.InternalName}(this.{Screen.InternalName.Camelize()}.id, operations).subscribe( result => {{
+                this.{Screen.InternalName.Camelize()}Form.markAsPristine({{ onlySelf: false }});
+            }});
+        }}
+    }}");
+
+                // Create patch object
+                methods.Add($@"    private getPatchOperations(): Operation[] {{
         let operations: Operation[] = [];
 
         Object.keys(this.{Screen.InternalName.Camelize()}Form.controls).forEach((name) => {{
@@ -192,27 +239,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             }}
         }});
         return operations;
-    }}",
-                $@"    onSubmit() {{ 
-        // Don't submit if nothing has changed
-        if (this.{Screen.InternalName.Camelize()}Form.pristine || !this.{Screen.InternalName.Camelize()}Form.valid) {{
-            return;
-        }}
-        
-        if (this.new){{
-            // Post new
-            this.{Screen.InternalName.Camelize()}Service.add{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
-                this.router.navigate([this.router.url + '/' + id], {{ replaceUrl: true }});
-            }});
-        }} else {{
-            // Patch existing
-            let operations = this.getPatchOperations();
-            this.{Screen.InternalName.Camelize()}Service.update{Screen.InternalName}(this.{Screen.InternalName.Camelize()}.id, operations).subscribe( result => {{
-                this.{Screen.InternalName.Camelize()}Form.markAsPristine({{ onlySelf: false }});
-            }});
-        }}
-    }}"
-            };
+    }}");
+            }
 
             return methods;
         }
