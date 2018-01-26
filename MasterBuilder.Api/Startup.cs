@@ -14,17 +14,37 @@ namespace MasterBuilder.Api
     public class Startup
     {
         /// <summary>
-        /// Constructor
+        /// Main
         /// </summary>
-        public Startup(IConfiguration configuration)
+        public static void Main(string[] args)
         {
-            Configuration = configuration;
+            var host = new WebHostBuilder()
+                .UseKestrel()
+                .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseIISIntegration()
+                .UseStartup<Startup>()
+                .Build();
+
+            host.Run();
         }
 
         /// <summary>
+        /// Startup
+        /// </summary>
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+            Configuration = builder.Build();
+        }
+        
+        /// <summary>
         /// Configuration
         /// </summary>
-        public IConfiguration Configuration { get; }
+        public IConfigurationRoot Configuration { get; }
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
