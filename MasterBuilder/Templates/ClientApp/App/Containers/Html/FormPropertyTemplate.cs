@@ -104,6 +104,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 }
             }
 
+            propertyValidators.Add($@"                    <mat-error>
+                        {{{{serverErrorMessages.{propertyName}}}}}
+                    </mat-error>");
+
             string control = null;
             string wrapAttributes = null;
             bool dontWrap = false;

@@ -91,6 +91,7 @@ import {{ TranslateHttpLoader }} from '@ngx-translate/http-loader';
 
 {string.Join(Environment.NewLine, declarations.Values)}
 
+import {{ HttpErrorService }} from './shared/httperror.service';
 import {{ LinkService }} from './shared/link.service';
 {string.Join(Environment.NewLine, providers.Values)}
 import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine';
@@ -151,6 +152,7 @@ export function createTranslateLoader(http: HttpClient, baseHref) {{
     ],
     providers: [
         LinkService,
+        HttpErrorService,
             {string.Join(string.Concat(",", Environment.NewLine, "        "), providers.Keys)},
         TranslateModule,
 

@@ -32,6 +32,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
             }
             
             templates.Add(new LinkServiceTemplate());
+            templates.Add(new HttpErrorServiceTemplate());
 
             return templates;
         }

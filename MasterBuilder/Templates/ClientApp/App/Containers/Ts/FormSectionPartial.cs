@@ -38,7 +38,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 $"import {{ {Screen.InternalName}Service }} from '../../shared/{Screen.InternalName.ToLowerInvariant()}.service';",
                 "import { Operation } from '../../models/Operation';",
                 "import { FormControl, FormGroup, Validators } from '@angular/forms';",
-                "import { Observable } from 'rxjs/Observable';"
+                "import { Observable } from 'rxjs/Observable';",
+                "import { HttpErrorService } from '../../shared/httperror.service';"
             };
 
             var hasReferenceFormField = false;
@@ -71,7 +72,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         {
             return new string[]
             {
-                $"private {Screen.InternalName.Camelize()}Service: {Screen.InternalName}Service"
+                $"private {Screen.InternalName.Camelize()}Service: {Screen.InternalName}Service",
+                "private httpErrorService: HttpErrorService"
             };
         }
 
@@ -95,7 +97,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             {
                 $"public {ScreenSection.InternalName.Camelize()}: {ScreenSection.InternalName};",
                 $"public {ScreenSection.InternalName.Camelize()}Form: FormGroup;",
-                "public new: boolean;"
+                "public new: boolean;",
+                // Re using the model class as it has the same properties needed
+                $"public serverErrorMessages: {ScreenSection.InternalName} = new {ScreenSection.InternalName}();"
             };
 
             foreach (var referenceFormField in ScreenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
@@ -183,12 +187,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             // Post new
             this.{Screen.InternalName.Camelize()}Service.add{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
                 this.router.navigate([this.router.url + '/' + id], {{ replaceUrl: true }});
-            }});
+            }},
+                error => this.httpErrorService.handleError(this.{Screen.InternalName.Camelize()}Form, this.serverErrorMessages, error)
+            );
         }} else {{
             // Put existing
             this.{Screen.InternalName.Camelize()}Service.update{Screen.InternalName}(this.{Screen.InternalName.Camelize()}.id, this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( result => {{
                 this.{Screen.InternalName.Camelize()}Form.markAsPristine({{ onlySelf: false }});
-            }});
+            }},
+                error => this.httpErrorService.handleError(this.{Screen.InternalName.Camelize()}Form, this.serverErrorMessages, error)
+            );
         }}
     }}");
             }
