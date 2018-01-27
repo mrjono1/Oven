@@ -20,6 +20,7 @@ namespace MasterBuilder
             };
             project.Entities = new Entity[]
             {
+                #region Project Entity
                 new Entity()
                 {
                     Id = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
@@ -159,6 +160,8 @@ namespace MasterBuilder
                         }
                     }
                 },
+                #endregion
+                #region Entity Entity
                 new Entity()
                 {
                     Id = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
@@ -250,6 +253,8 @@ namespace MasterBuilder
                         },
                     }
                 },
+                #endregion
+                #region Property Entity
                 new Entity()
                 {
                     Id = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
@@ -340,6 +345,20 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
+                            Id = new Guid("{53AD68E2-5C5C-405C-8407-67EA58862B0D}"),
+                            InternalName = "PropertyTemplate",
+                            PropertyType = PropertyType.ReferenceRelationship,
+                            Title = "Property Template",
+                            ParentEntityId = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    ValidationType = ValidationType.Required
+                                },
+                            }
+                        },
+                        new Property()
+                        {
                             Id = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}"),
                             InternalName = "ParentEntity",
                             PropertyType = PropertyType.ReferenceRelationship,
@@ -377,6 +396,8 @@ namespace MasterBuilder
                         }
                     }
                 },
+                #endregion
+                #region Validation Entity
                 new Entity()
                 {
                     Id = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
@@ -471,6 +492,8 @@ namespace MasterBuilder
                         },
                     }
                 },
+                #endregion
+
                 new Entity()
                 {
                     Id = new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
@@ -538,6 +561,7 @@ namespace MasterBuilder
                         },
                     }
                 },
+                #region Screen Entity
                 new Entity()
                 {
                     Id = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
@@ -589,6 +613,13 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
+                            Id = new Guid("{B2F3E579-DEA2-4E82-A69D-F7CD247E1765}"),
+                            InternalName = "Path",
+                            PropertyType = PropertyType.String,
+                            Title = "Path/Slug"
+                        },
+                        new Property()
+                        {
                             Id = new Guid("{A02115B5-4E6A-4D7B-AB80-9E58516B1E3A}"),
                             InternalName = "Entity",
                             PropertyType = PropertyType.ReferenceRelationship,
@@ -610,9 +641,18 @@ namespace MasterBuilder
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Screen Type",
                             ParentEntityId = new Guid("{C04282DB-CB85-445D-BB4B-AEBB3801DAC7}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{B9A65C24-AE1B-41E6-8E84-973908051DE2}"),
+                            InternalName = "NavigateToScreen",
+                            PropertyType = PropertyType.ReferenceRelationship,
+                            Title = "Navigate to screen",
+                            ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
                         }
                     }
                 },
+#endregion
                 new Entity()
                 {
                     Id = new Guid("{F6C0ADDF-CBE3-48F1-8B9E-51C91EEC534F}"),
@@ -629,6 +669,7 @@ namespace MasterBuilder
                         },
                     }
                 },
+                #region Screen Section Entity
                 new Entity()
                 {
                     Id = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
@@ -731,9 +772,18 @@ namespace MasterBuilder
                                     ValidationType = ValidationType.Required
                                 },
                             }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{B92AFD77-FFAC-4F87-B7A7-CDFA98AFD59E}"),
+                            InternalName = "Html",
+                            PropertyType = PropertyType.String,
+                            Title = "Html"
                         }
                     }
                 },
+                #endregion
+                #region Seed Entity
                 new Entity()
                 {
                     Id = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}"),
@@ -779,6 +829,7 @@ namespace MasterBuilder
                         }
                     }
                 },
+#endregion
                 new Entity()
                 {
                     Id = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}"),
@@ -815,26 +866,16 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{E2422CFE-AA47-4DD8-A5D7-69F45174E39A}"),
-                            InternalName = "InternalName",
-                            PropertyType = PropertyType.String,
-                            Title = "Internal Name",
+                            Id = new Guid("{01C880DB-2D97-425A-905D-D7CC571A4709}"),
+                            InternalName = "ServiceType",
+                            PropertyType = PropertyType.ReferenceRelationship,
+                            Title = "Service Type",
+                            ParentEntityId = new Guid("{65D65D11-D1F0-421E-811E-A8CBB84CBB0D}"),
                             ValidationItems = new Validation[]
                             {
-                                new Validation
-                                {
-                                    Id = new Guid("{09271B7B-3F02-4B4E-9CDF-734A3B584A6F}"),
-                                    ValidationType = ValidationType.MaximumLength,
-                                    IntegerValue = 200
-                                },
                                 new Validation{
-                                    Id = new Guid("{48DEBB0A-C55F-4975-926C-D476F4E415DF}"),
                                     ValidationType = ValidationType.Required
                                 },
-                                new Validation{
-                                    ValidationType = ValidationType.Pattern,
-                                    StringValue = "^[a-zA-Z]+$"
-                                }
                             }
                         },
                         new Property()
@@ -862,6 +903,7 @@ namespace MasterBuilder
                         }
                     }
                 },
+                #region Web Service Entity
                 new Entity()
                 {
                     Id = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
@@ -898,6 +940,8 @@ namespace MasterBuilder
                         }
                     }
                 },
+#endregion
+                #region Web Service Operation Entity
                 new Entity()
                 {
                     Id = new Guid("{9878D52D-9962-4131-BE6C-1CED4004C8C4}"),
@@ -934,30 +978,6 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{E0982E44-7604-4E35-BE71-598A3A536870}"),
-                            InternalName = "InternalName",
-                            PropertyType = PropertyType.String,
-                            Title = "Internal Name",
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation
-                                {
-                                    Id = new Guid("{7606E365-FB07-4348-92D0-8B28AB9D246B}"),
-                                    ValidationType = ValidationType.MaximumLength,
-                                    IntegerValue = 200
-                                },
-                                new Validation{
-                                    Id = new Guid("{B8D83508-9AC9-4F26-94AB-2F75F63A2763}"),
-                                    ValidationType = ValidationType.Required
-                                },
-                                new Validation{
-                                    ValidationType = ValidationType.Pattern,
-                                    StringValue = "^[a-zA-Z]+$"
-                                }
-                            }
-                        },
-                        new Property()
-                        {
                             Id = new Guid("{EE1E832A-A9A1-4152-B7B5-A4D23914F6A7}"),
                             InternalName = "RelativeRoute",
                             PropertyType = PropertyType.String,
@@ -972,6 +992,7 @@ namespace MasterBuilder
                                 }
                             }
                         },
+                        // TODO: Convert verb to reference
                         new Property()
                         {
                             Id = new Guid("{E32BF54A-E604-4E97-81B9-CECF9BA5D32D}"),
@@ -1005,6 +1026,7 @@ namespace MasterBuilder
                         }
                     }
                 }
+#endregion
             };
 
             project.Screens = new Screen[]
@@ -1350,7 +1372,7 @@ namespace MasterBuilder
         {
             return new Entity[]
             {
-                // Validation Type
+                #region Validation Type Entity
                 new Entity()
                 {
                     Id = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
@@ -1419,7 +1441,8 @@ namespace MasterBuilder
                         })
                     }
                 },
-                // Feature
+                #endregion
+                #region Feature Entity
                 new Entity()
                 {
                     Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
@@ -1456,7 +1479,8 @@ namespace MasterBuilder
                         })
                     }
                 },
-                // Menu Item Type
+                #endregion
+                #region Menu Item Type Entity
                 new Entity()
                 {
                     Id = new Guid("{092F60B1-EE1E-4451-A771-013376C93E65}"),
@@ -1497,6 +1521,7 @@ namespace MasterBuilder
                         })
                     }
                 },
+#endregion
                 // Property Template
                 new Entity()
                 {
@@ -1819,7 +1844,50 @@ namespace MasterBuilder
                             }
                         })
                     }
+                },
+                #region Service Type Entity
+                new Entity()
+                {
+                    Id = new Guid("{65D65D11-D1F0-421E-811E-A8CBB84CBB0D}"),
+                    InternalName = "ServiceType",
+                    Title = "Service Type",
+                    EntityTemplate = Request.EntityTemplate.Reference,
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{83B85CF2-1D09-473B-9212-9602E9CD7F5D}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{372DD3D3-F71D-4A25-91E6-7F8DC7D5AA44}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyType.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedType.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{87D5B4C5-9862-4282-8BB2-E2707A17036A}"),
+                                Title = "Web Service"
+                            },
+                            new
+                            {
+                                Id = new Guid("{DD6A4434-16E1-41BF-B75B-C78E3A8D46BF}"),
+                                Title = "Export"
+                            }
+                        })
+                    }
                 }
+#endregion
             };
         }
     }
