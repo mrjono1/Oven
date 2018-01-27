@@ -90,12 +90,13 @@ namespace MasterBuilder.Helpers
             var directory = new DirectoryInfo(Path.Combine(rootPath, Path.Combine(sourceDirectory)));
             foreach (var file in directory.EnumerateFiles())
             {
-                var destinationPath = Path.Combine(ProjectDirectory, Path.Combine(destinationDirectory), file.Name);
-                if (!new FileInfo(destinationPath).Exists)
+                var destinationPath = FileHelper.CreateFolder(ProjectDirectory, destinationDirectory);
+                var destinationFile = Path.Combine(destinationPath, file.Name);
+                if (!new FileInfo(destinationFile).Exists)
                 {
-                    file.CopyTo(destinationPath);
+                    file.CopyTo(destinationFile);
                 }
-                FilePaths.Add(destinationPath);
+                FilePaths.Add(destinationFile);
             }
         }
 
