@@ -14,17 +14,25 @@ namespace MasterBuilder.ConsoleApp
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
 
             IConfigurationRoot configuration = builder.Build();
-            var outputDirectory = configuration["OutputDirectory"];
-            new Program().Run(outputDirectory).Wait();
+
+            var builderSettings = new BuilderSettings()
+            {
+                OutputDirectory = configuration["OutputDirectory"],
+                GitUserName = configuration["GitUserName"],
+                GitEmail = configuration["GitEmail"],
+                VstsPersonalAccessToken = configuration["VstsPersonalAccessToken"]
+            };
+
+            new Program().Run(builderSettings).Wait();
         }
 
-        public async Task Run(string outputDirectory)
+        public async Task Run(BuilderSettings builderSettings)
         {
-            var builder = new MasterBuilder.Builder();
+            var builder = new MasterBuilder.Builder(builderSettings);
 
             var testProject = new MasterBuilderUiModel();
 
-            string messages = await builder.Run(outputDirectory, testProject.Project);
+            string messages = await builder.Run(testProject.Project);
             
             Console.WriteLine(messages);
             if (!messages.Equals("Success"))

@@ -8,10 +8,20 @@ namespace MasterBuilder
     /// </summary>
     public class Builder
     {
+        private readonly BuilderSettings builderSettings;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public Builder(BuilderSettings builderSettings)
+        {
+            this.builderSettings = builderSettings;
+        }
+
         /// <summary>
         /// Run Master Builder
         /// </summary>
-        public async Task<string> Run(string outputDirectory, Request.Project project)
+        public async Task<string> Run(Request.Project project)
         {
             var gitOn = true;
 
@@ -30,13 +40,13 @@ namespace MasterBuilder
                 return messages;
             }
 
-            var topProjectDirectory = FileHelper.CreateFolder(outputDirectory, project.InternalName);
+            var topProjectDirectory = FileHelper.CreateFolder(builderSettings.OutputDirectory, project.InternalName);
 
             SourceControl.Git git = null;
             Dictionary<string, SourceControl.Models.GetRepository> repos = null;
             if (gitOn)
             {
-                git = new SourceControl.Git(topProjectDirectory, project, "master-builder", "jonoclarnette@gmail.com", "wynpvam2lj24cvtw6y3vgghio32x5u5pwnyxiyg5zrmowntm4fwa");
+                git = new SourceControl.Git(topProjectDirectory, project, builderSettings.GitUserName, builderSettings.GitEmail, builderSettings.VstsPersonalAccessToken);
                 repos = await git.SetupAndGetRepos();
                 
                 var rtf = new SourceControl.RequestToFileSystem(topProjectDirectory, project);

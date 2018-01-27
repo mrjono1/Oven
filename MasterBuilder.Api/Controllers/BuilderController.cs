@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MasterBuilder.Request;
 using Microsoft.AspNetCore.Mvc;
@@ -36,13 +34,19 @@ namespace MasterBuilder.Api.Controllers
             {
                 return new BadRequestObjectResult(ModelState);
             }
-            var builder = new MasterBuilder.Builder();
+            
+            var builder = new MasterBuilder.Builder(new BuilderSettings()
+            {
+                OutputDirectory = _iconfiguration.GetValue<string>("OutputDirectory"),
+                GitUserName = _iconfiguration.GetValue<string>("GitUserName"),
+                GitEmail = _iconfiguration.GetValue<string>("GitEmail"),
+                VstsPersonalAccessToken = _iconfiguration.GetValue<string>("VstsPersonalAccessToken")
+            });
 
             string result = null;
             try
             {
-                string outputDirectory = _iconfiguration.GetValue<string>("OutputDirectory");
-                result = await builder.Run(outputDirectory, project);
+                result = await builder.Run(project);
             }
             catch (Exception ex)
             {
