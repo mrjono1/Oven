@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MasterBuilder.Request;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace MasterBuilder.Api.Controllers
 {
@@ -13,6 +14,14 @@ namespace MasterBuilder.Api.Controllers
     [Route("api/[controller]")]
     public class BuilderController : Controller
     {
+        private readonly IConfiguration _iconfiguration;
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public BuilderController(IConfiguration iconfiguration)
+        {
+            _iconfiguration = iconfiguration;
+        }
         /// <summary>
         /// Publish a project
         /// </summary>
@@ -32,7 +41,8 @@ namespace MasterBuilder.Api.Controllers
             string result = null;
             try
             {
-                result = await builder.Run("C:\\Temp", project);
+                string outputDirectory = _iconfiguration.GetValue<string>("OutputDirectory");
+                result = await builder.Run(outputDirectory, project);
             }
             catch (Exception ex)
             {

@@ -1,16 +1,14 @@
 using MasterBuilder.Request;
-using MasterBuilder.Templates.Entities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace MasterBuilder
 {
-    public class Test
+    public class MasterBuilderUiModel
     {
         public Project Project { get; set; }
-        public Test()
+        public MasterBuilderUiModel()
         {
             var project = new Project
             {
