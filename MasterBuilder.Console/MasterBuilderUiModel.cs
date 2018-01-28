@@ -349,13 +349,7 @@ namespace MasterBuilder
                             InternalName = "PropertyTemplate",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Property Template",
-                            ParentEntityId = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}"),
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation{
-                                    ValidationType = ValidationType.Required
-                                },
-                            }
+                            ParentEntityId = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}")
                         },
                         new Property()
                         {
@@ -829,7 +823,8 @@ namespace MasterBuilder
                         }
                     }
                 },
-#endregion
+                #endregion
+                #region Service Entity
                 new Entity()
                 {
                     Id = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}"),
@@ -900,9 +895,51 @@ namespace MasterBuilder
                             PropertyType = PropertyType.OneToOneRelationship,
                             Title = "WebService",
                             ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{3E70E9E0-707D-4441-B4F0-199B70B31A64}"),
+                            InternalName = "ExportService",
+                            PropertyType = PropertyType.OneToOneRelationship,
+                            Title = "Export Service",
+                            ParentEntityId = new Guid("{2B77156B-E550-4E46-8472-FAFA3D04966E}")
                         }
                     }
                 },
+#endregion
+                #region Export Service Entity
+                new Entity()
+                {
+                    Id = new Guid("{2B77156B-E550-4E46-8472-FAFA3D04966E}"),
+                    InternalName = "ExportService",
+                    Title = "Export Service",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{4B576F42-685D-4683-B48A-5B6FF5E450CA}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{4430E6C1-70EA-41E9-AA58-67176D9310E4}"),
+                            InternalName = "Entity",
+                            PropertyType = PropertyType.ReferenceRelationship,
+                            Title = "Root Entity",
+                            ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{FB010C63-85C0-445C-8880-FF989F908F33}"),
+                                    ValidationType = ValidationType.Required
+                                },
+                            }
+                        }
+                    }
+                },
+#endregion
                 #region Web Service Entity
                 new Entity()
                 {
