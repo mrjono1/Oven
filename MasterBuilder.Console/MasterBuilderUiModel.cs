@@ -739,6 +739,14 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
+                            Id = new Guid("{3EDDA39A-A700-486D-ABD8-7D9E14C6F550}"),
+                            InternalName = "NavigateToScreen",
+                            PropertyType = PropertyType.ReferenceRelationship,
+                            Title = "Navigate to screen",
+                            ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
+                        },
+                        new Property()
+                        {
                             Id = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
                             InternalName = "ScreenSectionType",
                             PropertyType = PropertyType.ReferenceRelationship,
@@ -773,6 +781,22 @@ namespace MasterBuilder
                             InternalName = "Html",
                             PropertyType = PropertyType.String,
                             Title = "Html"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{381E1C63-004D-4AAB-B41D-86D62D39A7F9}"),
+                            InternalName = "FormSection",
+                            PropertyType = PropertyType.OneToOneRelationship,
+                            Title = "Form Section",
+                            ParentEntityId = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{4923CC53-3325-4070-BEE5-B8B07CBDC751}"),
+                            InternalName = "SearchSection",
+                            PropertyType = PropertyType.OneToOneRelationship,
+                            Title = "Search Section",
+                            ParentEntityId = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}")
                         }
                     }
                 },
@@ -1062,7 +1086,175 @@ namespace MasterBuilder
                             }
                         }
                     }
-                }
+                },
+#endregion
+                #region Form Field Entity
+                new Entity()
+                {
+                    Id = new Guid("{8D68FDDE-6621-472B-9F2C-04ADE443E51C}"),
+                    InternalName = "FormField",
+                    Title = "Form Field",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{941173BD-D4B0-4216-8CCE-DC3DF81456A5}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{218A6A13-5A20-49D0-8770-ECD570D94599}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyType.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{35982768-3C3A-41E1-9080-F25218529A5B}"),
+                                    ValidationType = ValidationType.MaximumLength,
+                                    IntegerValue = 200
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{FB5EC954-8935-48B2-BCEB-FCE643098C63}"),
+                            InternalName = "FormSection",
+                            PropertyType = PropertyType.ParentRelationship,
+                            Title = "Form Section",
+                            ParentEntityId = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{307F022C-B5ED-4F1F-8015-9DF223F95599}"),
+                            InternalName = "EntityProperty",
+                            PropertyType = PropertyType.ReferenceRelationship,
+                            Title = "Entity Property",
+                            ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{42B9A2C7-DDB4-4B83-AFB1-0A282DC72839}"),
+                                    ValidationType = ValidationType.Required
+                                },
+                            }
+                        }
+                    }
+                },
+#endregion
+                #region Form Section Entity
+                new Entity()
+                {
+                    Id = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}"),
+                    InternalName = "FormSection",
+                    Title = "Form Section",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{3DEF9251-17DA-4BFA-B941-CA0E14C298B7}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        }
+                        // At the moment it only has a collection of form Fields
+                    }
+                },
+#endregion
+                #region Search Section Entity
+                new Entity()
+                {
+                    Id = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}"),
+                    InternalName = "SearchSection",
+                    Title = "Search Section",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{621D9C10-93FB-4178-9670-28CEBABF5C7A}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        }
+                        // At the moment it only has a collection of Search Columns
+                    }
+                },
+#endregion
+                #region Search Column Entity
+                new Entity()
+                {
+                    Id = new Guid("{559E8929-2395-4BFD-AF37-DCA314368DA5}"),
+                    InternalName = "SearchColumn",
+                    Title = "Search Column",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{16650A1E-9786-482F-814E-331698DF389C}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{7334EF78-E75A-45A1-BFB6-122CDDC8281B}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyType.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{A67BA3F9-3DB5-4A51-B5CF-F4CBD0125483}"),
+                                    ValidationType = ValidationType.MaximumLength,
+                                    IntegerValue = 200
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{483D2C5E-1C04-4C2E-8468-4753D3F88996}"),
+                            InternalName = "Ordinal",
+                            PropertyType = PropertyType.Integer,
+                            Title = "Ordinal",
+                            DefaultIntegerValue = 1,
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{A67BA3F9-3DB5-4A51-B5CF-F4CBD0125483}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{DCC45498-8A8A-4A47-9414-B46E6EDFC921}"),
+                            InternalName = "SearchSection",
+                            PropertyType = PropertyType.ParentRelationship,
+                            Title = "Search Section",
+                            ParentEntityId = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{8623E412-9601-4A64-9B99-A9439D725B37}"),
+                            InternalName = "EntityProperty",
+                            PropertyType = PropertyType.ReferenceRelationship,
+                            Title = "Entity Property",
+                            ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{C7DD9CDB-2A42-49F1-9EFC-EB2E78516518}"),
+                                    ValidationType = ValidationType.Required
+                                },
+                            }
+                        }
+                    }
+                },
 #endregion
             };
 
