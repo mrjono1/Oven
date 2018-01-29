@@ -64,7 +64,7 @@ namespace MasterBuilder.Templates.Services
         /// </summary>
         public async Task<IRestResponse> {operation.InternalName}Async(Models.Project.Export.Project body)
         {{
-            var request = new RestRequest(""{operation.RelativeRoute}"", Method.{operation.Verb})
+            var request = new RestRequest(""{operation.RelativeRoute}"", Method.{operation.Verb.ToString().ToUpperInvariant()})
             {{
                 RequestFormat = DataFormat.Json
             }};

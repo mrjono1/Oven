@@ -1260,10 +1260,11 @@ namespace MasterBuilder
 
             project.Screens = new Screen[]
             {
+                #region Home Screen
                 new Screen()
                 {
                     Id = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
-                    ScreenTypeId = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), // Html
+                    ScreenType = ScreenType.Html,
                     Title = "Home",
                     Path = "home",
                     Template = ScreenTemplate.Home,
@@ -1285,7 +1286,9 @@ namespace MasterBuilder
 </ul>"
                         }
                     }
-                },         
+                },
+                #endregion
+                #region Projects Screen
                 new Screen()
                 {
                     Id = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
@@ -1302,6 +1305,7 @@ namespace MasterBuilder
                         }
                     }
                 },
+#endregion
                 new Screen()
                 {
                     Id = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
@@ -1582,7 +1586,7 @@ namespace MasterBuilder
                             {
                                 Id = new Guid("{99B9358B-2266-47BC-957A-DC6EF459D4A1}"),
                                 Title = "Publish",
-                                Verb = "POST",
+                                Verb = HttpVerb.Post,
                                 RelativeRoute = "/api/builder/publish"
                             }
                         }
@@ -1750,8 +1754,8 @@ namespace MasterBuilder
                         })
                     }
                 },
-#endregion
-                // Property Template
+                #endregion
+                #region Property Template Entity
                 new Entity()
                 {
                     Id = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}"),
@@ -1792,7 +1796,8 @@ namespace MasterBuilder
                         })
                     }
                 },
-                // Property Type
+                #endregion
+                #region Property Type Entity
                 new Entity()
                 {
                     Id = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
@@ -1853,7 +1858,8 @@ namespace MasterBuilder
                         })
                     }
                 },
-                // Screen Section Type
+                #endregion
+                #region Screen Section Type Entity
                 new Entity()
                 {
                     Id = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
@@ -1902,7 +1908,8 @@ namespace MasterBuilder
                         })
                     }
                 },
-                // Screen Type
+#endregion
+                #region Screen Type Entity
                 new Entity()
                 {
                     Id = new Guid("{C04282DB-CB85-445D-BB4B-AEBB3801DAC7}"),
@@ -1951,7 +1958,8 @@ namespace MasterBuilder
                         })
                     }
                 },
-                // Screen Template
+                #endregion
+                #region Screen Template Entity
                 new Entity()
                 {
                     Id = new Guid("{564E3EC4-59E0-4EEB-A9E5-F1367E1FEB29}"),
@@ -1992,7 +2000,8 @@ namespace MasterBuilder
                         })
                     }
                 },
-                // Seed Type
+                #endregion
+                #region Seed Type Entity
                 new Entity()
                 {
                     Id = new Guid("{EA6A9786-573A-4821-824C-3FB5322D2A51}"),
@@ -2037,7 +2046,8 @@ namespace MasterBuilder
                         })
                     }
                 },
-                // Entity Template
+                #endregion
+                #region Entity Template Entity
                 new Entity()
                 {
                     Id = new Guid("{E20337EA-37F3-48D1-96F7-3CF2A40A7F52}"),
@@ -2074,6 +2084,7 @@ namespace MasterBuilder
                         })
                     }
                 },
+#endregion
                 #region Service Type Entity
                 new Entity()
                 {
@@ -2112,6 +2123,59 @@ namespace MasterBuilder
                             {
                                 Id = new Guid("{DD6A4434-16E1-41BF-B75B-C78E3A8D46BF}"),
                                 Title = "Export"
+                            }
+                        })
+                    }
+                },
+#endregion
+                #region Http Verb
+                new Entity()
+                {
+                    Id = new Guid("{384874D5-107B-48A3-980C-8F299BEADAE1}"),
+                    InternalName = "HttpVerb",
+                    Title = "Http Verb",
+                    EntityTemplate = Request.EntityTemplate.Reference,
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{431DFED1-4CD6-4D26-8BEF-54109AA9FC43}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{37BEB522-5AA5-46B2-A2B3-5111F9596A50}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyType.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedType.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{EF85B946-2F8D-49D6-AFE7-924D53CBA328}"),
+                                Title = "Get"
+                            },
+                            new
+                            {
+                                Id = new Guid("{B5EFB225-77A7-4BC7-8062-BC4B296CEFAB}"),
+                                Title = "Post"
+                            },
+                            new
+                            {
+                                Id = new Guid("{AC3CA150-F44C-4F6C-A26F-09573DB433CF}"),
+                                Title = "Put"
+                            },
+                            new
+                            {
+                                Id = new Guid("{B6FBA91F-753D-4B80-9624-BDDA8F0E2868}"),
+                                Title = "Delete"
                             }
                         })
                     }
