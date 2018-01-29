@@ -57,6 +57,12 @@ namespace MasterBuilder.Templates.ProjectFiles
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
+  <Target Name=""PrepublishScript"" BeforeTargets=""PrepareForPublish""> 
+    <ItemGroup>
+      <DocFile Include=""bin\$(Configuration)\$(TargetFramework)\*.xml"" />
+    </ItemGroup>
+    <Copy SourceFiles=""@(DocFile)"" DestinationFolder=""$(PublishDir)"" SkipUnchangedFiles=""false"" />
+  </Target>
   <PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"">
     <DocumentationFile>bin\Debug\netcoreapp2.0\{Project.InternalName}.xml</DocumentationFile>
   </PropertyGroup> 
