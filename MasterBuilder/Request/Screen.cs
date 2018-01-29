@@ -21,7 +21,7 @@ namespace MasterBuilder.Request
         {
             { Guid.Empty, ScreenType.None},
             { new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), ScreenType.Search },
-            { new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), ScreenType.Edit },
+            { new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), ScreenType.Form },
             { new Guid("{ACE5A965-7005-4E34-9C66-AF0F0CD15AE9}"), ScreenType.View },
             { new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), ScreenType.Html }
         };
@@ -151,7 +151,7 @@ namespace MasterBuilder.Request
                 return null;
             }
 
-            if (ScreenType != ScreenType.Edit)
+            if (ScreenType != ScreenType.Form)
             {
                 return null;
             }
@@ -196,7 +196,7 @@ namespace MasterBuilder.Request
                 {
                     foundParentScreen = (from s in project.Screens
                                          where s.EntityId == parentProperty.ParentEntityId &&
-                                         s.ScreenType == ScreenType.Edit &&
+                                         s.ScreenType == ScreenType.Form &&
                                          s.Id != screen.Id
                                          select s).SingleOrDefault();
                     if (foundParentScreen != null)

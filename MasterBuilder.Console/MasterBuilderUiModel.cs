@@ -1310,7 +1310,7 @@ namespace MasterBuilder
                 {
                     Id = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
                     EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
-                    ScreenType = ScreenType.Edit,
+                    ScreenType = ScreenType.Form,
                     Title = "Project",
                     Path = "project",
                     ScreenSections = new ScreenSection[]
@@ -1378,6 +1378,25 @@ namespace MasterBuilder
                                     Title = "New"
                                 }
                             }
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{BAAB75F0-E712-431C-8AB0-6166914889D8}"),
+                            Title = "Services",
+                            InternalName = "Services",
+                            ScreenSectionType = ScreenSectionType.Search,
+                            EntityId = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}"),
+                            NavigateToScreenId = new Guid("{04F72D2F-2280-4635-8F57-485E6F44026A}"),
+                            MenuItems = new MenuItem[]
+                            {
+                                new MenuItem
+                                {
+                                    Id = new Guid("{4491A95A-3C34-4CE7-9FFE-B1825DE5523D}"),
+                                    MenuItemType = MenuItemType.New,
+                                    ScreenId = new Guid("{04F72D2F-2280-4635-8F57-485E6F44026A}"),
+                                    Title = "New"
+                                }
+                            }
                         }
                     },
                     MenuItems = new MenuItem[]
@@ -1394,11 +1413,12 @@ namespace MasterBuilder
                         }
                     }
                 },
+                #region Entity Form Screen
                 new Screen()
                 {
                     Id = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
                     EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
-                    ScreenType = ScreenType.Edit,
+                    ScreenType = ScreenType.Form,
                     Title = "Entity",
                     Path = "entity",
                     ScreenSections = new ScreenSection[]
@@ -1431,11 +1451,13 @@ namespace MasterBuilder
                         }
                     }
                 },
+                #endregion
+                #region Scren Form Screen
                 new Screen()
                 {
                     Id = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
                     EntityId =new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
-                    ScreenType = ScreenType.Edit,
+                    ScreenType = ScreenType.Form,
                     Title = "Screen",
                     Path = "screen",
                     ScreenSections = new ScreenSection[]
@@ -1469,11 +1491,13 @@ namespace MasterBuilder
                         }
                     }
                 },
+                #endregion
+                #region Screen Section Form Screen
                 new Screen()
                 {
                     Id = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
                     EntityId =new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
-                    ScreenType = ScreenType.Edit,
+                    ScreenType = ScreenType.Form,
                     Title = "Screen Section",
                     Path = "screen-section",
                     ScreenSections = new ScreenSection[]
@@ -1488,11 +1512,13 @@ namespace MasterBuilder
                         }
                     }
                 },
+#endregion
+                #region Menu Item
                 new Screen()
                 {
                     Id = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
                     EntityId =new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
-                    ScreenType = ScreenType.Edit,
+                    ScreenType = ScreenType.Form,
                     Title = "Menu Item",
                     Path = "menu-item",
                     ScreenSections = new ScreenSection[]
@@ -1507,11 +1533,13 @@ namespace MasterBuilder
                         }
                     }
                 },
+                #endregion
+                #region Property Form Screen
                 new Screen()
                 {
                     Id = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
                     EntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
-                    ScreenType = ScreenType.Edit,
+                    ScreenType = ScreenType.Form,
                     Title = "Property",
                     Path = "property",
                     ScreenSections = new ScreenSection[]
@@ -1525,6 +1553,8 @@ namespace MasterBuilder
                         }
                     }
                 },
+#endregion
+                #region Validation Type Search Screen
                 new Screen()
                 {
                     Id = new Guid("{8E1A9AB1-799E-46B4-8364-85FB087C643E}"),
@@ -1541,11 +1571,13 @@ namespace MasterBuilder
                         }
                     }
                 },
+                #endregion
+                #region Validation Type Form Screen
                 new Screen()
                 {
                     Id = new Guid("{5D9BA697-C64B-40EE-9DF4-F88BD683713F}"),
                     EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
-                    ScreenType = ScreenType.Edit,
+                    ScreenType = ScreenType.Form,
                     Title = "Validation Type",
                     Path = "validation-type",
                     ScreenSections = new ScreenSection[]
@@ -1559,8 +1591,30 @@ namespace MasterBuilder
                         }
                     }
                 },
+#endregion
+                #region Service Form Screen
+                new Screen()
+                {
+                    Id = new Guid("{04F72D2F-2280-4635-8F57-485E6F44026A}"),
+                    EntityId = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}"),
+                    ScreenType = ScreenType.Form,
+                    Title = "Service",
+                    Path = "service",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{ADE6F0EE-DA71-4E4A-8458-95E12761303B}"),
+                            Title = "Service",
+                            InternalName = "Service",
+                            ScreenSectionType = ScreenSectionType.Form
+                        }
+                    }
+                }
+#endregion
             };
 
+            #region MENU ITEMS
             project.MenuItems = new MenuItem[]
             {
                 new MenuItem
@@ -1570,7 +1624,9 @@ namespace MasterBuilder
                     Icon = "glyphicon glyphicon-th-list"
                 }
             };
+            #endregion
 
+            #region SERVICES
             project.Services = new Service[]
             {
                 new Service(){
@@ -1593,6 +1649,7 @@ namespace MasterBuilder
                     }
                 }
             };
+            #endregion
 
             var entities = new List<Entity>(project.Entities);
             entities.AddRange(ReferenceEntities());

@@ -85,7 +85,7 @@ namespace MasterBuilder.Request
                         Id = editScreenId,
                         EntityId = Id,
                         Title = Title,
-                        ScreenType = ScreenType.Edit,
+                        ScreenType = ScreenType.Form,
                         Path = InternalName.Kebaberize()
                     }
                 };

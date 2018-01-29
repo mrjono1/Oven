@@ -68,7 +68,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 {
                     foundParentScreen = (from s in Project.Screens
                                          where s.EntityId == parentProperty.ParentEntityId &&
-                                         s.ScreenType == ScreenType.Edit
+                                         s.ScreenType == ScreenType.Form
                                          select s).SingleOrDefault();
                 }
 

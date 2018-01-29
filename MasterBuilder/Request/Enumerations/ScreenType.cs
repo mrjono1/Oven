@@ -10,9 +10,9 @@ namespace MasterBuilder.Request
         /// </summary>
         Search,
         /// <summary>
-        /// Edit Screen
+        /// Form Screen
         /// </summary>
-        Edit,
+        Form,
         /// <summary>
         /// View Screen
         /// </summary>

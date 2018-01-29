@@ -25,7 +25,7 @@ namespace MasterBuilder.Request
                         case ScreenType.Search:
                             screenSectionType = ScreenSectionType.Search;
                             break;
-                        case ScreenType.Edit:
+                        case ScreenType.Form:
                             screenSectionType = ScreenSectionType.Form;
                             break;
                         case ScreenType.View:
