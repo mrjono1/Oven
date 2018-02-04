@@ -36,6 +36,11 @@ namespace MasterBuilder.Request
                 };
             }
 
+            if (ParentEntityId.HasValue)
+            {
+                ParentEntity = project.Entities.Single(a => a.Id == ParentEntityId.Value);
+            }
+
             if (errors.Any())
             {
                 message = string.Join(Environment.NewLine, errors);

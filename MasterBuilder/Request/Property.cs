@@ -217,5 +217,11 @@ namespace MasterBuilder.Request
         /// </summary>
         public bool? DefaultBooleanValue { get; set; }
 
+        #region Internal Helper Properties
+        /// <summary>
+        /// Parent Entity
+        /// </summary>
+        internal Entity ParentEntity { get; set; }
+        #endregion
     }
 }

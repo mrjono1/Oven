@@ -14,7 +14,10 @@ namespace MasterBuilder.Request
         internal bool Resolve(Project project, out string message)
         {
             var errors = new List<string>();
-            
+            if (EntityId.HasValue)
+            {
+                Entity = project.Entities.Single(e => e.Id == EntityId.Value);
+            }
             if (ScreenSections == null || !ScreenSections.Any())
             {
                 var screenSectionType = ScreenSectionType.Html;

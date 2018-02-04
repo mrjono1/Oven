@@ -222,7 +222,7 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
-                            Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
+                            Id = new Guid("{331D99C4-1D7A-48D3-8979-987A5285F3B3}"),
                             InternalName = "EntityTemplate",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity Template",
@@ -1305,7 +1305,8 @@ namespace MasterBuilder
                         }
                     }
                 },
-#endregion
+                #endregion
+                #region Project Form Screen
                 new Screen()
                 {
                     Id = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
@@ -1413,6 +1414,7 @@ namespace MasterBuilder
                         }
                     }
                 },
+#endregion
                 #region Entity Form Screen
                 new Screen()
                 {
@@ -1428,6 +1430,7 @@ namespace MasterBuilder
                             Id = new Guid("{8130C0F4-F8F7-4A7A-9793-85B8939589EB}"),
                             Title = "Entity",
                             InternalName = "Entity",
+                            EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                             ScreenSectionType = ScreenSectionType.Form
                         },
                         new ScreenSection
@@ -1448,11 +1451,21 @@ namespace MasterBuilder
                                     Title = "New"
                                 }
                             }
-                        }
+                        },
+                        // TODO
+                        //new ScreenSection
+                        //{
+                        //    Id = new Guid("{193EBB3E-45C8-47DD-A058-0004626AC9EB}"),
+                        //    Title = "Seed",
+                        //    InternalName = "Seed",
+                        //    ScreenSectionType = ScreenSectionType.Form,
+                        //    EntityId = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}"),
+                        //    ParentEntityPropertyId = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}")
+                        //}
                     }
                 },
                 #endregion
-                #region Scren Form Screen
+                #region Screen Form Screen
                 new Screen()
                 {
                     Id = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),

@@ -1,5 +1,7 @@
+using Humanizer;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace MasterBuilder.Request
@@ -19,6 +21,10 @@ namespace MasterBuilder.Request
         public string Title { get; set; }
 
         #region Internal Helper Properties
+        /// <summary>
+        /// Project
+        /// </summary>
+        internal Project Project { get; set; }
         /// <summary>
         /// Entity Property
         /// </summary>
@@ -84,6 +90,39 @@ namespace MasterBuilder.Request
             }
         }
         /// <summary>
+        /// Internal Name Type Script
+        /// </summary>
+        internal string InternalNameTypeScript
+        {
+            get
+            {
+                switch (Property.PropertyType)
+                {
+                    case PropertyType.ParentRelationship:
+                    case PropertyType.ReferenceRelationship:
+                        return $"{Property.InternalName}Id".Camelize();
+                    default:
+                        return Property.InternalName.Camelize();
+                }
+            }
+        }
+        /// <summary>
+        /// Internal Name Alternate
+        /// </summary>
+        internal string InternalNameAlternateTypeScript
+        {
+            get
+            {
+                switch (Property.PropertyType)
+                {
+                    case PropertyType.ReferenceRelationship:
+                        return $"{Property.InternalName}Title".Camelize();
+                    default:
+                        return null;
+                }
+            }
+        }
+        /// <summary>
         /// Type C#
         /// </summary>
         internal string TypeCSharp
@@ -94,9 +133,22 @@ namespace MasterBuilder.Request
                 {
                     case PropertyType.PrimaryKey:
                         return $"{Property.CsType}?";
+                    case PropertyType.OneToOneRelationship:
+                        var referenceEntityName = (from entity in Project.Entities where entity.Id == Property.ParentEntityId.Value select entity.InternalName).Single();
+                        return $"{referenceEntityName}";
                     default:
                         return Property.CsType;
                 }
+            }
+        }
+        /// <summary>
+        /// Type TypeScript
+        /// </summary>
+        internal string TypeTypeScript
+        {
+            get
+            {
+                return Property.TsType;
             }
         }
         /// <summary>

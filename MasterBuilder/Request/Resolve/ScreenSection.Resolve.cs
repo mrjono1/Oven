@@ -46,17 +46,22 @@ namespace MasterBuilder.Request
         /// </summary>
         private void ResolveFormSection(Project project, Screen screen)
         {
-            var entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
+            Entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
+            if (ParentEntityPropertyId.HasValue)
+            {
+                ParentEntityProperty = screen.Entity.Properties.Single(p => p.Id == ParentEntityPropertyId.Value);
+            }
 
             // Populate Property property for helper functions to work
             if (FormSection != null && FormSection.FormFields != null)
             {
                 FormSection.Screen = screen;
                 FormSection.ScreenSection = this;
-                FormSection.Entity = entity;
+                FormSection.Entity = Entity;
                 foreach (var formField in FormSection.FormFields)
                 {
-                    formField.Property = entity.Properties.SingleOrDefault(p => p.Id == formField.EntityPropertyId);
+                    formField.Property = Entity.Properties.SingleOrDefault(p => p.Id == formField.EntityPropertyId);
+                    formField.Project = project;
                 }
 
                 return;
@@ -64,7 +69,7 @@ namespace MasterBuilder.Request
 
             // Create Default Search Screens
             var formFields = new List<FormField>();
-            foreach (var property in entity.Properties)
+            foreach (var property in Entity.Properties)
             {
                 switch (property.PropertyType)
                 {
@@ -74,7 +79,8 @@ namespace MasterBuilder.Request
                         formFields.Add(new FormField
                         {
                             EntityPropertyId = property.Id,
-                            Property = property
+                            Property = property,
+                            Project = project
                         });
                         break;
                 }
@@ -85,7 +91,7 @@ namespace MasterBuilder.Request
                 FormFields = formFields,
                 Screen = screen,
                 ScreenSection = this,
-                Entity = entity
+                Entity = Entity
             };
         }
 
