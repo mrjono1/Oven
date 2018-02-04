@@ -123,6 +123,19 @@ namespace MasterBuilder.Templates.Entities
 {string.Join(Environment.NewLine, seed.Values)}";
             }
 
+            string dbConnection = null;
+            if (Project.UseMySql)
+            {
+#if DEBUG
+                dbConnection = $@"""Server=localhost;database={Project.InternalName};uid=root;pwd=password;""";
+#else
+                dbConnection = $@"Environment.GetEnvironmentVariable(""MYSQLCONNSTR_localdb"").ToString())";
+#endif
+            }
+            else
+            {
+                dbConnection = $@"Database.GetDbConnection().ConnectionString";
+            }
             return $@"using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -188,14 +201,14 @@ namespace {Project.InternalName}.Entities
             var designTimeServiceCollection = new ServiceCollection()
                 .AddSingleton<IOperationReporter>(reporter)
                 .AddScaffolding(reporter);
-            new SqlServerDesignTimeServices().ConfigureDesignTimeServices(designTimeServiceCollection);
+            new {(Project.UseMySql ? "MySql" : "SqlServer")}DesignTimeServices().ConfigureDesignTimeServices(designTimeServiceCollection);
 
             var designTimeServices = designTimeServiceCollection.BuildServiceProvider();
 
             // TODO: Just use db.Database.EnsureCreated() if the database doesn't exist
             var databaseModelFactory = designTimeServices.GetService<IScaffoldingModelFactory>();
             var databaseModel = (Model)databaseModelFactory.Create(
-                Database.GetDbConnection().ConnectionString,
+                {dbConnection},
                 tables: new string[0],
                 schemas: new string[0],
                 useDatabaseNames: false);
@@ -211,8 +224,8 @@ namespace {Project.InternalName}.Entities
                 }}
             }}
             databaseModel.Relational().DefaultSchema = null;
-            databaseModel.SqlServer().ValueGenerationStrategy =
-                currentModel.SqlServer().ValueGenerationStrategy;
+            databaseModel.{(Project.UseMySql ? "MySql" : "SqlServer")}().ValueGenerationStrategy =
+                currentModel.{(Project.UseMySql ? "MySql" : "SqlServer")}().ValueGenerationStrategy;
             // TODO: ...more fix up as needed
 
             var differ = this.GetService<IMigrationsModelDiffer>();

@@ -30,22 +30,6 @@ namespace MasterBuilder.Request
                 "Properties",
                 "dist"
             };
-
-            DefaultNugetReferences = new Dictionary<string, string>
-            {
-                { "Microsoft.AspNetCore.All", "2.0.3" },
-                { "Microsoft.EntityFrameworkCore", "2.0.1"},
-                { "Microsoft.EntityFrameworkCore.SqlServer", "2.0.1"},
-                { "Swashbuckle.AspNetCore", "1.1.0" },
-                { "Swashbuckle.AspNetCore.Swagger", "1.1.0" },
-                { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" },
-                { "RestSharp", "106.1.0"}
-            };
-
-            if (!UsePutForUpdate)
-            {
-                DefaultNugetReferences.Add("Microsoft.AspNetCore.JsonPatch", "2.0.0" );
-            }
         }
         /// <summary>
         /// Uniqueidentifier
@@ -118,12 +102,12 @@ namespace MasterBuilder.Request
         /// Default Screen to load
         /// </summary>
         public Guid? DefaultScreenId { get; set; }
-        /// <summary>
-        /// The List of Default Nuget Packages
-        /// </summary>
-        internal Dictionary<string, string> DefaultNugetReferences { get; set; }
 
         #region Internal Settings
+        /// <summary>
+        /// Use MySql instead of MS Sql (not fully implemented explicit migrations needed)
+        /// </summary>
+        internal bool UseMySql { get; set; }
         /// <summary>
         /// Allow Destructive Database Change, things like dropping columns, tables, keys
         /// </summary>

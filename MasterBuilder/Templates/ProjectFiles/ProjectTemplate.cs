@@ -1,6 +1,7 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace MasterBuilder.Templates.ProjectFiles
@@ -11,7 +12,7 @@ namespace MasterBuilder.Templates.ProjectFiles
     public class ProjectTemplate: ITemplate
     {
         private readonly Project Project;
-
+        
         /// <summary>
         /// Constructor
         /// </summary>
@@ -44,7 +45,33 @@ namespace MasterBuilder.Templates.ProjectFiles
             string solutionGuid = Guid.NewGuid().ToString();
 
             StringBuilder packageReferences = new StringBuilder();
-            foreach (var item in Project.DefaultNugetReferences)
+
+
+            var nugetReferences = new Dictionary<string, string>
+            {
+                { "Microsoft.AspNetCore.All", "2.0.3" },
+                { "Microsoft.EntityFrameworkCore", "2.0.1"},
+                { "Swashbuckle.AspNetCore", "1.1.0" },
+                { "Swashbuckle.AspNetCore.Swagger", "1.1.0" },
+                { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" },
+                { "RestSharp", "106.1.0"}
+            };
+
+            if (!Project.UsePutForUpdate)
+            {
+                nugetReferences.Add("Microsoft.AspNetCore.JsonPatch", "2.0.0");
+            }
+
+            if (Project.UseMySql)
+            {
+                nugetReferences.Add("Pomelo.EntityFrameworkCore.MySql", "2.0.1");
+            }
+            else
+            {
+                nugetReferences.Add("Microsoft.EntityFrameworkCore.SqlServer", "2.0.1");
+            }
+
+            foreach (var item in nugetReferences)
             {
                 packageReferences.AppendLine($@"<PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
             }

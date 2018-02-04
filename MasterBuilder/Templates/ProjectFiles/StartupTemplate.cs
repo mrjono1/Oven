@@ -47,6 +47,20 @@ namespace MasterBuilder.Templates.ProjectFiles
             var services = new List<string>();
             serviceNames.ForEach(name => services.Add($"services.AddTransient<I{name}, {name}>();"));
 
+            string dbConnection = null;
+            if (Project.UseMySql)
+            {
+#if DEBUG
+                dbConnection = $@"options.UseMySql(""Server=localhost;database={Project.InternalName};uid=root;pwd=password;""));";
+#else
+                dbConnection = $@"options.UseMySql(Environment.GetEnvironmentVariable(""MYSQLCONNSTR_localdb"").ToString()));";
+#endif
+            }
+            else
+            {
+                dbConnection = $@"options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));";
+            }
+
             return $@"using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
@@ -113,7 +127,7 @@ namespace {Project.InternalName}
 
             // Add Entity Framework service
             services.AddDbContext<Entities.{Project.InternalName}Context>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));
+                {dbConnection}
 
             var xmlfilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, ""{Project.InternalName}.xml"");
 
