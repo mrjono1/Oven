@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Humanizer;
 using MasterBuilder.Request;
 
@@ -12,16 +13,72 @@ namespace MasterBuilder.Templates.Controllers
     {
         private readonly Project Project;
         private readonly Screen Screen;
-        private readonly ScreenSection ScreenSection;
+        private readonly IEnumerable<ScreenSection> ScreenSections;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ControllerFormSectionMethodsPartial(Project project, Screen screen, ScreenSection screenSection)
+        public ControllerFormSectionMethodsPartial(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
         {
             Project = project;
             Screen = screen;
-            ScreenSection = screenSection;
+            ScreenSections = screenSections;
+        }
+
+        private IEnumerable<string> GetDbProperties(IEnumerable<FormField> formFields, string objectName = "item", int level = 0)
+        {
+            var properties = new List<string>();
+            foreach (var formField in formFields)
+            {
+                switch (formField.PropertyType)
+                {
+                    case PropertyType.ReferenceRelationship:
+
+                        properties.Add($"                            {new string(' ', 4 * level)}{objectName}.{formField.InternalNameCSharp}");
+
+                        // TODO: Title should be configurable
+                        // TODO: is it faster to do the bool check on the key instead of object?
+                        properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameAlternateCSharp} = {objectName}.{formField.Property.InternalName} != null ? {objectName}.{formField.Property.InternalName}.Title : null");
+                        break;
+                    case PropertyType.OneToOneRelationship:
+                        // TODO
+                        break;
+                    default:
+                        properties.Add($"                            {new string(' ', 4 * level)}{objectName}.{formField.InternalNameCSharp}");
+                        break;
+                }
+            }
+            return properties;
+        }
+
+        private IEnumerable<string> GetProperties(IEnumerable<FormField> formFields, string objectName = "dbResult", int level = 0)
+        {
+            var properties = new List<string>();
+            foreach (var formField in formFields)
+            {
+                switch (formField.PropertyType)
+                {
+                    case PropertyType.ReferenceRelationship:
+
+                        properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameCSharp} = {objectName}.{formField.InternalNameCSharp}");
+
+                        // TODO: Title should be configurable
+                        // TODO: is it faster to do the bool check on the key instead of object?
+                        // TODO: needs to work for all levels
+                        if (level == 0)
+                        {
+                            properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameAlternateCSharp} = {objectName}.{formField.InternalNameAlternateCSharp}");
+                        }
+                        break;
+                    case PropertyType.OneToOneRelationship:
+                        // TODO
+                        break;
+                    default:
+                        properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameCSharp} = {objectName}.{formField.InternalNameCSharp}");
+                        break;
+                }
+            }
+            return properties;
         }
 
         /// <summary>
@@ -29,38 +86,55 @@ namespace MasterBuilder.Templates.Controllers
         /// </summary>
         internal string GetMethod()
         {
+            var getDbPropertyMapping = new List<string>();
             var getPropertyMapping = new List<string>();
-            foreach (var formField in ScreenSection.FormSection.FormFields)
+
+            // Convert root fields to properties
+            var rootFields = (from formSection in ScreenSections
+                              where !formSection.ParentEntityPropertyId.HasValue
+                              from ff in formSection.FormSection.FormFields
+                              select ff).ToArray();
+            getPropertyMapping.AddRange(GetProperties(rootFields));
+            getDbPropertyMapping.AddRange(GetDbProperties(rootFields));
+
+            // Convert child properties to objects with properties
+            var childSections = (from formSection in ScreenSections
+                                 where formSection.ParentEntityPropertyId.HasValue
+                                 select formSection).ToArray();
+
+            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
             {
-                switch (formField.PropertyType)
+                ParentEntityProperty = a.Key,
+                ChildSections = a.ToArray()
+            }))
+            {
+                var entityProperties = new List<string>();
+
+                entityProperties.AddRange(
+                    GetProperties((from screenSection in childItem.ChildSections
+                                   from ff in screenSection.FormSection.FormFields
+                                   select ff).ToArray(),
+                    $"dbResult.{childItem.ParentEntityProperty.ParentEntity.InternalName}",
+                    1));
+
+                // TODO: turn this on and get it to work
+                if (entityProperties.Any())
                 {
-                    case PropertyType.ParentRelationship:
-                        getPropertyMapping.Add($"                           {formField.InternalNameCSharp} = item.{formField.InternalNameCSharp}");
-                        break;
-
-                    case PropertyType.ReferenceRelationship:
-
-                        getPropertyMapping.Add($"                           {formField.InternalNameCSharp} = item.{formField.InternalNameCSharp}");
-
-                        // TODO: Title should be configurable
-                        // TODO: is it faster to do the bool check on the key instead of object?
-                        getPropertyMapping.Add($"                           {formField.InternalNameAlternateCSharp} = item.{formField.Property.InternalName} != null ? item.{formField.Property.InternalName}.Title : null");
-                        break;
-                    case PropertyType.OneToOneRelationship:
-                        // TODO
-                        break;
-                    default:
-                        getPropertyMapping.Add($"                           {formField.InternalNameCSharp} = item.{formField.InternalNameCSharp}");
-                        break;
+                    getDbPropertyMapping.Add($"                            item.{childItem.ParentEntityProperty.InternalName}");
+                    //getDbPropertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = item.{childItem.ParentEntityProperty.InternalName}");
+                    //getPropertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = new {childItem.ParentEntityProperty.InternalName}{Screen.FormResponseClass}{{");
+                    getPropertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = (dbResult.{childItem.ParentEntityProperty.ParentEntity.InternalName} == null ? null : new {childItem.ParentEntityProperty.InternalName}{Screen.FormResponseClass} {{
+{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
+                            }})");
                 }
             }
 
             return $@"
         /// <summary>
-        /// {ScreenSection.Title} Get
+        /// {Screen.Title} Get
         /// </summary>
         [HttpGet(""{Screen.InternalName}/{{id}}"")]
-        [ProducesResponseType(typeof(Models.{Screen.InternalName}Response), 200)]
+        [ProducesResponseType(typeof(Models.{Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> {Screen.InternalName}(Guid id)
         {{
@@ -74,13 +148,17 @@ namespace MasterBuilder.Templates.Controllers
                 return NotFound();
             }}
             
-            var result = await _context.{ScreenSection.FormSection.Entity.InternalNamePlural}
-                            .AsNoTracking()
-                            .Select(item => new Models.{Screen.InternalName}Response
-                            {{
+            var dbResult = await _context.{Screen.Entity.InternalNamePlural}
+                        .AsNoTracking()
+                        .Select(item => new
+                        {{
+{string.Join(string.Concat(",", Environment.NewLine), getDbPropertyMapping)}
+                        }})
+                        .SingleOrDefaultAsync(p => p.Id == id);
+
+            var result = new Models.{Screen.FormResponseClass}{{
 {string.Join(string.Concat(",", Environment.NewLine), getPropertyMapping)}
-                            }})
-                            .SingleOrDefaultAsync(p => p.Id == id);
+            }};
             if (result == null)
             {{
                 return NotFound();
@@ -90,31 +168,79 @@ namespace MasterBuilder.Templates.Controllers
         }}";
         }
 
+        private IEnumerable<string> PutProperty(IEnumerable<FormField> formFields, string objectName = "")
+        {
+            var properties = new List<string>();
+
+            foreach (var formField in formFields)
+            {
+                switch (formField.PropertyType)
+                {
+                    case PropertyType.PrimaryKey:
+                    case PropertyType.OneToOneRelationship:
+                        // Ignore
+                        break;
+                    default:
+                        properties.Add($"            existingRecord.{objectName}{formField.InternalNameCSharp} = put.{objectName}{formField.InternalNameCSharp};");
+                        break;
+                }
+            }
+            return properties;
+        }
+
         /// <summary>
         /// PUT Verb Method, for updating records
         /// </summary>
         internal string PutMethod()
         {
-            var propertyMapping = new List<string>();
-            foreach (var formField in ScreenSection.FormSection.FormFields)
+            var properties = new List<string>();
+
+            // Convert root fields to properties
+            var rootFields = (from formSection in ScreenSections
+                              where !formSection.ParentEntityPropertyId.HasValue
+                              from ff in formSection.FormSection.FormFields
+                              select ff).ToArray();
+            properties.AddRange(PutProperty(rootFields));
+
+            // Convert child properties to objects with properties
+            var childSections = (from formSection in ScreenSections
+                                 where formSection.ParentEntityPropertyId.HasValue
+                                 select formSection).ToArray();
+
+            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
             {
-                switch (formField.PropertyType)
+                ParentEntityProperty = a.Key,
+                ChildSections = a.ToArray()
+            }))
+            {
+                var entityProperties = new List<string>();
+
+                entityProperties.AddRange(
+                    PutProperty((from screenSection in childItem.ChildSections
+                                 from ff in screenSection.FormSection.FormFields
+                                 select ff).ToArray(),
+                    $"{childItem.ParentEntityProperty.ParentEntity.InternalName}."));
+
+                if (entityProperties.Any())
                 {
-                    case PropertyType.PrimaryKey:
-                        // Ignore
-                        break;
-                    case PropertyType.OneToOneRelationship:
-                        // TODO
-                        break;
-                    default:
-                        propertyMapping.Add($"                {formField.InternalNameCSharp} = put.{formField.InternalNameCSharp}");
-                        break;
+                    properties.Add($@"            if (put.{childItem.ParentEntityProperty.ParentEntity.InternalName} == null)
+            {{
+                existingRecord.{childItem.ParentEntityProperty.InternalName} = null;
+            }}
+            else
+            {{
+                if (existingRecord.{childItem.ParentEntityProperty.InternalName} == null)
+                {{
+                    existingRecord.{childItem.ParentEntityProperty.InternalName} = new {childItem.ParentEntityProperty.InternalName}();
+                }}
+{string.Join(Environment.NewLine, entityProperties)}
+            }}");
                 }
             }
 
             return $@"
         /// <summary>
-        /// {ScreenSection.Title} Update
+        /// {Screen.Title} Update
         /// </summary>
         [HttpPut(""{Screen.InternalName}/{{id}}"")]
         [ProducesResponseType(200)]
@@ -131,15 +257,34 @@ namespace MasterBuilder.Templates.Controllers
                 return new BadRequestObjectResult(ModelState);
             }}
             
-            var newRecord = new {ScreenSection.FormSection.Entity.InternalName}{{
-{string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
-            }};            
+            var existingRecord = await _context.{Screen.Entity.InternalNamePlural}.FindAsync(id);
 
-            _context.{ScreenSection.FormSection.Entity.InternalNamePlural}.Add(newRecord);
+{string.Join(Environment.NewLine, properties)}
+
             await _context.SaveChangesAsync();
 
-            return Ok(newRecord.Id);
+            return Ok(id);
         }}";
+        }
+
+        private IEnumerable<string> PostProperty(IEnumerable<FormField> formFields, string objectName = "post", int level = 0)
+        {
+            var properties = new List<string>();
+
+            foreach (var formField in formFields)
+            {
+                switch (formField.PropertyType)
+                {
+                    case PropertyType.PrimaryKey:
+                    case PropertyType.OneToOneRelationship:
+                        // Ignore
+                        break;
+                    default:
+                        properties.Add($"                {new string(' ', 4 * level)}{formField.InternalNameCSharp} = {objectName}.{formField.InternalNameCSharp}");
+                        break;
+                }
+            }
+            return properties;
         }
 
         /// <summary>
@@ -147,26 +292,47 @@ namespace MasterBuilder.Templates.Controllers
         /// </summary>
         internal string PostMethod()
         {
-            var postPropertyMapping = new List<string>();
-            foreach (var formField in ScreenSection.FormSection.FormFields)
+            var properties = new List<string>();
+
+
+            // Convert root fields to properties
+            var rootFields = (from formSection in ScreenSections
+                              where !formSection.ParentEntityPropertyId.HasValue
+                              from ff in formSection.FormSection.FormFields
+                              select ff).ToArray();
+            properties.AddRange(PostProperty(rootFields));
+
+            // Convert child properties to objects with properties
+            var childSections = (from formSection in ScreenSections
+                                 where formSection.ParentEntityPropertyId.HasValue
+                                 select formSection).ToArray();
+
+            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
             {
-                switch (formField.PropertyType)
+                ParentEntityProperty = a.Key,
+                ChildSections = a.ToArray()
+            }))
+            {
+                var entityProperties = new List<string>();
+
+                entityProperties.AddRange(
+                    PostProperty((from screenSection in childItem.ChildSections
+                                  from ff in screenSection.FormSection.FormFields
+                                  select ff).ToArray(),
+                    $"post.{childItem.ParentEntityProperty.ParentEntity.InternalName}",
+                    1));
+
+                if (entityProperties.Any())
                 {
-                    case PropertyType.PrimaryKey:
-                        // Ignore
-                        break;
-                    case PropertyType.OneToOneRelationship:
-                        // TODO
-                        break;
-                    default:
-                        postPropertyMapping.Add($"                {formField.InternalNameCSharp} = post.{formField.InternalNameCSharp}");
-                        break;
+                    properties.Add($@"                {childItem.ParentEntityProperty.InternalName} = (post.{childItem.ParentEntityProperty.ParentEntity.InternalName} == null ? null : new {childItem.ParentEntityProperty.InternalName} {{
+{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
+                }})");
                 }
             }
 
             return $@"
         /// <summary>
-        /// {ScreenSection.Title} Add
+        /// {Screen.Title} Add
         /// </summary>
         [HttpPost(""{Screen.InternalName}"")]
         [ProducesResponseType(typeof(Guid), 200)]
@@ -183,11 +349,11 @@ namespace MasterBuilder.Templates.Controllers
                 return new BadRequestObjectResult(ModelState);
             }}
             
-            var newRecord = new {ScreenSection.FormSection.Entity.InternalName}{{
-{string.Join(string.Concat(",", Environment.NewLine), postPropertyMapping)}
+            var newRecord = new {Screen.Entity.InternalName}{{
+{string.Join(string.Concat(",", Environment.NewLine), properties)}
             }};            
 
-            _context.{ScreenSection.FormSection.Entity.InternalNamePlural}.Add(newRecord);
+            _context.{Screen.Entity.InternalNamePlural}.Add(newRecord);
             await _context.SaveChangesAsync();
 
             return Ok(newRecord.Id);
@@ -200,127 +366,127 @@ namespace MasterBuilder.Templates.Controllers
         internal string PatchMethod()
         {
             var patchEntityOperations = new List<string>();
-            foreach (var formField in ScreenSection.FormSection.FormFields)
-            {
-                switch (formField.PropertyType)
-                {
-                    case PropertyType.ParentRelationship:
-                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-                        if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
-                        {{
-                            entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
-                        }}
-                        else
-                        {{
-                            throw new Exception(""{formField.InternalNameCSharp.Camelize()} value is invalid"");
-                        }}
-                        entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        break;");
-                        break;
+            //foreach (var formField in ScreenSection.FormSection.FormFields)
+            //{
+            //    switch (formField.PropertyType)
+            //    {
+            //        case PropertyType.ParentRelationship:
+            //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
+            //            {{
+            //                entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
+            //            }}
+            //            else
+            //            {{
+            //                throw new Exception(""{formField.InternalNameCSharp.Camelize()} value is invalid"");
+            //            }}
+            //            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            break;");
+            //            break;
 
-                    case PropertyType.ReferenceRelationship:
-                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-                        if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
-                        {{
-                            entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
-                        }}
-                        else
-                        {{
-                            {(formField.Property.Required ? $@"throw new Exception(""{formField.InternalNameCSharp.Camelize()} value is invalid"");" : $"entity.{formField.InternalNameCSharp} = null;")}
-                        }}
-                        entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        break;");
-                        break;
+            //        case PropertyType.ReferenceRelationship:
+            //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
+            //            {{
+            //                entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
+            //            }}
+            //            else
+            //            {{
+            //                {(formField.Property.Required ? $@"throw new Exception(""{formField.InternalNameCSharp.Camelize()} value is invalid"");" : $"entity.{formField.InternalNameCSharp} = null;")}
+            //            }}
+            //            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            break;");
+            //            break;
 
-                    case PropertyType.PrimaryKey:
-                        break;
-                    case PropertyType.String:
-                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-                        entity.{formField.InternalNameCSharp} = operation.value.ToString();
-                        entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        break;");
-                        break;
+            //        case PropertyType.PrimaryKey:
+            //            break;
+            //        case PropertyType.String:
+            //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+            //            entity.{formField.InternalNameCSharp} = operation.value.ToString();
+            //            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            break;");
+            //            break;
 
-                    case PropertyType.Integer:
-                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-                        int int32Value{formField.InternalNameCSharp};
-                        if (operation.value != null && Int32.TryParse(operation.value.ToString(), out int32Value{formField.InternalNameCSharp}))
-                        {{
-                            entity.{formField.InternalNameCSharp} = int32Value{formField.InternalNameCSharp};
-                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        }}
-                        {(formField.Property.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
-                        {{
-                            entity.{formField.InternalNameCSharp} = null;
-                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        }}")}
-                        else
-                        {{
-                            throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid integer value"");
-                        }}
-                        break;");
-                        break;
-                    case PropertyType.Double:
-                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-                        double doubleValue{formField.InternalNameCSharp};
-                        if (operation.value != null && Double.TryParse(operation.value.ToString(), out doubleValue{formField.InternalNameCSharp}))
-                        {{
-                            entity.{formField.InternalNameCSharp} = doubleValue{formField.InternalNameCSharp};
-                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        }}
-                        {(formField.Property.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
-                        {{
-                            entity.{formField.InternalNameCSharp} = null;
-                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        }}")}
-                        else
-                        {{
-                            throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid double value"");
-                        }}
-                        break;");
-                        break;
-                    case PropertyType.DateTime:
-                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-                        DateTime dateTimeValue{formField.InternalNameCSharp};
-                        if (operation.value != null && DateTime.TryParse(operation.value.ToString(), out dateTimeValue{formField.InternalNameCSharp}))
-                        {{
-                            entity.{formField.InternalNameCSharp} = dateTimeValue{formField.InternalNameCSharp};
-                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        }}
-                        {(formField.Property.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
-                        {{
-                            entity.{formField.InternalNameCSharp} = null;
-                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        }}")}
-                        else
-                        {{
-                            throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid boolean value"");
-                        }}
-                        break;");
-                        break;
-                    case PropertyType.Boolean:
-                        patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-                        bool booleanValue{formField.InternalNameCSharp};
-                        if (operation.value != null && Boolean.TryParse(operation.value.ToString(), out booleanValue{formField.InternalNameCSharp}))
-                        {{
-                            entity.{formField.InternalNameCSharp} = booleanValue{formField.InternalNameCSharp};
-                            entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
-                        }}
-                        else
-                        {{
-                            throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid boolean value"");
-                        }}
-                        break;");
-                        break;
-                    default:
-                        break;
-                }
-            }
-            
+            //        case PropertyType.Integer:
+            //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+            //            int int32Value{formField.InternalNameCSharp};
+            //            if (operation.value != null && Int32.TryParse(operation.value.ToString(), out int32Value{formField.InternalNameCSharp}))
+            //            {{
+            //                entity.{formField.InternalNameCSharp} = int32Value{formField.InternalNameCSharp};
+            //                entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            }}
+            //            {(formField.Property.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
+            //            {{
+            //                entity.{formField.InternalNameCSharp} = null;
+            //                entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            }}")}
+            //            else
+            //            {{
+            //                throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid integer value"");
+            //            }}
+            //            break;");
+            //            break;
+            //        case PropertyType.Double:
+            //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+            //            double doubleValue{formField.InternalNameCSharp};
+            //            if (operation.value != null && Double.TryParse(operation.value.ToString(), out doubleValue{formField.InternalNameCSharp}))
+            //            {{
+            //                entity.{formField.InternalNameCSharp} = doubleValue{formField.InternalNameCSharp};
+            //                entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            }}
+            //            {(formField.Property.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
+            //            {{
+            //                entity.{formField.InternalNameCSharp} = null;
+            //                entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            }}")}
+            //            else
+            //            {{
+            //                throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid double value"");
+            //            }}
+            //            break;");
+            //            break;
+            //        case PropertyType.DateTime:
+            //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+            //            DateTime dateTimeValue{formField.InternalNameCSharp};
+            //            if (operation.value != null && DateTime.TryParse(operation.value.ToString(), out dateTimeValue{formField.InternalNameCSharp}))
+            //            {{
+            //                entity.{formField.InternalNameCSharp} = dateTimeValue{formField.InternalNameCSharp};
+            //                entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            }}
+            //            {(formField.Property.Required ? string.Empty : $@"else if (operation.value == null || string.IsNullOrWhiteSpace(operation.value.ToString()))
+            //            {{
+            //                entity.{formField.InternalNameCSharp} = null;
+            //                entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            }}")}
+            //            else
+            //            {{
+            //                throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid boolean value"");
+            //            }}
+            //            break;");
+            //            break;
+            //        case PropertyType.Boolean:
+            //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
+            //            bool booleanValue{formField.InternalNameCSharp};
+            //            if (operation.value != null && Boolean.TryParse(operation.value.ToString(), out booleanValue{formField.InternalNameCSharp}))
+            //            {{
+            //                entity.{formField.InternalNameCSharp} = booleanValue{formField.InternalNameCSharp};
+            //                entityEntry.Property(p => p.{formField.InternalNameCSharp}).IsModified = true;
+            //            }}
+            //            else
+            //            {{
+            //                throw new Exception(""Property: {formField.InternalNameCSharp}, Value:"" + operation.value + "" is not a valid boolean value"");
+            //            }}
+            //            break;");
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+
             //http://benfoster.io/blog/aspnet-core-json-patch-partial-api-updates
             return $@"
         /// <summary>
-        /// {ScreenSection.Title} Update
+        /// {Screen.Title} Update
         /// </summary>
         [HttpPatch(""{Screen.InternalName}/{{id}}"")]
         [ProducesResponseType(200)]
@@ -342,8 +508,8 @@ namespace MasterBuilder.Templates.Controllers
                 return Ok();
             }}
 
-            var entity = new Entities.{ScreenSection.FormSection.Entity.InternalName}() {{ Id = id }};
-            var entityEntry = _context.{ScreenSection.FormSection.Entity.InternalNamePlural}.Attach(entity);
+            var entity = new Entities.{Screen.Entity.InternalName}() {{ Id = id }};
+            var entityEntry = _context.{Screen.Entity.InternalNamePlural}.Attach(entity);
             
             // do stuff
             foreach(var operation in patch.Operations)

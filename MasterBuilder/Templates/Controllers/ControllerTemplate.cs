@@ -67,6 +67,7 @@ namespace MasterBuilder.Templates.Controllers
             };
 
             var referenceFormFields = new List<FormField>();
+            var formSections = new List<ScreenSection>();
             foreach (var screenSection in Screen.ScreenSections)
             {
                 switch (screenSection.ScreenSectionType)
@@ -76,19 +77,7 @@ namespace MasterBuilder.Templates.Controllers
                         break;
 
                     case ScreenSectionType.Form:
-                        var controllerFormSectionMethodsPartial = new ControllerFormSectionMethodsPartial(Project, Screen, screenSection);
-                        methods.Add(controllerFormSectionMethodsPartial.GetMethod());
-                        methods.Add(controllerFormSectionMethodsPartial.PostMethod());
-
-                        if (Project.UsePutForUpdate)
-                        {
-                            methods.Add(controllerFormSectionMethodsPartial.PutMethod());
-                        }
-                        else
-                        {
-                            usings.Add("using Microsoft.AspNetCore.JsonPatch;");
-                            methods.Add(controllerFormSectionMethodsPartial.PatchMethod());
-                        }
+                        formSections.Add(screenSection);
                         referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
                         break;
 
@@ -115,6 +104,23 @@ namespace MasterBuilder.Templates.Controllers
                                 break;
                         }
                     }
+                }
+            }
+
+            if (formSections.Any())
+            {
+                var controllerFormSectionMethodsPartial = new ControllerFormSectionMethodsPartial(Project, Screen, formSections);
+                methods.Add(controllerFormSectionMethodsPartial.GetMethod());
+                methods.Add(controllerFormSectionMethodsPartial.PostMethod());
+
+                if (Project.UsePutForUpdate)
+                {
+                    methods.Add(controllerFormSectionMethodsPartial.PutMethod());
+                }
+                else
+                {
+                    usings.Add("using Microsoft.AspNetCore.JsonPatch;");
+                    methods.Add(controllerFormSectionMethodsPartial.PatchMethod());
                 }
             }
 
