@@ -2,6 +2,7 @@ using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MasterBuilder.Templates.Models
 {
@@ -12,16 +13,18 @@ namespace MasterBuilder.Templates.Models
     {
         private readonly Project Project;
         private readonly Screen Screen;
-        private readonly ScreenSection ScreenSection;
+        private readonly IEnumerable<ScreenSection> ScreenSections;
+        private readonly IEnumerable<ScreenSection> ChildScreenSections;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelFormResponseTemplate(Project project, Screen screen, ScreenSection screenSection)
+        public ModelFormResponseTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections, IEnumerable<ScreenSection> childScreenSections)
         {
             Project = project;
             Screen = screen;
-            ScreenSection = screenSection;
+            ScreenSections = screenSections;
+            ChildScreenSections = childScreenSections;
         }
 
         /// <summary>
@@ -29,7 +32,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{ScreenSection.FormSection.FormResponseClass}.cs";
+            return $"{Screen.FormResponseClass}.cs";
         }
 
         /// <summary>
@@ -47,10 +50,24 @@ namespace MasterBuilder.Templates.Models
         {
             var properties = new List<string>();
             
-            foreach (var formField in ScreenSection.FormSection.FormFields)
+            foreach (var formField in (from screenSection in ScreenSections
+                                       from ff in screenSection.FormSection.FormFields
+                                       select ff))
             {
-                properties.Add(ModelFormResponsePropertyTemplate.Evaluate(formField));
+                properties.AddRange(ModelFormResponsePropertyPartial.Evaluate(formField));
             }
+
+            // TODO: Validation
+            foreach (var childProperty in (from child in ChildScreenSections
+                        select child.ParentEntityProperty).Distinct())
+            {
+                properties.Add($@"        /// <summary>
+        /// {childProperty.Title}
+        /// </summary>
+        [Display(Name = ""{childProperty.Title}"")]
+        public {childProperty.InternalName}{Screen.FormResponseClass} {childProperty.InternalName} {{ get; set; }}");
+            }
+
 
             return $@"using System;
 using System.ComponentModel.DataAnnotations;
@@ -60,9 +77,9 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Screen Load
     /// </summary>
-    public class {ScreenSection.FormSection.FormResponseClass}
+    public class {Screen.FormResponseClass}
     {{
-{string.Join(Environment.NewLine ,properties)}
+{string.Join(Environment.NewLine, properties)}
     }}
 }}";
         }

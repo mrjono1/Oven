@@ -14,10 +14,16 @@ namespace MasterBuilder.Request
         internal bool Resolve(Project project, out string message)
         {
             var errors = new List<string>();
-            
+
+            if (EntityId.HasValue)
+            {
+                Entity = project.Entities.Single(e => e.Id == EntityId.Value);
+            }
+
             if (ScreenSections == null || !ScreenSections.Any())
             {
                 var screenSectionType = ScreenSectionType.Html;
+                var extraScreenSections = new List<ScreenSection>();
                 if (EntityId.HasValue)
                 {
                     switch (ScreenType)
@@ -27,6 +33,24 @@ namespace MasterBuilder.Request
                             break;
                         case ScreenType.Form:
                             screenSectionType = ScreenSectionType.Form;
+
+                            var oneToOnePropertyIds = (from property in Entity.Properties
+                                                      where property.PropertyType == PropertyType.OneToOneRelationship
+                                                      select property.Id).ToArray();
+                            foreach (var oneToOnePropertyId in oneToOnePropertyIds)
+                            {
+                                extraScreenSections.Add(new ScreenSection
+                                {
+                                    Id = Id,
+                                    Title = Title,
+                                    EntityId = EntityId,
+                                    InternalName = InternalName,
+                                    ScreenSectionType = screenSectionType,
+                                    NavigateToScreenId = NavigateToScreenId,
+                                    ParentEntityPropertyId = oneToOnePropertyId
+                                });
+                            }
+
                             break;
                         case ScreenType.View:
                             screenSectionType = ScreenSectionType.Form;

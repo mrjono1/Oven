@@ -21,30 +21,6 @@ namespace MasterBuilder.Request
         /// Screen Section
         /// </summary>
         internal ScreenSection ScreenSection { get; set; }
-        /// <summary>
-        /// Entity
-        /// </summary>
-        internal Entity Entity { get; set; }
-        /// <summary>
-        /// Form Response Class
-        /// </summary>
-        internal string FormResponseClass
-        {
-            get
-            {
-                return $"{Screen.InternalName}Response";
-            }
-        }
-        /// <summary>
-        /// Form Request Class
-        /// </summary>
-        internal string FormRequestClass
-        {
-            get
-            {
-                return $"{Screen.InternalName}Request";
-            }
-        }
         #endregion
     }
 }

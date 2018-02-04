@@ -7,24 +7,24 @@ using System.Linq;
 namespace MasterBuilder.Templates.Models
 {
     /// <summary>
-    /// Model Form Request Template
+    /// Model Child Form Request Template
     /// </summary>
-    public class ModelFormRequestTemplate : ITemplate
+    public class ModelChildFormRequestTemplate : ITemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
+        private readonly Property Property;
         private readonly IEnumerable<ScreenSection> ScreenSections;
-        private readonly IEnumerable<ScreenSection> ChildScreenSections;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelFormRequestTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections, IEnumerable<ScreenSection> childScreenSections)
+        public ModelChildFormRequestTemplate(Project project, Screen screen, Property property, IEnumerable<ScreenSection> screenSections)
         {
             Project = project;
             Screen = screen;
+            Property = property;
             ScreenSections = screenSections;
-            ChildScreenSections = childScreenSections;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{Screen.FormRequestClass}.cs";
+            return $"{Property.InternalName}{Screen.FormRequestClass}.cs";
         }
 
         /// <summary>
@@ -56,17 +56,7 @@ namespace MasterBuilder.Templates.Models
             {
                 properties.Add(ModelFormRequestPropertyTemplate.Evaluate(formField));
             }
-
-            foreach (var childProperty in (from child in ChildScreenSections
-                                           select child.ParentEntityProperty).Distinct())
-            {
-                properties.Add($@"        /// <summary>
-        /// {childProperty.Title}
-        /// </summary>
-        [Display(Name = ""{childProperty.Title}"")]
-        public {childProperty.InternalName}{Screen.FormResponseClass} {childProperty.InternalName} {{ get; set; }}");
-            }
-
+            
 
             return $@"using System;
 using System.ComponentModel;
@@ -75,9 +65,9 @@ using System.ComponentModel.DataAnnotations;
 namespace {Project.InternalName}.Models
 {{
     /// <summary>
-    /// {Screen.InternalName} Insert/Update Model
+    /// {Screen.InternalName} {Property.InternalName} Request Model
     /// </summary>
-    public class {Screen.FormRequestClass}
+    public class {Property.InternalName}{Screen.FormRequestClass}
     {{
 {string.Join(Environment.NewLine, properties)}
     }}

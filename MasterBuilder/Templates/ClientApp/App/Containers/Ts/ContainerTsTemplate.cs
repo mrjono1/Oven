@@ -57,22 +57,14 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             };
             var properties = new List<string>();
             var formControls = new List<string>();
-            
+
+            var formSections = new List<ScreenSection>();
             foreach (var screenSection in Screen.ScreenSections)
             {
                 switch (screenSection.ScreenSectionType)
                 {
                     case ScreenSectionType.Form:
-
-                        var formSectionPartial = new FormSectionPartial(Project, Screen, screenSection);
-                        imports.AddRange(formSectionPartial.GetImports());
-                        constructorParamerters.AddRange(formSectionPartial.GetConstructorParameters());
-                        constructorBodySections.AddRange(formSectionPartial.GetConstructorBodySections());
-                        classProperties.AddRange(formSectionPartial.GetClassProperties());
-                        onNgInitBodySections.AddRange(formSectionPartial.GetOnNgInitBodySections());
-                        functions.AddRange(formSectionPartial.GetFunctions());
-                        properties.AddRange(formSectionPartial.GetProperties());
-                        formControls.AddRange(formSectionPartial.GetFormControls());
+                        formSections.Add(screenSection);
                         
                         break;
                     case ScreenSectionType.Search:
@@ -118,12 +110,27 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                     }
                 }
             }
+
+            if (formSections.Any())
+            {
+                var formSectionPartial = new FormSectionPartial(Project, Screen, formSections);
+                imports.AddRange(formSectionPartial.GetImports());
+                constructorParamerters.AddRange(formSectionPartial.GetConstructorParameters());
+                constructorBodySections.AddRange(formSectionPartial.GetConstructorBodySections());
+                classProperties.AddRange(formSectionPartial.GetClassProperties());
+                onNgInitBodySections.AddRange(formSectionPartial.GetOnNgInitBodySections());
+                functions.AddRange(formSectionPartial.GetFunctions());
+                properties.AddRange(formSectionPartial.GetProperties());
+                formControls.AddRange(formSectionPartial.GetFormControls());
+            }
             
             if (formControls.Any())
             {
                 functions.Add($@"    setupForm(){{
-        this.{Screen.InternalName.Camelize()}Form = new FormGroup({{}});
-{string.Join(Environment.NewLine, formControls)}
+        this.{Screen.InternalName.Camelize()}Form = new FormGroup({{
+{string.Join(string.Concat(",", Environment.NewLine), formControls)}
+        }});
+        this.{Screen.InternalName.Camelize()}Form.patchValue(this.{Screen.InternalName.Camelize()});
     }}");
             }
 

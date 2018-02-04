@@ -76,6 +76,10 @@ namespace MasterBuilder.Request
         /// </summary>
         public IEnumerable<MenuItem> MenuListMenuItems { get; set; }
         /// <summary>
+        /// Parent Property Id (used for nested sections)
+        /// </summary>
+        public Guid? ParentEntityPropertyId { get; set; }
+        /// <summary>
         /// Only populate when Screen Section Type = Search
         /// </summary>
         public SearchSection SearchSection { get; set; }
@@ -83,5 +87,17 @@ namespace MasterBuilder.Request
         /// Only populate when Screen Section Type = Form
         /// </summary>
         public FormSection FormSection { get; set; }
+
+        #region Internal Fields
+
+        /// <summary>
+        /// Entity
+        /// </summary>
+        internal Entity Entity { get; set; }
+        /// <summary>
+        /// Parent Entity Property, for nested sections
+        /// </summary>
+        internal Property ParentEntityProperty { get; set; }
+        #endregion
     }
 }

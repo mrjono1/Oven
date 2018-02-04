@@ -14,21 +14,24 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
     {
         private readonly Project Project;
         private readonly Screen Screen;
+        private readonly ScreenSection ScreenSection;
         private readonly Property Property;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public FormPropertyTemplate(Project project, Screen screen, Property property)
+        public FormPropertyTemplate(Project project, Screen screen, ScreenSection screenSection, Property property)
         {
             Project = project;
             Screen = screen;
+            ScreenSection = screenSection;
             Property = property;
         }
 
         internal string FormField()
         {
             string propertyName = null;
+            string propertyFormPath = null;
             switch (Property.PropertyType)
             {
                 case PropertyType.ReferenceRelationship:
@@ -37,6 +40,14 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 default:
                     propertyName = Property.InternalName.Camelize();
                     break;
+            }
+            if (ScreenSection.ParentEntityProperty == null)
+            {
+                propertyFormPath = propertyName;
+            }
+            else
+            {
+                propertyFormPath = $"{ScreenSection.ParentEntityProperty.InternalName.Camelize()}.{propertyName}";
             }
 
             var attributes = new List<string>();
@@ -97,7 +108,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     }
                     if (selector != null)
                     {
-                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{propertyName}.hasError('{selector}')"">
+                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{Screen.InternalName.Camelize()}Form.get('{propertyFormPath}').hasError('{selector}')"">
 {new String(' ', 24)}{validationItem.GetMessage(Property.Title)}
 {new String(' ', 20)}</mat-error>");
                     }
@@ -105,7 +116,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             }
 
             propertyValidators.Add($@"                    <mat-error>
-                        {{{{serverErrorMessages.{propertyName}}}}}
+                        {{{{serverErrorMessages.{propertyFormPath}}}}}
                     </mat-error>");
 
             string control = null;
@@ -115,22 +126,22 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 case PropertyType.String:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""text"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+{new String(' ', 22)}formControlName=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Integer:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+{new String(' ', 22)}formControlName=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Double:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+{new String(' ', 22)}formControlName=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.DateTime:
                     control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" matInput [matDatepicker]=""{propertyName}Control"" id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
+{new String(' ', 22)}formControlName=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
                     <mat-datepicker-toggle matSuffix [for]=""{propertyName}Control""></mat-datepicker-toggle>
                     <mat-datepicker #{propertyName}Control></mat-datepicker>";
                     break;
@@ -138,7 +149,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 case PropertyType.Boolean:
                     dontWrap = true;
                     control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{Screen.InternalName.Camelize()}"" id=""{Property.Id}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{Property.Title}</mat-checkbox>";
+{new String(' ', 22)}formControlName=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{Property.Title}</mat-checkbox>";
                     break;
 
                 case PropertyType.ReferenceRelationship:
@@ -146,7 +157,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                                         where e.Id == Property.ParentEntityId.Value
                                         select e).SingleOrDefault();
 
-                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{Property.Title}"" [compareWith]=""referenceCompare"" [formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
+                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{Property.Title}"" [compareWith]=""referenceCompare"" formControlName=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
                            {(Property.Required ? string.Empty : "<mat-option>--</mat-option>")}
                            <mat-option *ngFor=""let option of {parentEntity.InternalName.Camelize()}Reference.items"" [value]=""option.id"">
                                 <span>{{{{ option.title }}}}</span>

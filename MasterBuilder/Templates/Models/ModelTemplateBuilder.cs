@@ -30,14 +30,14 @@ namespace MasterBuilder.Templates.Models
             foreach (var screen in Project.Screens)
             {
                 var referenceFormFields = new List<FormField>();
+                var formSections = new List<ScreenSection>();
                 foreach (var screenSection in screen.ScreenSections)
                 {
                     switch (screenSection.ScreenSectionType)
                     {
                         case ScreenSectionType.Form:
                             referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
-                            templates.Add(new ModelFormResponseTemplate(Project, screen, screenSection));
-                            templates.Add(new ModelFormRequestTemplate(Project, screen, screenSection));
+                            formSections.Add(screenSection);
                             break;
                         case ScreenSectionType.Search:
                             templates.Add(new ModelSearchRequestTemplate(Project, screen, screenSection));
@@ -52,6 +52,29 @@ namespace MasterBuilder.Templates.Models
                             break;
                         default:
                             break;
+                    }
+                }
+
+                if (formSections.Any())
+                {
+                    var rootSections = (from formSection in formSections
+                                        where !formSection.ParentEntityPropertyId.HasValue
+                                        select formSection).ToArray();
+                    var childSections = (from formSection in formSections
+                                        where formSection.ParentEntityPropertyId.HasValue
+                                        select formSection).ToArray();
+
+                    templates.Add(new ModelFormResponseTemplate(Project, screen, rootSections, childSections));
+                    templates.Add(new ModelFormRequestTemplate(Project, screen, rootSections, childSections));
+
+                    foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
+                    {
+                        ParentEntityProperty = a.Key,
+                        ChildSections = a.ToArray()
+                    }))
+                    {
+                        templates.Add(new ModelChildFormResponseTemplate(Project, screen, childItem.ParentEntityProperty, childItem.ChildSections));
+                        templates.Add(new ModelChildFormRequestTemplate(Project, screen, childItem.ParentEntityProperty, childItem.ChildSections));
                     }
                 }
 

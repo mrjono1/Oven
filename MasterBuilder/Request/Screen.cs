@@ -140,7 +140,31 @@ namespace MasterBuilder.Request
                 ScreenTypeId = ScreenTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
             }
         }
-        
+        #region Internal Helpers
+        /// <summary>
+        /// Entity
+        /// </summary>
+        internal Entity Entity { get; set; }
+        /// <summary>
+        /// Form Response Class
+        /// </summary>
+        internal string FormResponseClass
+        {
+            get
+            {
+                return $"{InternalName}Response";
+            }
+        }
+        /// <summary>
+        /// Form Request Class
+        /// </summary>
+        internal string FormRequestClass
+        {
+            get
+            {
+                return $"{InternalName}Request";
+            }
+        }
         /// <summary>
         /// Get the edit path
         /// </summary>
@@ -232,5 +256,6 @@ namespace MasterBuilder.Request
             }
             return $"{ancestorsString}{Path}";
         }
+        #endregion
     }
 }

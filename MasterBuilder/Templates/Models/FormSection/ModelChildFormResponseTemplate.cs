@@ -7,24 +7,24 @@ using System.Linq;
 namespace MasterBuilder.Templates.Models
 {
     /// <summary>
-    /// Model Form Request Template
+    /// Model Form Response Template
     /// </summary>
-    public class ModelFormRequestTemplate : ITemplate
+    public class ModelChildFormResponseTemplate : ITemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
+        private readonly Property Property;
         private readonly IEnumerable<ScreenSection> ScreenSections;
-        private readonly IEnumerable<ScreenSection> ChildScreenSections;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelFormRequestTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections, IEnumerable<ScreenSection> childScreenSections)
+        public ModelChildFormResponseTemplate(Project project, Screen screen, Property property, IEnumerable<ScreenSection> screenSections)
         {
             Project = project;
             Screen = screen;
+            Property = property;
             ScreenSections = screenSections;
-            ChildScreenSections = childScreenSections;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{Screen.FormRequestClass}.cs";
+            return $"{Property.InternalName}{Screen.FormResponseClass}.cs";
         }
 
         /// <summary>
@@ -54,36 +54,22 @@ namespace MasterBuilder.Templates.Models
                                        from ff in screenSection.FormSection.FormFields
                                        select ff))
             {
-                properties.Add(ModelFormRequestPropertyTemplate.Evaluate(formField));
+                properties.AddRange(ModelFormResponsePropertyPartial.Evaluate(formField));
             }
-
-            foreach (var childProperty in (from child in ChildScreenSections
-                                           select child.ParentEntityProperty).Distinct())
-            {
-                properties.Add($@"        /// <summary>
-        /// {childProperty.Title}
-        /// </summary>
-        [Display(Name = ""{childProperty.Title}"")]
-        public {childProperty.InternalName}{Screen.FormResponseClass} {childProperty.InternalName} {{ get; set; }}");
-            }
-
 
             return $@"using System;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace {Project.InternalName}.Models
 {{
     /// <summary>
-    /// {Screen.InternalName} Insert/Update Model
+    /// {Screen.InternalName} Screen Load
     /// </summary>
-    public class {Screen.FormRequestClass}
+    public class {Property.InternalName}{Screen.FormResponseClass}
     {{
 {string.Join(Environment.NewLine, properties)}
     }}
 }}";
         }
-
-
     }
 }

@@ -36,7 +36,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
             foreach (var property in entity.Properties)
             {
-                var formPropertyTemplate = new FormPropertyTemplate(Project, Screen, property);
+                var formPropertyTemplate = new FormPropertyTemplate(Project, Screen, ScreenSection, property);
                 formGroups.Add(formPropertyTemplate.FormField());
             }
 
@@ -51,9 +51,15 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     menuItems.Add($@"<button mat-raised-button (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
                 }
             }
-
+            
+            string nestedFormGroup = "";
+            if (ScreenSection.ParentEntityProperty != null)
+            {
+                nestedFormGroup = $@"<div formGroupName=""{ScreenSection.ParentEntityProperty.InternalName.Camelize()}"">";
+            }
             return $@"        <div class=""screen-section-form container mat-elevation-z2"" fxFlex>
             <form *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate fxLayout=""column"">
+{nestedFormGroup}
         <mat-toolbar class=""primary"">
             <mat-toolbar-row>
             <span>{ScreenSection.Title}</span>
@@ -61,6 +67,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             </mat-toolbar-row>
         </mat-toolbar>
 { string.Join(Environment.NewLine, formGroups)}
+{(string.IsNullOrWhiteSpace(nestedFormGroup) ? "" : "</div>")}
             </form>
         </div>";
         }

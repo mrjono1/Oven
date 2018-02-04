@@ -14,16 +14,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
     {
         private readonly Project Project;
         private readonly Screen Screen;
-        private readonly ScreenSection ScreenSection;
+        private readonly IEnumerable<ScreenSection> ScreenSections;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public FormSectionPartial(Project project, Screen screen, ScreenSection screenSection)
+        public FormSectionPartial(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
         {
             Project = project;
             Screen = screen;
-            ScreenSection = screenSection;
+            ScreenSections = screenSections;
         }
 
         /// <summary>
@@ -34,13 +34,23 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         {
             var imports = new List<string>
             {
-                $"import {{ {ScreenSection.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{ScreenSection.InternalName}';",
+                $"import {{ {Screen.Entity.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{Screen.Entity.InternalName}';",
                 $"import {{ {Screen.InternalName}Service }} from '../../shared/{Screen.InternalName.ToLowerInvariant()}.service';",
                 "import { Operation } from '../../models/Operation';",
                 "import { FormControl, FormGroup, Validators } from '@angular/forms';",
                 "import { Observable } from 'rxjs/Observable';",
                 "import { HttpErrorService } from '../../shared/httperror.service';"
             };
+            
+            // Convert child properties to objects with properties
+            var childSections = (from formSection in ScreenSections
+                                 where formSection.ParentEntityPropertyId.HasValue
+                                 select formSection).ToArray();
+
+            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty))
+            {
+                imports.Add($"import {{ {childItem.Key.ParentEntity.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{childItem.Key.ParentEntity.InternalName}';");
+            }
 
             var hasReferenceFormField = false;
             foreach (var screenSection in Screen.ScreenSections)
@@ -83,9 +93,18 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         /// <returns></returns>
         internal IEnumerable<string> GetConstructorBodySections()
         {
-            return new string[]
+            var sections = new List<string>();
+
+            var childSections = (from formSection in ScreenSections
+                                 where formSection.ParentEntityPropertyId.HasValue
+                                 select formSection).ToArray();
+
+            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty))
             {
-            };
+                sections.Add($"this.serverErrorMessages.{childItem.Key.InternalName.Camelize()} = {{}};");
+            }
+
+            return sections;
         }
 
         /// <summary>
@@ -95,14 +114,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         {
             var classProperties = new List<string>
             {
-                $"public {ScreenSection.InternalName.Camelize()}: {ScreenSection.InternalName};",
-                $"public {ScreenSection.InternalName.Camelize()}Form: FormGroup;",
+                $"public {Screen.InternalName.Camelize()}: {Screen.InternalName};",
+                $"public {Screen.InternalName.Camelize()}Form: FormGroup;",
                 "public new: boolean;",
-                // Re using the model class as it has the same properties needed
-                $"public serverErrorMessages: {ScreenSection.InternalName} = new {ScreenSection.InternalName}();"
+                "public serverErrorMessages: any = {};"
             };
 
-            foreach (var referenceFormField in ScreenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
+            foreach (var referenceFormField in (from screenSection in ScreenSections
+                                                from formField in screenSection.FormSection.FormFields
+                                                where formField.PropertyType == PropertyType.ReferenceRelationship
+                                                select formField))
             {
                 classProperties.Add($"public {referenceFormField.Property.InternalName.Camelize()}Reference: {referenceFormField.ReferenceResponseClass} = new {referenceFormField.ReferenceResponseClass}();");
             }
@@ -118,7 +139,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             var lines = new List<string>();
 
             Property parentProperty = null;
-            parentProperty = (from p in ScreenSection.FormSection.Entity.Properties
+            parentProperty = (from p in Screen.Entity.Properties
                               where p.PropertyType == PropertyType.ParentRelationship
                               select p).SingleOrDefault();
             string setParentProperty = null;
@@ -127,36 +148,44 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 var parentEnitity = (from e in Project.Entities
                                      where e.Id == parentProperty.ParentEntityId
                                      select e).SingleOrDefault();
-                setParentProperty = $"this.{ScreenSection.InternalName.Camelize()}.{parentProperty.InternalName.Camelize()}Id = params['{parentEnitity.InternalName.Camelize()}Id'];";
+                setParentProperty = $"this.{Screen.InternalName.Camelize()}.{parentProperty.InternalName.Camelize()}Id = params['{parentEnitity.InternalName.Camelize()}Id'];";
+            }
+
+            var initSections = new List<string>();
+            var childSections = (from formSection in ScreenSections
+                                 where formSection.ParentEntityPropertyId.HasValue
+                                 select formSection).ToArray();
+
+            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty))
+            {
+                initSections.Add($"                this.{Screen.InternalName.Camelize()}.{childItem.Key.InternalName.Camelize()} = new {childItem.Key.ParentEntity.InternalName}();");
             }
 
             lines.Add($@"        this.route.params.subscribe(params => {{
             if (params['{Screen.InternalName.Camelize()}Id']) {{
                 this.new = false;
-                this.{Screen.InternalName.Camelize()}Service.get{Screen.InternalName}(params['{ScreenSection.FormSection.Entity.InternalName.Camelize()}Id']).subscribe(result => {{
-                    this.{ScreenSection.InternalName.Camelize()} = result;
+                this.{Screen.InternalName.Camelize()}Service.get{Screen.InternalName}(params['{Screen.Entity.InternalName.Camelize()}Id']).subscribe(result => {{
+                    this.{Screen.InternalName.Camelize()} = result;
                     this.setupForm();
                 }}, error => console.error(error));
             }} else {{
                 this.new = true;
-                this.{ScreenSection.InternalName.Camelize()} = new {ScreenSection.InternalName}();
+                this.{Screen.InternalName.Camelize()} = new {Screen.InternalName}();
                 {setParentProperty}
+{string.Join(Environment.NewLine, initSections)}
                 this.setupForm();
             }}
         }});");
 
-            foreach (var screenSection in Screen.ScreenSections)
+            foreach (var screenSection in ScreenSections)
             {
-                if (screenSection.ScreenSectionType == ScreenSectionType.Form)
+                foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
                 {
-                    foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
-                    {
-                        lines.Add($@"        this.{Screen.InternalName.Camelize()}Service.get{referenceFormField.Property.InternalName}References(null , 1, 100).subscribe((result: any) => {{
+                    lines.Add($@"        this.{Screen.InternalName.Camelize()}Service.get{referenceFormField.Property.InternalName}References(null , 1, 100).subscribe((result: any) => {{
             if (result != null) {{
                 this.{referenceFormField.Property.InternalName.Camelize()}Reference.items = result.items;
             }}
         }});");
-                    }
                 }
             }
 
@@ -260,7 +289,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         {
             var properties = new List<string>();
 
-            foreach (var formField in ScreenSection.FormSection.FormFields)
+            foreach (var formField in ScreenSections.First().FormSection.FormFields)
             {
                 switch (formField.PropertyType)
                 {
@@ -274,75 +303,109 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             
             return properties;
         }
+        private string GetValidationArray(FormField formField, int level = 0)
+        {
+            var propertyValidators = new List<string>();
+            if (formField.Property.ValidationItems != null)
+            {
+                foreach (var validationItem in formField.Property.ValidationItems)
+                {
+                    switch (validationItem.ValidationType)
+                    {
+                        case ValidationType.Required:
+                            propertyValidators.Add($"            {new string(' ', 4 * level)}Validators.required");
+                            break;
+                        case ValidationType.MaximumLength:
+                            propertyValidators.Add($"            {new string(' ', 4 * level)}Validators.maxLength({validationItem.IntegerValue.Value})");
+                            break;
+                        case ValidationType.MinimumLength:
+                            propertyValidators.Add($"            {new string(' ', 4 * level)}Validators.minLength({validationItem.IntegerValue.Value})");
+                            break;
+                        case ValidationType.MaximumValue:
+                            propertyValidators.Add($"            {new string(' ', 4 * level)}Validators.max({validationItem.IntegerValue.Value})");
+                            break;
+                        case ValidationType.MinimumValue:
+                            propertyValidators.Add($"            {new string(' ', 4 * level)}Validators.min({validationItem.IntegerValue.Value})");
+                            break;
+                        case ValidationType.Unique:
+                            // TODO async validator or just let database let you know of the error?
+                            break;
+                        case ValidationType.Email:
+                            propertyValidators.Add($"            {new string(' ', 4 * level)}Validators.email");
+                            break;
+                        case ValidationType.RequiredTrue:
+                            propertyValidators.Add($"            {new string(' ', 4 * level)}Validators.requiredTrue");
+                            break;
+                        case ValidationType.Pattern:
+                            propertyValidators.Add($@"            {new string(' ', 4 * level)}Validators.pattern(""{validationItem.StringValue}"")");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            
+            return (propertyValidators.Any() ?
+                $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" :
+                string.Empty);
+        }
 
-        internal IEnumerable<string> GetFormControls()
+        private IEnumerable<string> GetControls(IEnumerable<FormField> formFields, int level = 0)
         {
             var formControls = new List<string>();
 
-            foreach (var formField in ScreenSection.FormSection.FormFields)
+            foreach (var formField in formFields)
             {
                 if (formField.PropertyType == PropertyType.PrimaryKey)
                 {
                     continue;
                 }
 
-                var propertyValidators = new List<string>();
-                if (formField.Property.ValidationItems != null)
-                {
-                    foreach (var validationItem in formField.Property.ValidationItems)
-                    {
-                        switch (validationItem.ValidationType)
-                        {
-                            case ValidationType.Required:
-                                propertyValidators.Add("            Validators.required");
-                                break;
-                            case ValidationType.MaximumLength:
-                                propertyValidators.Add($"            Validators.maxLength({validationItem.IntegerValue.Value})");
-                                break;
-                            case ValidationType.MinimumLength:
-                                propertyValidators.Add($"            Validators.minLength({validationItem.IntegerValue.Value})");
-                                break;
-                            case ValidationType.MaximumValue:
-                                propertyValidators.Add($"            Validators.max({validationItem.IntegerValue.Value})");
-                                break;
-                            case ValidationType.MinimumValue:
-                                propertyValidators.Add($"            Validators.min({validationItem.IntegerValue.Value})");
-                                break;
-                            case ValidationType.Unique:
-                                // TODO async validator or just let database let you know of the error?
-                                break;
-                            case ValidationType.Email:
-                                propertyValidators.Add($"            Validators.email");
-                                break;
-                            case ValidationType.RequiredTrue:
-                                propertyValidators.Add($"            Validators.requiredTrue");
-                                break;
-                            case ValidationType.Pattern:
-                                propertyValidators.Add($@"            Validators.pattern(""{validationItem.StringValue}"")");
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
+                var propertyValidatorsString = GetValidationArray(formField, level);
 
-                var propertyValidatorsString = (propertyValidators.Any() ?
-                    $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" :
-                    string.Empty);
-
-                switch (formField.PropertyType)
-                {
-                    case PropertyType.ReferenceRelationship:
-                        formControls.Add($@"        let {formField.InternalNameCSharp.Camelize()}Control: FormControl = new FormControl(this.{Screen.InternalName.Camelize()}.{formField.InternalNameCSharp.Camelize()}{propertyValidatorsString});
-        this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameCSharp.Camelize()}', {formField.InternalNameCSharp.Camelize()}Control);");
-                        break;
-
-                    default:
-                        formControls.Add($@"        this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameCSharp.Camelize()}', new FormControl(this.{Screen.InternalName.Camelize()}.{formField.InternalNameCSharp.Camelize()}{propertyValidatorsString}));");
-                        break;
-                }
+                formControls.Add($@"        {new string(' ', 4 * level)}{formField.InternalNameCSharp.Camelize()}: new FormControl(null{propertyValidatorsString})");
             }
 
+            return formControls;
+        }
+
+        internal IEnumerable<string> GetFormControls()
+        {
+            var formControls = new List<string>();
+            var rootFields = (from formSection in ScreenSections
+                              where !formSection.ParentEntityPropertyId.HasValue
+                              from ff in formSection.FormSection.FormFields
+                              select ff).ToArray();
+
+            formControls.AddRange(GetControls(rootFields, 1));
+
+            // Convert child properties to objects with properties
+            var childSections = (from formSection in ScreenSections
+                                 where formSection.ParentEntityPropertyId.HasValue
+                                 select formSection).ToArray();
+
+            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
+            {
+                ParentEntityProperty = a.Key,
+                ChildSections = a.ToArray()
+            }))
+            {
+                var entityProperties = new List<string>();
+
+                entityProperties.AddRange(
+                    GetControls((from screenSection in childItem.ChildSections
+                                   from ff in screenSection.FormSection.FormFields
+                                   select ff).ToArray(), 2));
+
+                if (entityProperties.Any())
+                {
+                    formControls.Add($@"            {childItem.ParentEntityProperty.InternalName.Camelize()}: new FormGroup({{
+{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
+            }})");
+                }
+                
+            }
+            
             return formControls;
         }
     }

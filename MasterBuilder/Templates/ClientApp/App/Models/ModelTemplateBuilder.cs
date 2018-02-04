@@ -31,6 +31,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             foreach (var screen in Project.Screens)
             {
                 var referenceFormFields = new List<FormField>();
+                var formSections = new List<ScreenSection>();
                 foreach (var screenSection in screen.ScreenSections)
                 {
                     switch (screenSection.ScreenSectionType)
@@ -38,7 +39,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
                         case ScreenSectionType.Form:
 
                             referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
-                            templates.Add(new FormTemplate(Project, screen, screenSection));
+                            formSections.Add(screenSection);
 
                             break;
                         case ScreenSectionType.Search:
@@ -54,6 +55,27 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
                         case ScreenSectionType.Html:
                             // None
                             break;
+                    }
+                }
+
+
+                if (formSections.Any())
+                {
+                    var rootSections = (from formSection in formSections
+                                        where !formSection.ParentEntityPropertyId.HasValue
+                                        select formSection).ToArray();
+                    var childSections = (from formSection in formSections
+                                         where formSection.ParentEntityPropertyId.HasValue
+                                         select formSection).ToArray();
+
+                    templates.Add(new FormTemplate(Project, screen, rootSections, childSections, null));
+                    foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
+                    {
+                        ParentEntityProperty = a.Key,
+                        ChildSections = a.ToArray()
+                    }))
+                    {
+                        templates.Add(new FormTemplate(Project, screen, childItem.ChildSections, null, childItem.ParentEntityProperty));
                     }
                 }
 
