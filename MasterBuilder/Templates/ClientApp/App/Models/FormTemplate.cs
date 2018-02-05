@@ -14,16 +14,20 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
     {
         private readonly Project Project;
         private readonly Screen Screen;
-        private readonly ScreenSection ScreenSection;
+        private readonly IEnumerable<ScreenSection> ScreenSections;
+        private readonly IEnumerable<ScreenSection> ChildScreenSections;
+        private readonly Property ParentProperty;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public FormTemplate(Project project, Screen screen, ScreenSection screenSection)
+        public FormTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections, IEnumerable<ScreenSection> childScreenSections, Property parentProperty)
         {
             Project = project;
             Screen = screen;
-            ScreenSection = screenSection;
+            ScreenSections = screenSections;
+            ChildScreenSections = childScreenSections;
+            ParentProperty = parentProperty;
         }
 
         /// <summary>
@@ -31,7 +35,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{ScreenSection.InternalName}.ts";
+            return $"{(ParentProperty != null ? ParentProperty.InternalName : Screen.InternalName)}.ts";
         }
 
         /// <summary>
@@ -43,31 +47,59 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         }
 
         /// <summary>
+        /// Get Properties
+        /// </summary>
+        /// <param name="formField">The form field</param>
+        /// <returns>List of properties for this form field</returns>
+        private IEnumerable<string> GetProperties(FormField formField)
+        {
+            var properties = new List<string>();
+            switch (formField.PropertyType)
+            {
+                case PropertyType.ReferenceRelationship:
+                    properties.Add($"    {formField.InternalNameTypeScript}: {formField.TypeTypeScript};");
+                    properties.Add($"    {formField.InternalNameAlternateTypeScript}: string;");
+                    break;
+                default:
+                    properties.Add($"    {formField.InternalNameTypeScript}: {formField.TypeTypeScript};");
+                    break;
+            }
+
+            return properties;
+        }
+
+        /// <summary>
         /// Get file content
         /// </summary>
         public string GetFileContent()
         {
-            var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
-
             var properties = new List<string>();
-            foreach (var property in entity.Properties)
+            var imports = new List<string>();
+
+            foreach (var formField in (from screenSection in ScreenSections
+                                       from ff in screenSection.FormSection.FormFields
+                                       select ff))
             {
-                switch (property.PropertyType)
-                {
-                    case PropertyType.ParentRelationship:
-                        properties.Add($"   {property.InternalName.Camelize()}Id: {property.TsType};");
-                        break;
-                    case PropertyType.ReferenceRelationship:
-                        properties.Add($"   {property.InternalName.Camelize()}Id: {property.TsType};");
-                        properties.Add($"   {property.InternalName.Camelize()}Title: string;");
-                        break;
-                    default:
-                        properties.Add($"   {property.InternalName.Camelize()}: {property.TsType};");
-                        break;
-                }
+                properties.AddRange(GetProperties(formField));
             }
 
-            return $@"export class {ScreenSection.InternalName} {{
+            // TODO: Enable child sections, this needs to be recursive
+            //if (ChildScreenSections != null)
+            //{
+            //    foreach (var childProperty in (from child in ChildScreenSections
+            //                                   select child.ParentEntityProperty).Distinct())
+            //    {
+            //        properties.Add($@"    {childProperty.InternalName.Camelize()}: {childProperty.InternalName};");
+            //        imports.Add($@"import {{ {childProperty.InternalName} }} from './{childProperty.InternalName}';");
+            //    }
+            //}
+
+            if (imports.Any())
+            {
+                imports.Add(Environment.NewLine);
+            }
+
+            return $@"{string.Join(Environment.NewLine, imports)}export class {(ParentProperty != null ? ParentProperty.InternalName : Screen.InternalName)} {{
 {string.Join(Environment.NewLine, properties)}
 }}";
         }
