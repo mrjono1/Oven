@@ -122,7 +122,7 @@ namespace MasterBuilder.Templates.Entities
                         navigationProperties.Add($@"         /// <summary>
         /// Foreign Key (One to One Relationship)
         /// </summary>
-        public Guid {item.p.InternalName}{item.e.InternalName}Id {{ get; set; }}
+        public Guid? {item.p.InternalName}{item.e.InternalName}Id {{ get; set; }}
         /// <summary>
         /// Foreign Key (Via One to One Relationship)
         /// </summary>

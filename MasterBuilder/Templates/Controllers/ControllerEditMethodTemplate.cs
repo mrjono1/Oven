@@ -24,34 +24,8 @@ namespace MasterBuilder.Templates.Controllers
             Screen = screen;
             ScreenSections = screenSections;
         }
-
-        private IEnumerable<string> GetDbProperties(IEnumerable<FormField> formFields, string objectName = "item", int level = 0)
-        {
-            var properties = new List<string>();
-            foreach (var formField in formFields)
-            {
-                switch (formField.PropertyType)
-                {
-                    case PropertyType.ReferenceRelationship:
-
-                        properties.Add($"                            {new string(' ', 4 * level)}{objectName}.{formField.InternalNameCSharp}");
-
-                        // TODO: Title should be configurable
-                        // TODO: is it faster to do the bool check on the key instead of object?
-                        properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameAlternateCSharp} = {objectName}.{formField.Property.InternalName} != null ? {objectName}.{formField.Property.InternalName}.Title : null");
-                        break;
-                    case PropertyType.OneToOneRelationship:
-                        // TODO
-                        break;
-                    default:
-                        properties.Add($"                            {new string(' ', 4 * level)}{objectName}.{formField.InternalNameCSharp}");
-                        break;
-                }
-            }
-            return properties;
-        }
-
-        private IEnumerable<string> GetProperties(IEnumerable<FormField> formFields, string objectName = "dbResult", int level = 0)
+        
+        private IEnumerable<string> GetProperties(IEnumerable<FormField> formFields, string objectName = "item", int level = 0)
         {
             var properties = new List<string>();
             foreach (var formField in formFields)
@@ -67,7 +41,7 @@ namespace MasterBuilder.Templates.Controllers
                         // TODO: needs to work for all levels
                         if (level == 0)
                         {
-                            properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameAlternateCSharp} = {objectName}.{formField.InternalNameAlternateCSharp}");
+                            properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameAlternateCSharp} = {objectName}.{formField.Property.InternalName} != null ? {objectName}.{formField.Property.InternalName}.Title : null");
                         }
                         break;
                     case PropertyType.OneToOneRelationship:
@@ -86,16 +60,14 @@ namespace MasterBuilder.Templates.Controllers
         /// </summary>
         internal string GetMethod()
         {
-            var getDbPropertyMapping = new List<string>();
-            var getPropertyMapping = new List<string>();
+            var propertyMapping = new List<string>();
 
             // Convert root fields to properties
             var rootFields = (from formSection in ScreenSections
                               where !formSection.ParentEntityPropertyId.HasValue
                               from ff in formSection.FormSection.FormFields
                               select ff).ToArray();
-            getPropertyMapping.AddRange(GetProperties(rootFields));
-            getDbPropertyMapping.AddRange(GetDbProperties(rootFields));
+            propertyMapping.AddRange(GetProperties(rootFields));
 
             // Convert child properties to objects with properties
             var childSections = (from formSection in ScreenSections
@@ -114,16 +86,14 @@ namespace MasterBuilder.Templates.Controllers
                     GetProperties((from screenSection in childItem.ChildSections
                                    from ff in screenSection.FormSection.FormFields
                                    select ff).ToArray(),
-                    $"dbResult.{childItem.ParentEntityProperty.ParentEntity.InternalName}",
+                    $"item.{childItem.ParentEntityProperty.ParentEntity.InternalName}",
                     1));
-
-                // TODO: turn this on and get it to work
+                
                 if (entityProperties.Any())
                 {
-                    getDbPropertyMapping.Add($"                            item.{childItem.ParentEntityProperty.InternalName}");
-                    //getDbPropertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = item.{childItem.ParentEntityProperty.InternalName}");
-                    //getPropertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = new {childItem.ParentEntityProperty.InternalName}{Screen.FormResponseClass}{{");
-                    getPropertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = (dbResult.{childItem.ParentEntityProperty.ParentEntity.InternalName} == null ? null : new {childItem.ParentEntityProperty.InternalName}{Screen.FormResponseClass} {{
+                    // TODO fix the SeedEntityId property
+                    // Note: for One to One relationships the navigation object always exists so null check must be done on the nullable forein key
+                    propertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = (item.{childItem.ParentEntityProperty.ParentEntity.InternalName}.SeedEntityId == null ? null : new {childItem.ParentEntityProperty.InternalName}{Screen.FormResponseClass} {{
 {string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
                             }})");
                 }
@@ -148,17 +118,14 @@ namespace MasterBuilder.Templates.Controllers
                 return NotFound();
             }}
             
-            var dbResult = await _context.{Screen.Entity.InternalNamePlural}
+            var result = await _context.{Screen.Entity.InternalNamePlural}
                         .AsNoTracking()
-                        .Select(item => new
+                        .Select(item => new Models.{Screen.FormResponseClass}
                         {{
-{string.Join(string.Concat(",", Environment.NewLine), getDbPropertyMapping)}
+{string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
                         }})
                         .SingleOrDefaultAsync(p => p.Id == id);
 
-            var result = new Models.{Screen.FormResponseClass}{{
-{string.Join(string.Concat(",", Environment.NewLine), getPropertyMapping)}
-            }};
             if (result == null)
             {{
                 return NotFound();
