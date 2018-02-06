@@ -58,8 +58,8 @@ namespace MasterBuilder.Templates.Views.Shared
     @Html.Raw(ViewData[""Meta""])
     @Html.Raw(ViewData[""Links""])
 
-    <link href=""https://fonts.googleapis.com/icon?family=Material+Icons"" rel=""stylesheet"">
-    <link href=""https://fonts.googleapis.com/css?family=Roboto:300,400,500|Roboto+Mono:300"" rel=""stylesheet"">
+    <link href=""https://fonts.googleapis.com/icon?family=Material+Icons"" rel=""stylesheet"" media=""none"" onload=""if(media!='all')media='all'"">
+    <link href=""https://fonts.googleapis.com/css?family=Roboto:300,400,500|Roboto+Mono:300"" rel=""stylesheet"" media=""none"" onload=""if(media!='all')media='all'"">
     <!-- <link rel=""stylesheet"" href=""~/dist/vendor.css"" asp-append-version=""true"" /> -->
 
     @Html.Raw(ViewData[""Styles""])
