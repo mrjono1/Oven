@@ -53,7 +53,7 @@ namespace MasterBuilder.Templates.Services.Contracts
 
             return $@"using System;
 using System.Threading.Tasks;
-using {Project.InternalName}.Entities;
+using {Project.InternalName}.DataAccessLayer.Entities;
 
 namespace {Project.InternalName}.Services.Contracts
 {{

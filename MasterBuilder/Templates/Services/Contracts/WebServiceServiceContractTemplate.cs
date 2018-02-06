@@ -60,7 +60,8 @@ namespace MasterBuilder.Templates.Services.Contracts
             return $@"using System;
 using System.Threading.Tasks;
 using RestSharp;
-using {Project.InternalName}.Entities;
+using {Project.InternalName}.DataAccessLayer;
+using {Project.InternalName}.DataAccessLayer.Entities;
 
 namespace {Project.InternalName}.Services.Contracts
 {{

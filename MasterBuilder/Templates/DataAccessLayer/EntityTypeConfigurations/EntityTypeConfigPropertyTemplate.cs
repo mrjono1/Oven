@@ -2,7 +2,7 @@ using MasterBuilder.Request;
 using System.Linq;
 using System.Text;
 
-namespace MasterBuilder.Templates.EntityTypeConfigurations
+namespace MasterBuilder.Templates.DataAccessLayer.EntityTypeConfigurations
 {
     /// <summary>
     /// Entity Type Config Property Template

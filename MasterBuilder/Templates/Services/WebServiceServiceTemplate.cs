@@ -89,7 +89,8 @@ using System.Threading.Tasks;
 using RestSharp;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using {Project.InternalName}.Entities;
+using {Project.InternalName}.DataAccessLayer;
+using {Project.InternalName}.DataAccessLayer.Entities;
 using {Project.InternalName}.Services.Contracts;
 
 namespace {Project.InternalName}.Services

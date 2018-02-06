@@ -41,9 +41,11 @@ namespace MasterBuilder.Templates
         {
             return $@"Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project(""{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}"") = ""{Project.InternalName}"", ""{Project.InternalName}\{Project.InternalName}.csproj"", ""{{{Project.Id.ToString()}}}""
+Project(""{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}"") = ""{Project.InternalName}"", ""{Project.InternalName}\{Project.InternalName}.csproj"", ""{{{Project.Id.ToString().ToUpperInvariant()}}}""
+EndProject
+Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.DataAccessLayer"", ""{Project.InternalName}.DataAccessLayer\{Project.InternalName}.DataAccessLayer.csproj"", ""{{5BE39A8E-3012-4F57-8D44-36BA26CE5036}}""
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{{{Project.Id.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{{{Project.Id.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {{{Project.Id.ToString().ToUpperInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
+		{{5BE39A8E-3012-4F57-8D44-36BA26CE5036}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{{5BE39A8E-3012-4F57-8D44-36BA26CE5036}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{{5BE39A8E-3012-4F57-8D44-36BA26CE5036}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{{5BE39A8E-3012-4F57-8D44-36BA26CE5036}}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,25 +2,25 @@ using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System.Collections.Generic;
 
-namespace MasterBuilder.Templates.EntityTypeConfigurations
+namespace MasterBuilder.Templates.DataAccessLayer.Entities
 {
     /// <summary>
-    /// Entity Type Configuration Builder
+    /// Entity Template Builder
     /// </summary>
-    public class EntityTypeConfigTemplateBuilder : ITemplateBuilder
+    public class EntityTemplateBuilder : ITemplateBuilder
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public EntityTypeConfigTemplateBuilder(Project project)
+        public EntityTemplateBuilder(Project project)
         {
             Project = project;
         }
 
         /// <summary>
-        /// Get entity type config templates
+        /// Get entity templates
         /// </summary>
         public IEnumerable<ITemplate> GetTemplates()
         {
@@ -28,7 +28,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
 
             foreach (var entity in Project.Entities)
             {
-                templates.Add(new EntityTypeConfigTemplate(Project, entity));
+                templates.Add(new EntityTemplate(Project, entity));
             }
 
             return templates;

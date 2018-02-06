@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MasterBuilder.Templates.Entities
+namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
 {
     /// <summary>
     /// Entity Framework Core Context
@@ -35,7 +35,7 @@ namespace MasterBuilder.Templates.Entities
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "Entities" };
+            return new string[0];
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace MasterBuilder.Templates.Entities
                     properties.AppendLine($@"            /// <summary>
         /// {entity.Title}
         /// </summary>
-        public DbSet<{entity.InternalName}> {entity.InternalNamePlural} {{ get; set; }}");
+        public DbSet<Entities.{entity.InternalName}> {entity.InternalNamePlural} {{ get; set; }}");
                     configurations.AppendLine($"            builder.ApplyConfiguration(new {entity.InternalName}Config());");
                 }
             }
@@ -67,7 +67,7 @@ namespace MasterBuilder.Templates.Entities
                 var seedStringBuilder = new StringBuilder($@"        private async Task {entity.InternalName}Seed(){{
             var content = {content};
             // TODO: possibly could convert this to delegate so only executed if needed
-            var items = JsonConvert.DeserializeObject<List<{entity.InternalName}>>(content);");
+            var items = JsonConvert.DeserializeObject<List<Entities.{entity.InternalName}>>(content);");
 
                 seedStringBuilder.AppendLine($@"
             if (!{entity.InternalNamePlural}.Any())
@@ -115,12 +115,14 @@ namespace MasterBuilder.Templates.Entities
             string seedData = null;
             if (seed.Any())
             {
-                seedData = $@"        internal async Task Seed()
+                seedData = $@"        #region Seed
+        internal async Task Seed()
         {{
 {string.Join(Environment.NewLine, seed.Keys)}
         }}
 
-{string.Join(Environment.NewLine, seed.Values)}";
+{string.Join(Environment.NewLine, seed.Values)}
+        #endregion";
             }
 
             string dbConnection = null;
@@ -149,10 +151,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
-using {Project.InternalName}.EntityTypeConfigurations;
+using {Project.InternalName}.DataAccessLayer.Entities;
+using {Project.InternalName}.DataAccessLayer.EntityTypeConfigurations;
 using Newtonsoft.Json;
 
-namespace {Project.InternalName}.Entities
+namespace {Project.InternalName}.DataAccessLayer
 {{
     /// <summary>
     /// {Project.InternalName} Entity Framework Database Context
@@ -166,7 +169,10 @@ namespace {Project.InternalName}.Entities
         public {Project.InternalName}Context(DbContextOptions<{Project.InternalName}Context> options) : base(options)
         {{
         }}
+
+        #region DBSet Properties
 {properties}
+        #endregion
 
         /// <summary>
         /// On Model Creating

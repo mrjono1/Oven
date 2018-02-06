@@ -103,7 +103,7 @@ namespace {Project.InternalName}.Models.{RootEntity.InternalName}.Export
         /// <summary>
         /// Constructor defaults values from an entity
         /// </summary>
-        public {Entity.InternalName}(Entities.{Entity.InternalName} {Entity.InternalName.Camelize()})
+        public {Entity.InternalName}(DataAccessLayer.Entities.{Entity.InternalName} {Entity.InternalName.Camelize()})
         {{
 {string.Join(Environment.NewLine, propertyMappings)}            
         }}

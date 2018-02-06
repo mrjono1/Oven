@@ -475,7 +475,7 @@ namespace MasterBuilder.Templates.Controllers
                 return Ok();
             }}
 
-            var entity = new Entities.{Screen.Entity.InternalName}() {{ Id = id }};
+            var entity = new DataAccessLayer.Entities.{Screen.Entity.InternalName}() {{ Id = id }};
             var entityEntry = _context.{Screen.Entity.InternalNamePlural}.Attach(entity);
             
             // do stuff

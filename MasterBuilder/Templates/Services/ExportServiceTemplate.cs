@@ -54,7 +54,8 @@ namespace MasterBuilder.Templates.Services
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using {Project.InternalName}.Entities;
+using {Project.InternalName}.DataAccessLayer;
+using {Project.InternalName}.DataAccessLayer.Entities;
 using {Project.InternalName}.Services.Contracts;
 
 namespace {Project.InternalName}.Services

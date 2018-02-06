@@ -58,19 +58,21 @@ namespace MasterBuilder
 
             // Create Solution Directory
             var solutionDirectory = FileHelper.CreateFolder(topProjectDirectory, project.InternalName);
-            var projectDirectory = FileHelper.CreateFolder(solutionDirectory, project.InternalName);
+            var webProjectDirectory = FileHelper.CreateFolder(solutionDirectory, project.InternalName);
+            var dalProjectDirectory = FileHelper.CreateFolder(solutionDirectory, $"{project.InternalName}.DataAccessLayer");
 
-            var projectWriter = new Helpers.ProjectWriter(projectDirectory, project.CleanDirectoryIgnoreDirectories);
-            
+            var projectWriter = new Helpers.SolutionWriter(webProjectDirectory, project.CleanDirectoryIgnoreDirectories);
+
+            // Create Solution File
+            projectWriter.AddTemplate(solutionDirectory, new Templates.SolutionTemplate(project));
+
+            #region Web Project
             // Create Directories
-            var wwwrootPath = FileHelper.CreateFolder(projectDirectory, "wwwroot");
+            var wwwrootPath = FileHelper.CreateFolder(webProjectDirectory, "wwwroot");
 
             // Artifacts
             projectWriter.AddFolder(new string[] { "CopyFiles", "assets", "favicons" }, new string[] { "wwwroot", "assets", "favicons" });
             projectWriter.AddTemplate(new Templates.Assets.Favicons.ManifestTemplate(project));
-            
-            // Create Solution File
-            projectWriter.AddTemplate(solutionDirectory, new Templates.SolutionTemplate(project));
 
             // Create Project Files
             projectWriter.AddTemplate(new Templates.ProjectFiles.PackageJsonTemplate(project));
@@ -147,13 +149,6 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ClientApp.App.Containers.Ts.ContainerTsTemplateBuilder(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.Containers.Html.ContainerHtmlTemplateBuilder(project));
 
-            // Entities
-            projectWriter.AddTemplate(new Templates.Entities.EntityFrameworkContextTemplate(project));
-            projectWriter.AddTemplate(new Templates.Entities.EntityTemplateBuilder(project));
-
-            // Entity Type Config
-            projectWriter.AddTemplate(new Templates.EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project));
-
             // Controllers
             projectWriter.AddTemplate(new Templates.Controllers.ControllerTemplateBuilder(project));
 
@@ -170,6 +165,22 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.Services.ServiceTemplateBuilder(project));
             // Services/Contracts
             projectWriter.AddTemplate(new Templates.Services.Contracts.ServiceContractTemplateBuilder(project));
+            #endregion
+            
+            #region Data Access Layer Project
+            projectWriter.SetProjectDirectory(dalProjectDirectory);
+
+            // Project Files
+            projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ProjectTemplate(project));
+            projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.EntityFrameworkContextTemplate(project));
+
+            // Entities
+            projectWriter.AddTemplate(new Templates.DataAccessLayer.Entities.EntityTemplateBuilder(project));
+
+            // Entity Type Config
+            projectWriter.AddTemplate(new Templates.DataAccessLayer.EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project));
+
+            #endregion
 
             var errors = await projectWriter.WriteAndClean();
 

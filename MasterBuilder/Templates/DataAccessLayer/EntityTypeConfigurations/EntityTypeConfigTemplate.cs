@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MasterBuilder.Templates.EntityTypeConfigurations
+namespace MasterBuilder.Templates.DataAccessLayer.EntityTypeConfigurations
 {
     /// <summary>
     /// Entity Type Config
@@ -81,7 +81,7 @@ namespace MasterBuilder.Templates.EntityTypeConfigurations
             return $@"using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace {Project.InternalName}.EntityTypeConfigurations
+namespace {Project.InternalName}.DataAccessLayer.EntityTypeConfigurations
 {{
     /// <summary>
     /// Class to configure the {Entity.InternalName} database settings

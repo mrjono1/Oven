@@ -10,7 +10,7 @@ namespace MasterBuilder.Helpers
     /// <summary>
     /// Write a project to the file system
     /// </summary>
-    internal class ProjectWriter
+    internal class SolutionWriter
     {
         private List<Task<TemplateResult>> FilesToWrite;
         private string[] CleanDirectoryIngnoreList;
@@ -20,12 +20,21 @@ namespace MasterBuilder.Helpers
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectWriter(string projectDirectory, string[] cleanDirectoryIngnoreList)
+        public SolutionWriter(string projectDirectory, string[] cleanDirectoryIngnoreList)
         {
             FilesToWrite = new List<Task<TemplateResult>>();
             ProjectDirectory = projectDirectory;
             CleanDirectoryIngnoreList = cleanDirectoryIngnoreList;
             FilePaths = new List<string>();
+        }
+
+        /// <summary>
+        /// Change the set project directory
+        /// </summary>
+        /// <param name="projectDirectory">Project directory</param>
+        public void SetProjectDirectory(string projectDirectory)
+        {
+            ProjectDirectory = projectDirectory;
         }
 
         /// <summary>

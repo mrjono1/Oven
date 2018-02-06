@@ -42,19 +42,16 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            string solutionGuid = Guid.NewGuid().ToString();
-
             StringBuilder packageReferences = new StringBuilder();
-
-
+            
             var nugetReferences = new Dictionary<string, string>
             {
-                { "Microsoft.AspNetCore.All", "2.0.3" },
+                { "Microsoft.AspNetCore.All", "2.0.5" },
                 { "Microsoft.EntityFrameworkCore", "2.0.1"},
                 { "Swashbuckle.AspNetCore", "1.1.0" },
                 { "Swashbuckle.AspNetCore.Swagger", "1.1.0" },
                 { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" },
-                { "RestSharp", "106.1.0"}
+                { "RestSharp", "106.2.1"}
             };
 
             if (!Project.UsePutForUpdate)
@@ -110,6 +107,9 @@ namespace MasterBuilder.Templates.ProjectFiles
 
     <!-- Files not to publish (note that the 'dist' subfolders are re-added below) -->
     <Content Remove=""ClientApp\**"" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include=""..\{Project.InternalName}.DataAccessLayer\{Project.InternalName}.DataAccessLayer.csproj"" />
   </ItemGroup>
 
   <Target Name=""DebugRunWebpack"" BeforeTargets=""Build"" Condition="" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') "">

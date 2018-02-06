@@ -1,7 +1,7 @@
 using MasterBuilder.Request;
 using System.Linq;
 
-namespace MasterBuilder.Templates.Entities
+namespace MasterBuilder.Templates.DataAccessLayer.Entities
 {
     /// <summary>
     /// Entity Property Template

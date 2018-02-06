@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MasterBuilder.Templates.Entities
+namespace MasterBuilder.Templates.DataAccessLayer.Entities
 {
     /// <summary>
     /// Entity Template
@@ -135,7 +135,7 @@ namespace MasterBuilder.Templates.Entities
 
             return $@"using System; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
 
-namespace {Project.InternalName}.Entities
+namespace {Project.InternalName}.DataAccessLayer.Entities
 {{
     /// <summary>
     /// {Entity.InternalName} Entity
