@@ -165,8 +165,14 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.Services.ServiceTemplateBuilder(project));
             // Services/Contracts
             projectWriter.AddTemplate(new Templates.Services.Contracts.ServiceContractTemplateBuilder(project));
+
+            var errors = await projectWriter.WriteAndClean();
+            if (!string.IsNullOrEmpty(errors))
+            {
+                return errors;
+            }
             #endregion
-            
+
             #region Data Access Layer Project
             projectWriter.SetProjectDirectory(dalProjectDirectory);
 
@@ -180,14 +186,13 @@ namespace MasterBuilder
             // Entity Type Config
             projectWriter.AddTemplate(new Templates.DataAccessLayer.EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project));
 
-            #endregion
-
-            var errors = await projectWriter.WriteAndClean();
+            errors = await projectWriter.WriteAndClean();
 
             if (!string.IsNullOrEmpty(errors))
             {
                 return errors;
             }
+            #endregion
 
             if (gitOn)
             {

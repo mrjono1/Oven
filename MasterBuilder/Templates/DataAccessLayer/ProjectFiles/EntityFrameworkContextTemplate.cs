@@ -131,7 +131,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
 #if DEBUG
                 dbConnection = $@"""Server=localhost;database={Project.InternalName};uid=root;pwd=password;""";
 #else
-                dbConnection = $@"Environment.GetEnvironmentVariable(""MYSQLCONNSTR_localdb"").ToString())";
+                dbConnection = $@"Environment.GetEnvironmentVariable(""MYSQLCONNSTR_localdb"").ToString()";
 #endif
             }
             else
