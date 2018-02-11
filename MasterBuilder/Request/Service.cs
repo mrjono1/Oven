@@ -25,7 +25,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Title
@@ -49,7 +50,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Service Type
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid ServiceTypeId { get; set; }
         /// <summary>
         /// Service Type

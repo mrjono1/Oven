@@ -31,12 +31,14 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Validation Primary Key
         /// </summary>
+        [NonDefault]
         public Guid Id { get; set; }
 
         /// <summary>
         /// Validation Type Id
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid ValidationTypeId { get; set; }
 
         /// <summary>

@@ -42,7 +42,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier of an Entity
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Title
@@ -62,7 +63,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Property Type Identifier
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid PropertyTypeId { get; set; }
 
         //TODO: Change this property to PropertyType
@@ -90,6 +92,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Property Template Identifier, setting this will case future upgrades to update this field
         /// </summary>
+        [NonDefault]
         public Guid? PropertyTemplateId { get; set; }
 
         /// <summary>
@@ -121,6 +124,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Parent Entity Identifier
         /// </summary>
+        [NonDefault]
         public Guid? ParentEntityId { get; set; }
 
         /// <summary>

@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MasterBuilder.Request
 {
@@ -10,10 +11,14 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier
         /// </summary>
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Entity Id
         /// </summary>
+        [Required]
+        [NonDefault]
         public Guid EntityId { get; set; }
     }
 }

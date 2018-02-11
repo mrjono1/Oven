@@ -34,7 +34,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Internal Name
@@ -101,6 +102,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Default Screen to load
         /// </summary>
+        [NonDefault]
         public Guid? DefaultScreenId { get; set; }
 
         #region Internal Settings

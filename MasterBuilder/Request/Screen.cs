@@ -39,7 +39,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Identifier
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
         private string internalName;
         /// <summary>
@@ -67,11 +68,13 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Entity Id for entity related screens
         /// </summary>
+        [NonDefault]
         public Guid? EntityId { get; set; }
         /// <summary>
         /// Screen Type Id
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid ScreenTypeId { get; set; }
         /// <summary>
         /// Path segment
@@ -118,6 +121,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// On Screens like search navigate to this screen on an action
         /// </summary>
+        [NonDefault]
         public Guid? NavigateToScreenId { get; set; }
         /// <summary>
         /// Screen Sections

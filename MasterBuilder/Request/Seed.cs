@@ -30,7 +30,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Seed Type Id
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid SeedTypeId { get; set; }
 
         /// <summary>

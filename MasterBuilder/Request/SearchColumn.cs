@@ -11,7 +11,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Entity Property Id
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid EntityPropertyId { get; set; }
         /// <summary>
         /// Optional: Title, Defaulted from Entity if not provided

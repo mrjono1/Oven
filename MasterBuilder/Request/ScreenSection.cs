@@ -25,6 +25,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Identifier
         /// </summary>
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Title
@@ -37,7 +39,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Screen Section Type Id
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid ScreenSectionTypeId { get; set; }
         /// <summary>
         /// Screen Section Type
@@ -58,10 +61,12 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Optional: Entity to display in this section
         /// </summary>
+        [NonDefault]
         public Guid? EntityId { get; set; }
         /// <summary>
         /// Optional: Screen to navigate to on actoin
         /// </summary>
+        [NonDefault]
         public Guid? NavigateToScreenId { get; set; }
         /// <summary>
         /// Screen Menu Items
@@ -78,6 +83,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Parent Property Id (used for nested sections)
         /// </summary>
+        [NonDefault]
         public Guid? ParentEntityPropertyId { get; set; }
         /// <summary>
         /// Only populate when Screen Section Type = Search

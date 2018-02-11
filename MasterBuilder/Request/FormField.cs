@@ -1,6 +1,7 @@
 using Humanizer;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
@@ -14,6 +15,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Entity Property Id
         /// </summary>
+        [Required]
+        [NonDefault]
         public Guid EntityPropertyId { get; set; }
         /// <summary>
         /// Optional: Title, Defaulted from Entity if not provided

@@ -23,11 +23,14 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Identifier
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Feature Id
         /// </summary>
+        [Required]
+        [NonDefault]
         public Guid FeatureId { get; set; }
         /// <summary>
         /// Screen Type

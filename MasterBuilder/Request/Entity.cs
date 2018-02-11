@@ -26,7 +26,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier of an Entity
         /// </summary>
-        [RequiredNonDefault]
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
 
         /// <summary>
@@ -79,6 +80,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Optional: Entity Template Id, if specified it will define default behaviours for this entity
         /// </summary>
+        [NonDefault]
         public Guid? EntityTemplateId { get; set; }
         /// <summary>
         /// Entity Template

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MasterBuilder.Request
 {
@@ -11,6 +12,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier
         /// </summary>
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Default Base Endpoint: This can be overriden for each environment

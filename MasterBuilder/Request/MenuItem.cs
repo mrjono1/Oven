@@ -2,6 +2,7 @@ using Humanizer;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -25,6 +26,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier
         /// </summary>
+        [Required]
+        [NonDefault]
         public Guid Id { get; set; }
         /// <summary>
         /// Title
@@ -52,6 +55,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Navigate to Screen Id
         /// </summary>
+        [NonDefault]
         public Guid? ScreenId { get; set; }
         /// <summary>
         /// Icon css class
@@ -60,6 +64,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Menu Item Type Id
         /// </summary>
+        [Required]
+        [NonDefault]
         public Guid MenuItemTypeId { get; set; }
         /// <summary>
         /// Menu Item Type
