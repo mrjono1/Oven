@@ -42,12 +42,14 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            StringBuilder packageReferences = new StringBuilder();
-            
+            var packageReferences = new StringBuilder();
+
+            var efVersion = "2.0.1";
             var nugetReferences = new Dictionary<string, string>
             {
-                { "Microsoft.EntityFrameworkCore", "2.0.1"},
-                { "Microsoft.EntityFrameworkCore.Design", "2.0.1"},
+                { "Microsoft.EntityFrameworkCore", efVersion},
+                { "Microsoft.EntityFrameworkCore.Sqlite", efVersion},
+                { "Microsoft.EntityFrameworkCore.Design", efVersion},
                 { "Newtonsoft.Json", "10.0.3"}
             };
             
@@ -57,12 +59,12 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
             }
             else
             {
-                nugetReferences.Add("Microsoft.EntityFrameworkCore.SqlServer", "2.0.1");
+                nugetReferences.Add("Microsoft.EntityFrameworkCore.SqlServer", efVersion);
             }
 
             foreach (var item in nugetReferences)
             {
-                packageReferences.AppendLine($@"<PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
+                packageReferences.AppendLine($@"    <PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
             }
 
             return $@"<Project Sdk=""Microsoft.NET.Sdk"">
@@ -71,9 +73,14 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
   </PropertyGroup>
 
   <ItemGroup>
-    {packageReferences}
+{packageReferences}
   </ItemGroup>
-
+  <ItemGroup>
+    <DotNetCliToolReference Include=""Microsoft.EntityFrameworkCore.Tools.DotNet"" Version=""{efVersion}"" />
+  </ItemGroup>
+  <PropertyGroup>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
 </Project>";
         }
     }
