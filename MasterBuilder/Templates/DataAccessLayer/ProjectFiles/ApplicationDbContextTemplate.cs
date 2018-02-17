@@ -192,63 +192,6 @@ namespace {Project.InternalName}.DataAccessLayer
             await Database.EnsureCreatedAsync();
             {(seed.Any() ? "await Seed();" : string.Empty)}
         }}
-
-        /// <summary>
-        /// Migrate Database (not supported by EF Core)
-        /// </summary>
-        internal void MigrateDatabase()
-        {{
-            if (Database.EnsureCreated())
-            {{
-                return;
-            }}
-
-            var reporter = new OperationReporter(handler: null);
-            var designTimeServiceCollection = new ServiceCollection()
-                .AddSingleton<IOperationReporter>(reporter)
-                .AddScaffolding(reporter);
-            new {(Project.UseMySql ? "MySql" : "SqlServer")}DesignTimeServices().ConfigureDesignTimeServices(designTimeServiceCollection);
-
-            var designTimeServices = designTimeServiceCollection.BuildServiceProvider();
-
-            // TODO: Just use db.Database.EnsureCreated() if the database doesn't exist
-            var databaseModelFactory = designTimeServices.GetService<IScaffoldingModelFactory>();
-            var databaseModel = (Model)databaseModelFactory.Create(
-                {dbConnection},
-                tables: new string[0],
-                schemas: new string[0],
-                useDatabaseNames: false);
-
-            var currentModel = Model;
-
-            // Fix up the database model. It was never intended to be used like this. ;-)
-            foreach (var entityType in databaseModel.GetEntityTypes())
-            {{
-                if (entityType.Relational().Schema == databaseModel.Relational().DefaultSchema)
-                {{
-                    entityType.Relational().Schema = null;
-                }}
-            }}
-            databaseModel.Relational().DefaultSchema = null;
-            databaseModel.{(Project.UseMySql ? "MySql" : "SqlServer")}().ValueGenerationStrategy =
-                currentModel.{(Project.UseMySql ? "MySql" : "SqlServer")}().ValueGenerationStrategy;
-            // TODO: ...more fix up as needed
-
-            var differ = this.GetService<IMigrationsModelDiffer>();
-
-            var operations = differ.GetDifferences(databaseModel, currentModel);{(!Project.AllowDestructiveDatabaseChanges ? @"
-
-            if (operations.Any(o => o.IsDestructiveChange))
-            {{
-                throw new InvalidOperationException(
-                    ""Automatic migration was not applied because it would result in data loss."");
-            }}" : string.Empty)}
-
-            var sqlGenerator = this.GetService<IMigrationsSqlGenerator>();
-            var commands = sqlGenerator.Generate(operations, currentModel);
-            var executor = this.GetService<IMigrationCommandExecutor>();
-            executor.ExecuteNonQuery(commands, this.GetService<IRelationalConnection>());
-        }}
 {seedData}
     }}
 }}";
