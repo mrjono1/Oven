@@ -55,11 +55,11 @@ namespace MasterBuilder.Templates.Controllers
                 $@"        /// <summary>
         /// Database Context
         /// </summary>
-        private readonly {Project.InternalName}Context _context;"
+        private readonly ApplicationDbContext _context;"
             };
             var constructorParameters = new List<string>
             {
-                $"{Project.InternalName}Context context"
+                $"ApplicationDbContext context"
             };
             var constructorFieldMappings = new List<string>
             {

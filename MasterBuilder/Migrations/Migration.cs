@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MasterBuilder.Migrations
 {
@@ -22,11 +24,25 @@ namespace MasterBuilder.Migrations
         }
 
         /// <summary>
+        /// Generate Database migrations
+        /// </summary>
+        public async Task<bool> Migrate()
+        {
+            if (!await Build())
+            {
+                return false;
+            }
+            var list = await ListMigrations();
+
+            return await AddMigration(list);
+        }
+
+        /// <summary>
         /// Build Project
         /// </summary>
-        public bool Build()
+        public async Task<bool> Build()
         {
-            var result = ExecuteCommand("dotnet", $"build {DalProjectPath}");
+            var result = await ExecuteCommand("dotnet", $"build {DalProjectPath}");
 
             if (result.ExitCode == 0)
             {
@@ -36,11 +52,49 @@ namespace MasterBuilder.Migrations
         }
 
         /// <summary>
+        /// List Migrations
+        /// </summary>
+        public async Task<IEnumerable<string>> ListMigrations()
+        {
+            var result = await ExecuteCommand("dotnet", "ef migrations list", DalProjectPath);
+
+            if (result.ExitCode == 0)
+            {
+                if (string.IsNullOrEmpty(result.Message) || result.Message.StartsWith("No migrations were found.", StringComparison.OrdinalIgnoreCase))
+                {
+                    return new string[0];
+                }
+                else
+                {
+                    var migrations = new List<string>();
+                    foreach (var line in result.Message.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        var segments = line.Split("_");
+                        if (segments.Length == 2)
+                        {
+                            migrations.Add(segments[1]);
+                        }
+                    }
+                    return migrations;
+                }
+            }
+            return new string[0];
+        }
+        
+        /// <summary>
         /// Build Project
         /// </summary>
-        public bool InitialCreate()
+        public async Task<bool> AddMigration(IEnumerable<string> list)
         {
-            var result = ExecuteCommand("dotnet", "ef migrations add InitialCreate", DalProjectPath);
+            var number = 1;
+            if (list.Any())
+            {
+                var migrationNumbers = new List<int>();
+                list.ToList().ForEach(a => migrationNumbers.Add(Convert.ToInt32(a)));
+                number = migrationNumbers.Max() + 1;
+            }
+
+            var result = await ExecuteCommand("dotnet", $"ef migrations add {number}", DalProjectPath);
 
             if (result.ExitCode == 0)
             {
@@ -49,7 +103,13 @@ namespace MasterBuilder.Migrations
             return false;
         }
 
-        private CommandLineResult ExecuteCommand(string fileName, string command, string workingDirectory = null)
+        /// <summary>
+        /// Execute command line function
+        /// </summary>
+        /// <param name="fileName">.exe or alias name</param>
+        /// <param name="command">command parameters</param>
+        /// <param name="workingDirectory">Optional: working directory</param>
+        private async Task<CommandLineResult> ExecuteCommand(string fileName, string command, string workingDirectory = null)
         {
             var proc = new Process();
             proc.StartInfo.WorkingDirectory = workingDirectory;
@@ -58,7 +118,7 @@ namespace MasterBuilder.Migrations
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.RedirectStandardOutput = true;
             proc.Start();
-            var output = proc.StandardOutput.ReadToEnd();
+            var output = await proc.StandardOutput.ReadToEndAsync();
 
             proc.WaitForExit();
             var exitCode = proc.ExitCode;

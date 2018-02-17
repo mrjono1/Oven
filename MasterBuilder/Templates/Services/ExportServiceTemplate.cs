@@ -68,12 +68,12 @@ namespace {Project.InternalName}.Services
         /// <summary>
         /// Database Context
         /// </summary>
-        private readonly {Project.InternalName}Context _context;
+        private readonly ApplicationDbContext _context;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ExportService({Project.InternalName}Context context)
+        public ExportService(ApplicationDbContext context)
         {{
             _context = context;
         }}

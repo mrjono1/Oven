@@ -28,7 +28,8 @@ namespace MasterBuilder.Request
                 "node_modules",
                 "wwwroot",
                 "Properties",
-                "dist"
+                "dist",
+                "Migrations"
             };
         }
         /// <summary>

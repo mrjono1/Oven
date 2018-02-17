@@ -126,7 +126,7 @@ namespace {Project.InternalName}
             services.AddNodeServices();
 
             // Add Entity Framework service
-            services.AddDbContext<DataAccessLayer.{Project.InternalName}Context>(options =>
+            services.AddDbContext<DataAccessLayer.ApplicationDbContext>(options =>
                 {dbConnection}
 
             var xmlfilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, ""{Project.InternalName}.xml"");
@@ -146,7 +146,7 @@ namespace {Project.InternalName}
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataAccessLayer.{Project.InternalName}Context context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataAccessLayer.ApplicationDbContext context)
         {{
             loggerFactory.AddConsole(Configuration.GetSection(""Logging""));
             loggerFactory.AddDebug();
@@ -154,7 +154,7 @@ namespace {Project.InternalName}
             app.UseStaticFiles();
 
             // Initialize database
-            context.Initialize();
+            context.Initialize().Wait();
 
             if (env.IsDevelopment())
             {{

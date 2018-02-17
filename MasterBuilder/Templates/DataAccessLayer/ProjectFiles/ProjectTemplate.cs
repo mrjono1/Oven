@@ -48,7 +48,6 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
             var nugetReferences = new Dictionary<string, string>
             {
                 { "Microsoft.EntityFrameworkCore", efVersion},
-                { "Microsoft.EntityFrameworkCore.Sqlite", efVersion},
                 { "Microsoft.EntityFrameworkCore.Design", efVersion},
                 { "Newtonsoft.Json", "10.0.3"}
             };

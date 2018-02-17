@@ -178,7 +178,8 @@ namespace MasterBuilder
 
             // Project Files
             projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ProjectTemplate(project));
-            projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.EntityFrameworkContextTemplate(project));
+            projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ApplicationDbContextTemplate(project));
+            projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ApplicationDbContextFactoryTemplate(project));
 
             // Entities
             projectWriter.AddTemplate(new Templates.DataAccessLayer.Entities.EntityTemplateBuilder(project));
@@ -193,6 +194,13 @@ namespace MasterBuilder
                 return errors;
             }
             #endregion
+
+            var migration = new Migrations.Migration(dalProjectDirectory);
+            var success = await migration.Migrate();
+            if (!success)
+            {
+                return "Migration Generation Failed";
+            }
 
             if (gitOn)
             {

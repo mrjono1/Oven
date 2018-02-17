@@ -10,14 +10,14 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
     /// <summary>
     /// Entity Framework Core Context
     /// </summary>
-    public class EntityFrameworkContextTemplate : ITemplate
+    public class ApplicationDbContextTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public EntityFrameworkContextTemplate(Project project)
+        public ApplicationDbContextTemplate(Project project)
         {
             Project = project;
         }
@@ -27,7 +27,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
         /// </summary>
         public string GetFileName()
         {
-            return $"{Project.InternalName}Context.cs";
+            return "ApplicationDbContext.cs";
         }
 
         /// <summary>
@@ -158,15 +158,15 @@ using Newtonsoft.Json;
 namespace {Project.InternalName}.DataAccessLayer
 {{
     /// <summary>
-    /// {Project.InternalName} Entity Framework Database Context
+    /// Application Database Context
     /// </summary>
-    public class {Project.InternalName}Context : DbContext
+    public class ApplicationDbContext : DbContext
     {{
 
         /// <summary>
-        /// {Project.InternalName} Entity Framework Database Context
+        /// Application Database Context
         /// </summary>
-        public {Project.InternalName}Context(DbContextOptions<{Project.InternalName}Context> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {{
         }}
 
@@ -186,11 +186,11 @@ namespace {Project.InternalName}.DataAccessLayer
         /// <summary>
         /// Initialize Database
         /// </summary>
-        public void Initialize()
+        public async Task Initialize()
         {{
-            MigrateDatabase();
-
-            {(seed.Any() ? "Seed().Wait();" : string.Empty)}
+            await Database.MigrateAsync();
+            await Database.EnsureCreatedAsync();
+            {(seed.Any() ? "await Seed();" : string.Empty)}
         }}
 
         /// <summary>
