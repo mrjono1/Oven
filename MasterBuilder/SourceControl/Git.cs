@@ -206,5 +206,28 @@ namespace MasterBuilder.SourceControl
                 repository.Network.Push(remote, pushRefSpec, options);
             }
         }
+
+        internal bool FolderChanged(Models.GetRepository getRepository, string folder)
+        {
+            var path = Path.Combine(BaseDirectory, getRepository.Name);
+
+            using (var repository = new Repository(path))
+            {
+                var status = repository.RetrieveStatus(new StatusOptions
+                {
+                    PathSpec = new string[] { folder }
+                });
+
+                foreach (var statusEntry in status)
+                {
+                    if (statusEntry.State != FileStatus.Ignored)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     }
 }

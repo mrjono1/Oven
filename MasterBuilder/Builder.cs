@@ -195,15 +195,20 @@ namespace MasterBuilder
             }
             #endregion
 
-            var migration = new Migrations.Migration(dalProjectDirectory);
-            var success = await migration.Migrate();
-            if (!success)
-            {
-                return "Migration Generation Failed";
-            }
-
             if (gitOn)
             {
+                var dalProjectChanged = git.FolderChanged(repos[project.InternalName], $"{project.InternalName}.DataAccessLayer");
+
+                if (dalProjectChanged)
+                {
+                    var migration = new Migrations.Migration(dalProjectDirectory);
+                    var success = await migration.Migrate();
+                    if (!success)
+                    {
+                        return "Migration Generation Failed";
+                    }
+                }
+
                 git.StageCommitPush(repos[project.InternalName], "Build");
             }
             return "Success";

@@ -48,13 +48,17 @@ namespace MasterBuilder.Templates.ProjectFiles
             serviceNames.ForEach(name => services.Add($"services.AddTransient<I{name}, {name}>();"));
 
             string dbConnection = null;
+            string dbConnectionSetup = null;
             if (Project.UseMySql)
             {
-#if DEBUG
-                dbConnection = $@"options.UseMySql(""Server=localhost;database={Project.InternalName};uid=root;pwd=password;""));";
-#else
-                dbConnection = $@"options.UseMySql(Environment.GetEnvironmentVariable(""MYSQLCONNSTR_localdb"").ToString()));";
-#endif
+                dbConnectionSetup = $@"
+            var useMySqlInApp = Configuration[""useMySqlInApp""];
+            var connectionString = ""Server=localhost;database={Project.InternalName};uid=root;pwd=password;"";
+            if (!string.IsNullOrEmpty(useMySqlInApp) && useMySqlInApp.Equals(""true"", StringComparison.OrdinalIgnoreCase))
+            {{
+                connectionString = Environment.GetEnvironmentVariable(""MYSQLCONNSTR_localdb"").ToString();
+            }}";
+                dbConnection = $@"options.UseMySql(connectionString));";
             }
             else
             {
@@ -125,7 +129,7 @@ namespace {Project.InternalName}
             services.AddMvc();
             services.AddNodeServices();
 
-            // Add Entity Framework service
+            // Add Entity Framework service{dbConnectionSetup}
             services.AddDbContext<DataAccessLayer.ApplicationDbContext>(options =>
                 {dbConnection}
 

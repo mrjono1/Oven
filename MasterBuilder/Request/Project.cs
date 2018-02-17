@@ -20,7 +20,7 @@ namespace MasterBuilder.Request
             AllowDestructiveDatabaseChanges = true;
             ServerSideRendering = false;
             UsePutForUpdate = true;
-            
+            UseMySql = true;
             CleanDirectoryIgnoreDirectories = new string[]
             {
                 "bin",

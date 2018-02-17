@@ -49,16 +49,13 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
             {
                 { "Microsoft.EntityFrameworkCore", efVersion},
                 { "Microsoft.EntityFrameworkCore.Design", efVersion},
+                { "Microsoft.EntityFrameworkCore.SqlServer", efVersion },
                 { "Newtonsoft.Json", "10.0.3"}
             };
             
             if (Project.UseMySql)
             {
                 nugetReferences.Add("Pomelo.EntityFrameworkCore.MySql", "2.0.1");
-            }
-            else
-            {
-                nugetReferences.Add("Microsoft.EntityFrameworkCore.SqlServer", efVersion);
             }
 
             foreach (var item in nugetReferences)
