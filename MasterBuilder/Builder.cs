@@ -202,10 +202,10 @@ namespace MasterBuilder
                 if (dalProjectChanged)
                 {
                     var migration = new Migrations.Migration(dalProjectDirectory);
-                    var success = await migration.Migrate();
-                    if (!success)
+                    var migrationResult = await migration.Migrate();
+                    if (!migrationResult.Success)
                     {
-                        return "Migration Generation Failed";
+                        return $"Migration Generation Failed: {migrationResult.Message}";
                     }
                 }
 

@@ -26,11 +26,12 @@ namespace MasterBuilder.Migrations
         /// <summary>
         /// Generate Database migrations
         /// </summary>
-        public async Task<bool> Migrate()
+        internal async Task<CommandLineResult> Migrate()
         {
-            if (!await Build())
+            var buildResult = await Build();
+            if (!buildResult.Success)
             {
-                return false;
+                return buildResult;
             }
             var list = await ListMigrations();
 
@@ -40,15 +41,15 @@ namespace MasterBuilder.Migrations
         /// <summary>
         /// Build Project
         /// </summary>
-        public async Task<bool> Build()
+        internal async Task<CommandLineResult> Build()
         {
             var result = await ExecuteCommand("dotnet", $"build {DalProjectPath}");
 
             if (result.ExitCode == 0)
             {
-                return true;
+                result.Success = true;
             }
-            return false;
+            return result;
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace MasterBuilder.Migrations
         /// <summary>
         /// Build Project
         /// </summary>
-        public async Task<bool> AddMigration(IEnumerable<string> list)
+        internal async Task<CommandLineResult> AddMigration(IEnumerable<string> list)
         {
             var number = 1;
             if (list.Any())
@@ -98,9 +99,9 @@ namespace MasterBuilder.Migrations
 
             if (result.ExitCode == 0)
             {
-                return true;
+                result.Success = true;
             }
-            return false;
+            return result;
         }
 
         /// <summary>

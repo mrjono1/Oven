@@ -47,12 +47,46 @@ namespace MasterBuilder.Templates.DataAccessLayer.EntityTypeConfigurations
                                 break;
                             case ValidationType.MaximumLength:
                                 value.AppendLine();
-                                value.Append($"             .HasMaxLength({item.IntegerValue.Value})");
+                                value.Append($"                .HasMaxLength({item.IntegerValue.Value})");
                                 break;
                             default:
                                 break;
                         }
                     }
+                }
+
+                // Default Values
+                // TODO: support more database default values
+                switch (property.PropertyType)
+                {
+                    case PropertyType.String:
+                        if (!string.IsNullOrEmpty(property.DefaultStringValue))
+                        {
+                            value.AppendLine();
+                            value.Append($@"                .HasDefaultValue(""{property.DefaultStringValue}"")");
+                        }
+                        break;
+                    case PropertyType.Integer:
+                        if (property.DefaultIntegerValue.HasValue)
+                        {
+                            value.AppendLine();
+                            value.Append($@"                .HasDefaultValue({property.DefaultIntegerValue})");
+                        }
+                        break;
+                    case PropertyType.Boolean:
+                        if (property.DefaultBooleanValue.HasValue)
+                        {
+                            value.AppendLine();
+                            value.Append($@"                .HasDefaultValue({(property.DefaultBooleanValue.Value ? "true": "false")})");
+                        }
+                        break;
+                    case PropertyType.Double:
+                        if (property.DefaultDoubleValue.HasValue)
+                        {
+                            value.AppendLine();
+                            value.Append($@"                .HasDefaultValue({property.DefaultDoubleValue})");
+                        }
+                        break;
                 }
 
                 value.Append(";");
@@ -66,7 +100,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.EntityTypeConfigurations
                             case ValidationType.Unique:
                                 value.AppendLine();
                                 value.Append($@"            builder.HasIndex(p => p.{property.InternalName})
-                  .IsUnique();");
+                 .IsUnique();");
                                 break;
                             default:
                                 break;
@@ -85,27 +119,26 @@ namespace MasterBuilder.Templates.DataAccessLayer.EntityTypeConfigurations
                 if (property.PropertyType == PropertyType.ParentRelationship)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
-                    .WithMany(p => p.{entity.InternalNamePlural})
-                    .HasForeignKey(p => p.{property.InternalName}Id)");
+                 .WithMany(p => p.{entity.InternalNamePlural})
+                 .HasForeignKey(p => p.{property.InternalName}Id)");
                 }
                 else if (property.PropertyType == PropertyType.ReferenceRelationship)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
-                    .WithMany(p => p.{property.InternalName}{entity.InternalNamePlural})
-                    .HasForeignKey(p => p.{property.InternalName}Id)
-                    .OnDelete(DeleteBehavior.Restrict)");
+                 .WithMany(p => p.{property.InternalName}{entity.InternalNamePlural})
+                 .HasForeignKey(p => p.{property.InternalName}Id)
+                 .OnDelete(DeleteBehavior.Restrict)");
                 }
                 else if (property.PropertyType == PropertyType.OneToOneRelationship)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
-                    .WithOne(p => p.{property.InternalName}{entity.InternalName})
-                    .HasForeignKey<Entities.{parentEntity.InternalName}>(p => p.{property.InternalName}{entity.InternalName}Id)
-                    .OnDelete(DeleteBehavior.Cascade)");
+                 .WithOne(p => p.{property.InternalName}{entity.InternalName})
+                 .HasForeignKey<Entities.{parentEntity.InternalName}>(p => p.{property.InternalName}{entity.InternalName}Id)
+                 .OnDelete(DeleteBehavior.Cascade)");
                 }
                 value.Append(";");
             }
-
-
+            
             return value.ToString();
         }
     }
