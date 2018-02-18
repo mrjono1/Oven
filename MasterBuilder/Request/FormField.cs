@@ -22,6 +22,10 @@ namespace MasterBuilder.Request
         /// Optional: Title, Defaulted from Entity if not provided
         /// </summary>
         public string Title { get; set; }
+        /// <summary>
+        /// Visibility Expression - FormFields are Visible by default, this allows it to not be visible based on an expression
+        /// </summary>
+        public Expression VisibilityExpression { get; set; }
 
         #region Internal Helper Properties
         /// <summary>

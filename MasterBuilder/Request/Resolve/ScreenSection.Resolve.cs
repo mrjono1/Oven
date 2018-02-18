@@ -58,10 +58,28 @@ namespace MasterBuilder.Request
                 FormSection.Screen = screen;
                 FormSection.ScreenSection = this;
                 FormSection.Entity = Entity;
+
                 foreach (var formField in FormSection.FormFields)
                 {
                     formField.Property = Entity.Properties.SingleOrDefault(p => p.Id == formField.EntityPropertyId);
                     formField.Project = project;
+                }
+
+                // Add Primary Key field
+                if (!FormSection.FormFields.Any(a => a.PropertyType == PropertyType.PrimaryKey))
+                {
+                    var primaryKeyFormField = new FormField
+                    {
+                        Property = Entity.Properties.Single(property => property.PropertyType == PropertyType.PrimaryKey),
+                        Project = project
+                    };
+                    primaryKeyFormField.EntityPropertyId = primaryKeyFormField.Property.Id;
+
+                    var primaryKeyformFields = new List<FormField>(FormSection.FormFields)
+                    {
+                        primaryKeyFormField
+                    };
+                    FormSection.FormFields = primaryKeyformFields;
                 }
 
                 return;
@@ -100,25 +118,40 @@ namespace MasterBuilder.Request
         /// </summary>
         private void ResolveSearchSection(Project project, Screen screen)
         {
-            var entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
+            Entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
 
             // Populate Property property for helper functions to work
             if (SearchSection != null && SearchSection.SearchColumns != null)
             {
                 SearchSection.Screen = screen;
                 SearchSection.ScreenSection = this;
-                SearchSection.Entity = entity;
+                SearchSection.Entity = Entity;
                 foreach (var searchColumn in SearchSection.SearchColumns)
                 {
-                    searchColumn.Property = entity.Properties.SingleOrDefault(p => p.Id == searchColumn.EntityPropertyId);
+                    searchColumn.Property = Entity.Properties.SingleOrDefault(p => p.Id == searchColumn.EntityPropertyId);
                 }
+                
+                // Add Primary Key field
+                if (!SearchSection.SearchColumns.Any(a => a.PropertyType == PropertyType.PrimaryKey))
+                {
+                    var primaryKeySearchColumn = new SearchColumn
+                    {
+                        Property = Entity.Properties.Single(property => property.PropertyType == PropertyType.PrimaryKey)
+                    };
+                    primaryKeySearchColumn.EntityPropertyId = primaryKeySearchColumn.Property.Id;
 
+                    var primaryKeySearchColumns = new List<SearchColumn>(SearchSection.SearchColumns)
+                    {
+                        primaryKeySearchColumn
+                    };
+                    SearchSection.SearchColumns = primaryKeySearchColumns;
+                }
                 return;
             }
 
             // Create Default Search Screens
             var searchColumns = new List<SearchColumn>();
-            foreach (var property in entity.Properties)
+            foreach (var property in Entity.Properties)
             {
                 switch (property.PropertyType)
                 {
@@ -139,7 +172,7 @@ namespace MasterBuilder.Request
                 SearchColumns = searchColumns,
                 Screen = screen,
                 ScreenSection = this,
-                Entity = entity
+                Entity = Entity
             };
         }
     }

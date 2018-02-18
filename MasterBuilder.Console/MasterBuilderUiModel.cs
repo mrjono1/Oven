@@ -1313,8 +1313,10 @@ namespace MasterBuilder
                             ScreenSectionType = ScreenSectionType.Search,
                             Title = "Projects",
                             InternalName = "Projects",
+                            NavigateToScreenId = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
                             SearchSection = new SearchSection
                             {
+                                
                                 SearchColumns = new SearchColumn[]
                                 {
                                     new SearchColumn
@@ -1603,7 +1605,61 @@ namespace MasterBuilder
                             Id = new Guid("{03934004-41EF-40A7-B317-723019001DCB}"),
                             Title = "Property",
                             InternalName = "Property",
-                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
+                            ScreenSectionType = ScreenSectionType.Form,
+                            FormSection = new FormSection
+                            {
+                                FormFields = new FormField[]
+                                {
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}")
+                                    },
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}")
+                                    },
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{C52F7B8E-CAD0-40FF-8E89-B313A290A96E}")
+                                    },
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}")
+                                    },
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{53AD68E2-5C5C-405C-8407-67EA58862B0D}")
+                                    },
+                                    //new FormField
+                                    //{
+                                    //    EntityPropertyId = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}")
+                                    //},
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{62FE9985-98A3-4D40-BC68-8AF641FDABFC}"),
+                                        Title = "Default Value", // Integer
+                                        VisibilityExpression = new Expression()
+                                    },
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{61862CC1-DFD4-4578-BF6E-FFA195D6F6A1}"),
+                                        Title = "Default Value", // Double
+                                        VisibilityExpression = new Expression()
+                                    },
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{63935FCA-CC40-4A78-A21C-F76FD761701B}"),
+                                        Title = "Default Value", // String
+                                        VisibilityExpression = new Expression()
+                                    },
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{836DA351-CCCF-4269-89CA-98E7CD67E77E}"),
+                                        Title = "Default Value", // Boolean
+                                        VisibilityExpression = new Expression()
+                                    },
+                                }
+                            }
                         }
                     }
                 },

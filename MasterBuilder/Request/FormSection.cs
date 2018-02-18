@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MasterBuilder.Request
 {
@@ -10,6 +11,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Form Fields
         /// </summary>
+        [MustHaveOneElement]
         public IEnumerable<FormField> FormFields { get; set; }
 
         #region Internal Helper Properties
