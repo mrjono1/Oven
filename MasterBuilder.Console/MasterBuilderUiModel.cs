@@ -1630,33 +1630,49 @@ namespace MasterBuilder
                                     {
                                         EntityPropertyId = new Guid("{53AD68E2-5C5C-405C-8407-67EA58862B0D}")
                                     },
-                                    //new FormField
-                                    //{
-                                    //    EntityPropertyId = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}")
-                                    //},
                                     new FormField
                                     {
                                         EntityPropertyId = new Guid("{62FE9985-98A3-4D40-BC68-8AF641FDABFC}"),
                                         Title = "Default Value", // Integer
-                                        VisibilityExpression = new Expression()
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                            UniqueidentifierValue = new Guid("{F126388B-8A6E-41DB-A98A-A0E511016441}")
+                                        }
                                     },
                                     new FormField
                                     {
                                         EntityPropertyId = new Guid("{61862CC1-DFD4-4578-BF6E-FFA195D6F6A1}"),
                                         Title = "Default Value", // Double
-                                        VisibilityExpression = new Expression()
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                            UniqueidentifierValue = new Guid("{B967BF8D-0722-43F0-9945-CBEB4160822F}")
+                                        }
                                     },
                                     new FormField
                                     {
                                         EntityPropertyId = new Guid("{63935FCA-CC40-4A78-A21C-F76FD761701B}"),
                                         Title = "Default Value", // String
-                                        VisibilityExpression = new Expression()
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                            UniqueidentifierValue = new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}")
+                                        }
                                     },
                                     new FormField
                                     {
                                         EntityPropertyId = new Guid("{836DA351-CCCF-4269-89CA-98E7CD67E77E}"),
                                         Title = "Default Value", // Boolean
-                                        VisibilityExpression = new Expression()
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                            UniqueidentifierValue = new Guid("{2C1D2E2A-3531-41D9-90D3-3632C368B12A}")
+                                        }
                                     },
                                 }
                             }
