@@ -1303,6 +1303,47 @@ namespace MasterBuilder
                             Id = new Guid("{00CAB28C-F1CA-4FDC-9184-AC7DDA7FD3C5}"),
                             Feature = Feature.New
                         }
+                    },
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{56997673-082E-4FE0-BDC0-8088B0559694}"),
+                            EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ScreenSectionType = ScreenSectionType.Search,
+                            Title = "Projects",
+                            InternalName = "Projects",
+                            SearchSection = new SearchSection
+                            {
+                                SearchColumns = new SearchColumn[]
+                                {
+                                    new SearchColumn
+                                    {
+                                        EntityPropertyId = new Guid("{CB6D802C-1F26-4D23-9272-6396E6268D72}"),
+                                        Title = "Title",
+                                        Ordinal = 0
+                                    },
+                                    new SearchColumn
+                                    {
+                                        EntityPropertyId = new Guid("{F1EEF37B-F40D-44D4-832F-ACEC4B63D147}"),
+                                        Title = "Major Version",
+                                        Ordinal = 10
+                                    },
+                                    new SearchColumn
+                                    {
+                                        EntityPropertyId = new Guid("{97E822CB-7A95-4C14-BED4-6CE19602FEE8}"),
+                                        Title = "Minor Version",
+                                        Ordinal = 20
+                                    },
+                                    new SearchColumn
+                                    {
+                                        EntityPropertyId = new Guid("{D7E750B0-159D-464C-A88C-6E67673CFAF2}"),
+                                        Title = "Build Version",
+                                        Ordinal = 40
+                                    },
+                                }
+                            }
+                        }
                     }
                 },
                 #endregion

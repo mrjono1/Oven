@@ -31,10 +31,12 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Title
         /// </summary>
+        [Required]
         public string Title { get; set; }
         /// <summary>
         /// Internal Name
         /// </summary>
+        [Required]
         public string InternalName { get; set; }
         /// <summary>
         /// Screen Section Type Id
