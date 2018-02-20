@@ -120,6 +120,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 classProperties.AddRange(formSectionPartial.GetClassProperties());
                 onNgInitBodySections.AddRange(formSectionPartial.GetOnNgInitBodySections());
                 functions.AddRange(formSectionPartial.GetFunctions());
+                functions.AddRange(formSectionPartial.GetVisibilityFunctions());
                 properties.AddRange(formSectionPartial.GetProperties());
                 formControls.AddRange(formSectionPartial.GetFormControls());
             }

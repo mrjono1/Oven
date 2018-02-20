@@ -133,6 +133,39 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             return classProperties;
         }
 
+        internal IEnumerable<string> GetVisibilityFunctions()
+        {
+            var functions = new List<string>();
+
+            foreach (var formField in (from screenSection in ScreenSections
+                                       from formField in screenSection.FormSection.FormFields
+                                       where formField.PropertyType != PropertyType.PrimaryKey
+                                       select formField))
+            {
+                if (formField.VisibilityExpression == null) {
+                    functions.Add($@"    {formField.Property.InternalName.Camelize()}Visible() {{
+        return this.{Screen.InternalName.Camelize()} && this.{Screen.InternalName.Camelize()}Form;
+    }}");
+                }
+                else {
+                    var property = (from screenSection in ScreenSections
+                                    from ff in screenSection.FormSection.FormFields
+                                    where ff.EntityPropertyId == formField.VisibilityExpression.PropertyId
+                                    select ff).Single();
+                    functions.Add($@"    {formField.Property.InternalName.Camelize()}Visible() {{
+        if (this.{Screen.InternalName.Camelize()} &&
+            this.{Screen.InternalName.Camelize()}Form &&
+            this.{Screen.InternalName.Camelize()}Form.get('{property.InternalNameTypeScript}').value === '{formField.VisibilityExpression.UniqueidentifierValue.ToString().ToLowerInvariant()}') {{
+                return true;
+        }}
+        return false;
+    }}");
+                }
+            }
+
+            return functions;
+        }
+
         /// <summary>
         /// Get on Ng Init Body Sections
         /// </summary>

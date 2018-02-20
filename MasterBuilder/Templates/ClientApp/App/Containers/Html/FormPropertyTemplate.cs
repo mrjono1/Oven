@@ -109,27 +109,27 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     </mat-error>");
 
             string control = null;
-            string wrapAttributes = null;
+            string wrapAttributes = $@" *ngIf=""{Property.InternalName.Camelize()}Visible()""";
             bool dontWrap = false;
             switch (Property.PropertyType)
             {
                 case PropertyType.String:
-                    control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""text"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
+                    control = $@"{new String(' ', 20)}<input type=""text"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Integer:
-                    control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
+                    control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Double:
-                    control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
+                    control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.DateTime:
-                    control = $@"{new String(' ', 20)}<input *ngIf=""{Screen.InternalName.Camelize()}"" matInput [matDatepicker]=""{propertyName}Control"" id=""{Property.Id}"" placeholder=""{Property.Title}""
+                    control = $@"{new String(' ', 20)}<input matInput [matDatepicker]=""{propertyName}Control"" id=""{Property.Id}"" placeholder=""{Property.Title}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
                     <mat-datepicker-toggle matSuffix [for]=""{propertyName}Control""></mat-datepicker-toggle>
                     <mat-datepicker #{propertyName}Control></mat-datepicker>";
@@ -137,7 +137,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
                 case PropertyType.Boolean:
                     dontWrap = true;
-                    control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{Screen.InternalName.Camelize()}"" id=""{Property.Id}""
+                    control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{Property.InternalName.Camelize()}Visible()"" id=""{Property.Id}""
 {new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{Property.Title}</mat-checkbox>";
                     break;
 
@@ -153,7 +153,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                             </mat-option>
                         </mat-select>";
 
-                    wrapAttributes = $@" *ngIf=""{parentEntity.InternalName.Camelize()}Reference && {parentEntity.InternalName.Camelize()}Reference.items""";
+                    wrapAttributes = $@" *ngIf=""{parentEntity.InternalName.Camelize()}Reference && {parentEntity.InternalName.Camelize()}Reference.items && {Property.InternalName.Camelize()}Visible()""";
                     break;
                 default:
                     break;
