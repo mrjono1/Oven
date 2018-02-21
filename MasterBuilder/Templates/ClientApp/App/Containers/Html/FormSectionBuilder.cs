@@ -34,10 +34,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
             var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
 
-            foreach (var property in entity.Properties)
-            {
-                var formPropertyTemplate = new FormPropertyTemplate(Project, Screen, property);
-                formGroups.Add(formPropertyTemplate.FormField());
+            foreach (var formField in (from ff in ScreenSection.FormSection.FormFields
+                                       select ff))
+            { 
+                var formPropertyTemplate = new FormFieldTemplate(Project, Screen, formField);
+                formGroups.Add(formPropertyTemplate.GetFormField());
             }
 
             var menuItems = new List<string>

@@ -10,40 +10,29 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
     /// <summary>
     /// Form Property Template
     /// </summary>
-    public class FormPropertyTemplate
+    public class FormFieldTemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
-        private readonly Property Property;
+        private readonly FormField FormField;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public FormPropertyTemplate(Project project, Screen screen, Property property)
+        public FormFieldTemplate(Project project, Screen screen, FormField formField)
         {
             Project = project;
             Screen = screen;
-            Property = property;
+            FormField = formField;
         }
 
-        internal string FormField()
+        internal string GetFormField()
         {
-            string propertyName = null;
-            switch (Property.PropertyType)
-            {
-                case PropertyType.ReferenceRelationship:
-                    propertyName = $"{Property.InternalName.Camelize()}Id";
-                    break;
-                default:
-                    propertyName = Property.InternalName.Camelize();
-                    break;
-            }
-
             var attributes = new List<string>();
             var propertyValidators = new List<string>();
-            if (Property.ValidationItems != null && Property.ValidationItems.Any())
+            if (FormField.Property.ValidationItems != null && FormField.Property.ValidationItems.Any())
             {
-                foreach (var validationItem in Property.ValidationItems)
+                foreach (var validationItem in FormField.Property.ValidationItems)
                 {
                     string selector = null;
                     switch (validationItem.ValidationType)
@@ -61,22 +50,22 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                             break;
                         case ValidationType.MaximumValue:
                             selector = "max";
-                            if (Property.PropertyType == PropertyType.Integer)
+                            if (FormField.PropertyType == PropertyType.Integer)
                             {
                                 attributes.Add($@"max=""{validationItem.IntegerValue}""");
                             }
-                            else if (Property.PropertyType == PropertyType.Double)
+                            else if (FormField.PropertyType == PropertyType.Double)
                             {
                                 attributes.Add($@"max=""{validationItem.DoubleValue}""");
                             }
                             break;
                         case ValidationType.MinimumValue:
                             selector = "min";
-                            if (Property.PropertyType == PropertyType.Integer)
+                            if (FormField.PropertyType == PropertyType.Integer)
                             {
                                 attributes.Add($@"min=""{validationItem.IntegerValue}""");
                             }
-                            else if (Property.PropertyType == PropertyType.Double)
+                            else if (FormField.PropertyType == PropertyType.Double)
                             {
                                 attributes.Add($@"min=""{validationItem.DoubleValue}""");
                             }
@@ -97,63 +86,63 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     }
                     if (selector != null)
                     {
-                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{propertyName}.hasError('{selector}')"">
-{new String(' ', 24)}{validationItem.GetMessage(Property.Title)}
+                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{FormField.InternalNameTypeScript}.hasError('{selector}')"">
+{new String(' ', 24)}{validationItem.GetMessage(FormField.TitleValue)}
 {new String(' ', 20)}</mat-error>");
                     }
                 }
             }
 
             propertyValidators.Add($@"                    <mat-error>
-                        {{{{serverErrorMessages.{propertyName}}}}}
+                        {{{{serverErrorMessages.{FormField.InternalNameTypeScript}}}}}
                     </mat-error>");
 
             string control = null;
-            string wrapAttributes = $@" *ngIf=""{Property.InternalName.Camelize()}Visible()""";
+            string wrapAttributes = $@" *ngIf=""{FormField.InternalNameTypeScript}Visible()""";
             bool dontWrap = false;
-            switch (Property.PropertyType)
+            switch (FormField.Property.PropertyType)
             {
                 case PropertyType.String:
-                    control = $@"{new String(' ', 20)}<input type=""text"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+                    control = $@"{new String(' ', 20)}<input type=""text"" matInput id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
+{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Integer:
-                    control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+                    control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
+{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Double:
-                    control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+                    control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
+{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.DateTime:
-                    control = $@"{new String(' ', 20)}<input matInput [matDatepicker]=""{propertyName}Control"" id=""{Property.Id}"" placeholder=""{Property.Title}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
-                    <mat-datepicker-toggle matSuffix [for]=""{propertyName}Control""></mat-datepicker-toggle>
-                    <mat-datepicker #{propertyName}Control></mat-datepicker>";
+                    control = $@"{new String(' ', 20)}<input matInput [matDatepicker]=""{FormField.InternalNameTypeScript}Control"" id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
+{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
+                    <mat-datepicker-toggle matSuffix [for]=""{FormField.InternalNameTypeScript}Control""></mat-datepicker-toggle>
+                    <mat-datepicker #{FormField.InternalNameTypeScript}Control></mat-datepicker>";
                     break;
 
                 case PropertyType.Boolean:
                     dontWrap = true;
-                    control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{Property.InternalName.Camelize()}Visible()"" id=""{Property.Id}""
-{new String(' ', 22)}[formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{Property.Title}</mat-checkbox>";
+                    control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{FormField.InternalNameTypeScript}Visible()"" id=""{FormField.Property.Id}""
+{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{FormField.TitleValue}</mat-checkbox>";
                     break;
 
                 case PropertyType.ReferenceRelationship:
                     var parentEntity = (from e in Project.Entities
-                                        where e.Id == Property.ParentEntityId.Value
+                                        where e.Id == FormField.Property.ParentEntityId.Value
                                         select e).SingleOrDefault();
 
-                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{Property.Title}"" [compareWith]=""referenceCompare"" [formControl]=""{propertyName}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
-                           {(Property.Required ? string.Empty : "<mat-option>--</mat-option>")}
+                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{FormField.TitleValue}"" [compareWith]=""referenceCompare"" [formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
+                           {(FormField.Property.Required ? string.Empty : "<mat-option>--</mat-option>")}
                            <mat-option *ngFor=""let option of {parentEntity.InternalName.Camelize()}Reference.items"" [value]=""option.id"">
                                 <span>{{{{ option.title }}}}</span>
                             </mat-option>
                         </mat-select>";
 
-                    wrapAttributes = $@" *ngIf=""{parentEntity.InternalName.Camelize()}Reference && {parentEntity.InternalName.Camelize()}Reference.items && {Property.InternalName.Camelize()}Visible()""";
+                    wrapAttributes = $@" *ngIf=""{parentEntity.InternalName.Camelize()}Reference && {parentEntity.InternalName.Camelize()}Reference.items && {FormField.InternalNameTypeScript}Visible()""";
                     break;
                 default:
                     break;

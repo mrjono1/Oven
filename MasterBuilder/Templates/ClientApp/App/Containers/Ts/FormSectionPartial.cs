@@ -143,7 +143,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                        select formField))
             {
                 if (formField.VisibilityExpression == null) {
-                    functions.Add($@"    {formField.Property.InternalName.Camelize()}Visible() {{
+                    functions.Add($@"    {formField.InternalNameTypeScript}Visible() {{
         return this.{Screen.InternalName.Camelize()} && this.{Screen.InternalName.Camelize()}Form;
     }}");
                 }
@@ -152,7 +152,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                     from ff in screenSection.FormSection.FormFields
                                     where ff.EntityPropertyId == formField.VisibilityExpression.PropertyId
                                     select ff).Single();
-                    functions.Add($@"    {formField.Property.InternalName.Camelize()}Visible() {{
+                    functions.Add($@"    {formField.InternalNameTypeScript}Visible() {{
         if (this.{Screen.InternalName.Camelize()} &&
             this.{Screen.InternalName.Camelize()}Form &&
             this.{Screen.InternalName.Camelize()}Form.get('{property.InternalNameTypeScript}').value === '{formField.VisibilityExpression.UniqueidentifierValue.ToString().ToLowerInvariant()}') {{
