@@ -126,8 +126,9 @@ namespace MasterBuilder.Templates.ProjectFiles
     <Exec Command=""node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js"" />
     <Exec Command=""node node_modules/webpack/bin/webpack.js"" />
   </Target>
-  <Target Name=""RunWebpack"" AfterTargets=""ComputeFilesToPublish"">
+  <Target Name=""RunWebpack"" Condition="" '$(Configuration)' == 'Release' "">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Message Importance=""high"" Text=""Performing Release Webpack build..."" />
     <Exec Command=""npm install"" />
     <Exec Command=""node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js --env.prod"" />
     <Exec Command=""node node_modules/webpack/bin/webpack.js --env.prod"" />

@@ -168,44 +168,29 @@ namespace {Project.InternalName}
                     HotModuleReplacement = true,
                     HotModuleReplacementEndpoint = ""/dist/""
                 }});
-                // Enable middleware to serve generated Swagger as a JSON endpoint.
-                app.UseSwagger();
-                // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
-                app.UseSwaggerUI(c =>
-                {{
-                    c.SwaggerEndpoint(""/swagger/v1/swagger.json"", ""{Project.Title} API V1"");
-                }});
-
-                app.MapWhen(x => !x.Request.Path.Value.StartsWith(""/swagger"", StringComparison.OrdinalIgnoreCase), builder =>
-                {{
-                    builder.UseMvc(routes =>
-                    {{
-                        routes.MapSpaFallbackRoute(
-                            name: ""spa-fallback"",
-                            defaults: new {{ controller = ""Home"", action = ""Index"" }});
-                    }});
-                }});
             }}
             else
             {{
-                app.UseMvc(routes =>
-                {{
-                    routes.MapRoute(
-                     name: ""default"",
-                     template: ""{{controller=Home}}/{{action=Index}}/{{id?}}"");
-
-                    routes.MapRoute(
-                     ""Sitemap"",
-                     ""sitemap.xml"",
-                     new {{ controller = ""Home"", action = ""SitemapXml"" }});
-
-                    routes.MapSpaFallbackRoute(
-                      name: ""spa-fallback"",
-                      defaults: new {{ controller = ""Home"", action = ""Index"" }});
-
-                }});
                 app.UseExceptionHandler(""/Home/Error"");
             }}
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {{
+                c.SwaggerEndpoint(""/swagger/v1/swagger.json"", ""{Project.Title} API V1"");
+            }});
+
+            app.MapWhen(x => !x.Request.Path.Value.StartsWith(""/swagger"", StringComparison.OrdinalIgnoreCase), builder =>
+            {{
+                builder.UseMvc(routes =>
+                {{
+                    routes.MapSpaFallbackRoute(
+                        name: ""spa-fallback"",
+                        defaults: new {{ controller = ""Home"", action = ""Index"" }});
+                }});
+            }});
         }}
     }}
 }}";
