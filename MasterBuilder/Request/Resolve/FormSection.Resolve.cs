@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace MasterBuilder.Request
+{
+    public partial class FormSection
+    {
+        /// <summary>
+        /// Resolve Form Section
+        /// </summary>
+        internal bool Resolve(Project project, Screen screen, ScreenSection screenSection, out string message)
+        {
+            var errors = new List<string>();
+            Screen = screen;
+            ScreenSection = screenSection;
+            Entity = screenSection.Entity;
+            
+            // Populate Property property for helper functions to work
+            if (FormFields != null)
+            {
+                foreach (var formField in FormFields)
+                {
+
+                    if (!formField.Resolve(project, screen, screenSection, out string formFieldMessage)){
+                        errors.Add(formFieldMessage);
+                    }
+                }
+
+                // Add Primary Key field
+                if (!FormFields.Any(a => a.PropertyType == PropertyType.PrimaryKey))
+                {
+                    var primaryKeyProperty = Entity.Properties.Single(property => property.PropertyType == PropertyType.PrimaryKey);
+
+                    var primaryKeyFormField = new FormField
+                    {
+                        EntityPropertyId = primaryKeyProperty.Id
+                    };
+                    if (!primaryKeyFormField.Resolve(project, screen, screenSection, out string formFieldMessage))
+                    {
+                        errors.Add(formFieldMessage);
+                    }
+
+                    var primaryKeyformFields = new List<FormField>(FormFields)
+                    {
+                        primaryKeyFormField
+                    };
+                    FormFields = primaryKeyformFields;
+                }
+            }
+
+            if (errors.Any())
+            {
+                message = string.Join(Environment.NewLine, errors);
+                return false;
+            }
+            else
+            {
+                message = "Success";
+                return true;
+            }
+        }
+    }
+}

@@ -6,7 +6,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Form Section Settings
     /// </summary>
-    public class FormSection
+    public partial class FormSection
     {
         /// <summary>
         /// Form Fields

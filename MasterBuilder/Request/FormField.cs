@@ -10,7 +10,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Form Field
     /// </summary>
-    public class FormField
+    public partial class FormField
     {
         /// <summary>
         /// Entity Property Id
@@ -26,6 +26,10 @@ namespace MasterBuilder.Request
         /// Visibility Expression - FormFields are Visible by default, this allows it to not be visible based on an expression
         /// </summary>
         public Expression VisibilityExpression { get; set; }
+        /// <summary>
+        /// If true this property always hidden from the UI, also could be used in an expression
+        /// </summary>
+        public bool IsInternal { get; set; }
 
         #region Internal Helper Properties
         /// <summary>

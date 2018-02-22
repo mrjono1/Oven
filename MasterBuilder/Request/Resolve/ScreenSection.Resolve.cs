@@ -13,10 +13,25 @@ namespace MasterBuilder.Request
         {
             var errors = new List<string>();
 
+            if (EntityId.HasValue)
+            {
+                Entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
+            }
+
+            if (ParentEntityPropertyId.HasValue)
+            {
+                ParentEntityProperty = screen.Entity.Properties.Single(p => p.Id == ParentEntityPropertyId.Value);
+            }
+
             switch (ScreenSectionType)
             {
                 case ScreenSectionType.Form:
                     ResolveFormSection(project, screen);
+
+                    if (!FormSection.Resolve(project, screen, this, out string formSectionMessage))
+                    {
+                        errors.Add(formSectionMessage);
+                    }
                     break;
                 case ScreenSectionType.Search:
                     ResolveSearchSection(project, screen);
@@ -46,45 +61,11 @@ namespace MasterBuilder.Request
         /// </summary>
         private void ResolveFormSection(Project project, Screen screen)
         {
-            Entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
-            if (ParentEntityPropertyId.HasValue)
-            {
-                ParentEntityProperty = screen.Entity.Properties.Single(p => p.Id == ParentEntityPropertyId.Value);
-            }
-
-            // Populate Property property for helper functions to work
             if (FormSection != null && FormSection.FormFields != null)
             {
-                FormSection.Screen = screen;
-                FormSection.ScreenSection = this;
-                FormSection.Entity = Entity;
-
-                foreach (var formField in FormSection.FormFields)
-                {
-                    formField.Property = Entity.Properties.SingleOrDefault(p => p.Id == formField.EntityPropertyId);
-                    formField.Project = project;
-                }
-
-                // Add Primary Key field
-                if (!FormSection.FormFields.Any(a => a.PropertyType == PropertyType.PrimaryKey))
-                {
-                    var primaryKeyFormField = new FormField
-                    {
-                        Property = Entity.Properties.Single(property => property.PropertyType == PropertyType.PrimaryKey),
-                        Project = project
-                    };
-                    primaryKeyFormField.EntityPropertyId = primaryKeyFormField.Property.Id;
-
-                    var primaryKeyformFields = new List<FormField>(FormSection.FormFields)
-                    {
-                        primaryKeyFormField
-                    };
-                    FormSection.FormFields = primaryKeyformFields;
-                }
-
                 return;
             }
-
+            
             // Create Default Search Screens
             var formFields = new List<FormField>();
             foreach (var property in Entity.Properties)
@@ -92,6 +73,7 @@ namespace MasterBuilder.Request
                 switch (property.PropertyType)
                 {
                     case PropertyType.OneToOneRelationship:
+                        // TODO: figure out how to display these
                         continue;
                     default:
                         formFields.Add(new FormField
@@ -106,10 +88,7 @@ namespace MasterBuilder.Request
 
             FormSection = new FormSection
             {
-                FormFields = formFields,
-                Screen = screen,
-                ScreenSection = this,
-                Entity = Entity
+                FormFields = formFields
             };
         }
 
@@ -118,8 +97,6 @@ namespace MasterBuilder.Request
         /// </summary>
         private void ResolveSearchSection(Project project, Screen screen)
         {
-            Entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
-
             // Populate Property property for helper functions to work
             if (SearchSection != null && SearchSection.SearchColumns != null)
             {
