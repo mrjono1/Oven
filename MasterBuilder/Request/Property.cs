@@ -27,7 +27,8 @@ namespace MasterBuilder.Request
             { new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"), PropertyType.ReferenceRelationship },
             { new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}"), PropertyType.OneToOneRelationship },
             { new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}"), PropertyType.String },
-            { new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"), PropertyType.PrimaryKey }
+            { new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"), PropertyType.PrimaryKey },
+            { new Guid("{A3189B37-FC2D-417B-868F-61D52F4D06DC}"), PropertyType.Uniqueidentifier },
         };
 
         /// <summary>

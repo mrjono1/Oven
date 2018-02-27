@@ -148,6 +148,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
     }}");
                 }
                 else {
+                    var expressionPartial = new Evaluate.TsExpressionPartial(Screen, ScreenSections);
+                    var expression = expressionPartial.GetExpression(formField.VisibilityExpression);
+
                     var property = (from screenSection in ScreenSections
                                     from ff in screenSection.FormSection.FormFields
                                     where ff.EntityPropertyId == formField.VisibilityExpression.PropertyId
@@ -155,7 +158,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                     functions.Add($@"    {formField.InternalNameTypeScript}Visible() {{
         if (this.{Screen.InternalName.Camelize()} &&
             this.{Screen.InternalName.Camelize()}Form &&
-            this.{Screen.InternalName.Camelize()}Form.get('{property.InternalNameTypeScript}').value === '{formField.VisibilityExpression.UniqueidentifierValue.ToString().ToLowerInvariant()}') {{
+            {expression}) {{
                 return true;
         }}
         return false;

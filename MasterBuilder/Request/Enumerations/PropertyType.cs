@@ -40,6 +40,10 @@ namespace MasterBuilder.Request
         /// <summary>
         /// One to One Relationship to another entity
         /// </summary>
-        OneToOneRelationship
+        OneToOneRelationship,
+        /// <summary>
+        /// Uniqueidentifier
+        /// </summary>
+        Uniqueidentifier
     }
 }
