@@ -14,7 +14,9 @@ namespace MasterBuilder
             {
                 Id = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}"),
                 InternalName = "MasterBuilderUi",
-                BuildVersion = 1,
+                MajorVersion = 0,
+                MinorVersion = 1,
+                BuildVersion = 0,
                 Title = "Master Builder",
                 DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}")
             };

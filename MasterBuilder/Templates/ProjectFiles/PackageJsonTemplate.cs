@@ -119,7 +119,7 @@ namespace MasterBuilder.Templates.ProjectFiles
     }}";
 
             var devDependencies = $@"    ""devDependencies"": {{
-        ""@angular/cli"": ""^1.7.1"", 
+        ""@angular/cli"": ""^1.7.1"",
         ""@angular/service-worker"": ""{angularVersion}"",
         ""@ngtools/webpack"": ""^1.10.1"",
         ""@types/chai"": ""^3.4.34"",

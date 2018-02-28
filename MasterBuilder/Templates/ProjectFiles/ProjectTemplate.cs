@@ -79,6 +79,7 @@ namespace MasterBuilder.Templates.ProjectFiles
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>
+    <Version>{Project.MajorVersion}.{Project.MinorVersion}.{Project.BuildVersion}</Version>
   </PropertyGroup>
 
   <Target Name=""PrepublishScript"" BeforeTargets=""PrepareForPublish""> 
