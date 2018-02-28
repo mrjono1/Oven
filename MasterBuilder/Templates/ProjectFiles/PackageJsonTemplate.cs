@@ -1,6 +1,7 @@
 using Humanizer;
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
+using System;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
@@ -41,11 +42,11 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// <returns></returns>
         public string GetFileContent()
         {
-            var angularVersion = "^5.2.1"; //same version used by multiple angular packages
+            var angularVersion = "^5.2.6"; //same version used by multiple angular packages
             var angularMaterialVersion = "^5.1.0";  //same version used by multiple angular material packages
 
             // 'private: true' ensures that this project will not be published on npm
-            var topSettings = $@"  ""name"": ""{Project.InternalName.Kebaberize()}"",
+            var topSettings = $@"    ""name"": ""{Project.InternalName.Kebaberize()}"",
     ""private"": true,
     ""version"": ""{Project.Version}""";
 
@@ -79,7 +80,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         ""@angular/platform-browser-dynamic"": ""{angularVersion}"",
         ""@angular/platform-server"": ""{angularVersion}"",
         ""@angular/router"": ""{angularVersion}"",
-        ""@angular/flex-layout"": ""^2.0.0-beta.12"",
+        ""@angular/flex-layout"": ""^5.0.0-beta.13"",
         ""@nguniversal/aspnetcore-engine"": ""^5.0.0-beta.5"",
         ""@nguniversal/common"": ""^5.0.0-beta.5"",
         ""@ngx-translate/core"": ""^9.1.1"",
@@ -142,7 +143,7 @@ namespace MasterBuilder.Templates.ProjectFiles
     }}";
 
             return $@"{{
-                {string.Join(",", topSettings, scripts, dependencies, devDependencies)}
+{string.Join(string.Concat(",", Environment.NewLine), topSettings, scripts, dependencies, devDependencies)}
 }}";
         }
         
