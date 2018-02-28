@@ -39,7 +39,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 "import { Operation } from '../../models/Operation';",
                 "import { FormControl, FormGroup, Validators } from '@angular/forms';",
                 "import { Observable } from 'rxjs/Observable';",
-                "import { HttpErrorService } from '../../shared/httperror.service';"
+                "import { HttpErrorService } from '../../shared/httperror.service';",
+                "import { ComponentCanDeactivate } from '../../shared/pending.changes.guard';"
             };
 
             // TODO: implement child sections
@@ -240,6 +241,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             {
                 @"    referenceCompare(referenceItem1: any, referenceItem2: any): boolean {{
         return referenceItem1 === referenceItem2;
+    }}",
+                $@"    canDeactivate(): Observable<boolean> | boolean {{
+        // check if there are pending changes
+        if (this.{Screen.InternalName.Camelize()}Form.pristine || !this.{Screen.InternalName.Camelize()}Form.valid) {{
+            return true;
+        }}
+        return false;
     }}"
             };
 

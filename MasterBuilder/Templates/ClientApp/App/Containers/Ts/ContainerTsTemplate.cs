@@ -154,7 +154,7 @@ import {{ Router, ActivatedRoute }} from '@angular/router';
     selector: '{Screen.InternalName.ToLowerInvariant()}',
     templateUrl: './{Screen.InternalName.ToLowerInvariant()}.component.html'
 }})
-export class {Screen.InternalName}Component implements OnInit {{
+export class {Screen.InternalName}Component implements OnInit{(formSections.Any() ? ", ComponentCanDeactivate" : string.Empty)} {{
     {string.Join(string.Concat(Environment.NewLine, "    "), classProperties.Distinct())}
 
     constructor({string.Join(string.Concat(",", Environment.NewLine, "      "), constructorParamerters.Distinct())}){{

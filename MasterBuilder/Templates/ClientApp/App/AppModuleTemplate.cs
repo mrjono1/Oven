@@ -80,7 +80,7 @@ import {{ HttpClientModule, HttpClient }} from '@angular/common/http';
 import {{ FormsModule, ReactiveFormsModule }} from '@angular/forms';
 import {{ BrowserModule, BrowserTransferStateModule }} from '@angular/platform-browser';
 import {{ TransferHttpCacheModule }} from '@nguniversal/common';
-
+import {{ PendingChangesGuard }} from './shared/pending.changes.guard';
 // Date format
 import {{ MAT_MOMENT_DATE_FORMATS,MomentDateAdapter }} from '@angular/material-moment-adapter';
 import {{ DateAdapter,MAT_DATE_FORMATS, MAT_DATE_LOCALE }} from '@angular/material/core';
@@ -153,8 +153,9 @@ export function createTranslateLoader(http: HttpClient, baseHref) {{
     providers: [
         LinkService,
         HttpErrorService,
-            {string.Join(string.Concat(",", Environment.NewLine, "        "), providers.Keys)},
+        {string.Join(string.Concat(",", Environment.NewLine, "        "), providers.Keys)},
         TranslateModule,
+        PendingChangesGuard,
 
         // Date format
         {{ provide: MAT_DATE_LOCALE, useValue: 'en-au' }},
@@ -196,7 +197,7 @@ export class AppModuleShared {{
             var fullEditPath = screen.EditFullPath(Project);
             if (!string.IsNullOrEmpty(fullEditPath))
             {
-                menuItems.Add($@"            {{ path: '{fullEditPath}', component: {screen.InternalName}Component }}");
+                menuItems.Add($@"            {{ path: '{fullEditPath}', component: {screen.InternalName}Component, canDeactivate: [PendingChangesGuard] }}");
             }
             var fullPath = screen.FullPath(Project);
             if (!string.IsNullOrEmpty(fullPath))

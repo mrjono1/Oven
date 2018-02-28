@@ -33,6 +33,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
             
             templates.Add(new LinkServiceTemplate());
             templates.Add(new HttpErrorServiceTemplate());
+            templates.Add(new PendingChangesGuardTemplate());
 
             return templates;
         }
