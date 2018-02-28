@@ -43,7 +43,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         public string GetFileContent()
         {
             var angularVersion = "^5.2.6"; //same version used by multiple angular packages
-            var angularMaterialVersion = "^5.1.0";  //same version used by multiple angular material packages
+            var angularMaterialVersion = "^5.2.3";  //same version used by multiple angular material packages
 
             // 'private: true' ensures that this project will not be published on npm
             var topSettings = $@"    ""name"": ""{Project.InternalName.Kebaberize()}"",
@@ -67,8 +67,7 @@ namespace MasterBuilder.Templates.ProjectFiles
             var dependencies = $@"    ""dependencies"": {{
         ""@angular/material"": ""{angularMaterialVersion}"",
         ""@angular/material-moment-adapter"": ""{angularMaterialVersion}"",
-        ""hammerjs"": ""^2.0.8"",
-        ""@angular/cdk"": ""^5.1.0"",
+        ""@angular/cdk"": ""{angularMaterialVersion}"",
         ""@angular/animations"": ""{angularVersion}"",
         ""@angular/common"": ""{angularVersion}"",
         ""@angular/compiler"": ""{angularVersion}"",
@@ -98,6 +97,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         ""expose-loader"": ""^0.7.3"",
         ""extract-text-webpack-plugin"": ""^3.0.0"",
         ""file-loader"": ""^0.11.2"",
+        ""hammerjs"": ""^2.0.8"",
         ""html-loader"": ""^0.5.1"",
         ""isomorphic-fetch"": ""^2.2.1"",
         ""json-loader"": ""^0.5.4"",
@@ -119,9 +119,9 @@ namespace MasterBuilder.Templates.ProjectFiles
     }}";
 
             var devDependencies = $@"    ""devDependencies"": {{
-        ""@angular/cli"": ""^1.6.5"", 
+        ""@angular/cli"": ""^1.7.1"", 
         ""@angular/service-worker"": ""{angularVersion}"",
-        ""@ngtools/webpack"": ""^1.9.3"",
+        ""@ngtools/webpack"": ""^1.10.1"",
         ""@types/chai"": ""^3.4.34"",
         ""@types/jasmine"": ""^2.5.37"",
         ""chai"": ""^3.5.0"",
