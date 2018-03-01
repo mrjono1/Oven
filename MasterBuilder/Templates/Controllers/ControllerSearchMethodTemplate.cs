@@ -80,7 +80,7 @@ namespace MasterBuilder.Templates.Controllers
                 totalPages = Convert.ToInt32(Math.Ceiling((double)totalItems / request.PageSize));
 
                 items = await query
-                    .OrderBy(p => p.Title) //TODO: From Setting
+                    .OrderBy(p => p.{screenSection.SearchSection.OrderBy})
                     .Skip((request.Page - 1) * request.PageSize)
                     .Take(request.PageSize)
                     .Select(item => new {screenSection.SearchSection.SearchItemClass}

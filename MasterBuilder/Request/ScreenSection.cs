@@ -96,6 +96,13 @@ namespace MasterBuilder.Request
         /// </summary>
         public FormSection FormSection { get; set; }
 
+        /// <summary>
+        /// The property <see cref="Property.InternalName"/> to order by, defaults to "Title"
+        /// </summary>
+        public string OrderBy { get; set; } = "Title";
+
+
+
         #region Internal Fields
 
         /// <summary>

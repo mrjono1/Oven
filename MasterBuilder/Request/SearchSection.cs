@@ -12,6 +12,11 @@ namespace MasterBuilder.Request
         /// </summary>
         public IEnumerable<SearchColumn> SearchColumns { get; set; }
 
+        /// <summary>
+        /// The <see cref="Property.InternalName"/> to order by, defaults to Title
+        /// </summary>
+        public string OrderBy { get; set; } = "Title";
+
 
         #region Internal Helper Properties
         /// <summary>

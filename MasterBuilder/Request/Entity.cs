@@ -12,6 +12,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// The configuration for an entity
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("Entity: {Title}")]
     public partial class Entity
     {
         /// <summary>

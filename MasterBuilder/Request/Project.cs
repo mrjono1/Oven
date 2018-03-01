@@ -105,6 +105,16 @@ namespace MasterBuilder.Request
         [NonDefault]
         public Guid? DefaultScreenId { get; set; }
 
+        /// <summary>
+        /// Any NuGet dependencies to include
+        /// </summary>
+        public IEnumerable<NuGetImport> NuGetDependencies { get; set; }
+
+        /// <summary>
+        /// Any NuGet package sources to reference
+        /// </summary>
+        public IEnumerable<NuGetPackageSource> NuGetPackageSources { get; set; }
+
         #region Internal Settings
         /// <summary>
         /// Use MySql instead of MS Sql (not fully implemented explicit migrations needed)
