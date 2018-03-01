@@ -76,11 +76,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
             var properties = new List<string>();
             var imports = new List<string>();
 
-            foreach (var formField in (from screenSection in ScreenSections
+            foreach (var group in (from screenSection in ScreenSections
                                        from ff in screenSection.FormSection.FormFields
-                                       select ff))
+                                       select ff).GroupBy(ff => ff.EntityPropertyId))
             {
-                properties.AddRange(GetProperties(formField));
+                properties.AddRange(GetProperties(group.FirstOrDefault()));
             }
 
             // TODO: Enable child sections, this needs to be recursive

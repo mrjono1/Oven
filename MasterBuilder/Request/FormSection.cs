@@ -27,26 +27,6 @@ namespace MasterBuilder.Request
         /// Entity
         /// </summary>
         internal Entity Entity { get; set; }
-        /// <summary>
-        /// Form Response Class
-        /// </summary>
-        internal string FormResponseClass
-        {
-            get
-            {
-                return $"{Screen.InternalName}Response";
-            }
-        }
-        /// <summary>
-        /// Form Request Class
-        /// </summary>
-        internal string FormRequestClass
-        {
-            get
-            {
-                return $"{Screen.InternalName}Request";
-            }
-        }
         #endregion
     }
 }

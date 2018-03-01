@@ -72,6 +72,16 @@ namespace MasterBuilder.Request
             {
                 switch (property.PropertyType)
                 {
+                    case PropertyType.PrimaryKey:
+                    case PropertyType.ParentRelationship:
+                        formFields.Add(new FormField
+                        {
+                            EntityPropertyId = property.Id,
+                            Property = property,
+                            Project = project,
+                            IsHiddenFromUi = true
+                        });
+                        break;
                     case PropertyType.OneToOneRelationship:
                         // TODO: figure out how to display these
                         continue;

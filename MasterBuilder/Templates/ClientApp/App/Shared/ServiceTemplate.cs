@@ -56,26 +56,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                 {
                     case ScreenSectionType.Form:
 
-                        imports.Add($"import {{ {screenSection.InternalName} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.InternalName}';");
-
-                        methods.Add($@"    get{screenSection.InternalName}(id: string){{
-        return this.http.get<{screenSection.InternalName}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`);
-    }}");
-                        methods.Add($@"    add{Screen.InternalName}(request: any){{
-        return this.http.post<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}`, request);
-    }}");
-                        if (Project.UsePutForUpdate)
-                        {
-                            methods.Add($@"    update{Screen.InternalName}(id: string, request: any){{
-        return this.http.put<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`, request);
-    }}");
-                        }
-                        else
-                        {
-                            methods.Add($@"    update{Screen.InternalName}(id: string, operations: Operation[]){{
-        return this.http.patch<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`, operations);
-    }}");
-                        }
                         hasForm = true;
                         referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
 
@@ -119,7 +99,27 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
 
             if (hasForm)
             {
+                imports.Add($"import {{ {Screen.InternalName} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{Screen.InternalName}';");
                 imports.Add($"import {{ Operation }} from '../models/Operation';");
+
+                methods.Add($@"    get{Screen.InternalName}(id: string){{
+        return this.http.get<{Screen.InternalName}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`);
+    }}");
+                methods.Add($@"    add{Screen.InternalName}(request: any){{
+        return this.http.post<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}`, request);
+    }}");
+                if (Project.UsePutForUpdate)
+                {
+                    methods.Add($@"    update{Screen.InternalName}(id: string, request: any){{
+        return this.http.put<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`, request);
+    }}");
+                }
+                else
+                {
+                    methods.Add($@"    update{Screen.InternalName}(id: string, operations: Operation[]){{
+        return this.http.patch<string>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}/${{id}}`, operations);
+    }}");
+                }
             }
 
             foreach (var referenceFormField in referenceFormFields)

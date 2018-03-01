@@ -35,7 +35,8 @@ namespace MasterBuilder.Request
 
                     var primaryKeyFormField = new FormField
                     {
-                        EntityPropertyId = primaryKeyProperty.Id
+                        EntityPropertyId = primaryKeyProperty.Id,
+                        IsHiddenFromUi = true
                     };
                     if (!primaryKeyFormField.Resolve(project, screen, screenSection, out string formFieldMessage))
                     {
@@ -47,6 +48,32 @@ namespace MasterBuilder.Request
                         primaryKeyFormField
                     };
                     FormFields = primaryKeyformFields;
+                }
+
+                // Add Parent Relationship
+                Property parentProperty = null;
+                parentProperty = (from p in Screen.Entity.Properties
+                                  where p.PropertyType == PropertyType.ParentRelationship
+                                  select p).SingleOrDefault();
+
+                if (parentProperty != null)
+                {
+
+                    var parentFormField = new FormField
+                    {
+                        EntityPropertyId = parentProperty.Id,
+                        IsHiddenFromUi = true
+                    };
+                    if (!parentFormField.Resolve(project, screen, screenSection, out string formFieldMessage))
+                    {
+                        errors.Add(formFieldMessage);
+                    }
+
+                    var parentFormFields = new List<FormField>(FormFields)
+                    {
+                        parentFormField
+                    };
+                    FormFields = parentFormFields;
                 }
             }
 

@@ -16,7 +16,7 @@ namespace MasterBuilder.Request
             {
                 case PropertyType.PrimaryKey:
                 case PropertyType.ParentRelationship:
-                    IsInternal = true;
+                    IsHiddenFromUi = true;
                     break;
                 case PropertyType.OneToOneRelationship:
                     break;

@@ -35,6 +35,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
 
             foreach (var formField in (from ff in ScreenSection.FormSection.FormFields
+                                       where !ff.IsHiddenFromUi
                                        select ff))
             { 
                 var formPropertyTemplate = new FormFieldTemplate(Project, Screen, formField);
@@ -61,7 +62,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 {string.Join(Environment.NewLine, menuItems)}
             </mat-toolbar-row>
         </mat-toolbar>
-{ string.Join(Environment.NewLine, formGroups)}
+{string.Join(Environment.NewLine, formGroups)}
             </form>
         </div>";
         }

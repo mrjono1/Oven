@@ -29,7 +29,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// If true this property always hidden from the UI, also could be used in an expression
         /// </summary>
-        public bool IsInternal { get; set; }
+        public bool IsHiddenFromUi { get; set; }
 
         #region Internal Helper Properties
         /// <summary>

@@ -402,8 +402,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         {
             var formControls = new List<string>();
 
-            foreach (var formField in formFields)
+            foreach (var group in formFields.GroupBy(ff => ff.EntityPropertyId))
             {
+                var formField = group.First();
                 if (formField.PropertyType == PropertyType.PrimaryKey)
                 {
                     continue;

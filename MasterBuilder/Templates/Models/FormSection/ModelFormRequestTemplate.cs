@@ -2,6 +2,7 @@ using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MasterBuilder.Templates.Models
 {
@@ -12,16 +13,16 @@ namespace MasterBuilder.Templates.Models
     {
         private readonly Project Project;
         private readonly Screen Screen;
-        private readonly ScreenSection ScreenSection;
+        private readonly IEnumerable<ScreenSection> ScreenSections;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelFormRequestTemplate(Project project, Screen screen, ScreenSection screenSection)
+        public ModelFormRequestTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
         {
             Project = project;
             Screen = screen;
-            ScreenSection = screenSection;
+            ScreenSections = screenSections;
         }
 
         /// <summary>
@@ -29,7 +30,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{ScreenSection.FormSection.FormRequestClass}.cs";
+            return $"{Screen.FormRequestClass}.cs";
         }
 
         /// <summary>
@@ -47,9 +48,12 @@ namespace MasterBuilder.Templates.Models
         {
             var properties = new List<string>();
             
-            foreach (var formField in ScreenSection.FormSection.FormFields)
+            foreach (var group in (from formSection in ScreenSections
+                                       where !formSection.ParentEntityPropertyId.HasValue
+                                       from ff in formSection.FormSection.FormFields
+                                       select ff).GroupBy(ff => ff.EntityPropertyId))
             {
-                properties.Add(ModelFormRequestPropertyTemplate.Evaluate(formField));
+                properties.Add(ModelFormRequestPropertyTemplate.Evaluate(group.FirstOrDefault()));
             }
             
 
@@ -62,7 +66,7 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Insert/Update Model
     /// </summary>
-    public class {ScreenSection.FormSection.FormRequestClass}
+    public class {Screen.FormRequestClass}
     {{
 {string.Join(Environment.NewLine, properties)}
     }}

@@ -28,8 +28,9 @@ namespace MasterBuilder.Templates.Controllers
         private IEnumerable<string> GetProperties(IEnumerable<FormField> formFields, string objectName = "item", int level = 0)
         {
             var properties = new List<string>();
-            foreach (var formField in formFields)
+            foreach (var group in formFields.GroupBy(ff => ff.EntityPropertyId))
             {
+                var formField = group.First();
                 switch (formField.PropertyType)
                 {
                     case PropertyType.ReferenceRelationship:
@@ -139,8 +140,9 @@ namespace MasterBuilder.Templates.Controllers
         {
             var properties = new List<string>();
 
-            foreach (var formField in formFields)
+            foreach (var group in formFields.GroupBy(ff => ff.EntityPropertyId))
             {
+                var formField = group.First();
                 switch (formField.PropertyType)
                 {
                     case PropertyType.PrimaryKey:
@@ -238,8 +240,9 @@ namespace MasterBuilder.Templates.Controllers
         {
             var properties = new List<string>();
 
-            foreach (var formField in formFields)
+            foreach (var group in formFields.GroupBy(ff => ff.EntityPropertyId))
             {
+                var formField = group.First();
                 switch (formField.PropertyType)
                 {
                     case PropertyType.PrimaryKey:
