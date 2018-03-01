@@ -1258,6 +1258,217 @@ namespace MasterBuilder
                     }
                 },
 #endregion
+                #region NuGet Import Entity
+                new Entity()
+                {
+                    Id = new Guid("{91D514EB-27BD-4557-AF85-BE4EB99AA123}"),
+                    InternalName = "NuGetImport",
+                    Title = "NuGet Import",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{EFE04E0E-668E-4708-AE98-A52EA3AAC13D}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{0360F581-A74E-43F5-A679-664FE47A3E30}"),
+                            InternalName = "Include",
+                            PropertyType = PropertyType.String,
+                            Title = "Include",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{AED6AFE7-769D-4E52-A675-C8FE66F18DCA}"),
+                                    ValidationType = ValidationType.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{3EDA8200-9F4E-4774-BEDA-3C72468D1154}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{1155DB37-5EA7-4C72-B968-AC1CD35E8DA2}"),
+                            InternalName = "Version",
+                            PropertyType = PropertyType.String,
+                            Title = "Version",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{7A5DC485-3649-454D-A688-5F49E1AAD142}"),
+                                    ValidationType = ValidationType.MaximumValue,
+                                    IntegerValue = 200
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{6E81C5D5-C25F-4002-AAC4-F88232CDAB10}"),
+                            InternalName = "PrivateAssets",
+                            PropertyType = PropertyType.String,
+                            Title = "Private Assets",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{5E739BBD-7501-4ADE-B9E9-7F92EC480535}"),
+                                    ValidationType = ValidationType.MaximumValue,
+                                    IntegerValue = 2048
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{4AAC04F0-D204-4FC9-803E-32A666D8D34C}"),
+                            InternalName = "IncludeAssets",
+                            PropertyType = PropertyType.String,
+                            Title = "Include Assets",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{EF6DFE3A-AD43-417B-8954-13BCA681A8D1}"),
+                                    ValidationType = ValidationType.MaximumValue,
+                                    IntegerValue = 2048
+                                },
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{5CCA7C80-95FF-4915-ADAA-20D743923287}"),
+                            InternalName = "ExcludeAssets",
+                            PropertyType = PropertyType.String,
+                            Title = "Exclude Assets",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{FD5D48C0-9761-457F-B40B-7FB78FBCF744}"),
+                                    ValidationType = ValidationType.MaximumValue,
+                                    IntegerValue = 2048
+                                },
+                            }
+                        }
+                    }
+                },
+#endregion
+                #region NuGet Package Source Entity
+                new Entity()
+                {
+                    Id = new Guid("{9209A86B-2D99-462D-A983-10A54F476282}"),
+                    InternalName = "NuGetPackageSource",
+                    Title = "NuGet Package Source",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{C22A41F9-01C9-496B-998F-294E2D43B2E9}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{37782EE1-2011-49D1-9E03-B82171B1BCE4}"),
+                            InternalName = "Key",
+                            PropertyType = PropertyType.String,
+                            Title = "Key",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{BBEAD77B-02A4-4D9A-A916-C08D22543783}"),
+                                    ValidationType = ValidationType.MaximumLength,
+                                    IntegerValue = 200
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{91BA5C5E-F659-4B0A-9A13-9C892BA7E483}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{95EAF129-4B8E-44B1-849D-347EB6BCC161}"),
+                            InternalName = "Value",
+                            PropertyType = PropertyType.String,
+                            Title = "Value",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{6FC1A9B4-F215-4915-ADAD-F7AF57A2AE00}"),
+                                    ValidationType = ValidationType.MaximumLength,
+                                    IntegerValue = 2048
+                                },
+                                new Validation
+                                {
+                                    Id = new Guid("{95FA3F58-0D8B-40B4-8438-8BA5688BBCDF}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{B3D09458-D4D9-4DB7-99E6-D644D621D35B}"),
+                            InternalName = "ApiKey",
+                            PropertyType = PropertyType.String,
+                            Title = "Api Key",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{5F6C529F-DF7D-44E8-A6E9-43A7DE040101}"),
+                                    ValidationType = ValidationType.MaximumLength,
+                                    IntegerValue = 200
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{E69048CC-3F16-4B9D-9D39-2BD13048FC3B}"),
+                            InternalName = "Username",
+                            PropertyType = PropertyType.String,
+                            Title = "User name",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{291EA2DD-3E6A-4B3E-96F4-896263FA6525}"),
+                                    ValidationType = ValidationType.MaximumLength,
+                                    IntegerValue = 200
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{A14AF33A-3554-40B2-87D7-BCC7FBD26337}"),
+                            InternalName = "ClearTextPassword",
+                            PropertyType = PropertyType.String,
+                            Title = "Password",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{B8C16CD0-9822-420D-926E-D1203EEF5C2F}"),
+                                    ValidationType = ValidationType.MaximumLength,
+                                    IntegerValue = 200
+                                }
+                            }
+                        },
+                    }
+                },
+#endregion
             };
 
             project.Screens = new Screen[]
@@ -1318,7 +1529,7 @@ namespace MasterBuilder
                             NavigateToScreenId = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
                             SearchSection = new SearchSection
                             {
-                                
+
                                 SearchColumns = new SearchColumn[]
                                 {
                                     new SearchColumn
@@ -1443,7 +1654,48 @@ namespace MasterBuilder
                                     Title = "New"
                                 }
                             }
-                        }
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{D34EE092-BB9A-4E34-A086-073ABAF4512D}"),
+                            Title = "Dependencies",
+                            InternalName = "NuGetDependencies",
+                            ScreenSectionType = ScreenSectionType.Search,
+                            OrderBy = "Include",
+                            EntityId = new Guid("{91D514EB-27BD-4557-AF85-BE4EB99AA123}"),
+                            NavigateToScreenId = new Guid("{CE390639-0ED5-4488-8D8A-726C0E817766}"),
+                            MenuItems = new MenuItem[]
+                            {
+                                new MenuItem
+                                {
+                                    Id = new Guid("{CDFAF102-783A-4052-9048-7218FFA9B624}"),
+                                    MenuItemType = MenuItemType.New,
+                                    ScreenId = new Guid("{CE390639-0ED5-4488-8D8A-726C0E817766}"),
+                                    Title = "New"
+                                }
+                            }
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{48B73AFE-FF0B-4AE2-9E69-7E7C72C6221F}"),
+                            Title = "Dependency Libraries",
+                            InternalName = "NuGetPackageSources",
+                            ScreenSectionType = ScreenSectionType.Search,
+                            OrderBy = "Key",
+                            EntityId = new Guid("{9209A86B-2D99-462D-A983-10A54F476282}"),
+                            NavigateToScreenId = new Guid("{33508886-531C-4A8E-B01B-28A139A5AEC9}"),
+                            MenuItems = new MenuItem[]
+                            {
+                                new MenuItem
+                                {
+                                    Id = new Guid("{EBC67739-2E1A-4043-AE57-4B124C852144}"),
+                                    MenuItemType = MenuItemType.New,
+                                    ScreenId = new Guid("{33508886-531C-4A8E-B01B-28A139A5AEC9}"),
+                                    Title = "New"
+                                }
+                            }
+
+                        },
                     },
                     MenuItems = new MenuItem[]
                     {
@@ -1738,8 +1990,50 @@ namespace MasterBuilder
                             ScreenSectionType = ScreenSectionType.Form
                         }
                     }
-                }
-#endregion
+                },
+                #endregion
+                #region NuGet Import Screens
+                new Screen
+                {
+                    Id = new Guid("{CE390639-0ED5-4488-8D8A-726C0E817766}"),
+                    EntityId = new Guid("{91D514EB-27BD-4557-AF85-BE4EB99AA123}"),
+                    ScreenType = ScreenType.Form,
+                    Title = "NuGet Dependency",
+                    Path = "nuget",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{5A227F15-3C1E-4C47-A997-B0BD7D4F6A92}"),
+                            Title = "NuGet Dependency",
+                            InternalName = "NuGetDependency",
+                            ScreenSectionType = ScreenSectionType.Form,
+                            OrderBy = "Include"
+                        }
+                    }
+                },
+                #endregion
+                #region NuGet Package Source Screens
+                new Screen
+                {
+                    Id = new Guid("{33508886-531C-4A8E-B01B-28A139A5AEC9}"),
+                    EntityId = new Guid("{9209A86B-2D99-462D-A983-10A54F476282}"),
+                    ScreenType = ScreenType.Form,
+                    Title = "NuGet Package Source",
+                    Path = "nugetSource",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{BCD1AB41-2E44-4EE6-995C-F042C6CB321B}"),
+                            Title = "NuGet Package Source",
+                            InternalName = "NuGetPackageSource",
+                            ScreenSectionType = ScreenSectionType.Form,
+                            OrderBy = "Key"
+                        }
+                    }
+                },
+                #endregion
             };
 
             #region MENU ITEMS

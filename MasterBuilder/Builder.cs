@@ -88,7 +88,8 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebPackConfigVendorTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.WebConfigTemplate());
- 
+            projectWriter.AddTemplate(new Templates.ProjectFiles.NuGetconfigTemplate(project));
+
             // Views
             projectWriter.AddTemplate(new Templates.Views.ViewImportsTemplate(project));
             projectWriter.AddTemplate(new Templates.Views.ViewStartTemplate());

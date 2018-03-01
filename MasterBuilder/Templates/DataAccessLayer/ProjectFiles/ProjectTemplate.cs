@@ -63,6 +63,14 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
                 packageReferences.AppendLine($@"    <PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
             }
 
+            if (Project.NuGetDependencies != null)
+            {
+                foreach (var item in Project.NuGetDependencies)
+                {
+                    packageReferences.AppendLine($@"    <PackageReference Include=""{item.Include}"" Version=""{item.Version}"" IncludeAssets=""{item.IncludeAssets}"" ExcludeAssets=""{item.ExcludeAssets}"" PrivateAssets=""{item.PrivateAssets}"" />");
+                }
+            }
+
             return $@"<Project Sdk=""Microsoft.NET.Sdk"">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
