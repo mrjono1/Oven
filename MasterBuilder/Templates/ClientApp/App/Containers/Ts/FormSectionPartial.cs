@@ -334,21 +334,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         /// </summary>
         internal IEnumerable<string> GetProperties()
         {
-            var properties = new List<string>();
-
-            foreach (var formField in ScreenSections.First().FormSection.FormFields)
-            {
-                switch (formField.PropertyType)
-                {
-                    case PropertyType.PrimaryKey:
-                        break;
-                    default:
-                        properties.Add($@"    get {formField.InternalNameCSharp.Camelize()}() {{ return this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameCSharp.Camelize()}'); }}");
-                        break;
-                }
-            }
-
-            return properties;
+            return new string[0];
         }
         
         private string GetValidationArray(FormField formField, int level = 0)

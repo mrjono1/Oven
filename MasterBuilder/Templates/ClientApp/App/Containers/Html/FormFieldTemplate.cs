@@ -86,7 +86,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     }
                     if (selector != null)
                     {
-                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{FormField.InternalNameTypeScript}.hasError('{selector}')"">
+                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{Screen.InternalName.Camelize()}Form.get('{FormField.InternalNameTypeScript}').hasError('{selector}')"">
 {new String(' ', 24)}{validationItem.GetMessage(FormField.TitleValue)}
 {new String(' ', 20)}</mat-error>");
                     }
@@ -104,22 +104,22 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 case PropertyType.String:
                     control = $@"{new String(' ', 20)}<input type=""text"" matInput id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
-{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Integer:
                     control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
-{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Double:
                     control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
-{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.DateTime:
                     control = $@"{new String(' ', 20)}<input matInput [matDatepicker]=""{FormField.InternalNameTypeScript}Control"" id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
-{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
+{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
                     <mat-datepicker-toggle matSuffix [for]=""{FormField.InternalNameTypeScript}Control""></mat-datepicker-toggle>
                     <mat-datepicker #{FormField.InternalNameTypeScript}Control></mat-datepicker>";
                     break;
@@ -127,7 +127,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 case PropertyType.Boolean:
                     dontWrap = true;
                     control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{FormField.InternalNameTypeScript}Visible()"" id=""{FormField.Property.Id}""
-{new String(' ', 22)}[formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{FormField.TitleValue}</mat-checkbox>";
+{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{FormField.TitleValue}</mat-checkbox>";
                     break;
 
                 case PropertyType.ReferenceRelationship:
@@ -135,7 +135,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                                         where e.Id == FormField.Property.ParentEntityId.Value
                                         select e).SingleOrDefault();
 
-                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{FormField.TitleValue}"" [compareWith]=""referenceCompare"" [formControl]=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
+                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{FormField.TitleValue}"" [compareWith]=""referenceCompare"" formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
                            {(FormField.Property.Required ? string.Empty : "<mat-option>--</mat-option>")}
                            <mat-option *ngFor=""let option of {parentEntity.InternalName.Camelize()}Reference.items"" [value]=""option.id"">
                                 <span>{{{{ option.title }}}}</span>

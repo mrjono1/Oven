@@ -1566,7 +1566,57 @@ namespace MasterBuilder
                             Title = "Screen Section",
                             InternalName = "ScreenSection",
                             ScreenSectionType = ScreenSectionType.Form,
-                            EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}")
+                            EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                            FormSection = new FormSection
+                            {
+                                FormFields = new FormField[]
+                                {
+                                    new FormField
+                                    {
+                                        // Title
+                                        EntityPropertyId = new Guid("{61E1AAE0-315E-4BBB-B622-0E3D91B9959A}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Internal Name
+                                        EntityPropertyId = new Guid("{17FAC43C-9ED4-4D2B-ADA6-B59DA4D10C61}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Screen Section Type
+                                        EntityPropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Entity
+                                        EntityPropertyId = new Guid("{D6BB1A68-8C2A-4251-8EA0-B3AC6C9362AD}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Navigate To Screen
+                                        EntityPropertyId = new Guid("{3EDDA39A-A700-486D-ABD8-7D9E14C6F550}")
+                                    }
+                                }
+                            }
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{01E6D1DF-E5BE-492B-B7B8-34B93EB35A60}"),
+                            Title = "Screen Section",
+                            InternalName = "ScreenSection2",
+                            ScreenSectionType = ScreenSectionType.Form,
+                            EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                            FormSection = new FormSection
+                            {
+                                FormFields = new FormField[]
+                                {
+                                    new FormField
+                                    {
+                                        // Html
+                                        EntityPropertyId = new Guid("{B92AFD77-FFAC-4F87-B7A7-CDFA98AFD59E}")
+                                    }
+                                }
+                            }
                         }
                     }
                 },
