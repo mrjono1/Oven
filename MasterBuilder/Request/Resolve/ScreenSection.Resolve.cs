@@ -159,7 +159,8 @@ namespace MasterBuilder.Request
                 SearchColumns = searchColumns,
                 Screen = screen,
                 ScreenSection = this,
-                Entity = Entity
+                Entity = Entity,
+                OrderBy = OrderBy,
             };
         }
     }
