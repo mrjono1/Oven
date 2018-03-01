@@ -41,29 +41,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 var formPropertyTemplate = new FormFieldTemplate(Project, Screen, formField);
                 formGroups.Add(formPropertyTemplate.GetFormField());
             }
-
-            var menuItems = new List<string>
-            {
-                @"<button type=""submit"" mat-raised-button>Submit</button>"
-            };
-            if (Screen.MenuItems != null)
-            {
-                foreach (var menuItem in Screen.MenuItems)
-                {
-                    menuItems.Add($@"<button mat-raised-button (click)=""{menuItem.InternalName.Camelize()}()"">{menuItem.Title}</button>");
-                }
-            }
-
+            
             return $@"        <div class=""screen-section-form container mat-elevation-z2"" fxFlex>
-            <form *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate fxLayout=""column"">
-        <mat-toolbar class=""primary"">
-            <mat-toolbar-row>
-            <span>{ScreenSection.Title}</span>
-{string.Join(Environment.NewLine, menuItems)}
-            </mat-toolbar-row>
-        </mat-toolbar>
+            <div *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" fxLayout=""column"">
+                <mat-toolbar class=""primary"">
+                    <mat-toolbar-row>
+                        <span>{ScreenSection.Title}</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
 {string.Join(Environment.NewLine, formGroups)}
-            </form>
+            </div>
         </div>";
         }
         }

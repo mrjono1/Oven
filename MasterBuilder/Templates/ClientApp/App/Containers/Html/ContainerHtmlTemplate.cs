@@ -44,6 +44,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
         public string GetFileContent()
         {
             var sections = new List<string>();
+            var hasFormSection = false;
 
             foreach (var screenSection in Screen.ScreenSections)
             {
@@ -52,6 +53,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     case ScreenSectionType.Form:
                         var formSection = new FormSectionBuilder(Project, Screen, screenSection);
                         sections.Add(formSection.Evaluate());
+                        hasFormSection = true;
                         break;
                     case ScreenSectionType.Search:
                         var searchSection = new SearchSectionBuilder(Project, Screen, screenSection);
@@ -63,7 +65,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                         break;
                     case ScreenSectionType.Html:
                         sections.Add($@"        <div class=""screen-section-html container mat-elevation-z2"" fxFlex>
-{ screenSection.Html}
+{screenSection.Html}
         </div>");
                         break;
                     default:
@@ -71,16 +73,25 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 }
             }
 
-            return $@" <div class=""screen"">
-    <mat-toolbar class=""primary"">
-        <mat-toolbar-row>
-            <span>{Screen.Title}</span>
-        </mat-toolbar-row>
-    </mat-toolbar>
+            var screenActionsPartial = new ScreenActionsPartial(Screen, hasFormSection);
+            var screenActionsSection = screenActionsPartial.GetScreenActions();
+
+            if (hasFormSection)
+            {
+                return $@"<form #formDir=""ngForm"" (ngSubmit)=""onSubmit()"" novalidate class=""screen"">{(string.IsNullOrEmpty(screenActionsSection) ? string.Empty : string.Concat(Environment.NewLine, screenActionsSection))}
+    <div fxLayout=""column"" fxLayoutGap=""20px"" fxLayoutAlign=""start center"">
+{string.Join(Environment.NewLine, sections)}
+    </div>
+</form>";
+            }
+            else
+            {
+                return $@"<div class=""screen"">{(string.IsNullOrEmpty(screenActionsSection) ? string.Empty : string.Concat(Environment.NewLine, screenActionsSection))}
     <div fxLayout=""column"" fxLayoutGap=""20px"" fxLayoutAlign=""start center"">
 {string.Join(Environment.NewLine, sections)}
     </div>
 </div>";
+            }
         }
     }
 }
