@@ -25,6 +25,7 @@ namespace MasterBuilder.Templates.Models
             {
                 case PropertyType.ReferenceRelationship:
                     // Foreign Title
+                    result.AppendLine();
                     result.Append($@"        /// <summary>
         /// {formField.TitleValue}
         /// </summary>

@@ -12,6 +12,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Screen
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("Screen: {Title}")]
     public partial class Screen
     {
         /// <summary>

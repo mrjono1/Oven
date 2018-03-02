@@ -66,7 +66,7 @@ namespace {Project.InternalName}.Models
     /// </summary>
     public class {Screen.FormResponseClass}
     {{
-{string.Join(Environment.NewLine ,properties)}
+{string.Join(Environment.NewLine, properties)}
     }}
 }}";
         }

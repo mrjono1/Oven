@@ -12,6 +12,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Property
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("Property: {Title}")]
     public partial class Property
     {
         /// <summary>
