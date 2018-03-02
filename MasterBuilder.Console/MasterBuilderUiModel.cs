@@ -1275,6 +1275,21 @@ namespace MasterBuilder
                         },
                         new Property()
                         {
+                            Id = new Guid("{B3E67603-2BB6-4D4D-9491-112EE7E727E2}"),
+                            InternalName = "Project",
+                            PropertyType = PropertyType.ParentRelationship,
+                            Title = "Project",
+                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{A26BC965-B079-41FE-B9BC-A57159814C17}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
                             Id = new Guid("{0360F581-A74E-43F5-A679-664FE47A3E30}"),
                             InternalName = "Include",
                             PropertyType = PropertyType.String,
@@ -1375,6 +1390,21 @@ namespace MasterBuilder
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{3A66C9E4-F2FF-40F0-9CAE-C5756ABD1DDE}"),
+                            InternalName = "Project",
+                            PropertyType = PropertyType.ParentRelationship,
+                            Title = "Project",
+                            ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation{
+                                    Id = new Guid("{4CE0401D-D74F-44FE-9D0A-55587E117F4E}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
                         },
                         new Property()
                         {

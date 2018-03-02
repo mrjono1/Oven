@@ -163,10 +163,7 @@ export class {Screen.InternalName}Component implements OnInit{(formSections.Any(
 
     ngOnInit(){{
 {string.Join(Environment.NewLine, onNgInitBodySections.Distinct())}
-    }}
-
-{string.Join(Environment.NewLine, properties.Distinct())}
-
+    }}{(properties.Any() ? string.Concat(Environment.NewLine, string.Join(Environment.NewLine, properties.Distinct()), Environment.NewLine) : string.Empty)}
 {string.Join(Environment.NewLine, functions.Distinct())}
 }}";
         }
