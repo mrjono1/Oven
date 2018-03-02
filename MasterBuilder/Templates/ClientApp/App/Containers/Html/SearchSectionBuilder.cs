@@ -66,10 +66,25 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {
+                    // Standard Parent Relationship
                     foundParentScreen = (from s in Project.Screens
                                          where s.EntityId == parentProperty.ParentEntityId &&
                                          s.ScreenType == ScreenType.Form
                                          select s).SingleOrDefault();
+
+                    // One to One Relationship
+                    if (foundParentScreen == null)
+                    {
+                        var parentEntity = parentProperty.ParentEntity;
+
+                        foundParentScreen = (from s in Project.Screens
+                                             where s.ScreenType == ScreenType.Form
+                                             from p in s.Entity.Properties
+                                             where p.PropertyType == PropertyType.OneToOneRelationship &&
+                                             p.ParentEntityId == parentEntity.Id
+                                             select s).SingleOrDefault();
+                    }
+
                 }
 
                 if (navigateScreen != null)

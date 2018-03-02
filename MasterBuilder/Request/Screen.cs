@@ -222,11 +222,27 @@ namespace MasterBuilder.Request
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {
+                    // Standard Parent Relationship
                     foundParentScreen = (from s in project.Screens
                                          where s.EntityId == parentProperty.ParentEntityId &&
                                          s.ScreenType == ScreenType.Form &&
                                          s.Id != screen.Id
                                          select s).SingleOrDefault();
+
+                    // One to One Relationship
+                    if (foundParentScreen == null)
+                    {
+                        var parentEntity = parentProperty.ParentEntity;
+
+                        foundParentScreen = (from s in project.Screens
+                                             where s.ScreenType == ScreenType.Form &&
+                                             s.Id != screen.Id
+                                             from p in s.Entity.Properties
+                                             where p.PropertyType == PropertyType.OneToOneRelationship &&
+                                             p.ParentEntityId == parentEntity.Id
+                                             select s).SingleOrDefault();
+                    }
+
                     if (foundParentScreen != null)
                     {
                         var parentEntity = project.Entities.SingleOrDefault(e => e.Id == foundParentScreen.EntityId);
