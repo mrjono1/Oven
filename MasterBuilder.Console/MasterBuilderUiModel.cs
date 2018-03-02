@@ -1889,10 +1889,16 @@ namespace MasterBuilder
                         new ScreenSection
                         {
                             Id = new Guid("{01E6D1DF-E5BE-492B-B7B8-34B93EB35A60}"),
-                            Title = "Screen Section",
-                            InternalName = "ScreenSection2",
+                            Title = "Html Screen Section",
+                            InternalName = "HtmlScreenSection",
                             ScreenSectionType = ScreenSectionType.Form,
                             EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                            VisibilityExpression = new Expression
+                            {
+                                PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                UniqueidentifierValue = new Guid("{38EF9B44-A993-479B-91EC-1FE436E91556}")
+                            },
                             FormSection = new FormSection
                             {
                                 FormFields = new FormField[]

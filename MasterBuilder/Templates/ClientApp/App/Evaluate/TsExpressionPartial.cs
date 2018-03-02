@@ -25,7 +25,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
         {
             Screen = screen;
             ScreenSections = screenSections;
-
         }
 
         /// <summary>
@@ -60,6 +59,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
         private PropertyType GetPropertyType(Expression expression)
         {
             var property = (from screenSection in ScreenSections
+                            where screenSection.ScreenSectionType == ScreenSectionType.Form
                             from ff in screenSection.FormSection.FormFields
                             where ff.EntityPropertyId == expression.PropertyId
                             select ff).Single();
@@ -151,6 +151,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
         private string GetLeft(Expression expression)
         {
             var property = (from screenSection in ScreenSections
+                            where screenSection.ScreenSectionType == ScreenSectionType.Form
                             from ff in screenSection.FormSection.FormFields
                             where ff.EntityPropertyId == expression.PropertyId
                             select ff).Single();

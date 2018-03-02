@@ -100,9 +100,10 @@ namespace MasterBuilder.Request
         /// The property <see cref="Property.InternalName"/> to order by, defaults to "Title"
         /// </summary>
         public string OrderBy { get; set; } = "Title";
-
-
-
+        /// <summary>
+        /// Visibility Expression
+        /// </summary>
+        public Expression VisibilityExpression { get; set; }
         #region Internal Fields
 
         /// <summary>

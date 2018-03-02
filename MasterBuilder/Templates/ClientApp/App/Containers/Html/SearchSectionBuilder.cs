@@ -106,7 +106,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 menuItems.Add($@"                <a mat-raised-button {newRouterLink}>New</a>");
             }
-            return $@"        <mat-card class=""screen-section-search container"" fxFlex>
+            var visibile = ScreenSection.VisibilityExpression == null ? string.Empty : $@" *ngIf=""{ScreenSection.InternalName.Camelize()}ScreenSectionVisible()""";
+
+            return $@"        <mat-card class=""screen-section-search container"" fxFlex{visibile}>
             <mat-card-header>
                 <mat-card-title>{ScreenSection.Title}</mat-card-title>
 {string.Join(Environment.NewLine, menuItems)}

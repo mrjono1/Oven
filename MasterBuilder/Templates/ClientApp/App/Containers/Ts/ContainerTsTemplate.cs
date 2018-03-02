@@ -109,6 +109,20 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         }
                     }
                 }
+
+                if (screenSection.VisibilityExpression != null)
+                {
+                    var expressionPartial = new Evaluate.TsExpressionPartial(Screen, Screen.ScreenSections);
+                    var expression = expressionPartial.GetExpression(screenSection.VisibilityExpression);
+                    functions.Add($@"    {screenSection.InternalName.Camelize()}ScreenSectionVisible() {{
+        if (this.{Screen.InternalName.Camelize()} &&
+            this.{Screen.InternalName.Camelize()}Form &&
+            {expression}) {{
+                return true;
+        }}
+        return false;
+    }}");
+                }
             }
 
             if (formSections.Any())

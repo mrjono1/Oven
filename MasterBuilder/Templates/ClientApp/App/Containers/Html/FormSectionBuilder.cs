@@ -41,8 +41,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 var formPropertyTemplate = new FormFieldTemplate(Project, Screen, formField);
                 formGroups.Add(formPropertyTemplate.GetFormField());
             }
-            
-            return $@"        <div class=""screen-section-form container mat-elevation-z2"" fxFlex>
+
+            var visibile = ScreenSection.VisibilityExpression == null ? string.Empty : $@" *ngIf=""{ScreenSection.InternalName.Camelize()}ScreenSectionVisible()""";
+
+            return $@"        <div class=""screen-section-form container mat-elevation-z2"" fxFlex{visibile}>
             <div *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" fxLayout=""column"">
                 <mat-toolbar class=""primary"">
                     <mat-toolbar-row>
