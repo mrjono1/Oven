@@ -25,7 +25,7 @@ namespace MasterBuilder.Request
     /// <item>All – all assets are used.</item>
     /// </list>
     /// </remarks>
-    public partial class NuGetImport
+    public partial class NuGetDependency
     {
         /// <summary>
         /// Uniqueidentifier

@@ -1262,7 +1262,7 @@ namespace MasterBuilder
                 new Entity()
                 {
                     Id = new Guid("{91D514EB-27BD-4557-AF85-BE4EB99AA123}"),
-                    InternalName = "NuGetImport",
+                    InternalName = "NuGetDependency",
                     Title = "NuGet Import",
                     Properties = new Property[]
                     {
@@ -1360,7 +1360,7 @@ namespace MasterBuilder
                         }
                     }
                 },
-#endregion
+                #endregion
                 #region NuGet Package Source Entity
                 new Entity()
                 {
@@ -1394,6 +1394,11 @@ namespace MasterBuilder
                                 {
                                     Id = new Guid("{91BA5C5E-F659-4B0A-9A13-9C892BA7E483}"),
                                     ValidationType = ValidationType.Required
+                                },
+                                new Validation{
+                                    Id = new Guid("{46A2D5C5-152E-400D-9E3E-F6989A3D5149}"),
+                                    ValidationType = ValidationType.Pattern,
+                                    StringValue = "^[a-zA-Z]+$"
                                 }
                             }
                         },

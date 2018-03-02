@@ -108,7 +108,7 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Any NuGet dependencies to include
         /// </summary>
-        public IEnumerable<NuGetImport> NuGetDependencies { get; set; }
+        public IEnumerable<NuGetDependency> NuGetDependencies { get; set; }
 
         /// <summary>
         /// Any NuGet package sources to reference
