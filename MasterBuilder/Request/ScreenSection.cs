@@ -10,6 +10,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Screen Section
     /// </summary>
+    [System.Diagnostics.DebuggerDisplay("ScreenSection: {Title}")]
     public partial class ScreenSection
     {
         /// <summary>
