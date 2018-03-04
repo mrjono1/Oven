@@ -182,7 +182,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
             Property parentProperty = null;
             parentProperty = (from p in Screen.Entity.Properties
-                              where p.PropertyType == PropertyType.ParentRelationship
+                              where p.PropertyType == PropertyType.ParentRelationshipOneToMany
                               select p).SingleOrDefault();
             
             if (parentProperty != null)

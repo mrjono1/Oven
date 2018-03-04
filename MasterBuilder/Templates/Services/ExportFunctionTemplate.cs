@@ -60,7 +60,7 @@ namespace MasterBuilder.Templates.Services
             // Parent relationships
             var childEntities = (from e in Project.Entities
                                     from property in e.Properties
-                                    where property.PropertyType == PropertyType.ParentRelationship &&
+                                    where property.PropertyType == PropertyType.ParentRelationshipOneToMany &&
                                     property.ParentEntityId.HasValue &&
                                     property.ParentEntityId == entity.Id
                                     select new
@@ -71,7 +71,7 @@ namespace MasterBuilder.Templates.Services
 
             // One to One relationships
             childEntities.AddRange((from property in entity.Properties
-                                    where property.PropertyType == PropertyType.OneToOneRelationship
+                                    where property.PropertyType == PropertyType.ParentRelationshipOneToOne
                                     from e in Project.Entities
                                     where e.Id == property.ParentEntityId.Value
                                     select new

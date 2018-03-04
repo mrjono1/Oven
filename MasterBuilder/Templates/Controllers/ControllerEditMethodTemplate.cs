@@ -45,7 +45,7 @@ namespace MasterBuilder.Templates.Controllers
                             properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameAlternateCSharp} = {objectName}.{formField.Property.InternalName} != null ? {objectName}.{formField.Property.InternalName}.Title : null");
                         }
                         break;
-                    case PropertyType.OneToOneRelationship:
+                    case PropertyType.ParentRelationshipOneToOne:
                         // TODO
                         break;
                     default:
@@ -146,7 +146,7 @@ namespace MasterBuilder.Templates.Controllers
                 switch (formField.PropertyType)
                 {
                     case PropertyType.PrimaryKey:
-                    case PropertyType.OneToOneRelationship:
+                    case PropertyType.ParentRelationshipOneToOne:
                         // Ignore
                         break;
                     default:
@@ -246,7 +246,7 @@ namespace MasterBuilder.Templates.Controllers
                 switch (formField.PropertyType)
                 {
                     case PropertyType.PrimaryKey:
-                    case PropertyType.OneToOneRelationship:
+                    case PropertyType.ParentRelationshipOneToOne:
                         // Ignore
                         break;
                     default:

@@ -47,7 +47,7 @@ namespace MasterBuilder.Templates.Models
             string parentPropertyString = null;
             Entity parentEntity = null;
             var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
-                                    where p.PropertyType == PropertyType.ParentRelationship
+                                    where p.PropertyType == PropertyType.ParentRelationshipOneToMany
                                     select p).SingleOrDefault();
             if (parentProperty != null)
             {

@@ -53,7 +53,7 @@ namespace MasterBuilder.Request
             {
                 switch (Property.PropertyType)
                 {
-                    case PropertyType.ParentRelationship:
+                    case PropertyType.ParentRelationshipOneToMany:
                         return $"{Property.InternalName}Id";
                     case PropertyType.ReferenceRelationship:
                         return $"{Property.InternalName}Title";

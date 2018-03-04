@@ -94,16 +94,16 @@ namespace MasterBuilder.Templates.DataAccessLayer.Entities
             foreach (var item in (from e in Project.Entities
                 where e.Properties != null
                 from p in e.Properties
-                where (p.PropertyType == PropertyType.ParentRelationship ||
+                where (p.PropertyType == PropertyType.ParentRelationshipOneToMany ||
                 p.PropertyType == PropertyType.ReferenceRelationship ||
-                p.PropertyType == PropertyType.OneToOneRelationship) &&
+                p.PropertyType == PropertyType.ParentRelationshipOneToOne) &&
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {
                 // can currently only have 1 parent relationship but can have multiple reference relationships
                 switch (item.p.PropertyType)
                 {
-                    case PropertyType.ParentRelationship:
+                    case PropertyType.ParentRelationshipOneToMany:
 
                         navigationProperties.Add($@"        /// <summary>
         /// Foreign Key (Via Parent Relationship) to {item.e.InternalName}.{item.p.InternalName}
@@ -117,7 +117,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.Entities
         /// </summary>
         public ICollection<{item.e.InternalName}> {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
                         break;
-                    case PropertyType.OneToOneRelationship:
+                    case PropertyType.ParentRelationshipOneToOne:
 
                         navigationProperties.Add($@"         /// <summary>
         /// Foreign Key (One to One Relationship)

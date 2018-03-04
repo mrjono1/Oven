@@ -15,10 +15,10 @@ namespace MasterBuilder.Request
             switch (PropertyType)
             {
                 case PropertyType.PrimaryKey:
-                case PropertyType.ParentRelationship:
+                case PropertyType.ParentRelationshipOneToMany:
                     IsHiddenFromUi = true;
                     break;
-                case PropertyType.OneToOneRelationship:
+                case PropertyType.ParentRelationshipOneToOne:
                     break;
             }
 

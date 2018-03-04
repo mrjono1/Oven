@@ -39,14 +39,14 @@ namespace MasterBuilder.Templates.Models.Export
             // Parent relationships
             childEntities.AddRange((from entity in Project.Entities
                                  from property in entity.Properties
-                                 where property.PropertyType == PropertyType.ParentRelationship &&
+                                 where property.PropertyType == PropertyType.ParentRelationshipOneToMany &&
                                  property.ParentEntityId.HasValue &&
                                  property.ParentEntityId == Entity.Id
                                  select entity).ToArray());
 
             // One to One relationships
             childEntities.AddRange((from property in Entity.Properties
-                                    where property.PropertyType == PropertyType.OneToOneRelationship
+                                    where property.PropertyType == PropertyType.ParentRelationshipOneToOne
                                     from entity in Project.Entities
                                     where entity.Id == property.ParentEntityId.Value
                                     select entity).ToArray());

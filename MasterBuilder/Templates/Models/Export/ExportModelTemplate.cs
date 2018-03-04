@@ -53,7 +53,7 @@ namespace MasterBuilder.Templates.Models.Export
 
             if (Entity.Properties != null)
             {
-                foreach (var item in Entity.Properties.Where(p => p.PropertyType != PropertyType.ParentRelationship && p.PropertyType != PropertyType.OneToOneRelationship))
+                foreach (var item in Entity.Properties.Where(p => p.PropertyType != PropertyType.ParentRelationshipOneToMany && p.PropertyType != PropertyType.ParentRelationshipOneToOne))
                 {
                     properties.Add(ExportModelPropertyTemplate.Evaluate(Project, item));
 
@@ -68,7 +68,7 @@ namespace MasterBuilder.Templates.Models.Export
             foreach (var item in (from e in Project.Entities
                 where e.Properties != null
                 from p in e.Properties
-                where p.PropertyType == PropertyType.ParentRelationship &&
+                where p.PropertyType == PropertyType.ParentRelationshipOneToMany &&
                 p.ParentEntityId.Value == Entity.Id
                 select new { e, p }))
             {

@@ -73,7 +73,7 @@ namespace MasterBuilder.Request
                 switch (property.PropertyType)
                 {
                     case PropertyType.PrimaryKey:
-                    case PropertyType.ParentRelationship:
+                    case PropertyType.ParentRelationshipOneToMany:
                         formFields.Add(new FormField
                         {
                             EntityPropertyId = property.Id,
@@ -82,7 +82,7 @@ namespace MasterBuilder.Request
                             IsHiddenFromUi = true
                         });
                         break;
-                    case PropertyType.OneToOneRelationship:
+                    case PropertyType.ParentRelationshipOneToOne:
                         // TODO: figure out how to display these
                         continue;
                     default:
@@ -142,7 +142,7 @@ namespace MasterBuilder.Request
             {
                 switch (property.PropertyType)
                 {
-                    case PropertyType.OneToOneRelationship:
+                    case PropertyType.ParentRelationshipOneToOne:
                         continue;
                     default:
                         searchColumns.Add(new SearchColumn

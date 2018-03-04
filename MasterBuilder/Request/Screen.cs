@@ -219,7 +219,7 @@ namespace MasterBuilder.Request
             if (entity != null)
             {
                 var parentProperty = (from p in entity.Properties
-                                      where p.PropertyType == PropertyType.ParentRelationship
+                                      where p.PropertyType == PropertyType.ParentRelationshipOneToMany
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {
@@ -239,7 +239,7 @@ namespace MasterBuilder.Request
                                              where s.ScreenType == ScreenType.Form &&
                                              s.Id != screen.Id
                                              from p in s.Entity.Properties
-                                             where p.PropertyType == PropertyType.OneToOneRelationship &&
+                                             where p.PropertyType == PropertyType.ParentRelationshipOneToOne &&
                                              p.ParentEntityId == parentEntity.Id
                                              select s).SingleOrDefault();
                     }

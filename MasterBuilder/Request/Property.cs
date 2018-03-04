@@ -24,9 +24,9 @@ namespace MasterBuilder.Request
             { new Guid("{25E3A798-5F63-4A1E-93B3-A0BCE69836BC}"), PropertyType.DateTime },
             { new Guid("{F126388B-8A6E-41DB-A98A-A0E511016441}"), PropertyType.Integer },
             { new Guid("{B967BF8D-0722-43F0-9945-CBEB4160822F}"), PropertyType.Double },
-            { new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"), PropertyType.ParentRelationship },
+            { new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"), PropertyType.ParentRelationshipOneToMany },
             { new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"), PropertyType.ReferenceRelationship },
-            { new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}"), PropertyType.OneToOneRelationship },
+            { new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}"), PropertyType.ParentRelationshipOneToOne },
             { new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}"), PropertyType.String },
             { new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"), PropertyType.PrimaryKey },
             { new Guid("{A3189B37-FC2D-417B-868F-61D52F4D06DC}"), PropertyType.Uniqueidentifier },
@@ -156,7 +156,7 @@ namespace MasterBuilder.Request
                 {
                     case PropertyType.PrimaryKey:
                         return "Guid";
-                    case PropertyType.ParentRelationship:
+                    case PropertyType.ParentRelationshipOneToMany:
                     case PropertyType.ReferenceRelationship:
                         return $"Guid{(!Required ? "?": string.Empty)}";
                     case PropertyType.String:

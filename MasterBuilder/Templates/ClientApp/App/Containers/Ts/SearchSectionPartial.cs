@@ -65,7 +65,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 switch (searchColumn.PropertyType)
                 {
                     case PropertyType.PrimaryKey:
-                    case PropertyType.ParentRelationship:
+                    case PropertyType.ParentRelationshipOneToMany:
                         // Skip as not displayed
                         break;
                     default:
@@ -88,7 +88,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             string parentPropertyFilterString = null;
             Entity parentEntity = null;
             Property parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
-                                  where p.PropertyType == PropertyType.ParentRelationship
+                                  where p.PropertyType == PropertyType.ParentRelationshipOneToMany
                                   select p).SingleOrDefault();
             if (parentProperty != null)
             {

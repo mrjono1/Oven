@@ -234,7 +234,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}"),
                             InternalName = "Project",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
@@ -249,7 +249,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
                             InternalName = "Seed",
-                            PropertyType = PropertyType.OneToOneRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Seed",
                             ParentEntityId = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}")
                         },
@@ -275,7 +275,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}"),
                             InternalName = "Entity",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Entity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                             ValidationItems = new Validation[]
@@ -432,7 +432,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{BA0702F8-6F26-4A25-9300-31B44F14B3A8}"),
                             InternalName = "Property",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Property",
                             ParentEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
                             ValidationItems = new Validation[]
@@ -508,7 +508,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{51B87800-E2AC-48E6-917F-36B9E46F209E}"),
                             InternalName = "Project",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
@@ -576,7 +576,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
                             InternalName = "Project",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
@@ -728,7 +728,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}"),
                             InternalName = "Screen",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Screen",
                             ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
                             ValidationItems = new Validation[]
@@ -788,7 +788,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{381E1C63-004D-4AAB-B41D-86D62D39A7F9}"),
                             InternalName = "FormSection",
-                            PropertyType = PropertyType.OneToOneRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Form Section",
                             ParentEntityId = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}")
                         },
@@ -796,7 +796,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{4923CC53-3325-4070-BEE5-B8B07CBDC751}"),
                             InternalName = "SearchSection",
-                            PropertyType = PropertyType.OneToOneRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Search Section",
                             ParentEntityId = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}")
                         }
@@ -903,7 +903,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{D6D616EB-E922-4782-BC9D-D68F1F07DB60}"),
                             InternalName = "Project",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
@@ -918,7 +918,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{ACD4EA5B-644F-4DFD-9082-A0E58402B11D}"),
                             InternalName = "WebService",
-                            PropertyType = PropertyType.OneToOneRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "WebService",
                             ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}")
                         },
@@ -926,7 +926,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{3E70E9E0-707D-4441-B4F0-199B70B31A64}"),
                             InternalName = "ExportService",
-                            PropertyType = PropertyType.OneToOneRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Export Service",
                             ParentEntityId = new Guid("{2B77156B-E550-4E46-8472-FAFA3D04966E}")
                         }
@@ -1076,7 +1076,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{A619FE2D-DEDA-430F-BBF4-E1F7A919F95F}"),
                             InternalName = "WebService",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Web Service",
                             ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
                             ValidationItems = new Validation[]
@@ -1125,7 +1125,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{FB5EC954-8935-48B2-BCEB-FCE643098C63}"),
                             InternalName = "FormSection",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Form Section",
                             ParentEntityId = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}")
                         },
@@ -1236,7 +1236,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{DCC45498-8A8A-4A47-9414-B46E6EDFC921}"),
                             InternalName = "SearchSection",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Search Section",
                             ParentEntityId = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}")
                         },
@@ -1277,7 +1277,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{B3E67603-2BB6-4D4D-9491-112EE7E727E2}"),
                             InternalName = "Project",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
@@ -1395,7 +1395,7 @@ namespace MasterBuilder
                         {
                             Id = new Guid("{3A66C9E4-F2FF-40F0-9CAE-C5756ABD1DDE}"),
                             InternalName = "Project",
-                            PropertyType = PropertyType.ParentRelationship,
+                            PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
@@ -2473,11 +2473,19 @@ namespace MasterBuilder
                             },
                             new {
                                 Id = new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"),
-                                Title = "Parent Relationship"
+                                Title = "Parent Relationship, One to Many"
                             },
                             new {
                                 Id = new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"),
                                 Title = "Reference Relationship"
+                            },
+                            new {
+                                Id = new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}"),
+                                Title = "Parent Relationship, One to One"
+                            },
+                            new {
+                                Id = new Guid("{B967BF8D-0722-43F0-9945-CBEB4160822F}"),
+                                Title = "Double"
                             }
                         })
                     }

@@ -65,10 +65,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                             select ff).Single();
             switch (property.PropertyType)
             {
-                case PropertyType.ParentRelationship:
+                case PropertyType.ParentRelationshipOneToMany:
                 case PropertyType.PrimaryKey:
                 case PropertyType.ReferenceRelationship:
-                case PropertyType.OneToOneRelationship:
+                case PropertyType.ParentRelationshipOneToOne:
                     return PropertyType.Uniqueidentifier;
                 default:
                     return property.PropertyType;

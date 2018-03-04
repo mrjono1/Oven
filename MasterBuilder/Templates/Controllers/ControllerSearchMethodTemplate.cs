@@ -22,8 +22,8 @@ namespace MasterBuilder.Templates.Controllers
             {
                 switch (searchColumn.PropertyType)
                 {
-                    case PropertyType.ParentRelationship:
-                    case PropertyType.OneToOneRelationship:
+                    case PropertyType.ParentRelationshipOneToMany:
+                    case PropertyType.ParentRelationshipOneToOne:
                         break;
                     case PropertyType.ReferenceRelationship:
                         propertyMapping.Add($"                        {searchColumn.InternalNameCSharp} = (item.{searchColumn.Property.InternalName} != null ? item.{searchColumn.Property.InternalName}.Title : null)");
@@ -38,7 +38,7 @@ namespace MasterBuilder.Templates.Controllers
             Entity parentEntity = null;
 
             var parentProperty = (from p in screenSection.SearchSection.Entity.Properties
-                                    where p.PropertyType == PropertyType.ParentRelationship
+                                    where p.PropertyType == PropertyType.ParentRelationshipOneToMany
                                     select p).SingleOrDefault();
             if (parentProperty != null)
             {

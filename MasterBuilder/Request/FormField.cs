@@ -76,7 +76,7 @@ namespace MasterBuilder.Request
             {
                 switch (Property.PropertyType)
                 {
-                    case PropertyType.ParentRelationship:
+                    case PropertyType.ParentRelationshipOneToMany:
                     case PropertyType.ReferenceRelationship:
                         return $"{Property.InternalName}Id";
                     default:
@@ -109,7 +109,7 @@ namespace MasterBuilder.Request
             {
                 switch (Property.PropertyType)
                 {
-                    case PropertyType.ParentRelationship:
+                    case PropertyType.ParentRelationshipOneToMany:
                     case PropertyType.ReferenceRelationship:
                         return $"{Property.InternalName}Id".Camelize();
                     default:
@@ -144,7 +144,7 @@ namespace MasterBuilder.Request
                 {
                     case PropertyType.PrimaryKey:
                         return $"{Property.CsType}?";
-                    case PropertyType.OneToOneRelationship:
+                    case PropertyType.ParentRelationshipOneToOne:
                         var referenceEntityName = (from entity in Project.Entities where entity.Id == Property.ParentEntityId.Value select entity.InternalName).Single();
                         return $"{referenceEntityName}";
                     default:

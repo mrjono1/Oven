@@ -26,9 +26,9 @@ namespace MasterBuilder.Request
         /// </summary>
         Boolean,
         /// <summary>
-        /// Relationship to a parent entity
+        /// Relationship to a parent entity, can be zero, one or many
         /// </summary>
-        ParentRelationship,
+        ParentRelationshipOneToMany,
         /// <summary>
         /// Relatoinship to a reference entity
         /// </summary>
@@ -38,9 +38,9 @@ namespace MasterBuilder.Request
         /// </summary>
         Double,
         /// <summary>
-        /// One to One Relationship to another entity
+        /// Relationship to a parent entity, can be zero or one
         /// </summary>
-        OneToOneRelationship,
+        ParentRelationshipOneToOne,
         /// <summary>
         /// Uniqueidentifier
         /// </summary>

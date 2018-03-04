@@ -13,7 +13,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.Entities
         /// </summary>
         public static string Evaluate(Project project, Property property)
         {            
-            if (property.PropertyType == PropertyType.ParentRelationship || property.PropertyType == PropertyType.ReferenceRelationship)
+            if (property.PropertyType == PropertyType.ParentRelationshipOneToMany || property.PropertyType == PropertyType.ReferenceRelationship)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 return $@"        /// <summary>
@@ -25,7 +25,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.Entities
         /// </summary>
         public {relationshipEntity.InternalName} {property.InternalName} {{ get; set; }}";
             }
-            else if (property.PropertyType == PropertyType.OneToOneRelationship)
+            else if (property.PropertyType == PropertyType.ParentRelationshipOneToOne)
             {
                 var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 return $@"        /// <summary>

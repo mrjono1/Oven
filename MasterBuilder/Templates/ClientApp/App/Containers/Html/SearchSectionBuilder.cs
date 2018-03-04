@@ -37,7 +37,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             {
                 switch (column.PropertyType)
                 {
-                    case PropertyType.ParentRelationship:
+                    case PropertyType.ParentRelationshipOneToMany:
                     case PropertyType.PrimaryKey:
                         continue;
                     default:
@@ -62,7 +62,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
 
                 var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
-                                      where p.PropertyType == PropertyType.ParentRelationship
+                                      where p.PropertyType == PropertyType.ParentRelationshipOneToMany
                                       select p).SingleOrDefault();
                 if (parentProperty != null)
                 {
@@ -80,7 +80,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                         foundParentScreen = (from s in Project.Screens
                                              where s.ScreenType == ScreenType.Form
                                              from p in s.Entity.Properties
-                                             where p.PropertyType == PropertyType.OneToOneRelationship &&
+                                             where p.PropertyType == PropertyType.ParentRelationshipOneToOne &&
                                              p.ParentEntityId == parentEntity.Id
                                              select s).SingleOrDefault();
                     }

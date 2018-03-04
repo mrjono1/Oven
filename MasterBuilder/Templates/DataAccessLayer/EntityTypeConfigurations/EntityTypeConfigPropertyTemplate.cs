@@ -18,12 +18,12 @@ namespace MasterBuilder.Templates.DataAccessLayer.EntityTypeConfigurations
             string dbColumnName = null;
             switch (property.PropertyType)
             {
-                case PropertyType.ParentRelationship:
+                case PropertyType.ParentRelationshipOneToMany:
                 case PropertyType.ReferenceRelationship:
                     dbColumnName = $"{property.InternalName}Id";
                     value.AppendLine($"            builder.Property(p => p.{property.InternalName}Id)");
                     break;
-                case PropertyType.OneToOneRelationship:
+                case PropertyType.ParentRelationshipOneToOne:
                     // no property
                     break;
                 default:
@@ -109,14 +109,14 @@ namespace MasterBuilder.Templates.DataAccessLayer.EntityTypeConfigurations
                 }
             }
             
-            if (property.PropertyType == PropertyType.ParentRelationship ||
+            if (property.PropertyType == PropertyType.ParentRelationshipOneToMany ||
                 property.PropertyType == PropertyType.ReferenceRelationship ||
-                property.PropertyType == PropertyType.OneToOneRelationship)
+                property.PropertyType == PropertyType.ParentRelationshipOneToOne)
             {
                 var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
                 value.AppendLine();
 
-                if (property.PropertyType == PropertyType.ParentRelationship)
+                if (property.PropertyType == PropertyType.ParentRelationshipOneToMany)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
                  .WithMany(p => p.{entity.InternalNamePlural})
@@ -129,7 +129,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.EntityTypeConfigurations
                  .HasForeignKey(p => p.{property.InternalName}Id)
                  .OnDelete(DeleteBehavior.Restrict)");
                 }
-                else if (property.PropertyType == PropertyType.OneToOneRelationship)
+                else if (property.PropertyType == PropertyType.ParentRelationshipOneToOne)
                 {
                     value.Append($@"            builder.HasOne(p => p.{property.InternalName})
                  .WithOne(p => p.{property.InternalName}{entity.InternalName})
