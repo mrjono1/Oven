@@ -49,8 +49,7 @@ namespace MasterBuilder.Request
                         Title = Title,
                         EntityId = EntityId,
                         InternalName = InternalName,
-                        ScreenSectionType = screenSectionType,
-                        NavigateToScreenId = NavigateToScreenId
+                        ScreenSectionType = screenSectionType
                     }
                 };
             }

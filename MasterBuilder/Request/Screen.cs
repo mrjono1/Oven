@@ -118,12 +118,6 @@ namespace MasterBuilder.Request
         /// Screen Menu Items
         /// </summary>
         public IEnumerable<MenuItem> MenuItems { get; set; }
-        // TODO: possibly get rid of this have it section level only
-        /// <summary>
-        /// On Screens like search navigate to this screen on an action
-        /// </summary>
-        [NonDefault]
-        public Guid? NavigateToScreenId { get; set; }
         /// <summary>
         /// Screen Sections
         /// </summary>

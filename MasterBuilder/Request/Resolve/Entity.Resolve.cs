@@ -77,8 +77,19 @@ namespace MasterBuilder.Request
                         Title = Title.Pluralize(),
                         ScreenType = ScreenType.Search,
                         Path = InternalNamePlural.Kebaberize(),
-                        NavigateToScreenId = editScreenId,
-                        Template = ScreenTemplate.Reference
+                        Template = ScreenTemplate.Reference,
+                        ScreenSections = new ScreenSection[]
+                        {
+                            new ScreenSection
+                            {
+                                Id = Id,
+                                Title = Title.Pluralize(),
+                                EntityId = Id,
+                                InternalName = InternalName.Pluralize(),
+                                ScreenSectionType = ScreenSectionType.Search,
+                                NavigateToScreenId = editScreenId,
+                            }
+                        }
                     },
                     new Screen()
                     {
@@ -86,7 +97,18 @@ namespace MasterBuilder.Request
                         EntityId = Id,
                         Title = Title,
                         ScreenType = ScreenType.Form,
-                        Path = InternalName.Kebaberize()
+                        Path = InternalName.Kebaberize(),
+                        ScreenSections = new ScreenSection[]
+                        {
+                            new ScreenSection
+                            {
+                                Id = editScreenId,
+                                Title = Title,
+                                EntityId = Id,
+                                InternalName = InternalName,
+                                ScreenSectionType = ScreenSectionType.Form
+                            }
+                        }
                     }
                 };
                 project.Screens = screens;

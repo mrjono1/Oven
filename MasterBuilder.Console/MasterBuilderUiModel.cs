@@ -1544,7 +1544,6 @@ namespace MasterBuilder
                     ScreenType = ScreenType.Search,
                     Title = "Projects",
                     Path = "projects",
-                    NavigateToScreenId = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
                     ScreenFeatures = new ScreenFeature[]
                     {
                         new ScreenFeature{
@@ -2075,44 +2074,6 @@ namespace MasterBuilder
                                     },
                                 }
                             }
-                        }
-                    }
-                },
-#endregion
-                #region Validation Type Search Screen
-                new Screen()
-                {
-                    Id = new Guid("{8E1A9AB1-799E-46B4-8364-85FB087C643E}"),
-                    EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
-                    ScreenType = ScreenType.Search,
-                    Title = "Validation Types",
-                    Path = "validation-types",
-                    NavigateToScreenId = new Guid("{5D9BA697-C64B-40EE-9DF4-F88BD683713F}"),
-                    ScreenFeatures = new ScreenFeature[]
-                    {
-                        new ScreenFeature{
-                            Id = new Guid("{DF498A46-08B7-450E-8CE4-3BCC1B711A0D}"),
-                            FeatureId = new Guid("{6114120E-BD93-4CE4-A673-7DC295F93CFE}") // New
-                        }
-                    }
-                },
-                #endregion
-                #region Validation Type Form Screen
-                new Screen()
-                {
-                    Id = new Guid("{5D9BA697-C64B-40EE-9DF4-F88BD683713F}"),
-                    EntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
-                    ScreenType = ScreenType.Form,
-                    Title = "Validation Type",
-                    Path = "validation-type",
-                    ScreenSections = new ScreenSection[]
-                    {
-                        new ScreenSection
-                        {
-                            Id = new Guid("{459E59DD-D382-4061-94EF-3E73B47BFCB2}"),
-                            Title = "Validation Type",
-                            InternalName = "ValidationType",
-                            ScreenSectionTypeId = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}") // Form
                         }
                     }
                 },
