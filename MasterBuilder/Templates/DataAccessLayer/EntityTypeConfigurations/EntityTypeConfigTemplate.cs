@@ -62,8 +62,10 @@ namespace MasterBuilder.Templates.DataAccessLayer.EntityTypeConfigurations
                                   select new { e, p }))
             {
 
-                properties.Add($@"            builder.Property(p => p.{item.p.InternalName}{item.e.InternalName}Id)
-                .HasColumnName(""{(Project.ImutableDatabase.Value ? item.p.Id.ToString() : string.Concat(item.p.InternalName, item.e.InternalName, "Id"))}""){(item.p.Required ? string.Join(Environment.NewLine, ".IsRequired();") : ";")}");
+                properties.Add($@"            builder.HasOne(p => p.{item.e.InternalName})
+                .WithOne(p => p.{Entity.InternalName})
+                .HasForeignKey<Entities.{item.e.InternalName}>(p => p.{Entity.InternalName}Id)
+                .OnDelete(DeleteBehavior.Cascade);");
             }
 
             var tableName = Entity.InternalName;

@@ -244,15 +244,7 @@ namespace MasterBuilder
                                     ValidationType = ValidationType.Required
                                 },
                             }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
-                            InternalName = "Seed",
-                            PropertyType = PropertyType.ParentRelationshipOneToOne,
-                            Title = "Seed",
-                            ParentEntityId = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}")
-                        },
+                        }
                     }
                 },
                 #endregion
@@ -783,22 +775,6 @@ namespace MasterBuilder
                             InternalName = "Html",
                             PropertyType = PropertyType.String,
                             Title = "Html"
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{381E1C63-004D-4AAB-B41D-86D62D39A7F9}"),
-                            InternalName = "FormSection",
-                            PropertyType = PropertyType.ParentRelationshipOneToOne,
-                            Title = "Form Section",
-                            ParentEntityId = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}")
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{4923CC53-3325-4070-BEE5-B8B07CBDC751}"),
-                            InternalName = "SearchSection",
-                            PropertyType = PropertyType.ParentRelationshipOneToOne,
-                            Title = "Search Section",
-                            ParentEntityId = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}")
                         }
                     }
                 },
@@ -817,6 +793,14 @@ namespace MasterBuilder
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
+                            InternalName = "Entity",
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
+                            Title = "Entity",
+                            ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
                         },
                         new Property()
                         {
@@ -913,22 +897,6 @@ namespace MasterBuilder
                                     ValidationType = ValidationType.Required
                                 },
                             }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{ACD4EA5B-644F-4DFD-9082-A0E58402B11D}"),
-                            InternalName = "WebService",
-                            PropertyType = PropertyType.ParentRelationshipOneToOne,
-                            Title = "WebService",
-                            ParentEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}")
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{3E70E9E0-707D-4441-B4F0-199B70B31A64}"),
-                            InternalName = "ExportService",
-                            PropertyType = PropertyType.ParentRelationshipOneToOne,
-                            Title = "Export Service",
-                            ParentEntityId = new Guid("{2B77156B-E550-4E46-8472-FAFA3D04966E}")
                         }
                     }
                 },
@@ -947,6 +915,14 @@ namespace MasterBuilder
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{3E70E9E0-707D-4441-B4F0-199B70B31A64}"),
+                            InternalName = "Service",
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
+                            Title = "Service",
+                            ParentEntityId = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}")
                         },
                         new Property()
                         {
@@ -980,6 +956,14 @@ namespace MasterBuilder
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{ACD4EA5B-644F-4DFD-9082-A0E58402B11D}"),
+                            InternalName = "Service",
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
+                            Title = "Service",
+                            ParentEntityId = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}")
                         },
                         new Property()
                         {
@@ -1161,6 +1145,14 @@ namespace MasterBuilder
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{381E1C63-004D-4AAB-B41D-86D62D39A7F9}"),
+                            InternalName = "ScreenSection",
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
+                            Title = "Screen Section",
+                            ParentEntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}")
                         }
                         // At the moment it only has a collection of form Fields
                     }
@@ -1180,6 +1172,14 @@ namespace MasterBuilder
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{4923CC53-3325-4070-BEE5-B8B07CBDC751}"),
+                            InternalName = "ScreenSection",
+                            PropertyType = PropertyType.ParentRelationshipOneToOne,
+                            Title = "Screen Section",
+                            ParentEntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}")
                         }
                         // At the moment it only has a collection of Search Columns
                     }

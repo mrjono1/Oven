@@ -60,26 +60,16 @@ namespace MasterBuilder.Templates.Services
             // Parent relationships
             var childEntities = (from e in Project.Entities
                                     from property in e.Properties
-                                    where property.PropertyType == PropertyType.ParentRelationshipOneToMany &&
+                                    where (property.PropertyType == PropertyType.ParentRelationshipOneToMany ||
+                                    property.PropertyType == PropertyType.ParentRelationshipOneToOne ) &&
                                     property.ParentEntityId.HasValue &&
                                     property.ParentEntityId == entity.Id
                                     select new
                                     {
                                         Entity = e,
-                                        Collection = true
+                                        Collection = property.PropertyType == PropertyType.ParentRelationshipOneToMany
                                     }).ToList();
-
-            // One to One relationships
-            childEntities.AddRange((from property in entity.Properties
-                                    where property.PropertyType == PropertyType.ParentRelationshipOneToOne
-                                    from e in Project.Entities
-                                    where e.Id == property.ParentEntityId.Value
-                                    select new
-                                    {
-                                        Entity = e,
-                                        Collection = false
-                                    }).ToList());
-
+            
             var paths = new List<List<string>>();
             foreach (var childEntity in childEntities)
             {

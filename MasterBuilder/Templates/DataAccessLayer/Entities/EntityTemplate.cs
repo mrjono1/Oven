@@ -104,31 +104,24 @@ namespace MasterBuilder.Templates.DataAccessLayer.Entities
                 switch (item.p.PropertyType)
                 {
                     case PropertyType.ParentRelationshipOneToMany:
-
                         navigationProperties.Add($@"        /// <summary>
         /// Foreign Key (Via Parent Relationship) to {item.e.InternalName}.{item.p.InternalName}
         /// </summary>
         public ICollection<{item.e.InternalName}> {item.e.InternalNamePlural} {{ get; set; }}");
                         break;
-                    case PropertyType.ReferenceRelationship:
 
+                    case PropertyType.ReferenceRelationship:
                         navigationProperties.Add($@"        /// <summary>
         /// Foreign Key (Via Reference Relationship) to {item.e.InternalName}.{item.p.InternalName}
         /// </summary>
         public ICollection<{item.e.InternalName}> {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
                         break;
-                    case PropertyType.ParentRelationshipOneToOne:
 
-                        navigationProperties.Add($@"         /// <summary>
-        /// Foreign Key (One to One Relationship)
+                    case PropertyType.ParentRelationshipOneToOne:
+                        navigationProperties.Add($@"        /// <summary>
+        /// One to One Navigation object (One To One Relationship) to {item.e.InternalName}
         /// </summary>
-        public Guid? {item.p.InternalName}{item.e.InternalName}Id {{ get; set; }}
-        /// <summary>
-        /// Foreign Key (Via One to One Relationship)
-        /// </summary>
-        public {item.e.InternalName} {item.p.InternalName}{item.e.InternalName} {{ get; set; }}");
-                        break;
-                    default:
+        public {item.e.InternalName} {item.e.InternalName} {{ get; set; }}");
                         break;
                 }
             }
