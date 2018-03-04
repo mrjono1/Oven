@@ -2074,6 +2074,129 @@ namespace MasterBuilder
                                     },
                                 }
                             }
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{5B8A2C75-C319-40BD-87A4-444987A04A04}"),
+                            Title = "Validation",
+                            InternalName = "Validation",
+                            EntityId = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
+                            ScreenSectionType = ScreenSectionType.Search,
+                            // Validation
+                            NavigateToScreenId = new Guid("{12A2E083-5CFA-450C-9585-38DE0C60DCC2}"),
+                            SearchSection = new SearchSection
+                            {
+                                SearchColumns = new SearchColumn[]
+                                {
+                                    new SearchColumn
+                                    {
+                                        // Title
+                                        EntityPropertyId = new Guid("{3690A6AE-0573-40F3-8680-0BCE13931EE3}")
+                                    },
+                                    new SearchColumn
+                                    {
+                                        // Validation Type
+                                        EntityPropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}")
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                #endregion
+                #region Validation Form Screen
+                new Screen
+                {
+                    Id = new Guid("{12A2E083-5CFA-450C-9585-38DE0C60DCC2}"),
+                    Title = "Validation",
+                    Path = "validation",
+                    EntityId = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
+                    ScreenType = ScreenType.Form,
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{511119F3-9E30-4BCF-8887-32447DF171D2}"),
+                            Title = "Validation",
+                            InternalName = "Validation",
+                            EntityId = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
+                            ScreenSectionType = ScreenSectionType.Form,
+                            FormSection = new FormSection
+                            {
+                                FormFields = new FormField[]
+                                {
+                                    new FormField{
+                                        // Title
+                                        EntityPropertyId = new Guid("{3690A6AE-0573-40F3-8680-0BCE13931EE3}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Parent Relationship
+                                        EntityPropertyId = new Guid("{BA0702F8-6F26-4A25-9300-31B44F14B3A8}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Validation Type
+                                        EntityPropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Integer Value
+                                        EntityPropertyId = new Guid("{37E3DBC5-1B98-446D-B46B-1BD530CAD376}"),
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.In,
+                                            UniqueidentifierValues = new Guid[]
+                                            {
+                                                // Max Length
+                                                new Guid("{F7788E3D-7753-4491-98B1-AE78E16CDD0E}"),
+                                                // Max Value
+                                                new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"),
+                                                // Min Length
+                                                new Guid("{35D78EB6-F5DE-4E7B-AE79-B69A1D3DC7C9}"),
+                                                // Min Value
+                                                new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}")
+                                            }
+                                        }
+                                    },
+                                    new FormField
+                                    {
+                                        // Double Value
+                                        EntityPropertyId = new Guid("{8E35139C-E60C-4432-B1F7-62CEA1451593}"),
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.In,
+                                            UniqueidentifierValues = new Guid[]
+                                            {
+                                                // Max Value
+                                                new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"),
+                                                // Min Value
+                                                new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}")
+                                            }
+                                        }
+                                    },
+                                    new FormField
+                                    {
+                                        // String Value
+                                        EntityPropertyId = new Guid("{E2F53C95-BA38-47E1-93CD-38F4B04F44D0}"),
+                                        Title = "Regular Expression",
+                                        VisibilityExpression  = new Expression
+                                        {
+                                            PropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                            UniqueidentifierValue = new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}")
+                                        }
+                                    },
+                                    new FormField
+                                    {
+                                        // Message
+                                        EntityPropertyId = new Guid("{640B7178-5C6D-4265-9ADE-EDC606FC3362}"),
+                                        Title = "Validation Failed Message (Optional)"
+                                    }
+                                }
+                            }
                         }
                     }
                 },

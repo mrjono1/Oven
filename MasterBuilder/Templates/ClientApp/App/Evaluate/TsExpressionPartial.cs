@@ -34,21 +34,21 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
         {
             var propertyType = GetPropertyType(expression);
 
-            var left = GetLeft(expression);
+            var firstPart = GetLeft(expression);
             var @operator = GetOperator(expression);
-            var right = GetRight(expression, propertyType);
+            var secondPart = GetRight(expression, propertyType);
 
             if (IsBasicOperation(expression))
             {
-                return $@"{left} {@operator} {right}";
+                return $@"{firstPart} {@operator} {secondPart}";
             }
             else if (IsRangeOperation(expression))
             {
-                return $@"{left} {@operator}({right})";
+                return $@"{secondPart}.indexOf({firstPart}) > -1";
             }
             else if (IsSingleOperation(expression))
             {
-                return $@"{left} {@operator}";
+                return $@"{firstPart} {@operator}";
             }
             else
             {
@@ -134,7 +134,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                 case ExpressionOperator.LessThanOrEqual:
                     return "<=";
                 case ExpressionOperator.In:
-                    throw new NotImplementedException("In Operator not implemented");
+                    return "indexOf";
                 case ExpressionOperator.NotIn:
                     throw new NotImplementedException("Not In Operator not implemented");
                 case ExpressionOperator.IsNull:
@@ -193,6 +193,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                     if (expression.UniqueidentifierValue.HasValue)
                     {
                         return $@"'{expression.UniqueidentifierValue.ToString().ToLowerInvariant()}'";
+                    }
+                    else if (expression.UniqueidentifierValues != null && expression.UniqueidentifierValues.Any())
+                    {
+                        return string.Concat("['", string.Join("','", expression.UniqueidentifierValues), "']");
                     }
                     break;
             }

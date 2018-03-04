@@ -96,7 +96,7 @@ namespace MasterBuilder.Request
         /// Only populate when Screen Section Type = Form
         /// </summary>
         public FormSection FormSection { get; set; }
-
+        // TODO: Change this to Guid OrderBySearchColumnId, defaulting to a column will be annoying
         /// <summary>
         /// The property <see cref="Property.InternalName"/> to order by, defaults to "Title"
         /// </summary>
