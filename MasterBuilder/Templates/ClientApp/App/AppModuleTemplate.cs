@@ -194,15 +194,13 @@ export class AppModuleShared {{
             */
             var menuItems = new List<string>();
 
-            var fullEditPath = screen.EditFullPath(Project);
-            if (!string.IsNullOrEmpty(fullEditPath))
+            if (screen.ScreenType == ScreenType.Form)
             {
-                menuItems.Add($@"            {{ path: '{fullEditPath}', component: {screen.InternalName}Component, canDeactivate: [PendingChangesGuard] }}");
+                menuItems.Add($@"            {{ path: '{screen.Path}', component: {screen.InternalName}Component, canDeactivate: [PendingChangesGuard] }}");
             }
-            var fullPath = screen.FullPath(Project);
-            if (!string.IsNullOrEmpty(fullPath))
+            else
             {
-                menuItems.Add($"            {{ path: '{fullPath}', component: {screen.InternalName}Component }}");
+                menuItems.Add($"            {{ path: '{screen.Path}', component: {screen.InternalName}Component }}");
             }
 
             return menuItems;

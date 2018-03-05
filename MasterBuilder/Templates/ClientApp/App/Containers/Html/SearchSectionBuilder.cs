@@ -89,8 +89,17 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
                 if (navigateScreen != null)
                 {
-                    rowClickRouterLink = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}', row.id]""";
-                    newRouterLink = $@"[routerLink]=""['{(foundParentScreen != null ? "." : string.Empty)}/{navigateScreen.Path}']""";
+                    rowClickRouterLink = $@"[routerLink]=""['/{navigateScreen.Path}', {{ id: row.id}}]""";
+
+                    if (parentProperty == null)
+                    {
+                        newRouterLink = $@"[routerLink]=""['/{navigateScreen.Path}']""";
+                    }
+                    else
+                    {
+                        // TODO: This does not support child groups yet
+                        newRouterLink = $@" *ngIf=""{parentProperty.InternalName.Camelize()}"" [routerLink]=""['/{navigateScreen.Path}', {{ {parentProperty.InternalName.Camelize()}Id: {parentProperty.InternalName.Camelize()}.id}}]""";
+                    }
                 }
             }
 

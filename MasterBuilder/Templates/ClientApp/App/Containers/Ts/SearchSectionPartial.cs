@@ -95,7 +95,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 parentEntity = (from s in Project.Entities
                                 where s.Id == parentProperty.ParentEntityId
                                 select s).SingleOrDefault();
-                parentPropertyFilterString = $"this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = params['{parentEntity.InternalName.Camelize()}Id'];";
+                parentPropertyFilterString = $"this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = params.id;";
             }
 
             return new string[]

@@ -190,7 +190,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 var parentEnitity = (from e in Project.Entities
                                      where e.Id == parentProperty.ParentEntityId
                                      select e).SingleOrDefault();
-                initSections.Add($"                this.{Screen.InternalName.Camelize()}.{parentProperty.InternalName.Camelize()}Id = params['{parentEnitity.InternalName.Camelize()}Id'];");
+                initSections.Add($"                this.{Screen.InternalName.Camelize()}.{parentProperty.InternalName.Camelize()}Id = params.{parentEnitity.InternalName.Camelize()}Id;");
             }
 
             // TODO: implement child sections
@@ -204,9 +204,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             //}
 
             lines.Add($@"        this.route.params.subscribe(params => {{
-            if (params['{Screen.InternalName.Camelize()}Id']) {{
+            if (params['id']) {{
                 this.new = false;
-                this.{Screen.InternalName.Camelize()}Service.get{Screen.InternalName}(params['{Screen.Entity.InternalName.Camelize()}Id']).subscribe(result => {{
+                this.{Screen.InternalName.Camelize()}Service.get{Screen.InternalName}(params.id).subscribe(result => {{
                     this.{Screen.InternalName.Camelize()} = result;
                     this.setupForm();
                 }}, error => console.error(error));
@@ -262,7 +262,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         if (this.new){{
             // Post new
             this.{Screen.InternalName.Camelize()}Service.add{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
-                this.router.navigate([this.router.url + '/' + id], {{ replaceUrl: true }});
+                this.router.navigate(['/{Screen.Path}', {{ id: id}}], {{ replaceUrl: true }});
             }},
                 error => this.httpErrorService.handleError(this.{Screen.InternalName.Camelize()}Form, this.serverErrorMessages, error)
             );
