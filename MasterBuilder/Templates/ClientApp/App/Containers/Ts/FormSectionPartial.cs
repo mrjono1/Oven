@@ -262,6 +262,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         if (this.new){{
             // Post new
             this.{Screen.InternalName.Camelize()}Service.add{Screen.InternalName}(this.{Screen.InternalName.Camelize()}Form.getRawValue()).subscribe( id => {{
+                this.{Screen.InternalName.Camelize()}Form.markAsPristine({{ onlySelf: false }});
                 this.router.navigate(['/{Screen.Path}', {{ id: id}}], {{ replaceUrl: true }});
             }},
                 error => this.httpErrorService.handleError(this.{Screen.InternalName.Camelize()}Form, this.serverErrorMessages, error)
