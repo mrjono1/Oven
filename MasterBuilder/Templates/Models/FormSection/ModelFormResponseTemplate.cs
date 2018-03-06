@@ -14,15 +14,17 @@ namespace MasterBuilder.Templates.Models
         private readonly Project Project;
         private readonly Screen Screen;
         private readonly IEnumerable<ScreenSection> ScreenSections;
+        private readonly IEnumerable<ScreenSection> ChildScreenSections;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelFormResponseTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
+        public ModelFormResponseTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections, IEnumerable<ScreenSection> childScreenSection = null)
         {
             Project = project;
             Screen = screen;
             ScreenSections = screenSections;
+            ChildScreenSections = childScreenSection;
         }
 
         /// <summary>
@@ -30,7 +32,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{Screen.FormResponseClass}.cs";
+            return $"{ScreenSections.First().FormResponseClass}.cs";
         }
 
         /// <summary>
@@ -49,11 +51,22 @@ namespace MasterBuilder.Templates.Models
             var properties = new List<string>();
             
             foreach (var group in (from formSection in ScreenSections
-                                       where !formSection.ParentScreenSectionId.HasValue
-                                       from ff in formSection.FormSection.FormFields
-                                       select ff).GroupBy(ff => ff.EntityPropertyId))
+                                    from ff in formSection.FormSection.FormFields
+                                    select ff).GroupBy(ff => ff.EntityPropertyId))
             {
                 properties.Add(ModelFormResponsePropertyTemplate.Evaluate(group.FirstOrDefault()));
+            }
+
+            if (ChildScreenSections != null)
+            {
+                foreach (var childScreenSection in ChildScreenSections)
+                {
+                    properties.Add($@"        /// <summary>
+        /// {childScreenSection.Entity.Title} Response
+        /// </summary>
+        [Display(Name = ""{childScreenSection.Entity.Title}"")]
+        public {childScreenSection.FormResponseClass} {childScreenSection.FormResponseClass} {{ get; set; }}");
+                }
             }
 
             return $@"using System;
@@ -64,7 +77,7 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Screen Load
     /// </summary>
-    public class {Screen.FormResponseClass}
+    public class {ScreenSections.First().FormResponseClass}
     {{
 {string.Join(Environment.NewLine, properties)}
     }}

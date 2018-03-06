@@ -151,7 +151,7 @@ namespace MasterBuilder.Request
         {
             get
             {
-                return $"{InternalName}Response";
+                return $"{Entity.InternalName}Response";
             }
         }
         /// <summary>
@@ -161,7 +161,7 @@ namespace MasterBuilder.Request
         {
             get
             {
-                return $"{InternalName}Request";
+                return $"{Entity.InternalName}Request";
             }
         }
         #endregion

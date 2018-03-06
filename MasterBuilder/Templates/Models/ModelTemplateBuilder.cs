@@ -30,14 +30,14 @@ namespace MasterBuilder.Templates.Models
             foreach (var screen in Project.Screens)
             {
                 var referenceFormFields = new List<FormField>();
-                var formSections = new List<ScreenSection>();
+                var hasFormSections = false;
                 foreach (var screenSection in screen.ScreenSections)
                 {
                     switch (screenSection.ScreenSectionType)
                     {
                         case ScreenSectionType.Form:
                             referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
-                            formSections.Add(screenSection);
+                            hasFormSections = true;
                             break;
                         case ScreenSectionType.Search:
                             templates.Add(new ModelSearchRequestTemplate(Project, screen, screenSection));
@@ -62,10 +62,12 @@ namespace MasterBuilder.Templates.Models
                     templates.Add(new Reference.ModelReferenceResponseTemplate(Project, screen, referenceFormField));
                 }
 
-                if (formSections.Any())
+                if (hasFormSections)
                 {
-                    templates.Add(new ModelFormResponseTemplate(Project, screen, formSections));
-                    templates.Add(new ModelFormRequestTemplate(Project, screen, formSections));
+                    var modelFormSectionTemplateBuilder = new ModelFormSectionTemplateBuilder(Project, screen);
+                    templates.AddRange(modelFormSectionTemplateBuilder.GetTemplates());
+                    //templates.Add(new ModelFormResponseTemplate(Project, screen, formSections));
+                    //templates.Add(new ModelFormRequestTemplate(Project, screen, formSections));
                 }
             }
 

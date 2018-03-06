@@ -51,12 +51,12 @@ namespace MasterBuilder.Request
                 }
 
                 // Add Parent Relationship
-                if (ScreenSection.ParentScreenSection != null)
+                if (ScreenSection.ParentScreenSection == null)
                 {
                     Property parentProperty = (from p in ScreenSection.Entity.Properties
-                                      where p.PropertyType == PropertyType.ParentRelationshipOneToMany ||
-                                            p.PropertyType == PropertyType.ParentRelationshipOneToOne
-                                      select p).SingleOrDefault();
+                                               where p.PropertyType == PropertyType.ParentRelationshipOneToMany ||
+                                                     p.PropertyType == PropertyType.ParentRelationshipOneToOne
+                                               select p).SingleOrDefault();
 
                     if (parentProperty != null)
                     {

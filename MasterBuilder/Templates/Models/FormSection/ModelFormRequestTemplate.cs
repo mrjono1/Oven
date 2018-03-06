@@ -14,15 +14,17 @@ namespace MasterBuilder.Templates.Models
         private readonly Project Project;
         private readonly Screen Screen;
         private readonly IEnumerable<ScreenSection> ScreenSections;
+        private readonly IEnumerable<ScreenSection> ChildScreenSections;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ModelFormRequestTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
+        public ModelFormRequestTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections, IEnumerable<ScreenSection> childScreenSection = null)
         {
             Project = project;
             Screen = screen;
             ScreenSections = screenSections;
+            ChildScreenSections = childScreenSection;
         }
 
         /// <summary>
@@ -30,7 +32,7 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{Screen.FormRequestClass}.cs";
+            return $"{ScreenSections.First().FormRequestClass}.cs";
         }
 
         /// <summary>
@@ -49,13 +51,24 @@ namespace MasterBuilder.Templates.Models
             var properties = new List<string>();
             
             foreach (var group in (from formSection in ScreenSections
-                                       where !formSection.ParentScreenSectionId.HasValue
-                                       from ff in formSection.FormSection.FormFields
-                                       select ff).GroupBy(ff => ff.EntityPropertyId))
+                                    from ff in formSection.FormSection.FormFields
+                                    select ff).GroupBy(ff => ff.EntityPropertyId))
             {
                 properties.Add(ModelFormRequestPropertyTemplate.Evaluate(group.FirstOrDefault()));
             }
-            
+
+            if (ChildScreenSections != null)
+            {
+                foreach (var childScreenSection in ChildScreenSections)
+                {
+                    properties.Add($@"        /// <summary>
+        /// {childScreenSection.Entity.Title} Request
+        /// </summary>
+        [Display(Name = ""{childScreenSection.Entity.Title}"")]
+        public {childScreenSection.FormRequestClass} {childScreenSection.FormRequestClass} {{ get; set; }}");
+                }
+            }
+
             return $@"using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -65,7 +78,7 @@ namespace {Project.InternalName}.Models
     /// <summary>
     /// {Screen.InternalName} Insert/Update Model
     /// </summary>
-    public class {Screen.FormRequestClass}
+    public class {ScreenSections.First().FormRequestClass}
     {{
 {string.Join(Environment.NewLine, properties)}
     }}

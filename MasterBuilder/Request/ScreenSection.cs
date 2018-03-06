@@ -106,6 +106,26 @@ namespace MasterBuilder.Request
         public Guid? ParentScreenSectionId { get; set; }
         #region Internal Fields
         /// <summary>
+        /// Form Response Class
+        /// </summary>
+        internal string FormResponseClass
+        {
+            get
+            {
+                return $"{Entity.InternalName}Response";
+            }
+        }
+        /// <summary>
+        /// Form Request Class
+        /// </summary>
+        internal string FormRequestClass
+        {
+            get
+            {
+                return $"{Entity.InternalName}Request";
+            }
+        }
+        /// <summary>
         /// Entity
         /// </summary>
         internal Entity Entity { get; set; }
