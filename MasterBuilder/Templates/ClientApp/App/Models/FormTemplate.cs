@@ -16,18 +16,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         private readonly Screen Screen;
         private readonly IEnumerable<ScreenSection> ScreenSections;
         private readonly IEnumerable<ScreenSection> ChildScreenSections;
-        private readonly Property ParentProperty;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public FormTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections, IEnumerable<ScreenSection> childScreenSections, Property parentProperty)
+        public FormTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections, IEnumerable<ScreenSection> childScreenSections)
         {
             Project = project;
             Screen = screen;
             ScreenSections = screenSections;
             ChildScreenSections = childScreenSections;
-            ParentProperty = parentProperty;
         }
 
         /// <summary>
@@ -35,7 +33,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         /// </summary>
         public string GetFileName()
         {
-            return $"{(ParentProperty != null ? ParentProperty.InternalName : Screen.InternalName)}.ts";
+            return $"{ScreenSections.First().Entity.InternalName}.ts";
         }
 
         /// <summary>
@@ -83,23 +81,21 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
                 properties.AddRange(GetProperties(group.FirstOrDefault()));
             }
 
-            // TODO: Enable child sections, this needs to be recursive
-            //if (ChildScreenSections != null)
-            //{
-            //    foreach (var childProperty in (from child in ChildScreenSections
-            //                                   select child.ParentEntityProperty).Distinct())
-            //    {
-            //        properties.Add($@"    {childProperty.InternalName.Camelize()}: {childProperty.InternalName};");
-            //        imports.Add($@"import {{ {childProperty.InternalName} }} from './{childProperty.InternalName}';");
-            //    }
-            //}
+            if (ChildScreenSections != null)
+            {
+                foreach (var childScreenSection in ChildScreenSections)
+                {
+                    properties.Add($@"    {childScreenSection.Entity.InternalName.Camelize()}: {childScreenSection.Entity.InternalName};");
+                    imports.Add($@"import {{ {childScreenSection.Entity.InternalName} }} from './{childScreenSection.Entity.InternalName}';");
+                }
+            }
 
             if (imports.Any())
             {
                 imports.Add(Environment.NewLine);
             }
 
-            return $@"{string.Join(Environment.NewLine, imports)}export class {(ParentProperty != null ? ParentProperty.InternalName : Screen.InternalName)} {{
+            return $@"{string.Join(Environment.NewLine, imports)}export class {ScreenSections.First().Entity.InternalName} {{
 {string.Join(Environment.NewLine, properties)}
 }}";
         }

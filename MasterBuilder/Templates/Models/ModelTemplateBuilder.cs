@@ -66,8 +66,6 @@ namespace MasterBuilder.Templates.Models
                 {
                     var modelFormSectionTemplateBuilder = new ModelFormSectionTemplateBuilder(Project, screen);
                     templates.AddRange(modelFormSectionTemplateBuilder.GetTemplates());
-                    //templates.Add(new ModelFormResponseTemplate(Project, screen, formSections));
-                    //templates.Add(new ModelFormRequestTemplate(Project, screen, formSections));
                 }
             }
 
