@@ -18,9 +18,9 @@ namespace MasterBuilder.Request
                 Entity = project.Entities.SingleOrDefault(e => e.Id == EntityId.Value);
             }
 
-            if (ParentEntityPropertyId.HasValue)
+            if (ParentScreenSectionId.HasValue)
             {
-                ParentEntityProperty = screen.Entity.Properties.Single(p => p.Id == ParentEntityPropertyId.Value);
+                ParentScreenSection = screen.ScreenSections.Single(p => p.Id == ParentScreenSectionId.Value);
             }
 
             switch (ScreenSectionType)

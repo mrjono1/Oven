@@ -49,14 +49,13 @@ namespace MasterBuilder.Templates.Models
             var properties = new List<string>();
             
             foreach (var group in (from formSection in ScreenSections
-                                       where !formSection.ParentEntityPropertyId.HasValue
+                                       where !formSection.ParentScreenSectionId.HasValue
                                        from ff in formSection.FormSection.FormFields
                                        select ff).GroupBy(ff => ff.EntityPropertyId))
             {
                 properties.Add(ModelFormRequestPropertyTemplate.Evaluate(group.FirstOrDefault()));
             }
             
-
             return $@"using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;

@@ -84,11 +84,6 @@ namespace MasterBuilder.Request
         /// </summary>
         public IEnumerable<MenuItem> MenuListMenuItems { get; set; }
         /// <summary>
-        /// Parent Property Id (used for nested sections)
-        /// </summary>
-        [NonDefault]
-        public Guid? ParentEntityPropertyId { get; set; }
-        /// <summary>
         /// Only populate when Screen Section Type = Search
         /// </summary>
         public SearchSection SearchSection { get; set; }
@@ -105,16 +100,19 @@ namespace MasterBuilder.Request
         /// Visibility Expression
         /// </summary>
         public Expression VisibilityExpression { get; set; }
+        /// <summary>
+        /// Parent Screen Section Id
+        /// </summary>
+        public Guid? ParentScreenSectionId { get; set; }
         #region Internal Fields
-
         /// <summary>
         /// Entity
         /// </summary>
         internal Entity Entity { get; set; }
         /// <summary>
-        /// Parent Entity Property, for nested sections
+        /// Parent Screen Section, for nested sections
         /// </summary>
-        internal Property ParentEntityProperty { get; set; }
+        internal ScreenSection ParentScreenSection { get; set; }
         #endregion
     }
 }

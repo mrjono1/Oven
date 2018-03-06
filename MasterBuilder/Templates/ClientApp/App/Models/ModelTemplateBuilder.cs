@@ -62,7 +62,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
                 if (formSections.Any())
                 {
                     var rootSections = (from formSection in formSections
-                                        where !formSection.ParentEntityPropertyId.HasValue
+                                        where !formSection.ParentScreenSectionId.HasValue
                                         select formSection).ToArray();
                     // TODO: Child Sections
                     //var childSections = (from formSection in formSections

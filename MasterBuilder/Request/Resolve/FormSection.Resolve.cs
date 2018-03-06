@@ -51,29 +51,32 @@ namespace MasterBuilder.Request
                 }
 
                 // Add Parent Relationship
-                Property parentProperty = null;
-                parentProperty = (from p in Screen.Entity.Properties
-                                  where p.PropertyType == PropertyType.ParentRelationshipOneToMany
-                                  select p).SingleOrDefault();
-
-                if (parentProperty != null)
+                if (ScreenSection.ParentScreenSection != null)
                 {
+                    Property parentProperty = (from p in ScreenSection.Entity.Properties
+                                      where p.PropertyType == PropertyType.ParentRelationshipOneToMany ||
+                                            p.PropertyType == PropertyType.ParentRelationshipOneToOne
+                                      select p).SingleOrDefault();
 
-                    var parentFormField = new FormField
+                    if (parentProperty != null)
                     {
-                        EntityPropertyId = parentProperty.Id,
-                        IsHiddenFromUi = true
-                    };
-                    if (!parentFormField.Resolve(project, screen, screenSection, out string formFieldMessage))
-                    {
-                        errors.Add(formFieldMessage);
-                    }
 
-                    var parentFormFields = new List<FormField>(FormFields)
+                        var parentFormField = new FormField
+                        {
+                            EntityPropertyId = parentProperty.Id,
+                            IsHiddenFromUi = true
+                        };
+                        if (!parentFormField.Resolve(project, screen, screenSection, out string formFieldMessage))
+                        {
+                            errors.Add(formFieldMessage);
+                        }
+
+                        var parentFormFields = new List<FormField>(FormFields)
                     {
                         parentFormField
                     };
-                    FormFields = parentFormFields;
+                        FormFields = parentFormFields;
+                    }
                 }
             }
 

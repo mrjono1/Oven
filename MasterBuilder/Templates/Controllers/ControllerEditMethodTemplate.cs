@@ -65,40 +65,36 @@ namespace MasterBuilder.Templates.Controllers
 
             // Convert root fields to properties
             var rootFields = (from formSection in ScreenSections
-                              where !formSection.ParentEntityPropertyId.HasValue
+                              where !formSection.ParentScreenSectionId.HasValue
                               from ff in formSection.FormSection.FormFields
-                              select ff).ToArray();
+                              select ff).GroupBy(ff => ff.EntityPropertyId)
+                              .Select(ff => ff.First()).ToArray();
             propertyMapping.AddRange(GetProperties(rootFields));
 
-            // Convert child properties to objects with properties
-            var childSections = (from formSection in ScreenSections
-                                 where formSection.ParentEntityPropertyId.HasValue
-                                 select formSection).ToArray();
+//            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
+//            {
+//                ParentEntityProperty = a.Key,
+//                ChildSections = a.ToArray()
+//            }))
+//            {
+//                var entityProperties = new List<string>();
 
-            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
-            {
-                ParentEntityProperty = a.Key,
-                ChildSections = a.ToArray()
-            }))
-            {
-                var entityProperties = new List<string>();
-
-                entityProperties.AddRange(
-                    GetProperties((from screenSection in childItem.ChildSections
-                                   from ff in screenSection.FormSection.FormFields
-                                   select ff).ToArray(),
-                    $"item.{childItem.ParentEntityProperty.ParentEntity.InternalName}",
-                    1));
+//                entityProperties.AddRange(
+//                    GetProperties((from screenSection in childItem.ChildSections
+//                                   from ff in screenSection.FormSection.FormFields
+//                                   select ff).ToArray(),
+//                    $"item.{childItem.ParentEntityProperty.ParentEntity.InternalName}",
+//                    1));
                 
-                if (entityProperties.Any())
-                {
-                    // TODO fix the SeedEntityId property
-                    // Note: for One to One relationships the navigation object always exists so null check must be done on the nullable forein key
-                    propertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = (item.{childItem.ParentEntityProperty.ParentEntity.InternalName}.SeedEntityId == null ? null : new {childItem.ParentEntityProperty.InternalName}{Screen.FormResponseClass} {{
-{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
-                            }})");
-                }
-            }
+//                if (entityProperties.Any())
+//                {
+//                    // TODO fix the SeedEntityId property
+//                    // Note: for One to One relationships the navigation object always exists so null check must be done on the nullable forein key
+//                    propertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = (item.{childItem.ParentEntityProperty.ParentEntity.InternalName}.SeedEntityId == null ? null : new {childItem.ParentEntityProperty.InternalName}{Screen.FormResponseClass} {{
+//{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
+//                            }})");
+//                }
+//            }
 
             return $@"
         /// <summary>
@@ -166,46 +162,40 @@ namespace MasterBuilder.Templates.Controllers
 
             // Convert root fields to properties
             var rootFields = (from formSection in ScreenSections
-                              where !formSection.ParentEntityPropertyId.HasValue
                               from ff in formSection.FormSection.FormFields
                               select ff).ToArray();
             properties.AddRange(PutProperty(rootFields));
+            
+//            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
+//            {
+//                ParentEntityProperty = a.Key,
+//                ChildSections = a.ToArray()
+//            }))
+//            {
+//                var entityProperties = new List<string>();
 
-            // Convert child properties to objects with properties
-            var childSections = (from formSection in ScreenSections
-                                 where formSection.ParentEntityPropertyId.HasValue
-                                 select formSection).ToArray();
+//                entityProperties.AddRange(
+//                    PutProperty((from screenSection in childItem.ChildSections
+//                                 from ff in screenSection.FormSection.FormFields
+//                                 select ff).ToArray(),
+//                    $"{childItem.ParentEntityProperty.ParentEntity.InternalName}."));
 
-            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
-            {
-                ParentEntityProperty = a.Key,
-                ChildSections = a.ToArray()
-            }))
-            {
-                var entityProperties = new List<string>();
-
-                entityProperties.AddRange(
-                    PutProperty((from screenSection in childItem.ChildSections
-                                 from ff in screenSection.FormSection.FormFields
-                                 select ff).ToArray(),
-                    $"{childItem.ParentEntityProperty.ParentEntity.InternalName}."));
-
-                if (entityProperties.Any())
-                {
-                    properties.Add($@"            if (put.{childItem.ParentEntityProperty.ParentEntity.InternalName} == null)
-            {{
-                existingRecord.{childItem.ParentEntityProperty.InternalName} = null;
-            }}
-            else
-            {{
-                if (existingRecord.{childItem.ParentEntityProperty.InternalName} == null)
-                {{
-                    existingRecord.{childItem.ParentEntityProperty.InternalName} = new {childItem.ParentEntityProperty.InternalName}();
-                }}
-{string.Join(Environment.NewLine, entityProperties)}
-            }}");
-                }
-            }
+//                if (entityProperties.Any())
+//                {
+//                    properties.Add($@"            if (put.{childItem.ParentEntityProperty.ParentEntity.InternalName} == null)
+//            {{
+//                existingRecord.{childItem.ParentEntityProperty.InternalName} = null;
+//            }}
+//            else
+//            {{
+//                if (existingRecord.{childItem.ParentEntityProperty.InternalName} == null)
+//                {{
+//                    existingRecord.{childItem.ParentEntityProperty.InternalName} = new {childItem.ParentEntityProperty.InternalName}();
+//                }}
+//{string.Join(Environment.NewLine, entityProperties)}
+//            }}");
+//                }
+//            }
 
             return $@"
         /// <summary>
@@ -267,38 +257,38 @@ namespace MasterBuilder.Templates.Controllers
 
             // Convert root fields to properties
             var rootFields = (from formSection in ScreenSections
-                              where !formSection.ParentEntityPropertyId.HasValue
+                              where !formSection.ParentScreenSectionId.HasValue
                               from ff in formSection.FormSection.FormFields
                               select ff).ToArray();
             properties.AddRange(PostProperty(rootFields));
 
-            // Convert child properties to objects with properties
-            var childSections = (from formSection in ScreenSections
-                                 where formSection.ParentEntityPropertyId.HasValue
-                                 select formSection).ToArray();
+//            // Convert child properties to objects with properties
+//            var childSections = (from formSection in ScreenSections
+//                                 where formSection.ParentScreenSectionId.HasValue
+//                                 select formSection).ToArray();
 
-            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
-            {
-                ParentEntityProperty = a.Key,
-                ChildSections = a.ToArray()
-            }))
-            {
-                var entityProperties = new List<string>();
+//            foreach (var childItem in childSections.GroupBy(a => a.ParentScreenSection).Select(a => new
+//            {
+//                ParentEntityProperty = a.Key,
+//                ChildSections = a.ToArray()
+//            }))
+//            {
+//                var entityProperties = new List<string>();
 
-                entityProperties.AddRange(
-                    PostProperty((from screenSection in childItem.ChildSections
-                                  from ff in screenSection.FormSection.FormFields
-                                  select ff).ToArray(),
-                    $"post.{childItem.ParentEntityProperty.ParentEntity.InternalName}",
-                    1));
+//                entityProperties.AddRange(
+//                    PostProperty((from screenSection in childItem.ChildSections
+//                                  from ff in screenSection.FormSection.FormFields
+//                                  select ff).ToArray(),
+//                    $"post.{childItem.ParentEntityProperty.ParentEntity.InternalName}",
+//                    1));
 
-                if (entityProperties.Any())
-                {
-                    properties.Add($@"                {childItem.ParentEntityProperty.InternalName} = (post.{childItem.ParentEntityProperty.ParentEntity.InternalName} == null ? null : new {childItem.ParentEntityProperty.InternalName} {{
-{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
-                }})");
-                }
-            }
+//                if (entityProperties.Any())
+//                {
+//                    properties.Add($@"                {childItem.ParentEntityProperty.InternalName} = (post.{childItem.ParentEntityProperty.ParentEntity.InternalName} == null ? null : new {childItem.ParentEntityProperty.InternalName} {{
+//{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
+//                }})");
+//                }
+//            }
 
             return $@"
         /// <summary>

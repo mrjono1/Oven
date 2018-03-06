@@ -1859,6 +1859,11 @@ namespace MasterBuilder
                                 {
                                     new FormField
                                     {
+                                        // Screen
+                                        EntityPropertyId = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}")
+                                    },
+                                    new FormField
+                                    {
                                         // Title
                                         EntityPropertyId = new Guid("{61E1AAE0-315E-4BBB-B622-0E3D91B9959A}")
                                     },
@@ -1913,11 +1918,32 @@ namespace MasterBuilder
                         },
                         new ScreenSection
                         {
+                            Id = new Guid("{26DE012C-3622-46C2-BC6F-49B611B2CECE}"),
+                            Title = "Form Section",
+                            InternalName = "FormSection",
+                            EntityId = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}"),
+                            ScreenSectionType = ScreenSectionType.Form,
+                            ParentScreenSectionId = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
+                            VisibilityExpression = new Expression
+                            {
+                                PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                // Form
+                                UniqueidentifierValue = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}")
+                            },
+                            FormSection = new FormSection
+                            {
+                                FormFields = new FormField[]{ }
+                            }
+                        },
+                        new ScreenSection
+                        {
                             Id = new Guid("{35D50B7D-9ADE-46E3-B3F7-B3DE81704DB2}"),
                             Title = "Form Fields",
                             InternalName = "FormFields",
                             ScreenSectionType = ScreenSectionType.Search,
                             EntityId = new Guid("{8D68FDDE-6621-472B-9F2C-04ADE443E51C}"),
+                            ParentScreenSectionId = new Guid("{26DE012C-3622-46C2-BC6F-49B611B2CECE}"),
                             NavigateToScreenId = new Guid("{47F0B19F-6EF4-4D9D-AD73-D4701259364C}"),
                             VisibilityExpression = new Expression
                             {

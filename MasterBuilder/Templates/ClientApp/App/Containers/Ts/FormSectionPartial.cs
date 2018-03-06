@@ -409,7 +409,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         {
             var formControls = new List<string>();
             var rootFields = (from formSection in ScreenSections
-                              where !formSection.ParentEntityPropertyId.HasValue
+                              where !formSection.ParentScreenSectionId.HasValue
                               from ff in formSection.FormSection.FormFields
                               select ff).ToArray();
 
@@ -418,7 +418,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             // TODO: implement child sections
             // Convert child properties to objects with properties
             //var childSections = (from formSection in ScreenSections
-            //                     where formSection.ParentEntityPropertyId.HasValue
+            //                     where formSection.ParentScreenSectionId.HasValue
             //                     select formSection).ToArray();
 
             //foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
@@ -437,7 +437,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             //    if (entityProperties.Any())
             //    {
             //        formControls.Add($@"            {childItem.ParentEntityProperty.InternalName.Camelize()}: new FormGroup({{
-//{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
+            //{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
             //}})");
             //    }
 
