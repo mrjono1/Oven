@@ -38,16 +38,32 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     switch (validationItem.ValidationType)
                     {
                         case ValidationType.Required:
-                            selector = "required";
-                            attributes.Add("required");
+                            // Adding required validation at this level for boolean enforces true not enforcing not null
+                            if (FormField.PropertyType != PropertyType.Boolean)
+                            {
+                                selector = "required";
+                                attributes.Add("required");
+                            }
                             break;
+
+                        case ValidationType.RequiredTrue:
+                            // This is only applicable to boolean
+                            if (FormField.PropertyType == PropertyType.Boolean)
+                            {
+                                selector = "requiredtrue";
+                                attributes.Add("required");
+                            }
+                            break;
+
                         case ValidationType.MaximumLength:
                             selector = "maxlength";
                             attributes.Add($@"maxlength=""{validationItem.IntegerValue}""");
                             break;
+
                         case ValidationType.MinimumLength:
                             selector = "minlength";
                             break;
+
                         case ValidationType.MaximumValue:
                             selector = "max";
                             if (FormField.PropertyType == PropertyType.Integer)
@@ -59,6 +75,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                                 attributes.Add($@"max=""{validationItem.DoubleValue}""");
                             }
                             break;
+
                         case ValidationType.MinimumValue:
                             selector = "min";
                             if (FormField.PropertyType == PropertyType.Integer)
@@ -70,17 +87,18 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                                 attributes.Add($@"min=""{validationItem.DoubleValue}""");
                             }
                             break;
+
                         case ValidationType.Unique:
                             break;
+
                         case ValidationType.Email:
                             selector = "email";
                             break;
-                        case ValidationType.RequiredTrue:
-                            selector = "requiredtrue";
-                            break;
+
                         case ValidationType.Pattern:
                             selector = "pattern";
                             break;
+
                         default:
                             break;
                     }
@@ -143,8 +161,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                         </mat-select>";
 
                     wrapAttributes = $@" *ngIf=""{parentEntity.InternalName.Camelize()}Reference && {parentEntity.InternalName.Camelize()}Reference.items && {FormField.InternalNameTypeScript}Visible()""";
-                    break;
-                default:
                     break;
             }
 
