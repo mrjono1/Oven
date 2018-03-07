@@ -24,11 +24,70 @@ namespace MasterBuilder.Templates.Controllers
             Screen = screen;
             ScreenSections = screenSections;
         }
+
+        private class EntityFormFieldEntity
+        {
+            public Entity Entity { get; set; }
+            public List<FormField> FormFields { get; set; }
+            public List<Entity> ChildEntities { get; set; }
+        }
+
+        /// <summary>
+        /// Get Screen Section Entity Fields
+        /// </summary>
+        private IEnumerable<EntityFormFieldEntity> GetScreenSectionEntityFields()
+        {
+            var result = new List<EntityFormFieldEntity>();
+            var defaultScreenSection = new ScreenSection();
+
+            var groupedFormScreenSections = (from ss in Screen.ScreenSections
+                                             where ss.ScreenSectionType == ScreenSectionType.Form
+                                             select ss)
+                                   .GroupBy(ss => ss.ParentScreenSection ?? defaultScreenSection)
+                                   .Select(a => new { a.Key, Values = a.ToArray() }).ToDictionary(t => t.Key, t => t.Values);
+
+            foreach (var group in groupedFormScreenSections)
+            {
+                var children = new List<ScreenSection>();
+
+                foreach (var item in group.Value)
+                {
+                    if (groupedFormScreenSections.ContainsKey(item))
+                    {
+                        children.AddRange(groupedFormScreenSections[item]);
+                        break;
+                    }
+                }
+                
+                var effe = new EntityFormFieldEntity
+                {
+                    Entity = group.Value.First().Entity,
+                    FormFields = new List<FormField>(),
+                    ChildEntities = new List<Entity>() 
+                };
+
+                foreach (var ssGroup in (from formSection in @group.Value
+                                       from ff in formSection.FormSection.FormFields
+                                       select ff).GroupBy(ff => ff.EntityPropertyId))
+                {
+                    effe.FormFields.Add(ssGroup.First());
+                }
+
+                foreach (var item in children)
+                {
+                    effe.ChildEntities.Add(item.Entity);
+                }
+                result.Add(effe);
+
+            }
+
+            return result;
+        }
         
-        private IEnumerable<string> GetProperties(IEnumerable<FormField> formFields, string objectName = "item", int level = 0)
+        private IEnumerable<string> GetPropertiesRecursive(EntityFormFieldEntity entityFormFieldEntity, IEnumerable<EntityFormFieldEntity> effes, string objectName = "item", int level = 0)
         {
             var properties = new List<string>();
-            foreach (var group in formFields.GroupBy(ff => ff.EntityPropertyId))
+            foreach (var group in entityFormFieldEntity.FormFields.GroupBy(ff => ff.EntityPropertyId))
             {
                 var formField = group.First();
                 switch (formField.PropertyType)
@@ -53,6 +112,31 @@ namespace MasterBuilder.Templates.Controllers
                         break;
                 }
             }
+
+            if (entityFormFieldEntity.ChildEntities != null)
+            {
+                foreach (var childEntityFormFieldEntity in entityFormFieldEntity.ChildEntities)
+                {
+                    var childProperties = new List<string>();
+                    var childObjectName = $"{objectName}.{childEntityFormFieldEntity.InternalName}";
+                    foreach (var effe in effes)
+                    {
+                        if (effe.Entity.Id == childEntityFormFieldEntity.Id)
+                        {
+                            childProperties.AddRange(GetPropertiesRecursive(effe, effes, childObjectName, 1));
+                        }
+                    }
+
+                    var parentPropertyInternalName = (from p in childEntityFormFieldEntity.Properties
+                                                      where p.PropertyType == PropertyType.ParentRelationshipOneToOne
+                                                      select p).Single().InternalName;
+
+                    properties.Add($@"                            {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName}Response = {childObjectName} == null || !{childObjectName}.{parentPropertyInternalName}Id.HasValue ? null : new {childEntityFormFieldEntity.InternalName}Response{{
+{string.Join(Environment.NewLine,  childProperties)}
+                            {new string(' ', 4 * level)}}}");
+                }
+            }
+            
             return properties;
         }
 
@@ -61,16 +145,20 @@ namespace MasterBuilder.Templates.Controllers
         /// </summary>
         internal string GetMethod()
         {
+            // TODO: Phase 1 Get all screen section properties
+            // TODO: Phase 2 get screen section properties that are appropriate using required expression
+            var effes = GetScreenSectionEntityFields();
+
             var propertyMapping = new List<string>();
-
-            // Convert root fields to properties
-            var rootFields = (from formSection in ScreenSections
-                              where !formSection.ParentScreenSectionId.HasValue
-                              from ff in formSection.FormSection.FormFields
-                              select ff).GroupBy(ff => ff.EntityPropertyId)
-                              .Select(ff => ff.First()).ToArray();
-            propertyMapping.AddRange(GetProperties(rootFields));
-
+            foreach (var effe in effes)
+            {
+                if (effe.Entity.Id == Screen.EntityId)
+                {
+                    //propertyMapping.AddRange(GetProperties(effe.FormFields));
+                    propertyMapping.AddRange(GetPropertiesRecursive(effe, effes));
+                }
+            }
+            
 //            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
 //            {
 //                ParentEntityProperty = a.Key,
