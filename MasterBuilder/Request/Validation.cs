@@ -25,7 +25,8 @@ namespace MasterBuilder.Request
             { new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}"), ValidationType.Pattern },
             { new Guid("{BD110234-F05D-42AB-BF2E-382B83093D0C}"), ValidationType.Required },
             { new Guid("{CB9A60D3-42B3-411F-8FCE-2FC36C812A16}"), ValidationType.RequiredTrue },
-            { new Guid("{890C7A9E-09AE-4BB8-970E-85C564F753F1}"), ValidationType.Unique }
+            { new Guid("{890C7A9E-09AE-4BB8-970E-85C564F753F1}"), ValidationType.Unique },
+            { new Guid("{AA7EEB02-2FC2-429F-9259-C9958EFDFCB2}"), ValidationType.RequiredExpression }
         };
 
         /// <summary>
@@ -33,14 +34,12 @@ namespace MasterBuilder.Request
         /// </summary>
         [NonDefault]
         public Guid Id { get; set; }
-
         /// <summary>
         /// Validation Type Id
         /// </summary>
         [Required]
         [NonDefault]
         public Guid ValidationTypeId { get; set; }
-
         /// <summary>
         /// Validation Type Enum
         /// </summary>
@@ -57,22 +56,22 @@ namespace MasterBuilder.Request
                 ValidationTypeId = ValidationTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
             }
         }
-
         /// <summary>
         /// Required for data type integer and validation types: MaximumLength, MinimumLength, MaximumValue, MinimumValue
         /// </summary>
         public int? IntegerValue { get; set; }
-
         /// <summary>
         /// Required for data type double and validation types: MaximumLength, MinimumLength, MaximumValue, MinimumValue
         /// </summary>
         public double? DoubleValue { get; set; }
-
         /// <summary>
         /// Required for validation types: Pattern
         /// </summary>
         public string StringValue { get; set; }
-        
+        /// <summary>
+        /// Required for validation type: Requried Expression
+        /// </summary>
+        public Expression Expression { get; set; }
         /// <summary>
         /// Optional: Validation Failure Message
         /// </summary>
@@ -107,6 +106,8 @@ namespace MasterBuilder.Request
                         return $"{propertyTitle} must be true";
                     case ValidationType.Pattern:
                         return $"{propertyTitle} does not match the complexity";
+                    case ValidationType.RequiredExpression:
+                        return $"{propertyTitle} is required";
                     default:
                         return "Invalid";
                 }

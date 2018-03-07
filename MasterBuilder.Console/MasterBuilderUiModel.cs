@@ -244,6 +244,22 @@ namespace MasterBuilder
                                     ValidationType = ValidationType.Required
                                 },
                             }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{0AC3BDBB-79A4-4E0E-89F5-07CA3B5C0CE8}"),
+                            InternalName = "HasSeed",
+                            PropertyType = PropertyType.Boolean,
+                            Title = "Has Seed Data",
+                            DefaultBooleanValue = false,
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{89510E67-A33E-46C1-8A53-3290121DFD22}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
                         }
                     }
                 },
@@ -1152,7 +1168,24 @@ namespace MasterBuilder
                             InternalName = "ScreenSection",
                             PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Screen Section",
-                            ParentEntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}")
+                            ParentEntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    ValidationType = ValidationType.RequiredExpression,
+                                    Expression = new Expression
+                                    {
+                                        // Screen Section
+                                        EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                                        // Screen Section Type
+                                        PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                        Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                        // Form
+                                        UniqueidentifierValue = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}")
+                                    }
+                                }
+                            }
                         }
                         // At the moment it only has a collection of form Fields
                     }
@@ -1629,6 +1662,24 @@ namespace MasterBuilder
                                     MenuItemType = MenuItemType.New,
                                     ScreenId = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
                                     Title = "New"
+                                }
+                            },
+                            SearchSection = new SearchSection
+                            {
+                                SearchColumns = new SearchColumn[]
+                                {
+                                    new SearchColumn
+                                    {
+                                        // Title
+                                        EntityPropertyId = new Guid("{6D09DE04-2FDA-4091-A4DA-B3448ABA1A52}"),
+                                        Ordinal = 10
+                                    },
+                                    new SearchColumn
+                                    {
+                                        // Internal Name
+                                        EntityPropertyId = new Guid("{1CB8E873-07C7-461A-8859-672CE66C8513}"),
+                                        Ordinal = 20
+                                    }
                                 }
                             }
                         },

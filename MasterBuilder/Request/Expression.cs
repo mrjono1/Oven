@@ -18,7 +18,10 @@ namespace MasterBuilder.Request
                 return Condition.HasValue;
             }
         }
-
+        /// <summary>
+        /// If you just want the expression to return true/false use this property
+        /// </summary>
+        public bool? Value { get; set; }
         /// <summary>
         /// And/Or
         /// </summary>
@@ -27,7 +30,11 @@ namespace MasterBuilder.Request
         /// Rules
         /// </summary>
         public IEnumerable<Expression> Expressions { get; set; }
-
+        /// <summary>
+        /// Specify Entity Id if the Property Id is not on the current Entity
+        /// </summary>
+        [NonDefault]
+        public Guid? EntityId { get; set; }
         /// <summary>
         /// Entity Property Id
         /// </summary>
@@ -75,7 +82,6 @@ namespace MasterBuilder.Request
         /// Uniqueidentifier Value
         /// </summary>
         public IEnumerable<Guid> UniqueidentifierValues { get; set; }
-
         #endregion
     }
 }

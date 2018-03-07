@@ -40,6 +40,10 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Pattern: Regular Expression
         /// </summary>
-        Pattern
+        Pattern,
+        /// <summary>
+        /// An expression to determine if the property is requried
+        /// </summary>
+        RequiredExpression
     }
 }
