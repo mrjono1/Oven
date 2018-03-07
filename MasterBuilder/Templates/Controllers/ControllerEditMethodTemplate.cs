@@ -145,7 +145,6 @@ namespace MasterBuilder.Templates.Controllers
         /// </summary>
         internal string GetMethod()
         {
-            // TODO: Phase 1 Get all screen section properties
             // TODO: Phase 2 get screen section properties that are appropriate using required expression
             var effes = GetScreenSectionEntityFields();
 
@@ -154,36 +153,10 @@ namespace MasterBuilder.Templates.Controllers
             {
                 if (effe.Entity.Id == Screen.EntityId)
                 {
-                    //propertyMapping.AddRange(GetProperties(effe.FormFields));
                     propertyMapping.AddRange(GetPropertiesRecursive(effe, effes));
                 }
             }
             
-//            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
-//            {
-//                ParentEntityProperty = a.Key,
-//                ChildSections = a.ToArray()
-//            }))
-//            {
-//                var entityProperties = new List<string>();
-
-//                entityProperties.AddRange(
-//                    GetProperties((from screenSection in childItem.ChildSections
-//                                   from ff in screenSection.FormSection.FormFields
-//                                   select ff).ToArray(),
-//                    $"item.{childItem.ParentEntityProperty.ParentEntity.InternalName}",
-//                    1));
-                
-//                if (entityProperties.Any())
-//                {
-//                    // TODO fix the SeedEntityId property
-//                    // Note: for One to One relationships the navigation object always exists so null check must be done on the nullable forein key
-//                    propertyMapping.Add($@"                            {childItem.ParentEntityProperty.InternalName} = (item.{childItem.ParentEntityProperty.ParentEntity.InternalName}.SeedEntityId == null ? null : new {childItem.ParentEntityProperty.InternalName}{Screen.FormResponseClass} {{
-//{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
-//                            }})");
-//                }
-//            }
-
             return $@"
         /// <summary>
         /// {Screen.Title} Get
