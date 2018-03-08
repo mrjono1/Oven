@@ -214,8 +214,6 @@ namespace MasterBuilder.Templates.Controllers
                 }
             }
             
-            //properties.AddRange(PutProperty(rootFields));
-            
             return $@"
         /// <summary>
         /// {Screen.Title} Update

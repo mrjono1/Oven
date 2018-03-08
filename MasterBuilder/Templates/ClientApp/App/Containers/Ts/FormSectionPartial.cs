@@ -1,4 +1,5 @@
 using Humanizer;
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
@@ -385,11 +386,11 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 string.Empty);
         }
 
-        private IEnumerable<string> GetControls(IEnumerable<FormField> formFields, int level = 0)
+        private IEnumerable<string> GetControls(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, int level = 0)
         {
             var formControls = new List<string>();
 
-            foreach (var group in formFields.GroupBy(ff => ff.EntityPropertyId))
+            foreach (var group in entityFormFieldEntity.FormFields.GroupBy(ff => ff.EntityPropertyId))
             {
                 var formField = group.First();
                 if (formField.PropertyType == PropertyType.PrimaryKey)
@@ -402,18 +403,46 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 formControls.Add($@"        {new string(' ', 4 * level)}{formField.InternalNameCSharp.Camelize()}: new FormControl(null{propertyValidatorsString})");
             }
 
+            if (entityFormFieldEntity.ChildEntities != null)
+            {
+                foreach (var childEntityFormFieldEntity in entityFormFieldEntity.ChildEntities)
+                {
+                    var childProperties = new List<string>();
+                    
+                    foreach (var effe in effes)
+                    {
+                        if (effe.Entity.Id == childEntityFormFieldEntity.Id)
+                        {
+                            childProperties.AddRange(GetControls(effe, effes, level + 1));
+                        }
+                    }
+
+                    var parentPropertyInternalName = (from p in childEntityFormFieldEntity.Properties
+                                                      where p.PropertyType == PropertyType.ParentRelationshipOneToOne
+                                                      select p).Single().InternalName;
+
+                    formControls.Add($@"        {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName.Camelize()}: new FormGroup({{
+{string.Join(string.Concat(",", Environment.NewLine), childProperties)}
+        {new string(' ', 4 * level)}}})");
+                }
+            }
+
             return formControls;
         }
 
         internal IEnumerable<string> GetFormControls()
         {
-            var formControls = new List<string>();
-            var rootFields = (from formSection in ScreenSections
-                              where !formSection.ParentScreenSectionId.HasValue
-                              from ff in formSection.FormSection.FormFields
-                              select ff).ToArray();
+            var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
 
-            formControls.AddRange(GetControls(rootFields, 1));
+            var formControls = new List<string>();
+
+            foreach (var effe in effes)
+            {
+                if (effe.Entity.Id == Screen.EntityId)
+                {
+                    formControls.AddRange(GetControls(effe, effes, 1));
+                }
+            }
 
             // TODO: implement child sections
             // Convert child properties to objects with properties
