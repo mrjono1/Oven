@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Humanizer;
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.Controllers
@@ -24,67 +25,8 @@ namespace MasterBuilder.Templates.Controllers
             Screen = screen;
             ScreenSections = screenSections;
         }
-
-        private class EntityFormFieldEntity
-        {
-            public Entity Entity { get; set; }
-            public List<FormField> FormFields { get; set; }
-            public List<Entity> ChildEntities { get; set; }
-        }
-
-        /// <summary>
-        /// Get Screen Section Entity Fields
-        /// </summary>
-        private IEnumerable<EntityFormFieldEntity> GetScreenSectionEntityFields()
-        {
-            var result = new List<EntityFormFieldEntity>();
-            var defaultScreenSection = new ScreenSection();
-
-            var groupedFormScreenSections = (from ss in Screen.ScreenSections
-                                             where ss.ScreenSectionType == ScreenSectionType.Form
-                                             select ss)
-                                   .GroupBy(ss => ss.ParentScreenSection ?? defaultScreenSection)
-                                   .Select(a => new { a.Key, Values = a.ToArray() }).ToDictionary(t => t.Key, t => t.Values);
-
-            foreach (var group in groupedFormScreenSections)
-            {
-                var children = new List<ScreenSection>();
-
-                foreach (var item in group.Value)
-                {
-                    if (groupedFormScreenSections.ContainsKey(item))
-                    {
-                        children.AddRange(groupedFormScreenSections[item]);
-                        break;
-                    }
-                }
                 
-                var effe = new EntityFormFieldEntity
-                {
-                    Entity = group.Value.First().Entity,
-                    FormFields = new List<FormField>(),
-                    ChildEntities = new List<Entity>() 
-                };
-
-                foreach (var ssGroup in (from formSection in @group.Value
-                                       from ff in formSection.FormSection.FormFields
-                                       select ff).GroupBy(ff => ff.EntityPropertyId))
-                {
-                    effe.FormFields.Add(ssGroup.First());
-                }
-
-                foreach (var item in children)
-                {
-                    effe.ChildEntities.Add(item.Entity);
-                }
-                result.Add(effe);
-
-            }
-
-            return result;
-        }
-        
-        private IEnumerable<string> GetPropertiesRecursive(EntityFormFieldEntity entityFormFieldEntity, IEnumerable<EntityFormFieldEntity> effes, string objectName = "item", int level = 0)
+        private IEnumerable<string> GetPropertiesRecursive(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string objectName = "item", int level = 0)
         {
             var properties = new List<string>();
             foreach (var group in entityFormFieldEntity.FormFields.GroupBy(ff => ff.EntityPropertyId))
@@ -146,7 +88,7 @@ namespace MasterBuilder.Templates.Controllers
         internal string GetMethod()
         {
             // TODO: Phase 2 get screen section properties that are appropriate using required expression
-            var effes = GetScreenSectionEntityFields();
+            var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
 
             var propertyMapping = new List<string>();
             foreach (var effe in effes)
@@ -193,7 +135,7 @@ namespace MasterBuilder.Templates.Controllers
         }}";
         }
 
-        private IEnumerable<string> PutProperty(EntityFormFieldEntity entityFormFieldEntity, IEnumerable<EntityFormFieldEntity> effes, string requestObjectName = "put", string existingObjectName = "existingRecord", int level = 0)
+        private IEnumerable<string> PutProperty(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string requestObjectName = "put", string existingObjectName = "existingRecord", int level = 0)
         {
             var properties = new List<string>();
 
@@ -254,7 +196,7 @@ namespace MasterBuilder.Templates.Controllers
         internal string PutMethod()
         {
             // TODO: Phase 2 get screen section properties that are appropriate using required expression
-            var effes = GetScreenSectionEntityFields();
+            var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
 
             var properties = new List<string>();
 
@@ -308,7 +250,7 @@ namespace MasterBuilder.Templates.Controllers
         }}";
         }
 
-        private IEnumerable<string> PostProperty(EntityFormFieldEntity entityFormFieldEntity, IEnumerable<EntityFormFieldEntity> effes, string objectName = "post", int level = 0)
+        private IEnumerable<string> PostProperty(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string objectName = "post", int level = 0)
         {
             var properties = new List<string>();
 
@@ -360,7 +302,7 @@ namespace MasterBuilder.Templates.Controllers
         internal string PostMethod()
         {
             // TODO: Phase 2 get screen section properties that are appropriate using required expression
-            var effes = GetScreenSectionEntityFields();
+            var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
 
             var properties = new List<string>();
             foreach (var effe in effes)
