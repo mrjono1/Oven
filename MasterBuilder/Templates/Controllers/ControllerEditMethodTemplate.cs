@@ -132,7 +132,7 @@ namespace MasterBuilder.Templates.Controllers
                                                       select p).Single().InternalName;
 
                     properties.Add($@"                            {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName}Response = {childObjectName} == null || !{childObjectName}.{parentPropertyInternalName}Id.HasValue ? null : new {childEntityFormFieldEntity.InternalName}Response{{
-{string.Join(Environment.NewLine,  childProperties)}
+{string.Join(string.Concat(",", Environment.NewLine),  childProperties)}
                             {new string(' ', 4 * level)}}}");
                 }
             }
@@ -346,7 +346,7 @@ namespace MasterBuilder.Templates.Controllers
                                                       select p).Single().InternalName;
 
                     properties.Add($@"                {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName} = {childObjectName} == null ? null : new {childEntityFormFieldEntity.InternalName}{{
-{string.Join(Environment.NewLine, childProperties)}
+{string.Join(string.Concat(",", Environment.NewLine), childProperties)}
                 {new string(' ', 4 * level)}}}");
                 }
             }

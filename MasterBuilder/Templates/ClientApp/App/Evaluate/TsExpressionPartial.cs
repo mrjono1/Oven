@@ -172,7 +172,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                 case PropertyType.Integer:
                     if (expression.IntegerValue.HasValue)
                     {
-                        return $@"'{expression.IntegerValue.Value}'";
+                        return $@"{expression.IntegerValue.Value}";
                     }
                     break;
                 case PropertyType.DateTime:
@@ -180,13 +180,13 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                 case PropertyType.Boolean:
                     if (expression.BooleanValue.HasValue)
                     {
-                        return $@"'{expression.BooleanValue.Value.ToString().ToLowerInvariant()}'";
+                        return $@"{expression.BooleanValue.Value.ToString().ToLowerInvariant()}";
                     }
                     break;
                 case PropertyType.Double:
                     if (expression.DoubleValue.HasValue)
                     {
-                        return $@"'{expression.DoubleValue.Value}'";
+                        return $@"{expression.DoubleValue.Value}";
                     }
                     break;
                 case PropertyType.Uniqueidentifier:
