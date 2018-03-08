@@ -123,7 +123,7 @@ namespace MasterBuilder.Templates.Controllers
                     {
                         if (effe.Entity.Id == childEntityFormFieldEntity.Id)
                         {
-                            childProperties.AddRange(GetPropertiesRecursive(effe, effes, childObjectName, 1));
+                            childProperties.AddRange(GetPropertiesRecursive(effe, effes, childObjectName, level + 1));
                         }
                     }
 
@@ -193,11 +193,11 @@ namespace MasterBuilder.Templates.Controllers
         }}";
         }
 
-        private IEnumerable<string> PutProperty(IEnumerable<FormField> formFields, string objectName = "")
+        private IEnumerable<string> PutProperty(EntityFormFieldEntity entityFormFieldEntity, IEnumerable<EntityFormFieldEntity> effes, string requestObjectName = "put", string existingObjectName = "existingRecord", int level = 0)
         {
             var properties = new List<string>();
 
-            foreach (var group in formFields.GroupBy(ff => ff.EntityPropertyId))
+            foreach (var group in entityFormFieldEntity.FormFields.GroupBy(ff => ff.EntityPropertyId))
             {
                 var formField = group.First();
                 switch (formField.PropertyType)
@@ -207,8 +207,43 @@ namespace MasterBuilder.Templates.Controllers
                         // Ignore
                         break;
                     default:
-                        properties.Add($"            existingRecord.{objectName}{formField.InternalNameCSharp} = put.{objectName}{formField.InternalNameCSharp};");
+                        properties.Add($"            {existingObjectName}.{formField.InternalNameCSharp} = {requestObjectName}.{formField.InternalNameCSharp};");
                         break;
+                }
+            }
+
+
+            if (entityFormFieldEntity.ChildEntities != null)
+            {
+                foreach (var childEntityFormFieldEntity in entityFormFieldEntity.ChildEntities)
+                {
+                    var childProperties = new List<string>();
+                    var childObjectName = $"{requestObjectName}.{childEntityFormFieldEntity.InternalName}Request";
+                    var childExistingObjectName = $"{existingObjectName}.{childEntityFormFieldEntity.InternalName}";
+                    foreach (var effe in effes)
+                    {
+                        if (effe.Entity.Id == childEntityFormFieldEntity.Id)
+                        {
+                            childProperties.AddRange(PutProperty(effe, effes, childObjectName, childExistingObjectName, level++));
+                        }
+                    }
+
+                    var parentPropertyInternalName = (from p in childEntityFormFieldEntity.Properties
+                                                      where p.PropertyType == PropertyType.ParentRelationshipOneToOne
+                                                      select p).Single().InternalName;
+
+                    properties.Add($@"            if ({childObjectName} == null)
+            {{
+                {existingObjectName}.{childEntityFormFieldEntity.InternalName} = null;
+            }}
+            else
+            {{
+                if ({existingObjectName}.{childEntityFormFieldEntity.InternalName} == null || !{existingObjectName}.{childEntityFormFieldEntity.InternalName}.{parentPropertyInternalName}Id.HasValue)
+                {{
+                    {existingObjectName}.{childEntityFormFieldEntity.InternalName} = new {childEntityFormFieldEntity.InternalName}();
+                }}
+{string.Join(Environment.NewLine, childProperties)}
+            }}");
                 }
             }
             return properties;
@@ -219,45 +254,27 @@ namespace MasterBuilder.Templates.Controllers
         /// </summary>
         internal string PutMethod()
         {
+            // TODO: Phase 2 get screen section properties that are appropriate using required expression
+            var effes = GetScreenSectionEntityFields();
+
             var properties = new List<string>();
 
-            // Convert root fields to properties
-            var rootFields = (from formSection in ScreenSections
-                              from ff in formSection.FormSection.FormFields
-                              select ff).ToArray();
-            properties.AddRange(PutProperty(rootFields));
+            // TODO: Includes are not recursive yet
+            var includes = new List<string>();
+            foreach (var effe in effes)
+            {
+                if (effe.Entity.Id == Screen.EntityId)
+                {
+                    properties.AddRange(PutProperty(effe, effes));
+                }
+                else
+                {
+                    includes.Add($@"                .Include(p => p.{effe.Entity.InternalName})");
+                }
+            }
             
-//            foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
-//            {
-//                ParentEntityProperty = a.Key,
-//                ChildSections = a.ToArray()
-//            }))
-//            {
-//                var entityProperties = new List<string>();
-
-//                entityProperties.AddRange(
-//                    PutProperty((from screenSection in childItem.ChildSections
-//                                 from ff in screenSection.FormSection.FormFields
-//                                 select ff).ToArray(),
-//                    $"{childItem.ParentEntityProperty.ParentEntity.InternalName}."));
-
-//                if (entityProperties.Any())
-//                {
-//                    properties.Add($@"            if (put.{childItem.ParentEntityProperty.ParentEntity.InternalName} == null)
-//            {{
-//                existingRecord.{childItem.ParentEntityProperty.InternalName} = null;
-//            }}
-//            else
-//            {{
-//                if (existingRecord.{childItem.ParentEntityProperty.InternalName} == null)
-//                {{
-//                    existingRecord.{childItem.ParentEntityProperty.InternalName} = new {childItem.ParentEntityProperty.InternalName}();
-//                }}
-//{string.Join(Environment.NewLine, entityProperties)}
-//            }}");
-//                }
-//            }
-
+            //properties.AddRange(PutProperty(rootFields));
+            
             return $@"
         /// <summary>
         /// {Screen.Title} Update
@@ -277,7 +294,12 @@ namespace MasterBuilder.Templates.Controllers
                 return new BadRequestObjectResult(ModelState);
             }}
             
-            var existingRecord = await _context.{Screen.Entity.InternalNamePlural}.FindAsync(id);
+            var existingRecord = await _context.{Screen.Entity.InternalNamePlural}{(includes.Any() ? string.Concat(Environment.NewLine, string.Join(Environment.NewLine, includes)) : string.Empty)}
+                .SingleOrDefaultAsync(record => record.Id == id);
+
+            if (existingRecord == null){{
+                return BadRequest();
+            }}
 
 {string.Join(Environment.NewLine, properties)}
 
