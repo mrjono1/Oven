@@ -73,7 +73,7 @@ namespace MasterBuilder.Templates.Controllers
                                                       where p.PropertyType == PropertyType.ParentRelationshipOneToOne
                                                       select p).Single().InternalName;
 
-                    properties.Add($@"                            {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName}Response = {childObjectName} == null || !{childObjectName}.{parentPropertyInternalName}Id.HasValue ? null : new {childEntityFormFieldEntity.InternalName}Response{{
+                    properties.Add($@"                            {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName} = {childObjectName} == null || !{childObjectName}.{parentPropertyInternalName}Id.HasValue ? null : new {childEntityFormFieldEntity.InternalName}Response{{
 {string.Join(string.Concat(",", Environment.NewLine),  childProperties)}
                             {new string(' ', 4 * level)}}}");
                 }
@@ -159,7 +159,7 @@ namespace MasterBuilder.Templates.Controllers
                 foreach (var childEntityFormFieldEntity in entityFormFieldEntity.ChildEntities)
                 {
                     var childProperties = new List<string>();
-                    var childObjectName = $"{requestObjectName}.{childEntityFormFieldEntity.InternalName}Request";
+                    var childObjectName = $"{requestObjectName}.{childEntityFormFieldEntity.InternalName}";
                     var childExistingObjectName = $"{existingObjectName}.{childEntityFormFieldEntity.InternalName}";
                     foreach (var effe in effes)
                     {
@@ -272,7 +272,7 @@ namespace MasterBuilder.Templates.Controllers
                 foreach (var childEntityFormFieldEntity in entityFormFieldEntity.ChildEntities)
                 {
                     var childProperties = new List<string>();
-                    var childObjectName = $"{objectName}.{childEntityFormFieldEntity.InternalName}Request";
+                    var childObjectName = $"{objectName}.{childEntityFormFieldEntity.InternalName}";
                     foreach (var effe in effes)
                     {
                         if (effe.Entity.Id == childEntityFormFieldEntity.Id)

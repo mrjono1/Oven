@@ -65,7 +65,7 @@ namespace MasterBuilder.Templates.Models
         /// {childScreenSection.Entity.Title} Request
         /// </summary>
         [Display(Name = ""{childScreenSection.Entity.Title}"")]
-        public {childScreenSection.FormRequestClass} {childScreenSection.FormRequestClass} {{ get; set; }}");
+        public {childScreenSection.FormRequestClass} {childScreenSection.Entity.InternalName} {{ get; set; }}");
                 }
             }
 
