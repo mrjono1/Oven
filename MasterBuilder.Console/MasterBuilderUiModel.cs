@@ -1834,16 +1834,21 @@ namespace MasterBuilder
                                 }
                             }
                         },
-                        // TODO
-                        //new ScreenSection
-                        //{
-                        //    Id = new Guid("{193EBB3E-45C8-47DD-A058-0004626AC9EB}"),
-                        //    Title = "Seed",
-                        //    InternalName = "Seed",
-                        //    ScreenSectionType = ScreenSectionType.Form,
-                        //    EntityId = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}"),
-                        //    ParentEntityPropertyId = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}")
-                        //}
+                        new ScreenSection
+                        {
+                            Id = new Guid("{193EBB3E-45C8-47DD-A058-0004626AC9EB}"),
+                            Title = "Seed",
+                            InternalName = "Seed",
+                            ScreenSectionType = ScreenSectionType.Form,
+                            EntityId = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}"),
+                            ParentScreenSectionId = new Guid("{8130C0F4-F8F7-4A7A-9793-85B8939589EB}"),
+                            VisibilityExpression = new Expression
+                            {
+                                PropertyId = new Guid("{0AC3BDBB-79A4-4E0E-89F5-07CA3B5C0CE8}"),
+                                Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                BooleanValue = true
+                            }
+                        }
                     }
                 },
                 #endregion

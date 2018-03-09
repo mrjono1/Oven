@@ -32,20 +32,19 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
         {
             var formGroups = new List<string>();
 
-            var entity = Project.Entities.SingleOrDefault(p => p.Id == ScreenSection.EntityId);
-
             foreach (var formField in (from ff in ScreenSection.FormSection.FormFields
                                        where !ff.IsHiddenFromUi
                                        select ff))
             { 
-                var formPropertyTemplate = new FormFieldTemplate(Project, Screen, formField);
+                var formPropertyTemplate = new FormFieldTemplate(Project, Screen, ScreenSection, formField);
                 formGroups.Add(formPropertyTemplate.GetFormField());
             }
 
             var visibile = ScreenSection.VisibilityExpression == null ? string.Empty : $@" *ngIf=""{ScreenSection.InternalName.Camelize()}ScreenSectionVisible()""";
+            var formGroup = $"{Screen.InternalName.Camelize()}Form{(ScreenSection.EntityId == Screen.EntityId ? string.Empty : $".get('{ScreenSection.Entity.InternalName.Camelize()}')")}";
 
             return $@"        <div class=""screen-section-form container mat-elevation-z2"" fxFlex{visibile}>
-            <div *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{Screen.InternalName.Camelize()}Form"" fxLayout=""column"">
+            <div *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{formGroup}"" fxLayout=""column"">
                 <mat-toolbar class=""primary"">
                     <mat-toolbar-row>
                         <span>{ScreenSection.Title}</span>

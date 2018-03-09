@@ -15,21 +15,25 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
         private readonly Project Project;
         private readonly Screen Screen;
         private readonly FormField FormField;
+        private readonly ScreenSection ScreenSection;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public FormFieldTemplate(Project project, Screen screen, FormField formField)
+        public FormFieldTemplate(Project project, Screen screen, ScreenSection screenSection, FormField formField)
         {
             Project = project;
             Screen = screen;
             FormField = formField;
+            ScreenSection = screenSection;
         }
 
         internal string GetFormField()
         {
             var attributes = new List<string>();
             var propertyValidators = new List<string>();
+            var formGroup = $"{Screen.InternalName.Camelize()}Form{(ScreenSection.EntityId == Screen.EntityId ? string.Empty : $".get('{ScreenSection.Entity.InternalName.Camelize()}')")}";
+
             if (FormField.Property.ValidationItems != null && FormField.Property.ValidationItems.Any())
             {
                 foreach (var validationItem in FormField.Property.ValidationItems)
@@ -104,7 +108,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     }
                     if (selector != null)
                     {
-                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{Screen.InternalName.Camelize()}Form.get('{FormField.InternalNameTypeScript}').hasError('{selector}')"">
+                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{formGroup}.get('{FormField.InternalNameTypeScript}').hasError('{selector}')"">
 {new String(' ', 24)}{validationItem.GetMessage(FormField.TitleValue)}
 {new String(' ', 20)}</mat-error>");
                     }
