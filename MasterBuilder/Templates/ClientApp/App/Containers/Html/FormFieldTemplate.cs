@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
         {
             var attributes = new List<string>();
             var propertyValidators = new List<string>();
-            var formGroup = $"{Screen.InternalName.Camelize()}Form{(ScreenSection.EntityId == Screen.EntityId ? string.Empty : $".get('{ScreenSection.Entity.InternalName.Camelize()}')")}";
+            var formGroup = $"{Screen.InternalName.Camelize()}Form{(ScreenSection.EntityId == Screen.EntityId ? string.Empty : $".controls.{ScreenSection.Entity.InternalName.Camelize()}")}";
 
             if (FormField.Property.ValidationItems != null && FormField.Property.ValidationItems.Any())
             {
@@ -108,7 +108,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     }
                     if (selector != null)
                     {
-                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{formGroup}.get('{FormField.InternalNameTypeScript}').hasError('{selector}')"">
+                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{formGroup}.controls.{FormField.InternalNameTypeScript}.hasError('{selector}')"">
 {new String(' ', 24)}{validationItem.GetMessage(FormField.TitleValue)}
 {new String(' ', 20)}</mat-error>");
                     }

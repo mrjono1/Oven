@@ -41,7 +41,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             }
 
             var visibile = ScreenSection.VisibilityExpression == null ? string.Empty : $@" *ngIf=""{ScreenSection.InternalName.Camelize()}ScreenSectionVisible()""";
-            var formGroup = $"{Screen.InternalName.Camelize()}Form{(ScreenSection.EntityId == Screen.EntityId ? string.Empty : $".get('{ScreenSection.Entity.InternalName.Camelize()}')")}";
+            var formGroup = $"{Screen.InternalName.Camelize()}Form{(ScreenSection.EntityId == Screen.EntityId ? string.Empty : $".controls.{ScreenSection.Entity.InternalName.Camelize()}")}";
 
             return $@"        <div class=""screen-section-form container mat-elevation-z2"" fxFlex{visibile}>
             <div *ngIf=""{Screen.InternalName.Camelize()}"" [formGroup]=""{formGroup}"" fxLayout=""column"">
