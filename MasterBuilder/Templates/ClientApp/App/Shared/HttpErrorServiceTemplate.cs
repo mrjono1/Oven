@@ -44,15 +44,32 @@ export class HttpErrorService {{
     setModelStateErrors(httpErrorResponse: HttpErrorResponse) {{
         if (httpErrorResponse.error) {{
             for (let errorKey in httpErrorResponse.error) {{
-                var formControlName = this.lowerCaseFirstLetter(errorKey);
-                var formControl = this.formGroup.get(formControlName);
-                
-                this.serverErrorMessages[formControlName] = httpErrorResponse.error[errorKey].join(' ');
+                var formControl = this.getControl(this.formGroup, errorKey);
+
+                this.serverErrorMessages[this.lowerCaseFirstLetter(errorKey)] = httpErrorResponse.error[errorKey].join(' ');
 
                 formControl.setErrors({{
-                    ""server"": true
+                    'server': true
                 }});
             }}
+        }}
+    }}
+
+    getControl(formGroup: FormGroup, key: string): FormControl {{
+        let currentKey = key;
+        let remainingKey = null;
+        if (key.indexOf('.') !== -1) {{
+            currentKey = key.split('.')[0];
+            remainingKey = key.slice(currentKey.length + 1);
+        }}
+
+        let formControlName = this.lowerCaseFirstLetter(currentKey);
+        let abstractControl = formGroup.get(formControlName);
+
+        if (remainingKey !== null) {{
+            return this.getControl(abstractControl as FormGroup, remainingKey);
+        }} else {{
+            return abstractControl as FormControl;
         }}
     }}
 

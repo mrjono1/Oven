@@ -382,7 +382,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             }
 
             return (propertyValidators.Any() ?
-                $",[{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" :
+                $", [{Environment.NewLine}{string.Join(string.Concat(",", Environment.NewLine), propertyValidators)}]" :
                 string.Empty);
         }
 
