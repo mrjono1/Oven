@@ -2,6 +2,7 @@ using MasterBuilder.Request;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using System;
 
 namespace MasterBuilder.Helpers
 {
@@ -10,7 +11,7 @@ namespace MasterBuilder.Helpers
         /// <summary>
         /// Get Screen Section Entity Fields
         /// </summary>
-        internal static IEnumerable<ScreenSectionEntityFormFields> GetScreenSectionEntityFields(Screen screen)
+        internal static IEnumerable<ScreenSectionEntityFormFields> GetScreenSectionEntityFields(Screen screen, Guid? entityId = null)
         {
             var result = new List<ScreenSectionEntityFormFields>();
             var defaultScreenSection = new ScreenSection();
@@ -56,7 +57,14 @@ namespace MasterBuilder.Helpers
 
             }
 
-            return result;
+            if (!entityId.HasValue)
+            {
+                return result;
+            }
+            else
+            {
+                return result.Where(a => a.Entity != null && a.Entity.Id == entityId.Value);
+            }
         }
     }
 }

@@ -157,13 +157,27 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                     from ff in screenSection.FormSection.FormFields
                                     where ff.EntityPropertyId == formField.VisibilityExpression.PropertyId
                                     select ff).Single();
+                    // TODO: Move this to external file, with form control visibile
                     functions.Add($@"    {formField.InternalNameTypeScript}Visible() {{
+        let visible = false;
         if (this.{Screen.InternalName.Camelize()} &&
-            this.{Screen.InternalName.Camelize()}Form &&
-            {expression}) {{
-                return true;
+            this.{Screen.InternalName.Camelize()}Form) {{
+
+            if ({expression}) {{
+                visible = true;
+            }}
+
+            // Removing and adding controls so only the correct validation rules are applied
+            if (visible){{
+                // Add the FormControl if not already added
+                if (!this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameTypeScript}')){{
+                    this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameTypeScript}', null);
+                }}
+            }} else {{
+                this.{Screen.InternalName.Camelize()}Form.removeControl('{formField.InternalNameTypeScript}');
+            }}
         }}
-        return false;
+        return visible;
     }}");
                 }
             }
@@ -426,7 +440,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
             return formControls;
         }
-
+        
         internal IEnumerable<string> GetFormControls()
         {
             var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
@@ -438,6 +452,23 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 if (effe.Entity.Id == Screen.EntityId)
                 {
                     formControls.AddRange(GetControls(effe, effes, 1));
+                }
+            }
+
+            return formControls;
+        }
+
+        internal IEnumerable<string> GetFormGroupControls(Guid entityId)
+        {
+            var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
+
+            var formControls = new List<string>();
+
+            foreach (var effe in effes)
+            {
+                if (effe.Entity.Id == entityId)
+                {
+                    formControls.AddRange(GetControls(effe, effes, 4));
                 }
             }
 

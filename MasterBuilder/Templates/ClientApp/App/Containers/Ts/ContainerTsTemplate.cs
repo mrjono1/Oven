@@ -114,13 +114,39 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 {
                     var expressionPartial = new Evaluate.TsExpressionPartial(Screen, Screen.ScreenSections);
                     var expression = expressionPartial.GetExpression(screenSection.VisibilityExpression);
+
+                    var formGroupVisibility = string.Empty;
+                    if (screenSection.ScreenSectionType == ScreenSectionType.Form)
+                    {
+                        // TODO: Move this to external file, with form control visibile
+                        var screenSectionFormControls = new List<string>();
+                        var formSectionPartial = new FormSectionPartial(Project, Screen, null);
+                        screenSectionFormControls.AddRange(formSectionPartial.GetFormGroupControls(screenSection.EntityId.Value));
+
+                        formGroupVisibility = $@"
+
+            // Removing and adding controls so only the correct validation rules are applied
+            if (visible){{
+                // Add the FormGroup if not already added
+                if (!this.{Screen.InternalName.Camelize()}Form.get('{screenSection.InternalName.Camelize()}')){{
+                    this.{Screen.InternalName.Camelize()}Form.addControl('{screenSection.InternalName.Camelize()}', new FormGroup({{
+{string.Join(string.Concat(",", Environment.NewLine), screenSectionFormControls)}
+                    }}));
+                }}
+            }} else {{
+                this.{Screen.InternalName.Camelize()}Form.removeControl('{screenSection.InternalName.Camelize()}');
+            }}";
+                    }
                     functions.Add($@"    {screenSection.InternalName.Camelize()}ScreenSectionVisible() {{
+        let visible = false;
         if (this.{Screen.InternalName.Camelize()} &&
-            this.{Screen.InternalName.Camelize()}Form &&
-            {expression}) {{
-                return true;
+            this.{Screen.InternalName.Camelize()}Form) {{
+
+            if ({expression}) {{
+                visible = true;
+            }}{formGroupVisibility}
         }}
-        return false;
+        return visible;
     }}");
                 }
             }
