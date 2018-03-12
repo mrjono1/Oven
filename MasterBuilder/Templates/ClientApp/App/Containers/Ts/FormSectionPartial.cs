@@ -4,7 +4,6 @@ using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 {
@@ -41,7 +40,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 "import { FormControl, FormGroup, Validators } from '@angular/forms';",
                 "import { Observable } from 'rxjs/Observable';",
                 "import { HttpErrorService } from '../../shared/httperror.service';",
-                "import { ComponentCanDeactivate } from '../../shared/pending.changes.guard';"
+                "import { ComponentCanDeactivate } from '../../shared/pending.changes.guard';",
+                "import { BaseFormScreen } from '../base.form.screen';"
             };
 
             // TODO: implement child sections
@@ -96,8 +96,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         /// <returns></returns>
         internal IEnumerable<string> GetConstructorBodySections()
         {
-            var sections = new List<string>();
-
+            var sections = new List<string>
+            {
+                "        super();"
+            };
             // TODO: implement child sections
             //var childSections = (from formSection in ScreenSections
             //                     where formSection.ParentEntityPropertyId.HasValue
@@ -119,9 +121,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             var classProperties = new List<string>
             {
                 $"public {Screen.InternalName.Camelize()}: {Screen.InternalName};",
-                $"public {Screen.InternalName.Camelize()}Form: FormGroup;",
-                "public new: boolean;",
-                "public serverErrorMessages: any = {};"
+                $"public {Screen.InternalName.Camelize()}Form: FormGroup;"
             };
 
             foreach (var referenceFormField in (from screenSection in ScreenSections
@@ -240,9 +240,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         {
             var methods = new List<string>
             {
-                @"    referenceCompare(referenceItem1: any, referenceItem2: any): boolean {{
-        return referenceItem1 === referenceItem2;
-    }}",
                 $@"    canDeactivate(): Observable<boolean> | boolean {{
         // check if there are pending changes
         if (this.{Screen.InternalName.Camelize()}Form.pristine || !this.{Screen.InternalName.Camelize()}Form.valid) {{
@@ -443,34 +440,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                     formControls.AddRange(GetControls(effe, effes, 1));
                 }
             }
-
-            // TODO: implement child sections
-            // Convert child properties to objects with properties
-            //var childSections = (from formSection in ScreenSections
-            //                     where formSection.ParentScreenSectionId.HasValue
-            //                     select formSection).ToArray();
-
-            //foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty).Select(a => new
-            //{
-            //    ParentEntityProperty = a.Key,
-            //    ChildSections = a.ToArray()
-            //}))
-            //{
-            //    var entityProperties = new List<string>();
-
-            //    entityProperties.AddRange(
-            //        GetControls((from screenSection in childItem.ChildSections
-            //                     from ff in screenSection.FormSection.FormFields
-            //                     select ff).ToArray(), 2));
-
-            //    if (entityProperties.Any())
-            //    {
-            //        formControls.Add($@"            {childItem.ParentEntityProperty.InternalName.Camelize()}: new FormGroup({{
-            //{string.Join(string.Concat(",", Environment.NewLine), entityProperties)}
-            //}})");
-            //    }
-
-            //}
 
             return formControls;
         }

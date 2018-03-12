@@ -130,7 +130,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 var formSectionPartial = new FormSectionPartial(Project, Screen, formSections);
                 imports.AddRange(formSectionPartial.GetImports());
                 constructorParamerters.AddRange(formSectionPartial.GetConstructorParameters());
-                constructorBodySections.AddRange(formSectionPartial.GetConstructorBodySections());
+                constructorBodySections.InsertRange(0, formSectionPartial.GetConstructorBodySections());
                 classProperties.AddRange(formSectionPartial.GetClassProperties());
                 onNgInitBodySections.AddRange(formSectionPartial.GetOnNgInitBodySections());
                 functions.AddRange(formSectionPartial.GetFunctions());
@@ -145,7 +145,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         this.{Screen.InternalName.Camelize()}Form = new FormGroup({{
 {string.Join(string.Concat(",", Environment.NewLine), formControls)}
         }});
-        this.{Screen.InternalName.Camelize()}Form.patchValue(this.{Screen.InternalName.Camelize()});
+        this.patchValue(this.{Screen.InternalName.Camelize()}Form, this.{Screen.InternalName.Camelize()});
     }}");
             }
 
@@ -168,7 +168,7 @@ import {{ Router, ActivatedRoute }} from '@angular/router';
     selector: '{Screen.InternalName.ToLowerInvariant()}',
     templateUrl: './{Screen.InternalName.ToLowerInvariant()}.component.html'
 }})
-export class {Screen.InternalName}Component implements OnInit{(formSections.Any() ? ", ComponentCanDeactivate" : string.Empty)} {{
+export class {Screen.InternalName}Component{(formSections.Any() ? " extends BaseFormScreen" : string.Empty)} implements OnInit{(formSections.Any() ? ", ComponentCanDeactivate" : string.Empty)} {{
     {string.Join(string.Concat(Environment.NewLine, "    "), classProperties.Distinct())}
 
     constructor({string.Join(string.Concat(",", Environment.NewLine, "      "), constructorParamerters.Distinct())}){{

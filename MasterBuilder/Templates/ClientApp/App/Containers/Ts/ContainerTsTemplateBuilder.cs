@@ -31,6 +31,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 templates.Add(new ContainerTsTemplate(Project, screen));
             }
 
+            templates.Add(new BaseFormScreenTsTemplate(Project));
+
             return templates;
         }
     }
