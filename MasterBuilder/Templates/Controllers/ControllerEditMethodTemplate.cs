@@ -149,7 +149,7 @@ namespace MasterBuilder.Templates.Controllers
                         // Ignore
                         break;
                     default:
-                        properties.Add($"            {existingObjectName}.{formField.InternalNameCSharp} = {requestObjectName}.{formField.InternalNameCSharp};");
+                        properties.Add($"            {new string(' ', 4 * level)}{existingObjectName}.{formField.InternalNameCSharp} = {requestObjectName}.{formField.InternalNameCSharp};");
                         break;
                 }
             }
@@ -165,7 +165,7 @@ namespace MasterBuilder.Templates.Controllers
                     {
                         if (effe.Entity.Id == childEntityFormFieldEntity.Id)
                         {
-                            childProperties.AddRange(PutProperty(effe, effes, childObjectName, childExistingObjectName, level++));
+                            childProperties.AddRange(PutProperty(effe, effes, childObjectName, childExistingObjectName, level + 1));
                         }
                     }
 
