@@ -1,4 +1,5 @@
 using MasterBuilder.Interfaces;
+using MasterBuilder.Request;
 
 namespace MasterBuilder.Templates.ClientApp.App
 {
@@ -7,6 +8,17 @@ namespace MasterBuilder.Templates.ClientApp.App
     /// </summary>
     public class AppComponentScssTemplate : ITemplate
     {
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="project"></param>
+        public AppComponentScssTemplate(Project project)
+        {
+            Project = project;
+        }
+
         /// <summary>
         /// Get file name
         /// </summary>
@@ -28,19 +40,21 @@ namespace MasterBuilder.Templates.ClientApp.App
         /// </summary>
         public string GetFileContent()
         {
-            return @"// Material UI Theme
+            return $@"// Material UI Theme
 @import ""~@angular/material/prebuilt-themes/deeppurple-amber.css"";
+{(Project.IncludeSupportForSpatial ? @"// Mangol styles
+@import ""~mangol/src/assets/scss/mangol"";" : string.Empty)}
 
-body {
+body {{
     margin: 0;
-}
+}}
 
-.container {
+.container {{
     max-width: 992px;
     width: 100%;
     padding: 20px;
     margin: 8px;
-}";
+}}";
         }
     }
 }

@@ -131,7 +131,7 @@ namespace MasterBuilder
             // ClientApp/App
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleTemplate(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentHtmlTemplate());
-            projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentScssTemplate());
+            projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentScssTemplate(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentTsTemplate(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleBrowserTemplate());
             if (project.ServerSideRendering)

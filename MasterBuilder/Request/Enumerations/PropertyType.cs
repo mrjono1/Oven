@@ -44,6 +44,10 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Uniqueidentifier
         /// </summary>
-        Uniqueidentifier
+        Uniqueidentifier,
+        /// <summary>
+        /// Spatial (geography)
+        /// </summary>
+        Spatial,
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
@@ -55,7 +56,12 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""component"": {{
       ""spec"": false
     }}
-  }},
+  }},{(Project.IncludeSupportForSpatial ? $@"""scripts"": [
+    ""./node_modules/openlayers/dist/ol.js"",
+    ""./node_modules/proj4/dist/proj4.js"",
+    ""./node_modules/jspdf/dist/jspdf.min.js"",
+    ""./node_modules/jquery/dist/jquery.min.js""
+  ]," : String.Empty)}
   ""lint"":[
     {{
       ""project"": ""ClientApp/tsconfig.app.json""

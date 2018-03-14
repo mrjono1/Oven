@@ -89,6 +89,10 @@ import {{ DateAdapter,MAT_DATE_FORMATS, MAT_DATE_LOCALE }} from '@angular/materi
 import {{ TranslateModule, TranslateLoader }} from '@ngx-translate/core';
 import {{ TranslateHttpLoader }} from '@ngx-translate/http-loader';
 
+{(Project.IncludeSupportForSpatial ?
+@"// Material Angular Open Layers
+import { MangolModule } from 'mangol';" : String.Empty)}
+
 {string.Join(Environment.NewLine, declarations.Values)}
 
 import {{ HttpErrorService }} from './shared/httperror.service';

@@ -142,6 +142,10 @@ namespace MasterBuilder.Request
         /// Use Put for update instead of patch
         /// </summary>
         internal bool UsePutForUpdate { get; set; }
+        /// <summary>
+        /// Whether to include support for spatial properties
+        /// </summary>
+        internal bool IncludeSupportForSpatial { get; set; }
         #endregion
         /// <summary>
         /// Validate and Resolve this and child objects

@@ -58,6 +58,14 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
                 nugetReferences.Add("Pomelo.EntityFrameworkCore.MySql", "2.0.1");
             }
 
+            if (Project.IncludeSupportForSpatial)
+            {
+                // This is the spatial support provided by the OData team - it is not the perfect solution,
+                // but until https://github.com/aspnet/EntityFrameworkCore/issues/1100 and perhaps https://github.com/dotnet/corefx/issues/12034
+                // are implemented this is the next best option.
+                nugetReferences.Add("Microsoft.Spatial", "7.4.1");
+            }
+
             foreach (var item in nugetReferences)
             {
                 packageReferences.AppendLine($@"    <PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
