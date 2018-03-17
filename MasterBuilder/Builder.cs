@@ -79,6 +79,8 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.ProjectFiles.StartupTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.AngularCliJsonTemplate(project));
             projectWriter.AddTemplate(new Templates.ProjectFiles.ProjectTemplate(project));
+            projectWriter.AddTemplate(new Templates.ProjectFiles.GitAttributesTemplate());
+            projectWriter.AddTemplate(solutionDirectory, new Templates.ProjectFiles.GitAttributesTemplate());
             projectWriter.AddTemplate(new Templates.ProjectFiles.GitIgnoreTemplate());
             projectWriter.AddTemplate(solutionDirectory, new Templates.ProjectFiles.GitIgnoreTemplate());
             projectWriter.AddTemplate(new Templates.ProjectFiles.AppSettingsTemplate(project));
