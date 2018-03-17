@@ -17,15 +17,8 @@ namespace MasterBuilder.ConsoleApp
 #endif
                 ;
 
-            IConfigurationRoot configuration = builder.Build();
-
-            var builderSettings = new BuilderSettings()
-            {
-                OutputDirectory = configuration["OutputDirectory"],
-                GitUserName = configuration["GitUserName"],
-                GitEmail = configuration["GitEmail"],
-                VstsPersonalAccessToken = configuration["VstsPersonalAccessToken"]
-            };
+            IConfiguration configuration = builder.Build();
+            var builderSettings = configuration.Get<BuilderSettings>();
 
             new Program().Run(builderSettings).Wait();
         }
