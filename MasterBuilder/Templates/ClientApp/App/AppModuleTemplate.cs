@@ -133,7 +133,9 @@ export function createTranslateLoader(http: HttpClient, baseHref) {{
         BrowserAnimationsModule,
         MaterialModule,
 
-        FlexLayoutModule,
+        FlexLayoutModule,{(Project.IncludeSupportForSpatial ?@"
+        // Material Angular Open Layers
+        MangolModule," : String.Empty)}
 
         // i18n support
         TranslateModule.forRoot({{
