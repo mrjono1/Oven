@@ -23,12 +23,6 @@ namespace MasterBuilder
         /// </summary>
         public async Task<string> Run(Request.Project project)
         {
-            var gitOn = true;
-
-#if DEBUG
-            gitOn = false;
-#endif
-
             if (project == null)
             {
                 return "null project";
@@ -44,18 +38,16 @@ namespace MasterBuilder
 
             SourceControl.Git git = null;
             Dictionary<string, SourceControl.Models.GetRepository> repos = null;
-            if (gitOn)
+            if (builderSettings.GitPushOn || builderSettings.GitPullOn || builderSettings.CreateMigrations)
             {
                 git = new SourceControl.Git(topProjectDirectory, project, builderSettings.GitUserName, builderSettings.GitEmail, builderSettings.VstsPersonalAccessToken);
-                repos = await git.SetupAndGetRepos();
-                
-                var rtf = new SourceControl.RequestToFileSystem(topProjectDirectory, project);
-                await rtf.Write();
-
-                git.StageCommitPush(repos["Json"], "Build");
             }
 
-
+            if (builderSettings.GitPullOn)
+            {
+                repos = await git.SetupAndGetRepos();
+            }
+            
             // Create Solution Directory
             var solutionDirectory = FileHelper.CreateFolder(topProjectDirectory, project.InternalName);
             var webProjectDirectory = FileHelper.CreateFolder(solutionDirectory, project.InternalName);
@@ -133,7 +125,7 @@ namespace MasterBuilder
             // ClientApp/App
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleTemplate(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentHtmlTemplate());
-            projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentScssTemplate());
+            projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentScssTemplate(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppComponentTsTemplate(project));
             projectWriter.AddTemplate(new Templates.ClientApp.App.AppModuleBrowserTemplate());
             if (project.ServerSideRendering)
@@ -198,7 +190,7 @@ namespace MasterBuilder
             }
             #endregion
 
-            if (gitOn)
+            if (builderSettings.CreateMigrations)
             {
                 var dalProjectChanged = git.FolderChanged(repos[project.InternalName], $"{project.InternalName}.DataAccessLayer");
 
@@ -211,7 +203,14 @@ namespace MasterBuilder
                         return $"Migration Generation Failed: {migrationResult.Message}";
                     }
                 }
+            }
 
+            if (builderSettings.GitPushOn)
+            {
+                var rtf = new SourceControl.RequestToFileSystem(topProjectDirectory, project);
+                await rtf.Write();
+
+                git.StageCommitPush(repos["Json"], "Build");
                 git.StageCommitPush(repos[project.InternalName], "Build");
             }
             return "Success";

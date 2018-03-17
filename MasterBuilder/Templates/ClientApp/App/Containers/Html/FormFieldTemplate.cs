@@ -166,6 +166,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
 
                     wrapAttributes = $@" *ngIf=""{parentEntity.InternalName.Camelize()}Reference && {parentEntity.InternalName.Camelize()}Reference.items && {FormField.InternalNameTypeScript}Visible()""";
                     break;
+
+                case PropertyType.Spatial:
+                    control = $@"{new String(' ', 20)}<input type=""hidden"" matInput id=""{FormField.Property.Id}""
+{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")} />
+{new String(' ', 20)}<mangol></mangol>"; // *ngIf=""{FormField.InternalNameTypeScript}Visible()""
+                    break;
             }
 
             if (control != null)

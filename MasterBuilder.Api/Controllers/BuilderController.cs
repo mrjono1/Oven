@@ -34,14 +34,9 @@ namespace MasterBuilder.Api.Controllers
             {
                 return new BadRequestObjectResult(ModelState);
             }
-            
-            var builder = new MasterBuilder.Builder(new BuilderSettings()
-            {
-                OutputDirectory = _iconfiguration.GetValue<string>("OutputDirectory"),
-                GitUserName = _iconfiguration.GetValue<string>("GitUserName"),
-                GitEmail = _iconfiguration.GetValue<string>("GitEmail"),
-                VstsPersonalAccessToken = _iconfiguration.GetValue<string>("VstsPersonalAccessToken")
-            });
+            var builderSettings = _iconfiguration.Get<BuilderSettings>();
+
+            var builder = new MasterBuilder.Builder(builderSettings);
 
             string result = null;
             try

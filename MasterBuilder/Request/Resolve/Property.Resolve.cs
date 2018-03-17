@@ -36,6 +36,10 @@ namespace MasterBuilder.Request
                 };
             }
 
+            // Check if need to enable support for spatial at project level
+            if (this.PropertyType == PropertyType.Spatial && !project.IncludeSupportForSpatial)
+                project.IncludeSupportForSpatial = true;
+
             if (ParentEntityId.HasValue)
             {
                 ParentEntity = project.Entities.Single(a => a.Id == ParentEntityId.Value);

@@ -30,6 +30,7 @@ namespace MasterBuilder.Request
             { new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}"), PropertyType.String },
             { new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"), PropertyType.PrimaryKey },
             { new Guid("{A3189B37-FC2D-417B-868F-61D52F4D06DC}"), PropertyType.Uniqueidentifier },
+            { new Guid("{D709C3C3-E163-4C3A-A422-65DBFC87F037}"), PropertyType.Spatial },
         };
 
         /// <summary>
@@ -169,6 +170,8 @@ namespace MasterBuilder.Request
                         return "DateTime";
                     case PropertyType.Boolean:
                         return $"bool{(!Required ? "?" : string.Empty)}";
+                    case PropertyType.Spatial:
+                        return $"string";
                     default:
                         return "string";
                 }

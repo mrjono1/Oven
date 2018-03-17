@@ -11,17 +11,14 @@ namespace MasterBuilder.ConsoleApp
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("appsettings.json")
+#if DEBUG
+                .AddJsonFile($"appsettings.Development.json", optional: true)
+#endif
+                ;
 
-            IConfigurationRoot configuration = builder.Build();
-
-            var builderSettings = new BuilderSettings()
-            {
-                OutputDirectory = configuration["OutputDirectory"],
-                GitUserName = configuration["GitUserName"],
-                GitEmail = configuration["GitEmail"],
-                VstsPersonalAccessToken = configuration["VstsPersonalAccessToken"]
-            };
+            IConfiguration configuration = builder.Build();
+            var builderSettings = configuration.Get<BuilderSettings>();
 
             new Program().Run(builderSettings).Wait();
         }

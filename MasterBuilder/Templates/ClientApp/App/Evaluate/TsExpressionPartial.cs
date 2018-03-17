@@ -140,7 +140,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                 case ExpressionOperator.IsNull:
                     return "=== null || === undefined";
                 case ExpressionOperator.IsNotNull:
-                    return "=== null || === undefined";
+                    return "!== null && !== undefined";
                 case ExpressionOperator.Like:
                     throw new NotImplementedException("Like Operator not implemented");
             }

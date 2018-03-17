@@ -37,6 +37,14 @@ namespace MasterBuilder
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
+                        // Test spatial property
+                        //new Property()
+                        //{
+                        //    Id = new Guid("{E00F068C-A16B-4F78-99AA-9785AAC1FC12}"),
+                        //    InternalName = "TestSpatial",
+                        //    PropertyType = PropertyType.Spatial,
+                        //    Title = "Test Spatial"
+                        //},
                         new Property()
                         {
                             Id = new Guid("{CB6D802C-1F26-4D23-9272-6396E6268D72}"),

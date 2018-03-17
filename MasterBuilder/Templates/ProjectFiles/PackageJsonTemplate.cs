@@ -42,8 +42,8 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// <returns></returns>
         public string GetFileContent()
         {
-            var angularVersion = "^5.2.6"; //same version used by multiple angular packages
-            var angularMaterialVersion = "^5.2.3";  //same version used by multiple angular material packages
+            var angularVersion = "^5.2.8"; //same version used by multiple angular packages
+            var angularMaterialVersion = "^5.2.4";  //same version used by multiple angular material packages
 
             // 'private: true' ensures that this project will not be published on npm
             var topSettings = $@"    ""name"": ""{Project.InternalName.Kebaberize()}"",
@@ -89,7 +89,8 @@ namespace MasterBuilder.Templates.ProjectFiles
         ""angular2-template-loader"": ""^0.6.2"",{(Project.ServerSideRendering ? $@"
         ""aspnet-prerendering"": ""^3.0.1""," : string.Empty )}
         ""aspnet-webpack"": ""^2.0.1"",
-        ""awesome-typescript-loader"": ""^3.0.0"",
+        ""awesome-typescript-loader"": ""^3.0.0"",{(Project.IncludeSupportForSpatial ? $@"
+        ""mangol"": ""^1.0.8""," : string.Empty)}
         ""core-js"": ""^2.5.1"",
         ""css"": ""^2.2.1"",
         ""css-loader"": ""^0.28.7"",
