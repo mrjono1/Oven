@@ -11,7 +11,11 @@ namespace MasterBuilder.ConsoleApp
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                .AddJsonFile("appsettings.json")
+#if DEBUG
+                .AddJsonFile($"appsettings.Development.json", optional: true)
+#endif
+                ;
 
             IConfigurationRoot configuration = builder.Build();
 

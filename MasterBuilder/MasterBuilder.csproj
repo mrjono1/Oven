@@ -15,6 +15,10 @@
     <DocumentationFile>bin\Release\netcoreapp2.0\MasterBuilder.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETCOREAPP2_0</DefineConstants>
+  </PropertyGroup>
+  
   <ItemGroup>
     <Folder Include="Templates\Helpers\" />
   </ItemGroup>
