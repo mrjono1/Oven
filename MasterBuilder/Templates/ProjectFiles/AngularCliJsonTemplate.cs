@@ -40,6 +40,9 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
+            var includeMangolRecommendedScripts = Project.IncludeSupportForSpatial;
+            // TODO: do we need these scripts?? seems to work without them
+            includeMangolRecommendedScripts = false;
             return $@"{{
   ""$schema"": ""./node_modules/@angular/cli/lib/config/schema.json"",
   ""project"": {{
@@ -56,7 +59,7 @@ namespace MasterBuilder.Templates.ProjectFiles
     ""component"": {{
       ""spec"": false
     }}
-  }},{(Project.IncludeSupportForSpatial ? $@"""scripts"": [
+  }},{(includeMangolRecommendedScripts ? $@"""scripts"": [
     ""./node_modules/openlayers/dist/ol.js"",
     ""./node_modules/proj4/dist/proj4.js"",
     ""./node_modules/jspdf/dist/jspdf.min.js"",
