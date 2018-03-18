@@ -168,7 +168,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     break;
 
                 case PropertyType.Spatial:
-                    control = $@"{new String(' ', 20)}<input type=""hidden"" matInput id=""{FormField.Property.Id}""
+                    control = $@"{new String(' ', 20)}<input type=""text"" matInput id=""{FormField.Property.Id}""
 {new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")} />
 {new String(' ', 20)}<mangol></mangol>"; // *ngIf=""{FormField.InternalNameTypeScript}Visible()""
                     break;

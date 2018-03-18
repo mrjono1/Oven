@@ -90,7 +90,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         ""aspnet-prerendering"": ""^3.0.1""," : string.Empty )}
         ""aspnet-webpack"": ""^2.0.1"",
         ""awesome-typescript-loader"": ""^3.0.0"",{(Project.IncludeSupportForSpatial ? $@"
-        ""mangol"": ""^1.0.8""," : string.Empty)}
+        ""mangol"": ""^1.0.9""," : string.Empty)}
         ""core-js"": ""^2.5.1"",
         ""css"": ""^2.2.1"",
         ""css-loader"": ""^0.28.7"",
