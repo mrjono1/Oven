@@ -171,7 +171,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             if (visible){{
                 // Add the FormControl if not already added
                 if (!this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameTypeScript}')){{
-                    this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameTypeScript}', null);
+                    this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameTypeScript}', new FormControl({GetDefaultValue(formField)}));
                 }}
             }} else {{
                 this.{Screen.InternalName.Camelize()}Form.removeControl('{formField.InternalNameTypeScript}');
