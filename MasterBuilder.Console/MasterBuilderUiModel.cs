@@ -128,7 +128,8 @@ namespace MasterBuilder
                                     Id = new Guid("{18954CB6-7C4B-42E7-AF4D-F242461D16C2}"),
                                     ValidationType = ValidationType.Required
                                 }
-                            }
+                            },
+                            DefaultIntegerValue = 0
                         },
                         new Property()
                         {
@@ -136,6 +137,7 @@ namespace MasterBuilder
                             InternalName = "BuildVersion",
                             PropertyType = PropertyType.Integer,
                             Title = "Build Version",
+                            DefaultIntegerValue = 0,
                             ValidationItems = new Validation[]
                             {
                                 new Validation

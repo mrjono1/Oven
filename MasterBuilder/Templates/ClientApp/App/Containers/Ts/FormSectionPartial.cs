@@ -397,6 +397,41 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 string.Empty);
         }
 
+        private string GetDefaultValue(FormField formField)
+        {
+            var defaultValue = "null";
+
+            switch (formField.PropertyType)
+            {
+                case PropertyType.String:
+                    if (formField.Property.DefaultStringValue != null)
+                    {
+                        defaultValue = $"'{formField.Property.DefaultStringValue}'";
+                    }
+                    break;
+                case PropertyType.Integer:
+                    if (formField.Property.DefaultIntegerValue.HasValue)
+                    {
+                        defaultValue = formField.Property.DefaultIntegerValue.Value.ToString();
+                    }
+                    break;
+                case PropertyType.Boolean:
+                    if (formField.Property.DefaultBooleanValue.HasValue)
+                    {
+                        defaultValue = formField.Property.DefaultBooleanValue.Value ? "true" : "false";
+                    }
+                    break;
+                case PropertyType.Double:
+                    if (formField.Property.DefaultDoubleValue.HasValue)
+                    {
+                        defaultValue = formField.Property.DefaultDoubleValue.Value.ToString();
+                    }
+                    break;
+            }
+
+            return defaultValue;
+        }
+
         private IEnumerable<string> GetControls(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, int level = 0)
         {
             var formControls = new List<string>();
@@ -410,8 +445,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 }
 
                 var propertyValidatorsString = GetValidationArray(formField, level);
-
-                formControls.Add($@"        {new string(' ', 4 * level)}{formField.InternalNameCSharp.Camelize()}: new FormControl(null{propertyValidatorsString})");
+                var defaultValue = GetDefaultValue(formField);
+                formControls.Add($@"        {new string(' ', 4 * level)}{formField.InternalNameCSharp.Camelize()}: new FormControl({defaultValue}{propertyValidatorsString})");
             }
 
             if (entityFormFieldEntity.ChildEntities != null)
