@@ -157,6 +157,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                     from ff in screenSection.FormSection.FormFields
                                     where ff.EntityPropertyId == formField.VisibilityExpression.PropertyId
                                     select ff).Single();
+
+
+                    var formControl = GetFormControl(formField);
                     // TODO: Move this to external file, with form control visibile
                     functions.Add($@"    {formField.InternalNameTypeScript}Visible() {{
         let visible = false;
@@ -171,7 +174,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             if (visible){{
                 // Add the FormControl if not already added
                 if (!this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameTypeScript}')){{
-                    this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameTypeScript}', new FormControl({GetDefaultValue(formField)}));
+                    this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameTypeScript}', {formControl});
                 }}
             }} else {{
                 this.{Screen.InternalName.Camelize()}Form.removeControl('{formField.InternalNameTypeScript}');
@@ -444,9 +447,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                     continue;
                 }
 
-                var propertyValidatorsString = GetValidationArray(formField, level);
-                var defaultValue = GetDefaultValue(formField);
-                formControls.Add($@"        {new string(' ', 4 * level)}{formField.InternalNameCSharp.Camelize()}: new FormControl({defaultValue}{propertyValidatorsString})");
+                var formControl = GetFormControl(formField, level);
+                formControls.Add($@"        {new string(' ', 4 * level)}{formField.InternalNameCSharp.Camelize()}: {formControl}");
             }
 
             if (entityFormFieldEntity.ChildEntities != null)
@@ -475,7 +477,18 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
             return formControls;
         }
-        
+
+        /// <summary>
+        /// Get new Form Control
+        /// </summary>
+        private string GetFormControl(FormField formField, int indentationLevel = 0)
+        {
+            var propertyValidatorsString = GetValidationArray(formField, indentationLevel);
+            var defaultValue = GetDefaultValue(formField);
+
+            return $"new FormControl({defaultValue}{propertyValidatorsString})";
+        }
+
         internal IEnumerable<string> GetFormControls()
         {
             var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
