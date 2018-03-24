@@ -16,6 +16,17 @@ namespace MasterBuilder.Request
     public partial class Entity
     {
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public Entity() { }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public Entity(string internalName)
+        {
+            InternalName = internalName;
+        }
+        /// <summary>
         /// Register of all Entity Template Ids to Enum for easy use
         /// </summary>
         internal static readonly Dictionary<Guid, EntityTemplate> EntityTemplateDictonary = new Dictionary<Guid, EntityTemplate>

@@ -16,6 +16,17 @@ namespace MasterBuilder.Request
     public partial class Property
     {
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public Property() { }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public Property(string internalName)
+        {
+            InternalName = internalName;
+        }
+        /// <summary>
         /// Register of all Property Type Ids to Enum for easy use
         /// </summary>
         internal static readonly Dictionary<Guid, PropertyType> PropertyTypeDictonary = new Dictionary<Guid, PropertyType>
