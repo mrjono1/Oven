@@ -44,13 +44,13 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
         {
             var packageReferences = new StringBuilder();
 
-            var efVersion = "2.0.1";
+            var efVersion = "2.0.2";
             var nugetReferences = new Dictionary<string, string>
             {
                 { "Microsoft.EntityFrameworkCore", efVersion},
                 { "Microsoft.EntityFrameworkCore.Design", efVersion},
                 { "Microsoft.EntityFrameworkCore.SqlServer", efVersion },
-                { "Newtonsoft.Json", "10.0.3"}
+                { "Newtonsoft.Json", "11.0.2"}
             };
             
             if (Project.UseMySql)
@@ -63,7 +63,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
                 // This is the spatial support provided by the OData team - it is not the perfect solution,
                 // but until https://github.com/aspnet/EntityFrameworkCore/issues/1100 and perhaps https://github.com/dotnet/corefx/issues/12034
                 // are implemented this is the next best option.
-                nugetReferences.Add("Microsoft.Spatial", "7.4.1");
+                nugetReferences.Add("Microsoft.Spatial", "7.4.3");
             }
 
             foreach (var item in nugetReferences)

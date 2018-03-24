@@ -37,9 +37,9 @@ namespace MasterBuilder.Templates.ProjectFiles
 
   <system.webServer>
     <handlers>
-      <add name=""aspNetCore"" path=""*"" verb=""*"" modules=""AspNetCoreModule"" resourceType=""Unspecified""/>
+      <add name=""aspNetCore"" path=""*"" verb=""*"" modules=""AspNetCoreModule"" resourceType=""Unspecified"" />
     </handlers>
-    <aspNetCore processPath=""%LAUNCHER_PATH%"" arguments=""%LAUNCHER_ARGS%"" stdoutLogEnabled=""false"" stdoutLogFile="".\\logs\\stdout"" forwardWindowsAuthToken=""false""/>
+    <aspNetCore processPath=""%LAUNCHER_PATH%"" arguments=""%LAUNCHER_ARGS%"" stdoutLogEnabled=""false"" stdoutLogFile="".\\logs\\stdout"" forwardWindowsAuthToken=""false"" />
   </system.webServer>
 </configuration>";
         }

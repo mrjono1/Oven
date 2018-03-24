@@ -47,7 +47,7 @@ namespace MasterBuilder.Templates.ProjectFiles
             var nugetReferences = new Dictionary<string, string>
             {
                 { "Microsoft.AspNetCore.All", "2.0.5" },
-                { "Microsoft.EntityFrameworkCore", "2.0.1"},
+                { "Microsoft.EntityFrameworkCore", "2.0.2"},
                 { "Swashbuckle.AspNetCore", "1.1.0" },
                 { "Swashbuckle.AspNetCore.Swagger", "1.1.0" },
                 { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" },
@@ -65,7 +65,7 @@ namespace MasterBuilder.Templates.ProjectFiles
             }
             else
             {
-                nugetReferences.Add("Microsoft.EntityFrameworkCore.SqlServer", "2.0.1");
+                nugetReferences.Add("Microsoft.EntityFrameworkCore.SqlServer", "2.0.2");
             }
 
             foreach (var item in nugetReferences)
