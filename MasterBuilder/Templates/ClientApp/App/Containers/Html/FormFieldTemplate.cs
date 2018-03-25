@@ -153,18 +153,14 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                     break;
 
                 case PropertyType.ReferenceRelationship:
-                    var parentEntity = (from e in Project.Entities
-                                        where e.Id == FormField.Property.ParentEntityId.Value
-                                        select e).SingleOrDefault();
-
                     control = $@"{new String(' ', 20)}<mat-select placeholder=""{FormField.TitleValue}"" [compareWith]=""referenceCompare"" formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
                            {(FormField.Property.Required ? string.Empty : "<mat-option>--</mat-option>")}
-                           <mat-option *ngFor=""let option of {parentEntity.InternalName.Camelize()}Reference.items"" [value]=""option.id"">
+                           <mat-option *ngFor=""let option of {FormField.Property.InternalName.Camelize()}Reference.items"" [value]=""option.id"">
                                 <span>{{{{ option.title }}}}</span>
                             </mat-option>
                         </mat-select>";
 
-                    wrapAttributes = $@" *ngIf=""{parentEntity.InternalName.Camelize()}Reference && {parentEntity.InternalName.Camelize()}Reference.items && {FormField.InternalNameTypeScript}Visible()""";
+                    wrapAttributes = $@" *ngIf=""{FormField.Property.InternalName.Camelize()}Reference && {FormField.Property.InternalName.Camelize()}Reference.items && {FormField.InternalNameTypeScript}Visible()""";
                     break;
 
                 case PropertyType.Spatial:
