@@ -60,7 +60,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                                       where s.Id == ScreenSection.NavigateToScreenId
                                       select s).FirstOrDefault();
 
-
                 var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
                                       where p.PropertyType == PropertyType.ParentRelationshipOneToMany
                                       select p).SingleOrDefault();
@@ -84,21 +83,24 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                                              p.ParentEntityId == parentEntity.Id
                                              select s).SingleOrDefault();
                     }
-
                 }
 
                 if (navigateScreen != null)
                 {
                     rowClickRouterLink = $@"[routerLink]=""['/{navigateScreen.Path}', {{ id: row.id}}]""";
 
-                    if (parentProperty == null)
+                    if (ScreenSection.ParentScreenSection != null)
                     {
-                        newRouterLink = $@"[routerLink]=""['/{navigateScreen.Path}']""";
+                        var objectPath = GetParent(ScreenSection.ParentScreenSection, null);
+                        newRouterLink = $@" *ngIf=""{objectPath}"" [routerLink]=""['/{navigateScreen.Path}', {{ {parentProperty.InternalName.Camelize()}Id: {objectPath}.controls.id.value}}]""";
+                    }
+                    else if (parentProperty != null)
+                    {
+                        newRouterLink = $@" *ngIf=""{parentProperty.InternalName.Camelize()}"" [routerLink]=""['/{navigateScreen.Path}', {{ {parentProperty.InternalName.Camelize()}Id: {parentProperty.InternalName.Camelize()}.id}}]""";
                     }
                     else
                     {
-                        // TODO: This does not support child groups yet
-                        newRouterLink = $@" *ngIf=""{parentProperty.InternalName.Camelize()}"" [routerLink]=""['/{navigateScreen.Path}', {{ {parentProperty.InternalName.Camelize()}Id: {parentProperty.InternalName.Camelize()}.id}}]""";
+                        newRouterLink = $@"[routerLink]=""['/{navigateScreen.Path}']""";
                     }
                 }
             }
@@ -146,5 +148,33 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
             </mat-card-content>
         </mat-card>";
         }
+
+        private string GetParent(ScreenSection screenSection, string objectPath)
+        {
+            var parentSection = screenSection.ParentScreenSection;
+
+            var result = $"{screenSection.Entity.InternalName.Camelize()}";
+
+            if (parentSection == null)
+            {
+                if (!string.IsNullOrEmpty(objectPath))
+                {
+                    result = $"{result}Form.controls.{objectPath}";
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(objectPath))
+                {
+                    result = $"{result}.controls.{objectPath}";
+                }
+
+                result = GetParent(parentSection, result);
+            }
+
+            return result;
+            //var formGroup = $"{Screen.InternalName.Camelize()}Form{(ScreenSection.EntityId == Screen.EntityId ? string.Empty : $".controls.{ScreenSection.Entity.InternalName.Camelize()}")}";
+
         }
+    }
 }
