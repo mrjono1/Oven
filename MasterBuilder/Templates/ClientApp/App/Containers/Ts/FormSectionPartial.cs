@@ -442,11 +442,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             foreach (var group in entityFormFieldEntity.FormFields.GroupBy(ff => ff.EntityPropertyId))
             {
                 var formField = group.First();
-                if (formField.PropertyType == PropertyType.PrimaryKey)
-                {
-                    continue;
-                }
-
                 var formControl = GetFormControl(formField, level);
                 formControls.Add($@"        {new string(' ', 4 * level)}{formField.InternalNameCSharp.Camelize()}: {formControl}");
             }
