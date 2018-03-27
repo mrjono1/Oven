@@ -270,6 +270,36 @@ namespace MasterBuilder
                                     ValidationType = ValidationType.Required
                                 }
                             }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
+                            InternalName = "HasDefaultObject",
+                            PropertyType = PropertyType.Boolean,
+                            Title = "Has Default Object",
+                            DefaultBooleanValue = false,
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{026BF989-817D-4651-9760-1D5AA51FBD1B}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{995334B4-ED6C-44B8-AF11-51F05A6C9EC0}"),
+                            InternalName = "DefaultObjectJsonData",
+                            PropertyType = PropertyType.String,
+                            Title = "Default Object Json Data",
+                            ValidationItems = new Validation[]
+                            {
+                                //new Validation{
+                                //    Id = new Guid("{27779132-34C7-4EB5-8B35-33CDE6C3B6AF}"),
+                                //    ValidationType = ValidationType.RequiredExpression
+                                //}
+                            }
                         }
                     }
                 },
@@ -1823,7 +1853,49 @@ namespace MasterBuilder
                             Title = "Entity",
                             InternalName = "Entity",
                             EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
-                            ScreenSectionType = ScreenSectionType.Form
+                            ScreenSectionType = ScreenSectionType.Form,
+                            FormSection = new FormSection()
+                            {
+                                FormFields = new FormField[]
+                                {
+                                    new FormField
+                                    {
+                                        // Title
+                                        EntityPropertyId = new Guid("{6D09DE04-2FDA-4091-A4DA-B3448ABA1A52}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Internal Name
+                                        EntityPropertyId = new Guid("{1CB8E873-07C7-461A-8859-672CE66C8513}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Entity Template
+                                        EntityPropertyId = new Guid("{331D99C4-1D7A-48D3-8979-987A5285F3B3}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Has Seed Data
+                                        EntityPropertyId = new Guid("{0AC3BDBB-79A4-4E0E-89F5-07CA3B5C0CE8}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Has Default Object
+                                        EntityPropertyId = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}")
+                                    },
+                                    new FormField
+                                    {
+                                        //Default Object Json Data
+                                        EntityPropertyId = new Guid("{995334B4-ED6C-44B8-AF11-51F05A6C9EC0}"),
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                            BooleanValue = true
+                                        }
+                                    }
+                                }
+                            }
                         },
                         new ScreenSection
                         {
