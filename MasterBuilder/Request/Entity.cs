@@ -119,5 +119,9 @@ namespace MasterBuilder.Request
                 }
             }
         }
+        /// <summary>
+        /// Define child properties and objects by defining a json payload
+        /// </summary>
+        public string DefaultObjectJsonData { get; set; }
     }
 }

@@ -25,7 +25,8 @@ namespace MasterBuilder.Templates.Controllers
             Screen = screen;
             ScreenSections = screenSections;
         }
-                
+
+        #region GET
         private IEnumerable<string> GetPropertiesRecursive(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string objectName = "item", int level = 0)
         {
             var properties = new List<string>();
@@ -134,8 +135,10 @@ namespace MasterBuilder.Templates.Controllers
             return Ok(result);
         }}";
         }
+        #endregion
 
-        private IEnumerable<string> PutProperty(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string requestObjectName = "put", string existingObjectName = "existingRecord", int level = 0)
+
+        private IEnumerable<string> Property(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string requestObjectName = "put", string existingObjectName = "existingRecord", int level = 0, bool add = false)
         {
             var properties = new List<string>();
 
@@ -153,7 +156,7 @@ namespace MasterBuilder.Templates.Controllers
                         break;
                 }
             }
-            
+
             if (entityFormFieldEntity.ChildEntities != null)
             {
                 foreach (var childEntityFormFieldEntity in entityFormFieldEntity.ChildEntities)
@@ -165,15 +168,24 @@ namespace MasterBuilder.Templates.Controllers
                     {
                         if (effe.Entity.Id == childEntityFormFieldEntity.Id)
                         {
-                            childProperties.AddRange(PutProperty(effe, effes, childObjectName, childExistingObjectName, level + 1));
+                            childProperties.AddRange(Property(effe, effes, childObjectName, childExistingObjectName, level + 1));
                         }
                     }
 
                     var parentPropertyInternalName = (from p in childEntityFormFieldEntity.Properties
                                                       where p.PropertyType == PropertyType.ParentRelationshipOneToOne
                                                       select p).Single().InternalName;
-
-                    properties.Add($@"            if ({childObjectName} == null)
+                    if (add)
+                    {
+                        properties.Add($@"            if ({childObjectName} != null)
+            {{
+                {existingObjectName}.{childEntityFormFieldEntity.InternalName} = new {childEntityFormFieldEntity.InternalName}();
+{string.Join(Environment.NewLine, childProperties)}
+            }}");
+                    }
+                    else
+                    {
+                        properties.Add($@"            if ({childObjectName} == null)
             {{
                 {existingObjectName}.{childEntityFormFieldEntity.InternalName} = null;
             }}
@@ -185,11 +197,13 @@ namespace MasterBuilder.Templates.Controllers
                 }}
 {string.Join(Environment.NewLine, childProperties)}
             }}");
+                    }
                 }
             }
             return properties;
         }
 
+        #region PUT (Update)
         /// <summary>
         /// PUT Verb Method, for updating records
         /// </summary>
@@ -206,7 +220,7 @@ namespace MasterBuilder.Templates.Controllers
             {
                 if (effe.Entity.Id == Screen.EntityId)
                 {
-                    properties.AddRange(PutProperty(effe, effes));
+                    properties.AddRange(Property(effe, effes));
                 }
                 else
                 {
@@ -247,53 +261,9 @@ namespace MasterBuilder.Templates.Controllers
             return Ok(id);
         }}";
         }
+        #endregion
 
-        private IEnumerable<string> PostProperty(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string objectName = "post", int level = 0)
-        {
-            var properties = new List<string>();
-
-            foreach (var group in entityFormFieldEntity.FormFields.GroupBy(ff => ff.EntityPropertyId))
-            {
-                var formField = group.First();
-                switch (formField.PropertyType)
-                {
-                    case PropertyType.PrimaryKey:
-                    case PropertyType.ParentRelationshipOneToOne:
-                        // Ignore
-                        break;
-                    default:
-                        properties.Add($"                {new string(' ', 4 * level)}{formField.InternalNameCSharp} = {objectName}.{formField.InternalNameCSharp}");
-                        break;
-                }
-            }
-
-            if (entityFormFieldEntity.ChildEntities != null)
-            {
-                foreach (var childEntityFormFieldEntity in entityFormFieldEntity.ChildEntities)
-                {
-                    var childProperties = new List<string>();
-                    var childObjectName = $"{objectName}.{childEntityFormFieldEntity.InternalName}";
-                    foreach (var effe in effes)
-                    {
-                        if (effe.Entity.Id == childEntityFormFieldEntity.Id)
-                        {
-                            childProperties.AddRange(PostProperty(effe, effes, childObjectName, level + 1));
-                        }
-                    }
-
-                    var parentPropertyInternalName = (from p in childEntityFormFieldEntity.Properties
-                                                      where p.PropertyType == PropertyType.ParentRelationshipOneToOne
-                                                      select p).Single().InternalName;
-
-                    properties.Add($@"                {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName} = {childObjectName} == null ? null : new {childEntityFormFieldEntity.InternalName}{{
-{string.Join(string.Concat(",", Environment.NewLine), childProperties)}
-                {new string(' ', 4 * level)}}}");
-                }
-            }
-
-            return properties;
-        }
-
+        #region POST (Add)
         /// <summary>
         /// POST Verb Method, for adding new records
         /// </summary>
@@ -307,8 +277,18 @@ namespace MasterBuilder.Templates.Controllers
             {
                 if (effe.Entity.Id == Screen.EntityId)
                 {
-                    properties.AddRange(PostProperty(effe, effes));
+                    properties.AddRange(Property(effe, effes, "post", "newRecord", 0, true));
                 }
+            }
+
+            var newRecord = $"            var newRecord = new {Screen.Entity.InternalName}();";
+
+            if (!string.IsNullOrWhiteSpace(Screen.Entity.DefaultObjectJsonData))
+            {
+                // TODO: add try catch and logging around JsonConvert
+                var content = Newtonsoft.Json.JsonConvert.SerializeObject(Screen.Entity.DefaultObjectJsonData);
+                newRecord = $@"            var content  = {content};
+            var newRecord = Newtonsoft.Json.JsonConvert.DeserializeObject<{Screen.Entity.InternalName}>(content);";
             }
 
             return $@"
@@ -329,10 +309,9 @@ namespace MasterBuilder.Templates.Controllers
             {{
                 return new BadRequestObjectResult(ModelState);
             }}
-            
-            var newRecord = new {Screen.Entity.InternalName}{{
-{string.Join(string.Concat(",", Environment.NewLine), properties)}
-            }};            
+{newRecord}
+
+{string.Join(Environment.NewLine, properties)}
 
             _context.{Screen.Entity.InternalNamePlural}.Add(newRecord);
             await _context.SaveChangesAsync();
@@ -340,7 +319,9 @@ namespace MasterBuilder.Templates.Controllers
             return Ok(newRecord.Id);
         }}";
         }
+        #endregion
 
+        #region PATCH (Update not in use)
         /// <summary>
         /// PATCH Verb method, for updating records
         /// </summary>
@@ -506,5 +487,6 @@ namespace MasterBuilder.Templates.Controllers
             return Ok();
         }}";
         }
+        #endregion
     }
 }

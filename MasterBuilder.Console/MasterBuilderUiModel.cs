@@ -179,6 +179,17 @@ namespace MasterBuilder
                     Id = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                     InternalName = "Entity",
                     Title = "Entity",
+                    DefaultObjectJsonData = JsonConvert.SerializeObject(new
+                    {
+                        Properties =new []
+                        {
+                            new {
+                                Title = "Title",
+                                InternalName = "Title",
+                                PropertyTypeId = "{A05F5788-04C3-487D-92F1-A755C73230D4}"
+                            }
+                        }
+                    }),
                     Properties = new Property[]
                     {
                         new Property()
