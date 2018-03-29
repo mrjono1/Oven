@@ -283,10 +283,10 @@ namespace MasterBuilder.Templates.Controllers
 
             var newRecord = $"            var newRecord = new {Screen.Entity.InternalName}();";
 
-            if (!string.IsNullOrWhiteSpace(Screen.Entity.DefaultObjectJsonData))
+            if (!string.IsNullOrWhiteSpace(Screen.DefaultObjectJsonData))
             {
                 // TODO: add try catch and logging around JsonConvert
-                var content = Newtonsoft.Json.JsonConvert.SerializeObject(Screen.Entity.DefaultObjectJsonData);
+                var content = Newtonsoft.Json.JsonConvert.SerializeObject(Screen.DefaultObjectJsonData);
                 newRecord = $@"            var content  = {content};
             var newRecord = Newtonsoft.Json.JsonConvert.DeserializeObject<{Screen.Entity.InternalName}>(content);";
             }

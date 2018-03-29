@@ -139,6 +139,10 @@ namespace MasterBuilder.Request
                 ScreenTypeId = ScreenTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
             }
         }
+        /// <summary>
+        /// Define child properties and objects by defining a json payload
+        /// </summary>
+        public string DefaultObjectJsonData { get; set; }
         #region Internal Helpers
         /// <summary>
         /// Entity

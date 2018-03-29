@@ -179,17 +179,6 @@ namespace MasterBuilder
                     Id = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                     InternalName = "Entity",
                     Title = "Entity",
-                    DefaultObjectJsonData = JsonConvert.SerializeObject(new
-                    {
-                        Properties =new []
-                        {
-                            new {
-                                Title = "Title",
-                                InternalName = "Title",
-                                PropertyTypeId = "{A05F5788-04C3-487D-92F1-A755C73230D4}"
-                            }
-                        }
-                    }),
                     Properties = new Property[]
                     {
                         new Property()
@@ -280,36 +269,6 @@ namespace MasterBuilder
                                     Id = new Guid("{89510E67-A33E-46C1-8A53-3290121DFD22}"),
                                     ValidationType = ValidationType.Required
                                 }
-                            }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
-                            InternalName = "HasDefaultObject",
-                            PropertyType = PropertyType.Boolean,
-                            Title = "Has Default Object",
-                            DefaultBooleanValue = false,
-                            ValidationItems = new Validation[]
-                            {
-                                new Validation
-                                {
-                                    Id = new Guid("{026BF989-817D-4651-9760-1D5AA51FBD1B}"),
-                                    ValidationType = ValidationType.Required
-                                }
-                            }
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{995334B4-ED6C-44B8-AF11-51F05A6C9EC0}"),
-                            InternalName = "DefaultObjectJsonData",
-                            PropertyType = PropertyType.String,
-                            Title = "Default Object Json Data",
-                            ValidationItems = new Validation[]
-                            {
-                                //new Validation{
-                                //    Id = new Guid("{27779132-34C7-4EB5-8B35-33CDE6C3B6AF}"),
-                                //    ValidationType = ValidationType.RequiredExpression
-                                //}
                             }
                         }
                     }
@@ -704,6 +663,36 @@ namespace MasterBuilder
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Navigate to screen",
                             ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
+                            InternalName = "HasDefaultObject",
+                            PropertyType = PropertyType.Boolean,
+                            Title = "Has Default Object",
+                            DefaultBooleanValue = false,
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{026BF989-817D-4651-9760-1D5AA51FBD1B}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{995334B4-ED6C-44B8-AF11-51F05A6C9EC0}"),
+                            InternalName = "DefaultObjectJsonData",
+                            PropertyType = PropertyType.String,
+                            Title = "Default Object Json Data",
+                            ValidationItems = new Validation[]
+                            {
+                                //new Validation{
+                                //    Id = new Guid("{27779132-34C7-4EB5-8B35-33CDE6C3B6AF}"),
+                                //    ValidationType = ValidationType.RequiredExpression
+                                //}
+                            }
                         }
                     }
                 },
@@ -1856,6 +1845,17 @@ namespace MasterBuilder
                     ScreenType = ScreenType.Form,
                     Title = "Entity",
                     Path = "entity",
+                    DefaultObjectJsonData = JsonConvert.SerializeObject(new
+                    {
+                        Properties =new []
+                        {
+                            new {
+                                Title = "Title",
+                                InternalName = "Title",
+                                PropertyTypeId = "{A05F5788-04C3-487D-92F1-A755C73230D4}"
+                            }
+                        }
+                    }),
                     ScreenSections = new ScreenSection[]
                     {
                         new ScreenSection
@@ -1888,22 +1888,6 @@ namespace MasterBuilder
                                     {
                                         // Has Seed Data
                                         EntityPropertyId = new Guid("{0AC3BDBB-79A4-4E0E-89F5-07CA3B5C0CE8}")
-                                    },
-                                    new FormField
-                                    {
-                                        // Has Default Object
-                                        EntityPropertyId = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}")
-                                    },
-                                    new FormField
-                                    {
-                                        //Default Object Json Data
-                                        EntityPropertyId = new Guid("{995334B4-ED6C-44B8-AF11-51F05A6C9EC0}"),
-                                        VisibilityExpression = new Expression
-                                        {
-                                            PropertyId = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
-                                            Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                            BooleanValue = true
-                                        }
                                     }
                                 }
                             }
@@ -1961,7 +1945,95 @@ namespace MasterBuilder
                             Title = "Screen",
                             InternalName = "Screen",
                             ScreenSectionType = ScreenSectionType.Form,
-                            EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
+                            EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                            FormSection = new FormSection
+                            {
+                                FormFields = new FormField[]
+                                {
+                                    new FormField
+                                    {
+                                        // Title
+                                        EntityPropertyId = new Guid("{34B85ED2-3B10-4974-9451-7B87203F1E0F}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Screen Type
+                                        EntityPropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Path
+                                        EntityPropertyId = new Guid("{B2F3E579-DEA2-4E82-A69D-F7CD247E1765}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Entity
+                                        EntityPropertyId = new Guid("{A02115B5-4E6A-4D7B-AB80-9E58516B1E3A}"),
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.In,
+                                            UniqueidentifierValues = new Guid[]
+                                            {
+                                                // Search
+                                                new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
+                                                // Form
+                                                new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"),
+                                            }
+                                        }
+                                    },
+                                    new FormField
+                                    {
+                                        // Template
+                                        EntityPropertyId = new Guid("{92AD26A8-FECE-4AE0-809B-8CBE42AA7E6A}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Navigate to screen
+                                        EntityPropertyId = new Guid("{B9A65C24-AE1B-41E6-8E84-973908051DE2}"),
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.In,
+                                            UniqueidentifierValues = new Guid[]
+                                            {
+                                                // Search
+                                                new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
+                                                // Form
+                                                new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"),
+                                            }
+                                        }
+                                    },
+                                    new FormField
+                                    {
+                                        // Has Default Object
+                                        EntityPropertyId = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.In,
+                                            UniqueidentifierValues = new Guid[]
+                                            {
+                                                // Search
+                                                new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
+                                                // Form
+                                                new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"),
+                                            }
+                                        }
+                                    },
+                                    new FormField
+                                    {
+                                        //Default Object Json Data
+                                        EntityPropertyId = new Guid("{995334B4-ED6C-44B8-AF11-51F05A6C9EC0}"),
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                            BooleanValue = true
+                                        }
+                                    }
+                                }
+                            }
                         },
                         new ScreenSection
                         {
