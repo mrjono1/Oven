@@ -34,7 +34,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 $"import {{ {ScreenSection.SearchSection.SearchItemClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{ScreenSection.SearchSection.SearchItemClass}';",
                 $"import {{ {ScreenSection.SearchSection.SearchRequestClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{ScreenSection.SearchSection.SearchRequestClass}';",
                 $"import {{ {ScreenSection.SearchSection.SearchResponseClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{ScreenSection.SearchSection.SearchResponseClass}';",
-                "import { MatTableDataSource } from '@angular/material';",
+                "import { Observable } from 'rxjs/Observable';",
                 $"import {{ {Screen.InternalName}Service }} from '../../shared/{Screen.InternalName.ToLowerInvariant()}.service';"
             };
         }
@@ -78,8 +78,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             {
                 $"public {ScreenSection.SearchSection.SearchResponseClass.Camelize()}: {ScreenSection.SearchSection.SearchResponseClass};",
                 $"public {ScreenSection.SearchSection.SearchRequestClass.Camelize()}: {ScreenSection.SearchSection.SearchRequestClass};",
-                $"{ScreenSection.InternalName.Camelize()}Columns = [{string.Join(",", properties)}];",
-                $"{ScreenSection.InternalName.Camelize()}DataSource = new MatTableDataSource<{ScreenSection.SearchSection.SearchItemClass}>();"
+                $"public {ScreenSection.InternalName.Camelize()}Columns = [{string.Join(",", properties)}];",
+                $"public {ScreenSection.InternalName.Camelize()}DataSource = new Observable<{ScreenSection.SearchSection.SearchItemClass}[]>();"
         };
         }
 
@@ -106,10 +106,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.pageSize = 20;
             {parentPropertyFilterString}
 
-             this.{Screen.InternalName.Camelize()}Service.get{Screen.InternalName}{ScreenSection.InternalName}(this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}).subscribe( result => {{
-                this.{ScreenSection.SearchSection.SearchResponseClass.Camelize()} = result;
-                this.{ScreenSection.InternalName.Camelize()}DataSource = new MatTableDataSource<{ScreenSection.SearchSection.SearchItemClass}>(result.items);
-            }});
+            this.{ScreenSection.InternalName.Camelize()}DataSource = this.{Screen.InternalName.Camelize()}Service.{Screen.InternalName.Camelize()}{ScreenSection.InternalName.Pluralize()};
+            this.{Screen.InternalName.Camelize()}Service.load{Screen.InternalName}{ScreenSection.InternalName}(this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()});
         }});"
             };
         }

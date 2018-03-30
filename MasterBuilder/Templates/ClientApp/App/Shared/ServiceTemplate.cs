@@ -1,3 +1,4 @@
+using Humanizer;
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
@@ -47,6 +48,8 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
             var imports = new List<string>();
             var methods = new List<string>();
             var referenceFormFields = new List<FormField>();
+            var properties = new List<string>();
+            var constructorExperssions = new List<string>();
 
             var hasForm = false;
 
@@ -66,10 +69,31 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                         imports.Add($"import {{ {screenSection.SearchSection.SearchRequestClass} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.SearchSection.SearchRequestClass}';");
                         imports.Add($"import {{ {screenSection.SearchSection.SearchResponseClass} }} from '../models/{Screen.InternalName.ToLowerInvariant()}/{screenSection.SearchSection.SearchResponseClass}';");
 
-                        methods.Add($@"    get{Screen.InternalName}{screenSection.InternalName}(request: {screenSection.SearchSection.SearchRequestClass}){{
-        return this.http.post<{screenSection.SearchSection.SearchResponseClass}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}{screenSection.InternalName}`, request);
-    }}");
+                        var privateProperty = $"_{screenSection.SearchSection.SearchItemClass.Camelize()}";
+                        var dataStore = $"{screenSection.SearchSection.SearchItemClass.Camelize()}DataStore";
+                        var dataStoreProperty = $"{screenSection.Entity.InternalName.Camelize().Pluralize()}";
 
+                        properties.Add($@"    private {privateProperty}: BehaviorSubject<{screenSection.SearchSection.SearchItemClass}[]>;");
+                        properties.Add($@"    private {dataStore}: {{
+        {dataStoreProperty}: {screenSection.SearchSection.SearchItemClass}[]
+    }};");
+                        constructorExperssions.Add($@"        this.{dataStore} = {{ {dataStoreProperty}: [] }};");
+                        constructorExperssions.Add($@"        this.{privateProperty} = <BehaviorSubject<{screenSection.SearchSection.SearchItemClass}[]>>new BehaviorSubject([]);");
+
+                        // Get property
+                        methods.Add($@"    /**
+     * Gets an observable list of {screenSection.SearchSection.SearchItemClass.Camelize()}
+     */
+    get {Screen.InternalName.Camelize()}{screenSection.InternalName.Pluralize()}() {{
+        return this.{privateProperty}.asObservable();
+    }}");
+                        // Load method
+                        methods.Add($@"    load{Screen.InternalName}{screenSection.InternalName}(request: {screenSection.SearchSection.SearchRequestClass}) {{
+        this.http.post<{screenSection.SearchSection.SearchResponseClass}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}{screenSection.InternalName}`, request).subscribe(data => {{
+            this.{dataStore}.{dataStoreProperty} = data.items;
+            this.{privateProperty}.next(Object.assign({{}}, this.{dataStore}).{dataStoreProperty});
+        }}, error => console.log('Could not load {screenSection.SearchSection.SearchResponseClass}'));;
+    }}");
                         break;
                     case ScreenSectionType.MenuList:
                         // None
@@ -137,17 +161,19 @@ import {{ APP_BASE_HREF }} from '@angular/common';
 import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine';
 {string.Join(Environment.NewLine, imports.Distinct())}
 import {{ Observable }} from 'rxjs/Observable';
+import {{ BehaviorSubject }} from 'rxjs/BehaviorSubject';
 
 @Injectable()
-export class {Screen.InternalName}Service {{
-
+export class {Screen.InternalName}Service {{    
     private baseUrl: string;
+{string.Join(Environment.NewLine, properties)}
 
     constructor(
       private http: HttpClient,
       private injector: Injector
     ) {{
         this.baseUrl = this.injector.get(ORIGIN_URL);
+{string.Join(Environment.NewLine, constructorExperssions)}
     }}
 
 {string.Join(Environment.NewLine, methods.Distinct())}
