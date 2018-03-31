@@ -70,7 +70,7 @@ namespace MasterBuilder.Templates.ProjectFiles
 
             foreach (var item in nugetReferences)
             {
-                packageReferences.AppendLine($@"<PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
+                packageReferences.AppendLine($@"    <PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
             }
 
             return $@"<Project Sdk=""Microsoft.NET.Sdk.Web"">
@@ -96,7 +96,7 @@ namespace MasterBuilder.Templates.ProjectFiles
   </PropertyGroup>
 
   <ItemGroup>
-    {packageReferences}
+{packageReferences}
   </ItemGroup>
 
   <ItemGroup>
@@ -127,7 +127,7 @@ namespace MasterBuilder.Templates.ProjectFiles
     <Exec Command=""node node_modules/webpack/bin/webpack.js --config webpack.config.vendor.js"" />
     <Exec Command=""node node_modules/webpack/bin/webpack.js"" />
   </Target>
-  <Target Name=""RunWebpack"" Condition="" '$(Configuration)' == 'Release' "">
+  <Target Name=""RunWebpack"" BeforeTargets=""Build"" Condition="" '$(Configuration)' == 'Release' "">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Message Importance=""high"" Text=""Performing Release Webpack build..."" />
     <Exec Command=""npm install"" />
