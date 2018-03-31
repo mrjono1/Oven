@@ -42,8 +42,8 @@ namespace MasterBuilder.Templates.ProjectFiles
         /// <returns></returns>
         public string GetFileContent()
         {
-            var angularVersion = "^5.2.8"; //same version used by multiple angular packages
-            var angularMaterialVersion = "^5.2.4";  //same version used by multiple angular material packages
+            var angularVersion = "5.2.9"; //same version used by multiple angular packages
+            var angularMaterialVersion = "5.2.4";  //same version used by multiple angular material packages
 
             // 'private: true' ensures that this project will not be published on npm
             var topSettings = $@"    ""name"": ""{Project.InternalName.Kebaberize()}"",
@@ -90,7 +90,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         ""aspnet-prerendering"": ""^3.0.1""," : string.Empty )}
         ""aspnet-webpack"": ""^2.0.1"",
         ""awesome-typescript-loader"": ""^3.0.0"",{(Project.IncludeSupportForSpatial ? $@"
-        ""mangol"": ""^1.0.9""," : string.Empty)}
+        ""mangol"": ""1.0.9""," : string.Empty)}
         ""core-js"": ""^2.5.1"",
         ""css"": ""^2.2.1"",
         ""css-loader"": ""^0.28.7"",
@@ -103,7 +103,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         ""isomorphic-fetch"": ""^2.2.1"",
         ""json-loader"": ""^0.5.4"",
         ""moment"": ""^2.20.1"",
-        ""node-sass"": ""^4.5.2"",
+        ""node-sass"": ""4.8.3"",
         ""preboot"": ""^5.0.0"",
         ""raw-loader"": ""^0.5.1"",
         ""rimraf"": ""^2.6.2"",
