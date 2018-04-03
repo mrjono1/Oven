@@ -100,12 +100,17 @@ module.exports = (env) => {
         ] : [
             // new BundleAnalyzerPlugin(),
             // Plugins that apply in production builds only
-            new webpack.optimize.UglifyJsPlugin(),
             new AngularCompilerPlugin({
+                mainPath: path.join(__dirname, 'ClientApp/boot.browser.ts'),
                 tsConfigPath: './tsconfig.json',
                 entryModule: path.join(__dirname, 'ClientApp/app/app.module.browser#AppModule'),
                 exclude: ['./**/*.server.ts']
-            })
+            }),
+            new webpack.optimize.UglifyJsPlugin({
+                output: {
+                    ascii_only: true,
+                }
+            }),
         ]),
         devtool: isDevBuild ? 'cheap-eval-source-map' : false,
         node: {

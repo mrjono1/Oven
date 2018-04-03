@@ -98,7 +98,7 @@ import { MangolModule } from 'mangol';" : String.Empty)}
 import {{ HttpErrorService }} from './shared/httperror.service';
 import {{ LinkService }} from './shared/link.service';
 {string.Join(Environment.NewLine, providers.Values)}
-import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine';
+import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine/tokens';
 //material
 import {{ BrowserAnimationsModule }} from '@angular/platform-browser/animations';
 import {{ MaterialModule }} from './material.module';

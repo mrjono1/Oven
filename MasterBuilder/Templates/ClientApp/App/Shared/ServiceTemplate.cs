@@ -158,7 +158,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
 import {{ HttpClient }} from '@angular/common/http';
 import {{ Http, URLSearchParams }} from '@angular/http';
 import {{ APP_BASE_HREF }} from '@angular/common';
-import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine';
+import {{ ORIGIN_URL }} from '@nguniversal/aspnetcore-engine/tokens';
 {string.Join(Environment.NewLine, imports.Distinct())}
 import {{ Observable }} from 'rxjs/Observable';
 import {{ BehaviorSubject }} from 'rxjs/BehaviorSubject';

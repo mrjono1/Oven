@@ -89,7 +89,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         ""angular2-template-loader"": ""^0.6.2"",{(Project.ServerSideRendering ? $@"
         ""aspnet-prerendering"": ""^3.0.1""," : string.Empty )}
         ""aspnet-webpack"": ""^2.0.1"",
-        ""awesome-typescript-loader"": ""^3.0.0"",{(Project.IncludeSupportForSpatial ? $@"
+        ""awesome-typescript-loader"": ""^4.0.1"",{(Project.IncludeSupportForSpatial ? $@"
         ""mangol"": ""1.0.9""," : string.Empty)}
         ""core-js"": ""^2.5.1"",
         ""css"": ""^2.2.1"",
@@ -111,7 +111,7 @@ namespace MasterBuilder.Templates.ProjectFiles
         ""sass-loader"": ""^6.0.6"",
         ""style-loader"": ""^0.18.2"",
         ""to-string-loader"": ""^1.1.5"",
-        ""typescript"": ""2.6.2"",
+        ""typescript"": ""2.8.1"",
         ""url-loader"": ""^0.6.2"",
         ""webpack"": ""^3.10.0"",
         ""webpack-hot-middleware"": ""^2.21.0"",

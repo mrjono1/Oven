@@ -65,7 +65,7 @@ const nonTreeShakableModules = [
 const allModules = treeShakableModules.concat(nonTreeShakableModules);
 
 module.exports = (env) => {
-  console.log(`env = ${JSON.stringify(env)}`)
+    console.log(`env = ${JSON.stringify(env)}`);
     const extractCSS = new ExtractTextPlugin('vendor.css');
     const isDevBuild = !(env && env.prod);
     const sharedConfig = {
@@ -136,7 +136,8 @@ module.exports = (env) => {
     return [clientBundleConfig, serverBundleConfig];
 }";
 
-            var clientOnlySection = @" return [clientBundleConfig];
+            var clientOnlySection = @"
+    return [clientBundleConfig];
 }";
 
             if (Project.ServerSideRendering)
