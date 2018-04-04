@@ -6,25 +6,37 @@ using System.Text;
 
 namespace MasterBuilder.Templates.ProjectFiles
 {
+    /// <summary>
+    /// Nuget Config
+    /// </summary>
     public class NuGetconfigTemplate: ITemplate
     {
         private Project Project { get; set; }
-
+        /// <summary>
+        /// NuGet config Constructor
+        /// </summary>
         public NuGetconfigTemplate(Project project)
         {
             Project = project;
         }
 
+        /// <summary>
+        /// Get file name
+        /// </summary>
         public string GetFileName()
         {
             return "NuGet.config";
         }
-
+        /// <summary>
+        /// Get file path
+        /// </summary>
         public string[] GetFilePath()
         {
             return new string[] { };
         }
-
+        /// <summary>
+        /// Get file content
+        /// </summary>
         public string GetFileContent()
         {
             StringBuilder packages = new StringBuilder();

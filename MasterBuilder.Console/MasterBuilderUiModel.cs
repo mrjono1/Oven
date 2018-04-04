@@ -1740,6 +1740,32 @@ namespace MasterBuilder
                                     ScreenId = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
                                     Title = "New"
                                 }
+                            },
+                            SearchSection = new SearchSection
+                            {
+                                SearchColumns = new SearchColumn[]
+                                {
+                                    new SearchColumn
+                                    {
+                                        // Title
+                                        EntityPropertyId = new Guid("{34B85ED2-3B10-4974-9451-7B87203F1E0F}")
+                                    },
+                                    new SearchColumn
+                                    {
+                                        // Path/Slug
+                                        EntityPropertyId = new Guid("{B2F3E579-DEA2-4E82-A69D-F7CD247E1765}")
+                                    },
+                                    new SearchColumn
+                                    {
+                                        // Screen Type
+                                        EntityPropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}")
+                                    },
+                                    new SearchColumn
+                                    {
+                                        // Entity
+                                        EntityPropertyId = new Guid("{A02115B5-4E6A-4D7B-AB80-9E58516B1E3A}")
+                                    }
+                                }
                             }
                         },
                         new ScreenSection
@@ -1908,6 +1934,27 @@ namespace MasterBuilder
                                     MenuItemType = MenuItemType.New,
                                     ScreenId = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
                                     Title = "New"
+                                }
+                            },
+                            SearchSection = new SearchSection
+                            {
+                                SearchColumns = new SearchColumn[]
+                                {
+                                    new SearchColumn
+                                    {
+                                        // Title
+                                        EntityPropertyId = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}")
+                                    },
+                                    new SearchColumn
+                                    {
+                                        // Internal Name
+                                        EntityPropertyId = new Guid("{C52F7B8E-CAD0-40FF-8E89-B313A290A96E}")
+                                    },
+                                    new SearchColumn
+                                    {
+                                        // Property Type
+                                        EntityPropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}")
+                                    }
                                 }
                             }
                         },
