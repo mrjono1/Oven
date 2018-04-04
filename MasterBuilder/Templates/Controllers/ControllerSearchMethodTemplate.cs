@@ -45,7 +45,7 @@ namespace MasterBuilder.Templates.Controllers
                 parentEntity = (from s in project.Entities
                                 where s.Id == parentProperty.ParentEntityId
                                 select s).SingleOrDefault();
-                parentPropertyWhereString = $"where !request.{parentEntity.InternalName}Id.HasValue || (request.{parentEntity.InternalName}Id.HasValue &&  request.{parentEntity.InternalName}Id.Value == item.{parentEntity.InternalName}Id)";
+                parentPropertyWhereString = $"where request.{parentEntity.InternalName}Id == item.{parentEntity.InternalName}Id";
             }
             
             return $@"
@@ -69,7 +69,7 @@ namespace MasterBuilder.Templates.Controllers
 
             var query = from item in _context.{screenSection.SearchSection.Entity.InternalNamePlural}
             {parentPropertyWhereString}
-                        select item;            
+                        select item;
 
             var totalItems = query.Count();
             int totalPages = 0;

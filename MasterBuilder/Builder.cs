@@ -158,6 +158,8 @@ namespace MasterBuilder
             projectWriter.AddTemplate(new Templates.Services.ServiceTemplateBuilder(project));
             // Services/Contracts
             projectWriter.AddTemplate(new Templates.Services.Contracts.ServiceContractTemplateBuilder(project));
+            // Extensions
+            projectWriter.AddTemplate(new Templates.Extensions.NonDefaultAttributeTemplate(project));
 
             var errors = await projectWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))

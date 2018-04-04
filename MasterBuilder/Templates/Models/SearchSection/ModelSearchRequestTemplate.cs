@@ -57,7 +57,9 @@ namespace MasterBuilder.Templates.Models
                 parentPropertyString = $@"        /// <summary>
         /// {parentEntity.Title} Id
         /// </summary>
-        public Guid? {parentEntity.InternalName}Id {{ get; set; }}";
+        [Required]
+        [NonDefault]
+        public Guid {parentEntity.InternalName}Id {{ get; set; }}";
             }
             
 

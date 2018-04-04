@@ -87,8 +87,20 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
     get {Screen.InternalName.Camelize()}{screenSection.InternalName.Pluralize()}() {{
         return this.{privateProperty}.asObservable();
     }}");
+                        var validation = string.Empty;
+                        var parentProperties = (from prop in screenSection.Entity.Properties
+                                                where prop.PropertyType == PropertyType.ParentRelationshipOneToMany
+                                                select $"!request.{prop.InternalName.Camelize()}Id");
+                        if (parentProperties.Any())
+                        {
+                            validation = $@"
+        if ({string.Join(" && ", parentProperties)}){{
+            return;
+        }}";
+                        }
+
                         // Load method
-                        methods.Add($@"    load{Screen.InternalName}{screenSection.InternalName}(request: {screenSection.SearchSection.SearchRequestClass}) {{
+                        methods.Add($@"    load{Screen.InternalName}{screenSection.InternalName}(request: {screenSection.SearchSection.SearchRequestClass}) {{{validation}
         this.http.post<{screenSection.SearchSection.SearchResponseClass}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}{screenSection.InternalName}`, request).subscribe(data => {{
             this.{dataStore}.{dataStoreProperty} = data.items;
             this.{privateProperty}.next(Object.assign({{}}, this.{dataStore}).{dataStoreProperty});
