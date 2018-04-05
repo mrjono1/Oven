@@ -58,6 +58,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             var properties = new List<string>();
             var formControls = new List<string>();
             var formSections = new List<ScreenSection>();
+            var postSetupForm = new List<string>();
 
             foreach (var screenSection in Screen.ScreenSections)
             {
@@ -75,6 +76,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         constructorBodySections.AddRange(searchSectionPartial.GetConstructorBodySections());
                         classProperties.AddRange(searchSectionPartial.GetClassProperties());
                         onNgInitBodySections.AddRange(searchSectionPartial.GetOnNgInitBodySections());
+                        postSetupForm.Add(searchSectionPartial.PostSetupFormExpression());
 
                         break;
                     case ScreenSectionType.MenuList:
@@ -164,6 +166,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 properties.AddRange(formSectionPartial.GetProperties());
                 formControls.AddRange(formSectionPartial.GetFormControls());
             }
+            else
+            {
+                onNgInitBodySections.AddRange(postSetupForm);
+            }
 
             if (formControls.Any())
             {
@@ -171,7 +177,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
         this.{Screen.InternalName.Camelize()}Form = new FormGroup({{
 {string.Join(string.Concat(",", Environment.NewLine), formControls)}
         }});
-        this.patchValue(this.{Screen.InternalName.Camelize()}Form, this.{Screen.InternalName.Camelize()});
+        this.patchValue(this.{Screen.InternalName.Camelize()}Form, this.{Screen.InternalName.Camelize()});{string.Join(Environment.NewLine, postSetupForm)}
     }}");
             }
 

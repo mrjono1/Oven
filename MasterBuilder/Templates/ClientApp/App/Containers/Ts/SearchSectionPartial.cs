@@ -73,43 +73,52 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                         break;
                 }
             }
-            
+
             return new string[]
             {
                 $"public {ScreenSection.SearchSection.SearchResponseClass.Camelize()}: {ScreenSection.SearchSection.SearchResponseClass};",
                 $"public {ScreenSection.SearchSection.SearchRequestClass.Camelize()}: {ScreenSection.SearchSection.SearchRequestClass};",
                 $"public {ScreenSection.InternalName.Camelize()}Columns = [{string.Join(",", properties)}];",
                 $"public {ScreenSection.InternalName.Camelize()}DataSource = new Observable<{ScreenSection.SearchSection.SearchItemClass}[]>();"
-        };
+            };
         }
 
         internal IEnumerable<string> GetOnNgInitBodySections()
         {
+
+            return new string[]
+            {
+                $@"        // Search Section Init
+        this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()} = new {ScreenSection.SearchSection.SearchRequestClass}();
+        this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.page = 1;
+        this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.pageSize = 20;
+        this.{ScreenSection.InternalName.Camelize()}DataSource = this.{Screen.InternalName.Camelize()}Service.{Screen.InternalName.Camelize()}{ScreenSection.InternalName.Pluralize()};"
+            };
+        }
+
+        internal string PostSetupFormExpression()
+        {
+            // TODO: Make recursive
             string parentPropertyFilterString = null;
             Entity parentEntity = null;
             Property parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
-                                  where p.PropertyType == PropertyType.ParentRelationshipOneToMany
-                                  select p).SingleOrDefault();
+                                       where p.PropertyType == PropertyType.ParentRelationshipOneToMany
+                                       select p).SingleOrDefault();
             if (parentProperty != null)
             {
                 parentEntity = (from s in Project.Entities
                                 where s.Id == parentProperty.ParentEntityId
                                 select s).SingleOrDefault();
-                parentPropertyFilterString = $"this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = params.id;";
+
+                parentPropertyFilterString = $"this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = this.{Screen.InternalName.Camelize()}.id;";
+                if (ScreenSection.ParentScreenSection != null)
+                {
+                    parentPropertyFilterString = $"this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = this.{Screen.InternalName.Camelize()}.{parentEntity.InternalName.Camelize()}.id;";
+                }
             }
-
-            return new string[]
-            {
-                $@"        this.route.params.subscribe(params => {{
-            this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()} = new {ScreenSection.SearchSection.SearchRequestClass}();
-            this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.page = 1;
-            this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.pageSize = 20;
-            {parentPropertyFilterString}
-
-            this.{ScreenSection.InternalName.Camelize()}DataSource = this.{Screen.InternalName.Camelize()}Service.{Screen.InternalName.Camelize()}{ScreenSection.InternalName.Pluralize()};
-            this.{Screen.InternalName.Camelize()}Service.load{Screen.InternalName}{ScreenSection.InternalName}(this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()});
-        }});"
-            };
+            return $@"
+        {parentPropertyFilterString}
+        this.{Screen.InternalName.Camelize()}Service.load{Screen.InternalName}{ScreenSection.InternalName}(this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()});";
         }
     }
 }
