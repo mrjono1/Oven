@@ -1585,10 +1585,18 @@ namespace MasterBuilder
                 new Screen()
                 {
                     Id = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
-                    ScreenType = ScreenType.Html,
+                    EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                    ScreenType = ScreenType.Search,
                     Title = "Home",
                     Path = "home",
                     Template = ScreenTemplate.Home,
+                    ScreenFeatures = new ScreenFeature[]
+                    {
+                        new ScreenFeature{
+                            Id = new Guid("{00CAB28C-F1CA-4FDC-9184-AC7DDA7FD3C5}"),
+                            Feature = Feature.New
+                        }
+                    },
                     ScreenSections = new ScreenSection[]
                     {
                         new ScreenSection
@@ -1605,27 +1613,7 @@ namespace MasterBuilder
     <li><a href='https://webpack.github.io/'>Webpack</a> for building and bundling client-side resources</li>
     <li><a href='https://material.angular.io/'>Angular Material</a></li>
 </ul>"
-                        }
-                    }
-                },
-                #endregion
-                #region Projects Screen
-                new Screen()
-                {
-                    Id = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
-                    EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
-                    ScreenType = ScreenType.Search,
-                    Title = "Projects",
-                    Path = "projects",
-                    ScreenFeatures = new ScreenFeature[]
-                    {
-                        new ScreenFeature{
-                            Id = new Guid("{00CAB28C-F1CA-4FDC-9184-AC7DDA7FD3C5}"),
-                            Feature = Feature.New
-                        }
-                    },
-                    ScreenSections = new ScreenSection[]
-                    {
+                        },
                         new ScreenSection
                         {
                             Id = new Guid("{56997673-082E-4FE0-BDC0-8088B0559694}"),
@@ -2560,15 +2548,15 @@ namespace MasterBuilder
             };
 
             #region MENU ITEMS
-            project.MenuItems = new MenuItem[]
-            {
-                new MenuItem
-                {
-                    Title = "Projects",
-                    ScreenId = new Guid("{EAA8BF91-1F76-473F-8A0D-AB3DF8BD4B93}"),
-                    Icon = "glyphicon glyphicon-th-list"
-                }
-            };
+            //project.MenuItems = new MenuItem[]
+            //{
+            //    new MenuItem
+            //    {
+            //        Title = "Projects",
+            //        ScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
+            //        Icon = "glyphicon glyphicon-th-list"
+            //    }
+            //};
             #endregion
 
             #region SERVICES

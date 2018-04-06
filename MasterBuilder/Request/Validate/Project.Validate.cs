@@ -45,6 +45,10 @@ namespace MasterBuilder.Request
                 }
             }
 
+            if (MenuItems == null)
+            {
+                MenuItems = new MenuItem[0];
+            }
             foreach (var menuItem in MenuItems)
             {
                 if (!menuItem.Validate(this, out string screenMessage))

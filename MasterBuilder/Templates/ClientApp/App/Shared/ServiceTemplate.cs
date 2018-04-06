@@ -104,7 +104,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
         this.http.post<{screenSection.SearchSection.SearchResponseClass}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{Screen.InternalName}{screenSection.InternalName}`, request).subscribe(data => {{
             this.{dataStore}.{dataStoreProperty} = data.items;
             this.{privateProperty}.next(Object.assign({{}}, this.{dataStore}).{dataStoreProperty});
-        }}, error => console.log('Could not load {screenSection.SearchSection.SearchResponseClass}'));;
+        }}, error => console.log('Could not load {screenSection.SearchSection.SearchResponseClass}'));
     }}");
                         break;
                     case ScreenSectionType.MenuList:

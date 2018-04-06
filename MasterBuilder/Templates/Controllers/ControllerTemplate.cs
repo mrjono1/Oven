@@ -47,7 +47,6 @@ namespace MasterBuilder.Templates.Controllers
         {
             var usings = new List<string>();
             var methods = new List<string>();
-            var classAttributes = @"[Route(""api/[controller]"")]";
             var hasServerFunction = false;
 
             var privateFields = new List<string>
@@ -160,6 +159,8 @@ namespace MasterBuilder.Templates.Controllers
         /// Home Index
         /// </summary>
         [HttpGet]
+        [Route(""/"")]
+        [Route(""/Home"")]
         public async Task<IActionResult> Index()
         {{
             
@@ -182,6 +183,8 @@ namespace MasterBuilder.Templates.Controllers
         /// Home Index
         /// </summary>
         [HttpGet]
+        [Route(""/"")]
+        [Route(""/Home"")]
         public IActionResult Index()
         {{
             ViewData[""Title""] = ""{Project.Title}"";
@@ -194,7 +197,7 @@ namespace MasterBuilder.Templates.Controllers
         /// Sitemap Xml
         /// </summary>
         [HttpGet]
-        [Route(""sitemap.xml"")]
+        [Route(""/sitemap.xml"")]
         public IActionResult SitemapXml()
         {{
             var xml = $@""<?xml version=\""""1.0\"""" encoding=\""""utf-8\""""?>
@@ -207,6 +210,7 @@ namespace MasterBuilder.Templates.Controllers
         /// <summary>
         /// Error page
         /// </summary>
+        [Route(""/Error"")]
         public IActionResult Error()
         {{
             return View();
@@ -216,7 +220,6 @@ namespace MasterBuilder.Templates.Controllers
                         usings.Add($"using {Project.InternalName}.CoreModels;");
                         usings.Add($"using {Project.InternalName}.Extensions;");
                     }
-                    classAttributes = null;
                 }
             } 
 
@@ -239,7 +242,7 @@ namespace {Project.InternalName}.Controllers
     /// <summary>
     /// Controller for the {Screen.Title} Screen
     /// </summary>
-    {classAttributes}
+    [Route(""api/[controller]"")]
     public class {Screen.InternalName}Controller : Controller
     {{
 {string.Join(Environment.NewLine, privateFields)}
