@@ -2312,6 +2312,25 @@ namespace MasterBuilder
                                     },
                                     new FormField
                                     {
+                                        // Parent Entity
+                                        EntityPropertyId = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}"),
+                                        VisibilityExpression = new Expression
+                                        {
+                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            Operator = Request.Enumerations.ExpressionOperator.In,
+                                            UniqueidentifierValues = new Guid[]
+                                            {
+                                                // Parent Relationship One To Many
+                                                new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"),
+                                                // Reference Relationship
+                                                new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"),
+                                                // Parent Relationship One To One
+                                                new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}")
+                                            }
+                                        }
+                                    },
+                                    new FormField
+                                    {
                                         EntityPropertyId = new Guid("{62FE9985-98A3-4D40-BC68-8AF641FDABFC}"),
                                         Title = "Default Value", // Integer
                                         VisibilityExpression = new Expression

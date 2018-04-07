@@ -1,7 +1,6 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MasterBuilder.Templates.Controllers
 {
@@ -33,6 +32,8 @@ namespace MasterBuilder.Templates.Controllers
                 // Create Controller & Models for UI
                 templates.Add(new ControllerTemplate(Project, screen));
             }
+
+            templates.Add(new HomeControllerTemplate(Project));
 
             return templates;
         }
