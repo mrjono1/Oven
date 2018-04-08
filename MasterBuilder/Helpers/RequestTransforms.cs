@@ -14,35 +14,41 @@ namespace MasterBuilder.Helpers
         internal static IEnumerable<ScreenSectionEntityFormFields> GetScreenSectionEntityFields(Screen screen, Guid? entityId = null)
         {
             var result = new List<ScreenSectionEntityFormFields>();
-            var defaultScreenSection = new ScreenSection();
 
             var groupedFormScreenSections = (from ss in screen.ScreenSections
                                              where ss.ScreenSectionType == ScreenSectionType.Form
                                              select ss)
-                                   .GroupBy(ss => ss.ParentScreenSection ?? defaultScreenSection)
-                                   .Select(a => new { a.Key, Values = a.ToArray() }).ToDictionary(t => t.Key, t => t.Values);
+                                   .GroupBy(ss => new
+                                   {
+                                       ParentSection = ss.ParentScreenSection,
+                                       ss.Entity
+                                   })
+                                   .Select(a => new { a.Key.ParentSection, Values = a.ToArray() });
 
             foreach (var group in groupedFormScreenSections)
             {
                 var children = new List<ScreenSection>();
 
-                foreach (var item in group.Value)
+                foreach (var item in group.Values)
                 {
-                    if (groupedFormScreenSections.ContainsKey(item))
+                    var childSections = (from child in groupedFormScreenSections
+                                        where child.ParentSection == item
+                                        select child.Values).ToList();
+                    if (childSections.Any())
                     {
-                        children.AddRange(groupedFormScreenSections[item]);
+                        childSections.ForEach(cs => children.AddRange(cs));
                         break;
                     }
                 }
 
                 var effe = new ScreenSectionEntityFormFields
                 {
-                    Entity = group.Value.First().Entity,
+                    Entity = group.Values.First().Entity,
                     FormFields = new List<FormField>(),
                     ChildEntities = new List<Entity>()
                 };
 
-                foreach (var ssGroup in (from formSection in @group.Value
+                foreach (var ssGroup in (from formSection in @group.Values
                                          from ff in formSection.FormSection.FormFields
                                          select ff).GroupBy(ff => ff.EntityPropertyId))
                 {

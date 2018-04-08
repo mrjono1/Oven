@@ -33,24 +33,32 @@ namespace MasterBuilder.Templates.Models
             var groupedFormScreenSections = (from ss in Screen.ScreenSections
                                    where ss.ScreenSectionType == ScreenSectionType.Form
                                    select ss)
-                                   .GroupBy(ss => ss.ParentScreenSection ?? defaultScreenSection)
-                                   .Select( a => new { a.Key, Values = a.ToArray() }).ToDictionary( t => t.Key, t => t.Values);
+                                   .GroupBy(ss => new
+                                   {
+                                       ParentSection = ss.ParentScreenSection,
+                                       ss.Entity
+                                   })
+                                   .Select(a => new { a.Key.ParentSection, Values = a.ToArray() });
 
             foreach (var group in groupedFormScreenSections)
             {
                 var children = new List<ScreenSection>();
 
-                foreach (var item in group.Value)
+
+                foreach (var item in group.Values)
                 {
-                    if (groupedFormScreenSections.ContainsKey(item))
+                    var childSections = (from child in groupedFormScreenSections
+                                         where child.ParentSection == item
+                                         select child.Values).ToList();
+                    if (childSections.Any())
                     {
-                        children.AddRange(groupedFormScreenSections[item]);
+                        childSections.ForEach(cs => children.AddRange(cs));
                         break;
                     }
                 }
 
-                templates.Add(new ModelFormResponseTemplate(Project, Screen, group.Value, children));
-                templates.Add(new ModelFormRequestTemplate(Project, Screen, group.Value, children));
+                templates.Add(new ModelFormResponseTemplate(Project, Screen, group.Values, children));
+                templates.Add(new ModelFormRequestTemplate(Project, Screen, group.Values, children));
             }
 
             return templates;

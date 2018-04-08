@@ -2224,6 +2224,63 @@ namespace MasterBuilder
                                     }
                                 }
                             }
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{8B66CCB1-B5BC-4BE3-9C8A-1372B67BC07E}"),
+                            Title = "Search Section",
+                            InternalName = "SearchSection",
+                            EntityId = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}"),
+                            ScreenSectionType = ScreenSectionType.Form,
+                            ParentScreenSectionId = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
+                            VisibilityExpression = new Expression
+                            {
+                                PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                // Search
+                                UniqueidentifierValue = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}")
+                            },
+                            FormSection = new FormSection
+                            {
+                                FormFields = new FormField[]{ }
+                            }
+                        },
+                        new ScreenSection
+                        {
+                            Id = new Guid("{0C12DEEA-2496-48E7-9E1C-045FBC1B01ED}"),
+                            Title = "Search Columns",
+                            InternalName = "SearchColumns",
+                            ScreenSectionType = ScreenSectionType.Search,
+                            EntityId = new Guid("{559E8929-2395-4BFD-AF37-DCA314368DA5}"),
+                            ParentScreenSectionId = new Guid("{8B66CCB1-B5BC-4BE3-9C8A-1372B67BC07E}"),
+                            NavigateToScreenId = new Guid("{E8713635-0B11-491C-BA2F-62D743E5A948}"),
+                            VisibilityExpression = new Expression
+                            {
+                                PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                // Search
+                                UniqueidentifierValue = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}")
+                            },
+                            SearchSection = new SearchSection
+                            {
+                                SearchColumns = new SearchColumn[]
+                                {
+                                    new SearchColumn
+                                    {
+                                        // Entity Property
+                                        EntityPropertyId = new Guid("{8623E412-9601-4A64-9B99-A9439D725B37}")
+                                    },
+                                    new SearchColumn
+                                    {
+                                        // Title
+                                        EntityPropertyId = new Guid("{7334EF78-E75A-45A1-BFB6-122CDDC8281B}")
+                                    },
+                                    new SearchColumn
+                                    {
+                                        EntityPropertyId = new Guid("{483D2C5E-1C04-4C2E-8468-4753D3F88996}")
+                                    }
+                                }
+                            }
                         }
                     }
                 },
@@ -2245,6 +2302,27 @@ namespace MasterBuilder
                             ScreenSectionType = ScreenSectionType.Form,
                             Title = "Form Field",
                             InternalName = "FormField"
+                        }
+                    }
+                },
+                #endregion
+                #region Search Column Screen
+                new Screen
+                {
+                    Id = new Guid("{E8713635-0B11-491C-BA2F-62D743E5A948}"),
+                    EntityId = new Guid("{559E8929-2395-4BFD-AF37-DCA314368DA5}"),
+                    Path = "search-column",
+                    ScreenType = ScreenType.Form,
+                    Title = "Search Column",
+                    ScreenSections = new ScreenSection[]
+                    {
+                        new ScreenSection
+                        {
+                            Id = new Guid("{036D2648-F1DB-4C22-9D20-8DB8BA386D81}"),
+                            EntityId = new Guid("{559E8929-2395-4BFD-AF37-DCA314368DA5}"),
+                            ScreenSectionType = ScreenSectionType.Form,
+                            Title = "Search Column",
+                            InternalName = "SearchColumn"
                         }
                     }
                 },
