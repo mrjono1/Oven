@@ -24,7 +24,7 @@ namespace MasterBuilder.Templates.Controllers
 
             return $@"
         /// <summary>
-        /// {formField.Title} Reference Search
+        /// {formField.TitleValue} Reference Search
         /// </summary>
         [HttpPost(""{formField.Property.InternalName}References"")]
         [ProducesResponseType(typeof({responseClassName}), 200)]
