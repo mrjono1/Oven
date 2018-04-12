@@ -156,7 +156,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                             where ff.EntityPropertyId == expression.PropertyId
                             select ff).Single();
 
-            return $@"this.{Screen.InternalName.Camelize()}Form.get('{property.InternalNameTypeScript}').value";
+            return $@"(this.{Screen.InternalName.Camelize()}Form.get('{property.InternalNameTypeScript}') ? this.{Screen.InternalName.Camelize()}Form.get('{property.InternalNameTypeScript}').value : undefined)";
         }
 
         private string GetRight(Expression expression, PropertyType propertyType)
