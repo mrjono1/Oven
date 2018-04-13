@@ -3278,5 +3278,171 @@ namespace MasterBuilder
 #endregion
             };
         }
+
+        private IEnumerable<Entity> DefaultEntities()
+        {
+            return new Entity[]
+            {
+                new Entity("User")
+                {
+                    Id = new Guid("{2DC156C4-8A0E-4DE8-92A5-922C450473CF}"),
+                    Title = "User",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{E3B517D7-703F-4867-9100-482ACC9A45CE}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{D75F1D27-A656-46F2-9117-5A9F39E56723}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyType.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid(""),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        }
+
+                    }
+                },
+                new Entity("UserRole")
+                {
+                    Id = new Guid("{F2C7B8A9-1C8B-4E38-A964-2E98361DA5AE}"),
+                    Title = "User Role",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{B95C164B-11FB-46F4-9012-FB162F93B221}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{7AD3D455-2EAB-471C-B137-EDD91A8B7366}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyType.String,
+                            Title = "Title"
+                        }
+
+                    }
+                },
+                new Entity("Role")
+                {
+                    Id = new Guid("{AD16B078-26F8-4544-B8F7-AF2EA3298C01}"),
+                    Title = "Role",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{C6A6C38D-5635-426C-8686-F34E4D3406BF}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{BEC9721C-7F62-4DBA-9C65-6A0A970966E7}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyType.String,
+                            Title = "Title",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{D958367C-5B31-4B00-9851-0F16ED7AD33D}"),
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        }
+
+                    }
+                },
+                new Entity("Audit")
+                {
+                    Id = new Guid("{E10D2B13-C11E-4962-AAFA-EDCFD6905E4B}"),
+                    Title = "Audit",
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{BA67C0BC-D99D-475B-A225-B553AF8E2931}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{FCE53DDA-2FDE-401E-8359-8B2B405860D6}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyType.String,
+                            Title = "Title"
+                        },
+                        new Property("Action")
+                        {
+                            Id = new Guid("{FD589DEB-B68D-4AE3-BB06-1A6209105761}"),
+                            Title = "Action",
+                            PropertyType = PropertyType.ReferenceRelationship,
+                            ParentEntityId = new Guid("{31509CCC-920D-443E-A4CA-EB71C9A98CAB}")
+                        }
+                    }
+                },
+                new Entity("Action")
+                {
+                    Id = new Guid("{31509CCC-920D-443E-A4CA-EB71C9A98CAB}"),
+                    Title = "Action",
+                    EntityTemplate = Request.EntityTemplate.Reference,
+                    Properties = new Property[]
+                    {
+                        new Property()
+                        {
+                            Id = new Guid("{6458DE21-695D-4DB1-8FB9-111F03E9AE0D}"),
+                            InternalName = "Id",
+                            PropertyType = PropertyType.PrimaryKey,
+                            Title = "Id"
+                        },
+                        new Property()
+                        {
+                            Id = new Guid("{810DD8DC-DFCC-4B92-AC3C-3B26630E76B2}"),
+                            InternalName = "Title",
+                            PropertyType = PropertyType.String,
+                            Title = "Title",
+                            PropertyTemplate = PropertyTemplate.ReferenceTitle
+                        }
+                    },
+                    Seed = new Seed
+                    {
+                        SeedType = SeedType.EnsureAllUpdated,
+                        JsonData = JsonConvert.SerializeObject(new []
+                        {
+                            new {
+                                Id = new Guid("{DF69FFB1-AFCE-4AAE-B03E-659EC4731731}"),
+                                Title = "Insert"
+                            },
+                            new
+                            {
+                                Id = new Guid("{627E77A7-A973-4F04-9E8A-96E6A1B5B799}"),
+                                Title = "Update"
+                            },
+                            new
+                            {
+                                Id = new Guid("{0AE9F2E5-986F-4CF4-8179-274262C67BE4}"),
+                                Title = "Delete"
+                            }
+                        })
+                    }
+                }
+            };
+        }
     }
 }
