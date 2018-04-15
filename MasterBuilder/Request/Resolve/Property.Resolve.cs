@@ -45,6 +45,8 @@ namespace MasterBuilder.Request
                 ParentEntity = project.Entities.Single(a => a.Id == ParentEntityId.Value);
             }
 
+            Entity = entity;
+
             if (errors.Any())
             {
                 message = string.Join(Environment.NewLine, errors);

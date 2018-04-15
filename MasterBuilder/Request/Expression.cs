@@ -82,6 +82,10 @@ namespace MasterBuilder.Request
         /// Uniqueidentifier Value
         /// </summary>
         public IEnumerable<Guid> UniqueidentifierValues { get; set; }
+        /// <summary>
+        /// Child Property Id
+        /// </summary>
+        public Guid? ChildPropertyId { get; set; }
         #endregion
     }
 }

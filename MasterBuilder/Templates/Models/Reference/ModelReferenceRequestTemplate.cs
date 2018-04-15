@@ -1,5 +1,8 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MasterBuilder.Templates.Models.Reference
 {
@@ -42,7 +45,19 @@ namespace MasterBuilder.Templates.Models.Reference
         /// Get file content
         /// </summary>
         public string GetFileContent()
-        {            
+        {
+            var propertyStrings = new List<string>();
+            if (FormField.Property.FilterExpression != null)
+            {
+                var expressionPartial = new Helpers.CsExpressionPartial(FormField.Property, FormField.Property.FilterExpression);
+                var properties = expressionPartial.GetFilterProperties();
+
+                foreach (var property in properties)
+                {
+                    propertyStrings.Add(ModelReferenceItemPropertyTemplate.Evaluate(property));
+                }
+            }
+
             return $@"using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -69,7 +84,7 @@ namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
         /// <summary>
         /// Query
         /// </summary>
-        public string Query {{ get; set; }}
+        public string Query {{ get; set; }}{(propertyStrings.Any() ? Environment.NewLine : string.Empty)}{string.Join(Environment.NewLine, propertyStrings)}
     }}
 }}";
         }

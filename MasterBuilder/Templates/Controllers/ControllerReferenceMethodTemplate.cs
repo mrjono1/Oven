@@ -22,6 +22,21 @@ namespace MasterBuilder.Templates.Controllers
 
             // TODO: this url needs to be formField specific
 
+            var whereString = $@"where request.Query == null ||
+                        request.Query == """" ||
+                        item.Title.Contains(request.Query)";
+
+            if (formField.Property.FilterExpression != null)
+            {
+                var expressionPartial = new Helpers.CsExpressionPartial(formField.Property, formField.Property.FilterExpression);
+                var expression = expressionPartial.GetExpression("item", "request");
+
+                whereString = $@"where ({expression}) &&
+                        (request.Query == null ||
+                        request.Query == """" ||
+                        item.Title.Contains(request.Query))";
+            }
+
             return $@"
         /// <summary>
         /// {formField.TitleValue} Reference Search
@@ -42,8 +57,7 @@ namespace MasterBuilder.Templates.Controllers
             }}
 
             var query = from item in _context.{entity.InternalNamePlural}
-                        where request.Query == null || request.Query == """" ||
-                        item.Title.Contains(request.Query)
+                        {whereString}
                         select new
                         {{
                             item.Id,

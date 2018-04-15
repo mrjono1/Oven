@@ -6,37 +6,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MasterBuilder.Templates.ClientApp.App.Evaluate
+namespace MasterBuilder.Templates.Helpers
 {
     /// <summary>
-    /// Generate an TypeScript expression
+    /// Generate an C# expression
     /// </summary>
-    public class TsExpressionPartial
+    public class CsExpressionPartial
     {
-        private readonly Screen Screen;
-        private readonly IEnumerable<ScreenSection> ScreenSections;
+        private readonly Property Property;
+        private readonly Expression Expression;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="screen">The Screen</param>
-        /// <param name="screenSections">FormSections</param>
-        public TsExpressionPartial(Screen screen, IEnumerable<ScreenSection> screenSections)
+        /// <param name="property">The property</param>
+        /// <param name="expression">The Expression</param>
+        public CsExpressionPartial(Property property, Expression expression)
         {
-            Screen = screen;
-            ScreenSections = screenSections;
+            Property = property;
+            Expression = expression;
         }
 
         /// <summary>
         /// Get Generated Experession
         /// </summary>
-        public string GetExpression(Expression expression)
+        public string GetExpression(string objectName, string inputObjectName, Expression expression = null)
         {
-            var propertyType = GetPropertyType(expression);
+            if (expression == null)
+            {
+                expression = Expression;
+            }
+            var propertyType = GetPropertyType();
 
-            var firstPart = GetLeft(expression);
+            var firstPart = GetLeft(expression, objectName);
             var @operator = GetOperator(expression);
-            var secondPart = GetRight(expression, propertyType);
+            var secondPart = GetRight(expression, propertyType, inputObjectName);
 
             if (IsBasicOperation(expression))
             {
@@ -56,30 +60,26 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
             }
         }
 
-        internal IEnumerable<Property> GetFilterProperties(Expression expression)
+        internal IEnumerable<Property> GetFilterProperties()
         {
             var properties = new List<Property>();
 
-
-            var formField = (from screenSection in ScreenSections
-                            where screenSection.ScreenSectionType == ScreenSectionType.Form
-                            from ff in screenSection.FormSection.FormFields
-                            where ff.EntityPropertyId == expression.PropertyId
-                            select ff).Single();
-
-            properties.Add(formField.Property);
+            var property = Property.Entity.Properties.SingleOrDefault(prop => prop.Id == Expression.PropertyId.Value);
+            if (property != null)
+            {
+                properties.Add(property);
+            }
 
             return properties;
         }
 
-        private PropertyType GetPropertyType(Expression expression)
+        /// <summary>
+        /// Resolve User Types to data types
+        /// </summary>
+        /// <returns>A data type</returns>
+        private PropertyType GetPropertyType()
         {
-            var property = (from screenSection in ScreenSections
-                            where screenSection.ScreenSectionType == ScreenSectionType.Form
-                            from ff in screenSection.FormSection.FormFields
-                            where ff.EntityPropertyId == expression.PropertyId
-                            select ff).Single();
-            switch (property.PropertyType)
+            switch (Property.PropertyType)
             {
                 case PropertyType.ParentRelationshipOneToMany:
                 case PropertyType.PrimaryKey:
@@ -87,7 +87,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                 case PropertyType.ParentRelationshipOneToOne:
                     return PropertyType.Uniqueidentifier;
                 default:
-                    return property.PropertyType;
+                    return Property.PropertyType;
             }
         }
 
@@ -138,9 +138,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
             switch (expression.Operator)
             {
                 case ExpressionOperator.Equal:
-                    return "===";
+                    return "==";
                 case ExpressionOperator.NotEqual:
-                    return "!==";
+                    return "!=";
                 case ExpressionOperator.GreaterThan:
                     return ">";
                 case ExpressionOperator.GreaterThanOrEqual:
@@ -154,9 +154,9 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                 case ExpressionOperator.NotIn:
                     throw new NotImplementedException("Not In Operator not implemented");
                 case ExpressionOperator.IsNull:
-                    return "=== null || === undefined";
+                    return "== null";
                 case ExpressionOperator.IsNotNull:
-                    return "!== null && !== undefined";
+                    return "!= null";
                 case ExpressionOperator.Like:
                     throw new NotImplementedException("Like Operator not implemented");
             }
@@ -164,18 +164,14 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
             throw new InvalidOperationException("operator not defined");
         }
 
-        private string GetLeft(Expression expression)
+        private string GetLeft(Expression expression, string objectName)
         {
-            var property = (from screenSection in ScreenSections
-                            where screenSection.ScreenSectionType == ScreenSectionType.Form
-                            from ff in screenSection.FormSection.FormFields
-                            where ff.EntityPropertyId == expression.PropertyId
-                            select ff).Single();
+            var property = Property.Entity.Properties.SingleOrDefault(prop => prop.Id == expression.PropertyId.Value);
 
-            return $@"(this.{Screen.InternalName.Camelize()}Form.get('{property.InternalNameTypeScript}') ? this.{Screen.InternalName.Camelize()}Form.get('{property.InternalNameTypeScript}').value : undefined)";
+            return $@"{objectName}.{property.InternalNameCSharp}";
         }
 
-        private string GetRight(Expression expression, PropertyType propertyType)
+        private string GetRight(Expression expression, PropertyType propertyType, string inputObjectName)
         {
             switch (propertyType)
             {
@@ -206,7 +202,15 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
                     }
                     break;
                 case PropertyType.Uniqueidentifier:
-                    if (expression.UniqueidentifierValue.HasValue)
+                    if (expression.ChildPropertyId.HasValue)
+                    {
+                        if (Property.ParentEntity != null)
+                        {
+                            var childProperty = Property.ParentEntity.Properties.SingleOrDefault(prop => prop.Id == expression.ChildPropertyId.Value);
+                            return $@"{inputObjectName}.{childProperty.InternalNameCSharp}";
+                        }
+                    }
+                    else if (expression.UniqueidentifierValue.HasValue)
                     {
                         return $@"'{expression.UniqueidentifierValue.ToString().ToLowerInvariant()}'";
                     }

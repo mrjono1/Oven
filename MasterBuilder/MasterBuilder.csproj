@@ -18,10 +18,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineConstants>TRACE;DEBUG;NETCOREAPP2_0</DefineConstants>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Folder Include="Templates\Helpers\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Dropbox" Version="0.16.0" />

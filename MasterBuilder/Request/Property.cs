@@ -163,29 +163,33 @@ namespace MasterBuilder.Request
         {
             get
             {
+                return GetTypeCs(Required);
+            }
+        }
 
-                switch (PropertyType)
-                {
-                    case PropertyType.PrimaryKey:
-                        return "Guid";
-                    case PropertyType.ParentRelationshipOneToMany:
-                    case PropertyType.ReferenceRelationship:
-                        return $"Guid{(!Required ? "?": string.Empty)}";
-                    case PropertyType.String:
-                        return "string";
-                    case PropertyType.Integer:
-                        return $"int{(!Required ? "?" : string.Empty)}";
-                    case PropertyType.Double:
-                        return $"double{(!Required ? "?" : string.Empty)}";
-                    case PropertyType.DateTime:
-                        return "DateTime";
-                    case PropertyType.Boolean:
-                        return $"bool{(!Required ? "?" : string.Empty)}";
-                    case PropertyType.Spatial:
-                        return $"string";
-                    default:
-                        return "string";
-                }
+        internal string GetTypeCs(bool required)
+        {
+            switch (PropertyType)
+            {
+                case PropertyType.PrimaryKey:
+                    return "Guid";
+                case PropertyType.ParentRelationshipOneToMany:
+                case PropertyType.ReferenceRelationship:
+                    return $"Guid{(!required ? "?" : string.Empty)}";
+                case PropertyType.String:
+                    return "string";
+                case PropertyType.Integer:
+                    return $"int{(!required ? "?" : string.Empty)}";
+                case PropertyType.Double:
+                    return $"double{(!required ? "?" : string.Empty)}";
+                case PropertyType.DateTime:
+                    return "DateTime";
+                case PropertyType.Boolean:
+                    return $"bool{(!required ? "?" : string.Empty)}";
+                case PropertyType.Spatial:
+                    return $"string";
+                default:
+                    return "string";
             }
         }
 
@@ -217,6 +221,24 @@ namespace MasterBuilder.Request
         }
 
         /// <summary>
+        /// Internal Name Type Script
+        /// </summary>
+        internal string InternalNameTypeScript
+        {
+            get
+            {
+                switch (PropertyType)
+                {
+                    case PropertyType.ParentRelationshipOneToMany:
+                    case PropertyType.ReferenceRelationship:
+                        return $"{InternalName}Id".Camelize();
+                    default:
+                        return InternalName.Camelize();
+                }
+            }
+        }
+
+        /// <summary>
         /// Validation Items
         /// </summary>
         public IEnumerable<Validation> ValidationItems { get; set; }
@@ -236,12 +258,38 @@ namespace MasterBuilder.Request
         /// Default Boolean Value
         /// </summary>
         public bool? DefaultBooleanValue { get; set; }
+        /// <summary>
+        /// Server Side Filter Expression
+        /// </summary>
+        public Expression FilterExpression { get; set; }
 
         #region Internal Helper Properties
+        /// <summary>
+        /// The entity that this property is on
+        /// </summary>
+        internal Entity Entity { get; set; }
         /// <summary>
         /// Parent Entity
         /// </summary>
         internal Entity ParentEntity { get; set; }
+
+        /// <summary>
+        /// Internal Name C#
+        /// </summary>
+        internal string InternalNameCSharp
+        {
+            get
+            {
+                switch (PropertyType)
+                {
+                    case PropertyType.ParentRelationshipOneToMany:
+                    case PropertyType.ReferenceRelationship:
+                        return $"{InternalName}Id";
+                    default:
+                        return InternalName;
+                }
+            }
+        }
         #endregion
     }
 }

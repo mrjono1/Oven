@@ -27,7 +27,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
         public IEnumerable<ITemplate> GetTemplates()
         {
             var templates = new List<ITemplate>();
-            var hasReference = false;
+            
             foreach (var screen in Project.Screens)
             {
                 var referenceFormFields = new List<FormField>();
@@ -65,16 +65,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Models
 
                 foreach (var referenceFormField in referenceFormFields)
                 {
-                    hasReference = true;
+                    templates.Add(new Reference.ReferenceRequestTemplate(Project, screen, referenceFormField));
                     templates.Add(new Reference.ReferenceItemTemplate(Project, screen, referenceFormField));
                     templates.Add(new Reference.ReferenceResponseTemplate(Project, screen, referenceFormField));
                 }
             }
 
-            if (hasReference)
-            {
-                templates.Add(new Reference.ReferenceRequestTemplate());
-            }
             templates.Add(new OperationTemplate());
             
             return templates;

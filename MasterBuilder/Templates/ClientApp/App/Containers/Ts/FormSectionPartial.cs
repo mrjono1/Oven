@@ -63,6 +63,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                     foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
                     {
                         hasReferenceFormField = true;
+                        imports.Add($"import {{ {referenceFormField.ReferenceRequestClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{referenceFormField.ReferenceRequestClass}';");
                         imports.Add($"import {{ {referenceFormField.ReferenceItemClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{referenceFormField.ReferenceItemClass}';");
                         imports.Add($"import {{ {referenceFormField.ReferenceResponseClass} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{referenceFormField.ReferenceResponseClass}';");
                     }
@@ -71,7 +72,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
 
             if (hasReferenceFormField)
             {
-                imports.Add("import { ReferenceRequest } from '../../models/ReferenceRequest';");
                 imports.Add($"import {{ {Screen.InternalName}Service }} from '../../shared/{Screen.InternalName.ToLowerInvariant()}.service';");
             }
 
@@ -211,16 +211,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 initSections.Add($"                this.{Screen.InternalName.Camelize()}.{parentProperty.InternalName.Camelize()}Id = params.{parentEnitity.InternalName.Camelize()}Id;");
             }
 
-            // TODO: implement child sections
-            //var childSections = (from formSection in ScreenSections
-            //                     where formSection.ParentEntityPropertyId.HasValue
-            //                     select formSection).ToArray();
-
-            //foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty))
-            //{
-            //    initSections.Add($"                this.{Screen.InternalName.Camelize()}.{childItem.Key.InternalName.Camelize()} = new {childItem.Key.ParentEntity.InternalName}();");
-            //}
-
             lines.Add($@"        this.route.params.subscribe(params => {{
             if (params['id']) {{
                 this.new = false;
@@ -239,7 +229,26 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             {
                 foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
                 {
-                    lines.Add($@"        this.{Screen.InternalName.Camelize()}Service.get{referenceFormField.Property.InternalName}References(null , 1, 100).subscribe((result: any) => {{
+                    var parameters = new List<string>
+                    {
+                        "null",
+                        "1",
+                        "100"
+                    };
+
+                    if (referenceFormField.Property.FilterExpression != null)
+                    {
+                        var expressionPartial = new Evaluate.TsExpressionPartial(Screen, Screen.ScreenSections);
+                        var properties = expressionPartial.GetFilterProperties(referenceFormField.Property.FilterExpression);
+
+                        foreach (var property in properties)
+                        {
+                            // TODO: use form properties
+                            parameters.Add($@"params.id");
+                        }
+                    }
+
+                    lines.Add($@"        this.{Screen.InternalName.Camelize()}Service.get{referenceFormField.Property.InternalName}References({string.Join(", ", parameters)}).subscribe((result: any) => {{
             if (result != null) {{
                 this.{referenceFormField.Property.InternalName.Camelize()}Reference.items = result.items;
             }}

@@ -174,10 +174,9 @@ namespace MasterBuilder
                 },
                 #endregion
                 #region Entity Entity
-                new Entity()
+                new Entity("Entity")
                 {
                     Id = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
-                    InternalName = "Entity",
                     Title = "Entity",
                     Properties = new Property[]
                     {
@@ -576,10 +575,9 @@ namespace MasterBuilder
                     }
                 },
                 #region Screen Entity
-                new Entity()
+                new Entity("Screen")
                 {
                     Id = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
-                    InternalName = "Screen",
                     Title = "Screen",
                     Properties = new Property[]
                     {
@@ -638,7 +636,13 @@ namespace MasterBuilder
                             InternalName = "Entity",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity",
-                            ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
+                            ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")//,
+                            //FilterExpression = new Expression
+                            //{
+                            //    PropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
+                            //    Operator = Request.Enumerations.ExpressionOperator.Equal,
+                            //    ChildPropertyId = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}")
+                            //}
                         },
                         new Property()
                         {
