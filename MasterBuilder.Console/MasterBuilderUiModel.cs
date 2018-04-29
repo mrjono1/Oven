@@ -160,7 +160,13 @@ namespace MasterBuilder
                             InternalName = "DefaultScreen",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Default Screen",
-                            ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
+                            ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                            FilterExpression = new Expression
+                            {
+                                PropertyId = new Guid("{C3E14B66-FF43-478A-95D0-39524F6555B5}"),
+                                Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                ChildPropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}")
+                            }
                         }
                     }
                 },

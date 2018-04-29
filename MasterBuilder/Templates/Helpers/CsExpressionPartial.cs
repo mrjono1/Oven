@@ -168,7 +168,14 @@ namespace MasterBuilder.Templates.Helpers
         {
             var property = Property.Entity.Properties.SingleOrDefault(prop => prop.Id == expression.PropertyId.Value);
 
-            return $@"{objectName}.{property.InternalNameCSharp}";
+            if (property.PropertyType == PropertyType.PrimaryKey)
+            {
+                return $@"{objectName}.{property.Entity.InternalName}{property.InternalNameCSharp}";
+            }
+            else
+            {
+                return $@"{objectName}.{property.InternalNameCSharp}";
+            }
         }
 
         private string GetRight(Expression expression, PropertyType propertyType, string inputObjectName)

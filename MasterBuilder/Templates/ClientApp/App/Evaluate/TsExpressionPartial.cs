@@ -56,20 +56,18 @@ namespace MasterBuilder.Templates.ClientApp.App.Evaluate
             }
         }
 
-        internal IEnumerable<Property> GetFilterProperties(Expression expression)
+        internal IEnumerable<FormField> GetFilterProperties(Expression expression)
         {
-            var properties = new List<Property>();
-
-
+            var formFields = new List<FormField>();
+            
             var formField = (from screenSection in ScreenSections
-                            where screenSection.ScreenSectionType == ScreenSectionType.Form
-                            from ff in screenSection.FormSection.FormFields
-                            where ff.EntityPropertyId == expression.PropertyId
-                            select ff).Single();
+                                where screenSection.ScreenSectionType == ScreenSectionType.Form
+                                from ff in screenSection.FormSection.FormFields
+                                where ff.EntityPropertyId == expression.PropertyId
+                                select ff).Single();
+            formFields.Add(formField);
 
-            properties.Add(formField.Property);
-
-            return properties;
+            return formFields;
         }
 
         private PropertyType GetPropertyType(Expression expression)

@@ -15,12 +15,24 @@ namespace MasterBuilder.Templates.Models
         /// </summary>
         public static string Evaluate(Property property)
         {
-            return $@"        /// <summary>
+            if (property.PropertyType == PropertyType.PrimaryKey)
+            {
+                return $@"        /// <summary>
+        /// {property.Entity.Title} {property.Title}
+        /// </summary>
+        [Display(Name = ""{property.Entity.Title} {property.Title}"")]
+        [Required]
+        public {property.GetTypeCs(true)} {property.Entity.InternalName}{property.InternalNameCSharp} {{ get; set; }}";
+            }
+            else
+            {
+                return $@"        /// <summary>
         /// {property.Title}
         /// </summary>
         [Display(Name = ""{property.Title}"")]
         [Required]
         public {property.GetTypeCs(true)} {property.InternalNameCSharp} {{ get; set; }}";
+            }
         }
     }
 }

@@ -97,8 +97,16 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
 
                 foreach (var property in properties)
                 {
-                    parameters.Add($@"{property.InternalNameTypeScript}: {property.TsType}");
-                    propertyAssignment.Add($@"            request.{property.InternalNameTypeScript} = {property.InternalNameTypeScript};");
+                    if (property.PropertyType == PropertyType.PrimaryKey)
+                    {
+                        parameters.Add($@"{property.Property.Entity.InternalName.Camelize()}Id: {property.TypeTypeScript}");
+                        propertyAssignment.Add($@"            request.{property.Property.Entity.InternalName.Camelize()}Id = {property.Property.Entity.InternalName.Camelize()}Id;");
+                    }
+                    else
+                    {
+                        parameters.Add($@"{property.InternalNameTypeScript}: {property.TypeTypeScript}");
+                        propertyAssignment.Add($@"            request.{property.InternalNameTypeScript} = {property.InternalNameTypeScript};");
+                    }
                 }
             }
 

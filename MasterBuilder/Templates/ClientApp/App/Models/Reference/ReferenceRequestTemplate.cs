@@ -1,3 +1,4 @@
+using Humanizer;
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
@@ -53,10 +54,20 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
 
                 foreach (var property in properties)
                 {
-                    propertyStrings.Add($@"    /**
+                    if (property.PropertyType == PropertyType.PrimaryKey)
+                    {
+                        propertyStrings.Add($@"    /**
+    * {property.Property.Entity.Title} Id
+    */
+    {property.Property.Entity.InternalName.Camelize()}Id: {property.TypeTypeScript};");
+                    }
+                    else
+                    {
+                        propertyStrings.Add($@"    /**
     * {property.Title}
     */
-    {property.InternalNameTypeScript}: {property.TsType};");
+    {property.InternalNameTypeScript}: {property.TypeTypeScript};");
+                    }
                 }
             }
             return $@"export class {FormField.ReferenceRequestClass} {{

@@ -185,12 +185,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                     if (referenceFormField.Property.FilterExpression != null)
                     {
                         var expressionPartial = new Evaluate.TsExpressionPartial(Screen, Screen.ScreenSections);
-                        var properties = expressionPartial.GetFilterProperties(referenceFormField.Property.FilterExpression);
+                        var formFields = expressionPartial.GetFilterProperties(referenceFormField.Property.FilterExpression);
 
-                        foreach (var property in properties)
+                        foreach (var formField in formFields)
                         {
                             // TODO: use form properties
-                            parameters.Add($@"params.id");
+                            parameters.Add($@"this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameTypeScript}').value");
                         }
                     }
 
