@@ -1,3 +1,4 @@
+using Humanizer;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
@@ -36,11 +37,46 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
             };
         }
 
+        internal string PrivateProperty
+        {
+            get
+            {
+                return $"_{FormField.ReferenceItemClass.Camelize()}";
+            }
+        }
+        internal string DataStore
+        {
+            get
+            {
+                return $"{FormField.ReferenceItemClass.Camelize()}DataStore";
+            }
+        }
+        internal string DataStoreProperty
+        {
+            get
+            {
+                return $"{FormField.ReferenceResponseClass.Camelize().Pluralize()}";
+            }
+        }
+
+        internal IEnumerable<string> Properties()
+        {
+            return new string[]
+            {
+            $@"    private {PrivateProperty}: BehaviorSubject<{FormField.ReferenceItemClass}[]>;",
+            $@"    private {DataStore}: {{
+        {DataStoreProperty}: {FormField.ReferenceItemClass}[]
+    }};"
+            };
+        }
+
         /// <summary>
         /// Method
         /// </summary>
-        internal string Method()
+        internal IEnumerable<string> Method()
         {
+            var methods = new List<string>();
+
             var parameters = new List<string>
             {
                 "query: string",
@@ -62,16 +98,41 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
                 foreach (var property in properties)
                 {
                     parameters.Add($@"{property.InternalNameTypeScript}: {property.TsType}");
-                    propertyAssignment.Add($@"        request.{property.InternalNameTypeScript} = {property.InternalNameTypeScript};");
+                    propertyAssignment.Add($@"            request.{property.InternalNameTypeScript} = {property.InternalNameTypeScript};");
                 }
             }
 
-            return $@"    get{FormField.Property.InternalName}References({string.Join(", ", parameters)}){{
+//            methods.Add($@"    get{FormField.Property.InternalName}References({string.Join(", ", parameters)}){{
+//        let request = new {FormField.ReferenceRequestClass}();
+//{string.Join(Environment.NewLine, propertyAssignment)}
+//        return this.http.post<{FormField.ReferenceResponseClass}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{FormField.Property.InternalName}References`, request);
+//    }}");
+            // Get property
+            methods.Add($@"    /**
+     * Gets an observable list of {FormField.ReferenceItemClass}
+     */
+    get {FormField.Property.InternalName.Camelize()}References() {{
+        return this.{PrivateProperty}.asObservable();
+    }}");
+
+            // Load method
+            methods.Add($@"    load{FormField.Property.InternalName}References({string.Join(", ", parameters)}) {{
         let request = new {FormField.ReferenceRequestClass}();
 {string.Join(Environment.NewLine, propertyAssignment)}
-        return this.http.post<{FormField.ReferenceResponseClass}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{FormField.Property.InternalName}References`, request);
-    }}";
+            this.http.post<{FormField.ReferenceResponseClass}>(`${{this.baseUrl}}/api/{Screen.InternalName}/{FormField.Property.InternalName}References`, request).subscribe(data => {{
+            this.{DataStore}.{DataStoreProperty} = data.items;
+            this.{PrivateProperty}.next(Object.assign({{}}, this.{DataStore}).{DataStoreProperty});
+        }}, error => console.log('Could not load {FormField.ReferenceRequestClass}'));
+    }}");
+            return methods;
+        }
 
+        internal IEnumerable<string> ConstructorExpressions()
+        {
+            return new string[]{
+                $@"        this.{DataStore} = {{ {DataStoreProperty}: [] }};",
+                $@"        this.{PrivateProperty} = <BehaviorSubject<{FormField.ReferenceItemClass}[]>>new BehaviorSubject([]);"
+            };
         }
     }
 }

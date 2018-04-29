@@ -47,7 +47,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Models.Reference
 import {{ Observable }} from 'rxjs/Observable';
 
 export class {FormField.ReferenceResponseClass} {{
-    items: Observable<{FormField.ReferenceItemClass}>;
+    items: {FormField.ReferenceItemClass}[];
     totalPages: number;
     totalItems: number;
 }}";

@@ -110,10 +110,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                 where s.Id == parentProperty.ParentEntityId
                                 select s).SingleOrDefault();
 
-                parentPropertyFilterString = $"(this.{Screen.InternalName.Camelize()} ? this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = this.{Screen.InternalName.Camelize()}.id : null);";
+                parentPropertyFilterString = $"this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = (this.{Screen.InternalName.Camelize()} ? this.{Screen.InternalName.Camelize()}.id : null);";
                 if (ScreenSection.ParentScreenSection != null)
                 {
-                    parentPropertyFilterString = $"(this.{Screen.InternalName.Camelize()} ? (this.{Screen.InternalName.Camelize()}.{parentEntity.InternalName.Camelize()} ? this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = this.{Screen.InternalName.Camelize()}.{parentEntity.InternalName.Camelize()}.id : null) : null);";
+                    parentPropertyFilterString = $"this.{ScreenSection.SearchSection.SearchRequestClass.Camelize()}.{parentEntity.InternalName.Camelize()}Id = (this.{Screen.InternalName.Camelize()} && this.{Screen.InternalName.Camelize()}.{parentEntity.InternalName.Camelize()} ? this.{Screen.InternalName.Camelize()}.{parentEntity.InternalName.Camelize()}.id : null);";
                 }
             }
             return $@"

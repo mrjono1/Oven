@@ -155,12 +155,12 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Html
                 case PropertyType.ReferenceRelationship:
                     control = $@"{new String(' ', 20)}<mat-select placeholder=""{FormField.TitleValue}"" [compareWith]=""referenceCompare"" formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
                            {(FormField.Property.Required ? string.Empty : "<mat-option>--</mat-option>")}
-                           <mat-option *ngFor=""let option of {FormField.Property.InternalName.Camelize()}Reference.items"" [value]=""option.id"">
+                           <mat-option *ngFor=""let option of {FormField.Property.InternalName.Camelize()}DataSource | async"" [value]=""option.id"">
                                 <span>{{{{ option.title }}}}</span>
                             </mat-option>
                         </mat-select>";
 
-                    wrapAttributes = $@" *ngIf=""{FormField.Property.InternalName.Camelize()}Reference && {FormField.Property.InternalName.Camelize()}Reference.items && {FormField.InternalNameTypeScript}Visible()""";
+                    wrapAttributes = $@" *ngIf=""{FormField.Property.InternalName.Camelize()}DataSource && {FormField.InternalNameTypeScript}Visible()""";
                     break;
 
                 case PropertyType.Spatial:

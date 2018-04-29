@@ -165,6 +165,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 functions.AddRange(formSectionPartial.GetVisibilityFunctions());
                 properties.AddRange(formSectionPartial.GetProperties());
                 formControls.AddRange(formSectionPartial.GetFormControls());
+                postSetupForm.AddRange(formSectionPartial.PostSetupForm());
             }
             else
             {

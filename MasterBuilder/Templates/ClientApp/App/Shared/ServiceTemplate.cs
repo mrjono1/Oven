@@ -162,9 +162,10 @@ namespace MasterBuilder.Templates.ClientApp.App.Shared
             {
                 var serviceReferenceMethodTemplate = new ServiceReferenceMethodTemplate(Project, Screen, referenceFormField);
                 imports.AddRange(serviceReferenceMethodTemplate.Imports());
-                methods.Add(serviceReferenceMethodTemplate.Method());
+                methods.AddRange(serviceReferenceMethodTemplate.Method());
+                properties.AddRange(serviceReferenceMethodTemplate.Properties());
+                constructorExperssions.AddRange(serviceReferenceMethodTemplate.ConstructorExpressions());
             }
-
 
             return $@"import {{ Injectable, Inject, Injector }} from '@angular/core';
 import {{ HttpClient }} from '@angular/common/http';

@@ -43,18 +43,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                 "import { ComponentCanDeactivate } from '../../shared/pending.changes.guard';",
                 "import { BaseFormScreen } from '../base.form.screen';"
             };
-
-            // TODO: implement child sections
-            // Convert child properties to objects with properties
-            //var childSections = (from formSection in ScreenSections
-            //                     where formSection.ParentEntityPropertyId.HasValue
-            //                     select formSection).ToArray();
-
-            //foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty))
-            //{
-            //    imports.Add($"import {{ {childItem.Key.ParentEntity.InternalName} }} from '../../models/{Screen.InternalName.ToLowerInvariant()}/{childItem.Key.ParentEntity.InternalName}';");
-            //}
-
+            
             var hasReferenceFormField = false;
             foreach (var screenSection in Screen.ScreenSections)
             {
@@ -100,15 +89,6 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             {
                 "        super();"
             };
-            // TODO: implement child sections
-            //var childSections = (from formSection in ScreenSections
-            //                     where formSection.ParentEntityPropertyId.HasValue
-            //                     select formSection).ToArray();
-
-            //foreach (var childItem in childSections.GroupBy(a => a.ParentEntityProperty))
-            //{
-            //    sections.Add($"this.serverErrorMessages.{childItem.Key.InternalName.Camelize()} = {{}};");
-            //}
 
             return sections;
         }
@@ -129,7 +109,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
                                                 where formField.PropertyType == PropertyType.ReferenceRelationship
                                                 select formField))
             {
-                classProperties.Add($"public {referenceFormField.Property.InternalName.Camelize()}Reference: {referenceFormField.ReferenceResponseClass} = new {referenceFormField.ReferenceResponseClass}();");
+                classProperties.Add($"public {referenceFormField.Property.InternalName.Camelize()}DataSource = new Observable<{referenceFormField.ReferenceItemClass}[]>();");
             }
 
             return classProperties;
@@ -188,6 +168,38 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             return functions;
         }
 
+        internal IEnumerable<string> PostSetupForm()
+        {
+            var lines = new List<string>();
+            foreach (var screenSection in ScreenSections)
+            {
+                foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
+                {
+                    var parameters = new List<string>
+                    {
+                        "null",
+                        "1",
+                        "100"
+                    };
+
+                    if (referenceFormField.Property.FilterExpression != null)
+                    {
+                        var expressionPartial = new Evaluate.TsExpressionPartial(Screen, Screen.ScreenSections);
+                        var properties = expressionPartial.GetFilterProperties(referenceFormField.Property.FilterExpression);
+
+                        foreach (var property in properties)
+                        {
+                            // TODO: use form properties
+                            parameters.Add($@"params.id");
+                        }
+                    }
+
+                    lines.Add($@"        this.{Screen.InternalName.Camelize()}Service.load{referenceFormField.Property.InternalName}References({string.Join(", ", parameters)});");
+                }
+            }
+            return lines;
+        }
+
         /// <summary>
         /// Get on Ng Init Body Sections
         /// </summary>
@@ -229,30 +241,7 @@ namespace MasterBuilder.Templates.ClientApp.App.Containers.Ts
             {
                 foreach (var referenceFormField in screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship))
                 {
-                    var parameters = new List<string>
-                    {
-                        "null",
-                        "1",
-                        "100"
-                    };
-
-                    if (referenceFormField.Property.FilterExpression != null)
-                    {
-                        var expressionPartial = new Evaluate.TsExpressionPartial(Screen, Screen.ScreenSections);
-                        var properties = expressionPartial.GetFilterProperties(referenceFormField.Property.FilterExpression);
-
-                        foreach (var property in properties)
-                        {
-                            // TODO: use form properties
-                            parameters.Add($@"params.id");
-                        }
-                    }
-
-                    lines.Add($@"        this.{Screen.InternalName.Camelize()}Service.get{referenceFormField.Property.InternalName}References({string.Join(", ", parameters)}).subscribe((result: any) => {{
-            if (result != null) {{
-                this.{referenceFormField.Property.InternalName.Camelize()}Reference.items = result.items;
-            }}
-        }});");
+                    lines.Add($@"        this.{referenceFormField.Property.InternalName.Camelize()}DataSource = this.{Screen.InternalName.Camelize()}Service.{referenceFormField.Property.InternalName.Camelize()}References;");
                 }
             }
 
