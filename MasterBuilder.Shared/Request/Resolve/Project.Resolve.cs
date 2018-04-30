@@ -7,7 +7,7 @@ namespace MasterBuilder.Request
     /// <summary>
     /// Project - Resolve
     /// </summary>
-    public partial class Project
+    partial class Project
     {
         /// <summary>
         /// Fills in any missing values and records it can to assist templating

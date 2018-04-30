@@ -43,21 +43,6 @@ namespace MasterBuilder.Request
         [Required]
         [NonDefault]
         public Guid Id { get; set; }
-        private string internalName;
-        /// <summary>
-        /// Calculated Internal Name
-        /// </summary>
-        internal string InternalName
-        {
-            get
-            {
-                if (internalName == null)
-                {
-                    internalName = Title.Dehumanize();
-                }
-                return internalName;
-            }
-        }
         /// <summary>
         /// SEO Meta description
         /// </summary>
@@ -86,6 +71,56 @@ namespace MasterBuilder.Request
         /// </summary>
         public Guid? TemplateId { get; set; }
         /// <summary>
+        /// Screen Features
+        /// </summary>
+        public IEnumerable<ScreenFeature> ScreenFeatures { get; set; }
+        /// <summary>
+        /// Screen Menu Items
+        /// </summary>
+        public IEnumerable<MenuItem> MenuItems { get; set; }
+        /// <summary>
+        /// Screen Sections
+        /// </summary>
+        public ScreenSection[] ScreenSections { get; set; }
+        /// <summary>
+        /// Define child properties and objects by defining a json payload
+        /// </summary>
+        public string DefaultObjectJsonData { get; set; }
+        #region Internal Helpers
+        private string internalName;
+        /// <summary>
+        /// Calculated Internal Name
+        /// </summary>
+        [JsonIgnore]
+        public string InternalName
+        {
+            get
+            {
+                if (internalName == null)
+                {
+                    internalName = Title.Dehumanize();
+                }
+                return internalName;
+            }
+        }
+        // TODO: possibly get rid of this have it section level only
+        /// <summary>
+        /// Screen Type
+        /// </summary>
+        [JsonIgnore]
+        [NotMapped]
+        public ScreenType ScreenType
+        {
+            get
+            {
+                return ScreenTypeDictonary[ScreenTypeId];
+            }
+            set
+            {
+                ScreenTypeId = ScreenTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
+            }
+        }
+        /// <summary>
         /// Screen Template, using a template means the screen will get updated when the template does
         /// </summary>
         [JsonIgnore]
@@ -111,47 +146,15 @@ namespace MasterBuilder.Request
             }
         }
         /// <summary>
-        /// Screen Features
-        /// </summary>
-        public IEnumerable<ScreenFeature> ScreenFeatures { get; set; }
-        /// <summary>
-        /// Screen Menu Items
-        /// </summary>
-        public IEnumerable<MenuItem> MenuItems { get; set; }
-        /// <summary>
-        /// Screen Sections
-        /// </summary>
-        public ScreenSection[] ScreenSections { get; set; }
-        // TODO: possibly get rid of this have it section level only
-        /// <summary>
-        /// Screen Type
-        /// </summary>
-        [JsonIgnore]
-        [NotMapped]
-        public ScreenType ScreenType
-        {
-            get
-            {
-                return ScreenTypeDictonary[ScreenTypeId];
-            }
-            set
-            {
-                ScreenTypeId = ScreenTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
-            }
-        }
-        /// <summary>
-        /// Define child properties and objects by defining a json payload
-        /// </summary>
-        public string DefaultObjectJsonData { get; set; }
-        #region Internal Helpers
-        /// <summary>
         /// Entity
         /// </summary>
-        internal Entity Entity { get; set; }
+        [JsonIgnore]
+        public Entity Entity { get; set; }
         /// <summary>
         /// Form Response Class
         /// </summary>
-        internal string FormResponseClass
+        [JsonIgnore]
+        public string FormResponseClass
         {
             get
             {
@@ -161,7 +164,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Form Request Class
         /// </summary>
-        internal string FormRequestClass
+        [JsonIgnore]
+        public string FormRequestClass
         {
             get
             {

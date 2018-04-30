@@ -73,7 +73,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Pluralised version of the internal name for use in collections
         /// </summary>
-        internal string InternalNamePlural
+        [JsonIgnore]
+        public string InternalNamePlural
         {
             get
             {

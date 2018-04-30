@@ -1,4 +1,4 @@
-namespace MasterBuilder
+namespace MasterBuilder.Shared
 {
     /// <summary>
     /// Builder Settings

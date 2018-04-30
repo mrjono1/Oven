@@ -2,7 +2,6 @@ using System;
 
 namespace MasterBuilder.SourceControl.Models
 {
-
     /// <summary>
     /// VSTS API object
     /// </summary>

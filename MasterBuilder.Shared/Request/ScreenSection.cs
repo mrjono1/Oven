@@ -108,7 +108,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Form Response Class
         /// </summary>
-        internal string FormResponseClass
+        [JsonIgnore]
+        public string FormResponseClass
         {
             get
             {
@@ -118,7 +119,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Form Request Class
         /// </summary>
-        internal string FormRequestClass
+        [JsonIgnore]
+        public string FormRequestClass
         {
             get
             {
@@ -128,11 +130,13 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Entity
         /// </summary>
-        internal Entity Entity { get; set; }
+        [JsonIgnore]
+        public Entity Entity { get; set; }
         /// <summary>
         /// Parent Screen Section, for nested sections
         /// </summary>
-        internal ScreenSection ParentScreenSection { get; set; }
+        [JsonIgnore]
+        public ScreenSection ParentScreenSection { get; set; }
         #endregion
     }
 }

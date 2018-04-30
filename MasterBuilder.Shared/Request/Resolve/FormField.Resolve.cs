@@ -5,7 +5,7 @@ using System.Text;
 
 namespace MasterBuilder.Request
 {
-    public partial class FormField
+    partial class FormField
     {
         internal bool Resolve(Project project, Screen screen, ScreenSection screenSection, out string message)
         {

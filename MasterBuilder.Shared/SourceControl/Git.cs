@@ -34,7 +34,7 @@ namespace MasterBuilder.SourceControl
         /// <summary>
         /// Setup and Get Repositories
         /// </summary>
-        internal async Task<Dictionary<string, Models.GetRepository>> SetupAndGetRepos()
+        public async Task<Dictionary<string, Models.GetRepository>> SetupAndGetRepos()
         {
             var vsts = new VisualStudioTeamServices(Username, Project.InternalName, PersonalAccessToken);
             var project = await vsts.GetProject();
@@ -80,7 +80,7 @@ namespace MasterBuilder.SourceControl
         /// <summary>
         /// Ensure Repository is Intitialised
         /// </summary>
-        internal async Task<Models.GetRepository> EnsureRepoistoryIsInitialised(string name, string directory, Models.GetRepository repo, VisualStudioTeamServices vsts)
+        public async Task<Models.GetRepository> EnsureRepoistoryIsInitialised(string name, string directory, Models.GetRepository repo, VisualStudioTeamServices vsts)
         {
             if (repo == null)
             {
@@ -123,7 +123,7 @@ namespace MasterBuilder.SourceControl
         /// <summary>
         /// Pull
         /// </summary>
-        internal void Pull(Models.GetRepository getRepository)
+        public void Pull(Models.GetRepository getRepository)
         {
             var path = Path.Combine(BaseDirectory, getRepository.Name);
 
@@ -166,7 +166,7 @@ namespace MasterBuilder.SourceControl
         /// <summary>
         /// Stage, Commit, and Push
         /// </summary>
-        internal void StageCommitPush(Models.GetRepository getRepository, string message)
+        public void StageCommitPush(Models.GetRepository getRepository, string message)
         {
             var path = Path.Combine(BaseDirectory, getRepository.Name);
 
@@ -207,7 +207,7 @@ namespace MasterBuilder.SourceControl
             }
         }
 
-        internal bool FolderChanged(Models.GetRepository getRepository, string folder)
+        public bool FolderChanged(Models.GetRepository getRepository, string folder)
         {
             var path = Path.Combine(BaseDirectory, getRepository.Name);
 

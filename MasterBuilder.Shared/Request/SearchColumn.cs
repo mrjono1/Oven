@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,11 +27,13 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Property
         /// </summary>
-        internal Property Property { get; set; }
+        [JsonIgnore]
+        public Property Property { get; set; }
         /// <summary>
         /// Use Title specifed or if blank used Property Title
         /// </summary>
-        internal string TitleValue
+        [JsonIgnore]
+        public string TitleValue
         {
             get
             {
@@ -47,7 +50,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Internal Name C#
         /// </summary>
-        internal string InternalNameCSharp
+        [JsonIgnore]
+        public string InternalNameCSharp
         {
             get
             {
@@ -65,7 +69,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Property Type
         /// </summary>
-        internal PropertyType PropertyType
+        [JsonIgnore]
+        public PropertyType PropertyType
         {
             get
             {
@@ -75,7 +80,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Type C#
         /// </summary>
-        internal string TypeCSharp
+        [JsonIgnore]
+        public string TypeCSharp
         {
             get
             {
@@ -88,7 +94,8 @@ namespace MasterBuilder.Request
                 }
             }
         }
-        internal string TypeTs
+        [JsonIgnore]
+        public string TypeTs
         {
             get
             {

@@ -1,3 +1,4 @@
+using MasterBuilder.Shared;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -168,42 +169,42 @@ namespace MasterBuilder
             }
             #endregion
 
-            #region Data Access Layer Project
-            projectWriter.SetProjectDirectory(dalProjectDirectory);
+            //#region Data Access Layer Project
+            //projectWriter.SetProjectDirectory(dalProjectDirectory);
 
-            // Project Files
-            projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ProjectTemplate(project));
-            projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ApplicationDbContextTemplate(project));
-            projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ApplicationDbContextFactoryTemplate(project));
+            //// Project Files
+            //projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ProjectTemplate(project));
+            //projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ApplicationDbContextTemplate(project));
+            //projectWriter.AddTemplate(new Templates.DataAccessLayer.ProjectFiles.ApplicationDbContextFactoryTemplate(project));
 
-            // Entities
-            projectWriter.AddTemplate(new Templates.DataAccessLayer.Entities.EntityTemplateBuilder(project));
+            //// Entities
+            //projectWriter.AddTemplate(new Templates.DataAccessLayer.Entities.EntityTemplateBuilder(project));
 
-            // Entity Type Config
-            projectWriter.AddTemplate(new Templates.DataAccessLayer.EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project));
+            //// Entity Type Config
+            //projectWriter.AddTemplate(new Templates.DataAccessLayer.EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project));
 
-            errors = await projectWriter.WriteAndClean();
+            //errors = await projectWriter.WriteAndClean();
 
-            if (!string.IsNullOrEmpty(errors))
-            {
-                return errors;
-            }
-            #endregion
+            //if (!string.IsNullOrEmpty(errors))
+            //{
+            //    return errors;
+            //}
+            //#endregion
 
-            if (builderSettings.CreateMigrations)
-            {
-                var dalProjectChanged = git.FolderChanged(repos[project.InternalName], $"{project.InternalName}.DataAccessLayer");
+            //if (builderSettings.CreateMigrations)
+            //{
+            //    var dalProjectChanged = git.FolderChanged(repos[project.InternalName], $"{project.InternalName}.DataAccessLayer");
 
-                if (dalProjectChanged)
-                {
-                    var migration = new Migrations.Migration(dalProjectDirectory);
-                    var migrationResult = await migration.Migrate();
-                    if (!migrationResult.Success)
-                    {
-                        return $"Migration Generation Failed: {migrationResult.Message}";
-                    }
-                }
-            }
+            //    if (dalProjectChanged)
+            //    {
+            //        var migration = new Migrations.Migration(dalProjectDirectory);
+            //        var migrationResult = await migration.Migrate();
+            //        if (!migrationResult.Success)
+            //        {
+            //            return $"Migration Generation Failed: {migrationResult.Message}";
+            //        }
+            //    }
+            //}
 
             if (builderSettings.GitPushOn)
             {

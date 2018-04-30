@@ -1,4 +1,5 @@
 using Humanizer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -35,15 +36,18 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Project
         /// </summary>
-        internal Project Project { get; set; }
+        [JsonIgnore]
+        public Project Project { get; set; }
         /// <summary>
         /// Entity Property
         /// </summary>
-        internal Property Property { get; set; }
+        [JsonIgnore]
+        public Property Property { get; set; }
         /// <summary>
         /// Use Title specifed or if blank used Property Title
         /// </summary>
-        internal string TitleValue
+        [JsonIgnore]
+        public string TitleValue
         {
             get
             {
@@ -60,7 +64,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Property Type
         /// </summary>
-        internal PropertyType PropertyType
+        [JsonIgnore]
+        public PropertyType PropertyType
         {
             get
             {
@@ -70,7 +75,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Internal Name C#
         /// </summary>
-        internal string InternalNameCSharp
+        [JsonIgnore]
+        public string InternalNameCSharp
         {
             get
             {
@@ -87,7 +93,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Internal Name Alternate
         /// </summary>
-        internal string InternalNameAlternateCSharp
+        [JsonIgnore]
+        public string InternalNameAlternateCSharp
         {
             get
             {
@@ -103,7 +110,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Internal Name Type Script
         /// </summary>
-        internal string InternalNameTypeScript
+        [JsonIgnore]
+        public string InternalNameTypeScript
         {
             get
             {
@@ -120,7 +128,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Internal Name Alternate
         /// </summary>
-        internal string InternalNameAlternateTypeScript
+        [JsonIgnore]
+        public string InternalNameAlternateTypeScript
         {
             get
             {
@@ -136,7 +145,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Type C#
         /// </summary>
-        internal string TypeCSharp
+        [JsonIgnore]
+        public string TypeCSharp
         {
             get
             {
@@ -155,7 +165,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Type TypeScript
         /// </summary>
-        internal string TypeTypeScript
+        [JsonIgnore]
+        public string TypeTypeScript
         {
             get
             {
@@ -165,7 +176,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Reference Request Class
         /// </summary>
-        internal string ReferenceRequestClass
+        [JsonIgnore]
+        public string ReferenceRequestClass
         {
             get
             {
@@ -175,7 +187,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Reference Item Class
         /// </summary>
-        internal string ReferenceItemClass
+        [JsonIgnore]
+        public string ReferenceItemClass
         {
             get
             {
@@ -185,7 +198,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Reference Response Class
         /// </summary>
-        internal string ReferenceResponseClass
+        [JsonIgnore]
+        public string ReferenceResponseClass
         {
             get
             {

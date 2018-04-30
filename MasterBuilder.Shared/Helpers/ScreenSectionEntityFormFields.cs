@@ -6,7 +6,7 @@ namespace MasterBuilder.Helpers
     /// <summary>
     /// Helper class
     /// </summary>
-    internal class ScreenSectionEntityFormFields
+    public class ScreenSectionEntityFormFields
     {
         /// <summary>
         /// Entity

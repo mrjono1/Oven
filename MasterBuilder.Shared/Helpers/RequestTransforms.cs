@@ -6,12 +6,12 @@ using System;
 
 namespace MasterBuilder.Helpers
 {
-    internal static class RequestTransforms
+    public static class RequestTransforms
     {
         /// <summary>
         /// Get Screen Section Entity Fields
         /// </summary>
-        internal static IEnumerable<ScreenSectionEntityFormFields> GetScreenSectionEntityFields(Screen screen, Guid? entityId = null)
+        public static IEnumerable<ScreenSectionEntityFormFields> GetScreenSectionEntityFields(Screen screen, Guid? entityId = null)
         {
             var result = new List<ScreenSectionEntityFormFields>();
 

@@ -10,7 +10,7 @@ namespace MasterBuilder.Helpers
     /// <summary>
     /// Write a project to the file system
     /// </summary>
-    internal class SolutionWriter
+    public class SolutionWriter
     {
         private List<Task<TemplateResult>> FilesToWrite;
         private string[] CleanDirectoryIngnoreList;
@@ -40,7 +40,7 @@ namespace MasterBuilder.Helpers
         /// <summary>
         /// Add a template
         /// </summary>
-        internal void AddTemplate(params ITemplate[] templates)
+        public void AddTemplate(params ITemplate[] templates)
         {
             foreach (var template in templates)
             {
@@ -62,7 +62,7 @@ namespace MasterBuilder.Helpers
         /// <summary>
         /// Add templates from a template builder
         /// </summary>
-        internal void AddTemplate(ITemplateBuilder templateBuilder)
+        public void AddTemplate(ITemplateBuilder templateBuilder)
         {
             foreach (var template in templateBuilder.GetTemplates())
             {
@@ -73,7 +73,7 @@ namespace MasterBuilder.Helpers
         /// <summary>
         /// Final Step
         /// </summary>
-        internal async Task<string> WriteAndClean()
+        public async Task<string> WriteAndClean()
         {
             var result = await Task.WhenAll(FilesToWrite.ToArray());
 
@@ -92,7 +92,7 @@ namespace MasterBuilder.Helpers
             return null;
         }
 
-        internal void AddFolder(string[] sourceDirectory, string[] destinationDirectory)
+        public void AddFolder(string[] sourceDirectory, string[] destinationDirectory)
         {
             var rootPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase).Substring(6);
 

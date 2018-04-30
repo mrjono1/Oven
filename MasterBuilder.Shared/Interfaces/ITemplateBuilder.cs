@@ -5,7 +5,7 @@ namespace MasterBuilder.Interfaces
     /// <summary>
     /// Standard way of builing mutiple templates
     /// </summary>
-    internal interface ITemplateBuilder
+    public interface ITemplateBuilder
     {
         /// <summary>
         /// Get Templates

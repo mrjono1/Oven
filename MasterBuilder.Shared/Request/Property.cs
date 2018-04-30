@@ -144,7 +144,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Helper Function to get Required
         /// </summary>
-        internal bool Required
+        [JsonIgnore]
+        public bool Required
         {
             get
             {
@@ -159,7 +160,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// C# Data Type
         /// </summary>
-        internal string CsType
+        [JsonIgnore]
+        public string CsType
         {
             get
             {
@@ -167,7 +169,7 @@ namespace MasterBuilder.Request
             }
         }
 
-        internal string GetTypeCs(bool required)
+        public string GetTypeCs(bool required)
         {
             switch (PropertyType)
             {
@@ -196,7 +198,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Type Script Data Type
         /// </summary>
-        internal string TsType
+        [JsonIgnore]
+        public string TsType
         {
             get
             {
@@ -223,7 +226,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Internal Name Type Script
         /// </summary>
-        internal string InternalNameTypeScript
+        [JsonIgnore]
+        public string InternalNameTypeScript
         {
             get
             {
@@ -267,16 +271,19 @@ namespace MasterBuilder.Request
         /// <summary>
         /// The entity that this property is on
         /// </summary>
-        internal Entity Entity { get; set; }
+        [JsonIgnore]
+        public Entity Entity { get; set; }
         /// <summary>
         /// Parent Entity
         /// </summary>
-        internal Entity ParentEntity { get; set; }
+        [JsonIgnore]
+        public Entity ParentEntity { get; set; }
 
         /// <summary>
         /// Internal Name C#
         /// </summary>
-        internal string InternalNameCSharp
+        [JsonIgnore]
+        public string InternalNameCSharp
         {
             get
             {

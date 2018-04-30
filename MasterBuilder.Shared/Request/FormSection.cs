@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -18,15 +19,18 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Screen
         /// </summary>
-        internal Screen Screen { get; set; }
+        [JsonIgnore]
+        public Screen Screen { get; set; }
         /// <summary>
         /// Screen Section
         /// </summary>
-        internal ScreenSection ScreenSection { get; set; }
+        [JsonIgnore]
+        public ScreenSection ScreenSection { get; set; }
         /// <summary>
         /// Entity
         /// </summary>
-        internal Entity Entity { get; set; }
+        [JsonIgnore]
+        public Entity Entity { get; set; }
         #endregion
     }
 }

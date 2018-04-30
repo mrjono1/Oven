@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -120,39 +121,46 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Use MySql instead of MS Sql (not fully implemented explicit migrations needed)
         /// </summary>
-        internal bool UseMySql { get; set; }
+        [JsonIgnore]
+        public bool UseMySql { get; set; }
         /// <summary>
         /// Allow Destructive Database Change, things like dropping columns, tables, keys
         /// </summary>
-        internal bool AllowDestructiveDatabaseChanges { get; set; }
+        [JsonIgnore]
+        public bool AllowDestructiveDatabaseChanges { get; set; }
         /// <summary>
         /// Folders to ignore when cleaning out the directory on build
         /// </summary>
-        internal string[] CleanDirectoryIgnoreDirectories { get; set; }
+        [JsonIgnore]
+        public string[] CleanDirectoryIgnoreDirectories { get; set; }
         /// <summary>
         /// If true database tables and columns are all uniqueidentifiers making database 
         /// hard to use but less chance of needing to change database columns which can result in data loss
         /// </summary>
-        internal bool? ImutableDatabase { get; set; }
+        [JsonIgnore]
+        public bool? ImutableDatabase { get; set; }
         /// <summary>
         /// Enable Server side rendering
         /// </summary>
-        internal bool ServerSideRendering { get; set; }
+        [JsonIgnore]
+        public bool ServerSideRendering { get; set; }
         /// <summary>
         /// Use Put for update instead of patch
         /// </summary>
-        internal bool UsePutForUpdate { get; set; }
+        [JsonIgnore]
+        public bool UsePutForUpdate { get; set; }
         /// <summary>
         /// Whether to include support for spatial properties
         /// </summary>
-        internal bool IncludeSupportForSpatial { get; set; }
+        [JsonIgnore]
+        public bool IncludeSupportForSpatial { get; set; }
         #endregion
         /// <summary>
         /// Validate and Resolve this and child objects
         /// </summary>
         /// <param name="message">Error messages</param>
         /// <returns>true for no errors</returns>
-        internal bool ValidateAndResolve(out string message)
+        public bool ValidateAndResolve(out string message)
         {
             var errors = new List<string>();
 
