@@ -22,9 +22,16 @@
   <ItemGroup>
     <PackageReference Include="Dropbox" Version="0.16.0" />
     <PackageReference Include="Humanizer.Core" Version="2.2.0" />
-    <PackageReference Include="LibGit2Sharp" Version="0.25.0-preview-0073" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
-    <PackageReference Include="RestSharp" Version="106.2.1" />
+    <PackageReference Include="LibGit2Sharp" Version="0.25.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="RestSharp" Version="106.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MasterBuilder.Shared\MasterBuilder.Shared.csproj" />
+    <ProjectReference Include="..\MasterBuilder.Templates.Angular\MasterBuilder.Templates.Angular.csproj" />
+    <ProjectReference Include="..\MasterBuilder.Templates.Api\MasterBuilder.Templates.Api.csproj" />
+    <ProjectReference Include="..\MasterBuilder.Templates.DataAccessLayer\MasterBuilder.Templates.DataAccessLayer.csproj" />
   </ItemGroup>
 
   <ItemGroup>

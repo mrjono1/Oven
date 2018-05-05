@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MasterBuilder.Shared;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -25,11 +26,11 @@ namespace MasterBuilder.ConsoleApp
 
         public async Task Run(BuilderSettings builderSettings)
         {
-            var builder = new MasterBuilder.Builder(builderSettings);
+            var builder = new MasterBuilder.BuildSolution(builderSettings);
 
             var testProject = new MasterBuilderUiModel();
 
-            string messages = await builder.Run(testProject.Project);
+            string messages = await builder.RunAsync(testProject.Project);
             
             Console.WriteLine(messages);
             if (!messages.Equals("Success"))
