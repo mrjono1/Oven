@@ -88,7 +88,17 @@ namespace MasterBuilder.Templates.Angular
             // Components
             projectWriter.AddTemplate(new ClientApp.app.components.navmenu.NavmenuComponentHtmlTemplate(project));
             projectWriter.AddTemplate(new ClientApp.app.components.navmenu.NavmenuComponentTsTemplate(project));
-            
+
+            // Views
+            projectWriter.AddTemplate(new Views.ViewImportsTemplate(project));
+            projectWriter.AddTemplate(new Views.ViewStartTemplate());
+            projectWriter.AddTemplate(new Views.Home.IndexTemplate(project));
+            projectWriter.AddTemplate(new Views.Shared.ErrorTemplate(project));
+            projectWriter.AddTemplate(new Views.Shared.LayoutTemplate(project));
+
+            // Controller
+            projectWriter.AddTemplate(new Controllers.HomeControllerTemplate(project));
+
             var errors = await projectWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))
             {
