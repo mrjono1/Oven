@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace MasterBuilder.Request
@@ -22,19 +23,23 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Screen
         /// </summary>
-        internal Screen Screen { get; set; }
+        [JsonIgnore]
+        public Screen Screen { get; set; }
         /// <summary>
         /// Screen Section
         /// </summary>
-        internal ScreenSection ScreenSection { get; set; }
+        [JsonIgnore]
+        public ScreenSection ScreenSection { get; set; }
         /// <summary>
         /// Entity
         /// </summary>
-        internal Entity Entity { get; set; }
+        [JsonIgnore]
+        public Entity Entity { get; set; }
         /// <summary>
         /// Search Item C#
         /// </summary>
-        internal string SearchItemClass
+        [JsonIgnore]
+        public string SearchItemClass
         {
             get
             {
@@ -51,7 +56,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Search Request C#
         /// </summary>
-        internal string SearchRequestClass
+        [JsonIgnore]
+        public string SearchRequestClass
         {
             get
             {
@@ -68,7 +74,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Search Response C#
         /// </summary>
-        internal string SearchResponseClass
+        [JsonIgnore]
+        public string SearchResponseClass
         {
             get
             {

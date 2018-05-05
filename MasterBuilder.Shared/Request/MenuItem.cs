@@ -33,21 +33,6 @@ namespace MasterBuilder.Request
         /// Title
         /// </summary>
         public string Title { get; set; }
-        private string internalName;
-        /// <summary>
-        /// Calculated Internal Name
-        /// </summary>
-        internal string InternalName
-        {
-            get
-            {
-                if (internalName == null)
-                {
-                    internalName = Title.Pascalize();
-                }
-                return internalName;
-            }
-        }
         /// <summary>
         /// Path
         /// </summary>
@@ -68,6 +53,12 @@ namespace MasterBuilder.Request
         [NonDefault]
         public Guid MenuItemTypeId { get; set; }
         /// <summary>
+        /// Server side C# code
+        /// </summary>
+        public string ServerCode { get; set; }
+
+        #region Helpers
+        /// <summary>
         /// Menu Item Type
         /// </summary>
         [JsonIgnore]
@@ -83,10 +74,23 @@ namespace MasterBuilder.Request
                 MenuItemTypeId = MenuItemTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
             }
         }
+        private string internalName;
         /// <summary>
-        /// Server side C# code
+        /// Calculated Internal Name
         /// </summary>
-        public string ServerCode { get; set; }
+        [JsonIgnore]
+        public string InternalName
+        {
+            get
+            {
+                if (internalName == null)
+                {
+                    internalName = Title.Pascalize();
+                }
+                return internalName;
+            }
+        }
+        #endregion
 
         /// <summary>
         /// Validate Menu Item

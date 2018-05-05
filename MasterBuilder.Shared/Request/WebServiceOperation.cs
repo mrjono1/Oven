@@ -39,7 +39,8 @@ namespace MasterBuilder.Request
         /// <summary>
         /// Calculated Internal Name
         /// </summary>
-        internal string InternalName
+        [JsonIgnore]
+        public string InternalName
         {
             get
             {

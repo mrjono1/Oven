@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MasterBuilder.Migrations
+namespace MasterBuilder.Templates.DataAccessLayer.Migrations
 {
     internal class CommandLineResult
     {

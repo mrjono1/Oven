@@ -12,7 +12,7 @@ namespace MasterBuilder.Request
     [System.Diagnostics.DebuggerDisplay("Project: {Title}")]
     public partial class Project
     {
-        internal static readonly Guid MasterBuilderId = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}");
+        public static readonly Guid MasterBuilderId = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}");
         /// <summary>
         /// Constructor sets default values
         /// </summary>
@@ -71,17 +71,6 @@ namespace MasterBuilder.Request
         [Required]
         [Range(0, 99999999)]
         public int BuildVersion { get; set; }
-
-        /// <summary>
-        /// Semantic Version
-        /// </summary>
-        internal string Version
-        {
-            get
-            {
-                return $"{MajorVersion}.{MinorVersion}.{BuildVersion}";
-            }
-        }
         /// <summary>
         /// Entities
         /// </summary>
@@ -118,6 +107,18 @@ namespace MasterBuilder.Request
         public IEnumerable<NuGetPackageSource> NuGetPackageSources { get; set; }
 
         #region Internal Settings
+
+        /// <summary>
+        /// Semantic Version
+        /// </summary>
+        [JsonIgnore]
+        public string Version
+        {
+            get
+            {
+                return $"{MajorVersion}.{MinorVersion}.{BuildVersion}";
+            }
+        }
         /// <summary>
         /// Use MySql instead of MS Sql (not fully implemented explicit migrations needed)
         /// </summary>
@@ -154,6 +155,21 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         public bool IncludeSupportForSpatial { get; set; }
+        /// <summary>
+        /// Internal Id of the Web Project/Main entry project
+        /// </summary>
+        [JsonIgnore]
+        public Guid ProjectWebId { get; set; } = new Guid("{2AF7569A-8978-4FA6-B7B7-E49CB9AE46D8}");
+        /// <summary>
+        /// Internal Id of the Api Project
+        /// </summary>
+        [JsonIgnore]
+        public Guid ProjectApiId { get; set; } = new Guid("{CDC20F0A-B763-4DEE-B037-2F8A4F3DFC1B}");
+        /// <summary>
+        /// Internal Id of the Data Access Layer Project
+        /// </summary>
+        [JsonIgnore]
+        public Guid ProjectDataAccessLayerId { get; set; } = new Guid("{5BE39A8E-3012-4F57-8D44-36BA26CE5036}");
         #endregion
         /// <summary>
         /// Validate and Resolve this and child objects

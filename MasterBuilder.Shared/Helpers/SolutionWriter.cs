@@ -73,7 +73,7 @@ namespace MasterBuilder.Helpers
         /// <summary>
         /// Final Step
         /// </summary>
-        public async Task<string> WriteAndClean()
+        public async Task<string> WriteAndClean(bool clean = true)
         {
             var result = await Task.WhenAll(FilesToWrite.ToArray());
 
@@ -87,7 +87,10 @@ namespace MasterBuilder.Helpers
             {
                 FilePaths.AddRange(result.Select(a => a.FilePath));
 
-                DeleteFiles(ProjectDirectory);
+                if (clean)
+                {
+                    DeleteFiles(ProjectDirectory);
+                }
             }
             return null;
         }

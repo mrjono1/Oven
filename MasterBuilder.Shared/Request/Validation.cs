@@ -82,7 +82,7 @@ namespace MasterBuilder.Request
         /// </summary>
         /// <param name="propertyTitle">The Failing Property Title</param>
         /// <returns>Validation failure message</returns>
-        internal string GetMessage(string propertyTitle)
+        public string GetMessage(string propertyTitle)
         {
             if (string.IsNullOrEmpty(Message))
             {
