@@ -1,0 +1,69 @@
+using MasterBuilder.Shared;
+using System.Threading.Tasks;
+
+namespace MasterBuilder.Templates.React
+{
+    /// <summary>
+    /// Master Builder React Project
+    /// </summary>
+    public class ProjectBuilder
+    {
+        /// <summary>
+        /// Build Master Builder React Project
+        /// </summary>
+        public async Task<string> RunAsync(BuilderSettings builderSettings, Request.Project project, Helpers.SolutionWriter solutionWriter, string solutionDirectory)
+        {
+            // Create Solution Directory
+            var webProjectDirectory = FileHelper.CreateFolder(solutionDirectory, project.InternalName);
+
+            var projectWriter = new Helpers.SolutionWriter(webProjectDirectory, project.CleanDirectoryIgnoreDirectories);
+            
+            // Create Directories
+            var wwwrootPath = FileHelper.CreateFolder(webProjectDirectory, "wwwroot");
+
+            // Artifacts
+            //projectWriter.AddFolder(new string[] { "CopyFiles", "assets", "favicons" }, new string[] { "wwwroot", "assets", "favicons" });
+
+            // dot net project files
+            projectWriter.AddTemplate(new ProjectFiles.StartupTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.ProjectTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.WebConfigTemplate());
+            projectWriter.AddTemplate(new ProjectFiles.AppSettingsTemplate(project));
+
+            // Create Project Files
+            projectWriter.AddTemplate(new ProjectFiles.PackageJsonTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.PackageLockJsonTemplate(project));
+
+            projectWriter.AddTemplate(new ProjectFiles.EslintrcTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.EslintrcIgnoreTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.BabelrcTemplate(project));
+
+            projectWriter.AddTemplate(new Webpack.WebpackCommonTemplate());
+            projectWriter.AddTemplate(new Webpack.WebpackProdTemplate(project));
+            projectWriter.AddTemplate(new Webpack.WebpackDevTemplate(project));
+
+            // Views
+            projectWriter.AddTemplate(new Views.ViewImportsTemplate(project));
+            projectWriter.AddTemplate(new Views.ViewStartTemplate());
+            projectWriter.AddTemplate(new Views.Home.IndexTemplate(project));
+            projectWriter.AddTemplate(new Views.Shared.ErrorTemplate(project));
+            projectWriter.AddTemplate(new Views.Shared.LayoutTemplateTemplate(project));
+
+            // Controller
+            projectWriter.AddTemplate(new Controllers.HomeControllerTemplate(project));
+
+            // src
+            projectWriter.AddTemplate(new Src.ManifestTemplate(project));
+            projectWriter.AddTemplate(new Src.IndexJsTemplate(project));
+
+
+            var errors = await projectWriter.WriteAndClean();
+            if (!string.IsNullOrEmpty(errors))
+            {
+                return errors;
+            }
+            
+            return null;
+        }
+    }
+}

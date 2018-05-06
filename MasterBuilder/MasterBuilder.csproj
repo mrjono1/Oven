@@ -32,6 +32,7 @@
     <ProjectReference Include="..\MasterBuilder.Templates.Angular\MasterBuilder.Templates.Angular.csproj" />
     <ProjectReference Include="..\MasterBuilder.Templates.Api\MasterBuilder.Templates.Api.csproj" />
     <ProjectReference Include="..\MasterBuilder.Templates.DataAccessLayer\MasterBuilder.Templates.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\MasterBuilder.Templates.React\MasterBuilder.Templates.React.csproj" />
   </ItemGroup>
 
   <ItemGroup>

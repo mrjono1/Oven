@@ -170,6 +170,15 @@ namespace MasterBuilder.Request
         /// </summary>
         [JsonIgnore]
         public Guid ProjectDataAccessLayerId { get; set; } = new Guid("{5BE39A8E-3012-4F57-8D44-36BA26CE5036}");
+        /// <summary>
+        /// Is React App (Default = true)
+        /// </summary>
+        [JsonIgnore]
+        public bool React { get; set; } = true;
+        /// <summary>
+        /// Is Angular 2/5 App (Default = false)
+        /// </summary>
+        public bool Angular { get; set; } = false;
         #endregion
         /// <summary>
         /// Validate and Resolve this and child objects
