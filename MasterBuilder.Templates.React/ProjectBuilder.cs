@@ -56,6 +56,37 @@ namespace MasterBuilder.Templates.React
             projectWriter.AddTemplate(new Src.ManifestTemplate(project));
             projectWriter.AddTemplate(new Src.IndexJsTemplate(project));
 
+            // containers
+            projectWriter.AddTemplate(new Src.Containers.App.IndexJsTemplate(project));
+
+            projectWriter.AddTemplate(new Src.Containers.Footer.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.Footer.StylesScssTemplate(project));
+
+            projectWriter.AddTemplate(new Src.Containers.Header.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.Header.StylesScssTemplate(project));
+
+            projectWriter.AddTemplate(new Src.Containers.Home.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.Home.StylesScssTemplate(project));
+
+            projectWriter.AddTemplate(new Src.Containers.LeftNavBar.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.LeftNavBar.StylesScssTemplate(project));
+
+            // core
+            projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
+            projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
+            projectWriter.AddTemplate(new Src.Core.Reducers.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Core.Reducers.ReducerUiTemplate(project));
+            projectWriter.AddTemplate(new Src.Core.Store.ConfigureStoreTemplate(project));
+
+            //components
+            projectWriter.AddTemplate(new Src.Components.AppBar.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Components.AppBar.StylesScssTemplate(project));
+
+            projectWriter.AddTemplate(new Src.Components.Button.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Components.Button.StylesScssTemplate(project));
+
+            projectWriter.AddTemplate(new Src.Components.TextField.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Components.TextField.StylesScssTemplate(project));
 
             var errors = await projectWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))
