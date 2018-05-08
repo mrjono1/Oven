@@ -188,7 +188,7 @@ namespace {Project.InternalName}
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {{
                     HotModuleReplacement = true,
-                    ConfigFile = ""/webpack/common.config.js"",
+                    ConfigFile = ""webpack\\common.config.js"",
                     HotModuleReplacementEndpoint = ""/dist/""
                 }});
             }}

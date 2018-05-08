@@ -58,6 +58,13 @@ namespace MasterBuilder.Templates.React
 
             // containers
             projectWriter.AddTemplate(new Src.Containers.App.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.App.Styles.AppScssTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.App.Styles.Fonts.RobotoScssTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.App.Styles.ThirdParty.NormalizeScssTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.App.Styles.FontScssTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.App.Styles.LinksScssTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.App.Styles.TypographyScssTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.App.Styles.VariablesScssTemplate(project));
 
             projectWriter.AddTemplate(new Src.Containers.Footer.IndexJsTemplate(project));
             projectWriter.AddTemplate(new Src.Containers.Footer.StylesScssTemplate(project));

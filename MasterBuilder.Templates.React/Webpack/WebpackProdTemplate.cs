@@ -96,7 +96,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: 'Views/Shared/_LayoutTemplate.cshtml',
-      filename: '../../Views/Shared/_Layout.cshtml'
+      filename: '../Views/Shared/_Layout.cshtml'
     }),
     new HtmlWebpackPlugin({
     filename: 'manifest.json',

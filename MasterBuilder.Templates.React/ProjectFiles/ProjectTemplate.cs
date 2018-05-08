@@ -109,15 +109,13 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     <!-- In development, the dist files won't exist on the first run or when cloning to
          a different machine, so rebuild them if not already present. -->
     <Message Importance=""high"" Text=""Performing first-run Webpack build..."" />
-    <Exec Command=""node node_modules/webpack/bin/webpack.js --config webpack/common.config.js"" />
-    <Exec Command=""node node_modules/webpack/bin/webpack.js"" />
+    <Exec Command=""node node_modules/webpack/bin/webpack.js --display-error-details --config webpack/common.config.js"" />
   </Target>
 
   <Target Name=""PublishRunWebpack"" AfterTargets=""ComputeFilesToPublish"">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec Command=""npm install"" />
-    <Exec Command=""node node_modules/webpack/bin/webpack.js --config webpack/common.config.js --env.prod"" />
-    <Exec Command=""node node_modules/webpack/bin/webpack.js --env.prod"" />
+    <Exec Command=""node node_modules/webpack/bin/webpack.js --colors --display-error-details --config webpack/common.config.js --env.prod"" />
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>

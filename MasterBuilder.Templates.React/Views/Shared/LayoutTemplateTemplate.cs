@@ -46,15 +46,10 @@ namespace MasterBuilder.Templates.React.Views.Shared
     <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"" />
     <title>@ViewData[""Title""] - {Project.Title}</title>
     <base href=""~/"" />
-
-    <link rel=""stylesheet"" href=""~/dist/vendor.css"" asp-append-version=""true"" />
-    <link rel=""stylesheet"" href=""~/dist/site.css"" asp-append-version=""true"" />
 </head>
 <body>
     <noscript><p>Please enable javascript to use this site</p></noscript>
     @RenderBody()
-
-    <script src=""~/dist/vendor.js"" asp-append-version=""true""></script>
     @RenderSection(""scripts"", required: false)
 </body>
 </html>";
