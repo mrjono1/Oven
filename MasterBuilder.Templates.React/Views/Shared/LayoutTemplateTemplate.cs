@@ -50,7 +50,6 @@ namespace MasterBuilder.Templates.React.Views.Shared
 <body>
     <noscript><p>Please enable javascript to use this site</p></noscript>
     @RenderBody()
-    @RenderSection(""scripts"", required: false)
 </body>
 </html>";
         }

@@ -44,11 +44,7 @@ namespace MasterBuilder.Templates.React.Views.Home
     ViewData[""Title""] = ""Home Page"";
 }}
 
-<div id=""root"" asp-prerender-module=""src/dist/main-server"">Loading...</div>
-
-@section scripts {{
-    <script src=""~/dist/main-client.js"" asp-append-version=""true""></script>
-}}";
+<div id=""root"">Loading...</div>";
         }
     }
 }

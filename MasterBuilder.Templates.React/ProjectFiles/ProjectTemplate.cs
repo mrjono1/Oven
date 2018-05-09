@@ -46,8 +46,8 @@ namespace MasterBuilder.Templates.React.ProjectFiles
             
             var nugetReferences = new Dictionary<string, string>
             {
-                { "Microsoft.AspNetCore.All", "2.0.5" },
-                { "Microsoft.EntityFrameworkCore", "2.0.2"},
+                { "Microsoft.AspNetCore.All", "2.0.8" },
+                { "Microsoft.EntityFrameworkCore", "2.0.3"},
                 { "Swashbuckle.AspNetCore", "1.1.0" },
                 { "Swashbuckle.AspNetCore.Swagger", "1.1.0" },
                 { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" }
@@ -59,7 +59,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
             }
             else
             {
-                nugetReferences.Add("Microsoft.EntityFrameworkCore.SqlServer", "2.0.2");
+                nugetReferences.Add("Microsoft.EntityFrameworkCore.SqlServer", "2.0.3");
             }
 
             foreach (var item in nugetReferences)

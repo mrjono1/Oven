@@ -185,12 +185,6 @@ namespace {Project.InternalName}
             if (env.IsDevelopment())
             {{
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {{
-                    HotModuleReplacement = true,
-                    ConfigFile = ""webpack\\common.config.js"",
-                    HotModuleReplacementEndpoint = ""/dist/""
-                }});
             }}
             else
             {{
