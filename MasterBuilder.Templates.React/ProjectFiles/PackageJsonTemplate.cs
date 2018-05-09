@@ -46,7 +46,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
   ""version"": ""{Project.Version}"",
   ""description"": ""{Project.Title}"",
   ""scripts"": {{
-    ""clean"": ""rimraf dist"",
+    ""clean"": ""rimraf wwwroot"",
     ""build"": ""webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js"",
     ""build:production"": ""npm run clean && npm run build"",
     ""lint"": ""eslint src"",

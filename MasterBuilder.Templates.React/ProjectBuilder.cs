@@ -57,26 +57,8 @@ namespace MasterBuilder.Templates.React
             projectWriter.AddTemplate(new Src.IndexJsTemplate(project));
 
             // containers
-            projectWriter.AddTemplate(new Src.Containers.App.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.App.Styles.AppScssTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.App.Styles.Fonts.RobotoScssTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.App.Styles.ThirdParty.NormalizeScssTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.App.Styles.FontScssTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.App.Styles.LinksScssTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.App.Styles.TypographyScssTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.App.Styles.VariablesScssTemplate(project));
+            projectWriter.AddTemplate(new Src.Containers.ContainerBuilder(project));
 
-            projectWriter.AddTemplate(new Src.Containers.Footer.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.Footer.StylesScssTemplate(project));
-
-            projectWriter.AddTemplate(new Src.Containers.Header.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.Header.StylesScssTemplate(project));
-
-            projectWriter.AddTemplate(new Src.Containers.Home.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.Home.StylesScssTemplate(project));
-
-            projectWriter.AddTemplate(new Src.Containers.LeftNavBar.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Containers.LeftNavBar.StylesScssTemplate(project));
 
             // core
             projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));

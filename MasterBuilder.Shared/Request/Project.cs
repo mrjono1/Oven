@@ -12,7 +12,7 @@ namespace MasterBuilder.Request
     [System.Diagnostics.DebuggerDisplay("Project: {Title}")]
     public partial class Project
     {
-        public static readonly Guid MasterBuilderId = new Guid("{D1CB7777-6E61-486B-B15E-05B97B57D0FC}");
+        public static readonly Guid MasterBuilderId = new Guid("{66E47378-5CD8-40BC-833C-CDA2CC97058A}");
         /// <summary>
         /// Constructor sets default values
         /// </summary>
