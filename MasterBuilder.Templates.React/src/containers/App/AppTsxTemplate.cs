@@ -40,9 +40,11 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
         public string GetFileContent()
         {
             return @"import * as React from 'react';
+import TopAppBar from '../../components/TopAppBar/TopAppBar';
 
 // global styles for entire app
 import './styles/app.scss';
+import 'typeface-roboto';
 
 export interface AppProps {
 }
@@ -51,53 +53,13 @@ export default class App extends React.Component<AppProps, undefined> {
     render() {
         return (
             <div className=""app"">
+                <TopAppBar/>
                 <h1>Hello World!</h1>
                 <p>Foo to the barz</p>
             </div>
         );
     }
-}
-";
-
-            var x = @"
-import { HashRouter, Route }      from 'react-router-dom';
-
-
-// global styles for entire app
-import './styles/app.scss';
-
-/* application containers */
-import Header     from '../Header';
-import LeftNavBar from '../LeftNavBar';
-import Home       from '../Home';
-
-injectTapEventPlugin();
-
-export class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <div>
-          <Header />
-          <div className=""container"">
-            <HashRouter>
-              <div>
-                <Route exact path=""/"" component={Home}/>
-              </div>
-            </HashRouter>
-          </div>
-          <LeftNavBar />
-        </div>
-      </MuiThemeProvider>
-    );
-  }
-}
-
-export default connect(null)(App);";
+}";
         }
     }
 }

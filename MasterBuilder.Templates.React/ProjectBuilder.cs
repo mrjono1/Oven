@@ -80,7 +80,7 @@ namespace MasterBuilder.Templates.React
           //  projectWriter.AddTemplate(new Src.Core.Store.ConfigureStoreTemplate(project));
 
             //components
-   //         projectWriter.AddTemplate(new Src.Components.AppBar.AppBarTemplate(project));
+            projectWriter.AddTemplate(new Src.Components.TopAppBar.TopAppBarTemplate(project));
 
       //      projectWriter.AddTemplate(new Src.Components.Button.IndexJsTemplate(project));
     //        projectWriter.AddTemplate(new Src.Components.Button.StylesScssTemplate(project));
