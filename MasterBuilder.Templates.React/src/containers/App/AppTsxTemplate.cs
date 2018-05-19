@@ -4,16 +4,16 @@ using MasterBuilder.Request;
 namespace MasterBuilder.Templates.React.Src.Containers.App
 {
     /// <summary>
-    /// index.js Template
+    /// index.tsx Template
     /// </summary>
-    public class IndexJsTemplate : ITemplate
+    public class AppTsxTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexJsTemplate(Project project)
+        public AppTsxTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return "App.tsx";
         }
 
         /// <summary>
@@ -39,25 +39,41 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
         /// </summary>
         public string GetFileContent()
         {
-            return @"import React, { Component }       from 'react';
-import { connect }                from 'react-redux';
-import injectTapEventPlugin       from 'react-tap-event-plugin';
-import getMuiTheme                from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider           from 'material-ui/styles/MuiThemeProvider';
-import { HashRouter, Route }      from 'react-router-dom'
+            return @"import * as React from 'react';
+
+// global styles for entire app
+import './styles/app.scss';
+
+export interface AppProps {
+}
+
+export default class App extends React.Component<AppProps, undefined> {
+    render() {
+        return (
+            <div className=""app"">
+                <h1>Hello World!</h1>
+                <p>Foo to the barz</p>
+            </div>
+        );
+    }
+}
+";
+
+            var x = @"
+import { HashRouter, Route }      from 'react-router-dom';
 
 
 // global styles for entire app
 import './styles/app.scss';
 
 /* application containers */
-import Header     from 'containers/Header';
-import LeftNavBar from 'containers/LeftNavBar';
-import Home       from 'containers/Home';
+import Header     from '../Header';
+import LeftNavBar from '../LeftNavBar';
+import Home       from '../Home';
 
 injectTapEventPlugin();
 
-export class App extends Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
   }

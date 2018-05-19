@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.ProjectFiles
+namespace MasterBuilder.Templates.React.Src.Middleware
 {
     /// <summary>
-    /// .babelrc configuration
+    /// logger.ts Template
     /// </summary>
-    public class BabelrcTemplate: ITemplate
+    public class LoggerTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public BabelrcTemplate(Project project)
+        public LoggerTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string GetFileName()
         {
-            return ".babelrc";
+            return "logger.ts";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { };
+            return new string[] { "src", "middleware" };
         }
 
         /// <summary>
@@ -39,22 +39,11 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            return @"{
-  ""presets"": [
-    [""env"", {""modules"": false}],
-    ""react""
-  ],
-  ""plugins"": [
-    ""react-hot-loader/babel""
-  ],
-  ""env"": {
-    ""production"": {
-      ""presets"": [""minify""]
-    },
-    ""test"": {
-      ""presets"": [""env"", ""react""]
-    }
-  }
+            return @"export default function loggerMiddleware(store) {
+  return next => action => {
+    console.log(action);
+    return next(action);
+  };
 }";
         }
     }

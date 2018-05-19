@@ -46,10 +46,11 @@ const precss = require('precss');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
+  mode: 'development',
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './src/index',
+    './src/index'
   ],
   output: {
     publicPath: ''
@@ -61,8 +62,7 @@ module.exports = {
       test: /\.scss$/,
       use: [
         { loader: 'style-loader' },
-        {
-          loader: 'css-loader',
+        { loader: 'css-loader',
           options: {
             localIdentName: '[hash:base64:5][path]-[local]'
           }
@@ -101,9 +101,11 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
     new HtmlWebpackPlugin({
       template: 'Views/Shared/_LayoutTemplate.cshtml',
-      filename: '../Views/Shared/_Layout.cshtml'
+      filename: '../Views/Shared/_Layout.cshtml',
+      hash: true
     })
   ]
 };

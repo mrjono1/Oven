@@ -32,11 +32,14 @@ namespace MasterBuilder.Templates.React
 
             // Create Project Files
             projectWriter.AddTemplate(new ProjectFiles.PackageJsonTemplate(project));
-            projectWriter.AddTemplate(new ProjectFiles.PackageLockJsonTemplate(project));
+            // Add this at some point
+            //projectWriter.AddTemplate(new ProjectFiles.PackageLockJsonTemplate(project));
 
-            projectWriter.AddTemplate(new ProjectFiles.EslintrcTemplate(project));
-            projectWriter.AddTemplate(new ProjectFiles.EslintrcIgnoreTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.TsLintTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.TsConfigTemplate(project));
             projectWriter.AddTemplate(new ProjectFiles.BabelrcTemplate(project));
+
+            projectWriter.AddTemplate(new Types.GlobalTemplate(project));
 
             projectWriter.AddTemplate(new Webpack.WebpackCommonTemplate());
             projectWriter.AddTemplate(new Webpack.WebpackProdTemplate(project));
@@ -54,28 +57,36 @@ namespace MasterBuilder.Templates.React
 
             // src
             projectWriter.AddTemplate(new Src.ManifestTemplate(project));
-            projectWriter.AddTemplate(new Src.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.IndexTsxTemplate(project));
 
             // containers
             projectWriter.AddTemplate(new Src.Containers.ContainerBuilder(project));
 
+            // store
+        //    projectWriter.AddTemplate(new Src.Store.IndexTsTemplate(project));
+
+            // reducers
+         //   projectWriter.AddTemplate(new Src.Reducers.IndexTsTemplate(project));
+
+            // middleware
+       //     projectWriter.AddTemplate(new Src.Middleware.IndexTsTemplate(project));
+       //     projectWriter.AddTemplate(new Src.Middleware.LoggerTemplate(project));
 
             // core
-            projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
-            projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
-            projectWriter.AddTemplate(new Src.Core.Reducers.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Core.Reducers.ReducerUiTemplate(project));
-            projectWriter.AddTemplate(new Src.Core.Store.ConfigureStoreTemplate(project));
+         //   projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
+        //    projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
+        ///    projectWriter.AddTemplate(new Src.Core.Reducers.IndexJsTemplate(project));
+        //    projectWriter.AddTemplate(new Src.Core.Reducers.ReducerUiTemplate(project));
+          //  projectWriter.AddTemplate(new Src.Core.Store.ConfigureStoreTemplate(project));
 
             //components
-            projectWriter.AddTemplate(new Src.Components.AppBar.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Components.AppBar.StylesScssTemplate(project));
+   //         projectWriter.AddTemplate(new Src.Components.AppBar.AppBarTemplate(project));
 
-            projectWriter.AddTemplate(new Src.Components.Button.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Components.Button.StylesScssTemplate(project));
+      //      projectWriter.AddTemplate(new Src.Components.Button.IndexJsTemplate(project));
+    //        projectWriter.AddTemplate(new Src.Components.Button.StylesScssTemplate(project));
 
-            projectWriter.AddTemplate(new Src.Components.TextField.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Components.TextField.StylesScssTemplate(project));
+    //        projectWriter.AddTemplate(new Src.Components.TextField.IndexJsTemplate(project));
+    //        projectWriter.AddTemplate(new Src.Components.TextField.StylesScssTemplate(project));
 
             var errors = await projectWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))

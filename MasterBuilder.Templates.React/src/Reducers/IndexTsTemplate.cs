@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.Src.Components.AppBar
+namespace MasterBuilder.Templates.React.Src.Reducers
 {
     /// <summary>
-    /// styles.scss Template
+    /// index.ts Template
     /// </summary>
-    public class StylesScssTemplate : ITemplate
+    public class IndexTsTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public StylesScssTemplate(Project project)
+        public IndexTsTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Components.AppBar
         /// </summary>
         public string GetFileName()
         {
-            return "styles.scss";
+            return "index.ts";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src.Components.AppBar
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "components", "AppBar" };
+            return new string[] { "src", "reducers" };
         }
 
         /// <summary>
@@ -39,9 +39,18 @@ namespace MasterBuilder.Templates.React.Src.Components.AppBar
         /// </summary>
         public string GetFileContent()
         {
-            return @":local(.styles) {
+            // TODO: add reducers here
+            return $@"import {{ combineReducers, Reducer }} from 'redux';
+//import todos from './todos';
 
-}";
+export interface RootState {{
+  //todos: TodoStoreState;
+}}
+
+export default combineReducers<RootState>({{
+  //todos
+}});
+";
         }
     }
 }

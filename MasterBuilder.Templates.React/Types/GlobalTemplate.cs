@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.ProjectFiles
+namespace MasterBuilder.Templates.React.Types
 {
     /// <summary>
-    /// .eslintrcignore
+    /// global.d.ts configuration
     /// </summary>
-    public class EslintrcIgnoreTemplate : ITemplate
+    public class GlobalTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public EslintrcIgnoreTemplate(Project project)
+        public GlobalTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string GetFileName()
         {
-            return ".eslintrcignore";
+            return "global.d.ts";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { };
+            return new string[] { "types" };
         }
 
         /// <summary>
@@ -39,9 +39,19 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            return $@"dist
-node_modules
-bin";
+            return @"/** Global definitions for developement **/
+
+// for style loader
+declare module '*.css' {
+  const styles: any;
+  export = styles;
+}
+
+// for style loader
+declare module '*.scss' {
+  const styles: any;
+  export = styles;
+}";
         }
     }
 }

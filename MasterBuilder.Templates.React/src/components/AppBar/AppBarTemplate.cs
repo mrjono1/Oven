@@ -4,16 +4,16 @@ using MasterBuilder.Request;
 namespace MasterBuilder.Templates.React.Src.Components.AppBar
 {
     /// <summary>
-    /// index.js Template
+    /// index.tsx Template
     /// </summary>
-    public class IndexJsTemplate : ITemplate
+    public class AppBarTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexJsTemplate(Project project)
+        public AppBarTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Components.AppBar
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return "AppBar.tsx";
         }
 
         /// <summary>
@@ -43,19 +43,18 @@ namespace MasterBuilder.Templates.React.Src.Components.AppBar
  * AppBar
  */
 
-import React                   from 'react';
+import * as React from 'react';
 import { AppBar as MuiAppBar } from 'material-ui';
 
-/* component styles */
-import { styles } from './styles.scss';
+class AppBar extends React.Component {
+  public render() {
+      return <div>
+      <MuiAppBar {...this.props} className=""app-bar"" />
+    </div>;
+  }
+}
 
-export default function AppBar(props) {
-  return (
-    <div className={styles}>
-      <MuiAppBar {...props} className=""app-bar"" />
-    </div>
-  );
-}";
+export default AppBar;";
         }
     }
 }

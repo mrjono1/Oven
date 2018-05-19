@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.ProjectFiles
+namespace MasterBuilder.Templates.React.Src
 {
     /// <summary>
-    /// .babelrc configuration
+    /// index.tsx Template
     /// </summary>
-    public class BabelrcTemplate: ITemplate
+    public class IndexTsxTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public BabelrcTemplate(Project project)
+        public IndexTsxTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string GetFileName()
         {
-            return ".babelrc";
+            return "index.tsx";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { };
+            return new string[] { "src" };
         }
 
         /// <summary>
@@ -39,23 +39,14 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            return @"{
-  ""presets"": [
-    [""env"", {""modules"": false}],
-    ""react""
-  ],
-  ""plugins"": [
-    ""react-hot-loader/babel""
-  ],
-  ""env"": {
-    ""production"": {
-      ""presets"": [""minify""]
-    },
-    ""test"": {
-      ""presets"": [""env"", ""react""]
-    }
-  }
-}";
+            return $@"import * as React from 'react';
+import {{ render }} from 'react-dom';
+import App from './containers/App/App';
+
+render(
+    <App/>,
+  document.getElementById('root')
+);";
         }
     }
 }

@@ -25,30 +25,30 @@ namespace MasterBuilder.Templates.React.Src.Containers
         {
             var templates = new List<ITemplate>
             {
-                new App.IndexJsTemplate(Project),
+                new App.AppTsxTemplate(Project),
                 new App.Styles.AppScssTemplate(Project),
                 new App.Styles.Fonts.RobotoScssTemplate(Project),
                 new App.Styles.ThirdParty.NormalizeScssTemplate(Project),
                 new App.Styles.FontScssTemplate(Project),
                 new App.Styles.LinksScssTemplate(Project),
                 new App.Styles.TypographyScssTemplate(Project),
-                new App.Styles.VariablesScssTemplate(Project),
+                new App.Styles.VariablesScssTemplate(Project)
 
-                new Footer.IndexJsTemplate(Project),
-                new Footer.StylesScssTemplate(Project),
+                //new Footer.IndexJsTemplate(Project),
+                //new Footer.StylesScssTemplate(Project),
 
-                new Header.IndexJsTemplate(Project),
-                new Header.StylesScssTemplate(Project),
+                //new Header.IndexJsTemplate(Project),
+                //new Header.StylesScssTemplate(Project),
 
-                new LeftNavBar.IndexJsTemplate(Project),
-                new LeftNavBar.StylesScssTemplate(Project)
+                //new LeftNavBar.IndexJsTemplate(Project),
+                //new LeftNavBar.StylesScssTemplate(Project)
             };
 
-            foreach (var screen in Project.Screens)
-            {
-                templates.Add(new IndexJsTemplate(Project, screen));
-                templates.Add(new StylesScssTemplate(Project, screen));
-            }
+            //foreach (var screen in Project.Screens)
+            //{
+            //    templates.Add(new IndexJsTemplate(Project, screen));
+            //    templates.Add(new StylesScssTemplate(Project, screen));
+            //}
 
             return templates;
         }

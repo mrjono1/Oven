@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.Src
+namespace MasterBuilder.Templates.React.ProjectFiles
 {
     /// <summary>
-    /// index.js Template
+    /// tsconfig.json
     /// </summary>
-    public class IndexJsTemplate : ITemplate
+    public class TsConfigTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexJsTemplate(Project project)
+        public TsConfigTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return "tsconfig.json";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src" };
+            return new string[] { };
         }
 
         /// <summary>
@@ -39,20 +39,20 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string GetFileContent()
         {
-            return $@"import React          from 'react';
-import ReactDOM       from 'react-dom';
-import {{ Provider }}   from 'react-redux';
-import configureStore from 'core/store/configureStore';
-import App            from 'containers/App';
-
-const store = configureStore();
-
-ReactDOM.render(
-  <Provider store={{store}}>
-    <App/>
-  </Provider>,
-  document.getElementById('root')
-);";
+            return @"{
+    ""compilerOptions"": {
+        ""outDir"": ""./wwwroot/"",
+        ""sourceMap"": true,
+        ""noImplicitAny"": false,
+        ""module"": ""commonjs"",
+        ""target"": ""es5"",
+        ""jsx"": ""react"",
+        ""lib"": [""es5"", ""es6"", ""dom""]
+    },
+    ""include"": [
+        ""./src/**/*""
+    ]
+}";
         }
     }
 }

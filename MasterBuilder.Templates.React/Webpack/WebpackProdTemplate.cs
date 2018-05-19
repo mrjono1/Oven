@@ -46,10 +46,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: 'production',
   entry: [],
 
   output: {
-    publicPath: '',
+    publicPath: ''
   },
 
   module: {
@@ -74,41 +75,35 @@ module.exports = {
                 path.join(__dirname, '..', '/src/containers/App/styles')
               ]
             }
-    }
+          }
         ]
         })
       }
-    ],
+    ]
   },
 
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '""production""',
+        NODE_ENV: '""production""'
       },
-      __DEVELOPMENT__: false,
+      __DEVELOPMENT__: false
     }),
     new ExtractTextPlugin({ filename: 'bundle.css'}),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-    }),
     new HtmlWebpackPlugin({
       template: 'Views/Shared/_LayoutTemplate.cshtml',
-      filename: '../Views/Shared/_Layout.cshtml'
+      filename: '../Views/Shared/_Layout.cshtml',
+      hash: true
     }),
-    new HtmlWebpackPlugin({
-    filename: 'manifest.json',
-      template: 'src/manifest.json',
-      inject: false
-    }),
-    new CopyWebpackPlugin([
-      {
-    from: 'src/assets',
-        to: 'assets'
-      }
-    ])
+    //new HtmlWebpackPlugin({
+    //  template: 'src/manifest.json',
+    //  filename: '../wwwroot/manifest.json',
+    //  inject: false
+    //}),
+    //new CopyWebpackPlugin([{
+    //  from: 'src/assets',
+    //  to: 'assets'
+    //}])
   ]
 };
 ";

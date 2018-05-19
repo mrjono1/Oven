@@ -32,7 +32,6 @@ namespace MasterBuilder.Templates.React.Webpack
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const autoprefixer = require('autoprefixer');
-const OfflinePlugin = require('offline-plugin');
 
 
 const development = require('./dev.config.js');
@@ -44,7 +43,7 @@ const TARGET = process.env.npm_lifecycle_event;
 
 const PATHS = {
   app: path.join(__dirname, '../src'),
-  build: path.join(__dirname, '../wwwroot'),
+  build: path.join(__dirname, '../wwwroot')
 };
 
 process.env.BABEL_ENV = TARGET;
@@ -52,29 +51,34 @@ process.env.BABEL_ENV = TARGET;
 const common = {
   entry: [
     'babel-polyfill',
-    PATHS.app,
+    PATHS.app
   ],
 
   output: {
     path: PATHS.build,
-    filename: 'bundle.js',
+    filename: 'bundle.js'
   },
 
   resolve: {
-    extensions: ['.jsx', '.js', '.json', '.scss'],
-    modules: ['node_modules', PATHS.app],
+    extensions: ['.tsx', '.ts', '.js', '.json', '.scss'],
+    modules: ['node_modules', PATHS.app]
   },
 
   module: {
-    rules: [{
-      test: /\.js$/,
-      loaders: ['babel-loader'],
-      exclude: /node_modules/,
-    },
-    {
-      test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
-      loader: ""file-loader""
-    }],
+    rules: [
+      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+      {
+        test: /\.tsx?$/,
+        use: ['babel-loader', 'awesome-typescript-loader']
+      }, {
+        test: /\.js$/,
+        use: ['babel-loader', 'source-map-loader'],
+        exclude: /node_modules/
+      }, {
+        test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
+        loader: 'file-loader'
+      }
+    ]
   },
 
   plugins: [
@@ -82,7 +86,7 @@ const common = {
       options: {
         context: __dirname,
         postcss: [
-          autoprefixer(),
+          autoprefixer()
         ]
       }
     })
