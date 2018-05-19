@@ -4,9 +4,9 @@ using MasterBuilder.Request;
 namespace MasterBuilder.Templates.React.Src.Containers
 {
     /// <summary>
-    /// index.js Template
+    /// Container Template
     /// </summary>
-    public class IndexJsTemplate : ITemplate
+    public class ContainerTemplate : ITemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
@@ -14,7 +14,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexJsTemplate(Project project, Screen screen)
+        public ContainerTemplate(Project project, Screen screen)
         {
             Project = project;
             Screen = screen;
@@ -25,7 +25,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return $"{Screen.InternalName}.tsx";
         }
 
         /// <summary>
@@ -41,22 +41,17 @@ namespace MasterBuilder.Templates.React.Src.Containers
         /// </summary>
         public string GetFileContent()
         {
-            return $@"import React, {{ Component }} from 'react';
+            return $@"/**
+ * Component - {Screen.Title}
+ */
 
-/* component styles */
-import {{ styles }} from './styles.scss';
+import * as React from 'react';
 
-export default class {Screen.InternalName} extends Component {{
-  constructor(props) {{
-    super(props);
-  }}
-
-  render() {{
-    return (
-      <div className={{styles}}>
+export default class {Screen.InternalName} extends React.Component {{
+  public render() {{
+    return <div>
         Screen: {Screen.Title}
-      </div>
-    );
+      </div>;
   }}
 }}";
         }

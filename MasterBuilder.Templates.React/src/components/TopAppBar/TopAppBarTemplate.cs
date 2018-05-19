@@ -52,8 +52,8 @@ import Typography from '@material-ui/core/Typography';
 
 class TopAppBar extends React.Component {{
   public render() {{
-      return <div className={{classes.root}}>
-      <AppBar position=""static"" color=""default"">
+      return <div>
+      <AppBar position=""static"">
         <Toolbar>
           <Typography variant=""title"" color=""inherit"">
             {Project.Title}

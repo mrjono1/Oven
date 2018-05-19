@@ -44,11 +44,11 @@ namespace MasterBuilder.Templates.React.Src.Containers
                 //new LeftNavBar.StylesScssTemplate(Project)
             };
 
-            //foreach (var screen in Project.Screens)
-            //{
-            //    templates.Add(new IndexJsTemplate(Project, screen));
-            //    templates.Add(new StylesScssTemplate(Project, screen));
-            //}
+            foreach (var screen in Project.Screens)
+            {
+                templates.Add(new ContainerTemplate(Project, screen));
+                //templates.Add(new StylesScssTemplate(Project, screen));
+            }
 
             return templates;
         }
