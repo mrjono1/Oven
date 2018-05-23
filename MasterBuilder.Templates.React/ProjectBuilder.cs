@@ -37,9 +37,9 @@ namespace MasterBuilder.Templates.React
 
             projectWriter.AddTemplate(new ProjectFiles.TsLintTemplate(project));
             projectWriter.AddTemplate(new ProjectFiles.TsConfigTemplate(project));
-            projectWriter.AddTemplate(new ProjectFiles.BabelrcTemplate(project));
+            //projectWriter.AddTemplate(new ProjectFiles.BabelrcTemplate(project));
 
-            projectWriter.AddTemplate(new Types.GlobalTemplate(project));
+            //projectWriter.AddTemplate(new Types.GlobalTemplate(project));
 
             projectWriter.AddTemplate(new Webpack.WebpackCommonTemplate());
             projectWriter.AddTemplate(new Webpack.WebpackProdTemplate(project));
@@ -58,35 +58,54 @@ namespace MasterBuilder.Templates.React
             // src
             projectWriter.AddTemplate(new Src.ManifestTemplate(project));
             projectWriter.AddTemplate(new Src.IndexTsxTemplate(project));
+            projectWriter.AddTemplate(new Src.AppTsxTemplate(project));
+            projectWriter.AddTemplate(new Src.ReduxRootTemplate(project));
+            projectWriter.AddTemplate(new Src.WithRootTemplate(project));
 
             // containers
             projectWriter.AddTemplate(new Src.Containers.ContainerBuilder(project));
 
+            // Actions
+            projectWriter.AddTemplate(new Src.Actions.ActionBuilder(project));
+
+            // Components
+            projectWriter.AddTemplate(new Src.Components.ComponentBuilder(project));
+
+            // Model
+            projectWriter.AddTemplate(new Src.Model.ModelTsTemplate(project));
+
+            // Reducers
+            projectWriter.AddTemplate(new Src.Reducers.ComponentBuilder(project));
+
+            // Pages
+            projectWriter.AddTemplate(new Src.Pages.HomePageTsxTemplate(project));
+            projectWriter.AddTemplate(new Src.Pages.TodoPageTsxTemplate(project));
+
             // store
-        //    projectWriter.AddTemplate(new Src.Store.IndexTsTemplate(project));
+            //    projectWriter.AddTemplate(new Src.Store.IndexTsTemplate(project));
 
             // reducers
-         //   projectWriter.AddTemplate(new Src.Reducers.IndexTsTemplate(project));
+            //   projectWriter.AddTemplate(new Src.Reducers.IndexTsTemplate(project));
 
             // middleware
-       //     projectWriter.AddTemplate(new Src.Middleware.IndexTsTemplate(project));
-       //     projectWriter.AddTemplate(new Src.Middleware.LoggerTemplate(project));
+            //     projectWriter.AddTemplate(new Src.Middleware.IndexTsTemplate(project));
+            //     projectWriter.AddTemplate(new Src.Middleware.LoggerTemplate(project));
 
             // core
-         //   projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
-        //    projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
-        ///    projectWriter.AddTemplate(new Src.Core.Reducers.IndexJsTemplate(project));
-        //    projectWriter.AddTemplate(new Src.Core.Reducers.ReducerUiTemplate(project));
-          //  projectWriter.AddTemplate(new Src.Core.Store.ConfigureStoreTemplate(project));
+            //   projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
+            //    projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
+            ///    projectWriter.AddTemplate(new Src.Core.Reducers.IndexJsTemplate(project));
+            //    projectWriter.AddTemplate(new Src.Core.Reducers.ReducerUiTemplate(project));
+            //  projectWriter.AddTemplate(new Src.Core.Store.ConfigureStoreTemplate(project));
 
             //components
-            projectWriter.AddTemplate(new Src.Components.TopAppBar.TopAppBarTemplate(project));
+            //projectWriter.AddTemplate(new Src.Components.TopAppBar.TopAppBarTemplate(project));
 
-      //      projectWriter.AddTemplate(new Src.Components.Button.IndexJsTemplate(project));
-    //        projectWriter.AddTemplate(new Src.Components.Button.StylesScssTemplate(project));
+            //      projectWriter.AddTemplate(new Src.Components.Button.IndexJsTemplate(project));
+            //        projectWriter.AddTemplate(new Src.Components.Button.StylesScssTemplate(project));
 
-    //        projectWriter.AddTemplate(new Src.Components.TextField.IndexJsTemplate(project));
-    //        projectWriter.AddTemplate(new Src.Components.TextField.StylesScssTemplate(project));
+            //        projectWriter.AddTemplate(new Src.Components.TextField.IndexJsTemplate(project));
+            //        projectWriter.AddTemplate(new Src.Components.TextField.StylesScssTemplate(project));
 
             var errors = await projectWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))

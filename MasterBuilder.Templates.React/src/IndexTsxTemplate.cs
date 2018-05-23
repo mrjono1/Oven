@@ -40,13 +40,21 @@ namespace MasterBuilder.Templates.React.Src
         public string GetFileContent()
         {
             return $@"import * as React from 'react';
-import {{ render }} from 'react-dom';
-import App from './containers/App/App';
+import * as ReactDOM from 'react-dom';
+import ReduxRoot from './ReduxRoot';
 
-render(
-    <App/>,
-  document.getElementById('root')
-);";
+const rootEl = document.getElementById('root');
+ReactDOM.render(<ReduxRoot />, rootEl);
+
+if (module.hot) {{
+    module.hot.accept('./ReduxRoot', () => {{
+        const NextApp = require('./ReduxRoot').default;
+        ReactDOM.render(
+            <NextApp />,
+            rootEl
+        );
+    }});
+}}";
         }
     }
 }

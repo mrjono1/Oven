@@ -57,13 +57,59 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""start-prod"": ""npm run build && node express.js"",
     ""test"": ""jest --watch --coverage --config=configs/jest.json""
   }},
+  ""dependencies"": {{
+    ""@material-ui/core"": ""1.0.0"",
+    ""@material-ui/icons"": ""1.0.0"",
+    ""npm"": ""^5.7.1"",
+    ""react"": ""16.3.2"",
+    ""react-dom"": ""16.3.2"",
+    ""react-redux"": ""^5.0.7"",
+    ""react-router"": ""^4.2.0"",
+    ""redux"": ""^3.7.2"",
+    ""redux-logger"": ""^3.0.6"",
+    ""redux-persist"": ""^5.5.0"",
+    ""redux-thunk"": ""^2.2.0""
+  }},
   ""devDependencies"": {{
+    ""@types/history"": ""^4.6.2"",
+    ""@types/jest"": ""22.1.0"",
+    ""@types/node"": ""9.4.0"",
+    ""@types/react"": ""^16.3.2"",
+    ""@types/react-dom"": ""^16.0.5"",
+    ""@types/react-redux"": ""^5.0.19"",
+    ""@types/react-router"": ""^4.0.18"",
+    ""@types/redux-logger"": ""^3.0.5"",
+    ""@types/webpack-env"": ""^1.13.5"",
+    ""autoprefixer"": ""8.5.0"",
+    ""awesome-typescript-loader"": ""^5.0.0"",
+    ""babel-cli"": ""^6.26.0"",
+    ""babel-core"": ""^6.26.3"",
+    ""babel-loader"": ""^7.1.4"",
+    ""babel-preset-env"": ""^1.6.1"",
+    ""babel-preset-react"": ""^6.24.1"", 
+    ""copy-webpack-plugin"": ""^3.0.1"",
+    ""csstype"": ""^2.4.2"",
+    ""extract-text-webpack-plugin"": ""4.0.0-beta.0"",
+    ""html-webpack-plugin"": ""^3.2.0"",
+    ""redux-devtools-extension"": ""^2.13.2"",
+    ""typescript"": ""2.8.3"",
+    ""precss"": ""^1.4.0"",
+    ""webpack"": ""4.8.3"",
+    ""webpack-cli"": ""2.1.3"",
+    ""webpack-merge"": ""^4.1.2""
+  }}
+}}";
+
+            /* 
+             * 
+             *   ""devDependencies"": {{
     ""@types/jest"": ""^22.2.3"",
     ""@types/material-ui"": ""0.21.2"",
     ""@types/node"": ""^10.0.2"",
     ""@types/react"": ""^16.3.13"",
     ""@types/react-dom"": ""^16.0.5"",
     ""@material-ui/core"": ""1.0.0"",
+    ""@material-ui/icons"": ""1.0.0"",
     ""awesome-typescript-loader"": ""^5.0.0"",
     ""babel-cli"": ""^6.26.0"",
     ""babel-core"": ""^6.26.3"",
@@ -94,11 +140,9 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""webpack-dev-middleware"": ""^3.1.3"",
     ""webpack-dev-server"": ""^3.1.3"",
     ""webpack-merge"": ""^4.1.2""
-  }},
-  ""dependencies"": {{}},
-  ""postcss"": {{}}
-}}";
+  }}
+  */
         }
-        
+
     }
 }

@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.Src.Containers.App.Styles
+namespace MasterBuilder.Templates.React.Src.Actions
 {
     /// <summary>
-    /// links.scss Template
+    /// index.ts Template
     /// </summary>
-    public class LinksScssTemplate : ITemplate
+    public class IndexTsxTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public LinksScssTemplate(Project project)
+        public IndexTsxTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App.Styles
         /// </summary>
         public string GetFileName()
         {
-            return "links.scss";
+            return "index.tsx";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App.Styles
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "containers", "App", "styles" };
+            return new string[] { "src", "actions" };
         }
 
         /// <summary>
@@ -39,13 +39,9 @@ namespace MasterBuilder.Templates.React.Src.Containers.App.Styles
         /// </summary>
         public string GetFileContent()
         {
-            return @"a {
-  text-decoration: none;
+            return @"import * as TodoActions from './todo';
 
-  &:hover {
-    text-decoration: none !important;
-  }
-}";
+export const ActionCreators = Object.assign({}, TodoActions);";
         }
     }
 }

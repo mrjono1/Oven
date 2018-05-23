@@ -1,0 +1,127 @@
+using MasterBuilder.Interfaces;
+using MasterBuilder.Request;
+
+namespace MasterBuilder.Templates.React.Src.Components
+{
+    /// <summary>
+    /// TodoTable.tsx Template
+    /// </summary>
+    public class TodoTableTsxTemplate : ITemplate
+    {
+        private readonly Project Project;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public TodoTableTsxTemplate(Project project)
+        {
+            Project = project;
+        }
+
+        /// <summary>
+        /// Get file name
+        /// </summary>
+        public string GetFileName()
+        {
+            return "TodoTable.tsx";
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string[] GetFilePath()
+        {
+            return new string[] { "src", "components" };
+        }
+
+        /// <summary>
+        /// Get file content
+        /// </summary>
+        public string GetFileContent()
+        {
+            return @"import { Checkbox, IconButton, Paper, StyleRulesCallback, Table, TableBody, TableCell, TableHead, TableRow, WithStyles, withStyles } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import * as React from 'react';
+import * as TodoActions from '../actions/todo';
+import { Todo } from '../model/model';
+
+export namespace TodoTable {
+    export interface Props {
+        todoList: Todo[];
+        actions: typeof TodoActions;
+    }
+}
+
+class TodoTable extends React.Component<WithStyles & TodoTable.Props> {
+
+    constructor(props?: (WithStyles & TodoTable.Props), context?: any) {
+        super(props as any, context);
+    }
+
+    onRowClick(todo: Todo) {
+        if (todo.completed) {
+            this.props.actions.uncompleteTodo(todo.id);
+        } else {
+            this.props.actions.completeTodo(todo.id);
+        }
+    }
+
+    render() {
+        const { classes } = this.props;
+
+        return (
+            <Paper className={classes.paper}>
+                <Table className={classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Completed</TableCell>
+                            <TableCell>Text</TableCell>
+                            <TableCell>Delete</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.props.todoList.map(n => {
+                            return (
+                                <TableRow
+                                    key={n.id}
+                                    hover
+                                    onClick={event => this.onRowClick(n)}
+                                >
+                                    <TableCell padding=""checkbox"">
+                                        <Checkbox checked={n.completed} />
+                                    </TableCell>
+                                    <TableCell>{n.text}</TableCell>
+                                    <TableCell padding=""checkbox"">
+                                        <IconButton
+                                            aria-label=""Delete""
+                                            color=""default""
+                                            onClick={() => this.props.actions.deleteTodo(n.id)}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </Paper>
+        );
+    }
+}
+
+const styles: StyleRulesCallback = theme => ({
+    paper: {
+        maxWidth: 1000,
+        minWidth: 1000,
+        display: 'inline-block'
+    },
+    table: {
+        maxWidth: 1000,
+    },
+});
+
+export default withStyles(styles)<TodoTable.Props>(TodoTable);";
+        }
+    }
+}

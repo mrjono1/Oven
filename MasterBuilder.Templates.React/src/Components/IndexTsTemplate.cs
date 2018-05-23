@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.Src.Containers.App.Styles.Fonts
+namespace MasterBuilder.Templates.React.Src.Components
 {
     /// <summary>
-    /// roboto.scss Template
+    /// index.ts Template
     /// </summary>
-    public class RobotoScssTemplate: ITemplate
+    public class IndexTsTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public RobotoScssTemplate(Project project)
+        public IndexTsTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App.Styles.Fonts
         /// </summary>
         public string GetFileName()
         {
-            return "roboto.scss";
+            return "index.ts";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App.Styles.Fonts
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "containers", "App", "styles", "fonts" };
+            return new string[] { "src", "components" };
         }
 
         /// <summary>
@@ -39,11 +39,13 @@ namespace MasterBuilder.Templates.React.Src.Containers.App.Styles.Fonts
         /// </summary>
         public string GetFileContent()
         {
-            return @"/*
-  Fonts
-*/
+            return @"import TodoTable from './TodoTable';
 
-@import url(//fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900&subset=latin,cyrillic-ext);";
+export {
+    TodoTable
+};
+
+export default TodoTable;";
         }
     }
 }

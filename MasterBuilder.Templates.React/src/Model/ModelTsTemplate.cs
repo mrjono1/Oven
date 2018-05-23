@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.Src.Containers.App.Styles
+namespace MasterBuilder.Templates.React.Src.Model
 {
     /// <summary>
-    /// variables.scss Template
+    /// Model.ts Template
     /// </summary>
-    public class VariablesScssTemplate : ITemplate
+    public class ModelTsTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public VariablesScssTemplate(Project project)
+        public ModelTsTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App.Styles
         /// </summary>
         public string GetFileName()
         {
-            return "variables.scss";
+            return "model.ts";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App.Styles
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "containers", "App", "styles" };
+            return new string[] { "src", "model" };
         }
 
         /// <summary>
@@ -39,7 +39,23 @@ namespace MasterBuilder.Templates.React.Src.Containers.App.Styles
         /// </summary>
         public string GetFileContent()
         {
-            return @"$border-radius: 5px;";
+            return @"export interface Todo {
+    id: number;
+    text: string;
+    completed: boolean;
+}
+
+export enum ActionType {
+    ADD_TODO,
+    DELETE_TODO,
+    COMPLETE_TODO,
+    UNCOMPLETE_TODO,
+}
+
+export interface Action<T> {
+    type: ActionType;
+    payload: T;
+}";
         }
     }
 }

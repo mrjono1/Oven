@@ -4,16 +4,16 @@ using MasterBuilder.Request;
 namespace MasterBuilder.Templates.React.Src.Reducers
 {
     /// <summary>
-    /// index.ts Template
+    /// createReducers.ts Template
     /// </summary>
-    public class IndexTsTemplate : ITemplate
+    public class CreateReducerTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexTsTemplate(Project project)
+        public CreateReducerTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Reducers
         /// </summary>
         public string GetFileName()
         {
-            return "index.ts";
+            return "createReducer.ts";
         }
 
         /// <summary>
@@ -40,17 +40,20 @@ namespace MasterBuilder.Templates.React.Src.Reducers
         public string GetFileContent()
         {
             // TODO: add reducers here
-            return @"import { combineReducers } from 'redux';
-import * as todoReducder from './todo';
-import { Todo } from '../model/model';
+            return @"/**
+ * Created by toni on 12.03.2017.
+ */
+import { Action } from '../model/model';
 
-export interface RootState {
-  todoList: Array<Todo>;
-}
-
-export default combineReducers<RootState>({
-  ...todoReducder
-});";
+export default function createReducer(initialState: Object, handlers: Object) {
+    return function reducer(state: Object = initialState, action: Action<any>) {
+        if (handlers.hasOwnProperty(action.type)) {
+            return handlers[action.type](state, action);
+        } else {
+            return state;
+        }
+    };
+}";
         }
     }
 }
