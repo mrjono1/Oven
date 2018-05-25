@@ -1,23 +1,23 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
+using System;
+using System.Collections.Generic;
 
 namespace MasterBuilder.Templates.React.Src.Containers
 {
     /// <summary>
-    /// Container Template
+    /// index.ts Template
     /// </summary>
-    public class ContainerTemplate : ITemplate
+    public class IndexTsTemplate : ITemplate
     {
         private readonly Project Project;
-        private readonly Screen Screen;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ContainerTemplate(Project project, Screen screen)
+        public IndexTsTemplate(Project project)
         {
             Project = project;
-            Screen = screen;
         }
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
         /// </summary>
         public string GetFileName()
         {
-            return $"{Screen.InternalName}.tsx";
+            return "index.ts";
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "containers", Screen.InternalName };
+            return new string[] { "src", "containers" };
         }
 
         /// <summary>
@@ -41,19 +41,12 @@ namespace MasterBuilder.Templates.React.Src.Containers
         /// </summary>
         public string GetFileContent()
         {
-            return $@"/**
- * Component - {Screen.Title}
- */
-
-import * as React from 'react';
-
-export default class {Screen.InternalName} extends React.Component {{
-  public render() {{
-    return <div>
-        Screen: {Screen.Title}
-      </div>;
-  }}
-}}";
+            var exports = new List<string>();
+            foreach (var screen in Project.Screens)
+            {
+                exports.Add($"export {{ {screen.InternalName}Page }} from './{screen.InternalName}Page/{screen.InternalName}Page';");
+            }
+            return $"{string.Join(Environment.NewLine, exports)}";
         }
     }
 }

@@ -62,7 +62,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         ""indent"": [
             true,
             ""spaces"",
-            4
+            2
         ],
         ""interface-name"": [
             true,

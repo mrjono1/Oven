@@ -46,12 +46,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {{ createBrowserHistory }} from 'history';
 import * as React from 'react';
 import {{ connect }} from 'react-redux';
-import {{ Route, RouteComponentProps, Router }} from 'react-router';
+import {{ RouteComponentProps, Router }} from 'react-router';
 import {{ Todo }} from './model/model';
-import HomePage from './pages/HomePage';
-import TodoPage from './pages/TodoPage';
 import {{ RootState }} from './reducers/index';
 import withRoot from './withRoot';
+import Routes from './Routes';
 
 export namespace App {{
     export interface Props extends RouteComponentProps<void> {{
@@ -70,14 +69,6 @@ class App extends React.Component<WithStyles & App.Props, App.State> {{
     state = {{
         mobileOpen: true,
     }};
-
-    routes = (
-        <div className={{this.props.classes.content}}>
-            <Route exact={{true}} path=""/"" component={{HomePage}} />
-            <Route exact={{true}} path=""/home"" component={{HomePage}} />
-            <Route exact={{true}} path=""/todo"" component={{TodoPage}} />
-        </div>
-    );
 
     render() {{
 
@@ -152,7 +143,9 @@ class App extends React.Component<WithStyles & App.Props, App.State> {{
                                 {{drawer}}
                             </Drawer>
                         </Hidden>
-                        {{this.routes}}
+                        <div className={{this.props.classes.content}}>
+                            <Routes />
+                        </div>
                     </div>
                 </div>
             </Router>
