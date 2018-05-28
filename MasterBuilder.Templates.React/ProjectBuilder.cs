@@ -32,7 +32,7 @@ namespace MasterBuilder.Templates.React
 
             // Create Project Files
             projectWriter.AddTemplate(new ProjectFiles.PackageJsonTemplate(project));
-            projectWriter.AddTemplate(new ProjectFiles.PackageLockJsonTemplate(project));
+            //projectWriter.AddTemplate(new ProjectFiles.PackageLockJsonTemplate(project));
 
             projectWriter.AddTemplate(new ProjectFiles.EslintrcTemplate(project));
             projectWriter.AddTemplate(new ProjectFiles.EslintrcIgnoreTemplate(project));

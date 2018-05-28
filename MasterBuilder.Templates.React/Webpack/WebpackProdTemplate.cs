@@ -46,6 +46,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+    mode: 'production',
   entry: [],
 
   output: {
@@ -89,29 +90,13 @@ module.exports = {
       __DEVELOPMENT__: false,
     }),
     new ExtractTextPlugin({ filename: 'bundle.css'}),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-      },
-    }),
     new HtmlWebpackPlugin({
-      template: 'Views/Shared/_LayoutTemplate.cshtml',
-      filename: '../Views/Shared/_Layout.cshtml'
-    }),
-    new HtmlWebpackPlugin({
-    filename: 'manifest.json',
-      template: 'src/manifest.json',
-      inject: false
-    }),
-    new CopyWebpackPlugin([
-      {
-    from: 'src/assets',
-        to: 'assets'
-      }
-    ])
+    template: 'Views/Shared/_LayoutTemplate.cshtml',
+        filename: '../Views/Shared/_Layout.cshtml',
+        hash: true
+    })
   ]
-};
-";
+};";
         }
     }
 }

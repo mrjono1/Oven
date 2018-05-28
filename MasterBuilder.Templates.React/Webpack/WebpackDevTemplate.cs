@@ -46,10 +46,11 @@ const precss = require('precss');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
+    mode: 'development',
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './src/index',
+    './src/index'
   ],
   output: {
     publicPath: ''
@@ -87,7 +88,7 @@ module.exports = {
               path.join(__dirname, '..', '/src/containers/App/styles')
             ]
           }
-        }
+    }
       ]
     }]
   },
@@ -101,13 +102,14 @@ module.exports = {
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
     new HtmlWebpackPlugin({
-      template: 'Views/Shared/_LayoutTemplate.cshtml',
-      filename: '../Views/Shared/_Layout.cshtml'
+    template: 'Views/Shared/_LayoutTemplate.cshtml',
+      filename: '../Views/Shared/_Layout.cshtml',
+      hash: true
     })
   ]
-};
-";
+};";
         }
     }
 }
