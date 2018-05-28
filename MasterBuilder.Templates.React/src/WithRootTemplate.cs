@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src"};
+            return new string[] { "src" };
         }
 
         /// <summary>

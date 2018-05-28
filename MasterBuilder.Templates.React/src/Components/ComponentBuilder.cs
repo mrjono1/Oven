@@ -25,7 +25,9 @@ namespace MasterBuilder.Templates.React.Src.Components
             {
                 new IndexTsTemplate(Project),
                 new TodoDialogTsxTemplate(Project),
-                new TodoTableTsxTemplate(Project)
+                new TodoTableTsxTemplate(Project),
+                new RoutesTsxTemplate(Project),
+                new LeftDrawerTsxTemplate(Project)
             };
 
             return templates;

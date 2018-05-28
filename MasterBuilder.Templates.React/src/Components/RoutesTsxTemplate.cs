@@ -3,7 +3,7 @@ using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 
-namespace MasterBuilder.Templates.React.Src
+namespace MasterBuilder.Templates.React.Src.Components
 {
     /// <summary>
     /// Routes.tsx Template
@@ -33,7 +33,7 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", };
+            return new string[] { "src", "components" };
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace MasterBuilder.Templates.React.Src
             var routes = new List<string>();
             foreach (var screen in Project.Screens)
             {
-                imports.Add($"import {screen.InternalName}Page from './containers/{screen.InternalName}Page';");
+                imports.Add($"import {screen.InternalName}Page from '../containers/{screen.InternalName}Page';");
                 routes.Add($@"            <Route exact={{true}} path=""/{screen.Path}"" component={{{screen.InternalName}Page}} />");
             }
 
@@ -55,8 +55,8 @@ namespace MasterBuilder.Templates.React.Src
 
 import * as React from 'react';
 import {{ Route }} from 'react-router';
-import HomePage from './pages/HomePage';
-import TodoPage from './pages/TodoPage';
+import HomePage from '../pages/HomePage';
+import TodoPage from '../pages/TodoPage';
 {string.Join(Environment.NewLine, imports)}
 
 class Routes extends React.Component {{

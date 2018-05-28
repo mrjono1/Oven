@@ -61,7 +61,6 @@ namespace MasterBuilder.Templates.React
             projectWriter.AddTemplate(new Src.AppTsxTemplate(project));
             projectWriter.AddTemplate(new Src.ReduxRootTemplate(project));
             projectWriter.AddTemplate(new Src.WithRootTemplate(project));
-            projectWriter.AddTemplate(new Src.RoutesTsxTemplate(project));
 
             // Containers
             projectWriter.AddTemplate(new Src.Containers.PageBuilder(project));

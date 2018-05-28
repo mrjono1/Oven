@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", };
+            return new string[] { "src" };
         }
 
         /// <summary>
@@ -50,7 +50,8 @@ import {{ RouteComponentProps, Router }} from 'react-router';
 import {{ Todo }} from './model/model';
 import {{ RootState }} from './reducers/index';
 import withRoot from './withRoot';
-import Routes from './Routes';
+import Routes from './components/Routes';
+import LeftDrawer from './components/LeftDrawer';
 
 export namespace App {{
     export interface Props extends RouteComponentProps<void> {{
@@ -85,14 +86,7 @@ class App extends React.Component<WithStyles & App.Props, App.State> {{
                     </ListItem>
                 </List>
                 <Divider />
-                <List>
-                    <ListItem button onClick={{() => history.push('/todo')}}>
-                        <ListItemIcon>
-                            {{this.renderTodoIcon()}}
-                        </ListItemIcon>
-                        <ListItemText primary=""Todo"" />
-                    </ListItem>
-                </List>
+                <LeftDrawer />
                 <div style={{{{ height: 10000 }}}} />
             </div>
         );
