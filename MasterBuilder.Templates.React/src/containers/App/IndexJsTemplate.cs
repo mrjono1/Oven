@@ -51,9 +51,9 @@ import { HashRouter, Route }      from 'react-router-dom'
 import './styles/app.scss';
 
 /* application containers */
-import Header     from 'containers/Header';
+import Header from 'containers/Header';
 import LeftNavBar from 'containers/LeftNavBar';
-import Home       from 'containers/Home';
+import AppRoutes from '../../components/AppRoutes';
 
 injectTapEventPlugin();
 
@@ -68,11 +68,7 @@ export class App extends Component {
         <div>
           <Header />
           <div className=""container"">
-            <HashRouter>
-              <div>
-                <Route exact path=""/"" component={Home}/>
-              </div>
-            </HashRouter>
+            <AppRoutes/>
           </div>
           <LeftNavBar />
         </div>

@@ -60,7 +60,11 @@ Obj/
 # Visual Studio 2015 cache/options directory
 .vs/
 **/wwwroot/dist/
+**/wwwroot/*.js
+**/wwwroot/*.css
+**/wwwroot/*.html
 /ClientApp/dist/
+
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

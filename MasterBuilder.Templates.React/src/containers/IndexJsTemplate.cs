@@ -25,7 +25,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return $"{Screen.InternalName}Page.jsx";
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "containers", Screen.InternalName };
+            return new string[] { "src", "containers" };
         }
 
         /// <summary>
@@ -43,17 +43,14 @@ namespace MasterBuilder.Templates.React.Src.Containers
         {
             return $@"import React, {{ Component }} from 'react';
 
-/* component styles */
-import {{ styles }} from './styles.scss';
-
-export default class {Screen.InternalName} extends Component {{
+export default class {Screen.InternalName}Page extends Component {{
   constructor(props) {{
     super(props);
   }}
 
   render() {{
     return (
-      <div className={{styles}}>
+      <div>
         Screen: {Screen.Title}
       </div>
     );

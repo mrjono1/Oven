@@ -72,7 +72,7 @@ const common = {
 
   module: {
     rules: [{
-      test: /\.js$/,
+      test: /\.jsx?$/,
       loaders: ['babel-loader'],
       exclude: /node_modules/
     },

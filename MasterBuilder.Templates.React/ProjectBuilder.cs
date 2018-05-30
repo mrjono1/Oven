@@ -77,6 +77,8 @@ namespace MasterBuilder.Templates.React
             projectWriter.AddTemplate(new Src.Components.TextField.IndexJsTemplate(project));
             projectWriter.AddTemplate(new Src.Components.TextField.StylesScssTemplate(project));
 
+            projectWriter.AddTemplate(new Src.Components.ComponentBuilder(project));
+
             var errors = await projectWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))
             {
