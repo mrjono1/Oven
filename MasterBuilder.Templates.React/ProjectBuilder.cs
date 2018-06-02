@@ -68,7 +68,7 @@ namespace MasterBuilder.Templates.React
             projectWriter.AddTemplate(new Src.Core.Store.ConfigureStoreTemplate(project));
 
             //components
-            projectWriter.AddTemplate(new Src.Components.AppBar.IndexJsTemplate(project));
+            projectWriter.AddTemplate(new Src.Components.AppBar.IndexTemplate(project));
             projectWriter.AddTemplate(new Src.Components.AppBar.StylesScssTemplate(project));
 
             projectWriter.AddTemplate(new Src.Components.Button.IndexJsTemplate(project));

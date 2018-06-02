@@ -25,7 +25,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
         {
             var templates = new List<ITemplate>
             {
-                new App.IndexJsTemplate(Project),
+                new App.IndexTemplate(Project),
                 new App.Styles.AppScssTemplate(Project),
                 new App.Styles.Fonts.RobotoScssTemplate(Project),
                 new App.Styles.ThirdParty.NormalizeScssTemplate(Project),
@@ -40,7 +40,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
                 new Header.IndexJsTemplate(Project),
                 new Header.StylesScssTemplate(Project),
 
-                new LeftNavBar.IndexJsTemplate(Project),
+                new LeftNavBar.IndexTemplate(Project),
                 new LeftNavBar.StylesScssTemplate(Project)
             };
 

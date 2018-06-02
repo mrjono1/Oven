@@ -62,18 +62,22 @@ namespace MasterBuilder.Templates.React.Src.Components
  */
 
 import React, {{ Component }} from 'react';
-import {{ HashRouter, Route }} from 'react-router-dom';
+import {{ Route }} from 'react-router-dom';
+import {{ Router }} from 'react-router';
+import {{ createBrowserHistory }} from 'history';
 {string.Join(Environment.NewLine, imports)}
+
+const history = createBrowserHistory();
 
 class Routes extends Component {{
 
   render() {{
     return (
-      <HashRouter>      
+      <Router history={{history}}>      
         <div>
 {string.Join(Environment.NewLine, routes)}
         </div>
-      </HashRouter>
+      </Router>
     );
   }}
 }}

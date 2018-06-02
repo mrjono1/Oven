@@ -42,7 +42,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.Header
             return @"import React, { Component }   from 'react';
 import { connect }            from 'react-redux';
 import { bindActionCreators } from 'redux';
-import AppBar                 from 'components/AppBar';
+import TopAppBar                 from 'components/TopAppBar';
 
 /* actions */
 import * as uiActionCreators from 'core/actions/actions-ui';
@@ -64,7 +64,7 @@ class Header extends Component {
     return (
       <div className={styles}>
         <header>
-          <AppBar onLeftIconButtonClick={this.handleToggle} />
+          <TopAppBar onLeftIconButtonClick={this.handleToggle} />
         </header>
       </div>
     );

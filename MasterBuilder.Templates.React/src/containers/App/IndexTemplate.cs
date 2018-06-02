@@ -6,14 +6,14 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
     /// <summary>
     /// index.js Template
     /// </summary>
-    public class IndexJsTemplate : ITemplate
+    public class IndexTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexJsTemplate(Project project)
+        public IndexTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return "index.jsx";
         }
 
         /// <summary>
@@ -42,9 +42,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
             return @"import React, { Component }       from 'react';
 import { connect }                from 'react-redux';
 import injectTapEventPlugin       from 'react-tap-event-plugin';
-import getMuiTheme                from 'material-ui/styles/getMuiTheme';
-import MuiThemeProvider           from 'material-ui/styles/MuiThemeProvider';
-import { HashRouter, Route }      from 'react-router-dom'
+import { Route }      from 'react-router-dom'
 
 
 // global styles for entire app
@@ -64,7 +62,6 @@ export class App extends Component {
 
   render() {
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div>
           <Header />
           <div className=""container"">
@@ -72,7 +69,6 @@ export class App extends Component {
           </div>
           <LeftNavBar />
         </div>
-      </MuiThemeProvider>
     );
   }
 }

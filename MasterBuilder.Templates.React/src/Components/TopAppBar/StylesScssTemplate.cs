@@ -4,16 +4,16 @@ using MasterBuilder.Request;
 namespace MasterBuilder.Templates.React.Src.Components.AppBar
 {
     /// <summary>
-    /// index.js Template
+    /// styles.scss Template
     /// </summary>
-    public class IndexJsTemplate : ITemplate
+    public class StylesScssTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexJsTemplate(Project project)
+        public StylesScssTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Components.AppBar
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return "styles.scss";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src.Components.AppBar
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "components", "AppBar" };
+            return new string[] { "src", "components", "TopAppBar" };
         }
 
         /// <summary>
@@ -39,22 +39,8 @@ namespace MasterBuilder.Templates.React.Src.Components.AppBar
         /// </summary>
         public string GetFileContent()
         {
-            return @"/**
- * AppBar
- */
+            return @":local(.styles) {
 
-import React                   from 'react';
-import { AppBar as MuiAppBar } from 'material-ui';
-
-/* component styles */
-import { styles } from './styles.scss';
-
-export default function AppBar(props) {
-  return (
-    <div className={styles}>
-      <MuiAppBar {...props} className=""app-bar"" />
-    </div>
-  );
 }";
         }
     }

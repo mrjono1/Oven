@@ -4,16 +4,16 @@ using MasterBuilder.Request;
 namespace MasterBuilder.Templates.React.Src.Containers.LeftNavBar
 {
     /// <summary>
-    /// index.js Template
+    /// index.jsx Template
     /// </summary>
-    public class IndexJsTemplate : ITemplate
+    public class IndexTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexJsTemplate(Project project)
+        public IndexTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.LeftNavBar
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return "index.jsx";
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ import {{ connect }}            from 'react-redux';
 import {{ bindActionCreators }} from 'redux';
 import {{ Drawer,
          AppBar,
-         Divider }}           from 'material-ui';
+         Divider }}           from '@material-ui/core';
 
 /* component styles */
 import {{ styles }} from './styles.scss';
