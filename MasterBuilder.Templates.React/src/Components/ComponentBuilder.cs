@@ -23,8 +23,8 @@ namespace MasterBuilder.Templates.React.Src.Components
         {
             var templates = new List<ITemplate>
             {
-                new AppRoutesTemplate(Project)
-                //new LeftDrawerTsxTemplate(Project)
+                new AppRoutesTemplate(Project),
+                new LeftDrawerTemplate(Project)
             };
 
             return templates;

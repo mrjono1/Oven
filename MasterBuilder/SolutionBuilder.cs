@@ -18,7 +18,7 @@ namespace MasterBuilder
 
             // Create Project Files
             solutionWriter.AddTemplate(solutionDirectory, new Templates.SolutionFiles.GitAttributesTemplate());
-            solutionWriter.AddTemplate(solutionDirectory, new Templates.SolutionFiles.GitIgnoreTemplate());
+            solutionWriter.AddTemplate(solutionDirectory, new Templates.SolutionFiles.GitIgnoreTemplate(project));
 
             var errors = await solutionWriter.WriteAndClean(false);
             if (!string.IsNullOrEmpty(errors))
