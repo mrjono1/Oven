@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.Header
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return "index.jsx";
         }
 
         /// <summary>

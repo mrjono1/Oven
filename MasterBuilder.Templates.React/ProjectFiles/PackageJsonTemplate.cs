@@ -54,11 +54,11 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""test"": ""bin/test.sh""
   }},
   ""devDependencies"": {{
-    ""aspnet-webpack"": ""^2.0.3"",
+    ""aspnet-webpack"": ""3.0.0"",
     ""autoprefixer"": ""8.5.1"",
     ""babel-core"": ""^6.9.1"",
     ""babel-eslint"": ""^6.0.4"",
-    ""babel-loader"": ""^6.2.4"",
+    ""babel-loader"": ""7.1.4"",
     ""babel-plugin-transform-class-properties"": ""^6.9.1"",
     ""babel-plugin-transform-decorators-legacy"": ""^1.3.4"",
     ""babel-polyfill"": ""^6.9.1"",
@@ -70,7 +70,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""copy-webpack-plugin"": ""^3.0.1"",
     ""cross-env"": ""^5.0.0"",
     ""css-loader"": ""^0.28.0"",
-    ""enzyme"": ""^2.3.0"",
+    ""enzyme"": ""^3.3.0"",
     ""eslint"": ""^2.11.1"",
     ""eslint-config-airbnb"": ""3.1.0"",
     ""eslint-plugin-react"": ""^3.15.0"",
@@ -101,9 +101,9 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""url-loader"": ""^0.5.7"",
     ""webpack"": ""4.8.3"",
     ""webpack-cli"": ""2.1.3"",
-    ""webpack-dev-middleware"": ""^1.5.0"",
-    ""webpack-dev-server"": ""^1.14.1"",
-    ""webpack-hot-middleware"": ""^2.6.0"",
+    ""webpack-dev-middleware"": ""3.1.3"",
+    ""webpack-dev-server"": ""3.1.4"",
+    ""webpack-hot-middleware"": ""2.22.2"",
     ""webpack-merge"": ""^4.1.2""
   }},
   ""dependencies"": {{
