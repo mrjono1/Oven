@@ -47,7 +47,7 @@ namespace MasterBuilder.Templates.React.Src
             }
             return $@"                    <ListItem button onClick={{() => history.push('/{path}')}}>
                         <ListItemIcon>
-                            {{this.renderTodoIcon()}}
+                            <StarIcon />
                         </ListItemIcon>
                         <ListItemText primary=""{menuItem.Title}"" />
                     </ListItem>";
@@ -75,7 +75,9 @@ namespace MasterBuilder.Templates.React.Src
 
 import {{ List, ListItem, ListItemIcon, ListItemText }} from '@material-ui/core';
 import * as React from 'react';
-
+import StarIcon from '@material-ui/icons/Star';
+import {{ Link }} from 'react-router-dom';
+//https://codesandbox.io/s/lpwq74p30m <ListItem component={{Link}} to='/'>
 class LeftDrawer extends React.Component {{
 
     render() {{
@@ -83,7 +85,7 @@ class LeftDrawer extends React.Component {{
                 <List>
                     <ListItem button onClick={{() => history.push('/todo')}}>
                         <ListItemIcon>
-                            {{this.renderTodoIcon()}}
+                            <StarIcon />
                         </ListItemIcon>
                         <ListItemText primary=""Todo"" />
                     </ListItem>
