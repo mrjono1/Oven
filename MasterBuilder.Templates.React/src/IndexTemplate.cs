@@ -6,14 +6,14 @@ namespace MasterBuilder.Templates.React.Src
     /// <summary>
     /// index.js Template
     /// </summary>
-    public class IndexJsTemplate : ITemplate
+    public class IndexTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexJsTemplate(Project project)
+        public IndexTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string GetFileName()
         {
-            return "index.js";
+            return "index.jsx";
         }
 
         /// <summary>
@@ -39,17 +39,21 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string GetFileContent()
         {
-            return $@"import React          from 'react';
-import ReactDOM       from 'react-dom';
-import {{ Provider }}   from 'react-redux';
+            return $@"import React from 'react';
+import ReactDOM from 'react-dom';
+import {{ Provider }} from 'react-redux';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import configureStore from 'core/store/configureStore';
-import App            from 'containers/App';
+import App from 'containers/App';
 
 const store = configureStore();
 
 ReactDOM.render(
   <Provider store={{store}}>
-    <App/>
+      <React.Fragment>
+          <CssBaseline />
+          <App/>
+      </React.Fragment>
   </Provider>,
   document.getElementById('root')
 );";

@@ -64,9 +64,6 @@ const history = createBrowserHistory();
 injectTapEventPlugin();
 const drawerWidth = 240;
 
-// global styles for entire app
-import './styles/app.scss';
-
 const styles = theme => ({{
     root: {{
         flexGrow: 1,
