@@ -78,7 +78,7 @@ import * as React from 'react';
 import StarIcon from '@material-ui/icons/Star';
 import HomeIcon from '@material-ui/icons/Home';
 import {{ Link }} from 'react-router-dom';
-//https://codesandbox.io/s/lpwq74p30m <ListItem component={{Link}} to='/'>
+
 class LeftDrawer extends React.Component {{
 
     render() {{

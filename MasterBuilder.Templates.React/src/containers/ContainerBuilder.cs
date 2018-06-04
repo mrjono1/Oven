@@ -32,16 +32,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
                 new App.Styles.FontScssTemplate(Project),
                 new App.Styles.LinksScssTemplate(Project),
                 new App.Styles.TypographyScssTemplate(Project),
-                new App.Styles.VariablesScssTemplate(Project),
-
-                new Footer.IndexJsTemplate(Project),
-                new Footer.StylesScssTemplate(Project),
-
-                new Header.IndexJsTemplate(Project),
-                new Header.StylesScssTemplate(Project),
-
-                new LeftNavBar.IndexTemplate(Project),
-                new LeftNavBar.StylesScssTemplate(Project)
+                new App.Styles.VariablesScssTemplate(Project)
             };
 
             foreach (var screen in Project.Screens)
