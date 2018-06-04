@@ -45,7 +45,7 @@ namespace MasterBuilder.Templates.React.Src
                 path = Project.Screens.Where(s => s.Id == menuItem.ScreenId.Value).Select(p => p.Path).SingleOrDefault();
                 // TODO: if url is null error
             }
-            return $@"                    <ListItem button onClick={{() => history.push('/{path}')}}>
+            return $@"                    <ListItem component={{Link}} to='/{path}'>
                         <ListItemIcon>
                             <StarIcon />
                         </ListItemIcon>
@@ -76,6 +76,7 @@ namespace MasterBuilder.Templates.React.Src
 import {{ List, ListItem, ListItemIcon, ListItemText }} from '@material-ui/core';
 import * as React from 'react';
 import StarIcon from '@material-ui/icons/Star';
+import HomeIcon from '@material-ui/icons/Home';
 import {{ Link }} from 'react-router-dom';
 //https://codesandbox.io/s/lpwq74p30m <ListItem component={{Link}} to='/'>
 class LeftDrawer extends React.Component {{
@@ -83,11 +84,11 @@ class LeftDrawer extends React.Component {{
     render() {{
         return (
                 <List>
-                    <ListItem button onClick={{() => history.push('/todo')}}>
+                    <ListItem component={{Link}} to='/'>
                         <ListItemIcon>
-                            <StarIcon />
+                            <HomeIcon />
                         </ListItemIcon>
-                        <ListItemText primary=""Todo"" />
+                        <ListItemText primary=""Home"" />
                     </ListItem>
 {string.Join(Environment.NewLine, menuItems)}
                 </List>

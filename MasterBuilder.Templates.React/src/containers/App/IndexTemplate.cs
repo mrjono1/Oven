@@ -43,7 +43,9 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
 import PropTypes from 'prop-types';
 import {{ connect }} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import {{ Route }} from 'react-router-dom'
+import {{ Route }} from 'react-router-dom';
+import {{ Router }} from 'react-router';
+import {{ createBrowserHistory }} from 'history';
 import AppRoutes from '../../components/AppRoutes';
 
 import {{ withStyles }} from '@material-ui/core/styles';
@@ -58,6 +60,7 @@ import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
 import LeftDrawer from '../../components/LeftDrawer';
 
+const history = createBrowserHistory();
 injectTapEventPlugin();
 const drawerWidth = 240;
 
@@ -121,6 +124,7 @@ class App extends React.Component {{
         );
 
         return (
+        <Router history={{history}}>     
             <div className={{classes.root}}>
                 <AppBar className={{classes.appBar}}>
                     <Toolbar>
@@ -169,6 +173,7 @@ class App extends React.Component {{
                     <AppRoutes />
                 </main>
             </div>
+        </Router>
         );
     }}
 }}
