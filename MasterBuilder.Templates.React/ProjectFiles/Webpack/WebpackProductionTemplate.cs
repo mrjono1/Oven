@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.Webpack
+namespace MasterBuilder.Templates.React.ProjectFiles.Webpack
 {
     /// <summary>
     /// Webpack prod config
     /// </summary>
-    public class WebpackProdTemplate : ITemplate
+    public class WebpackProductionTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public WebpackProdTemplate(Project project)
+        public WebpackProductionTemplate(Project project)
         {
             Project = project;
         }
@@ -22,7 +22,7 @@ namespace MasterBuilder.Templates.React.Webpack
         /// </summary>
         public string GetFileName()
         {
-            return "prod.config.js";
+            return "webpack.config.production.js";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Webpack
         /// <returns></returns>
         public string[] GetFilePath()
         {
-            return new string[] { "webpack" };
+            return new string[] { };
         }
 
         /// <summary>
@@ -43,14 +43,13 @@ namespace MasterBuilder.Templates.React.Webpack
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-    mode: 'production',
+  mode: 'production',
   entry: [],
 
   output: {
-    publicPath: '',
+    publicPath: ''
   },
 
   module: {
@@ -75,25 +74,25 @@ module.exports = {
                 path.join(__dirname, '..', '/src/containers/App/styles')
               ]
             }
-    }
+        }
         ]
         })
       }
-    ],
+    ]
   },
 
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: '""production""',
+        NODE_ENV: '""production""'
       },
-      __DEVELOPMENT__: false,
+      __DEVELOPMENT__: false
     }),
     new ExtractTextPlugin({ filename: 'bundle.css'}),
     new HtmlWebpackPlugin({
-    template: 'Views/Shared/_LayoutTemplate.cshtml',
-        filename: '../Views/Shared/_Layout.cshtml',
-        hash: true
+      template: 'Views/Shared/_LayoutTemplate.cshtml',
+      filename: '../Views/Shared/_Layout.cshtml',
+      hash: true
     })
   ]
 };";

@@ -1,18 +1,18 @@
 using MasterBuilder.Interfaces;
 
-namespace MasterBuilder.Templates.React.Webpack
+namespace MasterBuilder.Templates.React.ProjectFiles.Webpack
 {
     /// <summary>
     /// Webpack common config
     /// </summary>
-    public class WebpackCommonTemplate : ITemplate
+    public class WebpackTemplate : ITemplate
     {
         /// <summary>
         /// Get file name
         /// </summary>
         public string GetFileName()
         {
-            return "common.config.js";
+            return "webpack.config.js";
         }
 
         /// <summary>
@@ -20,7 +20,7 @@ namespace MasterBuilder.Templates.React.Webpack
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "webpack" };
+            return new string[] { };
         }
 
         /// <summary>
@@ -33,16 +33,16 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const autoprefixer = require('autoprefixer');
 
-const development = require('./dev.config.js');
-const production = require('./prod.config.js');
+const development = require('./webpack.config.development.js');
+const production = require('./webpack.config.production.js');
 
 require('babel-polyfill');
 
 const TARGET = process.env.npm_lifecycle_event;
 
 const PATHS = {
-  app: path.join(__dirname, '../src'),
-  build: path.join(__dirname, '../wwwroot')
+  app: path.join(__dirname, './src'),
+  build: path.join(__dirname, './wwwroot')
 };
 
 process.env.BABEL_ENV = TARGET;

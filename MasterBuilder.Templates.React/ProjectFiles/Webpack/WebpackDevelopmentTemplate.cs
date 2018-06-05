@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.Webpack
+namespace MasterBuilder.Templates.React.ProjectFiles.Webpack
 {
     /// <summary>
     /// Webpack dev config
     /// </summary>
-    public class WebpackDevTemplate : ITemplate
+    public class WebpackDevelopmentTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public WebpackDevTemplate(Project project)
+        public WebpackDevelopmentTemplate(Project project)
         {
             Project = project;
         }
@@ -22,7 +22,7 @@ namespace MasterBuilder.Templates.React.Webpack
         /// </summary>
         public string GetFileName()
         {
-            return "dev.config.js";
+            return "webpack.config.development.js";
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace MasterBuilder.Templates.React.Webpack
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "webpack" };
+            return new string[] { };
         }
 
         /// <summary>
@@ -40,13 +40,12 @@ namespace MasterBuilder.Templates.React.Webpack
         {
             return @"const webpack = require('webpack');
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const precss = require('precss');
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-    mode: 'development',
+  mode: 'development',
   devtool: 'source-map',
   entry: [
     'webpack-hot-middleware/client',
@@ -88,7 +87,7 @@ module.exports = {
               path.join(__dirname, '..', '/src/containers/App/styles')
             ]
           }
-    }
+        }
       ]
     }]
   },
@@ -104,7 +103,7 @@ module.exports = {
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.NamedModulesPlugin(), // prints more readable module names in the browser console on HMR updates
     new HtmlWebpackPlugin({
-    template: 'Views/Shared/_LayoutTemplate.cshtml',
+      template: 'Views/Shared/_LayoutTemplate.cshtml',
       filename: '../Views/Shared/_Layout.cshtml',
       hash: true
     })

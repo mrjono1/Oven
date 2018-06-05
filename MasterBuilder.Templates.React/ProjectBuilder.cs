@@ -38,9 +38,9 @@ namespace MasterBuilder.Templates.React
             projectWriter.AddTemplate(new ProjectFiles.EslintrcIgnoreTemplate(project));
             projectWriter.AddTemplate(new ProjectFiles.BabelrcTemplate(project));
 
-            projectWriter.AddTemplate(new Webpack.WebpackCommonTemplate());
-            projectWriter.AddTemplate(new Webpack.WebpackProdTemplate(project));
-            projectWriter.AddTemplate(new Webpack.WebpackDevTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.Webpack.WebpackTemplate());
+            projectWriter.AddTemplate(new ProjectFiles.Webpack.WebpackProductionTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.Webpack.WebpackDevelopmentTemplate(project));
 
             // Views
             projectWriter.AddTemplate(new Views.ViewImportsTemplate(project));
