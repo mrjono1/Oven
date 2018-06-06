@@ -25,12 +25,12 @@ namespace MasterBuilder.Templates.React.Src.Containers
         {
             var templates = new List<ITemplate>
             {
-                new App.IndexTemplate(Project)
+                new App.AppTemplate(Project)
             };
 
             foreach (var screen in Project.Screens)
             {
-                templates.Add(new IndexJsTemplate(Project, screen));
+                templates.Add(new IndexTemplate(Project, screen));
             }
 
             return templates;

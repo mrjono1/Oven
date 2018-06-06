@@ -4,16 +4,16 @@ using MasterBuilder.Request;
 namespace MasterBuilder.Templates.React.Src.Containers.App
 {
     /// <summary>
-    /// index.js Template
+    /// App.jsx Template
     /// </summary>
-    public class IndexTemplate : ITemplate
+    public class AppTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexTemplate(Project project)
+        public AppTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
         /// </summary>
         public string GetFileName()
         {
-            return "index.jsx";
+            return "App.jsx";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "containers", "App" };
+            return new string[] { "src", "containers", "core" };
         }
 
         /// <summary>
@@ -67,7 +67,6 @@ const drawerWidth = 240;
 const styles = theme => ({{
     root: {{
         flexGrow: 1,
-        height: 430,
         zIndex: 1,
         overflow: 'hidden',
         position: 'relative',
