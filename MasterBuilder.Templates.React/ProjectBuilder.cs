@@ -63,7 +63,6 @@ namespace MasterBuilder.Templates.React
             // core
             projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
             projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
-           // projectWriter.AddTemplate(new Src.Core.Reducers.IndexTemplate(project));
             projectWriter.AddTemplate(new Src.Core.Reducers.ReducerUiTemplate(project));
 
             //components
