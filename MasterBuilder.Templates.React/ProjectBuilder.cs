@@ -63,9 +63,8 @@ namespace MasterBuilder.Templates.React
             // core
             projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
             projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
-            projectWriter.AddTemplate(new Src.Core.Reducers.IndexJsTemplate(project));
+           // projectWriter.AddTemplate(new Src.Core.Reducers.IndexTemplate(project));
             projectWriter.AddTemplate(new Src.Core.Reducers.ReducerUiTemplate(project));
-            projectWriter.AddTemplate(new Src.Core.Store.ConfigureStoreTemplate(project));
 
             //components
             projectWriter.AddTemplate(new Src.Components.AppBar.IndexTemplate(project));
@@ -77,6 +76,12 @@ namespace MasterBuilder.Templates.React
             projectWriter.AddTemplate(new Src.Components.TextField.StylesScssTemplate(project));
 
             projectWriter.AddTemplate(new Src.Components.ComponentBuilder(project));
+
+            // Reducers
+            projectWriter.AddTemplate(new Src.Reducers.ReducerBuilder(project));
+
+            // Store
+            projectWriter.AddTemplate(new Src.Store.ConfigureStoreTemplate(project));
 
             var errors = await projectWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))

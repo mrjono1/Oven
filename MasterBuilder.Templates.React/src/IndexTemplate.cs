@@ -43,7 +43,7 @@ namespace MasterBuilder.Templates.React.Src
 import ReactDOM from 'react-dom';
 import {{ Provider }} from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import configureStore from 'core/store/configureStore';
+import configureStore from 'store/configureStore';
 import App from 'containers/core/App';
 
 const store = configureStore();

@@ -2,19 +2,19 @@
 using MasterBuilder.Request;
 using System.Collections.Generic;
 
-namespace MasterBuilder.Templates.React.Src.Containers
+namespace MasterBuilder.Templates.React.Src.Reducers
 {
     /// <summary>
-    /// Build Containers
+    /// Build Reducers
     /// </summary>
-    public class ContainerBuilder : ITemplateBuilder
+    public class ReducerBuilder : ITemplateBuilder
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ContainerBuilder(Project project)
+        public ReducerBuilder(Project project)
         {
             Project = project;
         }
@@ -23,14 +23,13 @@ namespace MasterBuilder.Templates.React.Src.Containers
         {
             var templates = new List<ITemplate>
             {
-                new App.AppTemplate(Project)
+                new IndexTemplate(Project)
             };
 
             foreach (var screen in Project.Screens)
             {
-                templates.Add(new IndexTemplate(Project, screen));
+                templates.Add(new PageReducerTemplate(Project, screen));
             }
-
             return templates;
         }
     }

@@ -6,14 +6,14 @@ namespace MasterBuilder.Templates.React.Src.Core.Reducers
     /// <summary>
     /// index.js Template
     /// </summary>
-    public class IndexJsTemplate : ITemplate
+    public class IndexTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexJsTemplate(Project project)
+        public IndexTemplate(Project project)
         {
             Project = project;
         }

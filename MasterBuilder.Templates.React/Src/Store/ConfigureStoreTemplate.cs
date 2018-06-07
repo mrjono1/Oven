@@ -1,10 +1,13 @@
-using MasterBuilder.Interfaces;
+﻿using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace MasterBuilder.Templates.React.Src.Core.Store
+namespace MasterBuilder.Templates.React.Src.Store
 {
     /// <summary>
-    /// configure store Template
+    /// configureStore.js Template
     /// </summary>
     public class ConfigureStoreTemplate : ITemplate
     {
@@ -31,7 +34,7 @@ namespace MasterBuilder.Templates.React.Src.Core.Store
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "core", "store" };
+            return new string[] { "src", "store" };
         }
 
         /// <summary>
@@ -40,9 +43,9 @@ namespace MasterBuilder.Templates.React.Src.Core.Store
         public string GetFileContent()
         {
             return @"import { applyMiddleware, createStore } from 'redux';
-import reduxThunk                       from 'redux-thunk';
-import createLogger                     from 'redux-logger';
-import rootReducer                      from '../reducers';
+import reduxThunk from 'redux-thunk';
+import createLogger from 'redux-logger';
+import rootReducer from '../reducers'
 
 export default function configureStore(initialState) {
   const logger = createLogger({
