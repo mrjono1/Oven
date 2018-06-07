@@ -45,6 +45,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
   ""name"": ""{Project.InternalName.Kebaberize()}"",
   ""version"": ""{Project.Version}"",
   ""description"": ""{Project.Title}"",
+  ""private"": true,
   ""scripts"": {{
     ""clean"": ""rimraf wwwroot"",
     ""build"": ""webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js"",
