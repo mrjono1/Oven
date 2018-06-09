@@ -47,7 +47,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
         {
             var sections = new List<string>();
             var imports = new List<string>();
-            var hasFormSection = false;
+            //var hasFormSection = false;
 
             foreach (var screenSection in Screen.ScreenSections)
             {
@@ -56,7 +56,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
                     case ScreenSectionType.Form:
                     //    var formSection = new FormSectionTemplate(Project, Screen, screenSection);
                     //    sections.Add(formSection.Evaluate());
-                        hasFormSection = true;
+                     //   hasFormSection = true;
                         break;
                     case ScreenSectionType.Search:
                    //     var searchSection = new SearchSectionTemplate(Project, Screen, screenSection);

@@ -104,10 +104,10 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// <summary>
         /// {Screen.Title} Get
         /// </summary>
-        [HttpGet(""{Screen.InternalName}/{{id}}"")]
+        [HttpGet(""{{id}}"")]
         [ProducesResponseType(typeof(Models.{Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> {Screen.InternalName}(Guid id)
+        public async Task<IActionResult> GetAsync(Guid id)
         {{
             if (!ModelState.IsValid)
             {{
@@ -235,7 +235,7 @@ namespace MasterBuilder.Templates.Api.Controllers
         [HttpPut(""{Screen.InternalName}/{{id}}"")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> {Screen.InternalName}Put([FromRoute]Guid id, [FromBody]{Screen.InternalName}Request put)
+        public async Task<IActionResult> UpdateAsync([FromRoute]Guid id, [FromBody]{Screen.InternalName}Request put)
         {{
             if (put == null)
             {{
@@ -295,10 +295,10 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        [HttpPost(""{Screen.InternalName}"")]
+        [HttpPost]
         [ProducesResponseType(typeof(Guid), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> {Screen.InternalName}([FromBody]{Screen.InternalName}Request post)
+        public async Task<IActionResult> CreateAsync([FromBody]{Screen.InternalName}Request post)
         {{
             if (post == null)
             {{

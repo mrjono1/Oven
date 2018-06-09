@@ -14,8 +14,9 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// <summary>
         /// Evaluate
         /// </summary>
-        internal static string Evaluate(Project project, Screen screen, ScreenSection screenSection)
-        {            
+        internal static string Evaluate(Project project, Entity entity, Screen screen, ScreenSection screenSection)
+        {
+            string actionName = null;
             var propertyMapping = new List<string>();
             
             foreach (var searchColumn in screenSection.SearchSection.SearchColumns)
@@ -48,14 +49,19 @@ namespace MasterBuilder.Templates.Api.Controllers
                 parentPropertyWhereString = $"where request.{parentEntity.InternalName}Id == item.{parentEntity.InternalName}Id";
             }
             
+            if (entity.Id != screen.EntityId)
+            {
+                actionName = $"{screen.InternalName}{screenSection.InternalName}";
+            }
+
             return $@"
         /// <summary>
         /// {screenSection.Title} Search
         /// </summary>
-        [HttpPost(""{screen.InternalName}{screenSection.InternalName}"")]
+        {(string.IsNullOrEmpty(actionName) ? "[HttpPost]" : $@"[HttpPost(""{actionName}"")]")}
         [ProducesResponseType(typeof({screenSection.SearchSection.SearchResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> {screen.InternalName}{screenSection.InternalName}([FromBody]{screenSection.SearchSection.SearchRequestClass} request)
+        public async Task<IActionResult> Search{actionName}Async([FromBody]{screenSection.SearchSection.SearchRequestClass} request)
         {{
             if (request == null)
             {{

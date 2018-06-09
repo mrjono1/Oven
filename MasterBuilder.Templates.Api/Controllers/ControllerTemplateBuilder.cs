@@ -27,12 +27,23 @@ namespace MasterBuilder.Templates.Api.Controllers
         {
             var templates = new List<ITemplate>();
             
-            foreach (var screen in Project.Screens)
+            // Create Enity Controllers
+            foreach (var entity in Project.Entities)
             {
-                // Create Controller & Models for UI
-                templates.Add(new ControllerTemplate(Project, screen));
+                var controller = new EntityControllerTemplate(Project, entity);
+                if (controller.HasEntityActions)
+                {
+                    templates.Add(controller);
+                }
             }
-            
+
+            // Create Controller & Models for UI
+            // Non entity controller actions
+            //foreach (var screen in Project.Screens)
+            //{
+            //    templates.Add(new ControllerTemplate(Project, screen));
+            //}
+
             return templates;
         }
     }

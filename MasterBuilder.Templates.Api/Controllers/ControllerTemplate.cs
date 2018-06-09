@@ -27,18 +27,12 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// <summary>
         /// Get file name
         /// </summary>
-        public string GetFileName()
-        {
-            return $"{Screen.InternalName}ApiController.cs";
-        }
+        public string GetFileName() => $"{Screen.InternalName}ApiController.cs";
 
         /// <summary>
         /// Get file path
         /// </summary>
-        public string[] GetFilePath()
-        {
-            return new string[] { "Controllers" };
-        }
+        public string[] GetFilePath() => new string[] { "Controllers" };
 
         /// <summary>
         /// Get file content
@@ -69,20 +63,20 @@ namespace MasterBuilder.Templates.Api.Controllers
             var formSections = new List<ScreenSection>();
             foreach (var screenSection in Screen.ScreenSections)
             {
-                switch (screenSection.ScreenSectionType)
-                {
-                    case ScreenSectionType.Search:
-                        methods.Add(ControllerSearchMethodTemplate.Evaluate(Project, Screen, screenSection));
-                        break;
+                //switch (screenSection.ScreenSectionType)
+                //{
+                //    case ScreenSectionType.Search:
+                //        methods.Add(ControllerSearchMethodTemplate.Evaluate(Project, Screen, screenSection));
+                //        break;
 
-                    case ScreenSectionType.Form:
-                        formSections.Add(screenSection);
-                        referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
-                        break;
+                //    case ScreenSectionType.Form:
+                //        formSections.Add(screenSection);
+                //        referenceFormFields.AddRange(screenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
+                //        break;
 
-                    default:
-                        break;
-                }
+                //    default:
+                //        break;
+                //}
 
                 if (screenSection.MenuItems != null)
                 {

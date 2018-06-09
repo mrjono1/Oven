@@ -86,9 +86,6 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
   <ItemGroup>
 {packageReferences}
   </ItemGroup>
-  <ItemGroup>
-    <DotNetCliToolReference Include=""Microsoft.EntityFrameworkCore.Tools.DotNet"" Version=""{efVersion}"" />
-  </ItemGroup>
   <PropertyGroup>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
