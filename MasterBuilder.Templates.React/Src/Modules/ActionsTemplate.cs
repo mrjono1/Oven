@@ -1,4 +1,4 @@
-using Humanizer;
+﻿using Humanizer;
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
@@ -48,19 +48,54 @@ namespace MasterBuilder.Templates.React.Src.Modules
             var functions = new List<string>();
             if (hasSearchScreenSection)
             {
-                functions.Add($@"function requestItems(filter) {{
+                functions.Add($@"function requestItems() {{
   return {{
-    type: actionTypes.REQUEST_ITEMS,
-    filter
-  }}
+    type: actionTypes.REQUEST_ITEMS
+  }};
 }}");
-                functions.Add($@"function receiveItems(filter, json) {{
+                functions.Add($@"function receiveItems(json) {{
   return {{
     type: RECEIVE_ITEMS,
-    filter,
     items: json.data.children.map(child => child.data),
     receivedAt: Date.now()
+  }};
+}}");
+                functions.Add($@"function fetchItems() {{
+  return dispatch => {{
+    dispatch(requestItems());
+    return fetch('/api/{Entity.InternalNamePlural}')
+      .then(response => response.json())
+      .then(json => dispatch(receiveItems(json)));
   }}
+}}
+​
+function shouldFetchItems(state) {{
+  const items = state.items;
+  if (!items) {{
+    return true;
+  }} else if (items.isFetching) {{
+    return false;
+  }} else {{
+    return items.didInvalidate;
+  }}
+}}
+​
+export function fetchItemsIfNeeded() {{
+  // Note that the function also receives getState()
+  // which lets you choose what to dispatch next.
+​
+  // This is useful for avoiding a network request if
+  // a cached value is already available.
+​
+  return (dispatch, getState) => {{
+    if (shouldFetchItems(getState())) {{
+      // Dispatch a thunk from thunk!
+      return dispatch(fetchItems());
+    }} else {{
+      // Let the calling code know there's nothing to wait for.
+      return Promise.resolve();
+    }}
+  }};
 }}");
             }
             return $@"import fetch from 'cross-fetch';

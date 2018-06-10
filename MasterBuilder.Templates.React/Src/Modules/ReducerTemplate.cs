@@ -44,22 +44,22 @@ namespace MasterBuilder.Templates.React.Src.Modules
             var statements = new List<string>();
             if (hasSearchScreenSection)
             {
-                statements.Add($@"    case actionTypes.INVALIDATE_ITEMS:
-        return Object.assign({{}}, state, {{
-          didInvalidate: true
-        }});
-    case actionTypes.REQUEST_ITEMS:
-        return Object.assign({{}}, state, {{
-          isFetching: true,
-          didInvalidate: false
-        }});
-    case actionTypes.RECEIVE_ITEMS:
-        return Object.assign({{}}, state, {{
-          isFetching: false,
-          didInvalidate: false,
-          items: action.posts,
-          lastUpdated: action.receivedAt
-        }});");
+                statements.Add($@"  case actionTypes.INVALIDATE_ITEMS:
+    return Object.assign({{}}, state, {{
+      didInvalidate: true
+    }});
+  case actionTypes.REQUEST_ITEMS:
+    return Object.assign({{}}, state, {{
+      isFetching: true,
+      didInvalidate: false
+    }});
+  case actionTypes.RECEIVE_ITEMS:
+    return Object.assign({{}}, state, {{
+      isFetching: false,
+      didInvalidate: false,
+      items: action.posts,
+      lastUpdated: action.receivedAt
+    }});");
             }
                 return $@"import * as actionTypes from './actionTypes';
 
