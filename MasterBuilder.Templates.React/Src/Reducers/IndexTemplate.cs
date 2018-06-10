@@ -1,3 +1,4 @@
+using Humanizer;
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
@@ -44,6 +45,14 @@ namespace MasterBuilder.Templates.React.Src.Reducers
 
                 imports.Add($"import {name} from './{name}';");
                 reducerNames.Add($"  {name}");
+            }
+
+            // Module Reducers
+            foreach (var entity in Project.Entities)
+            {
+                var name = entity.InternalName.Camelize();
+                imports.Add($"import {{ default as {name}ModuleReducer }} from '../modules/{name}/reducer';");
+                reducerNames.Add($"  {name}ModuleReducer");
             }
 
             return $@"import {{ combineReducers }} from 'redux';

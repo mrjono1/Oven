@@ -39,7 +39,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            return $@"dist
+            return $@"wwwroot
 node_modules
 bin";
         }
