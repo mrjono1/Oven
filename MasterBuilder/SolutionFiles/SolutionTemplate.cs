@@ -43,7 +43,7 @@ namespace MasterBuilder.Templates.SolutionFiles
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project(""{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}"") = ""{Project.InternalName}"", ""{Project.InternalName}\{Project.InternalName}.csproj"", ""{{{Project.Id.ToString().ToUpperInvariant()}}}""
+Project(""{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}"") = ""{Project.InternalName}"", ""{Project.InternalName}\{Project.InternalName}.csproj"", ""{{{Project.ProjectWebId.ToString().ToUpperInvariant()}}}""
 EndProject
 Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Api"", ""{Project.InternalName}.Api\{Project.InternalName}.Api.csproj"", ""{{{Project.ProjectApiId.ToString().ToUpperInvariant()}}}""
 EndProject

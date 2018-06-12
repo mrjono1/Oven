@@ -72,9 +72,7 @@ Obj/
 # Visual Studio 2015 cache/options directory
 .vs/
 **/wwwroot/dist/
-**/wwwroot/*.js
-**/wwwroot/*.css
-**/wwwroot/*.html
+**/wwwroot/
 /ClientApp/dist/
 
 

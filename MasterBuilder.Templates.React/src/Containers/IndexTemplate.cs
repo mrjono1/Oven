@@ -59,8 +59,9 @@ namespace MasterBuilder.Templates.React.Src.Containers
                      //   hasFormSection = true;
                         break;
                     case ScreenSectionType.Search:
-                   //     var searchSection = new SearchSectionTemplate(Project, Screen, screenSection);
-                     //   sections.Add(searchSection.Evaluate());
+                        var searchSection = new SearchSectionTemplate(Project, Screen, screenSection);
+                        imports.AddRange(searchSection.Imports());
+                        sections.Add(searchSection.Evaluate());
                         break;
                     case ScreenSectionType.MenuList:
                         var menuListSection = new MenuListSectionTemplate(Project, Screen, screenSection);
@@ -68,9 +69,8 @@ namespace MasterBuilder.Templates.React.Src.Containers
                         imports.AddRange(menuListSection.Imports());
                         break;
                     case ScreenSectionType.Html:
-                        sections.Add($@"        <div class=""screen-section-html container mat-elevation-z2"" fxFlex>
-{screenSection.Html}
-        </div>");
+                        var htmlSection = new HtmlSectionTemplate(Project, Screen, screenSection);
+                        sections.Add(htmlSection.Evaluate());
                         break;
                     default:
                         break;
@@ -100,11 +100,11 @@ namespace MasterBuilder.Templates.React.Src.Containers
             var gridSections = new List<string>();
             foreach (var section in sections)
             {
-                gridSections.Add($@"                    <Grid item xs={{12}}>
-                        <Paper className={{classes.paper}}>
+                gridSections.Add($@"    <Grid item xs={{12}}>
+      <Paper className={{classes.paper}}>
 {section}
-                        </Paper>
-                    </Grid>");
+      </Paper>
+    </Grid>");
             }
 
             return $@"import React from 'react';
@@ -131,14 +131,14 @@ class {Screen.InternalName}Page extends React.Component {{
         const {{ classes }} = this.props;
 
         return (
-            <div className={{classes.root}}>
-                <Grid container spacing={{24}}>
-                    <Grid item xs={{12}}>
-                        <Paper className={{classes.paper}}>Screen: {Screen.Title}</Paper>
-                    </Grid>
+<div className={{classes.root}}>
+  <Grid container spacing={{24}}>
+    <Grid item xs={{12}}>
+      <Paper className={{classes.paper}}>Screen: {Screen.Title}</Paper>
+    </Grid>
 {string.Join(Environment.NewLine, gridSections)}
-                </Grid>
-            </div>
+  </Grid>
+</div>
         );
     }}
 }}

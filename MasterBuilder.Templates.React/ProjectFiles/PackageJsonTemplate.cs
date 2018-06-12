@@ -48,10 +48,10 @@ namespace MasterBuilder.Templates.React.ProjectFiles
   ""private"": true,
   ""scripts"": {{
     ""clean"": ""rimraf wwwroot"",
-    ""build"": ""webpack --progress --verbose --colors --display-error-details --config webpack/common.config.js"",
+    ""build"": ""webpack --progress --verbose --colors --display-error-details"",
     ""build:production"": ""npm run clean && npm run build"",
     ""lint"": ""eslint src"",
-    ""start"": ""cross-env NODE_ENV=development node bin/server.js"",
+    ""start"": ""webpack --watch --mode development --colors"",
     ""test"": ""bin/test.sh""
   }},
   ""devDependencies"": {{
@@ -70,6 +70,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""babel-register"": ""^6.9.0"",
     ""copy-webpack-plugin"": ""^3.0.1"",
     ""cross-env"": ""^5.0.0"",
+    ""cross-fetch"": ""2.2.1"",
     ""css-loader"": ""^0.28.0"",
     ""enzyme"": ""^3.3.0"",
     ""eslint"": ""^2.11.1"",

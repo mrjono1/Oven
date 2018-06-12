@@ -68,7 +68,7 @@ namespace MasterBuilder.Templates.React.Src.Modules
       .then(json => dispatch(receiveItems(json)));
   }}
 }}
-​
+
 function shouldFetchItems(state) {{
   const items = state.items;
   if (!items) {{
@@ -79,14 +79,13 @@ function shouldFetchItems(state) {{
     return items.didInvalidate;
   }}
 }}
-​
+
 export function fetchItemsIfNeeded() {{
   // Note that the function also receives getState()
   // which lets you choose what to dispatch next.
-​
   // This is useful for avoiding a network request if
   // a cached value is already available.
-​
+
   return (dispatch, getState) => {{
     if (shouldFetchItems(getState())) {{
       // Dispatch a thunk from thunk!
