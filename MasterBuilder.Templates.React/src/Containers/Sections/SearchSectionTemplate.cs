@@ -3,7 +3,6 @@ using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MasterBuilder.Templates.React.src.Containers.Sections
 {
@@ -40,98 +39,64 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
 
         internal string Evaluate()
         {
+            var columnHeaders = new List<string>();
             var columns = new List<string>();
             foreach (var searchColumn in ScreenSection.SearchSection.SearchColumns.OrderBy(_ => _.Ordinal))
             {
                 if (searchColumn.PropertyType != PropertyType.PrimaryKey)
                 {
-                    columns.Add($@"            <TableCell>{searchColumn.TitleValue}</TableCell>");
+                    columnHeaders.Add($@"            <TableCell>{searchColumn.TitleValue}</TableCell>");
+                    columns.Add($@"                <TableCell>{{item.{searchColumn.InternalNameJavascript}}}</TableCell>");
                 }
             }
             return $@"      <Table>
         <TableHead>
           <TableRow>
-{string.Join(Environment.NewLine, columns)}
+{string.Join(Environment.NewLine, columnHeaders)}
           </TableRow>
         </TableHead>
         <TableBody>
+          {{{ScreenSection.Entity.InternalName.Camelize()}Items.map(item => {{
+            return (
+              <TableRow key={{item.id}}>
+{string.Join(Environment.NewLine, columns)}
+              </TableRow>
+            );
+          }})}}
         </TableBody>
       </Table>";
-//            return $@"import React from 'react';
-//import PropTypes from 'prop-types';
-//import {{ withStyles }} from '@material-ui/core/styles';
-//import Table from '@material-ui/core/Table';
-//import TableBody from '@material-ui/core/TableBody';
-//import TableCell from '@material-ui/core/TableCell';
-//import TableHead from '@material-ui/core/TableHead';
-//import TableRow from '@material-ui/core/TableRow';
-//import Paper from '@material-ui/core/Paper';
+        }
 
-//const styles = theme => ({{
-//  root: {{
-//    width: '100%',
-//    marginTop: theme.spacing.unit * 3,
-//    overflowX: 'auto',
-//  }},
-//  table: {{
-//    minWidth: 700,
-//  }},
-//}});
+        internal IEnumerable<string> Props()
+        {
+            return new string[]
+            {
+                $"{ScreenSection.Entity.InternalName.Camelize()}Items"
+            };
+        }
 
-//let id = 0;
-//function createData(name, calories, fat, carbs, protein) {{
-//  id += 1;
-//  return {{ id, name, calories, fat, carbs, protein }};
-//}}
+        internal IEnumerable<string> ComponentWillMount()
+        {
+            return new string[]
+            {
+                $"this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemsIfNeeded();"
+            };
+        }
 
-//const data = [
-//  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//  createData('Eclair', 262, 16.0, 24, 6.0),
-//  createData('Cupcake', 305, 3.7, 67, 4.3),
-//  createData('Gingerbread', 356, 16.0, 49, 3.9),
-//];
+        internal IEnumerable<string> MapDispatchToProps()
+        {
+            return new string[]
+            {
+                $"{ScreenSection.Entity.InternalName.Camelize()}Actions: bindActionCreators({ScreenSection.Entity.InternalName.Camelize()}Actions, dispatch)"
+            };
+        }
 
-//function SimpleTable(props) {{
-//  const {{ classes }} = props;
-
-//  return (
-//    <Paper className={{classes.root}}>
-//      <Table className={{classes.table}}>
-//        <TableHead>
-//          <TableRow>
-//            <TableCell>Dessert (100g serving)</TableCell>
-//            <TableCell numeric>Calories</TableCell>
-//            <TableCell numeric>Fat (g)</TableCell>
-//            <TableCell numeric>Carbs (g)</TableCell>
-//            <TableCell numeric>Protein (g)</TableCell>
-//          </TableRow>
-//        </TableHead>
-//        <TableBody>
-//          {{data.map(n => {{
-//            return (
-//              <TableRow key={{n.id}}>
-//                <TableCell component=""th"" scope=""row"">
-//                  {{n.name}}
-//                </TableCell>
-//                <TableCell numeric>{{n.calories}}</TableCell>
-//                <TableCell numeric>{{n.fat}}</TableCell>
-//                <TableCell numeric>{{n.carbs}}</TableCell>
-//                <TableCell numeric>{{n.protein}}</TableCell>
-//              </TableRow>
-//            );
-//          }})}}
-//        </TableBody>
-//      </Table>
-//    </Paper>
-//  );
-//}}
-
-//SimpleTable.propTypes = {{
-//  classes: PropTypes.object.isRequired,
-//}};
-
-//export default withStyles(styles)(SimpleTable);";
+        internal IEnumerable<string> MapStateToProps()
+        {
+            return new string[]
+            {
+                $"{ScreenSection.Entity.InternalName.Camelize()}Items: state.{ScreenSection.Entity.InternalName.Camelize()}ModuleReducer.items"
+            };
         }
 
         private string GetRowTemplate()

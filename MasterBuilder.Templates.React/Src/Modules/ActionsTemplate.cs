@@ -55,15 +55,21 @@ namespace MasterBuilder.Templates.React.Src.Modules
 }}");
                 functions.Add($@"function receiveItems(json) {{
   return {{
-    type: RECEIVE_ITEMS,
-    items: json.data.children.map(child => child.data),
+    type: actionTypes.RECEIVE_ITEMS,
+    items: json.items,
     receivedAt: Date.now()
   }};
 }}");
                 functions.Add($@"function fetchItems() {{
   return dispatch => {{
     dispatch(requestItems());
-    return fetch('/api/{Entity.InternalNamePlural}')
+    return fetch('/api/{Entity.InternalNamePlural}/search', {{
+            method: 'POST', 
+            body: JSON.stringify({{ page: 1, pageSize: 10 }}),
+            headers: {{
+                'Content-Type': 'application/json'
+            }}
+        }})
       .then(response => response.json())
       .then(json => dispatch(receiveItems(json)));
   }}

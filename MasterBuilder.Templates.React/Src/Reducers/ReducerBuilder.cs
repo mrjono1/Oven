@@ -26,10 +26,11 @@ namespace MasterBuilder.Templates.React.Src.Reducers
                 new IndexTemplate(Project)
             };
 
-            foreach (var screen in Project.Screens)
-            {
-                templates.Add(new PageReducerTemplate(Project, screen));
-            }
+            // TODO: Screen Reducers
+            //foreach (var screen in Project.Screens)
+            //{
+            //    templates.Add(new PageReducerTemplate(Project, screen));
+            //}
             return templates;
         }
     }

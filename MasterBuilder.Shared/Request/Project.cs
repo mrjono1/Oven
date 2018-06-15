@@ -27,9 +27,7 @@ namespace MasterBuilder.Request
                 "bin",
                 "obj",
                 "node_modules",
-                "wwwroot",
                 "Properties",
-                "dist",
                 "Migrations"
             };
         }

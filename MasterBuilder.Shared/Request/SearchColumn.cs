@@ -1,3 +1,4 @@
+using Humanizer;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -63,6 +64,25 @@ namespace MasterBuilder.Request
                         return $"{Property.InternalName}Title";
                     default:
                         return Property.InternalName;
+                }
+            }
+        }
+        /// <summary>
+        /// Internal Name javascipt
+        /// </summary>
+        [JsonIgnore]
+        public string InternalNameJavascript
+        {
+            get
+            {
+                switch (Property.PropertyType)
+                {
+                    case PropertyType.ParentRelationshipOneToMany:
+                        return $"{Property.InternalName.Camelize()}Id";
+                    case PropertyType.ReferenceRelationship:
+                        return $"{Property.InternalName.Camelize()}Title";
+                    default:
+                        return Property.InternalName.Camelize();
                 }
             }
         }

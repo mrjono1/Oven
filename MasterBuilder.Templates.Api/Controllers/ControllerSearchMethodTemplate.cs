@@ -58,7 +58,7 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// <summary>
         /// {screenSection.Title} Search
         /// </summary>
-        {(string.IsNullOrEmpty(actionName) ? "[HttpPost]" : $@"[HttpPost(""{actionName}"")]")}
+        {(string.IsNullOrEmpty(actionName) ? "[HttpPost(\"search\")]" : $@"[HttpPost(""{actionName}"")]")}
         [ProducesResponseType(typeof({screenSection.SearchSection.SearchResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> Search{actionName}Async([FromBody]{screenSection.SearchSection.SearchRequestClass} request)

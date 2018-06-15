@@ -39,13 +39,14 @@ namespace MasterBuilder.Templates.React.Src.Reducers
             var imports = new List<string>();
             var reducerNames = new List<string>();
 
-            foreach (var screen in Project.Screens)
-            {
-                var name = new PageReducerTemplate(Project, screen).FunctionName;
+            // TODO: Screen Reducers
+            //foreach (var screen in Project.Screens)
+            //{
+            //    var name = new PageReducerTemplate(Project, screen).FunctionName;
 
-                imports.Add($"import {name} from './{name}';");
-                reducerNames.Add($"  {name}");
-            }
+            //    imports.Add($"import {name} from './{name}';");
+            //    reducerNames.Add($"  {name}");
+            //}
 
             // Module Reducers
             foreach (var entity in Project.Entities)

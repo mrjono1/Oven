@@ -47,6 +47,13 @@ namespace MasterBuilder.Templates.React.Src.Containers
         {
             var sections = new List<string>();
             var imports = new List<string>();
+            var mapDispatchToProps = new List<string>();
+            var mapStateToProps = new List<string>();
+            var componentWillMount = new List<string>();
+            var props = new List<string>
+            {
+                "classes"
+            };
             //var hasFormSection = false;
 
             foreach (var screenSection in Screen.ScreenSections)
@@ -62,6 +69,10 @@ namespace MasterBuilder.Templates.React.Src.Containers
                         var searchSection = new SearchSectionTemplate(Project, Screen, screenSection);
                         imports.AddRange(searchSection.Imports());
                         sections.Add(searchSection.Evaluate());
+                        componentWillMount.AddRange(searchSection.ComponentWillMount());
+                        mapStateToProps.AddRange(searchSection.MapStateToProps());
+                        mapDispatchToProps.AddRange(searchSection.MapDispatchToProps());
+                        props.AddRange(searchSection.Props());
                         break;
                     case ScreenSectionType.MenuList:
                         var menuListSection = new MenuListSectionTemplate(Project, Screen, screenSection);
@@ -108,6 +119,8 @@ namespace MasterBuilder.Templates.React.Src.Containers
             }
 
             return $@"import React from 'react';
+import {{ connect }} from 'react-redux';
+import {{ bindActionCreators }} from 'redux';
 import PropTypes from 'prop-types';
 import {{ withStyles }} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -127,10 +140,13 @@ const styles = theme => ({{
 
 
 class {Screen.InternalName}Page extends React.Component {{
-    render() {{
-        const {{ classes }} = this.props;
+  componentWillMount() {{
+{string.Join(Environment.NewLine, componentWillMount)}
+  }}
+  render() {{
+    const {{ {string.Join(", ", props)} }} = this.props;
 
-        return (
+    return (
 <div className={{classes.root}}>
   <Grid container spacing={{24}}>
     <Grid item xs={{12}}>
@@ -139,15 +155,27 @@ class {Screen.InternalName}Page extends React.Component {{
 {string.Join(Environment.NewLine, gridSections)}
   </Grid>
 </div>
-        );
-    }}
+    );
+  }}
 }}
 
 {Screen.InternalName}Page.propTypes = {{
-    classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 }};
 
-export default withStyles(styles)({Screen.InternalName}Page);";
+function mapStateToProps(state, ownProps) {{
+    return {{
+{string.Join($",{Environment.NewLine}", mapStateToProps)}
+    }};
+}}
+
+function mapDispatchToProps(dispatch) {{
+    return {{ 
+{string.Join($",{Environment.NewLine}", mapDispatchToProps)}
+    }};
+}}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)({Screen.InternalName}Page));";
         }
     }
 }

@@ -57,7 +57,7 @@ namespace MasterBuilder.Templates.React.Src.Modules
     return Object.assign({{}}, state, {{
       isFetching: false,
       didInvalidate: false,
-      items: action.posts,
+      items: action.items,
       lastUpdated: action.receivedAt
     }});");
             }
