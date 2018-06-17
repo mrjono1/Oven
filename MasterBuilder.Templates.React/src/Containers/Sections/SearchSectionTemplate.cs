@@ -33,7 +33,8 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
                 "import TableCell from '@material-ui/core/TableCell';",
                 "import TableHead from '@material-ui/core/TableHead';",
                 "import TableRow from '@material-ui/core/TableRow';",
-                $"import * as {ScreenSection.Entity.InternalName.Camelize()}Actions from '../modules/{ScreenSection.Entity.InternalName.Camelize()}/actions';"
+                $"import * as {ScreenSection.Entity.InternalName.Camelize()}Actions from '../modules/{ScreenSection.Entity.InternalName.Camelize()}/actions';",
+                "import { Link } from 'react-router-dom';"
             };
         }
 
@@ -49,6 +50,17 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
                     columns.Add($@"                <TableCell>{{item.{searchColumn.InternalNameJavascript}}}</TableCell>");
                 }
             }
+
+            var navigateScreen = (from s in Project.Screens
+                                  where s.Id == ScreenSection.NavigateToScreenId
+                                  select s).SingleOrDefault();
+
+            string route = string.Empty;
+            if (navigateScreen != null)
+            {
+                route = $@" component={{Link}} to={{`/{navigateScreen.Path}/${{item.id}}`}}";
+            }
+
             return $@"      <Table>
         <TableHead>
           <TableRow>
@@ -58,7 +70,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         <TableBody>
           {{{ScreenSection.Entity.InternalName.Camelize()}Items.map(item => {{
             return (
-              <TableRow key={{item.id}}>
+              <TableRow key={{item.id}}{route}>
 {string.Join(Environment.NewLine, columns)}
               </TableRow>
             );

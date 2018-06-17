@@ -47,7 +47,14 @@ namespace MasterBuilder.Templates.React.Src.Components
             foreach (var screen in Project.Screens)
             {
                 imports.Add($"import {screen.InternalName}Page from '../containers/{screen.InternalName}Page';");
-                routes.Add($@"            <Route exact path=""/{screen.Path}"" component={{{screen.InternalName}Page}} />");
+                if (screen.ScreenType == ScreenType.Form)
+                {
+                    routes.Add($@"            <Route exact path=""/{screen.Path}/:id"" component={{{screen.InternalName}Page}} />");
+                }
+                else
+                {
+                    routes.Add($@"            <Route exact path=""/{screen.Path}"" component={{{screen.InternalName}Page}} />");
+                }
             }
 
             if (Project.DefaultScreenId.HasValue)
