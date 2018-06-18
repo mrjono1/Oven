@@ -66,7 +66,7 @@ namespace MasterBuilder.Templates.Angular.ClientApp.App.Models.Reference
                         propertyStrings.Add($@"    /**
     * {property.Title}
     */
-    {property.InternalNameTypeScript}: {property.TypeTypeScript};");
+    {property.InternalNameJavaScript}: {property.TypeTypeScript};");
                     }
                 }
             }

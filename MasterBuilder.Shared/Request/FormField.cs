@@ -111,7 +111,7 @@ namespace MasterBuilder.Request
         /// Internal Name Type Script
         /// </summary>
         [JsonIgnore]
-        public string InternalNameTypeScript
+        public string InternalNameJavaScript
         {
             get
             {
@@ -129,7 +129,7 @@ namespace MasterBuilder.Request
         /// Internal Name Alternate
         /// </summary>
         [JsonIgnore]
-        public string InternalNameAlternateTypeScript
+        public string InternalNameAlternateJavaScript
         {
             get
             {

@@ -66,7 +66,10 @@ namespace MasterBuilder.Templates.React.Src.Modules
 const initialState = {{
   isFetching: false,
   didInvalidate: false,
-  items: []
+  items: [],
+  item: {{}},
+  byId: [],
+  allIds: []
 }};
 
 const reducer = (state = initialState, action) => {{

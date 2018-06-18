@@ -104,8 +104,8 @@ namespace MasterBuilder.Templates.Angular.ClientApp.App.Shared
                     }
                     else
                     {
-                        parameters.Add($@"{property.InternalNameTypeScript}: {property.TypeTypeScript}");
-                        propertyAssignment.Add($@"            request.{property.InternalNameTypeScript} = {property.InternalNameTypeScript};");
+                        parameters.Add($@"{property.InternalNameJavaScript}: {property.TypeTypeScript}");
+                        propertyAssignment.Add($@"            request.{property.InternalNameJavaScript} = {property.InternalNameJavaScript};");
                     }
                 }
             }

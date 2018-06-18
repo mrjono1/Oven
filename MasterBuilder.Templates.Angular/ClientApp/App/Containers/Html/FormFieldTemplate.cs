@@ -108,7 +108,7 @@ namespace MasterBuilder.Templates.Angular.ClientApp.App.Containers.Html
                     }
                     if (selector != null)
                     {
-                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{formGroup}.controls.{FormField.InternalNameTypeScript}.hasError('{selector}')"">
+                        propertyValidators.Add($@"{new String(' ', 20)}<mat-error *ngIf=""{formGroup}.controls.{FormField.InternalNameJavaScript}.hasError('{selector}')"">
 {new String(' ', 24)}{validationItem.GetMessage(FormField.TitleValue)}
 {new String(' ', 20)}</mat-error>");
                     }
@@ -116,56 +116,56 @@ namespace MasterBuilder.Templates.Angular.ClientApp.App.Containers.Html
             }
 
             propertyValidators.Add($@"                    <mat-error>
-                        {{{{serverErrorMessages.{FormField.InternalNameTypeScript}}}}}
+                        {{{{serverErrorMessages.{FormField.InternalNameJavaScript}}}}}
                     </mat-error>");
 
             string control = null;
-            string wrapAttributes = $@" *ngIf=""{FormField.InternalNameTypeScript}Visible()""";
+            string wrapAttributes = $@" *ngIf=""{FormField.InternalNameJavaScript}Visible()""";
             bool dontWrap = false;
             switch (FormField.Property.PropertyType)
             {
                 case PropertyType.String:
                     control = $@"{new String(' ', 20)}<input type=""text"" matInput id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
-{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+{new String(' ', 22)}formControlName=""{FormField.InternalNameJavaScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Integer:
                     control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
-{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+{new String(' ', 22)}formControlName=""{FormField.InternalNameJavaScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.Double:
                     control = $@"{new String(' ', 20)}<input type=""number"" matInput id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
-{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
+{new String(' ', 22)}formControlName=""{FormField.InternalNameJavaScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>";
                     break;
 
                 case PropertyType.DateTime:
-                    control = $@"{new String(' ', 20)}<input matInput [matDatepicker]=""{FormField.InternalNameTypeScript}Control"" id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
-{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
-                    <mat-datepicker-toggle matSuffix [for]=""{FormField.InternalNameTypeScript}Control""></mat-datepicker-toggle>
-                    <mat-datepicker #{FormField.InternalNameTypeScript}Control></mat-datepicker>";
+                    control = $@"{new String(' ', 20)}<input matInput [matDatepicker]=""{FormField.InternalNameJavaScript}Control"" id=""{FormField.Property.Id}"" placeholder=""{FormField.TitleValue}""
+{new String(' ', 22)}formControlName=""{FormField.InternalNameJavaScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
+                    <mat-datepicker-toggle matSuffix [for]=""{FormField.InternalNameJavaScript}Control""></mat-datepicker-toggle>
+                    <mat-datepicker #{FormField.InternalNameJavaScript}Control></mat-datepicker>";
                     break;
 
                 case PropertyType.Boolean:
                     dontWrap = true;
-                    control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{FormField.InternalNameTypeScript}Visible()"" id=""{FormField.Property.Id}""
-{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{FormField.TitleValue}</mat-checkbox>";
+                    control = $@"{new String(' ', 16)}<mat-checkbox *ngIf=""{FormField.InternalNameJavaScript}Visible()"" id=""{FormField.Property.Id}""
+{new String(' ', 22)}formControlName=""{FormField.InternalNameJavaScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>{FormField.TitleValue}</mat-checkbox>";
                     break;
 
                 case PropertyType.ReferenceRelationship:
-                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{FormField.TitleValue}"" [compareWith]=""referenceCompare"" formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
+                    control = $@"{new String(' ', 20)}<mat-select placeholder=""{FormField.TitleValue}"" [compareWith]=""referenceCompare"" formControlName=""{FormField.InternalNameJavaScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")}>
                            {(FormField.Property.Required ? string.Empty : "<mat-option>--</mat-option>")}
                            <mat-option *ngFor=""let option of {FormField.Property.InternalName.Camelize()}DataSource | async"" [value]=""option.id"">
                                 <span>{{{{ option.title }}}}</span>
                             </mat-option>
                         </mat-select>";
 
-                    wrapAttributes = $@" *ngIf=""{FormField.Property.InternalName.Camelize()}DataSource && {FormField.InternalNameTypeScript}Visible()""";
+                    wrapAttributes = $@" *ngIf=""{FormField.Property.InternalName.Camelize()}DataSource && {FormField.InternalNameJavaScript}Visible()""";
                     break;
 
                 case PropertyType.Spatial:
                     control = $@"{new String(' ', 20)}<input type=""text"" matInput id=""{FormField.Property.Id}""
-{new String(' ', 22)}formControlName=""{FormField.InternalNameTypeScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")} />
+{new String(' ', 22)}formControlName=""{FormField.InternalNameJavaScript}"" {(attributes.Any() ? string.Join(" ", attributes) : "")} />
 {new String(' ', 20)}<mangol></mangol>"; // *ngIf=""{FormField.InternalNameTypeScript}Visible()""
                     break;
             }

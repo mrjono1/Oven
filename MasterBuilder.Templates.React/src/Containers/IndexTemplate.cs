@@ -61,9 +61,11 @@ namespace MasterBuilder.Templates.React.Src.Containers
                 switch (screenSection.ScreenSectionType)
                 {
                     case ScreenSectionType.Form:
-                    //    var formSection = new FormSectionTemplate(Project, Screen, screenSection);
-                    //    sections.Add(formSection.Evaluate());
-                     //   hasFormSection = true;
+                        var formSection = new FormSectionTemplate(Project, Screen, screenSection);
+                        sections.Add(formSection.Body);
+                        imports.AddRange(formSection.Imports());
+                        mapStateToProps.AddRange(formSection.MapStateToProps());
+                        mapDispatchToProps.AddRange(formSection.MapDispatchToProps());
                         break;
                     case ScreenSectionType.Search:
                         var searchSection = new SearchSectionTemplate(Project, Screen, screenSection);

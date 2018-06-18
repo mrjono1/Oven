@@ -125,7 +125,7 @@ namespace MasterBuilder.Templates.Angular.ClientApp.App.Containers.Ts
                                        select formField))
             {
                 if (formField.VisibilityExpression == null) {
-                    functions.Add($@"    {formField.InternalNameTypeScript}Visible() {{
+                    functions.Add($@"    {formField.InternalNameJavaScript}Visible() {{
         return this.{Screen.InternalName.Camelize()} && this.{Screen.InternalName.Camelize()}Form;
     }}");
                 }
@@ -141,7 +141,7 @@ namespace MasterBuilder.Templates.Angular.ClientApp.App.Containers.Ts
 
                     var formControl = GetFormControl(formField);
                     // TODO: Move this to external file, with form control visibile
-                    functions.Add($@"    {formField.InternalNameTypeScript}Visible() {{
+                    functions.Add($@"    {formField.InternalNameJavaScript}Visible() {{
         let visible = false;
         if (this.{Screen.InternalName.Camelize()} &&
             this.{Screen.InternalName.Camelize()}Form) {{
@@ -153,11 +153,11 @@ namespace MasterBuilder.Templates.Angular.ClientApp.App.Containers.Ts
             // Removing and adding controls so only the correct validation rules are applied
             if (visible){{
                 // Add the FormControl if not already added
-                if (!this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameTypeScript}')){{
-                    this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameTypeScript}', {formControl});
+                if (!this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameJavaScript}')){{
+                    this.{Screen.InternalName.Camelize()}Form.addControl('{formField.InternalNameJavaScript}', {formControl});
                 }}
             }} else {{
-                this.{Screen.InternalName.Camelize()}Form.removeControl('{formField.InternalNameTypeScript}');
+                this.{Screen.InternalName.Camelize()}Form.removeControl('{formField.InternalNameJavaScript}');
             }}
         }}
         return visible;
@@ -190,7 +190,7 @@ namespace MasterBuilder.Templates.Angular.ClientApp.App.Containers.Ts
                         foreach (var formField in formFields)
                         {
                             // TODO: use form properties
-                            parameters.Add($@"this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameTypeScript}').value");
+                            parameters.Add($@"this.{Screen.InternalName.Camelize()}Form.get('{formField.InternalNameJavaScript}').value");
                         }
                     }
 

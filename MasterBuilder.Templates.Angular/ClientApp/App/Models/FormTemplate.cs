@@ -55,11 +55,11 @@ namespace MasterBuilder.Templates.Angular.ClientApp.App.Models
             switch (formField.PropertyType)
             {
                 case PropertyType.ReferenceRelationship:
-                    properties.Add($"    {formField.InternalNameTypeScript}: {formField.TypeTypeScript};");
-                    properties.Add($"    {formField.InternalNameAlternateTypeScript}: string;");
+                    properties.Add($"    {formField.InternalNameJavaScript}: {formField.TypeTypeScript};");
+                    properties.Add($"    {formField.InternalNameAlternateJavaScript}: string;");
                     break;
                 default:
-                    properties.Add($"    {formField.InternalNameTypeScript}: {formField.TypeTypeScript};");
+                    properties.Add($"    {formField.InternalNameJavaScript}: {formField.TypeTypeScript};");
                     break;
             }
 
