@@ -41,6 +41,13 @@ namespace MasterBuilder.Templates.React.Src.Modules
                                           where screenSection.ScreenSectionType == ScreenSectionType.Search &&
                                           screenSection.EntityId == Entity.Id
                                           select screen).Any();
+
+            var hasFormScreenSection = (from screen in Project.Screens
+                                        from screenSection in screen.ScreenSections
+                                        where screenSection.ScreenSectionType == ScreenSectionType.Form &&
+                                        screenSection.EntityId == Entity.Id
+                                        select screen).Any();
+
             var statements = new List<string>();
             if (hasSearchScreenSection)
             {
@@ -61,23 +68,43 @@ namespace MasterBuilder.Templates.React.Src.Modules
       lastUpdated: action.receivedAt
     }});");
             }
-                return $@"import * as actionTypes from './actionTypes';
+
+            if (hasFormScreenSection)
+            {
+                statements.Add($@"  case actionTypes.INVALIDATE_ITEM:
+    return Object.assign({{}}, state, {{
+      didInvalidate: true
+    }});
+  case actionTypes.REQUEST_ITEM:
+    return Object.assign({{}}, state, {{
+      isFetching: true,
+      didInvalidate: false
+    }});
+        case actionTypes.RECEIVE_ITEM:
+            let newState = Object.assign({{}}, state, {{
+                isFetching: false,
+                didInvalidate: false,
+                lastUpdated: action.receivedAt
+            }});
+            newState.byId[action.id] = action.item
+            return newState;");
+            }
+
+            return $@"import * as actionTypes from './actionTypes';
 
 const initialState = {{
-  isFetching: false,
-  didInvalidate: false,
-  items: [],
-  item: {{}},
-  byId: [],
-  allIds: []
+    isFetching: false,
+    didInvalidate: false,
+    items: [],
+    byId: []
 }};
 
 const reducer = (state = initialState, action) => {{
-  switch(action.type) {{
+    switch(action.type) {{
 {string.Join(Environment.NewLine, statements)}
-    default:
-      return state;
-  }}
+        default:
+          return state;
+    }}
 }}
 
 export default reducer;";

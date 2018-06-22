@@ -91,7 +91,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         {
             return new string[]
             {
-                $"this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemsIfNeeded();"
+                $"    this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemsIfNeeded();"
             };
         }
 

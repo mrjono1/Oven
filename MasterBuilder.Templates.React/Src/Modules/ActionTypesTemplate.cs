@@ -46,6 +46,13 @@ namespace MasterBuilder.Templates.React.Src.Modules
                                           where screenSection.ScreenSectionType == ScreenSectionType.Search &&
                                           screenSection.EntityId == Entity.Id
                                           select screen).Any();
+
+            var hasFormScreenSection = (from screen in Project.Screens
+                                          from screenSection in screen.ScreenSections
+                                          where screenSection.ScreenSectionType == ScreenSectionType.Form &&
+                                          screenSection.EntityId == Entity.Id
+                                          select screen).Any();
+
             var constants = new List<string>();
 
             if (hasSearchScreenSection)
@@ -53,6 +60,13 @@ namespace MasterBuilder.Templates.React.Src.Modules
                 constants.Add(GetConstant(name, "REQUEST_ITEMS"));
                 constants.Add(GetConstant(name, "RECEIVE_ITEMS"));
                 constants.Add(GetConstant(name, "INVALIDATE_ITEMS"));
+            }
+
+            if (hasFormScreenSection)
+            {
+                constants.Add(GetConstant(name, "REQUEST_ITEM"));
+                constants.Add(GetConstant(name, "RECEIVE_ITEM"));
+                constants.Add(GetConstant(name, "INVALIDATE_ITEM"));
             }
 
 

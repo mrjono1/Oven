@@ -45,6 +45,13 @@ namespace MasterBuilder.Templates.React.Src.Modules
                                           where screenSection.ScreenSectionType == ScreenSectionType.Search &&
                                           screenSection.EntityId == Entity.Id
                                           select screen).Any();
+
+            var hasFormScreenSection = (from screen in Project.Screens
+                                        from screenSection in screen.ScreenSections
+                                        where screenSection.ScreenSectionType == ScreenSectionType.Form &&
+                                        screenSection.EntityId == Entity.Id
+                                        select screen).Any();
+
             var functions = new List<string>();
             if (hasSearchScreenSection)
             {
@@ -103,6 +110,60 @@ export function fetchItemsIfNeeded() {{
   }};
 }}");
             }
+
+            if (hasFormScreenSection)
+            {
+                functions.Add($@"function fetchItem(id) {{
+  return dispatch => {{
+    dispatch(requestItem(id));
+    return fetch(`/api/{Entity.InternalNamePlural}/${{id}}`, {{
+      method: 'GET',
+      headers: {{
+        'Content-Type': 'application/json'
+      }}
+    }})
+    .then(response => response.json())
+    .then(json => dispatch(receiveItem(id, json)));
+  }}
+}}");
+                functions.Add(@"function requestItem(id) {
+  return {
+        type: actionTypes.REQUEST_ITEM,
+        id: id
+    };
+}
+function receiveItem(id, json) {
+    return {
+        type: actionTypes.RECEIVE_ITEM,
+        id: id,
+        item: json,
+        receivedAt: Date.now()
+    };
+}
+function shouldFetchItem(state, id) {
+    const item = state.item;
+    if (!item) {
+        return true;
+    } else if (item.isFetching) {
+        return false;
+    } else {
+        return item.didInvalidate;
+    }
+}
+export function fetchItemIfNeeded(id) {
+    return (dispatch, getState) => {
+        if (shouldFetchItem(getState(), id)) {
+            // Dispatch a thunk from thunk!
+            return dispatch(fetchItem(id));
+        } else {
+            // Let the calling code know there's nothing to wait for.
+            return Promise.resolve();
+        }
+    };
+}");
+            }
+
+
             return $@"import fetch from 'cross-fetch';
 import * as actionTypes from './actionTypes';
 

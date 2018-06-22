@@ -50,6 +50,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
             var mapDispatchToProps = new List<string>();
             var mapStateToProps = new List<string>();
             var componentWillMount = new List<string>();
+            var render = new List<string>();
             var props = new List<string>
             {
                 "classes"
@@ -64,8 +65,11 @@ namespace MasterBuilder.Templates.React.Src.Containers
                         var formSection = new FormSectionTemplate(Project, Screen, screenSection);
                         sections.Add(formSection.Body);
                         imports.AddRange(formSection.Imports());
+                        componentWillMount.AddRange(formSection.ComponentWillMount());
                         mapStateToProps.AddRange(formSection.MapStateToProps());
                         mapDispatchToProps.AddRange(formSection.MapDispatchToProps());
+                        props.AddRange(formSection.Props());
+                        render.AddRange(formSection.Render());
                         break;
                     case ScreenSectionType.Search:
                         var searchSection = new SearchSectionTemplate(Project, Screen, screenSection);
@@ -143,11 +147,11 @@ const styles = theme => ({{
 
 class {Screen.InternalName}Page extends React.Component {{
   componentWillMount() {{
-{string.Join(Environment.NewLine, componentWillMount)}
+{string.Join(Environment.NewLine, componentWillMount.Distinct())}
   }}
   render() {{
-    const {{ {string.Join(", ", props)} }} = this.props;
-
+    const {{ {string.Join(", ", props.Distinct())} }} = this.props;
+{string.Join(Environment.NewLine, render.Distinct())}
     return (
 <div className={{classes.root}}>
   <Grid container spacing={{24}}>

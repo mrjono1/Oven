@@ -82,6 +82,30 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
 
             _imports = imports.Distinct();
         }
+        
+        internal IEnumerable<string> ComponentWillMount()
+        {
+            return new string[]
+            {
+                "    var id = this.props.match.params.id;",
+                $@"    if (id){{
+      this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemIfNeeded(id);
+    }}"
+            };
+        }
+
+        internal IEnumerable<string> Props()
+        {
+            return new string[] { };
+        }
+
+        internal IEnumerable<string> Render()
+        {
+            return new string[]
+            {
+                "    const item = this.props.item ? this.props.item : {};"
+            };
+        }
 
         internal IEnumerable<string> MapDispatchToProps()
         {
@@ -95,7 +119,8 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         {
             return new string[]
             {
-                $"{ScreenSection.Entity.InternalName.Camelize()}: state.{ScreenSection.Entity.InternalNamePlural.Camelize()}"
+                "id: ownProps.match.params.id",
+                $"item: state.{ScreenSection.Entity.InternalNamePlural.Camelize()}.byId[ownProps.match.params.id]"
             };
         }
 

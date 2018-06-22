@@ -27,10 +27,9 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections.FormFields
             get
             {
                 return $@"        <TextField
-          id=""{FormField.InternalNameJavaScript}""
+          name=""{FormField.InternalNameJavaScript}""
           label=""{FormField.TitleValue}""
-          value={{this.props.{ScreenSection.Entity.InternalName.Camelize()}.{FormField.InternalNameJavaScript}}}
-          margin=""normal""
+          value={{item.{FormField.InternalNameJavaScript}}}
         />";
             }
         }
