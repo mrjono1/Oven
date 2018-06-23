@@ -121,13 +121,13 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
             return $@"import React from 'react';
 
 class {ScreenSection.InternalName}Row extends React.Component {{
-  render() {{
-    return (<tr>
+    render() {{
+        return (<tr>
       <td>
                 <Link to={{`/client/${{this.props.clientKey}}`}}>{{this.props.name}} {{enabledBadge}}</Link>
       </td>
     </tr>);
-  }}
+    }}
 }}
 
 export default {ScreenSection.InternalName}Row;";

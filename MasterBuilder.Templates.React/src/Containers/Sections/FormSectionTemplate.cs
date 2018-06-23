@@ -103,7 +103,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         {
             return new string[]
             {
-                "    const item = this.props.item ? this.props.item : {};"
+                "        const item = this.props.item ? this.props.item : {};"
             };
         }
 

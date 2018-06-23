@@ -51,43 +51,44 @@ namespace MasterBuilder.Templates.React.Src.Modules
             var statements = new List<string>();
             if (hasSearchScreenSection)
             {
-                statements.Add($@"  case actionTypes.INVALIDATE_ITEMS:
-    return Object.assign({{}}, state, {{
-      didInvalidate: true
-    }});
-  case actionTypes.REQUEST_ITEMS:
-    return Object.assign({{}}, state, {{
-      isFetching: true,
-      didInvalidate: false
-    }});
-  case actionTypes.RECEIVE_ITEMS:
-    return Object.assign({{}}, state, {{
-      isFetching: false,
-      didInvalidate: false,
-      items: action.items,
-      lastUpdated: action.receivedAt
-    }});");
+                statements.Add($@"        case actionTypes.INVALIDATE_ITEMS:
+            return Object.assign({{}}, state, {{
+                didInvalidate: true
+            }});
+        case actionTypes.REQUEST_ITEMS:
+            return Object.assign({{}}, state, {{
+                isFetching: true,
+                didInvalidate: false
+            }});
+        case actionTypes.RECEIVE_ITEMS:
+            return Object.assign({{}}, state, {{
+                isFetching: false,
+                didInvalidate: false,
+                items: action.items,
+                lastUpdated: action.receivedAt
+            }});");
             }
 
             if (hasFormScreenSection)
             {
-                statements.Add($@"  case actionTypes.INVALIDATE_ITEM:
-    return Object.assign({{}}, state, {{
-      didInvalidate: true
-    }});
-  case actionTypes.REQUEST_ITEM:
-    return Object.assign({{}}, state, {{
-      isFetching: true,
-      didInvalidate: false
-    }});
-        case actionTypes.RECEIVE_ITEM:
+                statements.Add($@"        case actionTypes.INVALIDATE_ITEM:
+            return Object.assign({{}}, state, {{
+                didInvalidate: true
+            }});
+        case actionTypes.REQUEST_ITEM:
+            return Object.assign({{}}, state, {{
+                isFetching: true,
+                didInvalidate: false
+            }});
+        case actionTypes.RECEIVE_ITEM: {{
             let newState = Object.assign({{}}, state, {{
                 isFetching: false,
                 didInvalidate: false,
                 lastUpdated: action.receivedAt
             }});
             newState.byId[action.id] = action.item
-            return newState;");
+            return newState;
+        }}");
             }
 
             return $@"import * as actionTypes from './actionTypes';
@@ -103,7 +104,7 @@ const reducer = (state = initialState, action) => {{
     switch(action.type) {{
 {string.Join(Environment.NewLine, statements)}
         default:
-          return state;
+            return state;
     }}
 }}
 

@@ -134,23 +134,23 @@ import Grid from '@material-ui/core/Grid';
 {string.Join(Environment.NewLine, imports.Distinct())}
 
 const styles = theme => ({{
-  root: {{
-    flexGrow: 1,
-  }},
-  paper: {{
-    padding: theme.spacing.unit * 2,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }},
+    root: {{
+        flexGrow: 1,
+    }},
+    paper: {{
+        padding: theme.spacing.unit * 2,
+        textAlign: 'center',
+        color: theme.palette.text.secondary,
+    }},
 }});
 
 
 class {Screen.InternalName}Page extends React.Component {{
-  componentWillMount() {{
+    componentWillMount() {{
 {string.Join(Environment.NewLine, componentWillMount.Distinct())}
-  }}
-  render() {{
-    const {{ {string.Join(", ", props.Distinct())} }} = this.props;
+    }}
+    render() {{
+        const {{ {string.Join(", ", props.Distinct())} }} = this.props;
 {string.Join(Environment.NewLine, render.Distinct())}
     return (
 <div className={{classes.root}}>
@@ -162,11 +162,11 @@ class {Screen.InternalName}Page extends React.Component {{
   </Grid>
 </div>
     );
-  }}
+    }}
 }}
 
 {Screen.InternalName}Page.propTypes = {{
-  classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired
 }};
 
 function mapStateToProps(state, ownProps) {{

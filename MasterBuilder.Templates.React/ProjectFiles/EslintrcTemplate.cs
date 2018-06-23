@@ -69,7 +69,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""no-use-before-define"": 0,
     ""eol-last"": 0,
     ""quotes"": [ 2, ""single""],
-    ""indent"": [2, 4, {{ ""indentSwitchCase"": true }}],
+    ""indent"": [""error"", 4, {{ ""SwitchCase"": 1 }}],
     ""jsx-quotes"": 1,
     ""react/jsx-no-undef"": 1,
     ""react/jsx-uses-react"": 1,
