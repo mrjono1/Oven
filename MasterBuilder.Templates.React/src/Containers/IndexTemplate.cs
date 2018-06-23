@@ -171,13 +171,13 @@ class {Screen.InternalName}Page extends React.Component {{
 
 function mapStateToProps(state, ownProps) {{
     return {{
-{string.Join($",{Environment.NewLine}", mapStateToProps)}
+        {string.Join($",{Environment.NewLine}        ", mapStateToProps.Distinct())}
     }};
 }}
 
 function mapDispatchToProps(dispatch) {{
     return {{ 
-{string.Join($",{Environment.NewLine}", mapDispatchToProps)}
+        {string.Join($",{Environment.NewLine}        ", mapDispatchToProps.Distinct())}
     }};
 }}
 
