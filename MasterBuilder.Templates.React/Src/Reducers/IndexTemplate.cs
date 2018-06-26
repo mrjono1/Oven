@@ -54,14 +54,14 @@ namespace MasterBuilder.Templates.React.Src.Reducers
                 var name = entity.InternalName.Camelize();
                 var namePlural = entity.InternalNamePlural.Camelize();
                 imports.Add($"import {{ default as {namePlural} }} from '../modules/{name}/reducer';");
-                reducerNames.Add($"  {namePlural}");
+                reducerNames.Add($"{namePlural}");
             }
 
             return $@"import {{ combineReducers }} from 'redux';
 {string.Join(Environment.NewLine, imports)}
 
 const rootReducer = combineReducers({{
-{string.Join(string.Concat(",", Environment.NewLine), reducerNames)}
+    {string.Join(string.Concat(",", Environment.NewLine, "    "), reducerNames)}
 }})
 
 export default rootReducer;";

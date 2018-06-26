@@ -62,6 +62,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""babel-loader"": ""7.1.4"",
     ""babel-plugin-transform-class-properties"": ""^6.9.1"",
     ""babel-plugin-transform-decorators-legacy"": ""^1.3.4"",
+    ""babel-plugin-syntax-object-rest-spread"": ""6.13.0"",
     ""babel-polyfill"": ""^6.9.1"",
     ""babel-preset-es2015"": ""^6.9.0"",
     ""babel-preset-react"": ""^6.5.0"",

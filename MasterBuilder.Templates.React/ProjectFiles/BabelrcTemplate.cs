@@ -39,17 +39,18 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            return $@"{{
-  ""presets"": [""react"", ""es2015""],
-  ""plugins"": [
-    [""transform-class-properties""]
-  ],
-  ""env"": {{
-    ""start"": {{
-      ""presets"": [""react-hmre""]
-    }}
-  }}
-}}";
+            return @"{
+  ""presets"": [ ""react"", ""es2015"" ],
+  ""plugins"": [ ""transform-class-properties"", ""syntax-object-rest-spread"" ],
+  ""env"": {
+    ""development"": {
+     ""presets"": [ ""react-hmre"" ]
+    },
+    ""production"": {
+      ""presets"": [ ""react"", ""es2015"" ]
+    }
+  }
+}";
         }
     }
 }
