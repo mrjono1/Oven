@@ -125,8 +125,25 @@ export function fetchItemsIfNeeded() {{
         .then(response => response.json())
         .then(json => dispatch(receiveItem(id, json)));
     }}
+}}
+function shouldFetchItem(state, id) {{
+    const item = state.{Entity.InternalNamePlural.Camelize()}.byId[id];
+    if (!item || item.$default) {{
+        return true;
+    }} else if (item.isFetching) {{
+        return false;
+    }} else {{
+        return item.didInvalidate;
+    }}
 }}");
-                functions.Add(@"function requestItem(id) {
+                functions.Add(@"
+function beforeRequestItem(id) {
+    return {
+        type: actionTypes.BEFORE_REQUEST_ITEM,
+        id: id
+    };
+}
+function requestItem(id) {
     return {
         type: actionTypes.REQUEST_ITEM,
         id: id
@@ -140,18 +157,10 @@ function receiveItem(id, json) {
         receivedAt: Date.now()
     };
 }
-function shouldFetchItem(state, id) {
-    const item = state.item;
-    if (!item) {
-        return true;
-    } else if (item.isFetching) {
-        return false;
-    } else {
-        return item.didInvalidate;
-    }
-}
+
 export function fetchItemIfNeeded(id) {
     return (dispatch, getState) => {
+        dispatch(beforeRequestItem(id));
         if (shouldFetchItem(getState(), id)) {
             // Dispatch a thunk from thunk!
             return dispatch(fetchItem(id));

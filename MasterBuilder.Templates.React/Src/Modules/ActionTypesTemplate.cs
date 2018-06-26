@@ -64,6 +64,7 @@ namespace MasterBuilder.Templates.React.Src.Modules
 
             if (hasFormScreenSection)
             {
+                constants.Add(GetConstant(name, "BEFORE_REQUEST_ITEM"));
                 constants.Add(GetConstant(name, "REQUEST_ITEM"));
                 constants.Add(GetConstant(name, "RECEIVE_ITEM"));
                 constants.Add(GetConstant(name, "INVALIDATE_ITEM"));

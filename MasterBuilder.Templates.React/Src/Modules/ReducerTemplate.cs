@@ -52,42 +52,62 @@ namespace MasterBuilder.Templates.React.Src.Modules
             if (hasSearchScreenSection)
             {
                 statements.Add($@"        case actionTypes.INVALIDATE_ITEMS:
-            return Object.assign({{}}, state, {{
+            return {{ 
+                ...state,
                 didInvalidate: true
-            }});
+            }};
         case actionTypes.REQUEST_ITEMS:
-            return Object.assign({{}}, state, {{
+            return {{
+                ...state,
                 isFetching: true,
                 didInvalidate: false
-            }});
+            }};
         case actionTypes.RECEIVE_ITEMS:
-            return Object.assign({{}}, state, {{
+            return {{
+                ...state,
                 isFetching: false,
                 didInvalidate: false,
                 items: action.items,
                 lastUpdated: action.receivedAt
-            }});");
+            }};");
             }
 
             if (hasFormScreenSection)
             {
                 statements.Add($@"        case actionTypes.INVALIDATE_ITEM:
-            return Object.assign({{}}, state, {{
+            return {{
+                ...state,
                 didInvalidate: true
-            }});
+            }};
+        case actionTypes.BEFORE_REQUEST_ITEM: {{
+            let newState = {{ ...state }};
+            if (!newState.byId[action.id]) {{
+                // Default Values if null
+                newState.byId[action.id] = {{
+                    $default: true
+                    // TODO: Default Values here
+                }};
+            }}
+            return newState;
+        }}
         case actionTypes.REQUEST_ITEM:
-            return Object.assign({{}}, state, {{
+            return {{
+                ...state,
                 isFetching: true,
                 didInvalidate: false
-            }});
+            }};
         case actionTypes.RECEIVE_ITEM: {{
-            let newState = Object.assign({{}}, state, {{
+            let newState = {{
+                ...state,
                 isFetching: false,
                 didInvalidate: false,
                 lastUpdated: action.receivedAt
-            }});
-            newState.byId[action.id] = action.item
-            return newState;
+            }};
+            newState.byId[action.id] = {{
+                ...newState.byId[action.id],
+                ...action.item,
+                $default: false
+            }};
         }}");
             }
 
