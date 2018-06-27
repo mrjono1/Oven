@@ -120,7 +120,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
             return new string[]
             {
                 "id: ownProps.match.params.id",
-                $"item: state.{ScreenSection.Entity.InternalNamePlural.Camelize()}.byId[ownProps.match.params.id]"
+                $"item: state.{ScreenSection.Entity.InternalName.Camelize()}.byId[ownProps.match.params.id]"
             };
         }
 

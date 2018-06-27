@@ -49,15 +49,19 @@ namespace MasterBuilder.Templates.React.Src.Reducers
             //}
 
             // Module Reducers
+
             foreach (var entity in Project.Entities)
             {
                 var name = entity.InternalName.Camelize();
-                var namePlural = entity.InternalNamePlural.Camelize();
-                imports.Add($"import {{ default as {namePlural} }} from '../modules/{name}/reducer';");
-                reducerNames.Add($"{namePlural}");
+                //var namePlural = entity.InternalNamePlural.Camelize();
+                //imports.Add($"import {{ default as {namePlural} }} from '../modules/{name}/reducer';");
+                //reducerNames.Add($"{namePlural}");
+
+                reducerNames.Add($@"{name}: createEntityReducer('{name}')");
             }
 
             return $@"import {{ combineReducers }} from 'redux';
+import {{ createEntityReducer }} from './entityReducer';
 {string.Join(Environment.NewLine, imports)}
 
 const rootReducer = combineReducers({{

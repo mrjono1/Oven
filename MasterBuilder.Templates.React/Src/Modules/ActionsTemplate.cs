@@ -57,12 +57,12 @@ namespace MasterBuilder.Templates.React.Src.Modules
             {
                 functions.Add($@"function requestItems() {{
     return {{
-        type: actionTypes.REQUEST_ITEMS
+        type: '{Entity.InternalName.ToUpperInvariant()}_REQUEST_ITEMS'
     }};
 }}");
                 functions.Add($@"function receiveItems(json) {{
     return {{
-        type: actionTypes.RECEIVE_ITEMS,
+        type: '{Entity.InternalName.ToUpperInvariant()}_RECEIVE_ITEMS',
         items: json.items,
         receivedAt: Date.now()
     }};
@@ -127,7 +127,7 @@ export function fetchItemsIfNeeded() {{
     }}
 }}
 function shouldFetchItem(state, id) {{
-    const item = state.{Entity.InternalNamePlural.Camelize()}.byId[id];
+    const item = state.{Entity.InternalName.Camelize()}.byId[id];
     if (!item || item.$default) {{
         return true;
     }} else if (item.isFetching) {{
@@ -135,46 +135,44 @@ function shouldFetchItem(state, id) {{
     }} else {{
         return item.didInvalidate;
     }}
-}}");
-                functions.Add(@"
-function beforeRequestItem(id) {
-    return {
-        type: actionTypes.BEFORE_REQUEST_ITEM,
+}}
+function beforeRequestItem(id) {{
+    return {{
+        type: '{Entity.InternalName.ToUpperInvariant()}_BEFORE_REQUEST_ITEM',
         id: id
-    };
-}
-function requestItem(id) {
-    return {
-        type: actionTypes.REQUEST_ITEM,
+    }};
+}}
+function requestItem(id) {{
+    return {{
+        type: '{Entity.InternalName.ToUpperInvariant()}_REQUEST_ITEM',
         id: id
-    };
-}
-function receiveItem(id, json) {
-    return {
-        type: actionTypes.RECEIVE_ITEM,
+    }};
+}}
+function receiveItem(id, json) {{
+    return {{
+        type: '{Entity.InternalName.ToUpperInvariant()}_RECEIVE_ITEM',
         id: id,
         item: json,
         receivedAt: Date.now()
-    };
-}
+    }};
+}}
 
-export function fetchItemIfNeeded(id) {
-    return (dispatch, getState) => {
+export function fetchItemIfNeeded(id) {{
+    return (dispatch, getState) => {{
         dispatch(beforeRequestItem(id));
-        if (shouldFetchItem(getState(), id)) {
+        if (shouldFetchItem(getState(), id)) {{
             // Dispatch a thunk from thunk!
             return dispatch(fetchItem(id));
-        } else {
+        }} else {{
             // Let the calling code know there's nothing to wait for.
             return Promise.resolve();
-        }
-    };
-}");
+        }}
+    }};
+}}");
             }
 
 
             return $@"import fetch from 'cross-fetch';
-import * as actionTypes from './actionTypes';
 
 {string.Join(Environment.NewLine, functions)}";
         }

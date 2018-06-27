@@ -27,9 +27,7 @@ namespace MasterBuilder.Templates.React.Src.Modules
 
             foreach (var entity in Project.Entities)
             {
-                templates.Add(new ActionTypesTemplate(Project, entity));
                 templates.Add(new ActionsTemplate(Project, entity));
-                templates.Add(new ReducerTemplate(Project, entity));
             }
             return templates;
         }

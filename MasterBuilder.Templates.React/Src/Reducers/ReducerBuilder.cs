@@ -23,7 +23,8 @@ namespace MasterBuilder.Templates.React.Src.Reducers
         {
             var templates = new List<ITemplate>
             {
-                new IndexTemplate(Project)
+                new IndexTemplate(Project),
+                new EntityReducerTemplate(Project)
             };
 
             // TODO: Screen Reducers
