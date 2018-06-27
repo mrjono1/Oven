@@ -108,7 +108,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""webpack-merge"": ""^4.1.2""
   }},
   ""dependencies"": {{
-    ""@material-ui/core"": ""1.1.0"",
+    ""@material-ui/core"": ""1.3.0"",
     ""@material-ui/icons"": ""1.1.0"",
     ""axios"": ""^0.17.1"",
     ""localforage"": ""^1.5.6"",

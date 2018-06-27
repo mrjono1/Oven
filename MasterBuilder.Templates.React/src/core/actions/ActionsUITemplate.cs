@@ -45,18 +45,18 @@ namespace MasterBuilder.Templates.React.Src.Core.Actions
  * openNav - Open the side nav
  */
 export function openNav() {
-  return {
-    type: constants.OPEN_NAV
-  };
+    return {
+        type: constants.OPEN_NAV
+    };
 }
 
 /**
  * closeNav - Close the side nav
  */
 export function closeNav() {
-  return {
-    type: constants.CLOSE_NAV
-  };
+    return {
+        type: constants.CLOSE_NAV
+    };
 }";
         }
     }

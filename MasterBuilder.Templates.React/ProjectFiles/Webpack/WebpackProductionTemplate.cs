@@ -58,22 +58,22 @@ module.exports = {
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
                 use: [
-                {
-                    loader: 'css-loader'
-                },
-                {
-                    loader: 'postcss-loader'
-                }, 
-                {
-                    loader: 'sass-loader',
-                    options: {
-                        sourceMap: true,
-                        data: '@import ""variables"";',
-                        includePaths: [
-                            path.join(__dirname, '..', '/src/containers/App/styles')
-                        ]
-                    }
-                }]
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'postcss-loader'
+                    }, 
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                            data: '@import ""variables"";',
+                            includePaths: [
+                                path.join(__dirname, '..', '/src/containers/App/styles')
+                            ]
+                        }
+                    }]
             })
         }]
     },
