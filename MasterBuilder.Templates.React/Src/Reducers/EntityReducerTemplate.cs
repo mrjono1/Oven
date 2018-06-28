@@ -34,9 +34,8 @@ namespace MasterBuilder.Templates.React.Src.Reducers
         /// </summary>
         public string GetFileContent()
         {
-            return @"export function createEntityReducer(entityName = '') {
+            return @"export function createEntityReducer(entityName = '', entityNameUpper = '') {
 
-    let entityNameUpper = entityName.toUpperCase();
     const initialState = {
         isFetching: false,
         didInvalidate: false,

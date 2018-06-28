@@ -53,11 +53,7 @@ namespace MasterBuilder.Templates.React.Src.Reducers
             foreach (var entity in Project.Entities)
             {
                 var name = entity.InternalName.Camelize();
-                //var namePlural = entity.InternalNamePlural.Camelize();
-                //imports.Add($"import {{ default as {namePlural} }} from '../modules/{name}/reducer';");
-                //reducerNames.Add($"{namePlural}");
-
-                reducerNames.Add($@"{name}: createEntityReducer('{name}')");
+                reducerNames.Add($@"{name}: createEntityReducer('{name}', '{entity.InternalName.ToUpperInvariant()}')");
             }
 
             return $@"import {{ combineReducers }} from 'redux';
