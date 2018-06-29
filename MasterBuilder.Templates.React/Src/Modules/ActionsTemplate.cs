@@ -86,10 +86,10 @@ function shouldFetchItems(state) {{
     const items = state.items;
     if (!items) {{
         return true;
-    }} else if (items.isFetching) {{
+    }} else if (items.$isFetching) {{
         return false;
     }} else {{
-        return items.didInvalidate;
+        return items.$didInvalidate;
     }}
 }}
 

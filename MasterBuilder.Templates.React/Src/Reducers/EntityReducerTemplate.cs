@@ -86,23 +86,30 @@ namespace MasterBuilder.Templates.React.Src.Reducers
             case `${entityNameUpper}_REQUEST_ITEM`:
                 return {
                     ...state,
-                    isFetching: true,
-                    didInvalidate: false
+                    byId: {
+                        ...state.byId,
+                        [action.id]: {
+                            ...state.byId[action.id],
+                            $isFetching: true,
+                            $didInvalidate: false
+                        }
+                    }
                 };
-            case `${entityNameUpper}_RECEIVE_ITEM`: {
-                let newState = {
+            case `${entityNameUpper}_RECEIVE_ITEM`:
+                return {
                     ...state,
-                    isFetching: false,
-                    didInvalidate: false,
-                    lastUpdated: action.receivedAt
+                    byId: {
+                        ...state.byId,
+                        [action.id]: {
+                            ...state.byId[action.id],
+                            ...action.item,
+                            $default: false,
+                            $isFetching: false,
+                            $didInvalidate: false,
+                            $lastUpdated: action.receivedAt
+                        }
+                    }
                 };
-                newState.byId[action.id] = {
-                    ...newState.byId[action.id],
-                    ...action.item,
-                    $default: false
-                };
-                return newState;
-            }
             default:
                 return state;
         }
