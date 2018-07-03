@@ -111,7 +111,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         {
             return new string[]
             {
-                $"{ScreenSection.Entity.InternalName.Camelize()}Actions: bindActionCreators({ScreenSection.Entity.InternalName.Camelize()}Actions, dispatch)"
+                $"{ScreenSection.Entity.InternalName.Camelize()}Actions: bindActionCreators(createEntityActions('{ScreenSection.Entity.InternalName.Camelize()}', '{ScreenSection.Entity.InternalNamePlural.Camelize()}', '{ScreenSection.Entity.InternalName.ToUpperInvariant()}'), dispatch)"
             };
         }
 
@@ -127,9 +127,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         private IEnumerable<string> _imports;
         internal IEnumerable<string> Imports()
         {
-            var imports = new List<string>{
-                $"import * as {ScreenSection.Entity.InternalName.Camelize()}Actions from '../modules/{ScreenSection.Entity.InternalName.Camelize()}/actions';"
-            };
+            var imports = new List<string>();
 
             imports.AddRange(_imports);
 

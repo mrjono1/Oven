@@ -55,7 +55,6 @@ namespace MasterBuilder.Templates.React.Src.Containers
             {
                 "classes"
             };
-            //var hasFormSection = false;
 
             foreach (var screenSection in Screen.ScreenSections)
             {
@@ -128,6 +127,7 @@ namespace MasterBuilder.Templates.React.Src.Containers
 import {{ connect }} from 'react-redux';
 import {{ bindActionCreators }} from 'redux';
 import PropTypes from 'prop-types';
+import createEntityActions from '../actions/entityActions';
 import {{ withStyles }} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';

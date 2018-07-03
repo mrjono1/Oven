@@ -83,7 +83,10 @@ namespace MasterBuilder.Templates.React
             projectWriter.AddTemplate(new Src.Store.ConfigureStoreTemplate(project));
 
             // Modules
-            projectWriter.AddTemplate(new Src.Modules.ModuleBuilder(project));
+            //projectWriter.AddTemplate(new Src.Modules.ModuleBuilder(project));
+
+            // Actions
+            projectWriter.AddTemplate(new Src.Actions.EntityActionsTemplate(project));
 
             var errors = await projectWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))

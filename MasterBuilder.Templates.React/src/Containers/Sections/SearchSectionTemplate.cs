@@ -33,7 +33,6 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
                 "import TableCell from '@material-ui/core/TableCell';",
                 "import TableHead from '@material-ui/core/TableHead';",
                 "import TableRow from '@material-ui/core/TableRow';",
-                $"import * as {ScreenSection.Entity.InternalName.Camelize()}Actions from '../modules/{ScreenSection.Entity.InternalName.Camelize()}/actions';",
                 "import { Link } from 'react-router-dom';"
             };
         }
@@ -99,7 +98,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         {
             return new string[]
             {
-                $"{ScreenSection.Entity.InternalName.Camelize()}Actions: bindActionCreators({ScreenSection.Entity.InternalName.Camelize()}Actions, dispatch)"
+                $"{ScreenSection.Entity.InternalName.Camelize()}Actions: bindActionCreators(createEntityActions('{ScreenSection.Entity.InternalName.Camelize()}', '{ScreenSection.Entity.InternalNamePlural.Camelize()}', '{ScreenSection.Entity.InternalName.ToUpperInvariant()}'), dispatch)"
             };
         }
 
