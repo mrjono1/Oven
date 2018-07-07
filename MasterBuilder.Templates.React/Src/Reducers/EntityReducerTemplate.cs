@@ -37,10 +37,15 @@ namespace MasterBuilder.Templates.React.Src.Reducers
             return @"export function createEntityReducer(entityName = '', entityNameUpper = '') {
 
     const initialState = {
-        isFetching: false,
-        didInvalidate: false,
-        items: [],
-        byId: []
+        byId: [],
+        all: {
+            $isFetching: false,
+            $didInvalidate: true,
+            $lastUpdated: null,
+            page: 1,
+            pageSize: 10,
+            items: []
+        }
     };
     
     return function reducer(state = initialState, action) {
@@ -49,28 +54,43 @@ namespace MasterBuilder.Templates.React.Src.Reducers
             case `${entityNameUpper}_INVALIDATE_ITEMS`:
                 return {
                     ...state,
-                    didInvalidate: true
+                    all: {
+                        ...state.all,
+                        $didInvalidate: true
+                    }
                 };
             case `${entityNameUpper}_REQUEST_ITEMS`:
                 return {
                     ...state,
-                    isFetching: true,
-                    didInvalidate: false
+                    all: {
+                        ...state.all,
+                        $isFetching: true,
+                        $didInvalidate: false
+                    }
                 };
             case `${entityNameUpper}_RECEIVE_ITEMS`:
                 return {
                     ...state,
-                    isFetching: false,
-                    didInvalidate: false,
-                    items: action.items,
-                    lastUpdated: action.receivedAt
+                    all: {
+                        ...state.all,
+                        $isFetching: false,
+                        $didInvalidate: false,
+                        items: action.items,
+                        $lastUpdated: action.receivedAt
+                    }
                 };
 
             // Form Reducer Actions
             case `${entityNameUpper}_INVALIDATE_ITEM`:
                 return {
                     ...state,
-                    didInvalidate: true
+                    byId: {
+                        ...state.byId,
+                        [action.id]: {
+                            ...state.byId[action.id],
+                            $didInvalidate: true
+                        }
+                    }
                 };
             case `${entityNameUpper}_BEFORE_REQUEST_ITEM`: {
                 let newState = { ...state };
@@ -114,7 +134,6 @@ namespace MasterBuilder.Templates.React.Src.Reducers
                 return state;
         }
     }
-
 }";
         }
     }

@@ -106,7 +106,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         {
             return new string[]
             {
-                $"{ScreenSection.Entity.InternalName.Camelize()}Items: state.{ScreenSection.Entity.InternalName.Camelize()}.items"
+                $"{ScreenSection.Entity.InternalName.Camelize()}Items: state.{ScreenSection.Entity.InternalName.Camelize()}.all.items"
             };
         }
 

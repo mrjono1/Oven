@@ -54,12 +54,14 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
         };
     }
     
-    function fetchItems() {
+    function fetchItems(state) {
         return dispatch => {
             dispatch(requestItems());
+
+            const items = state[entityName].all;
             return fetch(`/api/${entityNamePlural}/search`, {
                 method: 'POST', 
-                body: JSON.stringify({ page: 1, pageSize: 10 }),
+                body: JSON.stringify({ page: items.page, pageSize: items.pageSize }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -70,10 +72,8 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
     }
     
     function shouldFetchItems(state) {
-        const items = state.items;//[entityName]
-        if (!items) {
-            return true;
-        } else if (items.$isFetching) {
+        const items = state[entityName].all;
+        if (items.$isFetching) {
             return false;
         } else {
             return items.$didInvalidate;
@@ -134,7 +134,7 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
             return (dispatch, getState) => {
                 if (shouldFetchItems(getState())) {
                     // Dispatch a thunk from thunk!
-                    return dispatch(fetchItems());
+                    return dispatch(fetchItems(getState()));
                 } else {
                     // Let the calling code know there's nothing to wait for.
                     return Promise.resolve();

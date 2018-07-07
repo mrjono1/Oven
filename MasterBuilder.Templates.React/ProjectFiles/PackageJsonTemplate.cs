@@ -48,7 +48,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
   ""private"": true,
   ""scripts"": {{
     ""clean"": ""rimraf wwwroot"",
-    ""build"": ""webpack --progress --verbose --colors --display-error-details"",
+    ""build"": ""webpack --verbose --colors --display-error-details"",
     ""build:production"": ""npm run clean && npm run build"",
     ""lint"": ""eslint src"",
     ""start"": ""webpack --watch --mode development --colors"",

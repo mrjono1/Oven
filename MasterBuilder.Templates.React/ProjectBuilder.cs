@@ -81,10 +81,7 @@ namespace MasterBuilder.Templates.React
 
             // Store
             projectWriter.AddTemplate(new Src.Store.ConfigureStoreTemplate(project));
-
-            // Modules
-            //projectWriter.AddTemplate(new Src.Modules.ModuleBuilder(project));
-
+            
             // Actions
             projectWriter.AddTemplate(new Src.Actions.EntityActionsTemplate(project));
 
