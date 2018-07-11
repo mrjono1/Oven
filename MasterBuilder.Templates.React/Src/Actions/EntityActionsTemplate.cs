@@ -38,6 +38,7 @@ namespace MasterBuilder.Templates.React.Src.Actions
         public string GetFileContent()
         {
             return @"import fetch from 'cross-fetch';
+import uuid from 'uuid/v4';
 export default function createEntityActions(entityName = '', entityNamePlural = '', entityNameUpper = ''){
 
     function requestItems() {
@@ -95,13 +96,13 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
     }
 
     function shouldFetchItem(state, id) {
-        const item = state[entityName].byId[id];
-        if (!item || item.$default) {
+        const item = state[entityName].byIdMetadata[id];
+        if (!item || item.default) {
             return true;
-        } else if (item.$isFetching) {
+        } else if (item.isFetching) {
             return false;
         } else {
-            return item.$didInvalidate;
+            return item.didInvalidate;
         }
     }
 
@@ -128,6 +129,13 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
         };
     }
 
+    function createNewItem() {
+        return {
+            type: `${entityNameUpper}_NEW_ITEM`,
+            id: uuid(),
+            receivedAt: Date.now()
+        };
+    }
     // Functions available externally
     return {
         fetchItemsIfNeeded: function () {
@@ -151,6 +159,11 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
                     // Let the calling code know there's nothing to wait for.
                     return Promise.resolve();
                 }
+            }
+        },
+        newItem: function () {
+            return (dispatch) => {
+                return dispatch(createNewItem());
             }
         }
     }

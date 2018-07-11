@@ -34,10 +34,11 @@ namespace MasterBuilder.Templates.React.Src.Reducers
         /// </summary>
         public string GetFileContent()
         {
-            return @"export function createEntityReducer(entityName = '', entityNameUpper = '') {
+            return @"export function createEntityReducer(entityName = '', entityNameUpper = '', defaultEntity = {}) {
 
     const initialState = {
         byId: [],
+        byIdMetadata: [],
         all: {
             $isFetching: false,
             $didInvalidate: true,
@@ -81,27 +82,59 @@ namespace MasterBuilder.Templates.React.Src.Reducers
                 };
 
             // Form Reducer Actions
-            case `${entityNameUpper}_INVALIDATE_ITEM`:
+            case `${entityNameUpper}_NEW_ITEM`: {
                 return {
                     ...state,
                     byId: {
                         ...state.byId,
                         [action.id]: {
                             ...state.byId[action.id],
-                            $didInvalidate: true
+                            id: action.id,
+                            ...defaultEntity
+                        }
+                    },
+                    byIdMetadata: {
+                        ...state.byIdMetadata,
+                        [action.id]: {
+                            ...state.byIdMetadata[action.id],
+                            default: false,
+                            new: true,
+                            lastUpdated: action.receivedAt
+                        }
+                    }
+                };
+            }
+            case `${entityNameUpper}_INVALIDATE_ITEM`:
+                return {
+                    ...state,
+                    byIdMetadata: {
+                        ...state.byIdMetadata,
+                        [action.id]: {
+                            didInvalidate: true
                         }
                     }
                 };
             case `${entityNameUpper}_BEFORE_REQUEST_ITEM`: {
-                let newState = { ...state };
-                if (!newState.byId[action.id]) {
-                    // Default Values if null
-                    newState.byId[action.id] = {
-                        $default: true
-                        // TODO: Default Values here
-                    };
+
+                if (state.byIdMetadata[action.id]) {
+                    return state;
                 }
-                return newState;
+
+                return {
+                    ...state,
+                    byId: {
+                        ...state.byId,
+                        [action.id]: {
+                            /* Create new empty item*/
+                        }
+                    },
+                    byIdMetadata: {
+                        ...state.byIdMetadata,
+                        [action.id]: {
+                            default: true
+                        }
+                    }
+                };
             }
             case `${entityNameUpper}_REQUEST_ITEM`:
                 return {
@@ -109,9 +142,15 @@ namespace MasterBuilder.Templates.React.Src.Reducers
                     byId: {
                         ...state.byId,
                         [action.id]: {
-                            ...state.byId[action.id],
-                            $isFetching: true,
-                            $didInvalidate: false
+                            ...state.byId[action.id]
+                        }
+                    },
+                    byIdMetadata: {
+                        ...state.byIdMetadata,
+                        [action.id]: {
+                            ...state.byIdMetadata[action.id],
+                            isFetching: true,
+                            didInvalidate: false
                         }
                     }
                 };
@@ -122,11 +161,17 @@ namespace MasterBuilder.Templates.React.Src.Reducers
                         ...state.byId,
                         [action.id]: {
                             ...state.byId[action.id],
-                            ...action.item,
-                            $default: false,
-                            $isFetching: false,
-                            $didInvalidate: false,
-                            $lastUpdated: action.receivedAt
+                            ...action.item
+                        }
+                    },
+                    byIdMetadata: {
+                        ...state.byIdMetadata,
+                        [action.id]: {
+                            ...state.byIdMetadata[action.id],
+                            default: false,
+                            isFetching: false,
+                            didInvalidate: false,
+                            lastUpdated: action.receivedAt
                         }
                     }
                 };
