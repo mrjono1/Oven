@@ -33,7 +33,9 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
                 "import TableCell from '@material-ui/core/TableCell';",
                 "import TableHead from '@material-ui/core/TableHead';",
                 "import TableRow from '@material-ui/core/TableRow';",
-                "import { Link } from 'react-router-dom';"
+                "import { Link } from 'react-router-dom';",
+                "import Button from '@material-ui/core/Button';",
+                "import AddIcon from '@material-ui/icons/Add';"
             };
         }
 
@@ -41,23 +43,51 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         {
             var columnHeaders = new List<string>();
             var columns = new List<string>();
-            foreach (var searchColumn in ScreenSection.SearchSection.SearchColumns.OrderBy(_ => _.Ordinal))
-            {
-                if (searchColumn.PropertyType != PropertyType.PrimaryKey)
-                {
-                    columnHeaders.Add($@"            <TableCell>{searchColumn.TitleValue}</TableCell>");
-                    columns.Add($@"                <TableCell>{{item.{searchColumn.InternalNameJavascript}}}</TableCell>");
-                }
-            }
+
 
             var navigateScreen = (from s in Project.Screens
                                   where s.Id == ScreenSection.NavigateToScreenId
                                   select s).SingleOrDefault();
 
-            string route = string.Empty;
+            string route = null;
+            string newButton = null;
             if (navigateScreen != null)
             {
                 route = $@" component={{Link}} to={{`/{navigateScreen.Path}/${{item.id}}`}}";
+
+                newButton = $@"          <Button variant=""fab"" color=""primary"" aria-label=""add"">
+            <AddIcon />
+        </Button>";
+                // TODO: New item feature
+                //if (ScreenSection.ParentScreenSection == null)
+                //{
+                //    var objectPath = GetParent(ScreenSection.ParentScreenSection, null);
+                //    newRouterLink = $@" *ngIf=""{objectPath}"" [routerLink]=""['/{navigateScreen.Path}', {{ {parentProperty.InternalName.Camelize()}Id: {objectPath}.controls.id.value}}]""";
+                //}
+                //else if (parentProperty != null)
+                //{
+                //    newRouterLink = $@" *ngIf=""{parentProperty.InternalName.Camelize()}"" [routerLink]=""['/{navigateScreen.Path}', {{ {parentProperty.InternalName.Camelize()}Id: {parentProperty.InternalName.Camelize()}.id}}]""";
+                //}
+                //else
+                //{
+                //    newRouterLink = $@"[routerLink]=""['/{navigateScreen.Path}']""";
+                //}
+            }
+
+            foreach (var searchColumn in ScreenSection.SearchSection.SearchColumns.OrderBy(_ => _.Ordinal))
+            {
+                if (searchColumn.PropertyType != PropertyType.PrimaryKey)
+                {
+                    columnHeaders.Add($@"            <TableCell>{searchColumn.TitleValue}</TableCell>");
+                    if (route != null)
+                    {
+                        columns.Add($@"                <TableCell{route}>{{item.{searchColumn.InternalNameJavascript}}}</TableCell>");
+                    }
+                    else
+                    {
+                        columns.Add($@"                <TableCell>{{item.{searchColumn.InternalNameJavascript}}}</TableCell>");
+                    }
+                }
             }
 
             return $@"      <Table>
@@ -69,13 +99,40 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         <TableBody>
           {{{ScreenSection.Entity.InternalName.Camelize()}Items.map(item => {{
             return (
-              <TableRow key={{item.id}}{route}>
+              <TableRow key={{item.id}}>
 {string.Join(Environment.NewLine, columns)}
               </TableRow>
             );
           }})}}
         </TableBody>
-      </Table>";
+      </Table>
+{newButton}";
+        }
+
+        private string GetParent(ScreenSection screenSection, string objectPath)
+        {
+            var parentSection = screenSection.ParentScreenSection;
+
+            var result = $"{screenSection.Entity.InternalName.Camelize()}";
+
+            if (parentSection == null)
+            {
+                if (!string.IsNullOrEmpty(objectPath))
+                {
+                    result = $"{result}Form.controls.{objectPath}";
+                }
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(objectPath))
+                {
+                    result = $"{result}.controls.{objectPath}";
+                }
+
+                result = GetParent(parentSection, result);
+            }
+
+            return result;
         }
 
         internal IEnumerable<string> Props()
