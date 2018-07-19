@@ -29,7 +29,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections.FormFields
                 return $@"        <TextField
           name=""{FormField.InternalNameJavaScript}""
           label=""{FormField.TitleValue}""
-          value={{item.{FormField.InternalNameJavaScript}}}
+          value={{{ScreenSection.Entity.InternalName.Camelize()}Item.{FormField.InternalNameJavaScript}}}
         />";
             }
         }

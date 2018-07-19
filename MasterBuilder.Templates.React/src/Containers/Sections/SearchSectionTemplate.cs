@@ -54,10 +54,11 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
             if (navigateScreen != null)
             {
                 route = $@" component={{Link}} to={{`/{navigateScreen.Path}/${{item.id}}`}}";
-
+                
                 newButton = $@"          <Button variant=""fab"" color=""primary"" aria-label=""add"">
-            <AddIcon />
+            <AddIcon component={{Link}} to={{'/{navigateScreen.Path}/new'}}/>
         </Button>";
+                
                 // TODO: New item feature
                 //if (ScreenSection.ParentScreenSection == null)
                 //{
@@ -99,7 +100,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         <TableBody>
           {{{ScreenSection.Entity.InternalName.Camelize()}Items.map(item => {{
             return (
-              <TableRow key={{item.id}}>
+              <TableRow key={{item.id}} hover>
 {string.Join(Environment.NewLine, columns)}
               </TableRow>
             );
@@ -147,7 +148,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         {
             return new string[]
             {
-                $"    this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemsIfNeeded();"
+                $"        this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemsIfNeeded();"
             };
         }
 

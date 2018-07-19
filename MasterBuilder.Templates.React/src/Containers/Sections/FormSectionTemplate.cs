@@ -87,23 +87,29 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         {
             return new string[]
             {
-                "    var id = this.props.match.params.id;",
-                $@"    if (id){{
-      this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemIfNeeded(id);
-    }}"
+                $@"        if (!this.props.new){{
+            this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemIfNeeded(this.props.id);
+        }}"
             };
         }
 
         internal IEnumerable<string> Props()
         {
-            return new string[] { };
+            return new string[] 
+            {
+                $"{ScreenSection.Entity.InternalName.Camelize()}Item"
+            };
         }
 
         internal IEnumerable<string> Render()
         {
             return new string[]
             {
-                "        const item = this.props.item ? this.props.item : {};"
+                $@"        if (!{ScreenSection.Entity.InternalName.Camelize()}Item) {{
+            return (
+                <Paper>Loading...</Paper>
+            );
+        }}"
             };
         }
 
@@ -120,10 +126,11 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
             return new string[]
             {
                 "id: ownProps.match.params.id",
-                $"item: state.{ScreenSection.Entity.InternalName.Camelize()}.byId[ownProps.match.params.id]"
+                "new: ownProps.match.params.id === 'new'",
+                $"{ScreenSection.Entity.InternalName.Camelize()}Item: ownProps.match.params.id !== 'new' ? state.{ScreenSection.Entity.InternalName.Camelize()}.byId[ownProps.match.params.id] : {{}}"
             };
         }
-
+        
         private IEnumerable<string> _imports;
         internal IEnumerable<string> Imports()
         {
