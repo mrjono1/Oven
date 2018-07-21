@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MasterBuilder.Templates.React.src.Containers.Sections
+namespace MasterBuilder.Templates.React.Src.Containers.Sections
 {
     /// <summary>
     /// Menu List Section Builder
     /// </summary>
-    public class MenuListSectionTemplate
+    public class MenuListSectionTemplate : ISectionTemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
@@ -23,6 +23,11 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
             Project = project;
             Screen = screen;
             ScreenSection = screenSection;
+        }
+
+        public IEnumerable<string> Constructor()
+        {
+            return new string[] { };
         }
 
         internal string Evaluate()
@@ -48,7 +53,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
     </List>";
         }
 
-        internal IEnumerable<string> Imports()
+        public IEnumerable<string> Imports()
         {
             return new string[]
             {
@@ -57,6 +62,11 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
                 "import { ListItemText } from '@material-ui/core';",
                 "import { Link } from 'react-router-dom';"
             };
+        }
+
+        public IEnumerable<string> Methods()
+        {
+            return new string[] { };
         }
     }
 }

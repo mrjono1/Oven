@@ -1,9 +1,9 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
-using MasterBuilder.Templates.React.src.Containers.Sections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using MasterBuilder.Templates.React.Src.Containers.Sections;
 
 namespace MasterBuilder.Templates.React.Src.Containers
 {
@@ -45,8 +45,8 @@ namespace MasterBuilder.Templates.React.Src.Containers
         /// </summary>
         public string GetFileContent()
         {
-            var sections = new List<string>();
-            var imports = new List<string>();
+            var sections = new List<ISectionTemplate>();
+            var sectionBodys = new List<string>();
             var mapDispatchToProps = new List<string>();
             var mapStateToProps = new List<string>();
             var componentWillMount = new List<string>();
@@ -62,33 +62,39 @@ namespace MasterBuilder.Templates.React.Src.Containers
                 {
                     case ScreenSectionType.Form:
                         var formSection = new FormSectionTemplate(Project, Screen, screenSection);
-                        sections.Add(formSection.Body);
-                        imports.AddRange(formSection.Imports());
+                        sections.Add(formSection);
+
+                        sectionBodys.Add(formSection.Body);
                         componentWillMount.AddRange(formSection.ComponentWillMount());
                         mapStateToProps.AddRange(formSection.MapStateToProps());
                         mapDispatchToProps.AddRange(formSection.MapDispatchToProps());
                         props.AddRange(formSection.Props());
                         render.AddRange(formSection.Render());
                         break;
+
                     case ScreenSectionType.Search:
                         var searchSection = new SearchSectionTemplate(Project, Screen, screenSection);
-                        imports.AddRange(searchSection.Imports());
-                        sections.Add(searchSection.Evaluate());
+                        sections.Add(searchSection);
+
+                        sectionBodys.Add(searchSection.Evaluate());
                         componentWillMount.AddRange(searchSection.ComponentWillMount());
                         mapStateToProps.AddRange(searchSection.MapStateToProps());
                         mapDispatchToProps.AddRange(searchSection.MapDispatchToProps());
                         props.AddRange(searchSection.Props());
                         break;
+
                     case ScreenSectionType.MenuList:
                         var menuListSection = new MenuListSectionTemplate(Project, Screen, screenSection);
-                        sections.Add(menuListSection.Evaluate());
-                        imports.AddRange(menuListSection.Imports());
+                        sections.Add(menuListSection);
+
+                        sectionBodys.Add(menuListSection.Evaluate());
                         break;
+
                     case ScreenSectionType.Html:
                         var htmlSection = new HtmlSectionTemplate(Project, Screen, screenSection);
-                        sections.Add(htmlSection.Evaluate());
-                        break;
-                    default:
+                        sections.Add(htmlSection);
+
+                        sectionBodys.Add(htmlSection.Evaluate());
                         break;
                 }
             }
@@ -114,13 +120,23 @@ namespace MasterBuilder.Templates.React.Src.Containers
             //            }
 
             var gridSections = new List<string>();
-            foreach (var section in sections)
+            foreach (var section in sectionBodys)
             {
                 gridSections.Add($@"    <Grid item xs={{12}}>
       <Paper className={{classes.paper}}>
 {section}
       </Paper>
     </Grid>");
+            }
+
+            var constructorExpressions = new List<string>();
+            var imports = new List<string>();
+            var methods = new List<string>();
+            foreach (var section in sections)
+            {
+                constructorExpressions.AddRange(section.Constructor());
+                imports.AddRange(section.Imports());
+                methods.AddRange(section.Methods());
             }
 
             return $@"import React from 'react';
@@ -146,6 +162,10 @@ const styles = theme => ({{
 
 
 class {Screen.InternalName}Page extends React.Component {{
+    constructor(props) {{
+        super(props);
+{string.Join(Environment.NewLine, constructorExpressions.Distinct().OrderBy(a => a))}
+    }}
     componentWillMount() {{
 {string.Join(Environment.NewLine, componentWillMount.Distinct())}
     }}
@@ -163,6 +183,7 @@ class {Screen.InternalName}Page extends React.Component {{
 </div>
         );
     }}
+{string.Join(Environment.NewLine, methods.Distinct().OrderBy(a => a))}
 }}
 
 {Screen.InternalName}Page.propTypes = {{

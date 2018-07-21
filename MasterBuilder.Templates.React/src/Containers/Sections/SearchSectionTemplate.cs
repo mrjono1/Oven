@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MasterBuilder.Templates.React.src.Containers.Sections
+namespace MasterBuilder.Templates.React.Src.Containers.Sections
 {
     /// <summary>
     /// Search Section Template
     /// </summary>
-    public class SearchSectionTemplate
+    public class SearchSectionTemplate : ISectionTemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
@@ -25,7 +25,7 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
             ScreenSection = screenSection;
         }
 
-        internal IEnumerable<string> Imports()
+        public IEnumerable<string> Imports()
         {
             return new string[]{
                 "import Table from '@material-ui/core/Table';",
@@ -190,6 +190,16 @@ class {ScreenSection.InternalName}Row extends React.Component {{
 }}
 
 export default {ScreenSection.InternalName}Row;";
+        }
+
+        public IEnumerable<string> Constructor()
+        {
+            return new string[] { };
+        }
+
+        public IEnumerable<string> Methods()
+        {
+            return new string[] { };
         }
     }
 }

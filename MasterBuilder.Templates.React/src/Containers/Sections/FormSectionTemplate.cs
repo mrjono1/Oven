@@ -6,12 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace MasterBuilder.Templates.React.src.Containers.Sections
+namespace MasterBuilder.Templates.React.Src.Containers.Sections
 {
     /// <summary>
     /// Form Section Builder
     /// </summary>
-    public class FormSectionTemplate
+    public class FormSectionTemplate : ISectionTemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
@@ -67,7 +67,10 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
                 }
             }
 
-            var imports = new List<string>();
+            var imports = new List<string>()
+            {
+                "import Button from '@material-ui/core/Button';"
+            };
             var fields = new List<string>();
 
             foreach (var template in formFieldTemplates)
@@ -76,13 +79,24 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
                 fields.Add(template.Elements);
             }
 
-            Body = $@"      <form noValidate>
+            Body = $@"      <form noValidate autoComplete=""off"">
+                                <Button variant=""contained"" color=""primary"" type=""submit"" onClick={{this.onSubmit}}>
+                                    Save
+                                </Button>
 {string.Join(Environment.NewLine, fields)}
       </form>";
 
             _imports = imports.Distinct();
         }
-        
+
+        public IEnumerable<string> Constructor()
+        {
+            return new string[]
+            {
+                "        this.onSubmit = this.onSubmit.bind(this);"
+            };
+        }
+
         internal IEnumerable<string> ComponentWillMount()
         {
             return new string[]
@@ -132,13 +146,24 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
         }
         
         private IEnumerable<string> _imports;
-        internal IEnumerable<string> Imports()
+        public IEnumerable<string> Imports()
         {
             var imports = new List<string>();
 
             imports.AddRange(_imports);
 
             return imports;
+        }
+
+        public IEnumerable<string> Methods()
+        {
+            return new string[] {
+                $@"    onSubmit(event) {{
+        event.preventDefault();
+        console.log('submit');
+        //this.props.actions.createCat(this.state.cat)
+    }}"
+            };
         }
     }
 }
