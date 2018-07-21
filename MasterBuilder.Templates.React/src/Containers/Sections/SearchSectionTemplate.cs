@@ -53,10 +53,10 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
             string newButton = null;
             if (navigateScreen != null)
             {
-                route = $@" component={{Link}} to={{`/{navigateScreen.Path}/${{item.id}}`}}";
+                route = $@"`/{navigateScreen.Path}/${{item.id}}`";
                 
-                newButton = $@"          <Button variant=""fab"" color=""primary"" aria-label=""add"">
-            <AddIcon component={{Link}} to={{'/{navigateScreen.Path}/new'}}/>
+                newButton = $@"          <Button variant=""fab"" color=""primary"" aria-label=""add"" component={{Link}} to={{'/{navigateScreen.Path}/new'}}>
+            <AddIcon/>
         </Button>";
                 
                 // TODO: New item feature
@@ -82,7 +82,9 @@ namespace MasterBuilder.Templates.React.src.Containers.Sections
                     columnHeaders.Add($@"            <TableCell>{searchColumn.TitleValue}</TableCell>");
                     if (route != null)
                     {
-                        columns.Add($@"                <TableCell{route}>{{item.{searchColumn.InternalNameJavascript}}}</TableCell>");
+                        columns.Add($@"                <TableCell>
+                    <Link to={{{route}}}>{{item.{searchColumn.InternalNameJavascript}}}</Link>
+                </TableCell>");
                     }
                     else
                     {

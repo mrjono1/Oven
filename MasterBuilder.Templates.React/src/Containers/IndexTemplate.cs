@@ -152,7 +152,7 @@ class {Screen.InternalName}Page extends React.Component {{
     render() {{
         const {{ {string.Join(", ", props.Distinct())} }} = this.props;
 {string.Join(Environment.NewLine, render.Distinct())}
-    return (
+        return (
 <div className={{classes.root}}>
   <Grid container spacing={{24}}>
     <Grid item xs={{12}}>
@@ -161,7 +161,7 @@ class {Screen.InternalName}Page extends React.Component {{
 {string.Join(Environment.NewLine, gridSections)}
   </Grid>
 </div>
-    );
+        );
     }}
 }}
 
