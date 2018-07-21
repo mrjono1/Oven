@@ -70,14 +70,14 @@ namespace MasterBuilder.Templates.React.Src.Components
 
 import React, {{ Component }} from 'react';
 import {{ Route }} from 'react-router-dom';
-{string.Join(Environment.NewLine, imports)}
+{string.Join(Environment.NewLine, imports.OrderBy(a => a))}
 
 class AppRoutes extends Component {{
 
   render() {{
     return ( 
         <div>
-{string.Join(Environment.NewLine, routes)}
+{string.Join(Environment.NewLine, routes.OrderBy(a => a))}
         </div>
     );
   }}

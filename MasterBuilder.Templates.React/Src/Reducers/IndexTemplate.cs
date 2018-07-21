@@ -3,6 +3,7 @@ using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MasterBuilder.Templates.React.Src.Reducers
 {
@@ -58,10 +59,10 @@ namespace MasterBuilder.Templates.React.Src.Reducers
 
             return $@"import {{ combineReducers }} from 'redux';
 import {{ createEntityReducer }} from './entityReducer';
-{string.Join(Environment.NewLine, imports)}
+{string.Join(Environment.NewLine, imports.OrderBy(a => a))}
 
 const rootReducer = combineReducers({{
-    {string.Join(string.Concat(",", Environment.NewLine, "    "), reducerNames)}
+    {string.Join(string.Concat(",", Environment.NewLine, "    "), reducerNames.OrderBy(a => a))}
 }})
 
 export default rootReducer;";

@@ -147,7 +147,7 @@ import createEntityActions from '../actions/entityActions';
 import {{ withStyles }} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-{string.Join(Environment.NewLine, imports.Distinct())}
+{string.Join(Environment.NewLine, imports.Distinct().OrderBy(a => a))}
 
 const styles = theme => ({{
     root: {{
@@ -167,11 +167,11 @@ class {Screen.InternalName}Page extends React.Component {{
 {string.Join(Environment.NewLine, constructorExpressions.Distinct().OrderBy(a => a))}
     }}
     componentWillMount() {{
-{string.Join(Environment.NewLine, componentWillMount.Distinct())}
+{string.Join(Environment.NewLine, componentWillMount.Distinct().OrderBy(a => a))}
     }}
     render() {{
-        const {{ {string.Join(", ", props.Distinct())} }} = this.props;
-{string.Join(Environment.NewLine, render.Distinct())}
+        const {{ {string.Join(", ", props.Distinct().OrderBy(a => a))} }} = this.props;
+{string.Join(Environment.NewLine, render.Distinct().OrderBy(a => a))}
         return (
 <div className={{classes.root}}>
   <Grid container spacing={{24}}>
@@ -192,13 +192,13 @@ class {Screen.InternalName}Page extends React.Component {{
 
 function mapStateToProps(state, ownProps) {{
     return {{
-        {string.Join($",{Environment.NewLine}        ", mapStateToProps.Distinct())}
+        {string.Join($",{Environment.NewLine}        ", mapStateToProps.Distinct().OrderBy(a => a))}
     }};
 }}
 
 function mapDispatchToProps(dispatch) {{
     return {{ 
-        {string.Join($",{Environment.NewLine}        ", mapDispatchToProps.Distinct())}
+        {string.Join($",{Environment.NewLine}        ", mapDispatchToProps.Distinct().OrderBy(a => a))}
     }};
 }}
 
