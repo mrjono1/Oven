@@ -160,8 +160,13 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
                     return Promise.resolve();
                 }
             }
+        }, 
+        createEntity: function (entity) {
+            return (dispatch) => {
+                return dispatch(createNewItem(entity));
+            }
         },
-        newItem: function () {
+        updateEntity: function (id, entity) {
             return (dispatch) => {
                 return dispatch(createNewItem());
             }

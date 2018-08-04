@@ -161,9 +161,17 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
                 $@"    onSubmit(event) {{
         event.preventDefault();
         console.log('submit');
-        //this.props.actions.createCat(this.state.cat)
     }}"
             };
+    //    if (this.props.new) {{
+    //        var item = this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.createEntity(this.props.{ScreenSection.Entity.InternalName.Camelize()}Item);
+    //        this.props.history.push(`/{Screen.Path}/${{item.id}}`);
+    //    }} else {{
+    //        this.props.history.push(`/{Screen.Path}/new`);
+    //        //this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.updateEntity(this.props.id, this.props.{ScreenSection.Entity.InternalName.Camelize()}Item);
+    //    }}
+    //}}"
+    //        };
         }
     }
 }
