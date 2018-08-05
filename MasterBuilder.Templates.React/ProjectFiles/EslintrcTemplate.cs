@@ -40,10 +40,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
         public string GetFileContent()
         {
             return $@"{{
-  ""extends"": ""eslint:recommended"",
-  ""ecmaFeatures"": {{
-    ""modules"": true
-  }},
+  ""extends"": [ ""eslint:recommended"", ""plugin:react/recommended"" ],
   ""parser"": ""babel-eslint"",
   ""parserOptions"": {{
     ""ecmaVersion"": 6,

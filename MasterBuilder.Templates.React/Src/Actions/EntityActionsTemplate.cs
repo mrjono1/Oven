@@ -67,8 +67,8 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
                     'Content-Type': 'application/json'
                 }
             })
-          .then(response => response.json())
-          .then(json => dispatch(receiveItems(json)));
+                .then(response => response.json())
+                .then(json => dispatch(receiveItems(json)));
         }
     }
     
@@ -90,8 +90,8 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
                     'Content-Type': 'application/json'
                 }
             })
-            .then(response => response.json())
-            .then(json => dispatch(receiveItem(id, json)));
+                .then(response => response.json())
+                .then(json => dispatch(receiveItem(id, json)));
         }
     }
 

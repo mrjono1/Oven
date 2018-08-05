@@ -50,8 +50,7 @@ import rootReducer from '../reducers'
 export default function configureStore(initialState) {
     const logger = createLogger({
         collapsed: true,
-        predicate: () =>
-        process.env.NODE_ENV === 'development'
+        predicate: () => process.env.NODE_ENV === 'development'
     });
 
     const middleware = applyMiddleware(reduxThunk, logger);

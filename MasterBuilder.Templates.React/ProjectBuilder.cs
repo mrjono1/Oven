@@ -59,7 +59,6 @@ namespace MasterBuilder.Templates.React
             // containers
             projectWriter.AddTemplate(new Src.Containers.ContainerBuilder(project));
 
-
             // core
             projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
             projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
@@ -67,12 +66,6 @@ namespace MasterBuilder.Templates.React
 
             //components
             projectWriter.AddTemplate(new Src.Components.AppBar.IndexTemplate(project));
-
-            projectWriter.AddTemplate(new Src.Components.Button.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Components.Button.StylesScssTemplate(project));
-
-            projectWriter.AddTemplate(new Src.Components.TextField.IndexJsTemplate(project));
-            projectWriter.AddTemplate(new Src.Components.TextField.StylesScssTemplate(project));
 
             projectWriter.AddTemplate(new Src.Components.ComponentBuilder(project));
 
