@@ -122,11 +122,11 @@ namespace MasterBuilder.Templates.React.Src.Containers
             var gridSections = new List<string>();
             foreach (var section in sectionBodys)
             {
-                gridSections.Add($@"    <Grid item xs={{12}}>
-      <Paper className={{classes.paper}}>
-{section}
-      </Paper>
-    </Grid>");
+                gridSections.Add($@"<Grid item xs={{12}}>
+    <Paper className={{classes.paper}}>
+{section.IndentLines(8)}
+    </Paper>
+</Grid>");
             }
 
             var constructorExpressions = new List<string>();
@@ -151,13 +151,13 @@ import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({{
     root: {{
-        flexGrow: 1,
+        flexGrow: 1
     }},
     paper: {{
         padding: theme.spacing.unit * 2,
         textAlign: 'center',
-        color: theme.palette.text.secondary,
-    }},
+        color: theme.palette.text.secondary
+    }}
 }});
 
 
@@ -173,14 +173,14 @@ class {Screen.InternalName}Page extends React.Component {{
         const {{ {string.Join(", ", props.Distinct().OrderBy(a => a))} }} = this.props;
 {string.Join(Environment.NewLine, render.Distinct().OrderBy(a => a))}
         return (
-<div className={{classes.root}}>
-  <Grid container spacing={{24}}>
-    <Grid item xs={{12}}>
-      <Paper className={{classes.paper}}>Screen: {Screen.Title}</Paper>
-    </Grid>
-{string.Join(Environment.NewLine, gridSections)}
-  </Grid>
-</div>
+            <div className={{classes.root}}>
+                <Grid container spacing={{24}}>
+                    <Grid item xs={{12}}>
+                        <Paper className={{classes.paper}}>Screen: {Screen.Title}</Paper>
+                    </Grid>
+{string.Join(Environment.NewLine, gridSections).IndentLines(20)}
+                </Grid>
+            </div>
         );
     }}
 {string.Join(Environment.NewLine, methods.Distinct().OrderBy(a => a))}

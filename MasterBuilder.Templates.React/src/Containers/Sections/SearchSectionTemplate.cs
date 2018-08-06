@@ -55,9 +55,9 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
             {
                 route = $@"`/{navigateScreen.Path}/${{item.id}}`";
                 
-                newButton = $@"          <Button variant=""fab"" color=""primary"" aria-label=""add"" component={{Link}} to={{'/{navigateScreen.Path}/new'}}>
-            <AddIcon/>
-        </Button>";
+                newButton = $@"<Button variant=""fab"" color=""primary"" aria-label=""add"" component={{Link}} to={{'/{navigateScreen.Path}/new'}}>
+    <AddIcon/>
+</Button>";
                 
                 // TODO: New item feature
                 //if (ScreenSection.ParentScreenSection == null)
@@ -93,22 +93,22 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
                 }
             }
 
-            return $@"      <Table>
-        <TableHead>
-          <TableRow>
+            return $@"<Table>
+    <TableHead>
+        <TableRow>
 {string.Join(Environment.NewLine, columnHeaders)}
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {{{ScreenSection.Entity.InternalName.Camelize()}Items.map(item => {{
-            return (
+        </TableRow>
+    </TableHead>
+    <TableBody>
+        {{{ScreenSection.Entity.InternalName.Camelize()}Items.map(item => {{
+        return (
               <TableRow key={{item.id}} hover>
 {string.Join(Environment.NewLine, columns)}
               </TableRow>
             );
-          }})}}
-        </TableBody>
-      </Table>
+        }})}}
+    </TableBody>
+</Table>
 {newButton}";
         }
 
@@ -181,11 +181,13 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
 
 class {ScreenSection.InternalName}Row extends React.Component {{
     render() {{
-        return (<tr>
-      <td>
-                <Link to={{`/client/${{this.props.clientKey}}`}}>{{this.props.name}} {{enabledBadge}}</Link>
-      </td>
-    </tr>);
+        return (
+            <tr>
+                <td>
+                    <Link to={{`/client/${{this.props.clientKey}}`}}>{{this.props.name}} {{enabledBadge}}</Link>
+                </td>
+            </tr>
+        );
     }}
 }}
 

@@ -50,7 +50,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""clean"": ""rimraf wwwroot"",
     ""build"": ""webpack --verbose --colors --display-error-details"",
     ""build:production"": ""npm run clean && npm run build"",
-    ""lint"": ""eslint src"",
+    ""lint"": ""eslint --ext .js --ext .jsx src"",
     ""start"": ""webpack --watch --mode development --colors"",
     ""test"": ""bin/test.sh""
   }},

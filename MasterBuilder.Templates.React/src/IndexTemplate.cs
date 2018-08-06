@@ -49,13 +49,13 @@ import App from 'containers/core/App';
 const store = configureStore();
 
 ReactDOM.render(
-  <Provider store={{store}}>
-      <React.Fragment>
-          <CssBaseline />
-          <App/>
-      </React.Fragment>
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={{store}}>
+        <React.Fragment>
+            <CssBaseline />
+            <App/>
+        </React.Fragment>
+    </Provider>,
+    document.getElementById('root')
 );";
         }
     }

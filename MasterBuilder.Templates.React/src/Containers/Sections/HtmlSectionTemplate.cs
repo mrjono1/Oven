@@ -42,9 +42,9 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
         internal string Evaluate()
         {
             // TODO: validate html, no scripting
-            return $@"        <div>
+            return $@"<div>
 {ScreenSection.Html}
-        </div>";
+</div>";
         }
     }
 }
