@@ -41,16 +41,16 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
                     {
                         var screen = Project.Screens.Single(a => a.Id == menuItem.ScreenId);
 
-                        menuListItems.Add($@"        <ListItem component={{Link}} to='/{screen.Path ?? menuItem.Path}'>
-          <ListItemText primary=""{menuItem.Title ?? screen.Title}"" />
-        </ListItem>");
+                        menuListItems.Add($@"<ListItem component={{Link}} to=""/{screen.Path ?? menuItem.Path}"">
+    <ListItemText primary=""{menuItem.Title ?? screen.Title}"" />
+</ListItem>");
                     }
                 }
             }
 
-            return $@"    <List component=""nav"">
-{string.Join(Environment.NewLine, menuListItems)}
-    </List>";
+            return $@"<List component=""nav"">
+{string.Join(Environment.NewLine, menuListItems).IndentLines(4)}
+</List>";
         }
 
         public IEnumerable<string> Imports()

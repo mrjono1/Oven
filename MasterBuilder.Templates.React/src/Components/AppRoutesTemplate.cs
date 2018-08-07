@@ -49,18 +49,18 @@ namespace MasterBuilder.Templates.React.Src.Components
                 imports.Add($"import {screen.InternalName}Page from '../containers/{screen.InternalName}Page';");
                 if (screen.ScreenType == ScreenType.Form)
                 {
-                    routes.Add($@"            <Route exact path=""/{screen.Path}/:id"" component={{{screen.InternalName}Page}} />");
+                    routes.Add($@"<Route exact path=""/{screen.Path}/:id"" component={{{screen.InternalName}Page}} />".IndentLines(16));
                 }
                 else
                 {
-                    routes.Add($@"            <Route exact path=""/{screen.Path}"" component={{{screen.InternalName}Page}} />");
+                    routes.Add($@"<Route exact path=""/{screen.Path}"" component={{{screen.InternalName}Page}} />".IndentLines(16));
                 }
             }
 
             if (Project.DefaultScreenId.HasValue)
             {
                 var defaultScreen = Project.Screens.Single(a => a.Id == Project.DefaultScreenId.Value);
-                routes.Insert(0, $@"            <Route exact path=""/"" component={{{defaultScreen.InternalName}Page}} />");
+                routes.Insert(0, $@"<Route exact path=""/"" component={{{defaultScreen.InternalName}Page}} />".IndentLines(16));
                 // Import should already be added above
             }
 
@@ -73,14 +73,13 @@ import {{ Route }} from 'react-router-dom';
 {string.Join(Environment.NewLine, imports.OrderBy(a => a))}
 
 class AppRoutes extends Component {{
-
-  render() {{
-    return ( 
-        <div>
+    render() {{
+        return ( 
+            <div>
 {string.Join(Environment.NewLine, routes.OrderBy(a => a))}
-        </div>
-    );
-  }}
+            </div>
+        );
+    }}
 }}
 
 export default AppRoutes;";

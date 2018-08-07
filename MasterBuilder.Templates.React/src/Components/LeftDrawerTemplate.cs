@@ -45,12 +45,12 @@ namespace MasterBuilder.Templates.React.Src
                 path = Project.Screens.Where(s => s.Id == menuItem.ScreenId.Value).Select(p => p.Path).SingleOrDefault();
                 // TODO: if url is null error
             }
-            return $@"                    <ListItem component={{Link}} to='/{path}'>
-                        <ListItemIcon>
-                            <StarIcon />
-                        </ListItemIcon>
-                        <ListItemText primary=""{menuItem.Title}"" />
-                    </ListItem>";
+            return $@"<ListItem component={{Link}} to=""/{path}"">
+    <ListItemIcon>
+        <StarIcon />
+    </ListItemIcon>
+    <ListItemText primary=""{menuItem.Title}"" />
+</ListItem>";
         }
 
         /// <summary>
@@ -80,18 +80,17 @@ import HomeIcon from '@material-ui/icons/Home';
 import {{ Link }} from 'react-router-dom';
 
 class LeftDrawer extends React.Component {{
-
     render() {{
         return (
-                <List>
-                    <ListItem component={{Link}} to='/'>
-                        <ListItemIcon>
-                            <HomeIcon />
-                        </ListItemIcon>
-                        <ListItemText primary=""Home"" />
-                    </ListItem>
-{string.Join(Environment.NewLine, menuItems)}
-                </List>
+            <List>
+                <ListItem component={{Link}} to=""/"">
+                    <ListItemIcon>
+                        <HomeIcon />
+                    </ListItemIcon>
+                    <ListItemText primary=""Home"" />
+                </ListItem>
+{string.Join(Environment.NewLine, menuItems).IndentLines(16)}
+            </List>
         );
     }}
 }}
