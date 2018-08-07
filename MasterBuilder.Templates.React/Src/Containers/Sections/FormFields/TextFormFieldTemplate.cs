@@ -26,11 +26,11 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections.FormFields
         {
             get
             {
-                return $@"        <TextField
-          name=""{FormField.InternalNameJavaScript}""
-          label=""{FormField.TitleValue}""
-          value={{{ScreenSection.Entity.InternalName.Camelize()}Item.{FormField.InternalNameJavaScript}}}
-        />";
+                return $@"<TextField
+    name=""{FormField.InternalNameJavaScript}""
+    label=""{FormField.TitleValue}""
+    value={{{ScreenSection.Entity.InternalName.Camelize()}Item.{FormField.InternalNameJavaScript}}}
+/>";
             }
         }
 

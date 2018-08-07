@@ -79,12 +79,12 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
                 fields.Add(template.Elements);
             }
 
-            Body = $@"      <form noValidate autoComplete=""off"">
-                                <Button variant=""contained"" color=""primary"" type=""submit"" onClick={{this.onSubmit}}>
-                                    Save
-                                </Button>
-{string.Join(Environment.NewLine, fields)}
-      </form>";
+            Body = $@"<form noValidate autoComplete=""off"">
+    <Button variant=""contained"" color=""primary"" type=""submit"" onClick={{this.onSubmit}}>
+        Save
+    </Button>
+{string.Join(Environment.NewLine, fields).IndentLines(4)}
+</form>";
 
             _imports = imports.Distinct();
         }

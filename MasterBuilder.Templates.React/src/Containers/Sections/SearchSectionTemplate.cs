@@ -82,13 +82,13 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
                     columnHeaders.Add($@"            <TableCell>{searchColumn.TitleValue}</TableCell>");
                     if (route != null)
                     {
-                        columns.Add($@"                <TableCell>
-                    <Link to={{{route}}}>{{item.{searchColumn.InternalNameJavascript}}}</Link>
-                </TableCell>");
+                        columns.Add($@"<TableCell>
+    <Link to={{{route}}}>{{item.{searchColumn.InternalNameJavascript}}}</Link>
+</TableCell>");
                     }
                     else
                     {
-                        columns.Add($@"                <TableCell>{{item.{searchColumn.InternalNameJavascript}}}</TableCell>");
+                        columns.Add($@"<TableCell>{{item.{searchColumn.InternalNameJavascript}}}</TableCell>");
                     }
                 }
             }
@@ -101,10 +101,10 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
     </TableHead>
     <TableBody>
         {{{ScreenSection.Entity.InternalName.Camelize()}Items.map(item => {{
-        return (
-              <TableRow key={{item.id}} hover>
-{string.Join(Environment.NewLine, columns)}
-              </TableRow>
+            return (
+                <TableRow key={{item.id}} hover>
+{string.Join(Environment.NewLine, columns).IndentLines(20)}
+                </TableRow>
             );
         }})}}
     </TableBody>
