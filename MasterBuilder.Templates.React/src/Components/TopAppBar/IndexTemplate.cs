@@ -50,9 +50,9 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 
-export default function TopAppBar(props) {{
+export default function TopAppBar() {{
     return (
-        <div className={{styles}}>
+        <div>
             <AppBar position=""static"">
                 <Toolbar>
                     <IconButton color=""inherit"" aria-label=""Menu"">

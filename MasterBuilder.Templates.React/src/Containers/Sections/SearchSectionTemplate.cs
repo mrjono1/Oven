@@ -146,14 +146,6 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
             };
         }
 
-        internal IEnumerable<string> ComponentWillMount()
-        {
-            return new string[]
-            {
-                $"        this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemsIfNeeded();"
-            };
-        }
-
         internal IEnumerable<string> MapDispatchToProps()
         {
             return new string[]
@@ -196,7 +188,10 @@ export default {ScreenSection.InternalName}Row;";
 
         public IEnumerable<string> Constructor()
         {
-            return new string[] { };
+            return new string[] 
+            {
+                $"        this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemsIfNeeded();"
+            };
         }
 
         public IEnumerable<string> Methods()

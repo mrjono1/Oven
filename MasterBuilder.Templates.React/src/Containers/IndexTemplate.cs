@@ -49,7 +49,6 @@ namespace MasterBuilder.Templates.React.Src.Containers
             var sectionBodys = new List<string>();
             var mapDispatchToProps = new List<string>();
             var mapStateToProps = new List<string>();
-            var componentWillMount = new List<string>();
             var render = new List<string>();
             var props = new List<string>
             {
@@ -65,7 +64,6 @@ namespace MasterBuilder.Templates.React.Src.Containers
                         sections.Add(formSection);
 
                         sectionBodys.Add(formSection.Body);
-                        componentWillMount.AddRange(formSection.ComponentWillMount());
                         mapStateToProps.AddRange(formSection.MapStateToProps());
                         mapDispatchToProps.AddRange(formSection.MapDispatchToProps());
                         props.AddRange(formSection.Props());
@@ -77,7 +75,6 @@ namespace MasterBuilder.Templates.React.Src.Containers
                         sections.Add(searchSection);
 
                         sectionBodys.Add(searchSection.Evaluate());
-                        componentWillMount.AddRange(searchSection.ComponentWillMount());
                         mapStateToProps.AddRange(searchSection.MapStateToProps());
                         mapDispatchToProps.AddRange(searchSection.MapDispatchToProps());
                         props.AddRange(searchSection.Props());
@@ -166,9 +163,6 @@ class {Screen.InternalName}Page extends React.Component {{
         super(props);
 {string.Join(Environment.NewLine, constructorExpressions.Distinct().OrderBy(a => a))}
     }}
-    componentWillMount() {{
-{string.Join(Environment.NewLine, componentWillMount.Distinct().OrderBy(a => a))}
-    }}
     render() {{
         const {{ {string.Join(", ", props.Distinct().OrderBy(a => a))} }} = this.props;
 {string.Join(Environment.NewLine, render.Distinct().OrderBy(a => a))}
@@ -190,7 +184,7 @@ class {Screen.InternalName}Page extends React.Component {{
     classes: PropTypes.object.isRequired
 }};
 
-function mapStateToProps(state, ownProps) {{
+function mapStateToProps(state{(mapStateToProps.Where(a => a.Contains("ownProps.")).Any() ? ", ownProps": "")}) {{
     return {{
         {string.Join($",{Environment.NewLine}        ", mapStateToProps.Distinct().OrderBy(a => a))}
     }};

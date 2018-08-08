@@ -43,7 +43,6 @@ namespace MasterBuilder.Templates.React.Src.Containers.App
 import PropTypes from 'prop-types';
 import {{ connect }} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import {{ Route }} from 'react-router-dom';
 import {{ Router }} from 'react-router';
 import {{ createBrowserHistory }} from 'history';
 import AppRoutes from '../../components/AppRoutes';
@@ -52,7 +51,6 @@ import {{ withStyles }} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
@@ -144,10 +142,10 @@ class App extends React.Component {{
                             open={{this.state.mobileOpen}}
                             onClose={{this.handleDrawerToggle}}
                             classes={{{{
-                                paper: classes.drawerPaper,
+                                paper: classes.drawerPaper
                             }}}}
                             ModalProps={{{{
-                                keepMounted: true, // Better open performance on mobile.
+                                keepMounted: true // Better open performance on mobile.
                             }}}}
                         >
                             {{drawer}}
@@ -158,7 +156,7 @@ class App extends React.Component {{
                             variant=""permanent""
                             open
                             classes={{{{
-                                paper: classes.drawerPaper,
+                                paper: classes.drawerPaper
                             }}}}
                         >
                             {{drawer}}

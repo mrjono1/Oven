@@ -43,7 +43,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
         {
             // TODO: validate html, no scripting
             return $@"<div>
-{ScreenSection.Html}
+{ScreenSection.Html.IndentLines(4)}
 </div>";
         }
     }

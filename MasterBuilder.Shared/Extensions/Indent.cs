@@ -15,7 +15,7 @@ namespace System
             }
 
             var lines = new List<string>();
-            foreach (var line in value.Split(Environment.NewLine))
+            foreach (var line in value.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
             {
                 lines.Add(string.Concat(new string(' ', numberOfSpaces), line));
             }

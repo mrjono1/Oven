@@ -93,15 +93,8 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
         {
             return new string[]
             {
-                "        this.onSubmit = this.onSubmit.bind(this);"
-            };
-        }
-
-        internal IEnumerable<string> ComponentWillMount()
-        {
-            return new string[]
-            {
-                $@"        if (!this.props.new){{
+                "        this.onSubmit = this.onSubmit.bind(this);",
+                 $@"        if (!this.props.new){{
             this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.fetchItemIfNeeded(this.props.id);
         }}"
             };
