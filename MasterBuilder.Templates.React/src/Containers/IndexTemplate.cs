@@ -47,8 +47,8 @@ namespace MasterBuilder.Templates.React.Src.Containers
         {
             var sections = new List<ISectionTemplate>();
             var sectionBodys = new List<string>();
-            var mapDispatchToProps = new List<string>();
-            var mapStateToProps = new List<string>();
+            var mapDispatchToPropsExpressions = new List<string>();
+            var mapStateToPropsExpressions = new List<string>();
             var render = new List<string>();
             var props = new List<string>
             {
@@ -64,8 +64,8 @@ namespace MasterBuilder.Templates.React.Src.Containers
                         sections.Add(formSection);
 
                         sectionBodys.Add(formSection.Body);
-                        mapStateToProps.AddRange(formSection.MapStateToProps());
-                        mapDispatchToProps.AddRange(formSection.MapDispatchToProps());
+                        mapStateToPropsExpressions.AddRange(formSection.MapStateToProps());
+                        mapDispatchToPropsExpressions.AddRange(formSection.MapDispatchToProps());
                         props.AddRange(formSection.Props());
                         render.AddRange(formSection.Render());
                         break;
@@ -75,8 +75,8 @@ namespace MasterBuilder.Templates.React.Src.Containers
                         sections.Add(searchSection);
 
                         sectionBodys.Add(searchSection.Evaluate());
-                        mapStateToProps.AddRange(searchSection.MapStateToProps());
-                        mapDispatchToProps.AddRange(searchSection.MapDispatchToProps());
+                        mapStateToPropsExpressions.AddRange(searchSection.MapStateToProps());
+                        mapDispatchToPropsExpressions.AddRange(searchSection.MapDispatchToProps());
                         props.AddRange(searchSection.Props());
                         break;
 
@@ -136,11 +136,54 @@ namespace MasterBuilder.Templates.React.Src.Containers
                 methods.AddRange(section.Methods());
             }
 
+            string mapStateToProps = null;
+            if (mapStateToPropsExpressions.Any())
+            {
+                mapStateToProps = $@"
+
+function mapStateToProps(state{(mapStateToPropsExpressions.Where(a => a.Contains("ownProps.")).Any() ? ", ownProps" : "")}) {{
+    return {{
+        {string.Join($",{Environment.NewLine}        ", mapStateToPropsExpressions.Distinct().OrderBy(a => a))}
+    }};
+}}";
+            }
+
+            string mapDispatchToProps = null;
+            if (mapDispatchToPropsExpressions.Any())
+            {
+                mapDispatchToProps =$@"
+
+function mapDispatchToProps(dispatch) {{
+    return {{ 
+        {string.Join($",{Environment.NewLine}        ", mapDispatchToPropsExpressions.Distinct().OrderBy(a => a))}
+    }};
+}}";
+            }
+
+            string connect = null;
+            if (mapStateToProps != null && mapDispatchToProps != null)
+            {
+                connect = "connect(mapStateToProps, mapDispatchToProps)";
+                imports.Add("import { bindActionCreators } from 'redux';");
+                imports.Add("import createEntityActions from '../actions/entityActions';");
+            }
+            else if (mapStateToProps != null)
+            {
+                connect = "connect(mapStateToProps, null)";
+            }
+            else if (mapDispatchToProps != null)
+            {
+                connect = "connect(null, mapDispatchToProps)";
+                imports.Add("import { bindActionCreators } from 'redux';");
+                imports.Add("import createEntityActions from '../actions/entityActions';");
+            }
+            if (connect != null)
+            {
+                imports.Add("import { connect } from 'react-redux';");
+            }
+
             return $@"import React from 'react';
-import {{ connect }} from 'react-redux';
-import {{ bindActionCreators }} from 'redux';
 import PropTypes from 'prop-types';
-import createEntityActions from '../actions/entityActions';
 import {{ withStyles }} from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -177,26 +220,14 @@ class {Screen.InternalName}Page extends React.Component {{
             </div>
         );
     }}
-{string.Join(Environment.NewLine, methods.Distinct().OrderBy(a => a))}
+{string.Join(string.Concat(Environment.NewLine, Environment.NewLine), methods.Distinct().OrderBy(a => a))}
 }}
 
 {Screen.InternalName}Page.propTypes = {{
     classes: PropTypes.object.isRequired
-}};
+}};{mapStateToProps}{mapDispatchToProps}
 
-function mapStateToProps(state{(mapStateToProps.Where(a => a.Contains("ownProps.")).Any() ? ", ownProps": "")}) {{
-    return {{
-        {string.Join($",{Environment.NewLine}        ", mapStateToProps.Distinct().OrderBy(a => a))}
-    }};
-}}
-
-function mapDispatchToProps(dispatch) {{
-    return {{ 
-        {string.Join($",{Environment.NewLine}        ", mapDispatchToProps.Distinct().OrderBy(a => a))}
-    }};
-}}
-
-export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)({Screen.InternalName}Page));";
+export default withStyles(styles)({connect}({Screen.InternalName}Page));";
         }
     }
 }
