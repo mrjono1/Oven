@@ -175,6 +175,17 @@ namespace MasterBuilder.Templates.React.Src.Reducers
                         }
                     }
                 };
+            case `${entityNameUpper}_BEFORE_UPDATE_ITEM`:
+                return {
+                    ...state,
+                    byIdMetadata: {
+                        ...state.byIdMetadata,
+                        [action.id]: {
+                            ...state.byIdMetadata[action.id],
+                            updating: false
+                        }
+                    }
+                };
             default:
                 return state;
         }

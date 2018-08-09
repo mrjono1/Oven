@@ -129,13 +129,21 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
         };
     }
 
-    function createNewItem() {
+    function createItemAction() {
         return {
             type: `${entityNameUpper}_NEW_ITEM`,
             id: uuid(),
             receivedAt: Date.now()
         };
     }
+
+    function beforeUpdateItemAction(id) {
+        return {
+            type: `${entityNameUpper}_BEFORE_UPDATE_ITEM`,
+            id: id
+        };
+    }
+
     // Functions available externally
     return {
         fetchItemsIfNeeded: function () {
@@ -163,12 +171,12 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
         }, 
         createEntity: function (entity) {
             return (dispatch) => {
-                return dispatch(createNewItem(entity));
+                return dispatch(createItemAction(entity));
             }
         },
         updateEntity: function (id, entity) {
             return (dispatch) => {
-                return dispatch(createNewItem());
+                return dispatch(beforeUpdateItemAction(id));
             }
         }
     }
