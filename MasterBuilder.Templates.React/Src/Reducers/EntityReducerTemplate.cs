@@ -34,7 +34,7 @@ namespace MasterBuilder.Templates.React.Src.Reducers
         /// </summary>
         public string GetFileContent()
         {
-            return @"export function createEntityReducer(entityName = '', entityNameUpper = '', defaultEntity = {}) {
+            return @"export function createEntityReducer(entityNameUpper = '', defaultEntity = {}) {
 
     const initialState = {
         byId: [],
