@@ -220,7 +220,7 @@ class {Screen.InternalName}Page extends React.Component {{
             </div>
         );
     }}
-{string.Join(string.Concat(Environment.NewLine, Environment.NewLine), methods.Distinct().OrderBy(a => a))}
+{string.Join(string.Concat(Environment.NewLine, Environment.NewLine), methods.Distinct().OrderBy(a => a)).IndentLines(4)}
 }}
 
 {Screen.InternalName}Page.propTypes = {{

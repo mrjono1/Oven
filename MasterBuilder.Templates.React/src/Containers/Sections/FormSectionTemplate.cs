@@ -1,4 +1,5 @@
 ﻿using Humanizer;
+using MasterBuilder.Helpers;
 using MasterBuilder.Request;
 using MasterBuilder.Templates.React.Src.Containers.Sections.FormFields;
 using System;
@@ -16,6 +17,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
         private readonly Project Project;
         private readonly Screen Screen;
         private readonly ScreenSection ScreenSection;
+        private readonly ScreenItem ScreenItem;
 
         /// <summary>
         /// Constructor
@@ -26,6 +28,8 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
             Screen = screen;
             ScreenSection = screenSection;
 
+
+            ScreenItem = RequestTransforms.GetScreenFieldsNested(Screen);
             Evaluate();
         }
 
@@ -150,12 +154,25 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
 
         public IEnumerable<string> Methods()
         {
-            return new string[] {
-                $@"    onSubmit(event) {{
-        event.preventDefault();
-        console.log('submit');
-    }}"
+            var methods =  new List<string> {
+                $@"onSubmit(event) {{
+    event.preventDefault();
+    console.log('submit');
+}}"
             };
+
+            if (ScreenItem.FormFields.Any() || ScreenItem.ChildScreenItems.Any())
+            {
+                var properties = GetProperties(ScreenItem);
+                methods.Add($@"defaultItem() {{
+    return {{
+{string.Join(string.Concat(",", Environment.NewLine), properties).IndentLines(8)}
+    }};
+}}");
+            }
+
+
+            return methods;
     //    if (this.props.new) {{
     //        var item = this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.createEntity(this.props.{ScreenSection.Entity.InternalName.Camelize()}Item);
     //        this.props.history.push(`/{Screen.Path}/${{item.id}}`);
@@ -165,6 +182,89 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
     //    }}
     //}}"
     //        };
+        }
+
+        private IEnumerable<string> GetProperties(ScreenItem screenItem, int indent = 0)
+        {
+            var properties = new List<string>();
+
+            foreach (var formField in screenItem.FormFields)
+            {
+                properties.Add(GetProperty(formField));
+            }
+
+            foreach (var childScreenItem in screenItem.ChildScreenItems)
+            {
+                indent++;
+                var childProperties = GetProperties(childScreenItem, indent);
+                if (childProperties.Any())
+                {
+                    properties.Add($@"{childScreenItem.Entity.InternalName.Camelize()}: {{
+{string.Join(string.Concat(",", Environment.NewLine), childProperties).IndentLines(4)}
+}}");
+                }
+            }
+//                if (effe.ChildEntities != null)
+//                {
+//                    foreach (var childEntityFormFieldEntity in effe.ChildEntities)
+//                    {
+//                        var childProperties = new List<string>();
+//                        var childObjectName = $"{objectName}.{childEntityFormFieldEntity.InternalName}";
+//                        foreach (var effe in groupedFields)
+//                        {
+//                            if (effe.Entity.Id == childEntityFormFieldEntity.Id)
+//                            {
+//                                childProperties.AddRange(GetProperties(effe, effes, childObjectName, level + 1));
+//                            }
+//                        }
+
+//                        var parentPropertyInternalName = (from p in childEntityFormFieldEntity.Properties
+//                                                          where p.PropertyType == PropertyType.ParentRelationshipOneToOne
+//                                                          select p).Single().InternalName;
+
+//                        properties.Add($@"                            {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName} = {childObjectName} == null || !{childObjectName}.{parentPropertyInternalName}Id.HasValue ? null : new {childEntityFormFieldEntity.InternalName}Response{{
+//{string.Join(string.Concat(",", Environment.NewLine), childProperties)}
+//                            {new string(' ', 4 * level)}}}");
+//                    }
+//                }
+//            }
+
+            return properties.Distinct().OrderBy(a => a);
+        }
+
+        private string GetProperty(FormField formField)
+        {
+            var defaultValue = "null";
+
+            switch (formField.PropertyType)
+            {
+                case PropertyType.String:
+                    if (formField.Property.DefaultStringValue != null)
+                    {
+                        defaultValue = $"'{formField.Property.DefaultStringValue}'";
+                    }
+                    break;
+                case PropertyType.Integer:
+                    if (formField.Property.DefaultIntegerValue.HasValue)
+                    {
+                        defaultValue = formField.Property.DefaultIntegerValue.Value.ToString();
+                    }
+                    break;
+                case PropertyType.Boolean:
+                    if (formField.Property.DefaultBooleanValue.HasValue)
+                    {
+                        defaultValue = formField.Property.DefaultBooleanValue.Value ? "true" : "false";
+                    }
+                    break;
+                case PropertyType.Double:
+                    if (formField.Property.DefaultDoubleValue.HasValue)
+                    {
+                        defaultValue = formField.Property.DefaultDoubleValue.Value.ToString();
+                    }
+                    break;
+            }
+
+            return $"{formField.InternalNameJavaScript}: {defaultValue}";
         }
     }
 }
