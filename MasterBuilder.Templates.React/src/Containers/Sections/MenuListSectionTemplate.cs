@@ -68,5 +68,10 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
         {
             return new string[] { };
         }
+
+        public IEnumerable<string> Functions()
+        {
+            return new string[] { };
+        }
     }
 }

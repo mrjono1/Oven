@@ -128,7 +128,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
         {
             return new string[]
             {
-                $"{ScreenSection.Entity.InternalName.Camelize()}Actions: bindActionCreators(createEntityActions('{ScreenSection.Entity.InternalName.Camelize()}', '{ScreenSection.Entity.InternalNamePlural.Camelize()}', '{ScreenSection.Entity.InternalName.ToUpperInvariant()}'), dispatch)"
+                $"{ScreenSection.Entity.InternalName.Camelize()}Actions: bindActionCreators(createEntityActions('{ScreenSection.Entity.InternalName.Camelize()}', '{ScreenSection.Entity.InternalNamePlural.Camelize()}', '{ScreenSection.Entity.InternalName.ToUpperInvariant()}', defaultItem()), dispatch)"
             };
         }
 
@@ -138,7 +138,7 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
             {
                 "id: ownProps.match.params.id",
                 "new: ownProps.match.params.id === 'new'",
-                $"{ScreenSection.Entity.InternalName.Camelize()}Item: ownProps.match.params.id !== 'new' ? state.{ScreenSection.Entity.InternalName.Camelize()}.byId[ownProps.match.params.id] : {{}}"
+                $"{ScreenSection.Entity.InternalName.Camelize()}Item: ownProps.match.params.id !== 'new' ? state.{ScreenSection.Entity.InternalName.Camelize()}.byId[ownProps.match.params.id] : defaultItem()"
             };
         }
         
@@ -160,28 +160,22 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
     console.log('submit');
 }}"
             };
+            return methods;
+        }
 
+        public IEnumerable<string> Functions()
+        {
+            var functions = new List<string>();
             if (ScreenItem.FormFields.Any() || ScreenItem.ChildScreenItems.Any())
             {
                 var properties = GetProperties(ScreenItem);
-                methods.Add($@"defaultItem() {{
+                functions.Add($@"function defaultItem() {{
     return {{
 {string.Join(string.Concat(",", Environment.NewLine), properties).IndentLines(8)}
     }};
 }}");
             }
-
-
-            return methods;
-    //    if (this.props.new) {{
-    //        var item = this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.createEntity(this.props.{ScreenSection.Entity.InternalName.Camelize()}Item);
-    //        this.props.history.push(`/{Screen.Path}/${{item.id}}`);
-    //    }} else {{
-    //        this.props.history.push(`/{Screen.Path}/new`);
-    //        //this.props.{ScreenSection.Entity.InternalName.Camelize()}Actions.updateEntity(this.props.id, this.props.{ScreenSection.Entity.InternalName.Camelize()}Item);
-    //    }}
-    //}}"
-    //        };
+            return functions;
         }
 
         private IEnumerable<string> GetProperties(ScreenItem screenItem, int indent = 0)
@@ -204,31 +198,6 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
 }}");
                 }
             }
-//                if (effe.ChildEntities != null)
-//                {
-//                    foreach (var childEntityFormFieldEntity in effe.ChildEntities)
-//                    {
-//                        var childProperties = new List<string>();
-//                        var childObjectName = $"{objectName}.{childEntityFormFieldEntity.InternalName}";
-//                        foreach (var effe in groupedFields)
-//                        {
-//                            if (effe.Entity.Id == childEntityFormFieldEntity.Id)
-//                            {
-//                                childProperties.AddRange(GetProperties(effe, effes, childObjectName, level + 1));
-//                            }
-//                        }
-
-//                        var parentPropertyInternalName = (from p in childEntityFormFieldEntity.Properties
-//                                                          where p.PropertyType == PropertyType.ParentRelationshipOneToOne
-//                                                          select p).Single().InternalName;
-
-//                        properties.Add($@"                            {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName} = {childObjectName} == null || !{childObjectName}.{parentPropertyInternalName}Id.HasValue ? null : new {childEntityFormFieldEntity.InternalName}Response{{
-//{string.Join(string.Concat(",", Environment.NewLine), childProperties)}
-//                            {new string(' ', 4 * level)}}}");
-//                    }
-//                }
-//            }
-
             return properties.Distinct().OrderBy(a => a);
         }
 

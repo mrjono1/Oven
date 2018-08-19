@@ -125,7 +125,7 @@ namespace MasterBuilder.Templates.React.Src.Reducers
                     byId: {
                         ...state.byId,
                         [action.id]: {
-                            /* Create new empty item*/
+                            ...action.defaultItem
                         }
                     },
                     byIdMetadata: {

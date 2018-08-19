@@ -39,7 +39,7 @@ namespace MasterBuilder.Templates.React.Src.Actions
         {
             return @"import fetch from 'cross-fetch';
 import uuid from 'uuid/v4';
-export default function createEntityActions(entityName = '', entityNamePlural = '', entityNameUpper = ''){
+export default function createEntityActions(entityName = '', entityNamePlural = '', entityNameUpper = '', entityDefault = {}){
 
     function requestItems() {
         return {
@@ -109,7 +109,8 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
     function beforeRequestItem(id) {
         return {
             type: `${entityNameUpper}_BEFORE_REQUEST_ITEM`,
-            id: id
+            id: id,
+            defaultItem: entityDefault
         };
     }
 
@@ -133,7 +134,8 @@ export default function createEntityActions(entityName = '', entityNamePlural = 
         return {
             type: `${entityNameUpper}_NEW_ITEM`,
             id: uuid(),
-            receivedAt: Date.now()
+            receivedAt: Date.now(),
+            defaultItem: entityDefault
         };
     }
 

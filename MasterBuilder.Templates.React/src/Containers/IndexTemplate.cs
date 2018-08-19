@@ -129,49 +129,49 @@ namespace MasterBuilder.Templates.React.Src.Containers
             var constructorExpressions = new List<string>();
             var imports = new List<string>();
             var methods = new List<string>();
+            var functions = new List<string>();
             foreach (var section in sections)
             {
                 constructorExpressions.AddRange(section.Constructor());
                 imports.AddRange(section.Imports());
                 methods.AddRange(section.Methods());
+                functions.AddRange(section.Functions());
             }
 
-            string mapStateToProps = null;
+            bool mapStateToProps = false;
             if (mapStateToPropsExpressions.Any())
             {
-                mapStateToProps = $@"
-
-function mapStateToProps(state{(mapStateToPropsExpressions.Where(a => a.Contains("ownProps.")).Any() ? ", ownProps" : "")}) {{
+                mapStateToProps = true;
+                functions.Add($@"function mapStateToProps(state{(mapStateToPropsExpressions.Where(a => a.Contains("ownProps.")).Any() ? ", ownProps" : "")}) {{
     return {{
         {string.Join($",{Environment.NewLine}        ", mapStateToPropsExpressions.Distinct().OrderBy(a => a))}
     }};
-}}";
+}}");
             }
 
-            string mapDispatchToProps = null;
+            bool mapDispatchToProps = false;
             if (mapDispatchToPropsExpressions.Any())
             {
-                mapDispatchToProps =$@"
-
-function mapDispatchToProps(dispatch) {{
+                mapDispatchToProps = true;
+                functions.Add($@"function mapDispatchToProps(dispatch) {{
     return {{ 
         {string.Join($",{Environment.NewLine}        ", mapDispatchToPropsExpressions.Distinct().OrderBy(a => a))}
     }};
-}}";
+}}");
             }
 
             string connect = null;
-            if (mapStateToProps != null && mapDispatchToProps != null)
+            if (mapStateToProps && mapDispatchToProps)
             {
                 connect = "connect(mapStateToProps, mapDispatchToProps)";
                 imports.Add("import { bindActionCreators } from 'redux';");
                 imports.Add("import createEntityActions from '../actions/entityActions';");
             }
-            else if (mapStateToProps != null)
+            else if (mapStateToProps)
             {
                 connect = "connect(mapStateToProps, null)";
             }
-            else if (mapDispatchToProps != null)
+            else if (mapDispatchToProps)
             {
                 connect = "connect(null, mapDispatchToProps)";
                 imports.Add("import { bindActionCreators } from 'redux';");
@@ -225,7 +225,9 @@ class {Screen.InternalName}Page extends React.Component {{
 
 {Screen.InternalName}Page.propTypes = {{
     classes: PropTypes.object.isRequired
-}};{mapStateToProps}{mapDispatchToProps}
+}};
+
+{string.Join(string.Concat(Environment.NewLine, Environment.NewLine), functions.Distinct().OrderBy(a => a))}
 
 export default withStyles(styles)({connect}({Screen.InternalName}Page));";
         }

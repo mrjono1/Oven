@@ -198,5 +198,10 @@ export default {ScreenSection.InternalName}Row;";
         {
             return new string[] { };
         }
+
+        public IEnumerable<string> Functions()
+        {
+            return new string[] { };
+        }
     }
 }

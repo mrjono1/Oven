@@ -7,5 +7,6 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections
         IEnumerable<string> Constructor();
         IEnumerable<string> Imports();
         IEnumerable<string> Methods();
+        IEnumerable<string> Functions();
     }
 }
