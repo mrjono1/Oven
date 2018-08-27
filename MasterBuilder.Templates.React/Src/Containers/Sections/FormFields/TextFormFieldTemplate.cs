@@ -26,10 +26,11 @@ namespace MasterBuilder.Templates.React.Src.Containers.Sections.FormFields
         {
             get
             {
+                // Note: the ?? '' is because Material Ui dosent work with null or undefined
                 return $@"<TextField
     name=""{FormField.InternalNameJavaScript}""
     label=""{FormField.TitleValue}""
-    value={{{ScreenSection.Entity.InternalName.Camelize()}Item.{FormField.InternalNameJavaScript}}}
+    value={{{ScreenSection.Entity.InternalName.Camelize()}Item.{FormField.InternalNameJavaScript} ?? ''}}
 />";
             }
         }
