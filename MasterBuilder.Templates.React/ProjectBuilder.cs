@@ -53,30 +53,31 @@ namespace MasterBuilder.Templates.React
             projectWriter.AddTemplate(new Controllers.HomeControllerTemplate(project));
 
             // src
-            projectWriter.AddTemplate(new Src.ManifestTemplate(project));
-            projectWriter.AddTemplate(new Src.IndexTemplate(project));
+            projectWriter.AddTemplate(new Src.SrcBuilder(project));
 
             // containers
-            projectWriter.AddTemplate(new Src.Containers.ContainerBuilder(project));
+           // projectWriter.AddTemplate(new Src.Containers.ContainerBuilder(project));
 
             // core
-            projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
-            projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
-            projectWriter.AddTemplate(new Src.Core.Reducers.ReducerUiTemplate(project));
+           // projectWriter.AddTemplate(new Src.Core.TypesTemplate(project));
+           // projectWriter.AddTemplate(new Src.Core.Actions.ActionsUITemplate(project));
+           // projectWriter.AddTemplate(new Src.Core.Reducers.ReducerUiTemplate(project));
 
             //components
-            projectWriter.AddTemplate(new Src.Components.AppBar.IndexTemplate(project));
+           // projectWriter.AddTemplate(new Src.Components.AppBar.IndexTemplate(project));
 
-            projectWriter.AddTemplate(new Src.Components.ComponentBuilder(project));
+           // projectWriter.AddTemplate(new Src.Components.ComponentBuilder(project));
 
             // Reducers
-            projectWriter.AddTemplate(new Src.Reducers.ReducerBuilder(project));
+         //   projectWriter.AddTemplate(new Src.Reducers.ReducerBuilder(project));
 
             // Store
-            projectWriter.AddTemplate(new Src.Store.ConfigureStoreTemplate(project));
+         //   projectWriter.AddTemplate(new Src.Store.ConfigureStoreTemplate(project));
             
             // Actions
-            projectWriter.AddTemplate(new Src.Actions.EntityActionsTemplate(project));
+         //   projectWriter.AddTemplate(new Src.Actions.EntityActionsTemplate(project));
+
+            projectWriter.AddTemplate(new Src.Resources.ResourceBuilder(project));
 
             var errors = await projectWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))

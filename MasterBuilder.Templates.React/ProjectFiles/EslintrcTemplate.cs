@@ -82,7 +82,8 @@ namespace MasterBuilder.Templates.React.ProjectFiles
           ""ImportDeclaration"": true,
           ""Property"": true
       }}
-    }}]
+    }}],
+    ""react/jsx-key"": 0
   }}
 }}";
         }

@@ -4,16 +4,16 @@ using MasterBuilder.Request;
 namespace MasterBuilder.Templates.React.Src
 {
     /// <summary>
-    /// index.jsx Template
+    /// Layout.js Template
     /// </summary>
-    public class IndexTemplate : ITemplate
+    public class LayoutTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public IndexTemplate(Project project)
+        public LayoutTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string GetFileName()
         {
-            return "index.jsx";
+            return "Layout.js";
         }
 
         /// <summary>
@@ -39,11 +39,32 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string GetFileContent()
         {
-            return $@"import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+            return @"import { connect } from 'react-redux';
+import { Layout } from 'react-admin';
 
-ReactDOM.render(<App />, document.getElementById('root'));";
+const darkTheme = {
+    palette: {
+        type: 'dark' // Switching the dark mode on is a single property value change.
+    }
+};
+
+const lightTheme = {
+    palette: {
+        secondary: {
+            light: '#5f5fc4',
+            main: '#283593',
+            dark: '#001064',
+            contrastText: '#fff'
+        }
+    }
+};
+
+export default connect(
+    state => ({
+        theme: state.theme === 'dark' ? darkTheme : lightTheme
+    }),
+    {}
+)(Layout);";
         }
     }
 }
