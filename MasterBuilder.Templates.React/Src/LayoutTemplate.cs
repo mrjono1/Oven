@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string GetFileName()
         {
-            return "Layout.js";
+            return "Layout.jsx";
         }
 
         /// <summary>
@@ -39,8 +39,10 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string GetFileContent()
         {
-            return @"import { connect } from 'react-redux';
+            return @"import React from 'react';
+import { connect } from 'react-redux';
 import { Layout } from 'react-admin';
+import CustomMenu from './Menu';
 
 const darkTheme = {
     palette: {
@@ -59,12 +61,17 @@ const lightTheme = {
     }
 };
 
+const CustomLayout = (props) => <Layout 
+    {...props}
+    menu={CustomMenu}
+/>;
+
 export default connect(
     state => ({
         theme: state.theme === 'dark' ? darkTheme : lightTheme
     }),
     {}
-)(Layout);";
+)(CustomLayout);";
         }
     }
 }

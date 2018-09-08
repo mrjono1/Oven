@@ -3,7 +3,6 @@ using MasterBuilder.Request;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using MasterBuilder.Templates.React.Src.Containers.Sections;
 using Humanizer;
 
 namespace MasterBuilder.Templates.React.Src.Resources
@@ -28,7 +27,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
         /// <summary>
         /// Get file name
         /// </summary>
-        public string GetFileName() => $"{Screen.Entity.InternalName}Edit.js";
+        public string GetFileName() => $"{Screen.Entity.InternalName}Edit.jsx";
 
         /// <summary>
         /// Get file path
@@ -48,7 +47,11 @@ namespace MasterBuilder.Templates.React.Src.Resources
             var fields = new List<string>();
             foreach (var field in formFields)
             {
-                fields.Add($@"<TextInput source=""{field.InternalNameJavaScript}""/>");
+                if (field.PropertyType == PropertyType.PrimaryKey)
+                {
+                    continue;
+                }
+                fields.Add($@"<TextInput source=""{field.InternalNameJavaScript}"" />");
             }
             
             return $@"import React from 'react';

@@ -3,7 +3,6 @@ using MasterBuilder.Request;
 using System.Collections.Generic;
 using System;
 using System.Linq;
-using MasterBuilder.Templates.React.Src.Containers.Sections;
 using Humanizer;
 
 namespace MasterBuilder.Templates.React.Src.Resources
@@ -28,7 +27,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
         /// <summary>
         /// Get file name
         /// </summary>
-        public string GetFileName() => $"{Screen.Entity.InternalName}List.js";
+        public string GetFileName() => $"{Screen.Entity.InternalName}List.jsx";
 
         /// <summary>
         /// Get file path
@@ -47,7 +46,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
             var fields = new List<string>();
             foreach (var searchColumn in searchColumns)
             {
-                fields.Add($@"<TextField source=""{searchColumn.InternalNameJavascript}""/>");
+                fields.Add($@"<TextField source=""{searchColumn.InternalNameJavascript}"" />");
             }
 
             return $@"import React from 'react';
