@@ -78,7 +78,7 @@ import jsonServerProvider from 'ra-data-json-server';
 const App = () => 
     <Admin 
         title=""{Project.Title}""
-        dataProvider={{jsonServerProvider('http://localhost:54293/api')}}
+        dataProvider={{jsonServerProvider('/api')}}
         locale=""en"" 
         appLayout={{CustomLayout}}>
 {string.Join(Environment.NewLine, resources)}

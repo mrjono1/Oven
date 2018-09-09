@@ -92,10 +92,9 @@ namespace MasterBuilder.Templates.Api.Controllers
 {string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
                     }})
                     .ToArrayAsync();
-    
             }}
             
-            Response.Headers.Add(""Content-Range"", $@""ValidationTypes {{items.Count()}}/{{totalItems}}"");
+            Response.Headers.Add(""Content-Range"", $@""ValidationTypes {{request._start}}-{{request._start + items.Count()}}/{{totalItems}}"");
             Response.Headers.Add(""X-Total-Count"", totalItems.ToString());
             return Ok(items);
         }}";
