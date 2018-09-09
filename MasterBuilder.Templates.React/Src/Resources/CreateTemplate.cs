@@ -57,13 +57,15 @@ namespace MasterBuilder.Templates.React.Src.Resources
             return $@"import React from 'react';
 import {{ Create, SimpleForm, TextInput }} from 'react-admin';
 
-export const {Screen.Entity.InternalName}Create = (props) => (
+const {Screen.Entity.InternalName}Create = (props) => (
     <Create {{...props}}>
         <SimpleForm>
 {string.Join(Environment.NewLine, fields).IndentLines(12)}
         </SimpleForm>
     </Create>
-);";
+);
+
+export default {Screen.Entity.InternalName}Create;";
         }
     }
 }

@@ -54,31 +54,31 @@ namespace MasterBuilder.Templates.React.Src
                     imports.Add($"import {entity.InternalName}List from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}List';");
                     imports.Add($"import {entity.InternalName}Create from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Create';");
                     imports.Add($"import {entity.InternalName}Edit from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Edit';");
-                    resources.Add($@"<Resource name=""{entity.InternalNamePlural.Camelize()}"" options={{{{ label: '{entity.Title}' }}}} list={{{entity.InternalName}List}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8));
+                    resources.Add($@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} list={{{entity.InternalName}List}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8));
                 }
                 else if (createAndEdit)
                 {
                     imports.Add($"import {entity.InternalName}Create from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Create';");
                     imports.Add($"import {entity.InternalName}Edit from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Edit';");
-                    resources.Add($@"<Resource name=""{entity.InternalNamePlural.Camelize()}"" options={{{{ label: '{entity.Title}' }}}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8));
+                    resources.Add($@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8));
                 }
                 else if (list)
                 {
                     imports.Add($"import {entity.InternalName}List from './resources/{entity.InternalNamePlural.Camelize()}{entity.InternalName}List';");
-                    resources.Add($@"<Resource name=""{entity.InternalNamePlural.Camelize()}"" options={{{{ label: '{entity.Title}' }}}} list={{{entity.InternalName}List}} />".IndentLines(8));
+                    resources.Add($@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} list={{{entity.InternalName}List}} />".IndentLines(8));
                 }
             }
 
             return $@"import React from 'react';
 import {{ Admin, Resource }} from 'react-admin';
 import CustomLayout from './Layout';
-import simpleRestProvider from 'ra-data-simple-rest';
+import jsonServerProvider from 'ra-data-json-server';
 {string.Join(Environment.NewLine, imports)}
 
 const App = () => 
     <Admin 
         title=""{Project.Title}""
-        dataProvider={{simpleRestProvider('/api')}}
+        dataProvider={{jsonServerProvider('http://localhost:54293/api')}}
         locale=""en"" 
         appLayout={{CustomLayout}}>
 {string.Join(Environment.NewLine, resources)}

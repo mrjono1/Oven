@@ -57,13 +57,15 @@ namespace MasterBuilder.Templates.React.Src.Resources
             return $@"import React from 'react';
 import {{ Edit, SimpleForm, TextInput }} from 'react-admin';
 
-export const {Screen.Entity.InternalName}Edit = (props) => (
+const {Screen.Entity.InternalName}Edit = (props) => (
     <Edit {{...props}}>
         <SimpleForm>
 {string.Join(Environment.NewLine, fields).IndentLines(12)}
         </SimpleForm>
     </Edit>
-);";
+);
+
+export default {Screen.Entity.InternalName}Edit;";
         }
     }
 }

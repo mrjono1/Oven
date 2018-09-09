@@ -74,18 +74,10 @@ namespace {Project.InternalName}.Models
     /// </summary>
     public class {ScreenSection.SearchSection.SearchRequestClass}
     {{
-        /// <summary>
-        /// Page
-        /// </summary>
-        [Required]
-        [DefaultValue(1)]
-        public int Page {{ get; set; }}
-        /// <summary>
-        /// Page Size
-        /// </summary>
-        [Required]
-        [DefaultValue(10)]
-        public int PageSize {{ get; set; }}
+        public int _start {{ get; set; }}
+        public int _end {{ get; set; }}
+        public string _order {{ get; set; }}
+        public string _sort {{ get; set; }}
         {parentPropertyString}
         // TODO: Search fields
     }}

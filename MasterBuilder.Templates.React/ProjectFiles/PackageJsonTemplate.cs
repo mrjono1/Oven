@@ -48,7 +48,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
   ""private"": true,
   ""scripts"": {{
     ""clean"": ""rimraf wwwroot"",
-    ""build"": ""webpack --verbose --colors --display-error-details"",
+    ""build"": ""webpack --colors --display-error-details"",
     ""build:production"": ""npm run clean && npm run build"",
     ""lint"": ""eslint --ext .js --ext .jsx src"",
     ""start"": ""webpack --watch --mode development --colors"",
@@ -114,7 +114,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""localforage"": ""^1.5.6"",
     ""moment"": ""^2.20.1"", 
     ""prop-types"": ""15.6.2"",
-    ""ra-data-simple-rest"": ""2.2.3"",
+    ""ra-data-json-server"": ""~2.0.0"",
     ""react"": ""16.3.2"",
     ""react-admin"": ""2.2.3"",
     ""react-dom"": ""~16.3.0"",

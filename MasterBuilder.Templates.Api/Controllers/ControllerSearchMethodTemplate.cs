@@ -60,9 +60,9 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// {screenSection.Title} Search
         /// </summary>
         {(string.IsNullOrEmpty(actionName) ? $@"[HttpGet]" : $@"[HttpPost(""{actionName}"")]")}
-        [ProducesResponseType(typeof({screenSection.SearchSection.SearchResponseClass}), 200)]
+        [ProducesResponseType(typeof(IEnumerable<{screenSection.SearchSection.SearchItemClass}>), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> Search{actionName}Async([FromBody]{screenSection.SearchSection.SearchRequestClass} request)
+        public async Task<IActionResult> Search{actionName}Async([FromQuery]{screenSection.SearchSection.SearchRequestClass} request)
         {{
             if (request == null)
             {{
@@ -79,17 +79,14 @@ namespace MasterBuilder.Templates.Api.Controllers
                         select item;
 
             var totalItems = query.Count();
-            int totalPages = 0;
             var items = new {screenSection.SearchSection.SearchItemClass}[0];
 
-            if (totalItems != 0 && request.PageSize != 0)
+            if (totalItems != 0 && request._end != 0)
             {{
-                totalPages = Convert.ToInt32(Math.Ceiling((double)totalItems / request.PageSize));
-
                 items = await query
                     .OrderBy(p => p.{screenSection.SearchSection.OrderBy})
-                    .Skip((request.Page - 1) * request.PageSize)
-                    .Take(request.PageSize)
+                    .Skip(request._start)
+                    .Take(request._end - request._start)
                     .Select(item => new {screenSection.SearchSection.SearchItemClass}
                     {{
 {string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
@@ -98,13 +95,9 @@ namespace MasterBuilder.Templates.Api.Controllers
     
             }}
             
-            var result = new {screenSection.SearchSection.SearchResponseClass}
-            {{
-                TotalItems = totalItems,
-                TotalPages = totalPages,
-                Items = items
-            }};
-            return Ok(result);
+            Response.Headers.Add(""Content-Range"", $@""ValidationTypes {{items.Count()}}/{{totalItems}}"");
+            Response.Headers.Add(""X-Total-Count"", totalItems.ToString());
+            return Ok(items);
         }}";
         }
     }

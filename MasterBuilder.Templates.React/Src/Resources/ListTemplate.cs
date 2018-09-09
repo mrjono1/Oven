@@ -46,19 +46,25 @@ namespace MasterBuilder.Templates.React.Src.Resources
             var fields = new List<string>();
             foreach (var searchColumn in searchColumns)
             {
+                if (searchColumn.PropertyType == PropertyType.PrimaryKey)
+                {
+                    continue;
+                }
                 fields.Add($@"<TextField source=""{searchColumn.InternalNameJavascript}"" />");
             }
 
             return $@"import React from 'react';
 import {{ List, Datagrid, TextField }} from 'react-admin';
 
-export const {Screen.Entity.InternalName}List = (props) => (
+const {Screen.Entity.InternalName}List = (props) => (
     <List {{...props}} title=""{Screen.Title}"">
         <Datagrid>
 {string.Join(Environment.NewLine, fields).IndentLines(12)}
         </Datagrid>
     </List>
-);";
+);
+
+export default {Screen.Entity.InternalName}List;";
         }
     }
 }
