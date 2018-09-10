@@ -105,6 +105,7 @@ namespace MasterBuilder.Templates.Api.Controllers
                 var controllerFormSectionMethodsPartial = new ControllerFormSectionMethodsPartial(Project, Screen, formSections);
                 methods.Add(controllerFormSectionMethodsPartial.GetMethod());
                 methods.Add(controllerFormSectionMethodsPartial.PostMethod());
+                methods.Add(controllerFormSectionMethodsPartial.DeleteMethod());
 
                 if (Project.UsePutForUpdate)
                 {

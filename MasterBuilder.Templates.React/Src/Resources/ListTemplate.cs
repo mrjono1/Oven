@@ -54,12 +54,13 @@ namespace MasterBuilder.Templates.React.Src.Resources
             }
 
             return $@"import React from 'react';
-import {{ List, Datagrid, TextField }} from 'react-admin';
+import {{ List, Datagrid, TextField, EditButton }} from 'react-admin';
 
 const {Screen.Entity.InternalName}List = (props) => (
     <List {{...props}} title=""{Screen.Title}"">
         <Datagrid>
 {string.Join(Environment.NewLine, fields).IndentLines(12)}
+            <EditButton />
         </Datagrid>
     </List>
 );

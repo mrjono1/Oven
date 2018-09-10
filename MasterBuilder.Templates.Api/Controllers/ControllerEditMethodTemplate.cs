@@ -105,7 +105,7 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// {Screen.Title} Get
         /// </summary>
         [HttpGet(""{{id}}"")]
-        [ProducesResponseType(typeof(Models.{Screen.FormResponseClass}), 200)]
+        [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> GetAsync(Guid id)
         {{
@@ -232,7 +232,7 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// <summary>
         /// {Screen.Title} Update
         /// </summary>
-        [HttpPut(""{Screen.InternalName}/{{id}}"")]
+        [HttpPut(""{{id}}"")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> UpdateAsync([FromRoute]Guid id, [FromBody]{Screen.InternalName}Request put)
@@ -273,11 +273,13 @@ namespace MasterBuilder.Templates.Api.Controllers
             var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
 
             var properties = new List<string>();
+            var propertyMapping = new List<string>();
             foreach (var effe in effes)
             {
                 if (effe.Entity.Id == Screen.EntityId)
                 {
                     properties.AddRange(Property(effe, effes, "post", "newRecord", 0, true));
+                    propertyMapping.AddRange(GetPropertiesRecursive(effe, effes));
                 }
             }
 
@@ -296,7 +298,7 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// {Screen.Title} Add
         /// </summary>
         [HttpPost]
-        [ProducesResponseType(typeof(Guid), 200)]
+        [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> CreateAsync([FromBody]{Screen.InternalName}Request post)
         {{
@@ -316,10 +318,55 @@ namespace MasterBuilder.Templates.Api.Controllers
             _context.{Screen.Entity.InternalNamePlural}.Add(newRecord);
             await _context.SaveChangesAsync();
 
-            return Ok(newRecord.Id);
+            var result = await _context.{Screen.Entity.InternalNamePlural}
+                        .AsNoTracking()
+                        .Select(item => new Models.{Screen.FormResponseClass}
+                        {{
+{string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
+                        }})
+                        .SingleOrDefaultAsync(p => p.Id == newRecord.Id);
+
+            if (result == null)
+            {{
+                return NotFound();
+            }}
+
+            return Ok(result);
         }}";
         }
         #endregion
+
+        #region Delete
+        /// <summary>
+        /// DELETE Verb method
+        /// </summary>
+        internal string DeleteMethod()
+        {
+            return $@"
+        /// <summary>
+        /// {Screen.Title} Delete
+        /// </summary>
+        [HttpDelete(""{{id}}"")]
+        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {{
+            if (!ModelState.IsValid)
+            {{
+                return new BadRequestObjectResult(ModelState);
+            }}
+
+            if (id == Guid.Empty)
+            {{
+                return NotFound();
+            }}
+            
+            _context.{Screen.Entity.InternalNamePlural}.Remove(new {Screen.Entity.InternalName}() {{ Id = id }});
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }}";
+        }
+#endregion
 
         #region PATCH (Update not in use)
         /// <summary>
