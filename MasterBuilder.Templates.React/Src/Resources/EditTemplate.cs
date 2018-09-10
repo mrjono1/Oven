@@ -45,20 +45,27 @@ namespace MasterBuilder.Templates.React.Src.Resources
                                  select screenSection).First().FormSection.FormFields;
 
             var fields = new List<string>();
+            var imports = new List<string> { "Edit", "SimpleForm", "TextInput" };
             foreach (var field in formFields)
             {
                 if (field.PropertyType == PropertyType.PrimaryKey)
                 {
                     continue;
                 }
-                fields.Add($@"<TextInput source=""{field.InternalNameJavaScript}"" />");
+                var template = new CreateEditInputPartialTemplate(field);
+                fields.Add(template.Content());
+                imports.AddRange(template.ReactAdminImports());
             }
-            
+
             return $@"import React from 'react';
-import {{ Edit, SimpleForm, TextInput }} from 'react-admin';
+import {{ {string.Join(", ", imports.Distinct().OrderBy(a => a))} }} from 'react-admin';
+
+const DynamicTitle = ({{ record }}) => {{
+    return <span>{Screen.Title} {{record ? ` - ${{record.title}}` : ''}}</span>;
+}};
 
 const {Screen.Entity.InternalName}Edit = (props) => (
-    <Edit {{...props}}>
+    <Edit {{...props}} title={{< DynamicTitle />}}>
         <SimpleForm>
 {string.Join(Environment.NewLine, fields).IndentLines(12)}
         </SimpleForm>
