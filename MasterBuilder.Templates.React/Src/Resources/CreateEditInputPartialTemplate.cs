@@ -26,6 +26,43 @@ namespace MasterBuilder.Templates.React.Src.Resources
         {
             var imports = new List<string>();
 
+            switch (FormField.PropertyType)
+            {
+                case PropertyType.PrimaryKey:
+                    break;
+                case PropertyType.String:
+                    imports.Add("TextInput");
+                    break;
+                case PropertyType.Integer:
+                    imports.Add("NumberInput");
+                    break;
+                case PropertyType.DateTime:
+                    break;
+                case PropertyType.Boolean:
+                    if (FormField.Property.Required)
+                    {
+                        imports.Add("BooleanInput");
+                    }
+                    else
+                    {
+                        imports.Add("NullableBooleanInput");
+                    }
+                    break;
+                case PropertyType.ParentRelationshipOneToMany:
+                    break;
+                case PropertyType.ReferenceRelationship:
+                    break;
+                case PropertyType.Double:
+                    imports.Add("NumberInput");
+                    break;
+                case PropertyType.ParentRelationshipOneToOne:
+                    break;
+                case PropertyType.Uniqueidentifier:
+                    break;
+                case PropertyType.Spatial:
+                    break;
+            }
+
             if (FormField.Property.ValidationItems != null)
             {
                 foreach (var validationItem in FormField.Property.ValidationItems)
@@ -64,6 +101,43 @@ namespace MasterBuilder.Templates.React.Src.Resources
         {
             var type = "TextInput";
             var validate = "";
+
+            switch (FormField.PropertyType)
+            {
+                case PropertyType.PrimaryKey:
+                    break;
+                case PropertyType.String:
+                    type = "TextInput";
+                    break;
+                case PropertyType.Integer:
+                    type = "NumberInput";
+                    break;
+                case PropertyType.DateTime:
+                    break;
+                case PropertyType.Boolean:
+                    if (FormField.Property.Required)
+                    {
+                        type = "BooleanInput";
+                    }
+                    else
+                    {
+                        type = "NullableBooleanInput";
+                    }
+                    break;
+                case PropertyType.ParentRelationshipOneToMany:
+                    break;
+                case PropertyType.ReferenceRelationship:
+                    break;
+                case PropertyType.Double:
+                    type = "NumberInput";
+                    break;
+                case PropertyType.ParentRelationshipOneToOne:
+                    break;
+                case PropertyType.Uniqueidentifier:
+                    break;
+                case PropertyType.Spatial:
+                    break;
+            }
 
             if (FormField.Property.ValidationItems != null)
             {

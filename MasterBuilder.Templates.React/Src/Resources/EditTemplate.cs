@@ -45,7 +45,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                                  select screenSection).First().FormSection.FormFields;
 
             var fields = new List<string>();
-            var imports = new List<string> { "Edit", "SimpleForm", "TextInput" };
+            var imports = new List<string> { "Edit", "SimpleForm" };
             foreach (var field in formFields)
             {
                 if (field.PropertyType == PropertyType.PrimaryKey)
