@@ -29,6 +29,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
             switch (FormField.PropertyType)
             {
                 case PropertyType.PrimaryKey:
+                    // Not shown on UI
                     break;
                 case PropertyType.String:
                     imports.Add("TextInput");
@@ -37,6 +38,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     imports.Add("NumberInput");
                     break;
                 case PropertyType.DateTime:
+                    imports.Add("DateInput");
                     break;
                 case PropertyType.Boolean:
                     if (FormField.Property.Required)
@@ -73,20 +75,26 @@ namespace MasterBuilder.Templates.React.Src.Resources
                             imports.Add("required");
                             break;
                         case ValidationType.MaximumLength:
+                            imports.Add("maxLength");
                             break;
                         case ValidationType.MinimumLength:
+                            imports.Add("minLength");
                             break;
                         case ValidationType.MaximumValue:
+                            imports.Add("maxValue");
                             break;
                         case ValidationType.MinimumValue:
+                            imports.Add("minValue");
                             break;
                         case ValidationType.Unique:
                             break;
                         case ValidationType.Email:
+                            imports.Add("email");
                             break;
                         case ValidationType.RequiredTrue:
                             break;
                         case ValidationType.Pattern:
+                            imports.Add("regex");
                             break;
                         case ValidationType.RequiredExpression:
                             break;
@@ -105,6 +113,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
             switch (FormField.PropertyType)
             {
                 case PropertyType.PrimaryKey:
+                    // Not shown on UI
                     break;
                 case PropertyType.String:
                     type = "TextInput";
@@ -113,6 +122,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     type = "NumberInput";
                     break;
                 case PropertyType.DateTime:
+                    type = "DateInput";
                     break;
                 case PropertyType.Boolean:
                     if (FormField.Property.Required)
@@ -150,20 +160,40 @@ namespace MasterBuilder.Templates.React.Src.Resources
                             validationList.Add("required()");
                             break;
                         case ValidationType.MaximumLength:
+                            validationList.Add($"maxLength({validationItem.IntegerValue})");
                             break;
                         case ValidationType.MinimumLength:
+                            validationList.Add($"minLength({validationItem.IntegerValue})");
                             break;
                         case ValidationType.MaximumValue:
+                            if (FormField.PropertyType == PropertyType.Integer)
+                            {
+                                validationList.Add($"maxValue({validationItem.IntegerValue})");
+                            }
+                            else if (FormField.PropertyType == PropertyType.Double)
+                            {
+                                validationList.Add($"maxValue({validationItem.DoubleValue})");
+                            }
                             break;
                         case ValidationType.MinimumValue:
+                            if (FormField.PropertyType == PropertyType.Integer)
+                            {
+                                validationList.Add($"minValue({validationItem.IntegerValue})");
+                            }
+                            else if (FormField.PropertyType == PropertyType.Double)
+                            {
+                                validationList.Add($"minValue({validationItem.DoubleValue})");
+                            }
                             break;
                         case ValidationType.Unique:
                             break;
                         case ValidationType.Email:
+                            validationList.Add("email()");
                             break;
                         case ValidationType.RequiredTrue:
                             break;
                         case ValidationType.Pattern:
+                            validationList.Add($"regex(/{validationItem.StringValue}/)");
                             break;
                         case ValidationType.RequiredExpression:
                             break;
