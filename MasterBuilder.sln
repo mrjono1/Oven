@@ -20,9 +20,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterBuilder.Templates.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterBuilder.Templates.Api", "MasterBuilder.Templates.Api\MasterBuilder.Templates.Api.csproj", "{4224B3A4-2E76-4EB5-A58A-B3A141943010}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterBuilder.Templates.Angular", "MasterBuilder.Templates.Angular\MasterBuilder.Templates.Angular.csproj", "{B93CB5B3-7E44-42E7-9FAB-CD4B9D520D48}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MasterBuilder.Templates.React", "MasterBuilder.Templates.React\MasterBuilder.Templates.React.csproj", "{597999C7-CEEB-4981-A936-D84640272DF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MasterBuilder.Templates.React", "MasterBuilder.Templates.React\MasterBuilder.Templates.React.csproj", "{597999C7-CEEB-4981-A936-D84640272DF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,10 +52,6 @@ Global
 		{4224B3A4-2E76-4EB5-A58A-B3A141943010}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4224B3A4-2E76-4EB5-A58A-B3A141943010}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4224B3A4-2E76-4EB5-A58A-B3A141943010}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B93CB5B3-7E44-42E7-9FAB-CD4B9D520D48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B93CB5B3-7E44-42E7-9FAB-CD4B9D520D48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B93CB5B3-7E44-42E7-9FAB-CD4B9D520D48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B93CB5B3-7E44-42E7-9FAB-CD4B9D520D48}.Release|Any CPU.Build.0 = Release|Any CPU
 		{597999C7-CEEB-4981-A936-D84640272DF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{597999C7-CEEB-4981-A936-D84640272DF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{597999C7-CEEB-4981-A936-D84640272DF1}.Release|Any CPU.ActiveCfg = Release|Any CPU

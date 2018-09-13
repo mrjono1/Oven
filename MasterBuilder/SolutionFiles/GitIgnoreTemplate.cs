@@ -209,12 +209,10 @@ UpgradeLog*.htm
 .ntvs_analysis.dat
 
 # Paket dependency manager
-.paket/paket.exe" };
+.paket/paket.exe
 
-            if (Project.React)
-            {
-                gitIgnore.Add("_Layout.cshtml");
-            }
+_Layout.cshtml" };
+
             return string.Join(Environment.NewLine, gitIgnore);
         }
     }

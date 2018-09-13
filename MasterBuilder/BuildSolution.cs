@@ -63,25 +63,13 @@ namespace MasterBuilder
                 return errors;
             }
 
-            if (project.React)
+            var react = new Templates.React.ProjectBuilder();
+            errors = await react.RunAsync(builderSettings, project, solutionWriter, solutionDirectory);
+            if (!string.IsNullOrEmpty(errors))
             {
-                var react = new Templates.React.ProjectBuilder();
-                errors = await react.RunAsync(builderSettings, project, solutionWriter, solutionDirectory);
-                if (!string.IsNullOrEmpty(errors))
-                {
-                    return errors;
-                }
+                return errors;
             }
-            else if (project.Angular)
-            {
-                var angular = new Templates.Angular.ProjectBuilder();
-                errors = await angular.RunAsync(builderSettings, project, solutionWriter, solutionDirectory);
-                if (!string.IsNullOrEmpty(errors))
-                {
-                    return errors;
-                }
-            }
-
+            
             var api = new Templates.Api.ProjectBuilder();
             errors = await api.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);
             if (!string.IsNullOrEmpty(errors))
