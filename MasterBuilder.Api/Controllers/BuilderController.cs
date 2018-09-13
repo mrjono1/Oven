@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using MasterBuilder.Request;
+using MasterBuilder.Shared;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -13,6 +14,7 @@ namespace MasterBuilder.Api.Controllers
     public class BuilderController : Controller
     {
         private readonly IConfiguration _iconfiguration;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -20,6 +22,7 @@ namespace MasterBuilder.Api.Controllers
         {
             _iconfiguration = iconfiguration;
         }
+
         /// <summary>
         /// Publish a project
         /// </summary>
@@ -36,12 +39,12 @@ namespace MasterBuilder.Api.Controllers
             }
             var builderSettings = _iconfiguration.Get<BuilderSettings>();
 
-            var builder = new MasterBuilder.Builder(builderSettings);
+            var builder = new BuildSolution(builderSettings);
 
             string result = null;
             try
             {
-                result = await builder.Run(project);
+                result = await builder.RunAsync(project);
             }
             catch (Exception ex)
             {

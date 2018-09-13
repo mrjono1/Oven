@@ -26,7 +26,7 @@ namespace MasterBuilder.ConsoleApp
 
         public async Task Run(BuilderSettings builderSettings)
         {
-            var builder = new MasterBuilder.BuildSolution(builderSettings);
+            var builder = new BuildSolution(builderSettings);
 
             var testProject = new MasterBuilderUiModel();
 
