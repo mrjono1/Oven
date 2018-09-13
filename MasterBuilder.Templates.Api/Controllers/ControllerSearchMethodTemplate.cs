@@ -59,7 +59,7 @@ namespace MasterBuilder.Templates.Api.Controllers
         /// <summary>
         /// {screenSection.Title} Search
         /// </summary>
-        {(string.IsNullOrEmpty(actionName) ? $@"[HttpGet]" : $@"[HttpPost(""{actionName}"")]")}
+        [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<{screenSection.SearchSection.SearchItemClass}>), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> Search{actionName}Async([FromQuery]{screenSection.SearchSection.SearchRequestClass} request)

@@ -1,4 +1,5 @@
-﻿using MasterBuilder.Request;
+﻿using Humanizer;
+using MasterBuilder.Request;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,8 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
+                    imports.Add("ReferenceInput");
+                    imports.Add("SelectInput");
                     break;
                 case PropertyType.Double:
                     imports.Add("NumberInput");
@@ -137,6 +140,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
+                    type = "ReferenceInput";
                     break;
                 case PropertyType.Double:
                     type = "NumberInput";
@@ -211,8 +215,17 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     }
                 }
             }
-            
-            return $@"<{type} source=""{FormField.InternalNameJavaScript}"" {validate}/>";
+
+            switch (FormField.PropertyType)
+            {
+                case PropertyType.ReferenceRelationship:
+                    return $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" target=""{FormField.Property.Entity.InternalName.Camelize()}Id"">
+    <SelectInput optionText=""title"" />
+</ReferenceInput>";
+                default:
+                    return $@"<{type} title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}/>";
+            }
+
         }
     }
 }

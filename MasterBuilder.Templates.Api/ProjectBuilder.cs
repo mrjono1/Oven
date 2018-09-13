@@ -27,8 +27,6 @@ namespace MasterBuilder.Templates.Api
             if (project.ServerSideRendering)
             {
                 solutionWriter.AddTemplate(new Extensions.HttpRequestExtensionsTemplate(project));
-                solutionWriter.AddTemplate(new CoreModels.IRequestTemplate(project));
-                solutionWriter.AddTemplate(new CoreModels.TransferDataTemplate(project));
             }
             
             // Controllers
