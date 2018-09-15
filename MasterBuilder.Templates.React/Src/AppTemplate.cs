@@ -72,7 +72,7 @@ namespace MasterBuilder.Templates.React.Src
             return $@"import React from 'react';
 import {{ Admin, Resource }} from 'react-admin';
 import CustomLayout from './Layout';
-import jsonServerProvider from 'ra-data-json-server';
+import jsonServerProvider from './RestProvider';
 {string.Join(Environment.NewLine, imports)}
 
 const App = () => 

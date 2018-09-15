@@ -43,7 +43,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
         {
             var packageReferences = new StringBuilder();
 
-            var efVersion = "2.0.3";
+            var efVersion = "2.1.3";
             var nugetReferences = new Dictionary<string, string>
             {
                 { "Microsoft.EntityFrameworkCore", efVersion},

@@ -27,8 +27,8 @@ namespace MasterBuilder.Templates.React.Src
                 new IndexTemplate(Project),
                 new LayoutTemplate(Project),
                 new ManifestTemplate(Project),
-                new MenuTemplate(Project)
-                //new RoutesTemplate(Project)
+                new MenuTemplate(Project),
+                new RestProviderTemplate(Project)
             };
 
             return templates;

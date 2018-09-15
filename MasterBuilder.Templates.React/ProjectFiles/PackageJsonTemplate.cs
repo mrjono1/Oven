@@ -114,7 +114,6 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""localforage"": ""^1.5.6"",
     ""moment"": ""^2.20.1"", 
     ""prop-types"": ""15.6.2"",
-    ""ra-data-json-server"": ""~2.0.0"",
     ""react"": ""16.3.2"",
     ""react-admin"": ""2.2.3"",
     ""react-dom"": ""~16.3.0"",

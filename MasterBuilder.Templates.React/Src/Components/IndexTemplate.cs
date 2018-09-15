@@ -1,19 +1,19 @@
 using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 
-namespace MasterBuilder.Templates.React.Src.Components.Button
+namespace MasterBuilder.Templates.React.Src.Components
 {
     /// <summary>
-    /// styles.scss Template
+    /// index.js Template
     /// </summary>
-    public class StylesScssTemplate : ITemplate
+    public class IndexTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public StylesScssTemplate(Project project)
+        public IndexTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +23,7 @@ namespace MasterBuilder.Templates.React.Src.Components.Button
         /// </summary>
         public string GetFileName()
         {
-            return "styles.scss";
+            return "index.js";
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace MasterBuilder.Templates.React.Src.Components.Button
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { "src", "components", "Button" };
+            return new string[] { "src", "components" };
         }
 
         /// <summary>
@@ -39,9 +39,7 @@ namespace MasterBuilder.Templates.React.Src.Components.Button
         /// </summary>
         public string GetFileContent()
         {
-            return @":local(.styles) {
-
-}";
+            return $@"";
         }
     }
 }

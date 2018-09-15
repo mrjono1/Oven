@@ -81,12 +81,12 @@ namespace MasterBuilder.Templates.Api.Controllers
             var totalItems = query.Count();
             var items = new {screenSection.SearchSection.SearchItemClass}[0];
 
-            if (totalItems != 0 && request._end != 0)
+            if (totalItems != 0 && request.end != 0)
             {{
                 items = await query
                     .OrderBy(p => p.{screenSection.SearchSection.OrderBy})
-                    .Skip(request._start)
-                    .Take(request._end - request._start)
+                    .Skip(request.start)
+                    .Take(request.end - request.start)
                     .Select(item => new {screenSection.SearchSection.SearchItemClass}
                     {{
 {string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
@@ -94,7 +94,7 @@ namespace MasterBuilder.Templates.Api.Controllers
                     .ToArrayAsync();
             }}
             
-            Response.Headers.Add(""Content-Range"", $@""ValidationTypes {{request._start}}-{{request._start + items.Count()}}/{{totalItems}}"");
+            Response.Headers.Add(""Content-Range"", $@""ValidationTypes {{request.start}}-{{request.start + items.Count()}}/{{totalItems}}"");
             Response.Headers.Add(""X-Total-Count"", totalItems.ToString());
             return Ok(items);
         }}";

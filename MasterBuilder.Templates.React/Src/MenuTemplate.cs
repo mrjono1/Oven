@@ -39,7 +39,7 @@ namespace MasterBuilder.Templates.React.Src
         /// </summary>
         public string GetFileContent()
         {
-            return $@"import React, {{ createElement }} from 'react';
+            return $@"import React from 'react';
 import {{ connect }} from 'react-redux';
 import {{ MenuItemLink, getResources }} from 'react-admin';
 import {{ withRouter }} from 'react-router-dom';
@@ -65,7 +65,7 @@ const CustomMenu = ({{ resources, onMenuClick }}) => (
 );
 
 const mapStateToProps = state => ({{
-    resources: getResources(state),
+    resources: getResources(state)
 }});
 
 export default withRouter(connect(mapStateToProps)(CustomMenu));";

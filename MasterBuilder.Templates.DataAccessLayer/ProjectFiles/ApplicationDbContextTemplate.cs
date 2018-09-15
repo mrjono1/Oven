@@ -142,6 +142,7 @@ namespace MasterBuilder.Templates.DataAccessLayer.ProjectFiles
 using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design.Internal;
 using Microsoft.EntityFrameworkCore.Scaffolding.Internal;

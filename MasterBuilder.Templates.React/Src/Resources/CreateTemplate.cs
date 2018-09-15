@@ -52,7 +52,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 {
                     continue;
                 }
-                var template = new CreateEditInputPartialTemplate(field);
+                var template = new CreateEditInputPartialTemplate(field, true);
                 fields.Add(template.Content());
                 imports.AddRange(template.ReactAdminImports());
             }

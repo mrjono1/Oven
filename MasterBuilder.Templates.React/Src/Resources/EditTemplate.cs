@@ -52,13 +52,25 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 {
                     continue;
                 }
-                var template = new CreateEditInputPartialTemplate(field);
+                var template = new CreateEditInputPartialTemplate(field, false);
                 fields.Add(template.Content());
                 imports.AddRange(template.ReactAdminImports());
             }
 
+            var searchSectionFields = new List<string>();
+            var componentImports = new List<string>();
+            var searchSections = (from screenSection in Screen.ScreenSections
+                              where screenSection.ScreenSectionType == ScreenSectionType.Search
+                              select screenSection);
+            foreach (var searchSection in searchSections)
+            {
+                searchSectionFields.Add($@"<{searchSection.InternalName} {{...props}} />");
+                componentImports.Add($@"import {searchSection.InternalName} from './{searchSection.InternalName}';");
+            }
+
             return $@"import React from 'react';
 import {{ {string.Join(", ", imports.Distinct().OrderBy(a => a))} }} from 'react-admin';
+{string.Join(Environment.NewLine, componentImports)}
 
 const DynamicTitle = ({{ record }}) => {{
     return <span>{Screen.Title} {{record ? ` - ${{record.title}}` : ''}}</span>;
@@ -68,6 +80,7 @@ const {Screen.Entity.InternalName}Edit = (props) => (
     <Edit {{...props}} title={{< DynamicTitle />}}>
         <SimpleForm>
 {string.Join(Environment.NewLine, fields).IndentLines(12)}
+{string.Join(Environment.NewLine, searchSectionFields).IndentLines(12)}
         </SimpleForm>
     </Edit>
 );

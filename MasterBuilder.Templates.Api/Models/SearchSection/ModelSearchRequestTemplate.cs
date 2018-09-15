@@ -74,10 +74,10 @@ namespace {Project.InternalName}.Models
     /// </summary>
     public class {ScreenSection.SearchSection.SearchRequestClass}
     {{
-        public int _start {{ get; set; }}
-        public int _end {{ get; set; }}
-        public string _order {{ get; set; }}
-        public string _sort {{ get; set; }}
+        public int start {{ get; set; }}
+        public int end {{ get; set; }}
+        public string order {{ get; set; }}
+        public string sort {{ get; set; }}
         {parentPropertyString}
         // TODO: Search fields
     }}

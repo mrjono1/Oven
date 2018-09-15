@@ -1,6 +1,7 @@
 ﻿using MasterBuilder.Interfaces;
 using MasterBuilder.Request;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MasterBuilder.Templates.React.Src.Resources
 {
@@ -34,6 +35,14 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     case ScreenType.Form:
                         templates.Add(new CreateTemplate(Project, screen));
                         templates.Add(new EditTemplate(Project, screen));
+
+                        var searchSections = (from screenSection in screen.ScreenSections
+                                              where screenSection.ScreenSectionType == ScreenSectionType.Search
+                                              select screenSection);
+                        foreach (var searchSection in searchSections)
+                        {
+                            templates.Add(new ListPartialTemplate(Project, screen, searchSection));
+                        }
                         break;
 
                     //case ScreenType.View:

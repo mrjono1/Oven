@@ -13,13 +13,15 @@ namespace MasterBuilder.Templates.React.Src.Resources
     public class CreateEditInputPartialTemplate
     {
         private readonly FormField FormField;
+        private readonly bool IsCreate;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public CreateEditInputPartialTemplate(FormField formField)
+        public CreateEditInputPartialTemplate(FormField formField, bool isCreate)
         {
             FormField = formField;
+            IsCreate = IsCreate;
         }
 
 
@@ -54,6 +56,11 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
+                    if (IsCreate)
+                    {
+                        // dont add this type to a create screen
+                        return imports;
+                    }
                     imports.Add("ReferenceInput");
                     imports.Add("SelectInput");
                     break;
@@ -140,6 +147,11 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
+                    if (IsCreate)
+                    {
+                        // dont add this type to a create screen
+                        return null;
+                    }
                     type = "ReferenceInput";
                     break;
                 case PropertyType.Double:
@@ -219,7 +231,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
             switch (FormField.PropertyType)
             {
                 case PropertyType.ReferenceRelationship:
-                    return $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" target=""{FormField.Property.Entity.InternalName.Camelize()}Id"">
+                    return $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" filter={{{{{FormField.Property.Entity.InternalName.Camelize()}Id: props.id}}}}>
     <SelectInput optionText=""title"" />
 </ReferenceInput>";
                 default:
