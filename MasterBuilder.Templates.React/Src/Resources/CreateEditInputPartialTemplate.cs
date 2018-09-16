@@ -82,7 +82,10 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     switch (validationItem.ValidationType)
                     {
                         case ValidationType.Required:
-                            imports.Add("required");
+                            if (FormField.PropertyType != PropertyType.Boolean)
+                            {
+                                imports.Add("required");
+                            }
                             break;
                         case ValidationType.MaximumLength:
                             imports.Add("maxLength");
@@ -102,6 +105,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                             imports.Add("email");
                             break;
                         case ValidationType.RequiredTrue:
+                            imports.Add("required");
                             break;
                         case ValidationType.Pattern:
                             imports.Add("regex");
@@ -173,7 +177,10 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     switch (validationItem.ValidationType)
                     {
                         case ValidationType.Required:
-                            validationList.Add("required()");
+                            if (FormField.PropertyType != PropertyType.Boolean)
+                            {
+                                validationList.Add("required()");
+                            }
                             break;
                         case ValidationType.MaximumLength:
                             validationList.Add($"maxLength({validationItem.IntegerValue})");
@@ -207,6 +214,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                             validationList.Add("email()");
                             break;
                         case ValidationType.RequiredTrue:
+                            validationList.Add("required()");
                             break;
                         case ValidationType.Pattern:
                             validationList.Add($"regex(/{validationItem.StringValue}/)");
