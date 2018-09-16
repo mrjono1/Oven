@@ -99,7 +99,6 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""sass-loader"": ""^6.0.3"",
     ""style-loader"": ""^0.13.0"",
     ""url-loader"": ""^0.5.7"",
-    ""uuid"": ""3.3.2"",
     ""webpack"": ""4.8.3"",
     ""webpack-cli"": ""2.1.3"",
     ""webpack-dev-middleware"": ""3.1.3"",
@@ -121,8 +120,7 @@ namespace MasterBuilder.Templates.React.ProjectFiles
     ""react-router"": ""^4.2.0"",
     ""react-router-dom"": ""^4.2.2"",
     ""react-tap-event-plugin"": ""^3.0.2"",
-    ""redux"": ""4.0.0"",
-    ""redux-thunk"": ""^2.2.0""
+    ""redux"": ""4.0.0""
   }}
 }}";
         }

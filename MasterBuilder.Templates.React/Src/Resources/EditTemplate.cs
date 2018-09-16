@@ -50,6 +50,12 @@ namespace MasterBuilder.Templates.React.Src.Resources
             {
                 if (field.PropertyType == PropertyType.PrimaryKey)
                 {
+                    // dont render primary key
+                    continue;
+                }
+                else if(field.PropertyType == PropertyType.ParentRelationshipOneToMany)
+                {
+                    // dont render parent relationship
                     continue;
                 }
                 var template = new CreateEditInputPartialTemplate(field, false);
