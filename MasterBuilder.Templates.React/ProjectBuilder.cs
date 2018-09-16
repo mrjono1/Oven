@@ -1,3 +1,4 @@
+using MasterBuilder.Helpers;
 using MasterBuilder.Shared;
 using System.Threading.Tasks;
 
@@ -11,12 +12,12 @@ namespace MasterBuilder.Templates.React
         /// <summary>
         /// Build Master Builder React Project
         /// </summary>
-        public async Task<string> RunAsync(BuilderSettings builderSettings, Request.Project project, Helpers.SolutionWriter solutionWriter, string solutionDirectory)
+        public async Task<string> RunAsync(BuilderSettings builderSettings, Request.Project project, SolutionWriter solutionWriter, string solutionDirectory)
         {
             // Create Solution Directory
             var webProjectDirectory = FileHelper.CreateFolder(solutionDirectory, project.InternalName);
 
-            var projectWriter = new Helpers.SolutionWriter(webProjectDirectory, project.CleanDirectoryIgnoreDirectories);
+            var projectWriter = new SolutionWriter(webProjectDirectory, project.CleanDirectoryIgnoreDirectories);
             
             // Create Directories
             var wwwrootPath = FileHelper.CreateFolder(webProjectDirectory, "wwwroot");

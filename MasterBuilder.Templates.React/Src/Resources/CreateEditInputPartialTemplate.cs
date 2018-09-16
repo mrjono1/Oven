@@ -1,5 +1,6 @@
 ﻿using Humanizer;
 using MasterBuilder.Request;
+using MasterBuilder.Templates.React.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +13,18 @@ namespace MasterBuilder.Templates.React.Src.Resources
     /// </summary>
     public class CreateEditInputPartialTemplate
     {
+        private readonly Screen Screen;
         private readonly FormField FormField;
         private readonly bool IsCreate;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public CreateEditInputPartialTemplate(FormField formField, bool isCreate)
+        public CreateEditInputPartialTemplate(Screen screen, FormField formField, bool isCreate)
         {
+            Screen = screen;
             FormField = formField;
-            IsCreate = IsCreate;
+            IsCreate = isCreate;
         }
 
 
@@ -29,6 +32,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
         {
             var imports = new List<string>();
 
+            // Property Type
             switch (FormField.PropertyType)
             {
                 case PropertyType.PrimaryKey:
@@ -75,6 +79,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     break;
             }
 
+            // Validation
             if (FormField.Property.ValidationItems != null)
             {
                 foreach (var validationItem in FormField.Property.ValidationItems)
@@ -116,6 +121,12 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 }
             }
 
+            // Visibility
+            if (FormField.VisibilityExpression != null)
+            {
+                imports.Add("FormDataConsumer");
+            }
+
             return imports;
         }
 
@@ -125,6 +136,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
             var validate = "";
             var defaultValue = "";
 
+            // Property Type
             switch (FormField.PropertyType)
             {
                 case PropertyType.PrimaryKey:
@@ -186,6 +198,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     break;
             }
 
+            // Validation
             if (FormField.Property.ValidationItems != null)
             {
                 var validationList = new List<string>();
@@ -253,20 +266,48 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 }
             }
 
+            // Default Value
             if (!string.IsNullOrEmpty(defaultValue))
             {
                 defaultValue = $@"defaultValue={defaultValue} ";
             }
 
+            // Include ...rest
+            var rest = "";
+            if (FormField.VisibilityExpression != null)
+            {
+                rest = "{...rest} ";
+            }
+
+            // Create Element
+            var element = "";
             switch (FormField.PropertyType)
             {
                 case PropertyType.ReferenceRelationship:
-                    return $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" filter={{{{{FormField.Property.Entity.InternalName.Camelize()}Id: props.id}}}}>
+                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" filter={{{{{FormField.Property.Entity.InternalName.Camelize()}Id: props.id}}}}{validate}{rest}>
     <SelectInput optionText=""title"" />
 </ReferenceInput>";
+                    break;
                 default:
-                    return $@"<{type} title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}{defaultValue}/>";
+                    element = $@"<{type} title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}{defaultValue}{rest}/>";
+                    break;
             }
+
+            // Visibility
+            if (FormField.VisibilityExpression != null)
+            {
+                var expressionHelper = new ExpressionHelper(Screen);
+                var expression = expressionHelper.GetExpression(FormField.VisibilityExpression, "formData");
+                element = $@"<FormDataConsumer>
+    {{({{ formData, ...rest }}) => 
+        {expression} &&
+        {element}
+    }}
+</FormDataConsumer>";
+            }
+
+            // Return Result
+            return element;
 
         }
     }

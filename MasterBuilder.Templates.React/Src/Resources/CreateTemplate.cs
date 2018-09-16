@@ -58,7 +58,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     // dont render parent relationship
                     continue;
                 }
-                var template = new CreateEditInputPartialTemplate(field, true);
+                var template = new CreateEditInputPartialTemplate(Screen, field, true);
                 fields.Add(template.Content());
                 imports.AddRange(template.ReactAdminImports());
             }
