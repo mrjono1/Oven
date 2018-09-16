@@ -301,7 +301,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 element = $@"<FormDataConsumer>
     {{({{ formData, ...rest }}) => 
         {expression} &&
-        {element}
+    {element.IndentLines(8)}
     }}
 </FormDataConsumer>";
             }

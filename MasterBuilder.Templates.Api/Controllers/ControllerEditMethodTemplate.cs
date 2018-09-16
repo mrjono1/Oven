@@ -137,6 +137,75 @@ namespace MasterBuilder.Templates.Api.Controllers
         }
         #endregion
 
+        #region GET multi
+
+        /// <summary>
+        /// GET Verb Multi method
+        /// </summary>
+        internal string GetMultiMethod()
+        {
+            // TODO: Phase 2 get screen section properties that are appropriate using required expression
+            var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
+
+            var propertyMapping = new List<string>();
+            foreach (var effe in effes)
+            {
+                if (effe.Entity.Id == Screen.EntityId)
+                {
+                    propertyMapping.AddRange(GetPropertiesRecursive(effe, effes));
+                }
+            }
+
+            return $@"
+        /// <summary>
+        /// {Screen.Title} Get multi
+        /// </summary>
+        [HttpGet(""multi"")]
+        [ProducesResponseType(typeof(IEnumerable<{Screen.FormResponseClass}>), 200)]
+        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
+        public async Task<IActionResult> GetMultiAsync(string ids)
+        {{
+            if (!ModelState.IsValid)
+            {{
+                return new BadRequestObjectResult(ModelState);
+            }}
+
+            if (string.IsNullOrEmpty(ids))
+            {{
+                return NotFound();
+            }}
+
+            var guids = new List<Guid?>();
+            foreach (var id in ids.Split(""|""))
+            {{
+                if (Guid.TryParse(id, out Guid parsedId))
+                {{
+                    guids.Add(parsedId);
+                }}
+                else
+                {{
+                    return NotFound();
+                }}
+            }}
+            
+            var result = await _context.{Screen.Entity.InternalNamePlural}
+                        .AsNoTracking()
+                        .Select(item => new Models.{Screen.FormResponseClass}
+                        {{
+{string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
+                        }})
+                        .Where(p => guids.Contains(p.Id))
+                        .ToArrayAsync();
+
+            if (result == null)
+            {{
+                return NotFound();
+            }}
+
+            return Ok(result);
+        }}";
+        }
+        #endregion
 
         private IEnumerable<string> Property(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string requestObjectName = "put", string existingObjectName = "existingRecord", int level = 0, bool add = false)
         {
