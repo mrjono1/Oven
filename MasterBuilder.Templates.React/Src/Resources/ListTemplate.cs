@@ -57,7 +57,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
 import {{ List, Datagrid, TextField, EditButton }} from 'react-admin';
 
 const {Screen.Entity.InternalName}List = (props) => (
-    <List {{...props}} title=""{Screen.Title}"">
+    <List {{...props}} title=""{Screen.Title}"" sort={{{{ field: 'title', order: 'DESC' }}}}>
         <Datagrid>
 {string.Join(Environment.NewLine, fields).IndentLines(12)}
             <EditButton />

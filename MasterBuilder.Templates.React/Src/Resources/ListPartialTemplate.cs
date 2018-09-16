@@ -65,7 +65,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                                 where s.Id == parentProperty.ParentEntityId
                                 select s).SingleOrDefault();
 
-                parentPropertyId = $"{parentEntity.InternalName}Id";
+                parentPropertyId = $"{parentEntity.InternalName.Camelize()}Id";
             }
 
             return $@"import React from 'react';
@@ -74,7 +74,7 @@ import CreateButton from './../../components/CreateButton';
 
 const {ScreenSection.InternalName} = (props) => (
     <div>
-        <CreateButton record={{props.record}} reference=""{ScreenSection.Entity.InternalNamePlural}"" target=""{parentPropertyId}""/>
+        <CreateButton record={{props.record}} reference=""{ScreenSection.Entity.InternalNamePlural}"" target=""{parentPropertyId}"" title=""Create {ScreenSection.Entity.Title}""/>
         <ReferenceManyField
             {{...props}}
             label=""{ScreenSection.Title}""

@@ -45,7 +45,7 @@ namespace MasterBuilder.Templates.React.Src
         {
             var resources = new List<string>();
             var imports = new List<string>();
-            foreach (var entity in Project.Entities.OrderByDescending(a => a.InternalName))
+            foreach (var entity in Project.Entities.OrderBy(a => a.InternalName))
             {
                 var createAndEdit = Project.Screens.Any(s => s.EntityId == entity.Id && s.ScreenType == ScreenType.Form);
                 var list = Project.Screens.Any(s => s.EntityId == entity.Id && s.ScreenType == ScreenType.Search);

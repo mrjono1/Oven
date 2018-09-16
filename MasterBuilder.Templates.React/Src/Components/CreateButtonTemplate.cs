@@ -43,7 +43,7 @@ namespace MasterBuilder.Templates.React.Src.Components
 import Button from '@material-ui/core/Button';
 import {{ Link }} from 'react-router-dom';
 
-const CreateButton = ({{ record, reference, target }}) => (
+const CreateButton = ({{ record, reference, target, title = 'Create' }}) => (
     <Button
         component={{Link}}
         to={{{{
@@ -51,7 +51,7 @@ const CreateButton = ({{ record, reference, target }}) => (
             state: {{ record: {{ [target]: record.id }} }}
         }}}}
     >
-        Create
+        {{title}}
     </Button>
 );
 
