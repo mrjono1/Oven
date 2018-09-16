@@ -123,6 +123,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
         {
             var type = "TextInput";
             var validate = "";
+            var defaultValue = "";
 
             switch (FormField.PropertyType)
             {
@@ -131,14 +132,26 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     break;
                 case PropertyType.String:
                     type = "TextInput";
+                    if (!string.IsNullOrWhiteSpace(FormField.Property.DefaultStringValue))
+                    {
+                        defaultValue = $@"""{defaultValue}""";
+                    }
                     break;
                 case PropertyType.Integer:
+                    if (FormField.Property.DefaultIntegerValue.HasValue)
+                    {
+                        defaultValue = $@"{{{FormField.Property.DefaultIntegerValue.Value}}}";
+                    }
                     type = "NumberInput";
                     break;
                 case PropertyType.DateTime:
                     type = "DateInput";
                     break;
                 case PropertyType.Boolean:
+                    if (FormField.Property.DefaultBooleanValue.HasValue)
+                    {
+                        defaultValue = $@"{{{(FormField.Property.DefaultBooleanValue.Value ? "true" : "false")}}}";
+                    }
                     if (FormField.Property.Required)
                     {
                         type = "BooleanInput";
@@ -159,6 +172,10 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     type = "ReferenceInput";
                     break;
                 case PropertyType.Double:
+                    if (FormField.Property.DefaultDoubleValue.HasValue)
+                    {
+                        defaultValue = $@"{{{FormField.Property.DefaultDoubleValue.Value}}}";
+                    }
                     type = "NumberInput";
                     break;
                 case PropertyType.ParentRelationshipOneToOne:
@@ -236,6 +253,11 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 }
             }
 
+            if (!string.IsNullOrEmpty(defaultValue))
+            {
+                defaultValue = $@"defaultValue={defaultValue} ";
+            }
+
             switch (FormField.PropertyType)
             {
                 case PropertyType.ReferenceRelationship:
@@ -243,7 +265,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
     <SelectInput optionText=""title"" />
 </ReferenceInput>";
                 default:
-                    return $@"<{type} title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}/>";
+                    return $@"<{type} title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}{defaultValue}/>";
             }
 
         }
