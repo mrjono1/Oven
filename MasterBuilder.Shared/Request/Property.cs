@@ -227,7 +227,7 @@ namespace MasterBuilder.Request
         /// Internal Name Type Script
         /// </summary>
         [JsonIgnore]
-        public string InternalNameTypeScript
+        public string InternalNameJavaScript
         {
             get
             {

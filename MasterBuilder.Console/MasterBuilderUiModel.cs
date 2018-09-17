@@ -30,10 +30,9 @@ namespace MasterBuilder
                     Title = "Project",
                     Properties = new Property[]
                     {
-                        new Property()
+                        new Property("Id")
                         {
                             Id = new Guid("{C3E14B66-FF43-478A-95D0-39524F6555B5}"),
-                            InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
@@ -154,10 +153,9 @@ namespace MasterBuilder
                                 }
                             }
                         },
-                        new Property()
+                        new Property("DefaultScreen")
                         {
                             Id = new Guid("{6C22EF44-E5C0-4E3F-B315-A03703AB9D97}"),
-                            InternalName = "DefaultScreen",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Default Screen",
                             ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
@@ -579,10 +577,9 @@ namespace MasterBuilder
                     Title = "Screen",
                     Properties = new Property[]
                     {
-                        new Property()
+                        new Property("Id")
                         {
                             Id = new Guid("{CCDFE624-33F8-4B38-9871-E051A301B73B}"),
-                            InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
@@ -706,10 +703,9 @@ namespace MasterBuilder
                     Title = "Screen Feature",
                     Properties = new Property[]
                     {
-                        new Property()
+                        new Property("Id")
                         {
                             Id = new Guid("{2D145AAC-C180-462E-8837-FD769BE7E5FE}"),
-                            InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },

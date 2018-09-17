@@ -284,13 +284,16 @@ namespace MasterBuilder.Templates.React.Src.Resources
             switch (FormField.PropertyType)
             {
                 case PropertyType.ReferenceRelationship:
-                    var filterExpression = "";
+                    var filter = "";
                     if (FormField.Property.FilterExpression != null)
                     {
+                        var localProperty = Screen.Entity.Properties.Single(a => a.Id == FormField.Property.FilterExpression.PropertyId);
+
+                        var referenceProperty = FormField.Property.ParentEntity.Properties.Single(a => a.Id == FormField.Property.FilterExpression.ChildPropertyId);
                         // ToDo: fix this
-                        filterExpression = $@"filter={{{{{FormField.Property.Entity.InternalName.Camelize()}Id: props.id}}}} ";
+                        filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: props.{localProperty.InternalNameJavaScript}}}}} ";
                     }
-                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" {filterExpression}{validate}{rest}>
+                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" {filter}{validate}{rest}>
     <SelectInput optionText=""title"" />
 </ReferenceInput>";
                     break;
