@@ -60,7 +60,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
-                    if (IsCreate)
+                    if (IsCreate && FormField.Property.FilterExpression != null)
                     {
                         // dont add this type to a create screen
                         return imports;
@@ -176,7 +176,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
-                    if (IsCreate)
+                    if (IsCreate && FormField.Property.FilterExpression != null)
                     {
                         // dont add this type to a create screen
                         return null;
@@ -284,7 +284,13 @@ namespace MasterBuilder.Templates.React.Src.Resources
             switch (FormField.PropertyType)
             {
                 case PropertyType.ReferenceRelationship:
-                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" filter={{{{{FormField.Property.Entity.InternalName.Camelize()}Id: props.id}}}}{validate}{rest}>
+                    var filterExpression = "";
+                    if (FormField.Property.FilterExpression != null)
+                    {
+                        // ToDo: fix this
+                        filterExpression = $@"filter={{{{{FormField.Property.Entity.InternalName.Camelize()}Id: props.id}}}} ";
+                    }
+                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" {filterExpression}{validate}{rest}>
     <SelectInput optionText=""title"" />
 </ReferenceInput>";
                     break;
