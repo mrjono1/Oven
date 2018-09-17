@@ -46,6 +46,19 @@ namespace MasterBuilder.Templates.Api.Controllers
                         {
                             properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameAlternateCSharp} = {objectName}.{formField.Property.InternalName} != null ? {objectName}.{formField.Property.InternalName}.Title : null");
                         }
+
+
+                        if (formField.Property.FilterExpression != null)
+                        {
+                            var hasLocalProperty = Screen.Entity.Properties.Any(a => a.Id == formField.Property.FilterExpression.PropertyId);
+                            if (!hasLocalProperty)
+                            {
+                                var referenceProperty = formField.Property.ParentEntity.Properties.Single(a => a.Id == formField.Property.FilterExpression.ChildPropertyId);
+
+                                properties.Add($"                            {new string(' ', 4 * level)}{referenceProperty.InternalNameCSharp} = {objectName}.{formField.Property.ParentEntity.InternalName}.{referenceProperty.InternalNameCSharp}");
+                            }
+                        }
+
                         break;
                     case PropertyType.ParentRelationshipOneToOne:
                         // TODO

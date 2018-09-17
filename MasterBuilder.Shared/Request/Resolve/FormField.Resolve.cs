@@ -12,6 +12,12 @@ namespace MasterBuilder.Request
             Project = project;
             Property = screenSection.Entity.Properties.SingleOrDefault(p => p.Id == EntityPropertyId);
 
+            if (Property == null)
+            {
+                message = $"PropertyId:{EntityPropertyId} does not exisit. So on ScreenId:{screen.Id}";
+                return false;
+            }
+
             switch (PropertyType)
             {
                 case PropertyType.PrimaryKey:

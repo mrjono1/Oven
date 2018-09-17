@@ -61,6 +61,10 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 var template = new CreateEditInputPartialTemplate(Screen, field, false);
                 fields.Add(template.Content());
                 imports.AddRange(template.ReactAdminImports());
+                if (template.WrapInFormDataConsumer)
+                {
+                    imports.Add("FormDataConsumer");
+                }
             }
 
             var searchSectionFields = new List<string>();

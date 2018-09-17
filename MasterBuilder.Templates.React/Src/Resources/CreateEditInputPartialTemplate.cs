@@ -17,6 +17,8 @@ namespace MasterBuilder.Templates.React.Src.Resources
         private readonly FormField FormField;
         private readonly bool IsCreate;
 
+        public bool WrapInFormDataConsumer { get; private set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -119,12 +121,6 @@ namespace MasterBuilder.Templates.React.Src.Resources
                             break;
                     }
                 }
-            }
-
-            // Visibility
-            if (FormField.VisibilityExpression != null)
-            {
-                imports.Add("FormDataConsumer");
             }
 
             return imports;
@@ -287,11 +283,22 @@ namespace MasterBuilder.Templates.React.Src.Resources
                     var filter = "";
                     if (FormField.Property.FilterExpression != null)
                     {
-                        var localProperty = Screen.Entity.Properties.Single(a => a.Id == FormField.Property.FilterExpression.PropertyId);
-
                         var referenceProperty = FormField.Property.ParentEntity.Properties.Single(a => a.Id == FormField.Property.FilterExpression.ChildPropertyId);
+                        var localProperty = Screen.Entity.Properties.SingleOrDefault(a => a.Id == FormField.Property.FilterExpression.PropertyId);
+
+                        // May be empty if the property is from a parent record so it should be the same as the reference property
+                        // The backend does the hard work here
+                        if (localProperty == null)
+                        {
+                            localProperty = referenceProperty;
+                        }
+
+                        if (!localProperty.InternalNameJavaScript.Equals("id"))
+                        {
+                            WrapInFormDataConsumer = true;
+                        }
                         // ToDo: fix this
-                        filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: props.{localProperty.InternalNameJavaScript}}}}} ";
+                        filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: {(WrapInFormDataConsumer ? "formData" : "props") }.{localProperty.InternalNameJavaScript}}}}} ";
                     }
                     element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" {filter}{validate}{rest}>
     <SelectInput optionText=""title"" />
@@ -307,17 +314,24 @@ namespace MasterBuilder.Templates.React.Src.Resources
             {
                 var expressionHelper = new ExpressionHelper(Screen);
                 var expression = expressionHelper.GetExpression(FormField.VisibilityExpression, "formData");
-                element = $@"<FormDataConsumer>
-    {{({{ formData, ...rest }}) => 
-        {expression} &&
-{element.IndentLines(12)}
-    }}
-</FormDataConsumer>";
+                WrapInFormDataConsumer = true;
+                element = $@"{{({{ formData, ...rest }}) => 
+    {expression} &&
+{element.IndentLines(8)}
+}}";
             }
 
-            // Return Result
-            return element;
-
+            if (WrapInFormDataConsumer)
+            {
+                return $@"<FormDataConsumer>
+{element.IndentLines(4)}
+</FormDataConsumer>";
+            }
+            else
+            {
+                // Return Result
+                return element;
+            }
         }
     }
 }

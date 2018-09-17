@@ -176,10 +176,9 @@ namespace MasterBuilder
                     Title = "Entity",
                     Properties = new Property[]
                     {
-                        new Property()
+                        new Property("Id")
                         {
                             Id = new Guid("{4B5077DA-1516-44C4-81CC-D0CE25BBBCF0}"),
-                            InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
@@ -235,10 +234,9 @@ namespace MasterBuilder
                             Title = "Entity Template",
                             ParentEntityId = new Guid("{E20337EA-37F3-48D1-96F7-3CF2A40A7F52}")
                         },
-                        new Property()
+                        new Property("Project")
                         {
                             Id = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}"),
-                            InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
@@ -284,10 +282,9 @@ namespace MasterBuilder
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
-                        new Property()
+                        new Property("Entity")
                         {
                             Id = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}"),
-                            InternalName = "Entity",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Entity",
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
@@ -343,10 +340,9 @@ namespace MasterBuilder
                                 }
                             }
                         },
-                        new Property()
+                        new Property("PropertyType")
                         {
                             Id = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
-                            InternalName = "PropertyType",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Property Type",
                             ParentEntityId = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
@@ -372,7 +368,16 @@ namespace MasterBuilder
                             InternalName = "ParentEntity",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "ParentEntity",
-                            ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
+                            // Entity
+                            ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            FilterExpression = new Expression
+                            {
+                                // ProjectId
+                                PropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
+                                Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                // Entity.ProjectId
+                                ChildPropertyId = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}")
+                            }
                         },
                         new Property()
                         {
@@ -583,10 +588,9 @@ namespace MasterBuilder
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
-                        new Property()
+                        new Property("Project")
                         {
                             Id = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
-                            InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
                             ParentEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
@@ -598,10 +602,9 @@ namespace MasterBuilder
                                 }
                             }
                         },
-                        new Property()
+                        new Property("Title")
                         {
                             Id = new Guid("{34B85ED2-3B10-4974-9451-7B87203F1E0F}"),
-                            InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
@@ -618,24 +621,25 @@ namespace MasterBuilder
                                 }
                             }
                         },
-                        new Property()
+                        new Property("Path")
                         {
                             Id = new Guid("{B2F3E579-DEA2-4E82-A69D-F7CD247E1765}"),
-                            InternalName = "Path",
                             PropertyType = PropertyType.String,
                             Title = "Path/Slug"
                         },
-                        new Property()
+                        new Property("Entity")
                         {
                             Id = new Guid("{A02115B5-4E6A-4D7B-AB80-9E58516B1E3A}"),
-                            InternalName = "Entity",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity",
+                            // Entity
                             ParentEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
                             FilterExpression = new Expression
                             {
+                                // ProjectId
                                 PropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                // Entity.ProjectId
                                 ChildPropertyId = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}")
                             }
                         },
@@ -654,14 +658,6 @@ namespace MasterBuilder
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Screen Type",
                             ParentEntityId = new Guid("{C04282DB-CB85-445D-BB4B-AEBB3801DAC7}")
-                        },
-                        new Property()
-                        {
-                            Id = new Guid("{B9A65C24-AE1B-41E6-8E84-973908051DE2}"),
-                            InternalName = "NavigateToScreen",
-                            PropertyType = PropertyType.ReferenceRelationship,
-                            Title = "Navigate to screen",
-                            ParentEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
                         },
                         new Property()
                         {
@@ -2017,23 +2013,6 @@ namespace MasterBuilder
                                     {
                                         // Template
                                         EntityPropertyId = new Guid("{92AD26A8-FECE-4AE0-809B-8CBE42AA7E6A}")
-                                    },
-                                    new FormField
-                                    {
-                                        // Navigate to screen
-                                        EntityPropertyId = new Guid("{B9A65C24-AE1B-41E6-8E84-973908051DE2}"),
-                                        VisibilityExpression = new Expression
-                                        {
-                                            PropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}"),
-                                            Operator = Request.Enumerations.ExpressionOperator.In,
-                                            UniqueidentifierValues = new Guid[]
-                                            {
-                                                // Search
-                                                new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
-                                                // Form
-                                                new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"),
-                                            }
-                                        }
                                     },
                                     new FormField
                                     {

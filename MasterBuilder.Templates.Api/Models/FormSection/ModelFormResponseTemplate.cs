@@ -54,7 +54,23 @@ namespace MasterBuilder.Templates.Api.Models
                                     from ff in formSection.FormSection.FormFields
                                     select ff).GroupBy(ff => ff.EntityPropertyId))
             {
-                properties.Add(ModelFormResponsePropertyTemplate.Evaluate(group.FirstOrDefault()));
+                var formField = group.First();
+                properties.Add(ModelFormResponsePropertyTemplate.Evaluate(formField));
+
+                if (formField.Property.FilterExpression != null)
+                {
+                    var hasLocalProperty = Screen.Entity.Properties.Any(a => a.Id == formField.Property.FilterExpression.PropertyId);
+                    if (!hasLocalProperty)
+                    {
+                        var referenceProperty = formField.Property.ParentEntity.Properties.Single(a => a.Id == formField.Property.FilterExpression.ChildPropertyId);
+
+                        properties.Add($@"        /// <summary>
+        /// {referenceProperty.Title}
+        /// </summary>
+        [Display(Name = ""{referenceProperty.Title}"")]
+        public {referenceProperty.CsType}  {referenceProperty.InternalNameCSharp} {{ get; set; }}");
+                    }
+                }
             }
 
             if (ChildScreenSections != null)
