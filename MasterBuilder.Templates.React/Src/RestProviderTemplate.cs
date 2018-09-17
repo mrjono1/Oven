@@ -98,7 +98,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 url = `${apiUrl}/${resource}/${params.id}`;
                 break;
             case GET_MANY: {
-                url = `${apiUrl}/${resource}/multi?ids=${params.ids.join(""|"")}`;
+                url = `${apiUrl}/${resource}/multi?ids=${params.ids.join('|')}`;
                 break;
             }
             case GET_MANY_REFERENCE: {

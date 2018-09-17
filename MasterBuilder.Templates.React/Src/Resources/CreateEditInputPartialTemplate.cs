@@ -293,7 +293,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                         // ToDo: fix this
                         filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: props.{localProperty.InternalNameJavaScript}}}}} ";
                     }
-                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" {filter}{validate}{rest}>
+                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" {filter}{validate}{rest}>
     <SelectInput optionText=""title"" />
 </ReferenceInput>";
                     break;
@@ -310,7 +310,7 @@ namespace MasterBuilder.Templates.React.Src.Resources
                 element = $@"<FormDataConsumer>
     {{({{ formData, ...rest }}) => 
         {expression} &&
-    {element.IndentLines(8)}
+{element.IndentLines(12)}
     }}
 </FormDataConsumer>";
             }

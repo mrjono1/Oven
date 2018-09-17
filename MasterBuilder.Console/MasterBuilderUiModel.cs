@@ -1391,7 +1391,7 @@ namespace MasterBuilder
                                 new Validation
                                 {
                                     Id = new Guid("{7A5DC485-3649-454D-A688-5F49E1AAD142}"),
-                                    ValidationType = ValidationType.MaximumValue,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                             }
@@ -1407,7 +1407,7 @@ namespace MasterBuilder
                                 new Validation
                                 {
                                     Id = new Guid("{5E739BBD-7501-4ADE-B9E9-7F92EC480535}"),
-                                    ValidationType = ValidationType.MaximumValue,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 2048
                                 },
                             }
@@ -1423,7 +1423,7 @@ namespace MasterBuilder
                                 new Validation
                                 {
                                     Id = new Guid("{EF6DFE3A-AD43-417B-8954-13BCA681A8D1}"),
-                                    ValidationType = ValidationType.MaximumValue,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 2048
                                 },
                             }
@@ -1439,7 +1439,7 @@ namespace MasterBuilder
                                 new Validation
                                 {
                                     Id = new Guid("{FD5D48C0-9761-457F-B40B-7FB78FBCF744}"),
-                                    ValidationType = ValidationType.MaximumValue,
+                                    ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 2048
                                 },
                             }
