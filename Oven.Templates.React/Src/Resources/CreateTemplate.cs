@@ -39,31 +39,21 @@ namespace Oven.Templates.React.Src.Resources
         /// </summary>
         public string GetFileContent()
         {
-            var formFields = (from screenSection in Screen.ScreenSections
-                              where screenSection.ScreenSectionType == ScreenSectionType.Form &&
-                              screenSection.ParentScreenSectionId == null
-                              select screenSection).First().FormSection.FormFields;
-
-            var fields = new List<string>();
             var imports = new List<string> { "Create", "SimpleForm" };
-            foreach (var field in formFields)
+            var screenSections = new List<string>();
+
+            foreach (var section in Screen.ScreenSections)
             {
-                if (field.PropertyType == PropertyType.PrimaryKey)
+                switch (section.ScreenSectionType)
                 {
-                    // dont render primary key
-                    continue;
-                }
-                else if (field.PropertyType == PropertyType.ParentRelationshipOneToMany)
-                {
-                    // dont render parent relationship
-                    continue;
-                }
-                var template = new CreateEditInputPartialTemplate(Screen, field, true);
-                fields.Add(template.Content());
-                imports.AddRange(template.ReactAdminImports());
-                if (template.WrapInFormDataConsumer)
-                {
-                    imports.Add("FormDataConsumer");
+                    case ScreenSectionType.Form:
+                        var formSection = new CreateFormSectionPartialTemplate(Screen, section, true);
+                        imports.AddRange(formSection.Imports);
+                        if (!string.IsNullOrEmpty(formSection.Content))
+                        {
+                            screenSections.Add(formSection.Content);
+                        }
+                        break;
                 }
             }
 
@@ -73,7 +63,7 @@ import {{ {string.Join(", ", imports.Distinct().OrderBy(a => a))} }} from 'react
 const {Screen.Entity.InternalName}Create = (props) => (
     <Create {{...props}} title=""Create {Screen.Title}"">
         <SimpleForm>
-{string.Join(Environment.NewLine, fields).IndentLines(12)}
+{string.Join(Environment.NewLine, screenSections).IndentLines(12)}
         </SimpleForm>
     </Create>
 );

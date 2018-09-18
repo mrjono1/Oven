@@ -39,43 +39,34 @@ namespace Oven.Templates.React.Src.Resources
         /// </summary>
         public string GetFileContent()
         {
-            var formFields = (from screenSection in Screen.ScreenSections
-                                 where screenSection.ScreenSectionType == ScreenSectionType.Form &&
-                                 screenSection.ParentScreenSectionId == null
-                                 select screenSection).First().FormSection.FormFields;
-
-            var fields = new List<string>();
             var imports = new List<string> { "Edit", "SimpleForm" };
-            foreach (var field in formFields)
-            {
-                if (field.PropertyType == PropertyType.PrimaryKey)
-                {
-                    // dont render primary key
-                    continue;
-                }
-                else if(field.PropertyType == PropertyType.ParentRelationshipOneToMany)
-                {
-                    // dont render parent relationship
-                    continue;
-                }
-                var template = new CreateEditInputPartialTemplate(Screen, field, false);
-                fields.Add(template.Content());
-                imports.AddRange(template.ReactAdminImports());
-                if (template.WrapInFormDataConsumer)
-                {
-                    imports.Add("FormDataConsumer");
-                }
-            }
 
-            var searchSectionFields = new List<string>();
+            var screenSections = new List<string>();
             var componentImports = new List<string>();
-            var searchSections = (from screenSection in Screen.ScreenSections
-                              where screenSection.ScreenSectionType == ScreenSectionType.Search
-                              select screenSection);
-            foreach (var searchSection in searchSections)
+
+            foreach (var section in Screen.ScreenSections)
             {
-                searchSectionFields.Add($@"<{searchSection.InternalName} {{...props}} />");
-                componentImports.Add($@"import {searchSection.InternalName} from './{searchSection.InternalName}';");
+                switch (section.ScreenSectionType)
+                {
+                    case ScreenSectionType.Form:
+                        var formSection = new CreateFormSectionPartialTemplate(Screen, section, false);
+                        imports.AddRange(formSection.Imports);
+                        if (!string.IsNullOrEmpty(formSection.Content))
+                        {
+                            screenSections.Add(formSection.Content);
+                        }
+                        break;
+                    case ScreenSectionType.Search:
+                        screenSections.Add($@"<{section.InternalName} {{...props}} />");
+                        componentImports.Add($@"import {section.InternalName} from './{section.InternalName}';");
+                        break;
+                    case ScreenSectionType.MenuList:
+                        break;
+                    case ScreenSectionType.Html:
+                        break;
+                    default:
+                        break;
+                }
             }
 
             return $@"import React from 'react';
@@ -89,8 +80,7 @@ const DynamicTitle = ({{ record }}) => {{
 const {Screen.Entity.InternalName}Edit = (props) => (
     <Edit {{...props}} title={{< DynamicTitle />}}>
         <SimpleForm>
-{string.Join(Environment.NewLine, fields).IndentLines(12)}
-{string.Join(Environment.NewLine, searchSectionFields).IndentLines(12)}
+{string.Join(Environment.NewLine, screenSections).IndentLines(12)}
         </SimpleForm>
     </Edit>
 );

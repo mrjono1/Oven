@@ -308,7 +308,7 @@ namespace Oven.Templates.React.Src.Resources
                     element = $@"<{type} title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}{defaultValue}{rest}/>";
                     break;
             }
-
+            
             // Visibility
             if (FormField.VisibilityExpression != null)
             {
