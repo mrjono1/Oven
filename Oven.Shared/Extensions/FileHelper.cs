@@ -186,8 +186,7 @@ namespace Oven
             }
             if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(result.FilePath))
             {
-                result.Error = "Empty Template result";
-                result.HasError = true;
+                // Skip if file is empty
             }
             else
             {

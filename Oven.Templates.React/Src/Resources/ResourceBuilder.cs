@@ -36,18 +36,29 @@ namespace Oven.Templates.React.Src.Resources
                         templates.Add(new CreateTemplate(Project, screen));
                         templates.Add(new EditTemplate(Project, screen));
 
-                        var searchSections = (from screenSection in screen.ScreenSections
-                                              where screenSection.ScreenSectionType == ScreenSectionType.Search
-                                              select screenSection);
-                        foreach (var searchSection in searchSections)
+                        var rootFormSection = (from screenSection in screen.ScreenSections
+                                                 where screenSection.ScreenSectionType == ScreenSectionType.Form
+                                                 select screenSection).FirstOrDefault();
+
+                        foreach (var screenSection in screen.ScreenSections.Where(a => a != rootFormSection))
                         {
-                            templates.Add(new ListPartialTemplate(Project, screen, searchSection));
+                            switch (screenSection.ScreenSectionType)
+                            {
+                                case ScreenSectionType.Form:
+                                    templates.Add(new FormPartialTemplate(Project, screen, screenSection, false));
+                                    break;
+                                case ScreenSectionType.Search:
+                                    templates.Add(new ListPartialTemplate(Project, screen, screenSection));
+                                    break;
+                                case ScreenSectionType.MenuList:
+                                    break;
+                                case ScreenSectionType.Html:
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                         break;
-
-                    //case ScreenType.View:
-                    //    templates.Add(new ShowTemplate(Project, screen));
-                    //    break;
                 }
             }
 

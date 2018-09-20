@@ -17,6 +17,7 @@ namespace Oven.Templates.React.Src.Resources
         private readonly ScreenSection ScreenSection;
         public IEnumerable<string> Imports { get; private set; }
         public string Content { get; private set; }
+        public bool Blank { get; private set; } = true;
 
         /// <summary>
         /// Constructor
@@ -57,6 +58,7 @@ namespace Oven.Templates.React.Src.Resources
             if (fields.Any())
             {
                 Content = string.Join(Environment.NewLine, fields);
+                Blank = false;
             }
 
             Imports = imports;
