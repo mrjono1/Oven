@@ -16,12 +16,12 @@ namespace Oven.Request
         {
             var messageList = new List<string>();
             
-            if (ParentEntityId.HasValue)
+            if (ReferenceEntityId.HasValue)
             {
-                var parentEntity = project.Entities.Any(a => a.Id == ParentEntityId.Value);
+                var parentEntity = project.Entities.Any(a => a.Id == ReferenceEntityId.Value);
                 if (!parentEntity)
                 {
-                    messageList.Add($"Entity:{entity.InternalName}, Property:{InternalName} contains an invalid ParentEntitId:{ParentEntityId.Value}");
+                    messageList.Add($"Entity:{entity.InternalName}, Property:{InternalName} contains an invalid ParentEntitId:{ReferenceEntityId.Value}");
                 }
             }
 

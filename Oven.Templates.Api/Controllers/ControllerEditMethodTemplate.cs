@@ -53,9 +53,9 @@ namespace Oven.Templates.Api.Controllers
                             var hasLocalProperty = Screen.Entity.Properties.Any(a => a.Id == formField.Property.FilterExpression.PropertyId);
                             if (!hasLocalProperty)
                             {
-                                var referenceProperty = formField.Property.ParentEntity.Properties.Single(a => a.Id == formField.Property.FilterExpression.ChildPropertyId);
+                                var referenceProperty = formField.Property.ReferenceEntity.Properties.Single(a => a.Id == formField.Property.FilterExpression.ReferencePropertyId);
 
-                                properties.Add($"                            {new string(' ', 4 * level)}{referenceProperty.InternalNameCSharp} = {objectName}.{formField.Property.ParentEntity.InternalName}.{referenceProperty.InternalNameCSharp}");
+                                properties.Add($"                            {new string(' ', 4 * level)}{referenceProperty.InternalNameCSharp} = {objectName}.{formField.Property.ReferenceEntity.InternalName}.{referenceProperty.InternalNameCSharp}");
                             }
                         }
 

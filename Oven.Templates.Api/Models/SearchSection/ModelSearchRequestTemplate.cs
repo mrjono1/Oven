@@ -52,7 +52,7 @@ namespace Oven.Templates.Api.Models
             if (parentProperty != null)
             {
                 parentEntity = (from s in Project.Entities
-                                where s.Id == parentProperty.ParentEntityId
+                                where s.Id == parentProperty.ReferenceEntityId
                                 select s).SingleOrDefault();
                 parentPropertyString = $@"        /// <summary>
         /// {parentEntity.Title} Id

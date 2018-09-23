@@ -111,7 +111,7 @@ namespace Oven.Templates.DataAccessLayer.EntityTypeConfigurations
             if (property.PropertyType == PropertyType.ParentRelationshipOneToMany ||
                 property.PropertyType == PropertyType.ReferenceRelationship)
             {
-                var parentEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).Single();
+                var parentEntity = project.Entities.Where(p => p.Id == property.ReferenceEntityId.Value).Single();
                 value.AppendLine();
 
                 switch (property.PropertyType)

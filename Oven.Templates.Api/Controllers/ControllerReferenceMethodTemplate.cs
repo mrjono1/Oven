@@ -14,7 +14,7 @@ namespace Oven.Templates.Api.Controllers
         internal static string Evaluate(Project project, Screen screen, FormField formField)
         {
 
-            var entity = project.Entities.SingleOrDefault(e => e.Id == formField.Property.ParentEntityId);
+            var entity = project.Entities.SingleOrDefault(e => e.Id == formField.Property.ReferenceEntityId);
                         
             var itemClassName = $"Models.{screen.InternalName}.Reference.{formField.ReferenceItemClass}";
             var responseClassName = $"Models.{screen.InternalName}.Reference.{formField.ReferenceResponseClass}";

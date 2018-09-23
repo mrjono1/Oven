@@ -41,8 +41,8 @@ namespace Oven.Templates.Api.Models.Export
                                  from property in entity.Properties
                                  where (property.PropertyType == PropertyType.ParentRelationshipOneToMany ||
                                  property.PropertyType == PropertyType.ParentRelationshipOneToOne) &&
-                                 property.ParentEntityId.HasValue &&
-                                 property.ParentEntityId == Entity.Id
+                                 property.ReferenceEntityId.HasValue &&
+                                 property.ReferenceEntityId == Entity.Id
                                  select entity).ToArray());
             
             foreach (var childEntity in childEntities)

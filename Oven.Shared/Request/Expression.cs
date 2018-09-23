@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using Oven.Request.Enumerations;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Oven.Request
     /// <summary>
     /// Logic Rule
     /// </summary>
-    public class Expression
+    public partial class Expression
     {
         internal bool IsExpressionSet
         {
@@ -85,7 +86,16 @@ namespace Oven.Request
         /// <summary>
         /// Child Property Id
         /// </summary>
-        public Guid? ChildPropertyId { get; set; }
+        public Guid? ReferencePropertyId { get; set; }
+        #endregion
+
+        #region Resolved Fields
+        /// <summary>
+        /// Specify Entity if the Property Id is not on the current Entity
+        /// </summary>
+        [NonDefault]
+        [JsonIgnore]
+        public Entity Entity { get; set; }
         #endregion
     }
 }

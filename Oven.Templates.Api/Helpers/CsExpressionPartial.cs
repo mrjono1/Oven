@@ -209,11 +209,11 @@ namespace Oven.Templates.Api.Helpers
                     }
                     break;
                 case PropertyType.Uniqueidentifier:
-                    if (expression.ChildPropertyId.HasValue)
+                    if (expression.ReferencePropertyId.HasValue)
                     {
-                        if (Property.ParentEntity != null)
+                        if (Property.ReferenceEntity != null)
                         {
-                            var childProperty = Property.ParentEntity.Properties.SingleOrDefault(prop => prop.Id == expression.ChildPropertyId.Value);
+                            var childProperty = Property.ReferenceEntity.Properties.SingleOrDefault(prop => prop.Id == expression.ReferencePropertyId.Value);
                             return $@"{inputObjectName}.{childProperty.InternalNameCSharp}";
                         }
                     }

@@ -40,12 +40,21 @@ namespace Oven.Request
             if (this.PropertyType == PropertyType.Spatial && !project.IncludeSupportForSpatial)
                 project.IncludeSupportForSpatial = true;
 
-            if (ParentEntityId.HasValue)
+            if (ReferenceEntityId.HasValue)
             {
-                ParentEntity = project.Entities.Single(a => a.Id == ParentEntityId.Value);
+                ReferenceEntity = project.Entities.Single(a => a.Id == ReferenceEntityId.Value);
             }
 
             Entity = entity;
+
+
+            if (FilterExpression != null)
+            {
+                if (!FilterExpression.Resolve(project, out string filterMessages))
+                {
+                    errors.Add(filterMessages);
+                }
+            }
 
             if (errors.Any())
             {

@@ -43,12 +43,12 @@ namespace Oven.Templates.React.Src.Components
 import Button from '@material-ui/core/Button';
 import {{ Link }} from 'react-router-dom';
 
-const CreateButton = ({{ record, reference, target, title = 'Create' }}) => (
+const CreateButton = ({{ record, reference, target, title = 'Create', defaultValues = {{}} }}) => (
     <Button
         component={{Link}}
         to={{{{
             pathname: `/${{reference}}/create`,
-            state: {{ record: {{ [target]: record.id }} }}
+            state: {{ record: {{ ...defaultValues, [target]: record.id }} }}
         }}}}
     >
         {{title}}

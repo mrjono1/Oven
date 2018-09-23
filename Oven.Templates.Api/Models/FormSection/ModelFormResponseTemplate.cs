@@ -62,7 +62,7 @@ namespace Oven.Templates.Api.Models
                     var hasLocalProperty = Screen.Entity.Properties.Any(a => a.Id == formField.Property.FilterExpression.PropertyId);
                     if (!hasLocalProperty)
                     {
-                        var referenceProperty = formField.Property.ParentEntity.Properties.Single(a => a.Id == formField.Property.FilterExpression.ChildPropertyId);
+                        var referenceProperty = formField.Property.ReferenceEntity.Properties.Single(a => a.Id == formField.Property.FilterExpression.ReferencePropertyId);
 
                         properties.Add($@"        /// <summary>
         /// {referenceProperty.Title}

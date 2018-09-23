@@ -51,8 +51,7 @@ namespace Oven.Templates.React.ProjectFiles
     ""build"": ""webpack --colors --display-error-details"",
     ""build:production"": ""npm run clean && npm run build"",
     ""lint"": ""eslint --ext .js --ext .jsx src"",
-    ""start"": ""webpack --watch --mode development --colors"",
-    ""test"": ""bin/test.sh""
+    ""start"": ""webpack --watch --mode development --colors""
   }},
   ""devDependencies"": {{
     ""aspnet-webpack"": ""3.0.0"",

@@ -62,7 +62,7 @@ namespace Oven.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
-                    if (IsCreate && FormField.Property.FilterExpression != null)
+                    if (IsCreate && FormField.Property.FilterExpression != null && FormField.Property.FilterExpression.EntityId == null)
                     {
                         // dont add this type to a create screen
                         return imports;
@@ -172,7 +172,7 @@ namespace Oven.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
-                    if (IsCreate && FormField.Property.FilterExpression != null)
+                    if (IsCreate && FormField.Property.FilterExpression != null && FormField.Property.FilterExpression.EntityId == null)
                     {
                         // dont add this type to a create screen
                         return null;
@@ -270,9 +270,11 @@ namespace Oven.Templates.React.Src.Resources
 
             // Include ...rest
             var rest = "";
+            var includeRest = false;
             if (FormField.VisibilityExpression != null)
             {
                 rest = "{...rest} ";
+                includeRest = true;
             }
 
             // Create Element
@@ -283,24 +285,33 @@ namespace Oven.Templates.React.Src.Resources
                     var filter = "";
                     if (FormField.Property.FilterExpression != null)
                     {
-                        var referenceProperty = FormField.Property.ParentEntity.Properties.Single(a => a.Id == FormField.Property.FilterExpression.ChildPropertyId);
-                        var localProperty = Screen.Entity.Properties.SingleOrDefault(a => a.Id == FormField.Property.FilterExpression.PropertyId);
-
-                        // May be empty if the property is from a parent record so it should be the same as the reference property
-                        // The backend does the hard work here
-                        if (localProperty == null)
+                        var referenceProperty = FormField.Property.ReferenceEntity.Properties.Single(a => a.Id == FormField.Property.FilterExpression.ReferencePropertyId);
+                        
+                        if (FormField.Property.FilterExpression.EntityId == null)
                         {
-                            localProperty = referenceProperty;
-                        }
+                            var localProperty = Screen.Entity.Properties.SingleOrDefault(a => a.Id == FormField.Property.FilterExpression.PropertyId);
 
-                        if (!localProperty.InternalNameJavaScript.Equals("id"))
+                            // May be empty if the property is from a parent record so it should be the same as the reference property
+                            // The backend does the hard work here
+                            if (localProperty == null)
+                            {
+                                localProperty = referenceProperty;
+                            }
+
+                            if (!localProperty.InternalNameJavaScript.Equals("id"))
+                            {
+                                WrapInFormDataConsumer = true;
+                            }
+                            filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: {(WrapInFormDataConsumer ? "formData" : "props") }.{localProperty.InternalNameJavaScript}}}}} ";
+                        }
+                        else
                         {
                             WrapInFormDataConsumer = true;
+                            var entityProperty = FormField.Property.FilterExpression.Entity.Properties.Where(a => a.Id == FormField.Property.FilterExpression.PropertyId).Single();
+                            filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: formData.{entityProperty.InternalNameJavaScript}}}}} ";
                         }
-                        // ToDo: fix this
-                        filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: {(WrapInFormDataConsumer ? "formData" : "props") }.{localProperty.InternalNameJavaScript}}}}} ";
                     }
-                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" reference=""{FormField.Property.ParentEntity.InternalNamePlural}"" {filter}{validate}{rest}>
+                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" reference=""{FormField.Property.ReferenceEntity.InternalNamePlural}"" {filter}{validate}{rest}>
     <SelectInput optionText=""title"" />
 </ReferenceInput>";
                     break;
@@ -315,16 +326,16 @@ namespace Oven.Templates.React.Src.Resources
                 var expressionHelper = new ExpressionHelper(Screen);
                 var expression = expressionHelper.GetExpression(FormField.VisibilityExpression, "formData");
                 WrapInFormDataConsumer = true;
-                element = $@"{{({{ formData, ...rest }}) => 
-    {expression} &&
-{element.IndentLines(8)}
-}}";
+                element = $@"    {expression} &&
+{element.IndentLines(8)}";
             }
 
             if (WrapInFormDataConsumer)
             {
                 return $@"<FormDataConsumer>
+    {{({{ formData{(includeRest ? ", ...rest": "")} }}) => 
 {element.IndentLines(4)}
+    }}
 </FormDataConsumer>";
             }
             else

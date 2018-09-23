@@ -54,18 +54,41 @@ namespace Oven.Templates.React.Src.Resources
             }
 
             string parentPropertyId = null;
-            Entity parentEntity = null;
+            //Entity parentEntity = null;
 
-            var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
-                                  where p.PropertyType == PropertyType.ParentRelationshipOneToMany
-                                  select p).SingleOrDefault();
-            if (parentProperty != null)
+            //var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
+            //                      where p.PropertyType == PropertyType.ParentRelationshipOneToMany
+            //                      select p).SingleOrDefault();
+            //if (parentProperty != null)
+            //{
+            //    parentEntity = (from s in Project.Entities
+            //                    where s.Id == parentProperty.ReferenceEntityId
+            //                    select s).SingleOrDefault();
+
+            //    parentPropertyId = $"{parentEntity.InternalName.Camelize()}Id";
+            //}
+
+            var defaultValues = new List<string>();
+            var defaultValuesString = "";
+
+            var parentEntities = GetParentEntites(ScreenSection.Entity);
+            if (parentEntities.Any())
             {
-                parentEntity = (from s in Project.Entities
-                                where s.Id == parentProperty.ParentEntityId
-                                select s).SingleOrDefault();
-
-                parentPropertyId = $"{parentEntity.InternalName.Camelize()}Id";
+                foreach (var pe in parentEntities)
+                {
+                    if (string.IsNullOrEmpty(parentPropertyId))
+                    {
+                        parentPropertyId = $"{pe.InternalName.Camelize()}Id";
+                    }
+                    else
+                    {
+                        defaultValues.Add($"{pe.InternalName.Camelize()}Id: props.record.{pe.InternalName.Camelize()}Id");
+                    }
+                }
+                if (defaultValues.Any())
+                {
+                    defaultValuesString = $" defaultValues={{{{{string.Join(", ", defaultValues)}}}}}";
+                }
             }
 
             return $@"import React from 'react';
@@ -74,7 +97,7 @@ import CreateButton from './../../components/CreateButton';
 
 const {ScreenSection.InternalName} = (props) => (
     <div>
-        <CreateButton record={{props.record}} reference=""{ScreenSection.Entity.InternalNamePlural}"" target=""{parentPropertyId}"" title=""Create {ScreenSection.Entity.Title}""/>
+        <CreateButton record={{props.record}} reference=""{ScreenSection.Entity.InternalNamePlural}"" target=""{parentPropertyId}"" title=""Create {ScreenSection.Entity.Title}""{defaultValuesString}/>
         <ReferenceManyField
             {{...props}}
             label=""{ScreenSection.Title}""
@@ -91,6 +114,29 @@ const {ScreenSection.InternalName} = (props) => (
 );
 
 export default {ScreenSection.InternalName};";
+        }
+
+        private IEnumerable<Entity> GetParentEntites(Entity entity)
+        {
+            var parentEnities = new List<Entity>();
+            Entity parentEntity = null;
+
+            var parentProperty = (from p in entity.Properties
+                                  where p.PropertyType == PropertyType.ParentRelationshipOneToMany
+                                  select p).SingleOrDefault();
+            if (parentProperty != null)
+            {
+                parentEntity = (from s in Project.Entities
+                                where s.Id == parentProperty.ReferenceEntityId
+                                select s).SingleOrDefault();
+
+                if (parentEntity != null)
+                {
+                    parentEnities.Add(parentEntity);
+                    parentEnities.AddRange(GetParentEntites(parentEntity));
+                }
+            }
+            return parentEnities;
         }
     }
 }

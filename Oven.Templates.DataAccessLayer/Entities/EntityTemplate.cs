@@ -97,7 +97,7 @@ namespace Oven.Templates.DataAccessLayer.Entities
                 where (p.PropertyType == PropertyType.ParentRelationshipOneToMany ||
                 p.PropertyType == PropertyType.ReferenceRelationship ||
                 p.PropertyType == PropertyType.ParentRelationshipOneToOne) &&
-                p.ParentEntityId.Value == Entity.Id
+                p.ReferenceEntityId.Value == Entity.Id
                 select new { e, p }))
             {
                 // can currently only have 1 parent relationship but can have multiple reference relationships

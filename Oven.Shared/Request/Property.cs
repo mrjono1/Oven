@@ -139,7 +139,7 @@ namespace Oven.Request
         /// Parent Entity Identifier
         /// </summary>
         [NonDefault]
-        public Guid? ParentEntityId { get; set; }
+        public Guid? ReferenceEntityId { get; set; }
 
         /// <summary>
         /// Helper Function to get Required
@@ -277,7 +277,7 @@ namespace Oven.Request
         /// Parent Entity
         /// </summary>
         [JsonIgnore]
-        public Entity ParentEntity { get; set; }
+        public Entity ReferenceEntity { get; set; }
 
         /// <summary>
         /// Internal Name C#

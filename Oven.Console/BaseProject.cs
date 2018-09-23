@@ -47,7 +47,7 @@ namespace Oven.ConsoleApp
                                 Title = "Role",
                                 InternalName = "Role",
                                 PropertyType = PropertyType.ParentRelationshipOneToMany,
-                                ParentEntityId = new Guid("{EAC32A99-BEAF-4DE0-AA00-8B9B1093E8F6}"),
+                                ReferenceEntityId = new Guid("{EAC32A99-BEAF-4DE0-AA00-8B9B1093E8F6}"),
                                 ValidationItems = new Validation[]
                                 {
                                     new Validation
@@ -62,7 +62,7 @@ namespace Oven.ConsoleApp
                                 Title = "Group",
                                 InternalName = "Group",
                                 PropertyType = PropertyType.ParentRelationshipOneToMany,
-                                ParentEntityId = new Guid("{2C57831F-B4D4-474F-A094-DA3D307D18CF}"),
+                                ReferenceEntityId = new Guid("{2C57831F-B4D4-474F-A094-DA3D307D18CF}"),
                                 ValidationItems = new Validation[]
                                 {
                                     new Validation
@@ -107,7 +107,7 @@ namespace Oven.ConsoleApp
                                 Title = "Group",
                                 InternalName = "Group",
                                 PropertyType = PropertyType.ParentRelationshipOneToMany,
-                                ParentEntityId = new Guid("{2C57831F-B4D4-474F-A094-DA3D307D18CF}"),
+                                ReferenceEntityId = new Guid("{2C57831F-B4D4-474F-A094-DA3D307D18CF}"),
                                 ValidationItems = new Validation[]
                                 {
                                     new Validation
@@ -122,7 +122,7 @@ namespace Oven.ConsoleApp
                                 Title = "User",
                                 InternalName = "User",
                                 PropertyType = PropertyType.ParentRelationshipOneToMany,
-                                ParentEntityId = new Guid("{0206FF03-BD07-41D7-977D-0472EEBC8908}"),
+                                ReferenceEntityId = new Guid("{0206FF03-BD07-41D7-977D-0472EEBC8908}"),
                                 ValidationItems = new Validation[]
                                 {
                                     new Validation

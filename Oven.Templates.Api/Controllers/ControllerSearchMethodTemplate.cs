@@ -45,7 +45,7 @@ namespace Oven.Templates.Api.Controllers
             if (parentProperty != null)
             {
                 parentEntity = (from s in project.Entities
-                                where s.Id == parentProperty.ParentEntityId
+                                where s.Id == parentProperty.ReferenceEntityId
                                 select s).SingleOrDefault();
                 parentPropertyWhereString = $"where request.{parentEntity.InternalName}Id == item.{parentEntity.InternalName}Id";
             }

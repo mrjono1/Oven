@@ -69,7 +69,7 @@ namespace Oven.Templates.Api.Models.Export
                 where e.Properties != null
                 from p in e.Properties
                 where p.PropertyType == PropertyType.ParentRelationshipOneToMany &&
-                p.ParentEntityId.Value == Entity.Id
+                p.ReferenceEntityId.Value == Entity.Id
                 select new { e, p }))
             {
                 navigationProperties.Add($@"

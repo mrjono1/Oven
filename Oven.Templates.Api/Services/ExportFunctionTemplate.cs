@@ -62,8 +62,8 @@ namespace Oven.Templates.Api.Services
                                     from property in e.Properties
                                     where (property.PropertyType == PropertyType.ParentRelationshipOneToMany ||
                                     property.PropertyType == PropertyType.ParentRelationshipOneToOne ) &&
-                                    property.ParentEntityId.HasValue &&
-                                    property.ParentEntityId == entity.Id
+                                    property.ReferenceEntityId.HasValue &&
+                                    property.ReferenceEntityId == entity.Id
                                     select new
                                     {
                                         Entity = e,

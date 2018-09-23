@@ -40,25 +40,61 @@ namespace Oven.Templates.React.Src.Resources
         public string GetFileContent()
         {
             var imports = new List<string> { "Create", "SimpleForm" };
+            var componentImports = new List<string>();
             var screenSections = new List<string>();
 
+            ScreenSection rootScreenSection = null;
             foreach (var section in Screen.ScreenSections)
             {
                 switch (section.ScreenSectionType)
                 {
                     case ScreenSectionType.Form:
-                        var formSection = new CreateFormSectionPartialTemplate(Screen, section, true);
-                        imports.AddRange(formSection.Imports);
-                        if (!string.IsNullOrEmpty(formSection.Content))
+                        if (rootScreenSection == null)
                         {
-                            screenSections.Add(formSection.Content);
+                            rootScreenSection = section;
+                            var formSection = new CreateFormSectionPartialTemplate(Screen, section, true);
+                            imports.AddRange(formSection.Imports);
+                            if (!string.IsNullOrEmpty(formSection.Content))
+                            {
+                                screenSections.Add(formSection.Content);
+                            }
+                        }
+                        else
+                        {
+                            var formSection = new CreateFormSectionPartialTemplate(Screen, section, true);
+                            if (formSection.Blank)
+                            {
+                                continue;
+                            }
+                            if (section.VisibilityExpression == null)
+                            {
+                                screenSections.Add($@"<Edit{section.InternalName} {{...props}} />");
+                            }
+                            else
+                            {
+                                var expressionHelper = new Helpers.ExpressionHelper(Screen);
+                                var expression = expressionHelper.GetExpression(section.VisibilityExpression, "formData");
+                                screenSections.Add($@"<FormDataConsumer>
+    {{({{ formData }}) => 
+        {expression} &&
+            <Edit{section.InternalName} {{...props}} />
+    }}
+</FormDataConsumer>");
+                                imports.Add("FormDataConsumer");
+                            }
+                            componentImports.Add($@"import Edit{section.InternalName} from './Edit{section.InternalName}';");
                         }
                         break;
                 }
             }
 
+            if (imports.Any())
+            {
+                componentImports.Add($@"import {{ {string.Join(", ", imports.Distinct().OrderBy(a => a))} }} from 'react-admin';");
+            }
+
             return $@"import React from 'react';
-import {{ {string.Join(", ", imports.Distinct().OrderBy(a => a))} }} from 'react-admin';
+{string.Join(Environment.NewLine, componentImports)}
 
 const {Screen.Entity.InternalName}Create = (props) => (
     <Create {{...props}} title=""Create {Screen.Title}"">

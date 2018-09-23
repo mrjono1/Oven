@@ -22,7 +22,7 @@ namespace Oven.Templates.Api.Models.Export
 
             if (property.PropertyType == PropertyType.ReferenceRelationship)
             {
-                var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
+                var relationshipEntity = project.Entities.Where(p => p.Id == property.ReferenceEntityId.Value).First();
                 return $@"        /// <summary>
         /// {property.Title}
         /// </summary>
@@ -57,7 +57,7 @@ namespace Oven.Templates.Api.Models.Export
 
             if (property.PropertyType == PropertyType.ReferenceRelationship)
             {
-                var relationshipEntity = project.Entities.Where(p => p.Id == property.ParentEntityId.Value).First();
+                var relationshipEntity = project.Entities.Where(p => p.Id == property.ReferenceEntityId.Value).First();
                 return $@"            {property.InternalName}Id = {entity.InternalName.Camelize()}.{property.InternalName}Id;";
             }
             else if (property.PropertyType == PropertyType.PrimaryKey)
