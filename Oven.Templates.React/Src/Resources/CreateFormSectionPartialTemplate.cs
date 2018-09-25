@@ -46,6 +46,11 @@ namespace Oven.Templates.React.Src.Resources
                     // dont render parent relationship
                     continue;
                 }
+                else if (field.IsHiddenFromUi)
+                {
+                    // dont render hidden fields
+                    continue;
+                }
                 var template = new CreateEditInputPartialTemplate(Screen, field, isCreate);
                 fields.Add(template.Content());
                 imports.AddRange(template.ReactAdminImports());

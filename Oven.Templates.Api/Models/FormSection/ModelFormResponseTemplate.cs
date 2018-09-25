@@ -1,5 +1,6 @@
 using Oven.Interfaces;
 using Oven.Request;
+using Oven.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,21 +57,6 @@ namespace Oven.Templates.Api.Models
             {
                 var formField = group.First();
                 properties.Add(ModelFormResponsePropertyTemplate.Evaluate(formField));
-
-                if (formField.Property.FilterExpression != null)
-                {
-                    var hasLocalProperty = Screen.Entity.Properties.Any(a => a.Id == formField.Property.FilterExpression.PropertyId);
-                    if (!hasLocalProperty)
-                    {
-                        var referenceProperty = formField.Property.ReferenceEntity.Properties.Single(a => a.Id == formField.Property.FilterExpression.ReferencePropertyId);
-
-                        properties.Add($@"        /// <summary>
-        /// {referenceProperty.Title}
-        /// </summary>
-        [Display(Name = ""{referenceProperty.Title}"")]
-        public {referenceProperty.CsType}  {referenceProperty.InternalNameCSharp} {{ get; set; }}");
-                    }
-                }
             }
 
             if (ChildScreenSections != null)
@@ -82,6 +68,19 @@ namespace Oven.Templates.Api.Models
         /// </summary>
         [Display(Name = ""{childScreenSection.Entity.Title}"")]
         public {childScreenSection.FormResponseClass} {childScreenSection.Entity.InternalName} {{ get; set; }}");
+                }
+            }
+
+            var parentEntities = Screen.Entity.GetParentEntites(Project);
+            if (parentEntities.Any())
+            {
+                foreach (var pe in parentEntities.Skip(1))
+                {
+                    properties.Add($@"        /// <summary>
+        /// {pe.Title}
+        /// </summary>
+        [Display(Name = ""{pe.Title}"")]
+        public Guid {pe.InternalName}Id {{ get; set; }}");
                 }
             }
 

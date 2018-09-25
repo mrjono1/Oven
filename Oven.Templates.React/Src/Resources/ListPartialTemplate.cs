@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using Humanizer;
+using Oven.Shared.Extensions;
 
 namespace Oven.Templates.React.Src.Resources
 {
@@ -54,24 +55,10 @@ namespace Oven.Templates.React.Src.Resources
             }
 
             string parentPropertyId = null;
-            //Entity parentEntity = null;
-
-            //var parentProperty = (from p in ScreenSection.SearchSection.Entity.Properties
-            //                      where p.PropertyType == PropertyType.ParentRelationshipOneToMany
-            //                      select p).SingleOrDefault();
-            //if (parentProperty != null)
-            //{
-            //    parentEntity = (from s in Project.Entities
-            //                    where s.Id == parentProperty.ReferenceEntityId
-            //                    select s).SingleOrDefault();
-
-            //    parentPropertyId = $"{parentEntity.InternalName.Camelize()}Id";
-            //}
-
             var defaultValues = new List<string>();
             var defaultValuesString = "";
 
-            var parentEntities = GetParentEntites(ScreenSection.Entity);
+            var parentEntities = ScreenSection.Entity.GetParentEntites(Project);
             if (parentEntities.Any())
             {
                 foreach (var pe in parentEntities)
@@ -114,29 +101,6 @@ const {ScreenSection.InternalName} = (props) => (
 );
 
 export default {ScreenSection.InternalName};";
-        }
-
-        private IEnumerable<Entity> GetParentEntites(Entity entity)
-        {
-            var parentEnities = new List<Entity>();
-            Entity parentEntity = null;
-
-            var parentProperty = (from p in entity.Properties
-                                  where p.PropertyType == PropertyType.ParentRelationshipOneToMany
-                                  select p).SingleOrDefault();
-            if (parentProperty != null)
-            {
-                parentEntity = (from s in Project.Entities
-                                where s.Id == parentProperty.ReferenceEntityId
-                                select s).SingleOrDefault();
-
-                if (parentEntity != null)
-                {
-                    parentEnities.Add(parentEntity);
-                    parentEnities.AddRange(GetParentEntites(parentEntity));
-                }
-            }
-            return parentEnities;
         }
     }
 }

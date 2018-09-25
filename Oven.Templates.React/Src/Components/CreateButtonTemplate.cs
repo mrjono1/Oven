@@ -48,7 +48,7 @@ const CreateButton = ({{ record, reference, target, title = 'Create', defaultVal
         component={{Link}}
         to={{{{
             pathname: `/${{reference}}/create`,
-            state: {{ record: {{ ...defaultValues, [target]: record.id }} }}
+            state: {{ record: {{ ...defaultValues, [target]: record ? record.id : null }} }}
         }}}}
     >
         {{title}}

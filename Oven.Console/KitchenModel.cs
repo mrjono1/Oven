@@ -780,7 +780,17 @@ namespace Oven
                             Id = new Guid("{3EDDA39A-A700-486D-ABD8-7D9E14C6F550}"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Navigate to screen",
-                            ReferenceEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
+                            ReferenceEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                            FilterExpression = new Expression
+                            {
+                                // Screen
+                                EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                                // Screen.ProjectId
+                                PropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
+                                Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                // Screen.ProjectId
+                                ReferencePropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}")
+                            },
                         },
                         new Property("ScreenSectionType")
                         {
@@ -2144,6 +2154,12 @@ namespace Oven
                                     {
                                         // Navigate To Screen
                                         EntityPropertyId = new Guid("{3EDDA39A-A700-486D-ABD8-7D9E14C6F550}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Screen
+                                        EntityPropertyId = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}"),
+                                        IsHiddenFromUi = true
                                     }
                                 }
                             }
@@ -2370,10 +2386,6 @@ namespace Oven
                             {
                                 FormFields = new FormField[]
                                 {
-                                    new FormField
-                                    {
-                                        EntityPropertyId = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}")
-                                    },
                                     new FormField
                                     {
                                         EntityPropertyId = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}")

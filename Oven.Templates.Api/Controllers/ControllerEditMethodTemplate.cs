@@ -48,16 +48,16 @@ namespace Oven.Templates.Api.Controllers
                         }
 
 
-                        if (formField.Property.FilterExpression != null)
-                        {
-                            var hasLocalProperty = Screen.Entity.Properties.Any(a => a.Id == formField.Property.FilterExpression.PropertyId);
-                            if (!hasLocalProperty)
-                            {
-                                var referenceProperty = formField.Property.ReferenceEntity.Properties.Single(a => a.Id == formField.Property.FilterExpression.ReferencePropertyId);
+                        //if (formField.Property.FilterExpression != null)
+                        //{
+                        //    var hasLocalProperty = Screen.Entity.Properties.Any(a => a.Id == formField.Property.FilterExpression.PropertyId);
+                        //    if (!hasLocalProperty)
+                        //    {
+                        //        var referenceProperty = formField.Property.ReferenceEntity.Properties.Single(a => a.Id == formField.Property.FilterExpression.ReferencePropertyId);
 
-                                properties.Add($"                            {new string(' ', 4 * level)}{referenceProperty.InternalNameCSharp} = {objectName}.{formField.Property.ReferenceEntity.InternalName}.{referenceProperty.InternalNameCSharp}");
-                            }
-                        }
+                        //        properties.Add($"                            {new string(' ', 4 * level)}{referenceProperty.InternalNameCSharp} = {objectName}.{formField.Property.ReferenceEntity.InternalName}.{referenceProperty.InternalNameCSharp}");
+                        //    }
+                        //}
 
                         break;
                     case PropertyType.ParentRelationshipOneToOne:
@@ -96,6 +96,37 @@ namespace Oven.Templates.Api.Controllers
             return properties;
         }
 
+        private IEnumerable<string> GetParentProperties(Entity entity, string objectName, bool first = false)
+        {
+            var propertyMapping = new List<string>();
+
+
+            Entity parentEntity = null;
+
+            var parentProperty = (from p in entity.Properties
+                                  where p.PropertyType == PropertyType.ParentRelationshipOneToMany
+                                  select p).SingleOrDefault();
+            if (parentProperty != null)
+            {
+                parentEntity = (from s in Project.Entities
+                                where s.Id == parentProperty.ReferenceEntityId
+                                select s).SingleOrDefault();
+
+                if (parentEntity != null)
+                {
+                    if (!first)
+                    {
+                        propertyMapping.Add($"{parentEntity.InternalName}Id = {objectName}.{parentEntity.InternalName}Id".IndentLines(28));
+                    }
+
+                    objectName = $"{objectName}.{parentEntity.InternalName}";
+                    propertyMapping.AddRange(GetParentProperties(parentEntity, objectName));
+                }
+            }
+
+            return propertyMapping;
+        }
+
         /// <summary>
         /// GET Verb method
         /// </summary>
@@ -112,7 +143,9 @@ namespace Oven.Templates.Api.Controllers
                     propertyMapping.AddRange(GetPropertiesRecursive(effe, effes));
                 }
             }
-            
+
+            propertyMapping.AddRange(GetParentProperties(Screen.Entity, "item", true));
+
             return $@"
         /// <summary>
         /// {Screen.Title} Get
@@ -168,6 +201,8 @@ namespace Oven.Templates.Api.Controllers
                     propertyMapping.AddRange(GetPropertiesRecursive(effe, effes));
                 }
             }
+
+            propertyMapping.AddRange(GetParentProperties(Screen.Entity, "item", true));
 
             return $@"
         /// <summary>
@@ -364,6 +399,8 @@ namespace Oven.Templates.Api.Controllers
                     propertyMapping.AddRange(GetPropertiesRecursive(effe, effes));
                 }
             }
+
+            propertyMapping.AddRange(GetParentProperties(Screen.Entity, "item", true));
 
             var newRecord = $"            var newRecord = new {Screen.Entity.InternalName}();";
 
