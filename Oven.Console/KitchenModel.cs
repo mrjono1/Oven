@@ -1207,6 +1207,20 @@ namespace Oven
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
+                        new Property("Dummy")
+                        {
+                            Id = new Guid("{8A0F2995-B90C-446E-8199-F7FF5D6B107D}"),
+                            PropertyType = PropertyType.String,
+                            Title = "Dummy",
+                            DefaultStringValue = "Dummy",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
+                        },
                         new Property()
                         {
                             Id = new Guid("{381E1C63-004D-4AAB-B41D-86D62D39A7F9}"),
@@ -1258,8 +1272,21 @@ namespace Oven
                             PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Screen Section",
                             ReferenceEntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}")
+                        },
+                        new Property("Dummy")
+                        {
+                            Id = new Guid("{4641F0DF-8380-4633-9390-3E3E59B54118}"),
+                            PropertyType = PropertyType.String,
+                            Title = "Dummy",
+                            DefaultStringValue = "Dummy",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    ValidationType = ValidationType.Required
+                                }
+                            }
                         }
-                        // At the moment it only has a collection of Search Columns
                     }
                 },
 #endregion
@@ -2207,7 +2234,13 @@ namespace Oven
                             },
                             FormSection = new FormSection
                             {
-                                FormFields = new FormField[]{ }
+                                FormFields = new FormField[]
+                                {
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{8A0F2995-B90C-446E-8199-F7FF5D6B107D}")
+                                    }
+                                }
                             }
                         },
                         new ScreenSection
@@ -2260,7 +2293,13 @@ namespace Oven
                             },
                             FormSection = new FormSection
                             {
-                                FormFields = new FormField[]{ }
+                                FormFields = new FormField[]
+                                {
+                                    new FormField
+                                    {
+                                        EntityPropertyId = new Guid("{4641F0DF-8380-4633-9390-3E3E59B54118}")
+                                    }
+                                }
                             }
                         },
                         new ScreenSection

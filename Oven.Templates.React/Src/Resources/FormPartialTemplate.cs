@@ -44,8 +44,10 @@ namespace Oven.Templates.React.Src.Resources
         public string GetFileContent()
         {
             var imports = new List<string>();
+            var constants = new List<string>();
 
             var formSection = new CreateFormSectionPartialTemplate(Screen, ScreenSection, IsCreate);
+            constants.AddRange(formSection.Constants);
 
             if (formSection.Blank)
             {
@@ -54,8 +56,16 @@ namespace Oven.Templates.React.Src.Resources
 
             imports.AddRange(formSection.Imports);
 
+            var source = "";
+            if (ScreenSection.ParentScreenSectionId.HasValue)
+            {
+                source = $@" source=""{ScreenSection.Entity.InternalName.Camelize()}""";
+            }
+
             return $@"import React from 'react';
 import {{ {string.Join(", ", imports.Distinct().OrderBy(a => a))} }} from 'react-admin';
+
+{string.Join(Environment.NewLine, constants)}
 
 const {(IsCreate ? "Create" : "Edit")}{ScreenSection.InternalName} = ({(formSection.Content.Contains("{...props}") ? "props" : "")}) => (
     <div>

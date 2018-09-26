@@ -43,6 +43,7 @@ namespace Oven.Templates.React.Src.Resources
 
             var screenSections = new List<string>();
             var componentImports = new List<string>();
+            var constants = new List<string>();
 
             ScreenSection rootScreenSection = null;
             foreach (var section in Screen.ScreenSections)
@@ -55,6 +56,7 @@ namespace Oven.Templates.React.Src.Resources
                             rootScreenSection = section;
                             var formSection = new CreateFormSectionPartialTemplate(Screen, section, false);
                             imports.AddRange(formSection.Imports);
+                            constants.AddRange(formSection.Constants);
                             if (!formSection.Blank)
                             {
                                 screenSections.Add(formSection.Content);
@@ -63,6 +65,7 @@ namespace Oven.Templates.React.Src.Resources
                         else
                         {
                             var formSection = new CreateFormSectionPartialTemplate(Screen, section, false);
+                            constants.AddRange(formSection.Constants);
                             if (formSection.Blank)
                             {
                                 continue;
@@ -118,6 +121,7 @@ namespace Oven.Templates.React.Src.Resources
 import {{ {string.Join(", ", imports.Distinct().OrderBy(a => a))} }} from 'react-admin';
 {string.Join(Environment.NewLine, componentImports)}
 
+{string.Join(Environment.NewLine, constants)}
 const DynamicTitle = ({{ record }}) => {{
     return <span>{Screen.Title} {{record ? ` - ${{record.title}}` : ''}}</span>;
 }};

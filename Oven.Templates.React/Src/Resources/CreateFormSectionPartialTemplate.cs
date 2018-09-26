@@ -16,6 +16,7 @@ namespace Oven.Templates.React.Src.Resources
         private readonly Screen Screen;
         private readonly ScreenSection ScreenSection;
         public IEnumerable<string> Imports { get; private set; }
+        public IEnumerable<string> Constants { get; private set; }
         public string Content { get; private set; }
         public bool Blank { get; private set; } = true;
 
@@ -34,6 +35,14 @@ namespace Oven.Templates.React.Src.Resources
         {
             var fields = new List<string>();
             var imports = new List<string>();
+            var constants = new List<string>();
+
+            var source = "";
+            if (ScreenSection.ParentScreenSectionId.HasValue)
+            {
+                source = $@"{ScreenSection.Entity.InternalName.Camelize()}.";
+            }
+
             foreach (var field in ScreenSection.FormSection.FormFields)
             {
                 if (field.PropertyType == PropertyType.PrimaryKey)
@@ -51,9 +60,10 @@ namespace Oven.Templates.React.Src.Resources
                     // dont render hidden fields
                     continue;
                 }
-                var template = new CreateEditInputPartialTemplate(Screen, field, isCreate);
+                var template = new CreateEditInputPartialTemplate(Screen, field, isCreate, source);
                 fields.Add(template.Content());
                 imports.AddRange(template.ReactAdminImports());
+                constants.AddRange(template.Constants);
 
                 if (template.WrapInFormDataConsumer)
                 {
@@ -67,6 +77,7 @@ namespace Oven.Templates.React.Src.Resources
             }
 
             Imports = imports;
+            Constants = constants;
         }
     }
 }

@@ -16,17 +16,20 @@ namespace Oven.Templates.React.Src.Resources
         private readonly Screen Screen;
         private readonly FormField FormField;
         private readonly bool IsCreate;
+        private readonly string Source;
 
         public bool WrapInFormDataConsumer { get; private set; }
+        public List<string> Constants { get; private set; } = new List<string>();
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public CreateEditInputPartialTemplate(Screen screen, FormField formField, bool isCreate)
+        public CreateEditInputPartialTemplate(Screen screen, FormField formField, bool isCreate, string source)
         {
             Screen = screen;
             FormField = formField;
             IsCreate = isCreate;
+            Source = source;
         }
 
 
@@ -142,7 +145,7 @@ namespace Oven.Templates.React.Src.Resources
                     type = "TextInput";
                     if (!string.IsNullOrWhiteSpace(FormField.Property.DefaultStringValue))
                     {
-                        defaultValue = $@"""{defaultValue}""";
+                        defaultValue = $@"""{FormField.Property.DefaultStringValue}""";
                     }
                     break;
                 case PropertyType.Integer:
@@ -257,7 +260,8 @@ namespace Oven.Templates.React.Src.Resources
                     }
                     else
                     {
-                        validate = $@"validate={{[{string.Join(", ", validationList)}]}} ";
+                        Constants.Add($@"const validate{FormField.Property.InternalName} = [{string.Join(", ", validationList)}];");
+                        validate = $@"validate={{validate{FormField.Property.InternalName}}} ";
                     }
                 }
             }
@@ -311,12 +315,12 @@ namespace Oven.Templates.React.Src.Resources
                             filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: formData.{entityProperty.InternalNameJavaScript}}}}} ";
                         }
                     }
-                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" reference=""{FormField.Property.ReferenceEntity.InternalNamePlural}"" {filter}{validate}{rest}>
+                    element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{Source}{FormField.InternalNameJavaScript}"" reference=""{FormField.Property.ReferenceEntity.InternalNamePlural}"" {filter}{validate}{rest}>
     <SelectInput optionText=""title"" />
 </ReferenceInput>";
                     break;
                 default:
-                    element = $@"<{type} title=""{FormField.TitleValue}"" source=""{FormField.InternalNameJavaScript}"" {validate}{defaultValue}{rest}/>";
+                    element = $@"<{type} title=""{FormField.TitleValue}"" source=""{Source}{FormField.InternalNameJavaScript}"" {validate}{defaultValue}{rest}/>";
                     break;
             }
             

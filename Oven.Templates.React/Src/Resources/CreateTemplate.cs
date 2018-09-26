@@ -42,6 +42,7 @@ namespace Oven.Templates.React.Src.Resources
             var imports = new List<string> { "Create", "SimpleForm" };
             var componentImports = new List<string>();
             var screenSections = new List<string>();
+            var constants = new List<string>();
 
             ScreenSection rootScreenSection = null;
             foreach (var section in Screen.ScreenSections)
@@ -54,6 +55,7 @@ namespace Oven.Templates.React.Src.Resources
                             rootScreenSection = section;
                             var formSection = new CreateFormSectionPartialTemplate(Screen, section, true);
                             imports.AddRange(formSection.Imports);
+                            constants.AddRange(formSection.Constants);
                             if (!string.IsNullOrEmpty(formSection.Content))
                             {
                                 screenSections.Add(formSection.Content);
@@ -62,6 +64,7 @@ namespace Oven.Templates.React.Src.Resources
                         else
                         {
                             var formSection = new CreateFormSectionPartialTemplate(Screen, section, true);
+                            constants.AddRange(formSection.Constants);
                             if (formSection.Blank)
                             {
                                 continue;
@@ -95,6 +98,8 @@ namespace Oven.Templates.React.Src.Resources
 
             return $@"import React from 'react';
 {string.Join(Environment.NewLine, componentImports)}
+
+{string.Join(Environment.NewLine, constants)}
 
 const {Screen.Entity.InternalName}Create = (props) => (
     <Create {{...props}} title=""Create {Screen.Title}"">

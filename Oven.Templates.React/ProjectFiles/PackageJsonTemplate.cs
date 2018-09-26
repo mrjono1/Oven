@@ -113,7 +113,7 @@ namespace Oven.Templates.React.ProjectFiles
     ""moment"": ""^2.20.1"", 
     ""prop-types"": ""15.6.2"",
     ""react"": ""16.3.2"",
-    ""react-admin"": ""2.2.3"",
+    ""react-admin"": ""2.3.2"",
     ""react-dom"": ""~16.3.0"",
     ""react-redux"": ""5.0.7"",
     ""react-router"": ""^4.2.0"",
