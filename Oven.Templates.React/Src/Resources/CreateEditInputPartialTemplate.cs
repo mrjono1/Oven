@@ -283,6 +283,7 @@ namespace Oven.Templates.React.Src.Resources
 
             // Create Element
             var element = "";
+            var expressionItems = new List<string>();
             switch (FormField.PropertyType)
             {
                 case PropertyType.ReferenceRelationship:
@@ -307,12 +308,14 @@ namespace Oven.Templates.React.Src.Resources
                                 WrapInFormDataConsumer = true;
                             }
                             filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: {(WrapInFormDataConsumer ? "formData" : "props") }.{localProperty.InternalNameJavaScript}}}}} ";
+                            expressionItems.Add($@"{(WrapInFormDataConsumer ? "formData" : "props") }.{localProperty.InternalNameJavaScript}");
                         }
                         else
                         {
                             WrapInFormDataConsumer = true;
                             var entityProperty = FormField.Property.FilterExpression.Entity.Properties.Where(a => a.Id == FormField.Property.FilterExpression.PropertyId).Single();
                             filter = $@"filter={{{{{referenceProperty.InternalNameJavaScript}: formData.{entityProperty.InternalNameJavaScript}}}}} ";
+                            expressionItems.Add($"formData.{entityProperty.InternalNameJavaScript}");
                         }
                     }
                     element = $@"<ReferenceInput title=""{FormField.TitleValue}"" source=""{Source}{FormField.InternalNameJavaScript}"" reference=""{FormField.Property.ReferenceEntity.InternalNamePlural}"" {filter}{validate}{rest}>
@@ -328,17 +331,20 @@ namespace Oven.Templates.React.Src.Resources
             if (FormField.VisibilityExpression != null)
             {
                 var expressionHelper = new ExpressionHelper(Screen);
-                var expression = expressionHelper.GetExpression(FormField.VisibilityExpression, "formData");
+                expressionItems.Add(expressionHelper.GetExpression(FormField.VisibilityExpression, "formData"));
                 WrapInFormDataConsumer = true;
-                element = $@"    {expression} &&
-{element.IndentLines(8)}";
             }
 
             if (WrapInFormDataConsumer)
             {
+                if (expressionItems.Any())
+                {
+                    element = $@"{string.Join(string.Join(Environment.NewLine, "&&"), expressionItems)} &&
+{element}";
+                }
                 return $@"<FormDataConsumer>
     {{({{ formData{(includeRest ? ", ...rest": "")} }}) => 
-{element.IndentLines(4)}
+{element.IndentLines(8)}
     }}
 </FormDataConsumer>";
             }
