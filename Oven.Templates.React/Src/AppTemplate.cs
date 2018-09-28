@@ -73,14 +73,18 @@ namespace Oven.Templates.React.Src
 import {{ Admin, Resource }} from 'react-admin';
 import CustomLayout from './Layout';
 import jsonServerProvider from './RestProvider';
+import createHistory from 'history/createBrowserHistory';
 {string.Join(Environment.NewLine, imports)}
+
+const history = createHistory();
 
 const App = () => 
     <Admin 
         title=""{Project.Title}""
         dataProvider={{jsonServerProvider('/api')}}
         locale=""en"" 
-        appLayout={{CustomLayout}}>
+        appLayout={{CustomLayout}}
+        history={{history}}>
 {string.Join(Environment.NewLine, resources)}
     </Admin>;
 

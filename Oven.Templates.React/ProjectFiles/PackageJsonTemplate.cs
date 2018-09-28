@@ -109,6 +109,7 @@ namespace Oven.Templates.React.ProjectFiles
     ""@material-ui/core"": ""1.5.1"",
     ""@material-ui/icons"": ""2.0.3"",
     ""axios"": ""^0.17.1"",
+    ""history"": ""4.7.2"",
     ""localforage"": ""^1.5.6"",
     ""moment"": ""^2.20.1"", 
     ""prop-types"": ""15.6.2"",
