@@ -60,6 +60,25 @@ namespace Oven.Templates.React.Src.Resources
                             }
                         }
                         break;
+                    case ScreenType.Html:
+                        foreach (var screenSection in screen.ScreenSections)
+                        {
+                            switch (screenSection.ScreenSectionType)
+                            {
+                                case ScreenSectionType.Form:
+                                    break;
+                                case ScreenSectionType.Search:
+                                    break;
+                                case ScreenSectionType.MenuList:
+                                    templates.Add(new MenuListTemplate(Project, screen, screenSection));
+                                    break;
+                                case ScreenSectionType.Html:
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        break;
                 }
             }
 

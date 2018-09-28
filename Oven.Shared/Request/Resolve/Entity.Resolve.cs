@@ -76,7 +76,7 @@ namespace Oven.Request
                         EntityId = Id,
                         Title = Title.Pluralize(),
                         ScreenType = ScreenType.Search,
-                        Path = InternalNamePlural.Kebaberize(),
+                        Path = InternalNamePlural,
                         Template = ScreenTemplate.Reference,
                         ScreenSections = new ScreenSection[]
                         {
@@ -97,7 +97,7 @@ namespace Oven.Request
                         EntityId = Id,
                         Title = Title,
                         ScreenType = ScreenType.Form,
-                        Path = InternalName.Kebaberize(),
+                        Path = InternalName,
                         ScreenSections = new ScreenSection[]
                         {
                             new ScreenSection

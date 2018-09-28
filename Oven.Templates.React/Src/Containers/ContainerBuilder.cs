@@ -23,13 +23,8 @@ namespace Oven.Templates.React.Src.Containers
         {
             var templates = new List<ITemplate>
             {
-                new App.AppTemplate(Project)
+                //new AdminMenuTemplate(Project)
             };
-
-            foreach (var screen in Project.Screens)
-            {
-                templates.Add(new IndexTemplate(Project, screen));
-            }
 
             return templates;
         }

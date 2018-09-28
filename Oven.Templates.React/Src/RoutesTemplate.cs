@@ -44,24 +44,10 @@ namespace Oven.Templates.React.Src
         {
             var imports = new List<string>();
             var routes = new List<string>();
-            foreach (var screen in Project.Screens)
+            foreach (var screen in Project.Screens.Where(a => a.ScreenType != ScreenType.Form && a.ScreenType != ScreenType.Search))
             {
-                imports.Add($"import {screen.InternalName}Page from '../containers/{screen.InternalName}Page';");
-                if (screen.ScreenType == ScreenType.Form)
-                {
-                    routes.Add($@"<Route exact path=""/{screen.Path}/:id"" component={{{screen.InternalName}Page}} />".IndentLines(4));
-                }
-                else
-                {
-                    routes.Add($@"<Route exact path=""/{screen.Path}"" component={{{screen.InternalName}Page}} />".IndentLines(4));
-                }
-            }
-
-            if (Project.DefaultScreenId.HasValue)
-            {
-                var defaultScreen = Project.Screens.Single(a => a.Id == Project.DefaultScreenId.Value);
-                routes.Insert(0, $@"<Route exact path=""/"" component={{{defaultScreen.InternalName}Page}} />".IndentLines(4));
-                // Import should already be added above
+                imports.Add($"import {screen.InternalName} from './containers/{screen.InternalName}';");
+                routes.Add($@"<Route exact path=""/{screen.Path}"" component={{{screen.InternalName}}} />");
             }
 
             return $@"/**
@@ -73,7 +59,7 @@ import {{ Route }} from 'react-router-dom';
 {string.Join(Environment.NewLine, imports.OrderBy(a => a))}
 
 export default [
-{string.Join(string.Concat(",", Environment.NewLine), routes.OrderBy(a => a))}
+{string.Join(string.Concat(",", Environment.NewLine), routes.OrderBy(a => a)).IndentLines(4)}
 ];";
         }
     }

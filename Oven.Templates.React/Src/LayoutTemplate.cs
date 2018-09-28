@@ -42,6 +42,7 @@ namespace Oven.Templates.React.Src
             return @"import React from 'react';
 import { connect } from 'react-redux';
 import { Layout } from 'react-admin';
+import { CustomMenu } from './Menu';
 
 const darkTheme = {
     palette: {
@@ -62,6 +63,7 @@ const lightTheme = {
 
 const CustomLayout = (props) => <Layout 
     {...props}
+    menu={CustomMenu}
 />;
 
 export default connect(

@@ -25,18 +25,12 @@ namespace Oven.Templates.React.Src
         /// <summary>
         /// Get file name
         /// </summary>
-        public string GetFileName()
-        {
-            return "App.jsx";
-        }
+        public string GetFileName() => "App.jsx";
 
         /// <summary>
         /// Get file content
         /// </summary>
-        public string[] GetFilePath()
-        {
-            return new string[] { "src" };
-        }
+        public string[] GetFilePath() => new string[] { "src" };
 
         /// <summary>
         /// Get file content
@@ -74,17 +68,19 @@ import {{ Admin, Resource }} from 'react-admin';
 import CustomLayout from './Layout';
 import jsonServerProvider from './RestProvider';
 import createHistory from 'history/createBrowserHistory';
+import customRoutes from './Routes';
 {string.Join(Environment.NewLine, imports)}
 
 const history = createHistory();
 
 const App = () => 
     <Admin 
-        title=""{Project.Title}""
-        dataProvider={{jsonServerProvider('/api')}}
-        locale=""en"" 
         appLayout={{CustomLayout}}
-        history={{history}}>
+        dataProvider={{jsonServerProvider('/api')}}
+        customRoutes={{customRoutes}}
+        history={{history}}
+        locale=""en"" 
+        title=""{Project.Title}"">
 {string.Join(Environment.NewLine, resources)}
     </Admin>;
 
