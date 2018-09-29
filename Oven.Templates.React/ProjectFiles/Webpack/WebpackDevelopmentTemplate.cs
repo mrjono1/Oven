@@ -39,10 +39,7 @@ namespace Oven.Templates.React.ProjectFiles.Webpack
         public string GetFileContent()
         {
             return @"const webpack = require('webpack');
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const precss = require('precss');
-const autoprefixer = require('autoprefixer');
 
 module.exports = {
     mode: 'development',
@@ -53,41 +50,6 @@ module.exports = {
     ],
     output: {
         publicPath: ''
-    },
-    
-    module: {
-        noParse: [new RegExp('node_modules/localforage/dist/localforage.js')],
-        rules: [{
-            test: /\.scss$/,
-            use: [
-                { loader: 'style-loader' },
-                {
-                    loader: 'css-loader',
-                    options: {
-                        localIdentName: '[hash:base64:5][path]-[local]'
-                    }
-                },{
-                    loader: 'postcss-loader',
-                    options: {
-                        plugins: function () {
-                            return [
-                                precss,
-                                autoprefixer
-                            ];
-                        }
-                    }
-                },{
-                    loader: 'sass-loader',
-                    options: {
-                        sourceMap: true,
-                        data: '@import ""variables"";',
-                        includePaths: [
-                            path.join(__dirname, '..', '/src/containers/App/styles')
-                        ]
-                    }
-                }
-            ]
-        }]
     },
     
     plugins: [

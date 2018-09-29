@@ -40,8 +40,6 @@ namespace Oven.Templates.React.ProjectFiles.Webpack
         public string GetFileContent()
         {
             return @"const webpack = require('webpack');
-const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
@@ -52,32 +50,6 @@ module.exports = {
         publicPath: ''
     },
     
-    module: {
-        rules: [{
-            test: /\.scss$/,
-            use: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: [
-                    {
-                        loader: 'css-loader'
-                    },
-                    {
-                        loader: 'postcss-loader'
-                    }, 
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            sourceMap: true,
-                            data: '@import ""variables"";',
-                            includePaths: [
-                                path.join(__dirname, '..', '/src/containers/App/styles')
-                            ]
-                        }
-                    }]
-            })
-        }]
-    },
-    
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
@@ -85,7 +57,6 @@ module.exports = {
             },
             __DEVELOPMENT__: false
         }),
-        new ExtractTextPlugin({ filename: 'bundle.css'}),
         new HtmlWebpackPlugin({
             template: 'Views/Shared/_LayoutTemplate.cshtml',
             filename: '../Views/Shared/_Layout.cshtml',

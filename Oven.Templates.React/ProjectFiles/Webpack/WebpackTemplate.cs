@@ -59,7 +59,7 @@ const common = {
     },
 
     resolve: {
-        extensions: ['.jsx', '.js', '.json', '.scss'],
+        extensions: ['.jsx', '.js', '.json'],
         modules: ['node_modules', PATHS.app]
     },
     optimization: {
