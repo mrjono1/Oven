@@ -128,7 +128,7 @@ const DynamicTitle = ({{ record }}) => {{
 
 const {Screen.Entity.InternalName}Edit = (props) => (
     <Edit {{...props}} title={{< DynamicTitle />}}>
-        <SimpleForm>
+        <SimpleForm redirect=""edit"">
 {string.Join(Environment.NewLine, screenSections).IndentLines(12)}
         </SimpleForm>
     </Edit>

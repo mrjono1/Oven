@@ -84,7 +84,7 @@ import CreateButton from './../../components/CreateButton';
 
 const {ScreenSection.InternalName} = (props) => (
     <div>
-        <CreateButton record={{props.record}} reference=""{ScreenSection.Entity.InternalNamePlural}"" target=""{parentPropertyId}"" title=""Create {ScreenSection.Entity.Title}""{defaultValuesString}/>
+        <CreateButton record={{!props.record ? {{}} : props.record}} reference=""{ScreenSection.Entity.InternalNamePlural}"" target=""{parentPropertyId}"" title=""Create {ScreenSection.Entity.Title}""{defaultValuesString}/>
         <ReferenceManyField
             {{...props}}
             label=""{ScreenSection.Title}""
