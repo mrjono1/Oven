@@ -46,11 +46,11 @@ namespace Oven.Templates.React.ProjectFiles
             
             var nugetReferences = new Dictionary<string, string>
             {
-                { "Microsoft.AspNetCore.All", "2.0.8" },
+                { "Microsoft.AspNetCore.All", "2.1.4" },
                 { "Microsoft.EntityFrameworkCore", "2.1.3"},
-                { "Swashbuckle.AspNetCore", "1.1.0" },
-                { "Swashbuckle.AspNetCore.Swagger", "1.1.0" },
-                { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" }
+                { "Swashbuckle.AspNetCore", "3.0.0" },
+                { "Swashbuckle.AspNetCore.Swagger", "3.0.0" },
+                { "Swashbuckle.AspNetCore.SwaggerUi", "3.0.0" }
             };
 
             if (Project.UseMySql)
@@ -70,7 +70,7 @@ namespace Oven.Templates.React.ProjectFiles
             return $@"<Project Sdk=""Microsoft.NET.Sdk.Web"">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>

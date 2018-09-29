@@ -46,12 +46,12 @@ namespace Oven.Templates.Api.ProjectFiles
             
             var nugetReferences = new Dictionary<string, string>
             {
-                { "Microsoft.AspNetCore.All", "2.0.8" },
+                { "Microsoft.AspNetCore.All", "2.1.4" },
                 { "Microsoft.EntityFrameworkCore", "2.1.3"},
-                { "Swashbuckle.AspNetCore", "1.1.0" },
-                { "Swashbuckle.AspNetCore.Swagger", "1.1.0" },
-                { "Swashbuckle.AspNetCore.SwaggerUi", "1.1.0" },
-                { "RestSharp", "106.2.1"}
+                { "Swashbuckle.AspNetCore", "3.0.0" },
+                { "Swashbuckle.AspNetCore.Swagger", "3.0.0" },
+                { "Swashbuckle.AspNetCore.SwaggerUi", "3.0.0" },
+                { "RestSharp", "106.4.2"}
             };
 
             if (!Project.UsePutForUpdate)
@@ -75,7 +75,7 @@ namespace Oven.Templates.Api.ProjectFiles
 
             return $@"<Project Sdk=""Microsoft.NET.Sdk"">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <Version>{Project.MajorVersion}.{Project.MinorVersion}.{Project.BuildVersion}</Version>
   </PropertyGroup>
 

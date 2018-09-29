@@ -101,10 +101,9 @@ namespace Oven.Templates.React.ProjectFiles
   ""dependencies"": {{
     ""@material-ui/core"": ""1.5.1"",
     ""@material-ui/icons"": ""2.0.3"",
-    ""axios"": ""^0.17.1"",
     ""history"": ""4.7.2"",
     ""localforage"": ""^1.5.6"",
-    ""moment"": ""^2.20.1"", 
+    ""moment"": ""^2.20.1"",
     ""prop-types"": ""15.6.2"",
     ""react"": ""16.3.2"",
     ""react-admin"": ""2.3.2"",
