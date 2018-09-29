@@ -1,5 +1,8 @@
 using Oven.Interfaces;
 using Oven.Request;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Oven.Templates.React.Src
 {
@@ -39,36 +42,38 @@ namespace Oven.Templates.React.Src
         /// </summary>
         public string GetFileContent()
         {
+            var menuListItems = new List<string>();
+            if (Project.MenuItems != null)
+            {
+                foreach (var menuItem in Project.MenuItems)
+                {
+                    var screen = Project.Screens.Single(a => a.Id == menuItem.ScreenId);
+                    var path = screen.Path ?? menuItem.Path;
+                    if (screen.ScreenType == ScreenType.Search)
+                    {
+                        path = screen.Entity.InternalNamePlural;
+                    }
+                    menuListItems.Add($@"<MenuItemLink 
+    to=""/{path}""
+    primaryText=""{menuItem.Title ?? screen.Title}""
+    leftIcon={{<LabelIcon />}}
+    onClick={{onMenuClick}}
+/>");
+                }
+            }
+
             return $@"import React from 'react';
-import {{ connect }} from 'react-redux';
 import {{ MenuItemLink, getResources }} from 'react-admin';
 import {{ withRouter }} from 'react-router-dom';
 import LabelIcon from '@material-ui/icons/Label';
 
-const CustomMenu = ({{ resources, onMenuClick }}) => (
+const CustomMenu = ({{ onMenuClick }}) => (
     <div>
-        {{resources.map(resource => (
-            <MenuItemLink 
-                to={{`/${{resource.name}}`}}
-                primaryText={{resource.options.label}}
-                leftIcon={{<LabelIcon />}}
-                onClick={{onMenuClick}}
-            />
-        ))}}
-        <MenuItemLink 
-            to=""/custom-route""
-            primaryText=""Miscellaneous""
-            leftIcon={{<LabelIcon />}}
-            onClick={{onMenuClick}}
-        />
+{string.Join(Environment.NewLine, menuListItems).IndentLines(8)}
     </div>
 );
 
-const mapStateToProps = state => ({{
-    resources: getResources(state)
-}});
-
-export default withRouter(connect(mapStateToProps)(CustomMenu));";
+export default withRouter(CustomMenu);";
         }
     }
 }

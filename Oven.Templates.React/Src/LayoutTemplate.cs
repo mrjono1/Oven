@@ -42,7 +42,7 @@ namespace Oven.Templates.React.Src
             return @"import React from 'react';
 import { connect } from 'react-redux';
 import { Layout } from 'react-admin';
-import { CustomMenu } from './Menu';
+import CustomMenu from './Menu';
 
 const darkTheme = {
     palette: {

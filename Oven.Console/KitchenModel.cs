@@ -2698,15 +2698,15 @@ namespace Oven
             };
 
             #region MENU ITEMS
-            //project.MenuItems = new MenuItem[]
-            //{
-            //    new MenuItem
-            //    {
-            //        Title = "Projects",
-            //        ScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
-            //        Icon = "glyphicon glyphicon-th-list"
-            //    }
-            //};
+            project.MenuItems = new MenuItem[]
+            {
+                new MenuItem
+                {
+                    Title = "Projects",
+                    ScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
+                    Icon = "glyphicon glyphicon-th-list"
+                }
+            };
             #endregion
 
             #region SERVICES
