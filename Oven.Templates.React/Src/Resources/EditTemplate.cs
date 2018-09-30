@@ -79,9 +79,9 @@ namespace Oven.Templates.React.Src.Resources
                                 var expressionHelper = new Helpers.ExpressionHelper(Screen);
                                 var expression = expressionHelper.GetExpression(section.VisibilityExpression, "formData");
                                 screenSections.Add($@"<FormDataConsumer>
-    {{({{ formData }}) => 
+    {{({{ formData, ...rest }}) => 
         {expression} &&
-            <Edit{section.InternalName} {{...props}} />
+            <Edit{section.InternalName} {{...props}} {{...rest}} />
     }}
 </FormDataConsumer>");
                                 imports.Add("FormDataConsumer");
@@ -99,9 +99,9 @@ namespace Oven.Templates.React.Src.Resources
                             var expressionHelper = new Helpers.ExpressionHelper(Screen);
                             var expression = expressionHelper.GetExpression(section.VisibilityExpression, "formData");
                             screenSections.Add($@"<FormDataConsumer>
-    {{({{ formData }}) => 
+    {{({{ formData, ...rest }}) => 
         {expression} &&
-            <{section.InternalName} {{...props}} />
+            <{section.InternalName} {{...props}} {{...rest}} />
     }}
 </FormDataConsumer>");
                             imports.Add("FormDataConsumer");
