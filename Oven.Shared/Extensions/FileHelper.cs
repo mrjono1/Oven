@@ -137,6 +137,25 @@ namespace Oven
             }
         }
         
+        private static bool IsHashEqual(byte[] firstHash, byte[] secondHash)
+        {
+            if (firstHash == null && secondHash != null)
+            {
+                return true;
+            }
+            else if (firstHash != null && secondHash == null)
+            {
+                return true;
+            }
+
+            for (int i = 0; i < firstHash.Length; i++)
+            {
+                if (firstHash[i] != secondHash[i])
+                    return false;
+            }
+            return true;
+        }
+
         /// <summary>
         /// Write text to a file
         /// </summary>
@@ -146,6 +165,30 @@ namespace Oven
             {
                 FilePath = path
             };
+
+            byte[] existingFile = null;
+            byte[] newFile = null;
+            if (File.Exists(result.FilePath))
+            {
+                var existingFileInfo = new FileInfo(path);
+                using (var existingStream = existingFileInfo.OpenRead())
+                {
+                    existingFile = System.Security.Cryptography.MD5.Create().ComputeHash(existingStream);
+                }
+                newFile = System.Security.Cryptography.MD5.Create().ComputeHash(System.Text.Encoding.UTF8.GetBytes(contents));
+            }
+
+            if (existingFile == null && newFile == null)
+            {
+                // Then a new file so continue
+            }
+            else if (IsHashEqual(existingFile, newFile))
+            {
+                // files the same so skip
+                return result;
+            }
+            // else files different so continue
+
             try
             {
                 await File.WriteAllTextAsync(path, contents);
