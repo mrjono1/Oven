@@ -45,8 +45,7 @@ namespace Oven.Templates.React.Src.Resources
                             switch (screenSection.ScreenSectionType)
                             {
                                 case ScreenSectionType.Form:
-                                    templates.Add(new FormPartialTemplate(Project, screen, screenSection, true));
-                                    templates.Add(new FormPartialTemplate(Project, screen, screenSection, false));
+                                    templates.Add(new FormPartialTemplate(Project, screen, screenSection));
                                     break;
                                 case ScreenSectionType.Search:
                                     templates.Add(new ListPartialTemplate(Project, screen, screenSection));

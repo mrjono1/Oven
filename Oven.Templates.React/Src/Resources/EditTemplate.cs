@@ -72,7 +72,7 @@ namespace Oven.Templates.React.Src.Resources
                             }
                             if (section.VisibilityExpression == null)
                             {
-                                screenSections.Add($@"<Edit{section.InternalName} {{...props}} />");
+                                screenSections.Add($@"<{section.InternalName} {{...props}} />");
                             }
                             else
                             {
@@ -81,12 +81,12 @@ namespace Oven.Templates.React.Src.Resources
                                 screenSections.Add($@"<FormDataConsumer>
     {{({{ formData, ...rest }}) => 
         {expression} &&
-            <Edit{section.InternalName} {{...props}} {{...rest}} />
+            <{section.InternalName} {{...props}} {{...rest}} />
     }}
 </FormDataConsumer>");
                                 imports.Add("FormDataConsumer");
                             }
-                            componentImports.Add($@"import Edit{section.InternalName} from './Edit{section.InternalName}';");
+                            componentImports.Add($@"import {section.InternalName} from './{section.InternalName}';");
                         }
                         break;
                     case ScreenSectionType.Search:

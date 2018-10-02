@@ -15,23 +15,21 @@ namespace Oven.Templates.React.Src.Resources
         private readonly Project Project;
         private readonly Screen Screen;
         private readonly ScreenSection ScreenSection;
-        private readonly bool IsCreate;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public FormPartialTemplate(Project project, Screen screen, ScreenSection screenSection, bool isCreate)
+        public FormPartialTemplate(Project project, Screen screen, ScreenSection screenSection)
         {
             Project = project;
             Screen = screen;
             ScreenSection = screenSection;
-            IsCreate = isCreate;
         }
 
         /// <summary>
         /// Get file name
         /// </summary>
-        public string GetFileName() => $"{(IsCreate ? "Create" : "Edit")}{ScreenSection.InternalName}.jsx";
+        public string GetFileName() => $"{ScreenSection.InternalName}.jsx";
 
         /// <summary>
         /// Get file path
@@ -67,13 +65,13 @@ import {{ {string.Join(", ", imports.Distinct().OrderBy(a => a))} }} from 'react
 
 {string.Join(Environment.NewLine, constants)}
 
-const {(IsCreate ? "Create" : "Edit")}{ScreenSection.InternalName} = ({(formSection.Content.Contains("{...props}") ? "props" : "")}) => (
+const {ScreenSection.InternalName} = ({(formSection.Content.Contains("{...props}") ? "props" : "")}) => (
     <div>
 {formSection.Content.IndentLines(8)}
     </div>
 );
 
-export default {(IsCreate ? "Create" : "Edit")}{ScreenSection.InternalName};";
+export default {ScreenSection.InternalName};";
         }
     }
 }
