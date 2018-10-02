@@ -15,7 +15,7 @@ namespace Oven
                 Id = new Guid("{66E47378-5CD8-40BC-833C-CDA2CC97058A}"),
                 InternalName = "Kitchen",
                 MajorVersion = 0,
-                MinorVersion = 1,
+                MinorVersion = 3,
                 BuildVersion = 0,
                 Title = "Oven - Kitchen",
                 DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}")
@@ -1298,17 +1298,15 @@ namespace Oven
                     Title = "Search Column",
                     Properties = new Property[]
                     {
-                        new Property()
+                        new Property("Id")
                         {
                             Id = new Guid("{16650A1E-9786-482F-814E-331698DF389C}"),
-                            InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
-                        new Property()
+                        new Property("Title")
                         {
                             Id = new Guid("{7334EF78-E75A-45A1-BFB6-122CDDC8281B}"),
-                            InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
@@ -1321,10 +1319,9 @@ namespace Oven
                                 }
                             }
                         },
-                        new Property()
+                        new Property("Ordinal")
                         {
                             Id = new Guid("{483D2C5E-1C04-4C2E-8468-4753D3F88996}"),
-                            InternalName = "Ordinal",
                             PropertyType = PropertyType.Integer,
                             Title = "Ordinal",
                             DefaultIntegerValue = 1,
@@ -1337,18 +1334,16 @@ namespace Oven
                                 }
                             }
                         },
-                        new Property()
+                        new Property("SearchSection")
                         {
                             Id = new Guid("{DCC45498-8A8A-4A47-9414-B46E6EDFC921}"),
-                            InternalName = "SearchSection",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Search Section",
                             ReferenceEntityId = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}")
                         },
-                        new Property()
+                        new Property("EntityProperty")
                         {
                             Id = new Guid("{8623E412-9601-4A64-9B99-A9439D725B37}"),
-                            InternalName = "EntityProperty",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity Property",
                             ReferenceEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),

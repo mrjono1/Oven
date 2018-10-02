@@ -90,14 +90,14 @@ namespace Oven.Templates.React.Src.Resources
                         }
                         break;
                     case ScreenSectionType.Search:
-                        if (section.VisibilityExpression == null)
                         {
-                            screenSections.Add($@"<{section.InternalName} {{...props}} />");
-                        }
-                        else
-                        {
-                            var expressionHelper = new Helpers.ExpressionHelper(Screen);
-                            var expression = expressionHelper.GetExpression(section.VisibilityExpression, "formData");
+                            var expression = "formData.id";
+                            if (section.VisibilityExpression != null)
+                            {
+                                var expressionHelper = new Helpers.ExpressionHelper(Screen);
+                                expression = string.Concat(expression, " && ", expressionHelper.GetExpression(section.VisibilityExpression, "formData"));
+                            }
+
                             screenSections.Add($@"<FormDataConsumer>
     {{({{ formData, ...rest }}) => 
         {expression} &&
@@ -105,8 +105,9 @@ namespace Oven.Templates.React.Src.Resources
     }}
 </FormDataConsumer>");
                             imports.Add("FormDataConsumer");
+
+                            componentImports.Add($@"import {section.InternalName} from './{section.InternalName}';");
                         }
-                        componentImports.Add($@"import {section.InternalName} from './{section.InternalName}';");
                         break;
                     case ScreenSectionType.MenuList:
                         break;

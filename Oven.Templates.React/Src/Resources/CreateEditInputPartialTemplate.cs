@@ -339,7 +339,7 @@ namespace Oven.Templates.React.Src.Resources
             {
                 if (expressionItems.Any())
                 {
-                    element = $@"{string.Join(string.Join(Environment.NewLine, "&&"), expressionItems)} &&
+                    element = $@"{string.Join(string.Join(Environment.NewLine, " && "), expressionItems)} &&
 {element}";
                 }
                 return $@"<FormDataConsumer>
