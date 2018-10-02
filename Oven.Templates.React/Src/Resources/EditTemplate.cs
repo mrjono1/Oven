@@ -54,7 +54,7 @@ namespace Oven.Templates.React.Src.Resources
                         if (rootScreenSection == null)
                         {
                             rootScreenSection = section;
-                            var formSection = new CreateFormSectionPartialTemplate(Screen, section, false);
+                            var formSection = new CreateFormSectionPartialTemplate(Screen, section);
                             imports.AddRange(formSection.Imports);
                             constants.AddRange(formSection.Constants);
                             if (!formSection.Blank)
@@ -64,7 +64,7 @@ namespace Oven.Templates.React.Src.Resources
                         }
                         else
                         {
-                            var formSection = new CreateFormSectionPartialTemplate(Screen, section, false);
+                            var formSection = new CreateFormSectionPartialTemplate(Screen, section);
                             constants.AddRange(formSection.Constants);
                             if (formSection.Blank)
                             {

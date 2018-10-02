@@ -15,7 +15,6 @@ namespace Oven.Templates.React.Src.Resources
     {
         private readonly Screen Screen;
         private readonly FormField FormField;
-        private readonly bool IsCreate;
         private readonly string Source;
 
         public bool WrapInFormDataConsumer { get; private set; }
@@ -24,11 +23,10 @@ namespace Oven.Templates.React.Src.Resources
         /// <summary>
         /// Constructor
         /// </summary>
-        public CreateEditInputPartialTemplate(Screen screen, FormField formField, bool isCreate, string source)
+        public CreateEditInputPartialTemplate(Screen screen, FormField formField, string source)
         {
             Screen = screen;
             FormField = formField;
-            IsCreate = isCreate;
             Source = source;
         }
 
@@ -65,11 +63,6 @@ namespace Oven.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
-                    if (IsCreate && FormField.Property.FilterExpression != null && FormField.Property.FilterExpression.EntityId == null)
-                    {
-                        // dont add this type to a create screen
-                        return imports;
-                    }
                     imports.Add("ReferenceInput");
                     imports.Add("SelectInput");
                     break;
@@ -175,11 +168,6 @@ namespace Oven.Templates.React.Src.Resources
                 case PropertyType.ParentRelationshipOneToMany:
                     break;
                 case PropertyType.ReferenceRelationship:
-                    if (IsCreate && FormField.Property.FilterExpression != null && FormField.Property.FilterExpression.EntityId == null)
-                    {
-                        // dont add this type to a create screen
-                        return null;
-                    }
                     type = "ReferenceInput";
                     break;
                 case PropertyType.Double:

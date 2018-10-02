@@ -23,15 +23,15 @@ namespace Oven.Templates.React.Src.Resources
         /// <summary>
         /// Constructor
         /// </summary>
-        public CreateFormSectionPartialTemplate(Screen screen, ScreenSection screenSection, bool isCreate)
+        public CreateFormSectionPartialTemplate(Screen screen, ScreenSection screenSection)
         {
             Screen = screen;
             ScreenSection = screenSection;
 
-            Evaluate(isCreate);
+            Evaluate();
         }
 
-        private void Evaluate(bool isCreate)
+        private void Evaluate()
         {
             var fields = new List<string>();
             var imports = new List<string>();
@@ -60,7 +60,7 @@ namespace Oven.Templates.React.Src.Resources
                     // dont render hidden fields
                     continue;
                 }
-                var template = new CreateEditInputPartialTemplate(Screen, field, isCreate, source);
+                var template = new CreateEditInputPartialTemplate(Screen, field, source);
                 fields.Add(template.Content());
                 imports.AddRange(template.ReactAdminImports());
                 constants.AddRange(template.Constants);

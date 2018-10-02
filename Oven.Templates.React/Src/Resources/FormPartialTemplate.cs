@@ -46,7 +46,7 @@ namespace Oven.Templates.React.Src.Resources
             var imports = new List<string>();
             var constants = new List<string>();
 
-            var formSection = new CreateFormSectionPartialTemplate(Screen, ScreenSection, IsCreate);
+            var formSection = new CreateFormSectionPartialTemplate(Screen, ScreenSection);
             constants.AddRange(formSection.Constants);
 
             if (formSection.Blank)
