@@ -46,14 +46,12 @@ namespace Oven.Templates.React.Src
                 if (createAndEdit && list)
                 {
                     imports.Add($"import {entity.InternalName}List from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}List';");
-                    imports.Add($"import {entity.InternalName}Create from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Create';");
-                    imports.Add($"import {entity.InternalName}Edit from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Edit';");
+                    imports.Add($"import {{ {entity.InternalName}Create, {entity.InternalName}Edit }} from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Form';");
                     resources.Add($@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} list={{{entity.InternalName}List}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8));
                 }
                 else if (createAndEdit)
                 {
-                    imports.Add($"import {entity.InternalName}Create from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Create';");
-                    imports.Add($"import {entity.InternalName}Edit from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Edit';");
+                    imports.Add($"import {{ {entity.InternalName}Create, {entity.InternalName}Edit }} from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Form';");
                     resources.Add($@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8));
                 }
                 else if (list)

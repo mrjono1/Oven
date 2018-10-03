@@ -33,8 +33,7 @@ namespace Oven.Templates.React.Src.Resources
                         break;
 
                     case ScreenType.Form:
-                        templates.Add(new CreateTemplate(Project, screen));
-                        templates.Add(new EditTemplate(Project, screen));
+                        templates.Add(new FormTemplate(Project, screen));
 
                         var rootFormSection = (from screenSection in screen.ScreenSections
                                                  where screenSection.ScreenSectionType == ScreenSectionType.Form

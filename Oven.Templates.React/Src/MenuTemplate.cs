@@ -63,7 +63,7 @@ namespace Oven.Templates.React.Src
             }
 
             return $@"import React from 'react';
-import {{ MenuItemLink, getResources }} from 'react-admin';
+import {{ MenuItemLink }} from 'react-admin';
 import {{ withRouter }} from 'react-router-dom';
 import LabelIcon from '@material-ui/icons/Label';
 

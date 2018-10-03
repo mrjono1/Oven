@@ -10,7 +10,7 @@ namespace Oven.Templates.React.Src.Resources
     /// <summary>
     /// xEdit.jsx Template
     /// </summary>
-    public class EditTemplate : ITemplate
+    public class FormTemplate : ITemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
@@ -18,7 +18,7 @@ namespace Oven.Templates.React.Src.Resources
         /// <summary>
         /// Constructor
         /// </summary>
-        public EditTemplate(Project project, Screen screen)
+        public FormTemplate(Project project, Screen screen)
         {
             Project = project;
             Screen = screen;
@@ -27,7 +27,7 @@ namespace Oven.Templates.React.Src.Resources
         /// <summary>
         /// Get file name
         /// </summary>
-        public string GetFileName() => $"{Screen.Entity.InternalName}Edit.jsx";
+        public string GetFileName() => $"{Screen.Entity.InternalName}Form.jsx";
 
         /// <summary>
         /// Get file path
@@ -39,7 +39,7 @@ namespace Oven.Templates.React.Src.Resources
         /// </summary>
         public string GetFileContent()
         {
-            var imports = new List<string> { "Edit", "SimpleForm" };
+            var imports = new List<string> { "Edit", "SimpleForm", "Create" };
 
             var screenSections = new List<string>();
             var componentImports = new List<string>();
@@ -129,13 +129,23 @@ const DynamicTitle = ({{ record }}) => {{
 
 const {Screen.Entity.InternalName}Edit = (props) => (
     <Edit {{...props}} title={{< DynamicTitle />}}>
-        <SimpleForm redirect=""edit"">
-{string.Join(Environment.NewLine, screenSections).IndentLines(12)}
-        </SimpleForm>
+        <Form {{...props}} />
     </Edit>
 );
 
-export default {Screen.Entity.InternalName}Edit;";
+const {Screen.Entity.InternalName}Create = (props) => (
+    <Create {{...props}} title=""Create {Screen.Title}"">
+        <Form {{...props}} />
+    </Create>
+);
+
+const Form = (props) => (
+    <SimpleForm {{...props}} redirect=""edit"">
+{string.Join(Environment.NewLine, screenSections).IndentLines(8)}
+    </SimpleForm>
+);
+
+export {{ {Screen.Entity.InternalName}Edit, {Screen.Entity.InternalName}Create }};";
         }
     }
 }
