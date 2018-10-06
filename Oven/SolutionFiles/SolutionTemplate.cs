@@ -39,6 +39,21 @@ namespace Oven.Templates.SolutionFiles
         /// </summary>
         public string GetFileContent()
         {
+            var customProjects = $@"Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Api.Shared"", ""{Project.InternalName}.Api.Shared\{Project.InternalName}.Api.Shared.csproj"", ""{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}""
+EndProject
+Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Api.Custom"", ""{Project.InternalName}.Api.Custom\{Project.InternalName}.Api.Custom.csproj"", ""{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}""
+EndProject
+";
+            var customGlobalSection = $@"		{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
+		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
+";
+
             return $@"Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
@@ -49,7 +64,7 @@ Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}
 EndProject
 Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.DataAccessLayer"", ""{Project.InternalName}.DataAccessLayer\{Project.InternalName}.DataAccessLayer.csproj"", ""{{{Project.ProjectDataAccessLayerId.ToString().ToUpperInvariant()}}}""
 EndProject
-Global
+{(!Project.EnableCustomCode ? "" : customProjects)}Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -67,7 +82,7 @@ Global
 		{{{Project.ProjectDataAccessLayerId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{{{Project.ProjectDataAccessLayerId.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{{{Project.ProjectDataAccessLayerId.ToString().ToUpperInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
+{(!Project.EnableCustomCode ? "" : customGlobalSection)}	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

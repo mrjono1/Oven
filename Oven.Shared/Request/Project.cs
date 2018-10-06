@@ -103,6 +103,10 @@ namespace Oven.Request
         /// Any NuGet package sources to reference
         /// </summary>
         public IEnumerable<NuGetPackageSource> NuGetPackageSources { get; set; }
+        /// <summary>
+        /// Generate a Project that allows custom code
+        /// </summary>
+        public bool EnableCustomCode { get; set; }
 
         #region Internal Settings
 
@@ -168,6 +172,16 @@ namespace Oven.Request
         /// </summary>
         [JsonIgnore]
         public Guid ProjectDataAccessLayerId { get; set; } = new Guid("{5BE39A8E-3012-4F57-8D44-36BA26CE5036}");
+        /// <summary>
+        /// Internal Id of the Data Access Layer Project
+        /// </summary>
+        [JsonIgnore]
+        public Guid ProjectApiCustomId { get; set; } = new Guid("{84FAA2EF-D7B9-4981-BA59-BF122AB0FF68}");
+        /// <summary>
+        /// Internal Id of the Data Access Layer Project
+        /// </summary>
+        [JsonIgnore]
+        public Guid ProjectApiSharedId { get; set; } = new Guid("{ABBDC896-FD0A-4EFF-9C6E-226547A6C16D}");
         #endregion
         /// <summary>
         /// Validate and Resolve this and child objects

@@ -18,7 +18,8 @@ namespace Oven
                 MinorVersion = 3,
                 BuildVersion = 0,
                 Title = "Oven - Kitchen",
-                DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}")
+                DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
+                EnableCustomCode = true
             };
             project.Entities = new Entity[]
             {
@@ -162,6 +163,20 @@ namespace Oven
                                 PropertyId = new Guid("{C3E14B66-FF43-478A-95D0-39524F6555B5}"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 ReferencePropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}")
+                            }
+                        },
+                        new Property("EnableCustomCode")
+                        {
+                            Id = new Guid("{59B35D44-12FB-47A8-8589-A585DEA6BC29}"),
+                            PropertyType = PropertyType.Boolean,
+                            Title = "Enable Custom Code",
+                            ValidationItems = new Validation[]
+                            {
+                                new Validation
+                                {
+                                    Id = new Guid("{EE9F042B-C608-4602-9B31-D2F5E0C01406}"),
+                                    ValidationType = ValidationType.Required
+                                }
                             }
                         }
                     }

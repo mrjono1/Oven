@@ -93,7 +93,10 @@ namespace Oven.Templates.Api.ProjectFiles
   <ItemGroup>
     <ProjectReference Include=""..\{Project.InternalName}.DataAccessLayer\{Project.InternalName}.DataAccessLayer.csproj"" />
   </ItemGroup>
-
+  {(Project.EnableCustomCode ? $@"
+  <ItemGroup>
+    <ProjectReference Include=""..\{Project.InternalName}.Api.Shared\{Project.InternalName}.Api.Shared.csproj"" />
+  </ItemGroup>" : "")}
 </Project>";
         }
     }

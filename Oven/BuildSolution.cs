@@ -56,6 +56,7 @@ namespace Oven
             
             var solutionWriter = new Helpers.SolutionWriter(solutionDirectory, project.CleanDirectoryIgnoreDirectories);
 
+            // Solution
             var solution = new SolutionBuilder();
             var errors = await solution.RunAsync(builderSettings, project, solutionWriter, solutionDirectory);
             if (!string.IsNullOrEmpty(errors))
@@ -63,13 +64,15 @@ namespace Oven
                 return errors;
             }
 
+            // React
             var react = new Templates.React.ProjectBuilder();
             errors = await react.RunAsync(builderSettings, project, solutionWriter, solutionDirectory);
             if (!string.IsNullOrEmpty(errors))
             {
                 return errors;
             }
-            
+
+            // Api
             var api = new Templates.Api.ProjectBuilder();
             errors = await api.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);
             if (!string.IsNullOrEmpty(errors))
@@ -77,8 +80,25 @@ namespace Oven
                 return errors;
             }
 
+            // Data Access Layer
             var dal = new Templates.DataAccessLayer.ProjectBuilder();
             errors = await dal.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);
+            if (!string.IsNullOrEmpty(errors))
+            {
+                return errors;
+            }
+
+            // Api.Shared
+            var apiShared = new Templates.Api.Shared.ProjectBuilder();
+            errors = await apiShared.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);
+            if (!string.IsNullOrEmpty(errors))
+            {
+                return errors;
+            }
+
+            // Api.Custom, only created once, not updated
+            var apiCustom = new Templates.Api.Custom.ProjectBuilder();
+            errors = await apiCustom.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);
             if (!string.IsNullOrEmpty(errors))
             {
                 return errors;

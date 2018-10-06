@@ -24,11 +24,6 @@ namespace Oven.Templates.Api
             solutionWriter.AddTemplate(new ProjectFiles.WebConfigTemplate());
             solutionWriter.AddTemplate(new ProjectFiles.NuGetconfigTemplate(project));
 
-            if (project.ServerSideRendering)
-            {
-                solutionWriter.AddTemplate(new Extensions.HttpRequestExtensionsTemplate(project));
-            }
-            
             // Controllers
             solutionWriter.AddTemplate(new Controllers.ControllerTemplateBuilder(project));
 
