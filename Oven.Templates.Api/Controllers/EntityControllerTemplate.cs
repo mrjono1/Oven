@@ -82,7 +82,6 @@ namespace Oven.Templates.Api.Controllers
                         // TODO: Support more than one Form Screen
                         formScreen = screenSectionGroup.Screen;
                         formSections.Add(screenSectionGroup.ScreenSection);
-                        //referenceFormFields.AddRange(screenSectionGroup.ScreenSection.FormSection.FormFields.Where(a => a.PropertyType == PropertyType.ReferenceRelationship));
                         break;
 
                     default:
@@ -94,7 +93,6 @@ namespace Oven.Templates.Api.Controllers
             {
                 var controllerFormSectionMethodsPartial = new ControllerFormSectionMethodsPartial(Project, formScreen, formSections);
                 controllerActions.Add(controllerFormSectionMethodsPartial.GetMethod());
-                controllerActions.Add(controllerFormSectionMethodsPartial.GetMultiMethod());
                 controllerActions.Add(controllerFormSectionMethodsPartial.PostMethod());
                 controllerActions.Add(controllerFormSectionMethodsPartial.DeleteMethod());
 
@@ -108,15 +106,6 @@ namespace Oven.Templates.Api.Controllers
                     controllerActions.Add(controllerFormSectionMethodsPartial.PatchMethod());
                 }
             }
-
-            //foreach (var referenceFormField in referenceFormFields)
-            //{
-            //    var referenceMethod = ControllerReferenceMethodTemplate.Evaluate(Project, Entity, referenceFormField);
-            //    if (!string.IsNullOrEmpty(referenceMethod))
-            //    {
-            //        controllerActions.Add(referenceMethod);
-            //    }
-            //}
 
             return $@"using System;
 using System.Collections.Generic;

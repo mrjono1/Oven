@@ -96,6 +96,9 @@ namespace Oven.Templates.Api.ProjectFiles
   {(Project.EnableCustomCode ? $@"
   <ItemGroup>
     <ProjectReference Include=""..\{Project.InternalName}.Api.Shared\{Project.InternalName}.Api.Shared.csproj"" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include=""..\{Project.InternalName}.Api.Custom\{Project.InternalName}.Api.Custom.csproj"" />
   </ItemGroup>" : "")}
 </Project>";
         }

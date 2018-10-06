@@ -37,13 +37,6 @@ namespace Oven.Templates.Api.Controllers
                 }
             }
 
-            // Create Controller & Models for UI
-            // Non entity controller actions
-            //foreach (var screen in Project.Screens)
-            //{
-            //    templates.Add(new ControllerTemplate(Project, screen));
-            //}
-
             return templates;
         }
     }

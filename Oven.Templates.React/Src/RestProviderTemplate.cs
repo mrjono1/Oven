@@ -97,10 +97,6 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
             case GET_ONE:
                 url = `${apiUrl}/${resource}/${params.id}`;
                 break;
-            case GET_MANY: {
-                url = `${apiUrl}/${resource}/multi?ids=${params.ids.join('|')}`;
-                break;
-            }
             case GET_MANY_REFERENCE: {
                 const { page, perPage } = params.pagination;
                 const { field, order } = params.sort;
@@ -180,31 +176,38 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
      * @returns { Promise} the Promise for a data response
      */
     return (type, resource, params) => {
-        // simple-rest doesn't handle filters on UPDATE route, so we fallback to calling UPDATE n times instead
-        if (type === UPDATE_MANY) {
-            return Promise.all(
-                params.ids.map(id =>
-                    httpClient(`${ apiUrl}/${ resource}/${ id}`, {
-                        method: 'PUT',
-                        body: JSON.stringify(params.data)
-                    })
-                )
-            ).then(responses => ({
-                data: responses.map(response => response.json)
-            }));
-        }
-        // simple-rest doesn't handle filters on DELETE route, so we fallback to calling DELETE n times instead
-        if (type === DELETE_MANY)
-        {
-            return Promise.all(
-                params.ids.map(id =>
-                    httpClient(`${ apiUrl}/${ resource}/${ id}`, {
-                        method: 'DELETE'
-                    })
-                )
-            ).then(responses => ({
-                data: responses.map(response => response.json)
-            }));
+        switch (type) {
+            case GET_MANY:
+                return Promise.all(
+                    params.ids.map(id =>
+                        httpClient(`${apiUrl}/${resource}/${id}`, {
+                            method: 'GET'
+                        })
+                    )
+                ).then(responses => ({
+                    data: responses.map(response => response.json)
+                }));
+            case UPDATE_MANY:
+                return Promise.all(
+                    params.ids.map(id =>
+                        httpClient(`${apiUrl}/${resource}/${id}`, {
+                            method: 'PUT',
+                            body: JSON.stringify(params.data)
+                        })
+                    )
+                ).then(responses => ({
+                    data: responses.map(response => response.json)
+                    }));
+            case DELETE_MANY:
+                return Promise.all(
+                    params.ids.map(id =>
+                        httpClient(`${apiUrl}/${resource}/${id}`, {
+                            method: 'DELETE'
+                        })
+                    )
+                ).then(responses => ({
+                    data: responses.map(response => response.json)
+                }));
         }
 
         const { url, options } = convertDataRequestToHTTP(
