@@ -1,5 +1,6 @@
 using Oven.Interfaces;
 using Oven.Request;
+using Oven.Templates.Api.Services.Entities;
 using System.Collections.Generic;
 
 namespace Oven.Templates.Api.Services
@@ -45,6 +46,16 @@ namespace Oven.Templates.Api.Services
                         default:
                             break;
                     }
+                }
+            }
+
+            // Create Entity Services
+            foreach (var entity in Project.Entities)
+            {
+                var service = new EntityServiceTemplate(Project, entity);
+                if (service.HasEntityActions)
+                {
+                    templates.Add(service);
                 }
             }
 
