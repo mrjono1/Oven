@@ -88,8 +88,8 @@ namespace Oven
                 return errors;
             }
 
-            // Api.Shared
-            var apiShared = new Templates.Api.Shared.ProjectBuilder();
+            // Services
+            var apiShared = new Templates.Services.ProjectBuilder();
             errors = await apiShared.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);
             if (!string.IsNullOrEmpty(errors))
             {

@@ -39,7 +39,7 @@ namespace Oven.Templates.SolutionFiles
         /// </summary>
         public string GetFileContent()
         {
-            var customProjects = $@"Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Api.Shared"", ""{Project.InternalName}.Api.Shared\{Project.InternalName}.Api.Shared.csproj"", ""{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}""
+            var customProjects = $@"Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Services"", ""{Project.InternalName}.Services\{Project.InternalName}.Services.csproj"", ""{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}""
 EndProject
 Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Api.Custom"", ""{Project.InternalName}.Api.Custom\{Project.InternalName}.Api.Custom.csproj"", ""{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}""
 EndProject

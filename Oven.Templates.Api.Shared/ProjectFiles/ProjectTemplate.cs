@@ -1,10 +1,7 @@
 using Oven.Interfaces;
 using Oven.Request;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Oven.Templates.Api.ProjectFiles
+namespace Oven.Templates.Services.ProjectFiles
 {
     /// <summary>
     /// Project
@@ -26,7 +23,7 @@ namespace Oven.Templates.Api.ProjectFiles
         /// </summary>
         public string GetFileName()
         {
-            return $"{Project.InternalName}.Api.Shared.csproj";
+            return $"{Project.InternalName}.Services.csproj";
         }
 
         /// <summary>
@@ -48,6 +45,9 @@ namespace Oven.Templates.Api.ProjectFiles
     <Version>{Project.MajorVersion}.{Project.MinorVersion}.{Project.BuildVersion}</Version>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include=""..\{Project.InternalName}.DataAccessLayer\{Project.InternalName}.DataAccessLayer.csproj"" />
+  </ItemGroup>
 </Project>";
         }
     }

@@ -1,4 +1,5 @@
 using Oven.Request;
+using Oven.Shared.Helpers;
 using System.Linq;
 
 namespace Oven.Templates.Api.Controllers
@@ -28,7 +29,7 @@ namespace Oven.Templates.Api.Controllers
 
             if (formField.Property.FilterExpression != null)
             {
-                var expressionPartial = new Helpers.CsExpressionPartial(formField.Property, formField.Property.FilterExpression);
+                var expressionPartial = new CsExpressionPartial(formField.Property, formField.Property.FilterExpression);
                 var expression = expressionPartial.GetExpression("item", "request");
 
                 whereString = $@"where ({expression}) &&

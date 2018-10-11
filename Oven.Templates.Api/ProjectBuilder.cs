@@ -26,18 +26,11 @@ namespace Oven.Templates.Api
 
             // Controllers
             solutionWriter.AddTemplate(new Controllers.ControllerTemplateBuilder(project));
-
-            // Models
-            solutionWriter.AddTemplate(new Models.ModelTemplateBuilder(project));
-            // Models/Export
-            solutionWriter.AddTemplate(new Models.Export.ModelTemplateBuilder(project));
             
             // Services
             solutionWriter.AddTemplate(new Services.ServiceTemplateBuilder(project));
             // Services/Contracts
             solutionWriter.AddTemplate(new Services.Contracts.ServiceContractTemplateBuilder(project));
-            // Extensions
-            solutionWriter.AddTemplate(new Extensions.NonDefaultAttributeTemplate(project));
 
             var errors = await solutionWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))

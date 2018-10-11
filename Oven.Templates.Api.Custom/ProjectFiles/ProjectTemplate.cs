@@ -49,7 +49,7 @@ namespace Oven.Templates.Api.Custom.ProjectFiles
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include=""..\{Project.InternalName}.Api.Shared\{Project.InternalName}.Api.Shared.csproj"" />
+    <ProjectReference Include=""..\{Project.InternalName}.Services\{Project.InternalName}.Services.csproj"" />
   </ItemGroup>
 
 </Project>";
