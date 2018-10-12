@@ -87,15 +87,7 @@ namespace Oven
             {
                 return errors;
             }
-
-            // Services
-            var apiShared = new Templates.Services.ProjectBuilder();
-            errors = await apiShared.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);
-            if (!string.IsNullOrEmpty(errors))
-            {
-                return errors;
-            }
-
+            
             // Api.Custom, only created once, not updated
             var apiCustom = new Templates.Api.Custom.ProjectBuilder();
             errors = await apiCustom.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);

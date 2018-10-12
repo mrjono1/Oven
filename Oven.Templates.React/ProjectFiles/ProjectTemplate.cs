@@ -98,6 +98,10 @@ namespace Oven.Templates.React.ProjectFiles
     <ProjectReference Include=""..\{Project.InternalName}.Api\{Project.InternalName}.Api.csproj"" />
     <ProjectReference Include=""..\{Project.InternalName}.DataAccessLayer\{Project.InternalName}.DataAccessLayer.csproj"" />
   </ItemGroup>
+  {(Project.EnableCustomCode ? $@"
+  <ItemGroup>
+    <ProjectReference Include=""..\{Project.InternalName}.Api.Custom\{Project.InternalName}.Api.Custom.csproj"" />
+  </ItemGroup>" : "")}
 
   <Target Name=""DebugRunWebpack"" BeforeTargets=""Build"" Condition="" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') "">
     <!-- Ensure Node.js is installed -->

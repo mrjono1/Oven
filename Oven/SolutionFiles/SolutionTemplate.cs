@@ -39,16 +39,10 @@ namespace Oven.Templates.SolutionFiles
         /// </summary>
         public string GetFileContent()
         {
-            var customProjects = $@"Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Services"", ""{Project.InternalName}.Services\{Project.InternalName}.Services.csproj"", ""{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}""
-EndProject
-Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Api.Custom"", ""{Project.InternalName}.Api.Custom\{Project.InternalName}.Api.Custom.csproj"", ""{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}""
+            var customProjects = $@"Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Api.Custom"", ""{Project.InternalName}.Api.Custom\{Project.InternalName}.Api.Custom.csproj"", ""{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}""
 EndProject
 ";
-            var customGlobalSection = $@"		{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{{{Project.ProjectApiSharedId.ToString().ToUpperInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
-		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+            var customGlobalSection = $@"		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
