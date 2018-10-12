@@ -2,6 +2,7 @@ using Oven.Interfaces;
 using Oven.Request;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Oven.Templates.React.ProjectFiles
 {
@@ -85,6 +86,15 @@ namespace Oven.Templates.React.ProjectFiles
             else
             {
                 dbConnection = $@"options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));";
+            }
+
+            // Create Entity Services
+            foreach (var entity in Project.Entities)
+            {
+                if (Project.Screens.Any(_ => _.EntityId == entity.Id))
+                {
+                    services.Add($"services.AddTransient<I{entity.InternalName}Service, {entity.InternalName}Service>();");
+                }
             }
 
             return $@"using System;

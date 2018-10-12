@@ -112,7 +112,6 @@ using System.Diagnostics;
 
 namespace {Project.InternalName}.Services
 {{
-
     /// <summary>
     /// {Entity.Title} Service
     /// </summary>
