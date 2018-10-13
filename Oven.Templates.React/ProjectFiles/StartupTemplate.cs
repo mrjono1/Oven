@@ -176,7 +176,10 @@ namespace {Project.InternalName}
             }});
 
             // Services
-            {string.Join(string.Concat(Environment.NewLine, "            "), services)}
+            {string.Join(string.Concat(Environment.NewLine, "            "), services)}{(Project.EnableCustomCode ? $@"
+
+            var extensionPoint = new Api.Custom.ExtensionPoint();
+            extensionPoint.ConfigureServices(services);" : "")}
         }}
 
         /// <summary>

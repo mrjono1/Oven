@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Humanizer;
-using Oven.Helpers;
 using Oven.Request;
 
 namespace Oven.Templates.Api.Controllers
@@ -156,8 +154,7 @@ namespace Oven.Templates.Api.Controllers
                 return NotFound();
             }}
             
-            _context.{Screen.Entity.InternalNamePlural}.Remove(new {Screen.Entity.InternalName}() {{ Id = id }});
-            await _context.SaveChangesAsync();
+            await {Screen.Entity.InternalName.Camelize()}Service.DeleteAsync(id);
 
             return Ok();
         }}";

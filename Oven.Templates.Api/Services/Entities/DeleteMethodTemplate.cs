@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Humanizer;
-using Oven.Helpers;
 using Oven.Request;
 
 namespace Oven.Templates.Api.Entities

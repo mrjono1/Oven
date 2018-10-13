@@ -17,10 +17,19 @@ namespace Oven.Templates.Api.Custom
         {
             var apiProjectDirectory = FileHelper.CreateFolder(solutionDirectory, $"{project.InternalName}.Api.Custom");
 
+            if (!FileHelper.IsDirectoryEmpty(apiProjectDirectory))
+            {
+                // If directory exists then skip this project, user can do what ever they want here
+                return null;
+            }
+
             solutionWriter.SetProjectDirectory(apiProjectDirectory);
 
             // Create Project Files
             solutionWriter.AddTemplate(new ProjectFiles.ProjectTemplate(project));
+
+            // Extension Point
+            solutionWriter.AddTemplate(new ProjectFiles.ExtensionPointTemplate(project));
 
             var errors = await solutionWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))
