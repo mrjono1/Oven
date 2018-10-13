@@ -52,11 +52,11 @@ namespace Kitchen.Api.Custom
     public class ExtensionPoint
     {{
         /// <summary>
-        /// Startup ConfigureServices
+        /// Startup startup services
         /// </summary>
-        public void ConfigureServices(IServiceCollection services)
+        public Dictionary<Type, Type> GetServices()
         {{
-
+            return new Dictionary<Type, Type>();
         }}
     }}
 }}";

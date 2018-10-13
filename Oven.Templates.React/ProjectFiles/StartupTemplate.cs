@@ -67,9 +67,6 @@ namespace Oven.Templates.React.ProjectFiles
                 }
             }
 
-            var services = new List<string>();
-            serviceNames.ForEach(name => services.Add($"services.AddTransient<I{name}, {name}>();"));
-
             string dbConnection = null;
             string dbConnectionSetup = null;
             if (Project.UseMySql)
@@ -88,13 +85,54 @@ namespace Oven.Templates.React.ProjectFiles
                 dbConnection = $@"options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));";
             }
 
-            // Create Entity Services
-            foreach (var entity in Project.Entities)
+            var serviceSection = "";
+            if (Project.EnableCustomCode)
             {
-                if (Project.Screens.Any(_ => _.EntityId == entity.Id))
+                var services = new List<string>();
+                serviceNames.ForEach(name => services.Add($"{{ typeof(I{name}), typeof({name}) }}"));
+                // Create Entity Services
+                foreach (var entity in Project.Entities)
                 {
-                    services.Add($"services.AddTransient<I{entity.InternalName}Service, {entity.InternalName}Service>();");
+                    if (Project.Screens.Any(_ => _.EntityId == entity.Id))
+                    {
+                        services.Add($"{{ typeof(I{entity.InternalName}Service), typeof({entity.InternalName}Service) }}");
+                    }
                 }
+                serviceSection = $@"            var servicesDictionary = new System.Collections.Generic.Dictionary<Type, Type>
+            {{
+                {string.Join(string.Concat(",", Environment.NewLine, "                "), services)}
+            }};
+
+            var extensionPoint = new Api.Custom.ExtensionPoint();
+            var serviceExtensions = extensionPoint.GetServices();
+
+            foreach (var service in servicesDictionary)
+            {{
+                if (serviceExtensions.ContainsKey(service.Key))
+                {{
+                    var customServiceType = serviceExtensions[service.Key];
+                    services.AddTransient(service.Key, customServiceType);
+                }}
+                else
+                {{
+                    services.AddTransient(service.Key, service.Value);
+                }}
+            }}";
+
+            }
+            else
+            {
+                var services = new List<string>();
+                serviceNames.ForEach(name => services.Add($"services.AddTransient<I{name}, {name}>();"));
+                // Create Entity Services
+                foreach (var entity in Project.Entities)
+                {
+                    if (Project.Screens.Any(_ => _.EntityId == entity.Id))
+                    {
+                        services.Add($"services.AddTransient<I{entity.InternalName}Service, {entity.InternalName}Service>();");
+                    }
+                }
+                serviceSection = string.Join(string.Concat(Environment.NewLine, "            "), services);
             }
 
             return $@"using System;
@@ -176,10 +214,7 @@ namespace {Project.InternalName}
             }});
 
             // Services
-            {string.Join(string.Concat(Environment.NewLine, "            "), services)}{(Project.EnableCustomCode ? $@"
-
-            var extensionPoint = new Api.Custom.ExtensionPoint();
-            extensionPoint.ConfigureServices(services);" : "")}
+{serviceSection}
         }}
 
         /// <summary>

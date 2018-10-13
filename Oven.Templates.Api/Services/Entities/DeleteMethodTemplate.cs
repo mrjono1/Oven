@@ -28,7 +28,7 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {Entity.Title} Delete
         /// </summary>
-        public async Task<bool> DeleteAsync(Guid id)
+        public virtual async Task<bool> DeleteAsync(Guid id)
         {{
             if (id == Guid.Empty)
             {{

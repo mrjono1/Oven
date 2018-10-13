@@ -55,15 +55,15 @@ namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
         /// <summary>
         /// Total Pages
         /// </summary>
-        public int TotalPages {{ get; internal set; }}
+        public int TotalPages {{ get; set; }}
         /// <summary>
         /// Total Items
         /// </summary>
-        public int TotalItems {{ get; internal set; }}
+        public int TotalItems {{ get; set; }}
         /// <summary>
         /// {FormField.ReferenceItemClass} Array
         /// </summary>
-        public {Screen.InternalName}.Reference.{FormField.ReferenceItemClass}[] Items {{ get; internal set; }}
+        public {Screen.InternalName}.Reference.{FormField.ReferenceItemClass}[] Items {{ get; set; }}
     }}
 }}";
         }

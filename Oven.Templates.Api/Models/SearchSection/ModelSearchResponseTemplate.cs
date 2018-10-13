@@ -55,15 +55,15 @@ namespace {Project.InternalName}.Models
         /// <summary>
         /// Total Pages
         /// </summary>
-        public int TotalPages {{ get; internal set; }}
+        public int TotalPages {{ get; set; }}
         /// <summary>
         /// Total Items
         /// </summary>
-        public int TotalItems {{ get; internal set; }}
+        public int TotalItems {{ get; set; }}
         /// <summary>
         /// {ScreenSection.SearchSection.SearchItemClass}
         /// </summary>
-        public {ScreenSection.SearchSection.SearchItemClass}[] Items {{ get; internal set; }}
+        public {ScreenSection.SearchSection.SearchItemClass}[] Items {{ get; set; }}
     }}
 }}";
         }

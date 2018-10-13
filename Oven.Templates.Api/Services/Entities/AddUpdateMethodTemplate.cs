@@ -209,7 +209,7 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {Screen.Title} Update
         /// </summary>
-        public async Task<Guid> UpdateAsync(Guid id, {Screen.InternalName}Request put)
+        public virtual async Task<Guid> UpdateAsync(Guid id, {Screen.InternalName}Request put)
         {{
             if (put == null)
             {{
@@ -268,7 +268,7 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        public async Task<{Screen.FormResponseClass}> CreateAsync({Screen.InternalName}Request post)
+        public virtual async Task<{Screen.FormResponseClass}> CreateAsync({Screen.InternalName}Request post)
         {{
             if (post == null)
             {{

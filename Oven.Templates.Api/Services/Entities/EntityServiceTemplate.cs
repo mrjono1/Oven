@@ -46,12 +46,12 @@ namespace Oven.Templates.Api.Entities
             var usings = new List<string>();
             var controllerActions = new List<string>();
 
-            var privateFields = new List<string>
+            var fields = new List<string>
             {
                 $@"        /// <summary>
         /// Database Context
         /// </summary>
-        private readonly ApplicationDbContext _context;"
+        protected readonly ApplicationDbContext _context;"
             };
             var constructorParameters = new List<string>
             {
@@ -117,7 +117,7 @@ namespace {Project.InternalName}.Services
     /// </summary>
     public class {Entity.InternalName}Service: I{Entity.InternalName}Service
     {{
-{string.Join(Environment.NewLine, privateFields)}
+{string.Join(Environment.NewLine, fields)}
 
         /// <summary>
         /// Constructor

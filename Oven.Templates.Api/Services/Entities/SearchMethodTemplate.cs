@@ -59,7 +59,7 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {screenSection.Title} Search
         /// </summary>
-        public async Task<{screenSection.SearchSection.SearchResponseClass}> Search{actionName}Async({screenSection.SearchSection.SearchRequestClass} request)
+        public virtual async Task<{screenSection.SearchSection.SearchResponseClass}> Search{actionName}Async({screenSection.SearchSection.SearchRequestClass} request)
         {{
             if (request == null)
             {{
