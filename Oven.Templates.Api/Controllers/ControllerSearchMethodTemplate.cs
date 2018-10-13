@@ -62,7 +62,7 @@ namespace Oven.Templates.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<{screenSection.SearchSection.SearchItemClass}>), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> Search{actionName}Async([FromQuery]{screenSection.SearchSection.SearchRequestClass} request)
+        public async Task<IActionResult> Search{actionName}Async([FromServices] I{screenSection.Entity.InternalName}Service {screenSection.Entity.InternalName.Camelize()}Service, [FromQuery]{screenSection.SearchSection.SearchRequestClass} request)
         {{
             if (request == null)
             {{
@@ -74,29 +74,11 @@ namespace Oven.Templates.Api.Controllers
                 return new BadRequestObjectResult(ModelState);
             }}
 
-            var query = from item in _context.{screenSection.SearchSection.Entity.InternalNamePlural}
-            {parentPropertyWhereString}
-                        select item;
-
-            var totalItems = query.Count();
-            var items = new {screenSection.SearchSection.SearchItemClass}[0];
-
-            if (totalItems != 0 && request.end != 0)
-            {{
-                items = await query
-                    .OrderBy(p => p.{screenSection.SearchSection.OrderBy})
-                    .Skip(request.start)
-                    .Take(request.end - request.start)
-                    .Select(item => new {screenSection.SearchSection.SearchItemClass}
-                    {{
-{string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
-                    }})
-                    .ToArrayAsync();
-            }}
+            var response = await {screenSection.Entity.InternalName.Camelize()}Service.Search{actionName}Async(request);
             
-            Response.Headers.Add(""Content-Range"", $@""ValidationTypes {{request.start}}-{{request.start + items.Count()}}/{{totalItems}}"");
-            Response.Headers.Add(""X-Total-Count"", totalItems.ToString());
-            return Ok(items);
+            Response.Headers.Add(""Content-Range"", $@""{screenSection.Entity.InternalNamePlural} {{request.start}}-{{request.start + response.Items.Count()}}/{{response.TotalItems}}"");
+            Response.Headers.Add(""X-Total-Count"", response.TotalItems.ToString());
+            return Ok(response.Items);
         }}";
         }
     }

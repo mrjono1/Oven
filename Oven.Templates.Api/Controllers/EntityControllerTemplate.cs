@@ -46,25 +46,13 @@ namespace Oven.Templates.Api.Controllers
             var usings = new List<string>();
             var controllerActions = new List<string>();
 
-            var privateFields = new List<string>
-            {
-                $@"        /// <summary>
-        /// Database Context
-        /// </summary>
-        private readonly ApplicationDbContext _context;"
-            };
-            var constructorParameters = new List<string>
-            {
-                $"ApplicationDbContext context"
-            };
-            var constructorFieldMappings = new List<string>
-            {
-                "_context = context;"
-            };
-
+            var privateFields = new List<string>();
+            var constructorParameters = new List<string>();
+            var constructorFieldMappings = new List<string>();
             var referenceFormFields = new List<FormField>();
             var formSections = new List<ScreenSection>();
             Screen formScreen = null;
+
             var screenSectionGrouped = (from screen in Project.Screens
                                   from screenSection in screen.ScreenSections
                                   where screenSection.EntityId == Entity.Id
@@ -116,13 +104,11 @@ using {Project.InternalName}.Models;
 using {Project.InternalName}.DataAccessLayer;
 using {Project.InternalName}.DataAccessLayer.Entities;
 using {Project.InternalName}.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 {string.Join(Environment.NewLine, usings.Distinct())}
 
 namespace {Project.InternalName}.Controllers
 {{
-
     /// <summary>
     /// Controller for the {Entity.Title} Entity
     /// </summary>

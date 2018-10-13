@@ -23,7 +23,7 @@ namespace Oven.Templates.Api.Entities.Contracts
         /// <summary>
         /// {screenSection.Title} Search
         /// </summary>
-        Task<{screenSection.SearchSection.SearchItemClass}[]> Search{actionName}Async({screenSection.SearchSection.SearchRequestClass} request);";
+        Task<{screenSection.SearchSection.SearchResponseClass}> Search{actionName}Async({screenSection.SearchSection.SearchRequestClass} request);";
         }
     }
 }

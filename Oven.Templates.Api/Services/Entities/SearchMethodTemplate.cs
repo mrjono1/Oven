@@ -59,7 +59,7 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {screenSection.Title} Search
         /// </summary>
-        public async Task<{screenSection.SearchSection.SearchItemClass}[]> Search{actionName}Async({screenSection.SearchSection.SearchRequestClass} request)
+        public async Task<{screenSection.SearchSection.SearchResponseClass}> Search{actionName}Async({screenSection.SearchSection.SearchRequestClass} request)
         {{
             if (request == null)
             {{
@@ -86,9 +86,10 @@ namespace Oven.Templates.Api.Entities
                     .ToArrayAsync();
             }}
             
-            //Response.Headers.Add(""Content-Range"", $@""ValidationTypes {{request.start}}-{{request.start + items.Count()}}/{{totalItems}}"");
-            //Response.Headers.Add(""X-Total-Count"", totalItems.ToString());
-            return items;
+            return new {screenSection.SearchSection.SearchResponseClass} {{
+                TotalItems = totalItems,
+                Items = items,
+            }};
         }}";
         }
     }

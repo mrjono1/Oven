@@ -1,3 +1,4 @@
+using Humanizer;
 using Oven.Request;
 using Oven.Shared.Helpers;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace Oven.Templates.Api.Controllers
         [HttpPost(""{formField.Property.InternalName}References"")]
         [ProducesResponseType(typeof({responseClassName}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> {formField.Property.InternalName}Reference([FromBody]{requestClassName} request)
+        public async Task<IActionResult> {formField.Property.InternalName}Reference([FromServices] I{screen.Entity.InternalName}Service {screen.Entity.InternalName.Camelize()}Service, [FromBody]{requestClassName} request)
         {{
             if (request == null)
             {{
