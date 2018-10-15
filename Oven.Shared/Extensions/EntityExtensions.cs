@@ -12,7 +12,8 @@ namespace Oven.Shared.Extensions
             Entity parentEntity = null;
 
             var parentProperty = (from p in entity.Properties
-                                  where p.PropertyType == PropertyType.ParentRelationshipOneToMany
+                                  where p.PropertyType == PropertyType.ParentRelationshipOneToMany ||
+                                  p.PropertyType == PropertyType.ParentRelationshipOneToOne
                                   select p).SingleOrDefault();
             if (parentProperty != null)
             {

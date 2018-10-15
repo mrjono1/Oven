@@ -19,6 +19,14 @@ namespace Oven.Request
                 Entity = project.Entities.Single(e => e.Id == EntityId.Value);
             }
 
+            if (PropertyId.HasValue)
+            {
+                Property = (from projectEntity in project.Entities
+                            from entityProperty in projectEntity.Properties
+                            where entityProperty.Id == PropertyId.Value
+                            select entityProperty).SingleOrDefault();
+            }
+
             message = "Success";
             return true;
         }

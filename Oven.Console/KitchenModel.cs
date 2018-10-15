@@ -609,7 +609,8 @@ namespace Oven
                             ReferenceEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
                             ValidationItems = new Validation[]
                             {
-                                new Validation{
+                                new Validation
+                                {
                                     Id = new Guid("{253608F3-0E63-4F67-B7C4-940D2472D3F7}"),
                                     ValidationType = ValidationType.Required
                                 }
@@ -840,7 +841,8 @@ namespace Oven
                             },
                             ValidationItems = new Validation[]
                             {
-                                new Validation{
+                                new Validation
+                                {
                                     Id = new Guid("{872BB43B-C432-4EFA-AABE-4908E96EA1FB}"),
                                     ValidationType = ValidationType.Required
                                 },
@@ -1158,17 +1160,15 @@ namespace Oven
                     Title = "Form Field",
                     Properties = new Property[]
                     {
-                        new Property()
+                        new Property("Id")
                         {
                             Id = new Guid("{941173BD-D4B0-4216-8CCE-DC3DF81456A5}"),
-                            InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
-                        new Property()
+                        new Property("Title")
                         {
                             Id = new Guid("{218A6A13-5A20-49D0-8770-ECD570D94599}"),
-                            InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
@@ -1181,27 +1181,34 @@ namespace Oven
                                 }
                             }
                         },
-                        new Property()
+                        new Property("FormSection")
                         {
                             Id = new Guid("{FB5EC954-8935-48B2-BCEB-FCE643098C63}"),
-                            InternalName = "FormSection",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Form Section",
                             ReferenceEntityId = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}")
                         },
-                        new Property()
+                        new Property("EntityProperty")
                         {
                             Id = new Guid("{307F022C-B5ED-4F1F-8015-9DF223F95599}"),
-                            InternalName = "EntityProperty",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity Property",
                             ReferenceEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
                             ValidationItems = new Validation[]
                             {
-                                new Validation{
+                                new Validation
+                                {
                                     Id = new Guid("{42B9A2C7-DDB4-4B83-AFB1-0A282DC72839}"),
                                     ValidationType = ValidationType.Required
-                                },
+                                }
+                            },
+                            FilterExpression = new Expression
+                            {
+                                // ScreenSection.EntityId
+                                PropertyId = new Guid("{D6BB1A68-8C2A-4251-8EA0-B3AC6C9362AD}"),
+                                Operator = Request.Enumerations.ExpressionOperator.Equal,
+                                // Property.EntityId
+                                ReferencePropertyId = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}")
                             }
                         }
                     }
@@ -2368,7 +2375,23 @@ namespace Oven
                             EntityId = new Guid("{8D68FDDE-6621-472B-9F2C-04ADE443E51C}"),
                             ScreenSectionType = ScreenSectionType.Form,
                             Title = "Form Field",
-                            InternalName = "FormField"
+                            InternalName = "FormField",
+                            FormSection = new FormSection
+                            {
+                                FormFields = new FormField[]
+                                {
+                                    new FormField
+                                    {
+                                        // Title
+                                        EntityPropertyId = new Guid("{218A6A13-5A20-49D0-8770-ECD570D94599}")
+                                    },
+                                    new FormField
+                                    {
+                                        // Entity Property
+                                        EntityPropertyId = new Guid("{307F022C-B5ED-4F1F-8015-9DF223F95599}")
+                                    }
+                                }
+                            }
                         }
                     }
                 },

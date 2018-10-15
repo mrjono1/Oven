@@ -96,6 +96,12 @@ namespace Oven.Request
         [NonDefault]
         [JsonIgnore]
         public Entity Entity { get; set; }
+        /// <summary>
+        /// Property
+        /// </summary>
+        [NonDefault]
+        [JsonIgnore]
+        public Property Property { get; set; }
         #endregion
     }
 }
