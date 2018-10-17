@@ -89,7 +89,6 @@ namespace Oven.Templates.React.Src.Resources
                                 filterEntityProperties.Add(pp.Entity, new List<Property> { pp.Property });
                             }
                         }
-
                     }
                 }
             }

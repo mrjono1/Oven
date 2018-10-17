@@ -80,7 +80,7 @@ namespace {Project.InternalName}.Models
     /// </summary>
     public class {ScreenSections.First().FormRequestClass}
     {{
-{string.Join(Environment.NewLine, properties)}
+{string.Join(Environment.NewLine, properties.OrderBy(a => a))}
     }}
 }}";
         }
