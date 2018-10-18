@@ -48,9 +48,6 @@ module.exports = {
         'webpack-hot-middleware/client',
         './src/index'
     ],
-    output: {
-        publicPath: ''
-    },
     
     plugins: [
         new webpack.DefinePlugin({

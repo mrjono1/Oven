@@ -45,11 +45,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
     mode: 'production',
     entry: [],
-    
-    output: {
-        publicPath: ''
-    },
-    
+        
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {

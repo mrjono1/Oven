@@ -31,14 +31,13 @@ namespace Oven.Templates.React.ProjectFiles.Webpack
             return @"const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
-const autoprefixer = require('autoprefixer');
 
 const development = require('./webpack.config.development.js');
 const production = require('./webpack.config.production.js');
 
 require('babel-polyfill');
 
-const TARGET = process.env.npm_lifecycle_event;
+const TARGET = process.env.NODE_ENV || 'start';
 
 const PATHS = {
     app: path.join(__dirname, './src'),
@@ -55,7 +54,8 @@ const common = {
 
     output: {
         path: PATHS.build,
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: ''
     },
 
     resolve: {
@@ -79,25 +79,14 @@ const common = {
             test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
             loader: 'file-loader'
         }]
-    },
-    
-    plugins: [
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                context: __dirname,
-                postcss: [
-                    autoprefixer()
-                ]
-            }
-        })
-    ]
+    }
 };
 
-if (TARGET === 'start' || !TARGET) {
+if (TARGET === 'start') {
     module.exports = merge(development, common);
 }
 
-if (TARGET === 'build' || !TARGET) {
+if (TARGET === 'build') {
     module.exports = merge(production, common);
 }";
         }
