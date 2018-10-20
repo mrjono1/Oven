@@ -68,7 +68,6 @@ namespace Oven.Templates.React.ProjectFiles
     ""babel-preset-stage-1"": ""^6.24.1"",
     ""babel-register"": ""^6.9.0"",
     ""copy-webpack-plugin"": ""^3.0.1"",
-    ""cross-env"": ""^5.0.0"",
     ""eslint"": ""5.3.0"",
     ""eslint-plugin-react"": ""7.10.0"",
     ""exports-loader"": ""^0.6.2"",
@@ -77,12 +76,8 @@ namespace Oven.Templates.React.ProjectFiles
     ""file-loader"": ""^0.8.5"",
     ""html-webpack-plugin"": ""3.2.0"",
     ""imports-loader"": ""^0.6.5"",
-    ""keymirror"": ""^0.1.1"",
-    ""morgan"": ""^1.6.1"",
-    ""offline-plugin"": ""5.0.3"",
     ""react-hot-loader"": ""^1.3.0"",
     ""react-transform-hmr"": ""^1.0.1"",
-    ""resolve-url-loader"": ""^1.4.3"",
     ""rimraf"": ""^2.5.0"",
     ""webpack"": ""4.8.3"",
     ""webpack-cli"": ""2.1.3"",
@@ -102,7 +97,6 @@ namespace Oven.Templates.React.ProjectFiles
     ""react-redux"": ""5.0.7"",
     ""react-router"": ""^4.2.0"",
     ""react-router-dom"": ""^4.2.2"",
-    ""react-tap-event-plugin"": ""^3.0.2"",
     ""redux"": ""4.0.0""
   }}
 }}";
