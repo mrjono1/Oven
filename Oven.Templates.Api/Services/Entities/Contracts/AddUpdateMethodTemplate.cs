@@ -40,7 +40,7 @@ namespace Oven.Templates.Api.Entities.Contracts
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        Task<{Screen.FormResponseClass}> CreateAsync({Screen.InternalName}Request request);";
+        Task<Guid> CreateAsync({Screen.InternalName}Request request);";
         }
 
     }

@@ -242,17 +242,13 @@ namespace Oven.Templates.Api.Entities
             var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
 
             var properties = new List<string>();
-            var propertyMapping = new List<string>();
             foreach (var effe in effes)
             {
                 if (effe.Entity.Id == Screen.EntityId)
                 {
                     properties.AddRange(Property(effe, effes, "post", "newRecord", 0, true));
-                    propertyMapping.AddRange(GetPropertiesRecursive(effe, effes));
                 }
             }
-
-            propertyMapping.AddRange(GetParentProperties(Screen.Entity, "item", true));
 
             var newRecord = $"            var newRecord = new {Screen.Entity.InternalName}();";
 
@@ -268,7 +264,7 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        public virtual async Task<{Screen.FormResponseClass}> CreateAsync({Screen.InternalName}Request post)
+        public virtual async Task<Guid> CreateAsync({Screen.InternalName}Request post)
         {{
             if (post == null)
             {{
@@ -281,15 +277,7 @@ namespace Oven.Templates.Api.Entities
             _context.{Screen.Entity.InternalNamePlural}.Add(newRecord);
             await _context.SaveChangesAsync();
 
-            var result = await _context.{Screen.Entity.InternalNamePlural}
-                        .AsNoTracking()
-                        .Select(item => new Models.{Screen.FormResponseClass}
-                        {{
-{string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
-                        }})
-                        .SingleOrDefaultAsync(p => p.Id == newRecord.Id);
-
-            return result;
+            return newRecord.Id;
         }}";
         }
         #endregion

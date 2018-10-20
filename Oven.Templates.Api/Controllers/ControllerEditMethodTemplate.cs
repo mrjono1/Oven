@@ -72,7 +72,7 @@ namespace Oven.Templates.Api.Controllers
         /// {Screen.Title} Update
         /// </summary>
         [HttpPut(""{{id}}"")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
         public async Task<IActionResult> UpdateAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, [FromRoute]Guid id, [FromBody]{Screen.InternalName}Request request)
         {{
@@ -88,7 +88,14 @@ namespace Oven.Templates.Api.Controllers
             
             await {Screen.Entity.InternalName.Camelize()}Service.UpdateAsync(id, request);
 
-            return Ok(id);
+            var result = await {Screen.Entity.InternalName.Camelize()}Service.GetAsync(id);
+
+            if (result == null)
+            {{
+                return NotFound();
+            }}
+
+            return Ok(result);
         }}";
         }
         #endregion
@@ -118,7 +125,9 @@ namespace Oven.Templates.Api.Controllers
                 return new BadRequestObjectResult(ModelState);
             }}
 
-            var result = await {Screen.Entity.InternalName.Camelize()}Service.CreateAsync(request);
+            var id = await {Screen.Entity.InternalName.Camelize()}Service.CreateAsync(request);
+
+            var result = await {Screen.Entity.InternalName.Camelize()}Service.GetAsync(id);
 
             if (result == null)
             {{
