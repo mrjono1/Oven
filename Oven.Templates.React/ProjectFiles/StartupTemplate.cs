@@ -225,8 +225,6 @@ namespace {Project.InternalName}
             loggerFactory.AddConsole(Configuration.GetSection(""Logging""));
             loggerFactory.AddDebug();
 
-            app.UseStaticFiles();
-
             // Initialize database
             context.Initialize().Wait();
 
@@ -238,6 +236,8 @@ namespace {Project.InternalName}
             {{
                 app.UseExceptionHandler(""/Home/Error"");
             }}
+
+            app.UseStaticFiles();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();

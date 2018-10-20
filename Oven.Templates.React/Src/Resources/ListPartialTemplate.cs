@@ -94,7 +94,7 @@ namespace Oven.Templates.React.Src.Resources
             }
 
             var hasTarget = false;
-            var filter = "props.id";
+            var filter = "props.record.id";
             var parentEntities = ScreenSection.Entity.GetParentEntites(Project);
             if (parentEntities.Any())
             {
