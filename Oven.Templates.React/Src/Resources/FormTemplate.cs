@@ -128,13 +128,13 @@ const DynamicTitle = ({{ record }}) => {{
 }};
 
 const {Screen.Entity.InternalName}Edit = (props) => (
-    <Edit {{...props}} title={{< DynamicTitle />}}>
+    <Edit undoable={{ false }} {{...props}} title={{< DynamicTitle />}}>
         <Form {{...props}} />
     </Edit>
 );
 
 const {Screen.Entity.InternalName}Create = (props) => (
-    <Create {{...props}} title=""Create {Screen.Title}"">
+    <Create undoable={{ false }} {{...props}} title=""Create {Screen.Title}"">
         <Form {{...props}} />
     </Create>
 );

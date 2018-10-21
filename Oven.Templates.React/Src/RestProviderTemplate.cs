@@ -197,7 +197,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                     )
                 ).then(responses => ({
                     data: responses.map(response => response.json)
-                    }));
+                }));
             case DELETE_MANY:
                 return Promise.all(
                     params.ids.map(id =>

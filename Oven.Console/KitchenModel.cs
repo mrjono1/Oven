@@ -288,10 +288,9 @@ namespace Oven
                     Title = "Property",
                     Properties = new Property[]
                     {
-                        new Property()
+                        new Property("Id")
                         {
                             Id = new Guid("{D34BF79B-F052-4090-BBDD-8FAE69A256C4}"),
-                            InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
@@ -309,10 +308,9 @@ namespace Oven
                                 },
                             }
                         },
-                        new Property()
+                        new Property("Title")
                         {
                             Id = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}"),
-                            InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
@@ -329,10 +327,9 @@ namespace Oven
                                 },
                             }
                         },
-                        new Property()
+                        new Property("InternalName")
                         {
                             Id = new Guid("{C52F7B8E-CAD0-40FF-8E89-B313A290A96E}"),
-                            InternalName = "InternalName",
                             PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
@@ -367,18 +364,16 @@ namespace Oven
                                 },
                             }
                         },
-                        new Property()
+                        new Property("PropertyTemplate")
                         {
                             Id = new Guid("{53AD68E2-5C5C-405C-8407-67EA58862B0D}"),
-                            InternalName = "PropertyTemplate",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Property Template",
                             ReferenceEntityId = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}")
                         },
-                        new Property()
+                        new Property("ParentEntity")
                         {
                             Id = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}"),
-                            InternalName = "ParentEntity",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "ParentEntity",
                             // Entity
@@ -392,33 +387,29 @@ namespace Oven
                                 ReferencePropertyId = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}")
                             }
                         },
-                        new Property()
+                        new Property("DefaultIntegerValue")
                         {
                             Id = new Guid("{62FE9985-98A3-4D40-BC68-8AF641FDABFC}"),
-                            InternalName = "DefaultIntegerValue",
                             PropertyType = PropertyType.Integer,
-                            Title = "Default Integer Value"
+                            Title = "Default Value"
                         },
-                        new Property()
+                        new Property("DefaultDoubleValue")
                         {
                             Id = new Guid("{61862CC1-DFD4-4578-BF6E-FFA195D6F6A1}"),
-                            InternalName = "DefaultDoubleValue",
                             PropertyType = PropertyType.Double,
-                            Title = "Default Double Value"
+                            Title = "Default Value"
                         },
-                        new Property()
+                        new Property("DefaultStringValue")
                         {
                             Id = new Guid("{63935FCA-CC40-4A78-A21C-F76FD761701B}"),
-                            InternalName = "DefaultStringValue",
                             PropertyType = PropertyType.String,
-                            Title = "Default String Value"
+                            Title = "Default Value"
                         },
-                        new Property()
+                        new Property("DefaultBooleanValue")
                         {
                             Id = new Guid("{836DA351-CCCF-4269-89CA-98E7CD67E77E}"),
-                            InternalName = "DefaultBooleanValue",
                             PropertyType = PropertyType.Boolean,
-                            Title = "Default Boolean Value",
+                            Title = "Default Value",
                             DefaultBooleanValue = false
                         }
                     }
