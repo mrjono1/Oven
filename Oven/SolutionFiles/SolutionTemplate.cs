@@ -39,7 +39,7 @@ namespace Oven.Templates.SolutionFiles
         /// </summary>
         public string GetFileContent()
         {
-            var customProjects = $@"Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Api.Custom"", ""{Project.InternalName}.Api.Custom\{Project.InternalName}.Api.Custom.csproj"", ""{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}""
+            var customProjects = $@"Project(""{{9A19103F-16F7-4668-BE54-9A1E7A4F7556}}"") = ""{Project.InternalName}.Api.Custom"", ""{Project.InternalName}.Api.Custom\{Project.InternalName}.Api.Custom.csproj"", ""{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}""
 EndProject
 ";
             var customGlobalSection = $@"		{{{Project.ProjectApiCustomId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -52,11 +52,11 @@ EndProject
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project(""{{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}}"") = ""{Project.InternalName}"", ""{Project.InternalName}\{Project.InternalName}.csproj"", ""{{{Project.ProjectWebId.ToString().ToUpperInvariant()}}}""
+Project(""{{9A19103F-16F7-4668-BE54-9A1E7A4F7556}}"") = ""{Project.InternalName}"", ""{Project.InternalName}\{Project.InternalName}.csproj"", ""{{{Project.ProjectWebId.ToString().ToUpperInvariant()}}}""
 EndProject
-Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.Api"", ""{Project.InternalName}.Api\{Project.InternalName}.Api.csproj"", ""{{{Project.ProjectApiId.ToString().ToUpperInvariant()}}}""
+Project(""{{9A19103F-16F7-4668-BE54-9A1E7A4F7556}}"") = ""{Project.InternalName}.Api"", ""{Project.InternalName}.Api\{Project.InternalName}.Api.csproj"", ""{{{Project.ProjectApiId.ToString().ToUpperInvariant()}}}""
 EndProject
-Project(""{{3B11791D-0C2C-43C7-9B3A-8ED820AFC4A6}}"") = ""{Project.InternalName}.DataAccessLayer"", ""{Project.InternalName}.DataAccessLayer\{Project.InternalName}.DataAccessLayer.csproj"", ""{{{Project.ProjectDataAccessLayerId.ToString().ToUpperInvariant()}}}""
+Project(""{{9A19103F-16F7-4668-BE54-9A1E7A4F7556}}"") = ""{Project.InternalName}.DataAccessLayer"", ""{Project.InternalName}.DataAccessLayer\{Project.InternalName}.DataAccessLayer.csproj"", ""{{{Project.ProjectDataAccessLayerId.ToString().ToUpperInvariant()}}}""
 EndProject
 {(!Project.EnableCustomCode ? "" : customProjects)}Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

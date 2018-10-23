@@ -38,10 +38,7 @@ namespace Oven.Templates.React
             projectWriter.AddTemplate(new ProjectFiles.EslintrcTemplate(project));
             projectWriter.AddTemplate(new ProjectFiles.EslintrcIgnoreTemplate(project));
             projectWriter.AddTemplate(new ProjectFiles.BabelrcTemplate(project));
-
-            projectWriter.AddTemplate(new ProjectFiles.Webpack.WebpackTemplate());
-            projectWriter.AddTemplate(new ProjectFiles.Webpack.WebpackProductionTemplate(project));
-            projectWriter.AddTemplate(new ProjectFiles.Webpack.WebpackDevelopmentTemplate(project));
+            projectWriter.AddTemplate(new ProjectFiles.WebpackTemplate());
 
             // Views
             projectWriter.AddTemplate(new Views.ViewImportsTemplate(project));

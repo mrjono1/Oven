@@ -197,7 +197,6 @@ namespace {Project.InternalName}
         {{
             // Add framework services.
             services.AddMvc();
-            services.AddNodeServices();
 
             // Add Entity Framework service{dbConnectionSetup}
             services.AddDbContext<DataAccessLayer.ApplicationDbContext>(options =>
@@ -231,6 +230,10 @@ namespace {Project.InternalName}
             if (env.IsDevelopment())
             {{
                 app.UseDeveloperExceptionPage();
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {{
+                    HotModuleReplacement = true
+                }});
             }}
             else
             {{

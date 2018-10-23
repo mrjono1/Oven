@@ -63,15 +63,16 @@ namespace Oven.Templates.React.ProjectFiles
     ""babel-preset-es2015"": ""^6.9.0"",
     ""babel-preset-react"": ""^6.5.0"",
     ""babel-preset-react-hmre"": ""^1.1.1"",
+    ""clean-webpack-plugin"": ""0.1.19"",
     ""eslint"": ""5.3.0"",
     ""eslint-plugin-react"": ""7.10.0"",
     ""file-loader"": ""^0.8.5"",
     ""html-webpack-plugin"": ""3.2.0"",
     ""rimraf"": ""^2.5.0"",
-    ""webpack"": ""4.8.3"",
-    ""webpack-cli"": ""2.1.3"",
-    ""webpack-hot-middleware"": ""2.22.2"",
-    ""webpack-merge"": ""^4.1.2""
+    ""webpack"": ""4.22.0"",
+    ""webpack-cli"": ""3.1.2"",
+    ""webpack-dev-middleware"": ""3.4.0"",
+    ""webpack-hot-middleware"": ""2.24.3""
   }},
   ""dependencies"": {{
     ""@material-ui/core"": ""1.5.1"",
