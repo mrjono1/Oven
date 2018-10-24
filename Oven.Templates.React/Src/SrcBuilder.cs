@@ -24,6 +24,7 @@ namespace Oven.Templates.React.Src
             var templates = new List<ITemplate>
             {
                 new AppTemplate(Project),
+                new DevIndexTemplate(Project),
                 new IndexTemplate(Project),
                 new LayoutTemplate(Project),
                 new ManifestTemplate(Project),

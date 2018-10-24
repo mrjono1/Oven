@@ -42,12 +42,12 @@ module.exports = (env) => {
     return [{
         mode: isDevBuild ? 'development' : 'production',
 
-        devtool: 'inline-source-map',
+        devtool: isDevBuild ? 'eval-source-map' : 'source-map',
 
         stats: { modules: false },
 
         entry: {
-            'App': path.join(outputDir, './src')
+            'App': path.join(outputDir, (isDevBuild ? './src/devIndex.jsx' : './src/'))
         },
 
         watchOptions: {

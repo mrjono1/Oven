@@ -69,6 +69,7 @@ namespace Oven.Templates.React.ProjectFiles
     ""file-loader"": ""^0.8.5"",
     ""html-webpack-plugin"": ""3.2.0"",
     ""rimraf"": ""^2.5.0"",
+    ""react-hot-loader"": ""4.3.11"",
     ""webpack"": ""4.22.0"",
     ""webpack-cli"": ""3.1.2"",
     ""webpack-dev-middleware"": ""3.4.0"",
