@@ -31,13 +31,28 @@ namespace Oven.Templates.React.ProjectFiles
             return @"const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
 
-    const outputDir = (env && env.publishDir)
-        ? env.publishDir
-        : __dirname;
+
+    const plugins = [
+        new CleanWebpackPlugin(path.join(__dirname, 'wwwroot')),
+        new HtmlWebpackPlugin({
+            template: 'Views/Shared/_LayoutTemplate.cshtml',
+            filename: '../Views/Shared/_Layout.cshtml',
+            hash: true
+        })
+    ];
+    if (!isDevBuild) {
+        plugins.push(new WorkboxPlugin.GenerateSW({
+            // these options encourage the ServiceWorkers to get in there fast 
+            // and not allow any straggling 'old' SWs to hang around
+            clientsClaim: true,
+            skipWaiting: true
+        }));
+    }
 
     return [{
         mode: isDevBuild ? 'development' : 'production',
@@ -47,7 +62,7 @@ module.exports = (env) => {
         stats: { modules: false },
 
         entry: {
-            'App': path.join(outputDir, (isDevBuild ? './src/devIndex.jsx' : './src/'))
+            'App': path.join(__dirname, (isDevBuild ? './src/devIndex.jsx' : './src/'))
         },
 
         watchOptions: {
@@ -56,7 +71,7 @@ module.exports = (env) => {
 
         output: {
             filename: 'bundle.js',
-            path: path.join(outputDir, './wwwroot'),
+            path: path.join(__dirname, './wwwroot'),
             publicPath: '/'
         },
 
@@ -79,14 +94,14 @@ module.exports = (env) => {
             ]
         },
 
-        plugins: [
-            new CleanWebpackPlugin(path.join(outputDir, 'wwwroot')),
-            new HtmlWebpackPlugin({
-                template: 'Views/Shared/_LayoutTemplate.cshtml',
-                filename: '../Views/Shared/_Layout.cshtml',
-                hash: true
-            })
-        ]
+        optimization: {
+            splitChunks: {
+                cacheGroups: {
+                    commons: { test: /[\\/]node_modules[\\/]/, name: 'vendors', chunks: 'all' }
+                }
+            }
+        },
+        plugins: plugins
     }];
 };";
         }

@@ -30,8 +30,7 @@ namespace Oven.Templates.React.Src
                 new ManifestTemplate(Project),
                 new MenuTemplate(Project),
                 new RestProviderTemplate(Project),
-                new RoutesTemplate(Project),
-                new RegisterServiceWorkerTemplate(Project)
+                new RoutesTemplate(Project)
             };
 
             return templates;

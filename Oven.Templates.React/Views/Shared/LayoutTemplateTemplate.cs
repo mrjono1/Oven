@@ -45,6 +45,7 @@ namespace Oven.Templates.React.Views.Shared
     <meta charset=""utf-8"" />
     <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"" />
     <meta name=""theme-color"" content=""#4285f4"">
+    <meta name=""Description"" content=""{Project.Title}"">
     <title>@ViewData[""Title""] - {Project.Title}</title>
     <base href=""~/"" />
 </head>

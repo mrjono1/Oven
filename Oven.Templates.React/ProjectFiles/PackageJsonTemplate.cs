@@ -86,7 +86,8 @@ namespace Oven.Templates.React.ProjectFiles
     ""react-redux"": ""5.0.7"",
     ""react-router"": ""4.3.1"",
     ""react-router-dom"": ""4.3.1"",
-    ""redux"": ""4.0.1""
+    ""redux"": ""4.0.1"",
+    ""workbox-webpack-plugin"": ""3.6.3""
   }}
 }}";
         }
