@@ -73,7 +73,8 @@ namespace Oven.Templates.React.ProjectFiles
     ""webpack"": ""4.22.0"",
     ""webpack-cli"": ""3.1.2"",
     ""webpack-dev-middleware"": ""3.4.0"",
-    ""webpack-hot-middleware"": ""2.24.3""
+    ""webpack-hot-middleware"": ""2.24.3"",
+    ""webpack-manifest-plugin"": ""2.0.4""
   }},
   ""dependencies"": {{
     ""@material-ui/core"": ""1.5.1"",
