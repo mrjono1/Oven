@@ -107,6 +107,10 @@ namespace Oven.Request
         /// Generate a Project that allows custom code
         /// </summary>
         public bool EnableCustomCode { get; set; }
+        /// <summary>
+        /// Theme Colour HEX
+        /// </summary>
+        public string ThemeColour { get; set; } = "#4285f4";
 
         #region Internal Settings
 
