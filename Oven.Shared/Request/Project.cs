@@ -162,6 +162,11 @@ namespace Oven.Request
         [JsonIgnore]
         public bool IncludeSupportForSpatial { get; set; }
         /// <summary>
+        /// Default Screen
+        /// </summary>
+        [JsonIgnore]
+        public Screen DefaultScreen { get; private set; }
+        /// <summary>
         /// Internal Id of the Web Project/Main entry project
         /// </summary>
         [JsonIgnore]

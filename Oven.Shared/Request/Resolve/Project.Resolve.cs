@@ -26,6 +26,12 @@ namespace Oven.Request
                 DefaultScreenId = Screens.FirstOrDefault().Id;
             }
 
+            // Still could be null if no screens have been setup yet
+            if (DefaultScreenId.HasValue)
+            {
+                DefaultScreen = Screens.Single(a => a.Id == DefaultScreenId);
+            }
+
             // Resolve child records
             foreach (var entity in Entities)
             {

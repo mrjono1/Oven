@@ -32,6 +32,39 @@ namespace Oven.Templates.React.Src
         /// </summary>
         public string[] GetFilePath() => new string[] { "src" };
 
+        private bool GetResource(Entity entity, out string[] imports, out string resource)
+        {
+            var createAndEdit = Project.Screens.Any(s => s.EntityId == entity.Id && s.ScreenType == ScreenType.Form);
+            var list = Project.Screens.Any(s => s.EntityId == entity.Id && s.ScreenType == ScreenType.Search);
+            if (createAndEdit && list)
+            {
+                imports = new string[] {
+                    $"import {entity.InternalName}List from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}List';",
+                    $"import {{ {entity.InternalName}Create, {entity.InternalName}Edit }} from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Form';"
+                };
+                resource = $@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} list={{{entity.InternalName}List}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8);
+            }
+            else if (createAndEdit)
+            {
+                imports = new string[] { $"import {{ {entity.InternalName}Create, {entity.InternalName}Edit }} from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Form';"};
+                resource = $@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8);
+            }
+            else if (list)
+            {
+                imports = new string[] { $"import {entity.InternalName}List from './resources/{entity.InternalNamePlural.Camelize()}{entity.InternalName}List';" };
+                resource = $@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} list={{{entity.InternalName}List}} />".IndentLines(8);
+            }
+            else
+            {
+                imports = new string[] { };
+                resource = null;
+                return false;
+            }
+
+            return true;
+        }
+
+
         /// <summary>
         /// Get file content
         /// </summary>
@@ -39,26 +72,26 @@ namespace Oven.Templates.React.Src
         {
             var resources = new List<string>();
             var imports = new List<string>();
+
+            Entity defaultEntity = null;
             foreach (var entity in Project.Entities.OrderBy(a => a.InternalName))
             {
-                var createAndEdit = Project.Screens.Any(s => s.EntityId == entity.Id && s.ScreenType == ScreenType.Form);
-                var list = Project.Screens.Any(s => s.EntityId == entity.Id && s.ScreenType == ScreenType.Search);
-                if (createAndEdit && list)
+                if (Project.DefaultScreen != null && Project.DefaultScreen.EntityId.HasValue && Project.DefaultScreen.EntityId == entity.Id)
                 {
-                    imports.Add($"import {entity.InternalName}List from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}List';");
-                    imports.Add($"import {{ {entity.InternalName}Create, {entity.InternalName}Edit }} from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Form';");
-                    resources.Add($@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} list={{{entity.InternalName}List}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8));
+                    defaultEntity = entity;
+                    continue;
                 }
-                else if (createAndEdit)
+
+                if (GetResource(entity, out string[] outImports, out string outResource))
                 {
-                    imports.Add($"import {{ {entity.InternalName}Create, {entity.InternalName}Edit }} from './resources/{entity.InternalNamePlural.Camelize()}/{entity.InternalName}Form';");
-                    resources.Add($@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} create={{{entity.InternalName}Create}} edit={{{entity.InternalName}Edit}} />".IndentLines(8));
+                    imports.AddRange(outImports);
+                    resources.Add(outResource);
                 }
-                else if (list)
-                {
-                    imports.Add($"import {entity.InternalName}List from './resources/{entity.InternalNamePlural.Camelize()}{entity.InternalName}List';");
-                    resources.Add($@"<Resource name=""{entity.InternalNamePlural}"" options={{{{ label: '{entity.Title}' }}}} list={{{entity.InternalName}List}} />".IndentLines(8));
-                }
+            }
+            if (defaultEntity != null && GetResource(defaultEntity, out string[] outDefaultImports, out string outDefaultResource))
+            {
+                imports.AddRange(outDefaultImports);
+                resources.Insert(0, outDefaultResource);
             }
 
             return $@"import React from 'react';
