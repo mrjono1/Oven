@@ -80,12 +80,13 @@ namespace Oven.Templates.Api.Models
         /// {pe.Title}
         /// </summary>
         [Display(Name = ""{pe.Title}"")]
-        public Guid {pe.InternalName}Id {{ get; set; }}");
+        public ObjectId {pe.InternalName}Id {{ get; set; }}");
                 }
             }
 
             return $@"using System;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
 
 namespace {Project.InternalName}.Models
 {{

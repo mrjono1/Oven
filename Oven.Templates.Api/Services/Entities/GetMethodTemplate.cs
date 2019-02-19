@@ -5,7 +5,7 @@ using Humanizer;
 using Oven.Helpers;
 using Oven.Request;
 
-namespace Oven.Templates.Api.Entities
+namespace Oven.Templates.Api.Services
 {
     /// <summary>
     /// Get Method Template
@@ -74,7 +74,7 @@ namespace Oven.Templates.Api.Entities
                                                       where p.PropertyType == PropertyType.ParentRelationshipOneToOne
                                                       select p).Single().InternalName;
 
-                    properties.Add($@"                            {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName} = {childObjectName} == null || !{childObjectName}.{parentPropertyInternalName}Id.HasValue ? null : new {childEntityFormFieldEntity.InternalName}Response{{
+                    properties.Add($@"                            {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName} = {childObjectName} == null || {childObjectName}.{parentPropertyInternalName}Id != null ? null : new {childEntityFormFieldEntity.InternalName}Response{{
 {string.Join(string.Concat(",", Environment.NewLine),  childProperties)}
                             {new string(' ', 4 * level)}}}");
                 }
@@ -137,20 +137,19 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {Screen.Title} Get
         /// </summary>
-        public virtual async Task<{Screen.FormResponseClass}> GetAsync(Guid id)
+        public virtual async Task<{Screen.FormResponseClass}> GetAsync(ObjectId id)
         {{
-            if (id == Guid.Empty)
+            if (id == null)
             {{
                 throw new ArgumentNullException(); 
             }}
             
-            var result = await _context.{Screen.Entity.InternalNamePlural}
-                        .AsNoTracking()
+            var result = _context.{Screen.Entity.InternalNamePlural}.AsQueryable()
                         .Select(item => new {Screen.FormResponseClass}
                         {{
 {string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
                         }})
-                        .SingleOrDefaultAsync(p => p.Id == id);
+                        .SingleOrDefault(p => p.Id == id);
 
             return result;
         }}";

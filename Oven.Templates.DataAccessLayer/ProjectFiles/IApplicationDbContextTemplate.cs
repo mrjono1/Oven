@@ -1,19 +1,24 @@
+using Humanizer;
 using Oven.Interfaces;
 using Oven.Request;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Oven.Templates.DataAccessLayer.ProjectFiles
 {
     /// <summary>
-    /// Entity Framework Core Context Factory for Migrations
+    /// Db Context
     /// </summary>
-    public class ApplicationDbContextFactoryTemplate : ITemplate
+    public class IApplicationDbContextTemplate : ITemplate
     {
         private readonly Project Project;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ApplicationDbContextFactoryTemplate(Project project)
+        public IApplicationDbContextTemplate(Project project)
         {
             Project = project;
         }
@@ -23,7 +28,7 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
         /// </summary>
         public string GetFileName()
         {
-            return "ApplicationDbContextFactory.cs";
+            return "IApplicationDbContext.cs";
         }
 
         /// <summary>
@@ -39,23 +44,26 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-            return $@"using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
+            var properties = new List<string>();
+
+            if (Project.Entities != null)
+            {
+                foreach (var entity in Project.Entities)
+                {
+                    properties.Add($@"        IMongoCollection<Entities.{entity.InternalName}> {entity.InternalNamePlural} {{ get; }}");
+                }
+            }
+
+            return $@"using MongoDB.Driver;
 
 namespace {Project.InternalName}.DataAccessLayer
 {{
     /// <summary>
-    /// Application Db Context Factory
+    /// Application Database Context
     /// </summary>
-    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    public interface IApplicationDbContext
     {{
-        public ApplicationDbContext CreateDbContext(string[] args)
-        {{
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer(""x"");
-
-            return new ApplicationDbContext(optionsBuilder.Options);
-        }}
+{string.Join(Environment.NewLine, properties)}
     }}
 }}";
         }

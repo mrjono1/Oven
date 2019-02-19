@@ -5,7 +5,7 @@ using Oven.Request;
 using System.Linq;
 using Humanizer;
 
-namespace Oven.Templates.Api.Entities
+namespace Oven.Templates.Api.Services
 {
     /// <summary>
     /// Controller Search Method Template
@@ -66,7 +66,7 @@ namespace Oven.Templates.Api.Entities
                 throw new NullReferenceException(); 
             }}
 
-            var query = from item in _context.{screenSection.SearchSection.Entity.InternalNamePlural}
+            var query = from item in _context.{screenSection.SearchSection.Entity.InternalNamePlural}.AsQueryable()
             {parentPropertyWhereString}
                         select item;
 
@@ -75,7 +75,7 @@ namespace Oven.Templates.Api.Entities
 
             if (totalItems != 0 && request.end != 0)
             {{
-                items = await query
+                items = query
                     .OrderBy(p => p.{screenSection.SearchSection.OrderBy})
                     .Skip(request.start)
                     .Take(request.end - request.start)
@@ -83,7 +83,7 @@ namespace Oven.Templates.Api.Entities
                     {{
 {string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
                     }})
-                    .ToArrayAsync();
+                    .ToArray();
             }}
             
             return new {screenSection.SearchSection.SearchResponseClass} {{

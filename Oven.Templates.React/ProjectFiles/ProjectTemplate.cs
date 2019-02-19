@@ -46,31 +46,21 @@ namespace Oven.Templates.React.ProjectFiles
             
             var nugetReferences = new Dictionary<string, string>
             {
-                { "Microsoft.AspNetCore.All", "2.1.4" },
-                { "Microsoft.EntityFrameworkCore", "2.1.3"},
+                { "Microsoft.AspNetCore.All", null },
                 { "Swashbuckle.AspNetCore", "3.0.0" },
                 { "Swashbuckle.AspNetCore.Swagger", "3.0.0" },
                 { "Swashbuckle.AspNetCore.SwaggerUi", "3.0.0" }
             };
-
-            if (Project.UseMySql)
-            {
-                nugetReferences.Add("Pomelo.EntityFrameworkCore.MySql", "2.0.1");
-            }
-            else
-            {
-                nugetReferences.Add("Microsoft.EntityFrameworkCore.SqlServer", "2.1.3");
-            }
-
+            
             foreach (var item in nugetReferences)
             {
-                packageReferences.AppendLine($@"    <PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
+                packageReferences.AppendLine($@"    <PackageReference Include=""{item.Key}""{(item.Value == null ? "" : $@" Version=""{item.Value}"" ")}/>");
             }
 
             return $@"<Project Sdk=""Microsoft.NET.Sdk.Web"">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <IsPackable>false</IsPackable>

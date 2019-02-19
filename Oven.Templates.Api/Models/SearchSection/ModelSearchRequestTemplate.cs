@@ -59,13 +59,14 @@ namespace Oven.Templates.Api.Models
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid {parentEntity.InternalName}Id {{ get; set; }}";
+        public ObjectId {parentEntity.InternalName}Id {{ get; set; }}";
             }
             
 
             return $@"using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
 
 namespace {Project.InternalName}.Models
 {{

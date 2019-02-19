@@ -67,24 +67,8 @@ namespace Oven.Templates.React.ProjectFiles
                 }
             }
 
-            string dbConnection = null;
-            string dbConnectionSetup = null;
-            if (Project.UseMySql)
-            {
-                dbConnectionSetup = $@"
-            var useMySqlInApp = Configuration[""useMySqlInApp""];
-            var connectionString = ""Server=localhost;database={Project.InternalName};uid=root;pwd=password;"";
-            if (!string.IsNullOrEmpty(useMySqlInApp) && useMySqlInApp.Equals(""true"", StringComparison.OrdinalIgnoreCase))
-            {{
-                connectionString = Environment.GetEnvironmentVariable(""MYSQLCONNSTR_localdb"").ToString();
-            }}";
-                dbConnection = $@"options.UseMySql(connectionString));";
-            }
-            else
-            {
-                dbConnection = $@"options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));";
-            }
-
+            var dbConnection = $@"options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));";
+            
             var serviceSection = "";
             if (Project.EnableCustomCode)
             {
@@ -144,7 +128,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using {Project.InternalName}.Services;
 using {Project.InternalName}.Services.Contracts;
@@ -198,9 +181,9 @@ namespace {Project.InternalName}
             // Add framework services.
             services.AddMvc();
 
-            // Add Entity Framework service{dbConnectionSetup}
-            services.AddDbContext<DataAccessLayer.ApplicationDbContext>(options =>
-                {dbConnection}
+            // Add Entity Framework service
+            //services.AddDbContext<DataAccessLayer.ApplicationDbContext>(options =>
+            //    {dbConnection}
 
             var xmlfilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, ""{Project.InternalName}.xml"");
 
@@ -212,6 +195,8 @@ namespace {Project.InternalName}
                 c.IncludeXmlComments(xmlfilePath);
             }});
 
+
+            services.AddTransient(typeof(DataAccessLayer.IApplicationDbContext), typeof(DataAccessLayer.ApplicationDbContext));
             // Services
 {serviceSection}
         }}
@@ -219,13 +204,13 @@ namespace {Project.InternalName}
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataAccessLayer.ApplicationDbContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataAccessLayer.IApplicationDbContext context)
         {{
             loggerFactory.AddConsole(Configuration.GetSection(""Logging""));
             loggerFactory.AddDebug();
 
             // Initialize database
-            context.Initialize().Wait();
+            //context.Initialize().Wait();
 
             if (env.IsDevelopment())
             {{

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Oven.Templates.Api.Entities.Contracts
+namespace Oven.Templates.Api.Services.Contracts
 {
     /// <summary>
     /// Controller Template
@@ -86,6 +86,7 @@ namespace Oven.Templates.Api.Entities.Contracts
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using {Project.InternalName}.Models;
+using MongoDB.Bson;
 
 namespace {Project.InternalName}.Services.Contracts
 {{

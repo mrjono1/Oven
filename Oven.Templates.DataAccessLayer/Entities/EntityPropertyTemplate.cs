@@ -19,14 +19,17 @@ namespace Oven.Templates.DataAccessLayer.Entities
                     return @"        /// <summary>
         /// Primary Key
         /// </summary>
-        public Guid Id { get; set; }";
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId Id { get; set; }";
 
                 case PropertyType.ParentRelationshipOneToMany:
                     var parentRelationshipEntity = project.Entities.Where(p => p.Id == property.ReferenceEntityId.Value).Single();
                     return $@"        /// <summary>
         /// Foreign Key (Parent Relationship 1:Many) to {parentRelationshipEntity.InternalName}
         /// </summary>
-        public Guid{(property.Required ? "" : "?")} {property.InternalName}Id {{ get; set; }}
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId {property.InternalName}Id {{ get; set; }}
         /// <summary>
         /// Foreign Key navigation object (Parent Relationship 1:Many) to {parentRelationshipEntity.InternalName}
         /// </summary>
@@ -37,7 +40,8 @@ namespace Oven.Templates.DataAccessLayer.Entities
                     return $@"        /// <summary>
         /// Foreign Key (Reference Relationship) to {referenceRelationshipEntity.InternalName}
         /// </summary>
-        public Guid{(property.Required ? "" : "?")} {property.InternalName}Id {{ get; set; }}
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId {property.InternalName}Id {{ get; set; }}
         /// <summary>
         /// Foreign Key navigation object (Reference Relationship) to {referenceRelationshipEntity.InternalName}
         /// </summary>
@@ -48,7 +52,8 @@ namespace Oven.Templates.DataAccessLayer.Entities
                     return $@"        /// <summary>
         /// Foreign Key (Parent Relationship 1:1) to {oneToOneRelationshipEntity.InternalName}
         /// </summary>
-        public Guid{(property.Required ? "" : "?")} {property.InternalName}Id {{ get; set; }}
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId {property.InternalName}Id {{ get; set; }}
         /// <summary>
         /// Foreign Key navigation object (Parent Relationship 1:1) to {oneToOneRelationshipEntity.InternalName}
         /// </summary>

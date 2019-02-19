@@ -103,7 +103,7 @@ namespace {Project.InternalName}.Services
         /// <summary>
         /// Database Context
         /// </summary>
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
         /// <summary>
         /// Rest Sharp Client
         /// </summary>
@@ -112,7 +112,7 @@ namespace {Project.InternalName}.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public {Service.InternalName}Service(ApplicationDbContext context)
+        public {Service.InternalName}Service(IApplicationDbContext context)
         {{
             _context = context;
             _restClient = new RestClient(""{WebService.DefaultBaseEndpoint}"");

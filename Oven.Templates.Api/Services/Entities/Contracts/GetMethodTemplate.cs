@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Oven.Request;
 
-namespace Oven.Templates.Api.Entities.Contracts
+namespace Oven.Templates.Api.Services.Contracts
 {
     /// <summary>
     /// Get Method Template
@@ -31,7 +31,7 @@ namespace Oven.Templates.Api.Entities.Contracts
         /// <summary>
         /// {Screen.Title} Get
         /// </summary>
-        Task<{Screen.FormResponseClass}> GetAsync(Guid id);";
+        Task<{Screen.FormResponseClass}> GetAsync(ObjectId id);";
         }
     }
 }

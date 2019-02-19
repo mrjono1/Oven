@@ -40,7 +40,7 @@ namespace Oven
             SourceControl.Git git = null;
             SourceControl.Models.GetRepository repository = null;
             Dictionary<string, SourceControl.Models.GetRepository> repos = null;
-            if (builderSettings.GitPushOn || builderSettings.GitPullOn || builderSettings.CreateMigrations)
+            if (builderSettings.GitPushOn || builderSettings.GitPullOn)
             {
                 git = new SourceControl.Git(topProjectDirectory, project, builderSettings.GitUserName, builderSettings.GitEmail, builderSettings.VstsPersonalAccessToken);
             }

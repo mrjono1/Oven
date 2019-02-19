@@ -43,28 +43,13 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
         {
             var packageReferences = new StringBuilder();
 
-            var efVersion = "2.1.3";
+            var mongoDbVersion = "2.7.3";
             var nugetReferences = new Dictionary<string, string>
             {
-                { "Microsoft.EntityFrameworkCore", efVersion},
-                { "Microsoft.EntityFrameworkCore.Design", efVersion},
-                { "Microsoft.EntityFrameworkCore.SqlServer", efVersion },
+                { "MongoDB.Driver", mongoDbVersion},
                 { "Newtonsoft.Json", "11.0.2"}
             };
             
-            if (Project.UseMySql)
-            {
-                nugetReferences.Add("Pomelo.EntityFrameworkCore.MySql", "2.0.1");
-            }
-
-            if (Project.IncludeSupportForSpatial)
-            {
-                // This is the spatial support provided by the OData team - it is not the perfect solution,
-                // but until https://github.com/aspnet/EntityFrameworkCore/issues/1100 and perhaps https://github.com/dotnet/corefx/issues/12034
-                // are implemented this is the next best option.
-                nugetReferences.Add("Microsoft.Spatial", "7.4.3");
-            }
-
             foreach (var item in nugetReferences)
             {
                 packageReferences.AppendLine($@"    <PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
@@ -80,7 +65,7 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
 
             return $@"<Project Sdk=""Microsoft.NET.Sdk"">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

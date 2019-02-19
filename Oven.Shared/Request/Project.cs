@@ -27,8 +27,7 @@ namespace Oven.Request
                 "bin",
                 "obj",
                 "node_modules",
-                "Properties",
-                "Migrations"
+                "Properties"
             };
         }
         /// <summary>
@@ -125,11 +124,6 @@ namespace Oven.Request
                 return $"{MajorVersion}.{MinorVersion}.{BuildVersion}";
             }
         }
-        /// <summary>
-        /// Use MySql instead of MS Sql (not fully implemented explicit migrations needed)
-        /// </summary>
-        [JsonIgnore]
-        public bool UseMySql { get; set; }
         /// <summary>
         /// Allow Destructive Database Change, things like dropping columns, tables, keys
         /// </summary>

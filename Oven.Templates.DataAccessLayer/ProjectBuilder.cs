@@ -19,14 +19,12 @@ namespace Oven.Templates.DataAccessLayer
 
             // Project Files
             solutionWriter.AddTemplate(new ProjectFiles.ProjectTemplate(project));
-            solutionWriter.AddTemplate(new ProjectFiles.ApplicationDbContextTemplate(project));
-            solutionWriter.AddTemplate(new ProjectFiles.ApplicationDbContextFactoryTemplate(project));
 
-            // Entities
+            // Entites
             solutionWriter.AddTemplate(new Entities.EntityTemplateBuilder(project));
 
-            // Entity Type Config
-            solutionWriter.AddTemplate(new EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project));
+            solutionWriter.AddTemplate(new ProjectFiles.ApplicationDbContextTemplate(project));
+            solutionWriter.AddTemplate(new ProjectFiles.IApplicationDbContextTemplate(project));
 
             var errors = await solutionWriter.WriteAndClean();
 
@@ -35,21 +33,6 @@ namespace Oven.Templates.DataAccessLayer
                 return errors;
             }
 
-            if (builderSettings.CreateMigrations)
-            {
-                var dalProjectChanged = git.FolderChanged(repository, $"{project.InternalName}.DataAccessLayer");
-
-                if (dalProjectChanged)
-                {
-                    var migration = new Migrations.Migration(dalProjectDirectory);
-                    var migrationResult = await migration.Migrate();
-                    if (!migrationResult.Success)
-                    {
-                        return $"Migration Generation Failed: {migrationResult.Message}";
-                    }
-                }
-            }
-            
             return null;
         }
     }

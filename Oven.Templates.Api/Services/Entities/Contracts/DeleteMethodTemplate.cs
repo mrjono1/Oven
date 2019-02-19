@@ -1,6 +1,6 @@
 using Oven.Request;
 
-namespace Oven.Templates.Api.Entities.Contracts
+namespace Oven.Templates.Api.Services.Contracts
 {
     /// <summary>
     /// Delete Method Template
@@ -28,7 +28,7 @@ namespace Oven.Templates.Api.Entities.Contracts
         /// <summary>
         /// {Entity.Title} Delete
         /// </summary>
-        Task<bool> DeleteAsync(Guid id);";
+        Task<bool> DeleteAsync(ObjectId id);";
         }
     }
 }

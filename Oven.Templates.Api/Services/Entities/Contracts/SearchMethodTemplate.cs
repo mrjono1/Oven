@@ -1,6 +1,6 @@
 using Oven.Request;
 
-namespace Oven.Templates.Api.Entities.Contracts
+namespace Oven.Templates.Api.Services.Contracts
 {
     /// <summary>
     /// Controller Search Method Template

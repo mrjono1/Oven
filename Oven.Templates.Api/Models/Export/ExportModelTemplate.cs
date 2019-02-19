@@ -87,7 +87,8 @@ namespace Oven.Templates.Api.Models.Export
             }
 
             return $@"using System;
-using System.Linq; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
+using System.Linq;
+using MongoDB.Bson; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
 
 namespace {Project.InternalName}.Models.{RootEntity.InternalName}.Export
 {{

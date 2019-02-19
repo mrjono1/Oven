@@ -44,6 +44,7 @@ namespace Oven.Templates.Api.Models.Reference
         public string GetFileContent()
         {
             return $@"using System;
+using MongoDB.Bson;
 
 namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
 {{
@@ -55,7 +56,7 @@ namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
         /// <summary>
         /// Id
         /// </summary>
-        public Guid Id {{ get; set; }}
+        public ObjectId Id {{ get; set; }}
         /// <summary>
         /// Title
         /// </summary>

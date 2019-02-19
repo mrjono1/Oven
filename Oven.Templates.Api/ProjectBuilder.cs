@@ -47,7 +47,7 @@ namespace Oven.Templates.Api
             // Create Entity Service Interfaces
             foreach (var entity in project.Entities)
             {
-                var service = new Entities.Contracts.EntityServiceTemplate(project, entity);
+                var service = new Services.Contracts.EntityServiceTemplate(project, entity);
                 if (service.HasEntityActions)
                 {
                     solutionWriter.AddTemplate(service);
@@ -57,12 +57,13 @@ namespace Oven.Templates.Api
             // Create Entity Services
             foreach (var entity in project.Entities)
             {
-                var service = new Entities.EntityServiceTemplate(project, entity);
+                var service = new Services.EntityServiceTemplate(project, entity);
                 if (service.HasEntityActions)
                 {
                     solutionWriter.AddTemplate(service);
                 }
             }
+
             var errors = await solutionWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))
             {

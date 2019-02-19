@@ -1,6 +1,6 @@
 using Oven.Request;
 
-namespace Oven.Templates.Api.Entities
+namespace Oven.Templates.Api.Services
 {
     /// <summary>
     /// Delete Method Template
@@ -28,15 +28,14 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {Entity.Title} Delete
         /// </summary>
-        public virtual async Task<bool> DeleteAsync(Guid id)
+        public virtual async Task<bool> DeleteAsync(ObjectId id)
         {{
-            if (id == Guid.Empty)
+            if (id == null)
             {{
                 throw new ArgumentNullException(); 
             }}
             
-            _context.{Entity.InternalNamePlural}.Remove(new {Entity.InternalName}() {{ Id = id }});
-            await _context.SaveChangesAsync();
+            await _context.{Entity.InternalNamePlural}.DeleteOneAsync(record => record.Id == id);
 
             return true;
         }}";

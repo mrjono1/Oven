@@ -40,16 +40,7 @@ namespace Oven.Templates.Api.ProjectFiles
         public string GetFileContent()
         {
 
-            string connectionString = null;
-            if (Project.UseMySql)
-            {
-                connectionString = string.Empty;
-                // localhost = $"Server=localhost;database=Kitchen;uid=root;pwd=password;";
-            }
-            else
-            {
-                connectionString = $"Data Source=.\\\\SQLEXPRESS;Initial Catalog={Project.InternalName};Integrated Security=True";
-            }
+            string connectionString = $"Data Source=.\\\\SQLEXPRESS;Initial Catalog={Project.InternalName};Integrated Security=True";
 
             return $@"{{
   ""ConnectionStrings"": {{

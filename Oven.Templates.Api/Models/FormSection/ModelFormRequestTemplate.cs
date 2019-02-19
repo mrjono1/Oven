@@ -70,6 +70,7 @@ namespace Oven.Templates.Api.Models
             }
 
             return $@"using System;
+using MongoDB.Bson;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
