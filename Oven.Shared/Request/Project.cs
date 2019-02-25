@@ -166,6 +166,11 @@ namespace Oven.Request
         [JsonIgnore]
         public Guid ProjectWebId { get; set; } = new Guid("{2AF7569A-8978-4FA6-B7B7-E49CB9AE46D8}");
         /// <summary>
+        /// Internal Id of the Shared Project
+        /// </summary>
+        [JsonIgnore]
+        public Guid ProjectSharedId { get; set; } = new Guid("{9F905352-6C68-4738-B27D-F695C47EF611}");
+        /// <summary>
         /// Internal Id of the Api Project
         /// </summary>
         [JsonIgnore]

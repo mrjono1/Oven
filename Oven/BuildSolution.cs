@@ -72,6 +72,14 @@ namespace Oven
                 return errors;
             }
 
+            // Shared
+            var shared = new Templates.Shared.ProjectBuilder();
+            errors = await shared.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);
+            if (!string.IsNullOrEmpty(errors))
+            {
+                return errors;
+            }
+
             // Api
             var api = new Templates.Api.ProjectBuilder();
             errors = await api.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);

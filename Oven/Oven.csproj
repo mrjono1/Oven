@@ -33,6 +33,7 @@
     <ProjectReference Include="..\Oven.Templates.Api\Oven.Templates.Api.csproj" />
     <ProjectReference Include="..\Oven.Templates.DataAccessLayer\Oven.Templates.DataAccessLayer.csproj" />
     <ProjectReference Include="..\Oven.Templates.React\Oven.Templates.React.csproj" />
+    <ProjectReference Include="..\Oven.Templates.Shared\Oven.Templates.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -42,7 +42,7 @@ namespace Oven.Templates.React.Controllers
             return $@"using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jono.Controllers
+namespace {Project.InternalName}.Controllers
 {{
     /// <summary>
     /// Home Controller

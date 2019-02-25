@@ -3,7 +3,7 @@ using Oven.Request;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Oven.Templates.DataAccessLayer.ProjectFiles
+namespace Oven.Templates.Shared.ProjectFiles
 {
     /// <summary>
     /// Project
@@ -25,7 +25,7 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
         /// </summary>
         public string GetFileName()
         {
-            return $"{Project.InternalName}.DataAccessLayer.csproj";
+            return $"{Project.InternalName}.Shared.csproj";
         }
 
         /// <summary>
@@ -43,17 +43,14 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
         {
             var packageReferences = new StringBuilder();
 
-            var mongoDbVersion = "2.7.3";
             var nugetReferences = new Dictionary<string, string>
             {
-                { "Microsoft.AspNetCore.All", null },
-                { "MongoDB.Driver", mongoDbVersion},
                 { "Newtonsoft.Json", "11.0.2"}
             };
-
+            
             foreach (var item in nugetReferences)
             {
-                packageReferences.AppendLine($@"    <PackageReference Include=""{item.Key}""{(item.Value == null ? "" : $@" Version=""{item.Value}"" ")}/>");
+                packageReferences.AppendLine($@"    <PackageReference Include=""{item.Key}"" Version=""{item.Value}"" />");
             }
 
             if (Project.NuGetDependencies != null)

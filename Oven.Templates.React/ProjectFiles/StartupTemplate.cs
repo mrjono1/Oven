@@ -70,22 +70,19 @@ namespace Oven.Templates.React.ProjectFiles
             var dbConnection = $@"options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));";
             
             var serviceSection = "";
-            if (Project.EnableCustomCode)
-            {
-                var services = new List<string>();
-                serviceNames.ForEach(name => services.Add($"{{ typeof(I{name}), typeof({name}) }}"));
-                // Create Entity Services
-                foreach (var entity in Project.Entities)
-                {
-                    if (Project.Screens.Any(_ => _.EntityId == entity.Id))
-                    {
-                        services.Add($"{{ typeof(I{entity.InternalName}Service), typeof({entity.InternalName}Service) }}");
-                    }
-                }
-                serviceSection = $@"            var servicesDictionary = new System.Collections.Generic.Dictionary<Type, Type>
+            var services = new List<string>();
+            serviceNames.ForEach(name => services.Add($"{{ typeof(I{name}), typeof({name}) }}"));
+            
+            serviceSection = $@"            var servicesDictionary = new System.Collections.Generic.Dictionary<Type, Type>
             {{
                 {string.Join(string.Concat(",", Environment.NewLine, "                "), services)}
             }};
+
+            var dalServices = new DataAccessLayer.DatabaseContext().GetServices(services, Configuration);
+            foreach (var item in dalServices)
+            {{
+                servicesDictionary.Add(item.Key, item.Value);
+            }}
 
             var extensionPoint = new Api.Custom.ExtensionPoint();
             var serviceExtensions = extensionPoint.GetServices();
@@ -103,21 +100,6 @@ namespace Oven.Templates.React.ProjectFiles
                 }}
             }}";
 
-            }
-            else
-            {
-                var services = new List<string>();
-                serviceNames.ForEach(name => services.Add($"services.AddTransient<I{name}, {name}>();"));
-                // Create Entity Services
-                foreach (var entity in Project.Entities)
-                {
-                    if (Project.Screens.Any(_ => _.EntityId == entity.Id))
-                    {
-                        services.Add($"services.AddTransient<I{entity.InternalName}Service, {entity.InternalName}Service>();");
-                    }
-                }
-                serviceSection = string.Join(string.Concat(Environment.NewLine, "            "), services);
-            }
 
             return $@"using System;
 using System.IO;
@@ -195,8 +177,6 @@ namespace {Project.InternalName}
                 c.IncludeXmlComments(xmlfilePath);
             }});
 
-
-            services.AddTransient(typeof(DataAccessLayer.IApplicationDbContext), typeof(DataAccessLayer.ApplicationDbContext));
             // Services
 {serviceSection}
         }}
@@ -204,7 +184,7 @@ namespace {Project.InternalName}
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataAccessLayer.IApplicationDbContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {{
             loggerFactory.AddConsole(Configuration.GetSection(""Logging""));
             loggerFactory.AddDebug();

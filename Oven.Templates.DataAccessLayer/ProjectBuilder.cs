@@ -19,12 +19,40 @@ namespace Oven.Templates.DataAccessLayer
 
             // Project Files
             solutionWriter.AddTemplate(new ProjectFiles.ProjectTemplate(project));
+            solutionWriter.AddTemplate(new ProjectFiles.SettingsTemplate(project));
 
             // Entites
             solutionWriter.AddTemplate(new Entities.EntityTemplateBuilder(project));
 
+            solutionWriter.AddTemplate(new ProjectFiles.DatabaseContextTemplate(project));
             solutionWriter.AddTemplate(new ProjectFiles.ApplicationDbContextTemplate(project));
             solutionWriter.AddTemplate(new ProjectFiles.IApplicationDbContextTemplate(project));
+
+            // Models
+            solutionWriter.AddTemplate(new Models.ModelTemplateBuilder(project));
+
+            // Extensions
+            solutionWriter.AddTemplate(new Extensions.NonDefaultAttributeTemplate(project));
+
+            // Create Entity Service Interfaces
+            foreach (var entity in project.Entities)
+            {
+                var service = new Services.Contracts.EntityServiceTemplate(project, entity);
+                if (service.HasEntityActions)
+                {
+                    solutionWriter.AddTemplate(service);
+                }
+            }
+
+            // Create Entity Services
+            foreach (var entity in project.Entities)
+            {
+                var service = new Services.EntityServiceTemplate(project, entity);
+                if (service.HasEntityActions)
+                {
+                    solutionWriter.AddTemplate(service);
+                }
+            }
 
             var errors = await solutionWriter.WriteAndClean();
 

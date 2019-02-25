@@ -100,10 +100,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using {Project.InternalName}.Models;
+using {Project.InternalName}.DataAccessLayer.Models;
 using {Project.InternalName}.DataAccessLayer;
 using {Project.InternalName}.DataAccessLayer.Entities;
-using {Project.InternalName}.Services.Contracts;
+using {Project.InternalName}.DataAccessLayer.Services.Contracts;
 using System.Diagnostics;
 using MongoDB.Bson;
 {string.Join(Environment.NewLine, usings.Distinct())}

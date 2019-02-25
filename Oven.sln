@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oven.Templates.React", "Ove
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oven.Templates.Api.Custom", "Oven.Templates.Api.Custom\Oven.Templates.Api.Custom.csproj", "{2AC9635C-1AAC-41EF-9C1C-A8191BD708C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oven.Templates.Shared", "Oven.Templates.Shared\Oven.Templates.Shared.csproj", "{F030A863-426A-4BCE-84F0-484B772F0B33}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{2AC9635C-1AAC-41EF-9C1C-A8191BD708C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AC9635C-1AAC-41EF-9C1C-A8191BD708C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AC9635C-1AAC-41EF-9C1C-A8191BD708C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F030A863-426A-4BCE-84F0-484B772F0B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F030A863-426A-4BCE-84F0-484B772F0B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F030A863-426A-4BCE-84F0-484B772F0B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F030A863-426A-4BCE-84F0-484B772F0B33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -159,12 +159,10 @@ namespace {Project.InternalName}.DataAccessLayer
         /// <summary>
         /// Application Database Context
         /// </summary>
-        public ApplicationDbContext()
+        public ApplicationDbContext(Settings settings)
         {{
-            string connectionString = ""mongodb + srv://ovenman:LwA91B2EuVHaaUsz@oven-hni60.azure.mongodb.net/test?retryWrites=true"";
-            string databaseName = ""oven"";
-            _mongoClient = new MongoClient(connectionString);
-            _database = _mongoClient.GetDatabase(databaseName);
+            _mongoClient = new MongoClient(settings.ConnectionString);
+            _database = _mongoClient.GetDatabase(settings.DatabaseName);
         }}
 
         #region IMongoCollection Properties
