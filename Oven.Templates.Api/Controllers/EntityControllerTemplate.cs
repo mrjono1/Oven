@@ -105,7 +105,6 @@ using {Project.InternalName}.DataAccessLayer;
 using {Project.InternalName}.DataAccessLayer.Entities;
 using {Project.InternalName}.DataAccessLayer.Services.Contracts;
 using System.Diagnostics;
-using MongoDB.Bson;
 {string.Join(Environment.NewLine, usings.Distinct())}
 
 namespace {Project.InternalName}.Controllers

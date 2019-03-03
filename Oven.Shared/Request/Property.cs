@@ -176,7 +176,7 @@ namespace Oven.Request
                 case PropertyType.PrimaryKey:
                 case PropertyType.ParentRelationshipOneToMany:
                 case PropertyType.ReferenceRelationship:
-                    return $"ObjectId";
+                    return $"string";
                 case PropertyType.String:
                     return "string";
                 case PropertyType.Integer:

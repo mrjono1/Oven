@@ -28,14 +28,18 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// {Entity.Title} Delete
         /// </summary>
-        public virtual async Task<bool> DeleteAsync(ObjectId id)
+        public virtual async Task<bool> DeleteAsync(string id)
         {{
-            if (id == null)
+            if (string.IsNullOrWhiteSpace(id))
             {{
                 throw new ArgumentNullException(); 
             }}
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {{
+                throw new ArgumentException(""Invalid ObjectId"", ""id"");
+            }}
             
-            await _context.{Entity.InternalNamePlural}.DeleteOneAsync(record => record.Id == id);
+            await _context.{Entity.InternalNamePlural}.DeleteOneAsync(record => record.Id == objectId);
 
             return true;
         }}";

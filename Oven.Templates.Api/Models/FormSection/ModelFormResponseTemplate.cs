@@ -86,7 +86,6 @@ namespace Oven.Templates.Api.Models
 
             return $@"using System;
 using System.ComponentModel.DataAnnotations;
-using MongoDB.Bson;
 
 namespace {Project.InternalName}.Models
 {{

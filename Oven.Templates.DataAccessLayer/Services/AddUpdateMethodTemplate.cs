@@ -128,6 +128,10 @@ namespace Oven.Templates.DataAccessLayer.Services
                     case PropertyType.ParentRelationshipOneToOne:
                         // Ignore
                         break;
+                    case PropertyType.ParentRelationshipOneToMany:
+                    case PropertyType.ReferenceRelationship:
+                        properties.Add($"            {new string(' ', 4 * level)}{existingObjectName}.{formField.InternalNameCSharp} = {requestObjectName}.{formField.InternalNameCSharp}.ObjectIdValue();");
+                        break;
                     default:
                         properties.Add($"            {new string(' ', 4 * level)}{existingObjectName}.{formField.InternalNameCSharp} = {requestObjectName}.{formField.InternalNameCSharp};");
                         break;
@@ -202,15 +206,19 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// {Screen.Title} Update
         /// </summary>
-        public virtual async Task<ObjectId> UpdateAsync(ObjectId id, {Screen.InternalName}Request put)
+        public virtual async Task<string> UpdateAsync(string id, {Screen.InternalName}Request put)
         {{
-            if (put == null)
+            if (string.IsNullOrWhiteSpace(id) || put == null)
             {{
                 throw new ArgumentNullException(); 
             }}
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {{
+                throw new ArgumentException(""Invalid ObjectId"", ""id"");
+            }}
             /*
             var existingRecord = await _context.{Screen.Entity.InternalNamePlural}
-                .SingleOrDefaultAsync(record => record.Id == id);
+                .SingleOrDefaultAsync(record => record.Id == objectId);
 
             if (existingRecord == null){{
                 throw new ArgumentNullException();
@@ -257,7 +265,7 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        public virtual async Task<ObjectId> CreateAsync({Screen.InternalName}Request post)
+        public virtual async Task<string> CreateAsync({Screen.InternalName}Request post)
         {{
             if (post == null)
             {{
@@ -269,11 +277,11 @@ namespace Oven.Templates.DataAccessLayer.Services
 
             if (post.Id == null)
             {{
-                post.Id = ObjectId.GenerateNewId();
+                post.Id = ObjectId.GenerateNewId().ToString();
             }}
             await _context.{Screen.Entity.InternalNamePlural}.InsertOneAsync(newRecord);
 
-            return post.Id.Value;
+            return post.Id;
         }}";
         }
         #endregion

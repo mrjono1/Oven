@@ -1,3 +1,4 @@
+using Humanizer;
 using Oven.Interfaces;
 using Oven.Request;
 
@@ -39,12 +40,18 @@ namespace Oven.Templates.React.ProjectFiles
         /// </summary>
         public string GetFileContent()
         {
-
-            string connectionString = $"Data Source=.\\\\SQLEXPRESS;Initial Catalog={Project.InternalName};Integrated Security=True";
-
             return $@"{{
-  ""ConnectionStrings"": {{
-    ""DefaultConnection"": ""{connectionString}""
+  ""DatabaseSettings"": {{
+    ""ConnectionString"": ""mongodb+srv://ovenman:LwA91B2EuVHaaUsz@oven-hni60.azure.mongodb.net/test?retryWrites=true"",
+    ""DatabaseName"": ""{Project.InternalName.Camelize()}""
+  }},
+  ""Logging"": {{
+    ""IncludeScopes"": false,
+    ""LogLevel"": {{
+      ""Default"": ""Debug"",
+      ""System"": ""Information"",
+      ""Microsoft"": ""Information""
+    }}
   }}
 }}";
         }

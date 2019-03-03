@@ -86,7 +86,6 @@ namespace Oven.Templates.DataAccessLayer.Services.Contracts
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using {Project.InternalName}.DataAccessLayer.Models;
-using MongoDB.Bson;
 
 namespace {Project.InternalName}.DataAccessLayer.Services.Contracts
 {{

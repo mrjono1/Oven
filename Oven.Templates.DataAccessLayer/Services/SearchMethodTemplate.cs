@@ -30,6 +30,9 @@ namespace Oven.Templates.DataAccessLayer.Services
                     case PropertyType.ReferenceRelationship:
                         propertyMapping.Add($"                        {searchColumn.InternalNameCSharp} = (item.{searchColumn.Property.InternalName} != null ? item.{searchColumn.Property.InternalName}.Title : null)");
                         break;
+                    case PropertyType.PrimaryKey:
+                        propertyMapping.Add($"                        Object{searchColumn.InternalNameCSharp} = item.{searchColumn.Property.InternalName}");
+                        break;
                     default:
                         propertyMapping.Add($"                        {searchColumn.InternalNameCSharp} = item.{searchColumn.Property.InternalName}");
                         break;
@@ -47,7 +50,7 @@ namespace Oven.Templates.DataAccessLayer.Services
                 parentEntity = (from s in project.Entities
                                 where s.Id == parentProperty.ReferenceEntityId
                                 select s).SingleOrDefault();
-                parentPropertyWhereString = $"where request.{parentEntity.InternalName}Id == item.{parentEntity.InternalName}Id";
+                parentPropertyWhereString = $"where request.{parentEntity.InternalName}ObjectId == item.{parentEntity.InternalName}Id";
             }
             
             if (entity.Id != screen.EntityId)

@@ -145,6 +145,7 @@ using System.Collections.Generic;
 using {Project.InternalName}.DataAccessLayer.Entities;
 using Newtonsoft.Json;
 using MongoDB.Driver;
+using Microsoft.Extensions.Options;
 
 namespace {Project.InternalName}.DataAccessLayer
 {{
@@ -159,10 +160,10 @@ namespace {Project.InternalName}.DataAccessLayer
         /// <summary>
         /// Application Database Context
         /// </summary>
-        public ApplicationDbContext(Settings settings)
+        public ApplicationDbContext(IOptionsMonitor<Settings> settings)
         {{
-            _mongoClient = new MongoClient(settings.ConnectionString);
-            _database = _mongoClient.GetDatabase(settings.DatabaseName);
+            _mongoClient = new MongoClient(settings.CurrentValue.ConnectionString);
+            _database = _mongoClient.GetDatabase(settings.CurrentValue.DatabaseName);
         }}
 
         #region IMongoCollection Properties

@@ -31,7 +31,7 @@ namespace Oven.Templates.DataAccessLayer.Services.Contracts
         /// <summary>
         /// {Screen.Title} Get
         /// </summary>
-        Task<{Screen.FormResponseClass}> GetAsync(ObjectId id);";
+        Task<{Screen.FormResponseClass}> GetAsync(string id);";
         }
     }
 }

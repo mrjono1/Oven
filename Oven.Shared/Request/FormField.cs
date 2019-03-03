@@ -153,7 +153,7 @@ namespace Oven.Request
                 switch (Property.PropertyType)
                 {
                     case PropertyType.PrimaryKey:
-                        return $"{Property.CsType}?";
+                        return $"{Property.CsType}";
                     case PropertyType.ParentRelationshipOneToOne:
                         var referenceEntityName = (from entity in Project.Entities where entity.Id == Property.ReferenceEntityId.Value select entity.InternalName).Single();
                         return $"{referenceEntityName}";

@@ -28,7 +28,7 @@ namespace Oven.Templates.DataAccessLayer.Services.Contracts
         /// <summary>
         /// {Entity.Title} Delete
         /// </summary>
-        Task<bool> DeleteAsync(ObjectId id);";
+        Task<bool> DeleteAsync(string id);";
         }
     }
 }

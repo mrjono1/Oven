@@ -58,8 +58,14 @@ namespace Oven.Templates.DataAccessLayer.Models
         /// {parentEntity.Title} Id
         /// </summary>
         [Required]
-        [NonDefault]
-        public ObjectId {parentEntity.InternalName}Id {{ get; set; }}";
+        public string {parentEntity.InternalName}Id {{ get; set; }}
+        internal ObjectId {parentEntity.InternalName}ObjectId 
+        {{ 
+            get
+            {{
+                return ObjectId.Parse({parentEntity.InternalName}Id);
+            }}
+        }}";
             }
             
 

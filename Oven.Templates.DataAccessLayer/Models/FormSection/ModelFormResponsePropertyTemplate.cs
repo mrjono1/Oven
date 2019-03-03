@@ -1,4 +1,6 @@
 using Oven.Request;
+using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Oven.Templates.DataAccessLayer.Models
@@ -13,28 +15,56 @@ namespace Oven.Templates.DataAccessLayer.Models
         /// </summary>
         public static string Evaluate(FormField formField)
         {
-            var result = new StringBuilder();
-            
-            result.Append($@"        /// <summary>
+            var properties = new List<string>() { $@"        /// <summary>
         /// {formField.TitleValue}
         /// </summary>
         [Display(Name = ""{formField.TitleValue}"")]
-        public {formField.TypeCSharp} {formField.InternalNameCSharp} {{ get; set; }}");
+        public {formField.TypeCSharp} {formField.InternalNameCSharp} {{ get; set; }}" };
 
             switch (formField.PropertyType)
             {
+                case PropertyType.PrimaryKey:
+                case PropertyType.ParentRelationshipOneToMany:
+                        properties.Add($@"        /// <summary>
+        /// {formField.TitleValue}
+        /// </summary>
+        internal ObjectId Object{formField.InternalNameCSharp}
+        {{
+            get
+            {{
+                return ObjectId.Parse({formField.InternalNameCSharp});
+            }}
+            set
+            {{
+                {formField.InternalNameCSharp} = value.ToString();
+            }}
+        }}");
+                    break;
                 case PropertyType.ReferenceRelationship:
                     // Foreign Title
-                    result.AppendLine();
-                    result.Append($@"        /// <summary>
+                    properties.Add($@"        /// <summary>
         /// {formField.TitleValue}
         /// </summary>
         [Display(Name = ""{formField.TitleValue}"")]
         public string {formField.InternalNameAlternateCSharp} {{ get; set; }}");
+                    properties.Add($@"        /// <summary>
+        /// {formField.TitleValue}
+        /// </summary>
+        internal ObjectId Object{formField.InternalNameCSharp}
+        {{
+            get
+            {{
+                return ObjectId.Parse({formField.InternalNameCSharp});
+            }}
+            set
+            {{
+                {formField.InternalNameCSharp} = value.ToString();
+            }}
+        }}");
                     break;
             }
-            
-            return result.ToString();
+
+            return string.Join(Environment.NewLine, properties);
         }
     }
 }

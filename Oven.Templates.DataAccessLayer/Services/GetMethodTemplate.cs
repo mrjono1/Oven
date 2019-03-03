@@ -36,7 +36,7 @@ namespace Oven.Templates.DataAccessLayer.Services
                 {
                     case PropertyType.ReferenceRelationship:
 
-                        properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameCSharp} = {objectName}.{formField.InternalNameCSharp}");
+                        properties.Add($"                            {new string(' ', 4 * level)}Object{formField.InternalNameCSharp} = {objectName}.{formField.InternalNameCSharp}");
 
                         // TODO: Title should be configurable
                         // TODO: is it faster to do the bool check on the key instead of object?
@@ -47,9 +47,16 @@ namespace Oven.Templates.DataAccessLayer.Services
                         }
 
                         break;
+
+                    case PropertyType.PrimaryKey:
+                    case PropertyType.ParentRelationshipOneToMany:
+                        properties.Add($"                            {new string(' ', 4 * level)}Object{formField.InternalNameCSharp} = {objectName}.{formField.InternalNameCSharp}");
+                        break;
+
                     case PropertyType.ParentRelationshipOneToOne:
                         // TODO
                         break;
+
                     default:
                         properties.Add($"                            {new string(' ', 4 * level)}{formField.InternalNameCSharp} = {objectName}.{formField.InternalNameCSharp}");
                         break;
@@ -75,11 +82,11 @@ namespace Oven.Templates.DataAccessLayer.Services
                                                       select p).Single().InternalName;
 
                     properties.Add($@"                            {new string(' ', 4 * level)}{childEntityFormFieldEntity.InternalName} = {childObjectName} == null || {childObjectName}.{parentPropertyInternalName}Id != null ? null : new {childEntityFormFieldEntity.InternalName}Response{{
-{string.Join(string.Concat(",", Environment.NewLine),  childProperties)}
+{string.Join(string.Concat(",", Environment.NewLine), childProperties)}
                             {new string(' ', 4 * level)}}}");
                 }
             }
-            
+
             return properties;
         }
 
@@ -103,7 +110,7 @@ namespace Oven.Templates.DataAccessLayer.Services
                 {
                     if (!first)
                     {
-                        propertyMapping.Add($"{parentEntity.InternalName}Id = {objectName}.{parentEntity.InternalName}Id".IndentLines(28));
+                        propertyMapping.Add($"Object{parentEntity.InternalName}Id = {objectName}.{parentEntity.InternalName}Id".IndentLines(28));
                     }
 
                     objectName = $"{objectName}.{parentEntity.InternalName}";
@@ -137,11 +144,15 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// {Screen.Title} Get
         /// </summary>
-        public virtual async Task<{Screen.FormResponseClass}> GetAsync(ObjectId id)
+        public virtual async Task<{Screen.FormResponseClass}> GetAsync(string id)
         {{
-            if (id == null)
+            if (string.IsNullOrWhiteSpace(id))
             {{
                 throw new ArgumentNullException(); 
+            }}
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            {{
+                throw new ArgumentException(""Invalid ObjectId"", ""id"");
             }}
             
             var result = _context.{Screen.Entity.InternalNamePlural}.AsQueryable()
@@ -149,7 +160,7 @@ namespace Oven.Templates.DataAccessLayer.Services
                         {{
 {string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
                         }})
-                        .SingleOrDefault(p => p.Id == id);
+                        .SingleOrDefault(p => p.ObjectId == objectId);
 
             return result;
         }}";

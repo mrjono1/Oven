@@ -20,7 +20,6 @@ namespace Oven.Templates.Api
 
             // Create Project Files
             solutionWriter.AddTemplate(new ProjectFiles.ProjectTemplate(project));
-            solutionWriter.AddTemplate(new ProjectFiles.AppSettingsTemplate(project));
             solutionWriter.AddTemplate(new ProjectFiles.WebConfigTemplate());
             solutionWriter.AddTemplate(new ProjectFiles.NuGetconfigTemplate(project));
 

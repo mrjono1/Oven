@@ -80,7 +80,21 @@ namespace Oven.Templates.DataAccessLayer.Models
         /// {pe.Title}
         /// </summary>
         [Display(Name = ""{pe.Title}"")]
-        public ObjectId {pe.InternalName}Id {{ get; set; }}");
+        public string {pe.InternalName}Id {{ get; set; }}");
+                    properties.Add($@"        /// <summary>
+        /// {pe.Title}
+        /// </summary>
+        internal ObjectId Object{pe.InternalName}Id
+        {{
+            get
+            {{
+                return ObjectId.Parse({pe.InternalName}Id);
+            }}
+            set
+            {{
+                {pe.InternalName}Id = value.ToString();
+            }}
+        }}");
                 }
             }
 
