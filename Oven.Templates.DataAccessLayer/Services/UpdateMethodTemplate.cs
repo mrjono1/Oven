@@ -10,7 +10,7 @@ namespace Oven.Templates.DataAccessLayer.Services
     /// <summary>
     /// Contoller Edit Method Template
     /// </summary>
-    public class AddUpdateMethodTemplate
+    public class UpdateMethodTemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
@@ -19,7 +19,7 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public AddUpdateMethodTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
+        public UpdateMethodTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
         {
             Project = project;
             Screen = screen;
@@ -113,9 +113,8 @@ namespace Oven.Templates.DataAccessLayer.Services
 
             return propertyMapping;
         }
-
-
-        private IEnumerable<string> Property(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string requestObjectName = "put", string existingObjectName = "existingRecord", int level = 0, bool add = false)
+        
+        private IEnumerable<string> Property(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string requestObjectName = "put", string existingObjectName = "", int level = 0, bool add = false)
         {
             var properties = new List<string>();
 
@@ -130,10 +129,10 @@ namespace Oven.Templates.DataAccessLayer.Services
                         break;
                     case PropertyType.ParentRelationshipOneToMany:
                     case PropertyType.ReferenceRelationship:
-                        properties.Add($"            {new string(' ', 4 * level)}{existingObjectName}.{formField.InternalNameCSharp} = {requestObjectName}.{formField.InternalNameCSharp}.ObjectIdValue();");
+                        properties.Add($"            {new string(' ', 4 * level)}.Set(p => p.{existingObjectName}{formField.InternalNameCSharp}, {requestObjectName}.{formField.InternalNameCSharp})");
                         break;
                     default:
-                        properties.Add($"            {new string(' ', 4 * level)}{existingObjectName}.{formField.InternalNameCSharp} = {requestObjectName}.{formField.InternalNameCSharp};");
+                        properties.Add($"            {new string(' ', 4 * level)}.Set(p => p.{existingObjectName}{formField.InternalNameCSharp}, {requestObjectName}.{formField.InternalNameCSharp})");
                         break;
                 }
             }
@@ -184,7 +183,6 @@ namespace Oven.Templates.DataAccessLayer.Services
             return properties;
         }
 
-        #region PUT (Update)
         /// <summary>
         /// PUT Verb Method, for updating records
         /// </summary>
@@ -212,79 +210,21 @@ namespace Oven.Templates.DataAccessLayer.Services
             {{
                 throw new ArgumentNullException(); 
             }}
-            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            if (!Guid.TryParse(id, out Guid guid))
             {{
-                throw new ArgumentException(""Invalid ObjectId"", ""id"");
+                throw new ArgumentException(""Invalid Guid"", ""id"");
             }}
             /*
-            var existingRecord = await _context.{Screen.Entity.InternalNamePlural}
-                .SingleOrDefaultAsync(record => record.Id == objectId);
 
-            if (existingRecord == null){{
-                throw new ArgumentNullException();
-            }}
-
+            var filter = Builders<{Screen.Entity.InternalName}>.Filter.Eq(s => s.Id, id);
+            var update = Builders<{Screen.Entity.InternalName}>.Update
+            
 {string.Join(Environment.NewLine, properties)}
-
-            var result = await collection.UpdateOneAsync(filter, update);*/
+                
+            var result = await _context.{Screen.Entity.InternalNamePlural}.UpdateOneAsync(filter, update);*/
 
             return id;
         }}";
         }
-        #endregion
-
-        #region Add
-        /// <summary>
-        /// POST Verb Method, for adding new records
-        /// </summary>
-        internal string PostMethod()
-        {
-            // TODO: Phase 2 get screen section properties that are appropriate using required expression
-            var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
-
-            var properties = new List<string>();
-            foreach (var effe in effes)
-            {
-                if (effe.Entity.Id == Screen.EntityId)
-                {
-                    properties.AddRange(Property(effe, effes, "post", "newRecord", 0, true));
-                }
-            }
-
-            var newRecord = $"            var newRecord = new {Screen.Entity.InternalName}();";
-
-            if (!string.IsNullOrWhiteSpace(Screen.DefaultObjectJsonData))
-            {
-                // TODO: add try catch and logging around JsonConvert
-                var content = Newtonsoft.Json.JsonConvert.SerializeObject(Screen.DefaultObjectJsonData);
-                newRecord = $@"            var content  = {content};
-            var newRecord = Newtonsoft.Json.JsonConvert.DeserializeObject<{Screen.Entity.InternalName}>(content);";
-            }
-
-            return $@"
-        /// <summary>
-        /// {Screen.Title} Add
-        /// </summary>
-        public virtual async Task<string> CreateAsync({Screen.InternalName}Request post)
-        {{
-            if (post == null)
-            {{
-                throw new ArgumentNullException(); 
-            }}
-{newRecord}
-
-{string.Join(Environment.NewLine, properties)}
-
-            if (post.Id == null)
-            {{
-                post.Id = ObjectId.GenerateNewId().ToString();
-            }}
-            await _context.{Screen.Entity.InternalNamePlural}.InsertOneAsync(newRecord);
-
-            return post.Id;
-        }}";
-        }
-        #endregion
-
     }
 }

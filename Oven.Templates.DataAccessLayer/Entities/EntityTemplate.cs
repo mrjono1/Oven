@@ -46,7 +46,7 @@ namespace Oven.Templates.DataAccessLayer.Entities
         {
             var constructorDefaultValues = new List<string>
             {
-                "            Id = ObjectId.GenerateNewId();"
+                "            Id = Guid.NewGuid().ToString();"
             };
             var properties = new List<string>();
             var navigationProperties = new List<string>();
@@ -133,7 +133,7 @@ using MongoDB.Bson.Serialization.Attributes;{(navigationProperties.Any() ? strin
 namespace {Project.InternalName}.DataAccessLayer.Entities
 {{
     /// <summary>
-    /// {Entity.InternalName} Model
+    /// {Entity.InternalName} Entity
     /// </summary>
     public class {Entity.InternalName}
     {{

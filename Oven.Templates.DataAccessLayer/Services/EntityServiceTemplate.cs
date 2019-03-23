@@ -91,11 +91,10 @@ namespace Oven.Templates.DataAccessLayer.Services
 
             if (formSections.Any())
             {
-                var controllerFormSectionMethodsPartial = new AddUpdateMethodTemplate(Project, formScreen, formSections);
+                controllerActions.Add(new UpdateMethodTemplate(Project, formScreen, formSections).PutMethod());
                 controllerActions.Add(new GetMethodTemplate(Project, formScreen, formSections).GetMethod());
-                controllerActions.Add(controllerFormSectionMethodsPartial.PostMethod());
+                controllerActions.Add(new AddMethodTemplate(Project, formScreen, formSections).PostMethod());
                 controllerActions.Add(new DeleteMethodTemplate(Project, Entity).DeleteMethod());
-                controllerActions.Add(controllerFormSectionMethodsPartial.PutMethod());
             }
 
             return $@"using System;

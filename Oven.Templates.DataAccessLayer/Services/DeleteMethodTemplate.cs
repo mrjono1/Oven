@@ -34,12 +34,12 @@ namespace Oven.Templates.DataAccessLayer.Services
             {{
                 throw new ArgumentNullException(); 
             }}
-            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            if (!Guid.TryParse(id, out Guid guid))
             {{
-                throw new ArgumentException(""Invalid ObjectId"", ""id"");
+                throw new ArgumentException(""Invalid Guid"", ""id"");
             }}
             
-            await _context.{Entity.InternalNamePlural}.DeleteOneAsync(record => record.Id == objectId);
+            await _context.{Entity.InternalNamePlural}.DeleteOneAsync(record => record.Id == id);
 
             return true;
         }}";

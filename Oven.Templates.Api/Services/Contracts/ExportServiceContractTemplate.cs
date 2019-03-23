@@ -48,7 +48,7 @@ namespace Oven.Templates.Api.Services.Contracts
                 exportFunctions.Add($@"        /// <summary>
         /// Export Project Async
         /// </summary>
-        Task<Models.Project.Export.Project> ExportProjectAsync(ObjectId id);");
+        Task<Models.Project.Export.Project> ExportProjectAsync(Guid id);");
             }
 
             return $@"using System;

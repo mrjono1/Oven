@@ -28,7 +28,7 @@ namespace Oven.Templates.Api.Services.Contracts
         /// <summary>
         /// {Entity.Title} Delete
         /// </summary>
-        Task<bool> DeleteAsync(ObjectId id);";
+        Task<bool> DeleteAsync(Guid id);";
         }
     }
 }

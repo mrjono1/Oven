@@ -39,7 +39,7 @@ namespace Oven.Templates.Api.Services
             return $@"        /// <summary>
         /// Export Full {Entity.Title}
         /// </summary>
-        public async Task<Models.{Entity.InternalName}.Export.{Entity.InternalName}> Export{Entity.InternalName}Async(ObjectId id)
+        public async Task<Models.{Entity.InternalName}.Export.{Entity.InternalName}> Export{Entity.InternalName}Async(Guid id)
         {{
             /*var data = await _context.{Entity.InternalNamePlural}.Where(p => p.Id == id)
 {string.Join(Environment.NewLine, includes)}

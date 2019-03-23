@@ -137,7 +137,7 @@ namespace Oven.Templates.Api.Services
         /// <summary>
         /// {Screen.Title} Get
         /// </summary>
-        public virtual async Task<{Screen.FormResponseClass}> GetAsync(ObjectId id)
+        public virtual async Task<{Screen.FormResponseClass}> GetAsync(Guid id)
         {{
             if (id == null)
             {{

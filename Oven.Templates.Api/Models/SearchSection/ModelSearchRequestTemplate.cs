@@ -59,7 +59,7 @@ namespace Oven.Templates.Api.Models
         /// </summary>
         [Required]
         [NonDefault]
-        public ObjectId {parentEntity.InternalName}Id {{ get; set; }}";
+        public Guid {parentEntity.InternalName}Id {{ get; set; }}";
             }
             
 

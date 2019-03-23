@@ -84,11 +84,11 @@ namespace Oven.Templates.DataAccessLayer.Models
                     properties.Add($@"        /// <summary>
         /// {pe.Title}
         /// </summary>
-        internal ObjectId Object{pe.InternalName}Id
+        internal Guid Guid{pe.InternalName}Id
         {{
             get
             {{
-                return ObjectId.Parse({pe.InternalName}Id);
+                return Guid.Parse({pe.InternalName}Id);
             }}
             set
             {{

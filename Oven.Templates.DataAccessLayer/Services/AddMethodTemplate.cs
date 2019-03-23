@@ -5,12 +5,12 @@ using Humanizer;
 using Oven.Helpers;
 using Oven.Request;
 
-namespace Oven.Templates.Api.Services
+namespace Oven.Templates.DataAccessLayer.Services
 {
     /// <summary>
     /// Contoller Edit Method Template
     /// </summary>
-    public class AddUpdateMethodTemplate
+    public class AddMethodTemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
@@ -19,7 +19,7 @@ namespace Oven.Templates.Api.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public AddUpdateMethodTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
+        public AddMethodTemplate(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
         {
             Project = project;
             Screen = screen;
@@ -128,6 +128,10 @@ namespace Oven.Templates.Api.Services
                     case PropertyType.ParentRelationshipOneToOne:
                         // Ignore
                         break;
+                    case PropertyType.ParentRelationshipOneToMany:
+                    case PropertyType.ReferenceRelationship:
+                        properties.Add($"            {new string(' ', 4 * level)}{existingObjectName}.{formField.InternalNameCSharp} = {requestObjectName}.{formField.InternalNameCSharp};");
+                        break;
                     default:
                         properties.Add($"            {new string(' ', 4 * level)}{existingObjectName}.{formField.InternalNameCSharp} = {requestObjectName}.{formField.InternalNameCSharp};");
                         break;
@@ -180,51 +184,6 @@ namespace Oven.Templates.Api.Services
             return properties;
         }
 
-        #region PUT (Update)
-        /// <summary>
-        /// PUT Verb Method, for updating records
-        /// </summary>
-        internal string PutMethod()
-        {
-            // TODO: Phase 2 get screen section properties that are appropriate using required expression
-            var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
-
-            var properties = new List<string>();
-            foreach (var effe in effes)
-            {
-                if (effe.Entity.Id == Screen.EntityId)
-                {
-                    properties.AddRange(Property(effe, effes));
-                }
-            }
-
-            return $@"
-        /// <summary>
-        /// {Screen.Title} Update
-        /// </summary>
-        public virtual async Task<Guid> UpdateAsync(Guid id, {Screen.InternalName}Request put)
-        {{
-            if (put == null)
-            {{
-                throw new ArgumentNullException(); 
-            }}
-            /*
-            var existingRecord = await _context.{Screen.Entity.InternalNamePlural}
-                .SingleOrDefaultAsync(record => record.Id == id);
-
-            if (existingRecord == null){{
-                throw new ArgumentNullException();
-            }}
-
-{string.Join(Environment.NewLine, properties)}
-
-            var result = await collection.UpdateOneAsync(filter, update);*/
-
-            return id;
-        }}";
-        }
-        #endregion
-
         #region Add
         /// <summary>
         /// POST Verb Method, for adding new records
@@ -257,7 +216,7 @@ namespace Oven.Templates.Api.Services
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        public virtual async Task<Guid> CreateAsync({Screen.InternalName}Request post)
+        public virtual async Task<string> CreateAsync({Screen.InternalName}Request post)
         {{
             if (post == null)
             {{
@@ -269,11 +228,11 @@ namespace Oven.Templates.Api.Services
 
             if (post.Id == null)
             {{
-                post.Id = Guid.NewGuid();
+                post.Id = Guid.NewGuid().ToString();
             }}
             await _context.{Screen.Entity.InternalNamePlural}.InsertOneAsync(newRecord);
 
-            return post.Id.Value;
+            return post.Id;
         }}";
         }
         #endregion

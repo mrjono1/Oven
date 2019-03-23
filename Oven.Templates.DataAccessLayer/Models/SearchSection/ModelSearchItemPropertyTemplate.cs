@@ -24,11 +24,11 @@ namespace Oven.Templates.DataAccessLayer.Models
                 properties.Add($@"        /// <summary>
         /// {searchColumn.TitleValue}
         /// </summary>
-        internal ObjectId ObjectId
+        internal Guid GuidId
         {{
             get
             {{
-                return ObjectId.Parse(Id);
+                return Guid.Parse(Id);
             }}
             set
             {{

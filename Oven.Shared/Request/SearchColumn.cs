@@ -58,6 +58,8 @@ namespace Oven.Request
             {
                 switch (Property.PropertyType)
                 {
+                    case PropertyType.PrimaryKey:
+                        return "Id";
                     case PropertyType.ParentRelationshipOneToMany:
                         return $"{Property.InternalName}Id";
                     case PropertyType.ReferenceRelationship:

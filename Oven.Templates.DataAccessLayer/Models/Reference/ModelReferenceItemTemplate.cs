@@ -56,7 +56,7 @@ namespace {Project.InternalName}.DataAccessLayer.Models.{Screen.InternalName}.Re
         /// <summary>
         /// Id
         /// </summary>
-        public ObjectId Id {{ get; set; }}
+        public Guid Id {{ get; set; }}
         /// <summary>
         /// Title
         /// </summary>
