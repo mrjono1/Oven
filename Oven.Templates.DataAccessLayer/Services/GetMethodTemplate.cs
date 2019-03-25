@@ -44,7 +44,7 @@ namespace Oven.Templates.DataAccessLayer.Services
             
             var filter = Builders<{Screen.Entity.InternalName}>.Filter.Eq(a => a.Id, id.ToLower());
             var findOptions = new FindOptions<{Screen.Entity.InternalName}, {Screen.FormResponseClass}>();
-            var query = await _context.Features.FindAsync(filter, findOptions);
+            var query = await _context.{Screen.Entity.InternalNamePlural}.FindAsync(filter, findOptions);
             var result = await query.SingleOrDefaultAsync();
 
             return result;

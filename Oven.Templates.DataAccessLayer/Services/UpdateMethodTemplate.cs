@@ -114,7 +114,7 @@ namespace Oven.Templates.DataAccessLayer.Services
             return propertyMapping;
         }
         
-        private IEnumerable<string> Property(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string requestObjectName = "put", string existingObjectName = "", int level = 0, bool add = false)
+        private IEnumerable<string> Property(ScreenSectionEntityFormFields entityFormFieldEntity, IEnumerable<ScreenSectionEntityFormFields> effes, string requestObjectName = "request", string existingObjectName = "", int level = 0, bool add = false)
         {
             var properties = new List<string>();
 
@@ -129,10 +129,10 @@ namespace Oven.Templates.DataAccessLayer.Services
                         break;
                     case PropertyType.ParentRelationshipOneToMany:
                     case PropertyType.ReferenceRelationship:
-                        properties.Add($"            {new string(' ', 4 * level)}.Set(p => p.{existingObjectName}{formField.InternalNameCSharp}, {requestObjectName}.{formField.InternalNameCSharp})");
+                        properties.Add($"            {new string(' ', 4 * level)}updates.Add(update.Set(p => p.{existingObjectName}{formField.InternalNameCSharp}, {requestObjectName}.{formField.InternalNameCSharp}));");
                         break;
                     default:
-                        properties.Add($"            {new string(' ', 4 * level)}.Set(p => p.{existingObjectName}{formField.InternalNameCSharp}, {requestObjectName}.{formField.InternalNameCSharp})");
+                        properties.Add($"            {new string(' ', 4 * level)}updates.Add(update.Set(p => p.{existingObjectName}{formField.InternalNameCSharp}, {requestObjectName}.{formField.InternalNameCSharp}));");
                         break;
                 }
             }
@@ -143,7 +143,7 @@ namespace Oven.Templates.DataAccessLayer.Services
                 {
                     var childProperties = new List<string>();
                     var childObjectName = $"{requestObjectName}.{childEntityFormFieldEntity.InternalName}";
-                    var childExistingObjectName = $"{existingObjectName}.{childEntityFormFieldEntity.InternalName}";
+                    var childExistingObjectName = $"{(string.IsNullOrEmpty(existingObjectName) ? "" : $"{existingObjectName}.")}{childEntityFormFieldEntity.InternalName}.";
                     foreach (var effe in effes)
                     {
                         if (effe.Entity.Id == childEntityFormFieldEntity.Id)
@@ -159,7 +159,7 @@ namespace Oven.Templates.DataAccessLayer.Services
                     {
                         properties.Add($@"            if ({childObjectName} != null)
             {{
-                {existingObjectName}.{childEntityFormFieldEntity.InternalName} = new {childEntityFormFieldEntity.InternalName}();
+                update.Set(p => p{existingObjectName}.{childEntityFormFieldEntity.InternalName}, new {childEntityFormFieldEntity.InternalName}());
 {string.Join(Environment.NewLine, childProperties)}
             }}");
                     }
@@ -167,14 +167,14 @@ namespace Oven.Templates.DataAccessLayer.Services
                     {
                         properties.Add($@"            if ({childObjectName} == null)
             {{
-                {existingObjectName}.{childEntityFormFieldEntity.InternalName} = null;
+                updates.Add(update.Set(p => p{existingObjectName}.{childEntityFormFieldEntity.InternalName}, null));
             }}
             else
             {{
-                if ({existingObjectName}.{childEntityFormFieldEntity.InternalName} == null || !{existingObjectName}.{childEntityFormFieldEntity.InternalName}.{parentPropertyInternalName}Id.HasValue)
-                {{
-                    {existingObjectName}.{childEntityFormFieldEntity.InternalName} = new {childEntityFormFieldEntity.InternalName}();
-                }}
+                //if ({requestObjectName}{existingObjectName}.{childEntityFormFieldEntity.InternalName} == null || !{requestObjectName}{existingObjectName}.{childEntityFormFieldEntity.InternalName}.{parentPropertyInternalName}Id.HasValue)
+                //{{
+                    updates.Add(update.Set(p => p{existingObjectName}.{childEntityFormFieldEntity.InternalName}, new {childEntityFormFieldEntity.InternalName}()));
+                //}}
 {string.Join(Environment.NewLine, childProperties)}
             }}");
                     }
@@ -204,9 +204,9 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// {Screen.Title} Update
         /// </summary>
-        public virtual async Task<string> UpdateAsync(string id, {Screen.InternalName}Request put)
+        public virtual async Task<string> UpdateAsync(string id, {Screen.InternalName}Request request)
         {{
-            if (string.IsNullOrWhiteSpace(id) || put == null)
+            if (string.IsNullOrWhiteSpace(id) || request == null)
             {{
                 throw new ArgumentNullException(); 
             }}
@@ -214,16 +214,19 @@ namespace Oven.Templates.DataAccessLayer.Services
             {{
                 throw new ArgumentException(""Invalid Guid"", ""id"");
             }}
-            /*
-
+            
             var filter = Builders<{Screen.Entity.InternalName}>.Filter.Eq(s => s.Id, id);
-            var update = Builders<{Screen.Entity.InternalName}>.Update
+            var update = Builders<{Screen.Entity.InternalName}>.Update;
+            var updates = new List<UpdateDefinition<{Screen.Entity.InternalName}>>();
             
 {string.Join(Environment.NewLine, properties)}
                 
-            var result = await _context.{Screen.Entity.InternalNamePlural}.UpdateOneAsync(filter, update);*/
-
-            return id;
+            var result = await _context.{Screen.Entity.InternalNamePlural}.UpdateOneAsync(filter, update.Combine(updates));
+            if (result.IsAcknowledged)
+            {{
+                return id;
+            }}
+            return null;
         }}";
         }
     }
