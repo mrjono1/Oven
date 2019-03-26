@@ -53,6 +53,20 @@ namespace Oven.Templates.React.ProjectFiles
     ""lint"": ""eslint --ext .js --ext .jsx src"",
     ""start"": ""webpack --watch --mode development --colors""
   }},
+  ""dependencies"": {{
+    ""@material-ui/core"": ""1.5.1"",
+    ""@material-ui/icons"": ""2.0.3"",
+    ""history"": ""4.7.2"",
+    ""prop-types"": ""15.6.2"",
+    ""react"": ""16.5.2"",
+    ""react-admin"": ""2.4.0"",
+    ""react-dom"": ""16.5.2"",
+    ""react-redux"": ""5.0.7"",
+    ""react-router"": ""4.3.1"",
+    ""react-router-dom"": ""4.3.1"",
+    ""redux"": ""4.0.1"",
+    ""workbox-webpack-plugin"": ""3.6.3""
+  }},
   ""devDependencies"": {{
     ""aspnet-webpack"": ""3.0.0"",
     ""babel-core"": ""6.26.3"",
@@ -75,20 +89,6 @@ namespace Oven.Templates.React.ProjectFiles
     ""webpack-dev-middleware"": ""3.4.0"",
     ""webpack-hot-middleware"": ""2.24.3"",
     ""webpack-manifest-plugin"": ""2.0.4""
-  }},
-  ""dependencies"": {{
-    ""@material-ui/core"": ""1.5.1"",
-    ""@material-ui/icons"": ""2.0.3"",
-    ""history"": ""4.7.2"",
-    ""prop-types"": ""15.6.2"",
-    ""react"": ""16.5.2"",
-    ""react-admin"": ""2.4.0"",
-    ""react-dom"": ""16.5.2"",
-    ""react-redux"": ""5.0.7"",
-    ""react-router"": ""4.3.1"",
-    ""react-router-dom"": ""4.3.1"",
-    ""redux"": ""4.0.1"",
-    ""workbox-webpack-plugin"": ""3.6.3""
   }}
 }}";
         }

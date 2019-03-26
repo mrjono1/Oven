@@ -226,13 +226,13 @@ namespace Oven.Templates.DataAccessLayer.Services
 
 {string.Join(Environment.NewLine, properties)}
 
-            if (post.Id == null)
+            if (!string.IsNullOrEmpty(post.Id) && Guid.TryParse(post.Id, out var id))
             {{
-                post.Id = Guid.NewGuid().ToString();
+                newRecord.Id = id.ToString();
             }}
             await _context.{Screen.Entity.InternalNamePlural}.InsertOneAsync(newRecord);
 
-            return post.Id;
+            return newRecord.Id;
         }}";
         }
         #endregion

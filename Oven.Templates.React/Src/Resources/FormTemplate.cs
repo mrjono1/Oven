@@ -134,7 +134,7 @@ const {Screen.Entity.InternalName}Edit = (props) => (
 );
 
 const {Screen.Entity.InternalName}Create = (props) => (
-    <Create undoable={{ false }} {{...props}} title=""Create {Screen.Title}"">
+    <Create {{...props}} title=""Create {Screen.Title}"">
         <Form {{...props}} />
     </Create>
 );
