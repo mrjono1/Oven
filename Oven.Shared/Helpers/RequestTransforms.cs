@@ -1,7 +1,6 @@
 using Oven.Request;
 using System.Linq;
 using System.Collections.Generic;
-using System.Text;
 using System;
 
 namespace Oven.Helpers
@@ -25,12 +24,25 @@ namespace Oven.Helpers
                                        select ss.Id).FirstOrDefault();
 
             // TODO: if null log error
-
-            screenItem.FormFields = (from ss in screen.ScreenSections
+            var formFields = (from ss in screen.ScreenSections
                                      where ss.ScreenSectionType == ScreenSectionType.Form &&
                                      ss.EntityId == screenItem.Entity.Id
                                      from ff in ss.FormSection.FormFields
-                                     select ff).Distinct().ToList();
+                                     select ff).Distinct().OrderBy(p => p.InternalNameCSharp).ToList();
+
+            // Remove duplicates from other form sections
+            screenItem.FormFields = new List<FormField>();
+            foreach (var formField in formFields)
+            {
+                if (!formFields.Any())
+                {
+                    screenItem.FormFields.Add(formField);
+                }
+                else if (!screenItem.FormFields.Select(p => p.EntityPropertyId).Contains(formField.EntityPropertyId))
+                {
+                    screenItem.FormFields.Add(formField);
+                }
+            }
 
             screenItem.ChildScreenItems = (from ss in screen.ScreenSections
                                            where ss.ScreenSectionType == ScreenSectionType.Form &&

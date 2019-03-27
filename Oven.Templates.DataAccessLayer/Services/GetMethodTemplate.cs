@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Oven.Helpers;
 using Oven.Request;
 
 namespace Oven.Templates.DataAccessLayer.Services
@@ -22,11 +25,53 @@ namespace Oven.Templates.DataAccessLayer.Services
             ScreenSections = screenSections;
         }
         
+        public string GetProperty(FormField formField, List<ScreenItem> parentScreenItems = null)
+        {
+            var entityObjects = string.Empty;
+            if (parentScreenItems != null && parentScreenItems.Any())
+            {
+                entityObjects = $@"{string.Join(".", parentScreenItems.Select(p => $@"{p.Entity.InternalName}"))}.";
+            }
+            return $@"{formField.InternalNameCSharp} = p.{entityObjects}{formField.InternalNameCSharp}";
+        }
+
+        public List<string> GetScreenItemProperties(ScreenItem screenItem, List<ScreenItem> parentScreenItems = null)
+        {
+            var properties = new List<string>();
+            foreach (var formField in screenItem.FormFields)
+            {
+                properties.Add(GetProperty(formField, parentScreenItems));
+            }
+
+            
+            foreach (var childScreenItem in screenItem.ChildScreenItems)
+            {
+                var childProperties = new List<string>();
+                var childScreenItems = new List<ScreenItem> { childScreenItem };
+                if (parentScreenItems != null)
+                {
+                    childScreenItems.AddRange(parentScreenItems);
+                }
+
+                childProperties.AddRange(GetScreenItemProperties(childScreenItem, childScreenItems));
+                properties.Add($@"{childScreenItem.Entity.InternalName} = new {childScreenItem.Entity.InternalName}Response
+{{
+{childProperties.IndentLines(1, ",")}
+}}");
+            }
+
+            return properties;
+        }
+
         /// <summary>
         /// GET Verb method
         /// </summary>
         internal string GetMethod()
         {
+            var screenItem = RequestTransforms.GetScreenFieldsNested(Screen);
+
+            var properties = GetScreenItemProperties(screenItem);
+
             return $@"
         /// <summary>
         /// {Screen.Title} Get
@@ -43,8 +88,10 @@ namespace Oven.Templates.DataAccessLayer.Services
             }}
             
             var filter = Builders<{Screen.Entity.InternalName}>.Filter.Eq(a => a.Id, id.ToLower());
-            var findOptions = new FindOptions<{Screen.Entity.InternalName}, {Screen.FormResponseClass}>();
-            var query = await _context.{Screen.Entity.InternalNamePlural}.FindAsync(filter, findOptions);
+            var query = _context.{Screen.Entity.InternalNamePlural}.Find(filter)
+                .Project(p => new {Screen.FormResponseClass}() {{
+{properties.IndentLines(5, ",")}
+                }});
             var result = await query.SingleOrDefaultAsync();
 
             return result;

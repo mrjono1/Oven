@@ -2163,7 +2163,8 @@ namespace Oven
                                     new FormField
                                     {
                                         // Screen
-                                        EntityPropertyId = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}")
+                                        EntityPropertyId = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}"),
+                                        IsHiddenFromUi = true
                                     },
                                     new FormField
                                     {
@@ -2189,12 +2190,6 @@ namespace Oven
                                     {
                                         // Navigate To Screen
                                         EntityPropertyId = new Guid("{3EDDA39A-A700-486D-ABD8-7D9E14C6F550}")
-                                    },
-                                    new FormField
-                                    {
-                                        // Screen
-                                        EntityPropertyId = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}"),
-                                        IsHiddenFromUi = true
                                     }
                                 }
                             }
