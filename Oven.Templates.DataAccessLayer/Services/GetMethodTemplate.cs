@@ -25,7 +25,7 @@ namespace Oven.Templates.DataAccessLayer.Services
             ScreenSections = screenSections;
         }
         
-        public string GetProperty(FormField formField, List<ScreenItem> parentScreenItems = null)
+        private string GetProperty(FormField formField, List<ScreenItem> parentScreenItems = null)
         {
             var entityObjects = string.Empty;
             if (parentScreenItems != null && parentScreenItems.Any())
@@ -35,7 +35,7 @@ namespace Oven.Templates.DataAccessLayer.Services
             return $@"{formField.InternalNameCSharp} = p.{entityObjects}{formField.InternalNameCSharp}";
         }
 
-        public List<string> GetScreenItemProperties(ScreenItem screenItem, List<ScreenItem> parentScreenItems = null)
+        private List<string> GetScreenItemProperties(ScreenItem screenItem, List<ScreenItem> parentScreenItems = null)
         {
             var properties = new List<string>();
             foreach (var formField in screenItem.FormFields)
@@ -43,7 +43,6 @@ namespace Oven.Templates.DataAccessLayer.Services
                 properties.Add(GetProperty(formField, parentScreenItems));
             }
 
-            
             foreach (var childScreenItem in screenItem.ChildScreenItems)
             {
                 var childProperties = new List<string>();
