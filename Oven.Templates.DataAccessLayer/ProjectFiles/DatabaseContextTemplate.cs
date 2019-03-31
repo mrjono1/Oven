@@ -65,9 +65,9 @@ namespace {Project.InternalName}.DataAccessLayer
 {{
     public class DatabaseContext
     {{
-        public Dictionary<Type, Type> GetServices(IServiceCollection services, IConfigurationRoot configurationRoot)
+        public Dictionary<Type, Type> GetServices(IServiceCollection services, IConfiguration configuration)
         {{
-            services.Configure<Settings>(configurationRoot.GetSection(""DatabaseSettings""));
+            services.Configure<Settings>(configuration.GetSection(""DatabaseSettings""));
 
             // Services
             var servicesList = new Dictionary<Type, Type>

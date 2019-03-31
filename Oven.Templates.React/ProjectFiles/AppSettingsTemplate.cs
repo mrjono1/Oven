@@ -52,7 +52,8 @@ namespace Oven.Templates.React.ProjectFiles
       ""System"": ""Information"",
       ""Microsoft"": ""Information""
     }}
-  }}
+  }},
+  ""AllowedHosts"": ""*""
 }}";
         }
     }

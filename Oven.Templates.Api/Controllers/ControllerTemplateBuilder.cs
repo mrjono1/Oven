@@ -26,7 +26,7 @@ namespace Oven.Templates.Api.Controllers
         public IEnumerable<ITemplate> GetTemplates()
         {
             var templates = new List<ITemplate>();
-            
+
             // Create Enity Controllers
             foreach (var entity in Project.Entities)
             {
@@ -39,5 +39,7 @@ namespace Oven.Templates.Api.Controllers
 
             return templates;
         }
+
+        public IEnumerable<ITemplateBuilder> GetTemplateBuilders() => new ITemplateBuilder[]{};
     }
 }

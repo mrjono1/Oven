@@ -59,12 +59,29 @@ namespace Oven.Helpers
             }
         }
 
+        private IEnumerable<ITemplate> GetTemplates(ITemplateBuilder templateBuilder)
+        {
+            var templates = new List<ITemplate>();
+
+            templates.AddRange(templateBuilder.GetTemplates());
+
+            foreach (var item in templateBuilder.GetTemplateBuilders())
+            {
+                templates.AddRange(GetTemplates(item));
+            }
+
+            return templates;
+        }
+
+
         /// <summary>
         /// Add templates from a template builder
         /// </summary>
         public void AddTemplate(ITemplateBuilder templateBuilder)
         {
-            foreach (var template in templateBuilder.GetTemplates())
+            var templates = GetTemplates(templateBuilder);
+
+            foreach (var template in templates)
             {
                 FilesToWrite.Add(FileHelper.WriteTemplate(ProjectDirectory, template));
             }

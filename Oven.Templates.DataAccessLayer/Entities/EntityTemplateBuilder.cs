@@ -33,5 +33,7 @@ namespace Oven.Templates.DataAccessLayer.Entities
 
             return templates;
         }
+
+        public IEnumerable<ITemplateBuilder> GetTemplateBuilders() => new ITemplateBuilder[] { };
     }
 }

@@ -71,5 +71,7 @@ namespace Oven.Templates.DataAccessLayer.Models
 
             return templates;
         }
+
+        public IEnumerable<ITemplateBuilder> GetTemplateBuilders() => new ITemplateBuilder[] { };
     }
 }

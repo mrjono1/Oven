@@ -83,5 +83,7 @@ namespace Oven.Templates.Api.Services
 
             return names;
         }
+
+        public IEnumerable<ITemplateBuilder> GetTemplateBuilders() => new ITemplateBuilder[] { };
     }
 }

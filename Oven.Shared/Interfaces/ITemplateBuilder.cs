@@ -12,5 +12,11 @@ namespace Oven.Interfaces
         /// </summary>
         /// <returns>ITemplate objects</returns>
         IEnumerable<ITemplate> GetTemplates();
+
+        /// <summary>
+        /// Get Template Builders
+        /// </summary>
+        /// <returns>ITemplateBuilder objects</returns>
+        IEnumerable<ITemplateBuilder> GetTemplateBuilders();
     }
 }
