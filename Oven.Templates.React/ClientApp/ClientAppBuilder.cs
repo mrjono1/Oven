@@ -32,7 +32,8 @@ namespace Oven.Templates.React.ClientApp
 
         public IEnumerable<ITemplate> GetTemplates() => 
             new List<ITemplate>() {
-                new PackageJsonTemplate(Project)
+                new PackageJsonTemplate(Project),
+                new TsConfigTemplate(Project)
             };
     }
 }

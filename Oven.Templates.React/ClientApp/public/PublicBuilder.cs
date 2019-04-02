@@ -22,14 +22,9 @@ namespace Oven.Templates.React.ClientApp.Public
 
         public IEnumerable<ITemplateBuilder> GetTemplateBuilders() => new ITemplateBuilder[] { };
 
-        public IEnumerable<ITemplate> GetTemplates()
-        {
-            var templates = new List<ITemplate>
-            {
-                new IndexTemplate(Project)
-            };
-
-            return templates;
-        }
+        public IEnumerable<ITemplate> GetTemplates() => new ITemplate[] {
+                new IndexTemplate(Project),
+                new ManifestTemplate(Project)
+        };
     }
 }

@@ -1,7 +1,7 @@
 using Oven.Interfaces;
 using Oven.Request;
 
-namespace Oven.Templates.React.ProjectFiles
+namespace Oven.Templates.React.ClientApp
 {
     /// <summary>
     /// tsconfig.json configuration
@@ -31,7 +31,7 @@ namespace Oven.Templates.React.ProjectFiles
         /// </summary>
         public string[] GetFilePath()
         {
-            return new string[] { };
+            return new string[] { "ClientApp" };
         }
 
         /// <summary>

@@ -28,14 +28,11 @@ namespace Oven.Templates.React
             projectWriter.AddTemplate(new ProjectFiles.AppSettingsTemplate(project));
 
             // Create Project Files
-            projectWriter.AddTemplate(new ProjectFiles.TsConfigTemplate(project));
             projectWriter.AddTemplate(new ProjectFiles.TsLintTemplate(project));
             //projectWriter.AddTemplate(new ProjectFiles.PackageLockJsonTemplate(project));
 
             projectWriter.AddTemplate(new ProjectFiles.EslintrcTemplate(project));
             projectWriter.AddTemplate(new ProjectFiles.EslintrcIgnoreTemplate(project));
-            //projectWriter.AddTemplate(new ProjectFiles.BabelrcTemplate(project));
-            //projectWriter.AddTemplate(new ProjectFiles.WebpackTemplate(project));
 
             // Server Pages
             projectWriter.AddTemplate(new Pages.PagesBuilder(project));
