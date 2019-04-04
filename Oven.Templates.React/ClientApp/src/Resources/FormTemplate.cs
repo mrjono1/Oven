@@ -129,20 +129,18 @@ const DynamicTitle = ({{ record }}) => {{
 
 const {Screen.Entity.InternalName}Edit = (props) => (
     <Edit undoable={{ false }} {{...props}} title={{< DynamicTitle />}}>
-        <Form {{...props}} />
+        <SimpleForm>
+{screenSections.IndentLines(3)}
+        </SimpleForm>
     </Edit>
 );
 
 const {Screen.Entity.InternalName}Create = (props) => (
     <Create {{...props}} title=""Create {Screen.Title}"">
-        <Form {{...props}} />
+        <SimpleForm redirect=""edit"">
+{screenSections.IndentLines(3)}
+        </SimpleForm>
     </Create>
-);
-
-const Form = (props) => (
-    <SimpleForm {{...props}} redirect=""edit"">
-{string.Join(Environment.NewLine, screenSections).IndentLines(8)}
-    </SimpleForm>
 );
 
 export {{ {Screen.Entity.InternalName}Edit, {Screen.Entity.InternalName}Create }};";

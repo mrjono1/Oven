@@ -208,6 +208,8 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 ).then(responses => ({
                     data: responses.map(response => response.json)
                 }));
+            default:
+                break;
         }
 
         const { url, options } = convertDataRequestToHTTP(
