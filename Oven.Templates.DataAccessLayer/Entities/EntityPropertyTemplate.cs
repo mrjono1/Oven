@@ -1,4 +1,6 @@
 using Oven.Request;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Oven.Templates.DataAccessLayer.Entities
@@ -56,9 +58,18 @@ namespace Oven.Templates.DataAccessLayer.Entities
         public {oneToOneRelationshipEntity.InternalName} {property.InternalName} {{ get; set; }}";
 
                 default:
+                    var attributes = new List<string>
+                    {
+                        $@"[BsonElement(""{property.InternalNameJavaScript}"")]"
+                    };
+                    if (property.Required)
+                    {
+                        attributes.Add("[BsonRequired]");
+                    }
                     return $@"        /// <summary>
         /// {property.Title}
         /// </summary>
+{attributes.IndentLines(2)}
         public {property.CsType} {property.InternalName} {{ get; set; }}";
             }
         }
