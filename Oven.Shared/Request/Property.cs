@@ -1,4 +1,5 @@
 using Humanizer;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -29,28 +30,28 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Property Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, PropertyType> PropertyTypeDictonary = new Dictionary<Guid, PropertyType>
+        internal static readonly Dictionary<ObjectId, PropertyType> PropertyTypeDictonary = new Dictionary<ObjectId, PropertyType>
         {
-            { new Guid("{2C1D2E2A-3531-41D9-90D3-3632C368B12A}"), PropertyType.Boolean },
-            { new Guid("{25E3A798-5F63-4A1E-93B3-A0BCE69836BC}"), PropertyType.DateTime },
-            { new Guid("{F126388B-8A6E-41DB-A98A-A0E511016441}"), PropertyType.Integer },
-            { new Guid("{B967BF8D-0722-43F0-9945-CBEB4160822F}"), PropertyType.Double },
-            { new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"), PropertyType.ParentRelationshipOneToMany },
-            { new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"), PropertyType.ReferenceRelationship },
-            { new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}"), PropertyType.ParentRelationshipOneToOne },
-            { new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}"), PropertyType.String },
-            { new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"), PropertyType.PrimaryKey },
-            { new Guid("{A3189B37-FC2D-417B-868F-61D52F4D06DC}"), PropertyType.Uniqueidentifier },
-            { new Guid("{D709C3C3-E163-4C3A-A422-65DBFC87F037}"), PropertyType.Spatial },
+            { new ObjectId("{5ca86b146668b25914b67e74}"), PropertyType.Boolean },
+            { new ObjectId("{5ca86b266668b25914b67e75}"), PropertyType.DateTime },
+            { new ObjectId("{5ca86b506668b25914b67e76}"), PropertyType.Integer },
+            { new ObjectId("{5ca86b656668b25914b67e77}"), PropertyType.Double },
+            { new ObjectId("{5ca86c626668b25914b67e78}"), PropertyType.ParentRelationshipOneToMany },
+            { new ObjectId("{5ca86c956668b25914b67e79}"), PropertyType.ReferenceRelationship },
+            { new ObjectId("5ca877064a73264e4c06dfda"), PropertyType.ParentRelationshipOneToOne },
+            { new ObjectId("5ca877044a73264e4c06dfc1"), PropertyType.String },
+            { new ObjectId("5ca877094a73264e4c06dff8"), PropertyType.PrimaryKey },
+            { new ObjectId("5ca8770e4a73264e4c06e030"), PropertyType.Uniqueidentifier },
+            { new ObjectId("5ca8770e4a73264e4c06e031"), PropertyType.Spatial },
         };
 
         /// <summary>
         /// Register of all Property Template Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, PropertyTemplate> PropertyTemplateDictonary = new Dictionary<Guid, PropertyTemplate>
+        internal static readonly Dictionary<ObjectId, PropertyTemplate> PropertyTemplateDictonary = new Dictionary<ObjectId, PropertyTemplate>
         {
-            { Guid.Empty, PropertyTemplate.None },
-            { new Guid("{1B966A14-45B9-4E34-92BB-E2D46D97C5C3}"), PropertyTemplate.ReferenceTitle }
+            { ObjectId.Empty, PropertyTemplate.None },
+            { new ObjectId("5ca877094a73264e4c06dff5"), PropertyTemplate.ReferenceTitle }
         };
 
         /// <summary>
@@ -58,7 +59,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Title
         /// </summary>
@@ -79,7 +80,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid PropertyTypeId { get; set; }
+        public ObjectId PropertyTypeId { get; set; }
 
         //TODO: Change this property to PropertyType
         /// <summary>
@@ -91,7 +92,7 @@ namespace Oven.Request
         {
             get
             {
-                if (PropertyTypeId == Guid.Empty)
+                if (PropertyTypeId == ObjectId.Empty)
                 {
                     return PropertyType.String;
                 }
@@ -107,7 +108,7 @@ namespace Oven.Request
         /// Property Template Identifier, setting this will case future upgrades to update this field
         /// </summary>
         [NonDefault]
-        public Guid? PropertyTemplateId { get; set; }
+        public ObjectId? PropertyTemplateId { get; set; }
 
         /// <summary>
         /// Property Template Enum
@@ -118,13 +119,13 @@ namespace Oven.Request
         {
             get
             {
-                var id = PropertyTemplateId ?? Guid.Empty;
+                var id = PropertyTemplateId ?? ObjectId.Empty;
                 return PropertyTemplateDictonary[id];
             }
             set
             {
                 var id = PropertyTemplateDictonary.SingleOrDefault(v => v.Value == value).Key;
-                if (id == Guid.Empty)
+                if (id == ObjectId.Empty)
                 {
                     PropertyTemplateId = null;
                 }
@@ -139,7 +140,7 @@ namespace Oven.Request
         /// Parent Entity Identifier
         /// </summary>
         [NonDefault]
-        public Guid? ReferenceEntityId { get; set; }
+        public ObjectId? ReferenceEntityId { get; set; }
 
         /// <summary>
         /// Helper Function to get Required

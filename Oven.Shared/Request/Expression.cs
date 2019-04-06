@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using Oven.Request.Enumerations;
 using System;
@@ -35,12 +36,12 @@ namespace Oven.Request
         /// Specify Entity Id if the Property Id is not on the current Entity
         /// </summary>
         [NonDefault]
-        public Guid? EntityId { get; set; }
+        public ObjectId? EntityId { get; set; }
         /// <summary>
         /// Entity Property Id
         /// </summary>
         [NonDefault]
-        public Guid? PropertyId { get; set; }
+        public ObjectId? PropertyId { get; set; }
         /// <summary>
         /// =/!=/> etc
         /// </summary>
@@ -66,7 +67,7 @@ namespace Oven.Request
         /// <summary>
         /// Uniqueidentifier Value
         /// </summary>
-        public Guid? UniqueidentifierValue { get; set; }
+        public ObjectId? UniqueidentifierValue { get; set; }
         /// <summary>
         /// String Values
         /// </summary>
@@ -82,11 +83,11 @@ namespace Oven.Request
         /// <summary>
         /// Uniqueidentifier Value
         /// </summary>
-        public IEnumerable<Guid> UniqueidentifierValues { get; set; }
+        public IEnumerable<ObjectId> UniqueidentifierValues { get; set; }
         /// <summary>
         /// Child Property Id
         /// </summary>
-        public Guid? ReferencePropertyId { get; set; }
+        public ObjectId? ReferencePropertyId { get; set; }
         #endregion
 
         #region Resolved Fields

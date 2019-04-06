@@ -1,4 +1,5 @@
 using Humanizer;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid EntityPropertyId { get; set; }
+        public ObjectId EntityPropertyId { get; set; }
         /// <summary>
         /// Optional: Title, Defaulted from Entity if not provided
         /// </summary>

@@ -183,7 +183,7 @@ namespace Oven.Templates.Api.Controllers
             //    {
             //        case PropertyType.ParentRelationship:
             //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
+            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && ObjectId.TryParse(operation.value.ToString(), out ObjectId {formField.InternalNameCSharp.Camelize()}))
             //            {{
             //                entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
             //            }}
@@ -197,7 +197,7 @@ namespace Oven.Templates.Api.Controllers
 
             //        case PropertyType.ReferenceRelationship:
             //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
+            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && ObjectId.TryParse(operation.value.ToString(), out ObjectId {formField.InternalNameCSharp.Camelize()}))
             //            {{
             //                entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
             //            }}

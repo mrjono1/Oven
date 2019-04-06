@@ -56,7 +56,7 @@ namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
         /// <summary>
         /// Id
         /// </summary>
-        public Guid Id {{ get; set; }}
+        public ObjectId Id {{ get; set; }}
         /// <summary>
         /// Title
         /// </summary>

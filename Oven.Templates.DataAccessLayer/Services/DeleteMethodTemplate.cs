@@ -34,9 +34,9 @@ namespace Oven.Templates.DataAccessLayer.Services
             {{
                 throw new ArgumentNullException(); 
             }}
-            if (!Guid.TryParse(id, out Guid guid))
+            if (!ObjectId.TryParse(id, out ObjectId ObjectId))
             {{
-                throw new ArgumentException(""Invalid Guid"", ""id"");
+                throw new ArgumentException(""Invalid ObjectId"", ""id"");
             }}
             
             await _context.{Entity.InternalNamePlural}.DeleteOneAsync(record => record.Id == id);

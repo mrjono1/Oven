@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,11 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Seed Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, SeedType> SeedTypeDictonary = new Dictionary<Guid, SeedType>
+        internal static readonly Dictionary<ObjectId, SeedType> SeedTypeDictonary = new Dictionary<ObjectId, SeedType>
         {
-            { new Guid("{8A07A94D-4A5F-420F-B02A-4B2223B1213B}"), SeedType.AddIfNone },
-            { new Guid("{2729F45B-269F-42B1-BBA9-3E76DC9D1CBB}"), SeedType.EnsureAllAdded },
-            { new Guid("{6989AE9F-D5BD-4861-ABE6-0142EDDE6130}"), SeedType.EnsureAllUpdated }
+            { new ObjectId("5ca8770b4a73264e4c06e006"), SeedType.AddIfNone },
+            { new ObjectId("5ca8770b4a73264e4c06e007"), SeedType.EnsureAllAdded },
+            { new ObjectId("5ca8770b4a73264e4c06e008"), SeedType.EnsureAllUpdated }
         };
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid SeedTypeId { get; set; }
+        public ObjectId SeedTypeId { get; set; }
 
         /// <summary>
         /// Seed Type

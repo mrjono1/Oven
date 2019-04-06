@@ -2,6 +2,7 @@ using Oven.Request;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using MongoDB.Bson;
 
 namespace Oven.Helpers
 {
@@ -69,7 +70,7 @@ namespace Oven.Helpers
         /// <summary>
         /// Get Screen Section Entity Fields
         /// </summary>
-        public static IEnumerable<ScreenSectionEntityFormFields> GetScreenSectionEntityFields(Screen screen, Guid? entityId = null)
+        public static IEnumerable<ScreenSectionEntityFormFields> GetScreenSectionEntityFields(Screen screen, ObjectId? entityId = null)
         {
             var result = new List<ScreenSectionEntityFormFields>();
 

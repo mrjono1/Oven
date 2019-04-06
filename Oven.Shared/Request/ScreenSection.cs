@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,19 +17,19 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Screen Section Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ScreenSectionType> ScreenSectionTypeDictonary = new Dictionary<Guid, ScreenSectionType>
+        internal static readonly Dictionary<ObjectId, ScreenSectionType> ScreenSectionTypeDictonary = new Dictionary<ObjectId, ScreenSectionType>
         {
-            { new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), ScreenSectionType.Search },
-            { new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}"), ScreenSectionType.Form },
-            { new Guid("{4270A420-64CB-4A2C-B718-2C645DB2B57B}"), ScreenSectionType.MenuList },
-            { new Guid("{38EF9B44-A993-479B-91EC-1FE436E91556}"), ScreenSectionType.Html }
+            { new ObjectId("5ca877044a73264e4c06dfc4"), ScreenSectionType.Search },
+            { new ObjectId("5ca876fe4a73264e4c06df7c"), ScreenSectionType.Form },
+            { new ObjectId("5ca877094a73264e4c06dffb"), ScreenSectionType.MenuList },
+            { new ObjectId("5ca877054a73264e4c06dfcf"), ScreenSectionType.Html }
         };
         /// <summary>
         /// Identifier
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Title
         /// </summary>
@@ -44,7 +45,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid ScreenSectionTypeId { get; set; }
+        public ObjectId ScreenSectionTypeId { get; set; }
         /// <summary>
         /// Screen Section Type
         /// </summary>
@@ -65,12 +66,12 @@ namespace Oven.Request
         /// Optional: Entity to display in this section
         /// </summary>
         [NonDefault]
-        public Guid? EntityId { get; set; }
+        public ObjectId? EntityId { get; set; }
         /// <summary>
         /// Optional: Screen to navigate to on actoin
         /// </summary>
         [NonDefault]
-        public Guid? NavigateToScreenId { get; set; }
+        public ObjectId? NavigateToScreenId { get; set; }
         /// <summary>
         /// Screen Menu Items
         /// </summary>
@@ -91,7 +92,7 @@ namespace Oven.Request
         /// Only populate when Screen Section Type = Form
         /// </summary>
         public FormSection FormSection { get; set; }
-        // TODO: Change this to Guid OrderBySearchColumnId, defaulting to a column will be annoying
+        // TODO: Change this to ObjectId OrderBySearchColumnId, defaulting to a column will be annoying
         /// <summary>
         /// The property <see cref="Property.InternalName"/> to order by, defaults to "Title"
         /// </summary>
@@ -103,7 +104,7 @@ namespace Oven.Request
         /// <summary>
         /// Parent Screen Section Id
         /// </summary>
-        public Guid? ParentScreenSectionId { get; set; }
+        public ObjectId? ParentScreenSectionId { get; set; }
         #region Internal Fields
         /// <summary>
         /// Form Response Class

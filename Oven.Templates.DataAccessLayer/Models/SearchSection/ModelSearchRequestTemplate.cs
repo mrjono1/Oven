@@ -59,11 +59,11 @@ namespace Oven.Templates.DataAccessLayer.Models
         /// </summary>
         [Required]
         public string {parentEntity.InternalName}Id {{ get; set; }}
-        internal Guid {parentEntity.InternalName}GuidId
+        internal ObjectId {parentEntity.InternalName}ObjectIdId
         {{ 
             get
             {{
-                return Guid.Parse({parentEntity.InternalName}Id);
+                return ObjectId.Parse({parentEntity.InternalName}Id);
             }}
         }}";
             }

@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,31 +16,31 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Validation Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ValidationType> ValidationTypeDictonary = new Dictionary<Guid, ValidationType>
+        internal static readonly Dictionary<ObjectId, ValidationType> ValidationTypeDictonary = new Dictionary<ObjectId, ValidationType>
         {
-            { new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"), ValidationType.Email },
-            { new Guid("{F7788E3D-7753-4491-98B1-AE78E16CDD0E}"), ValidationType.MaximumLength },
-            { new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"), ValidationType.MaximumValue },
-            { new Guid("{35D78EB6-F5DE-4E7B-AE79-B69A1D3DC7C9}"), ValidationType.MinimumLength },
-            { new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}"), ValidationType.MinimumValue },
-            { new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}"), ValidationType.Pattern },
-            { new Guid("{BD110234-F05D-42AB-BF2E-382B83093D0C}"), ValidationType.Required },
-            { new Guid("{CB9A60D3-42B3-411F-8FCE-2FC36C812A16}"), ValidationType.RequiredTrue },
-            { new Guid("{890C7A9E-09AE-4BB8-970E-85C564F753F1}"), ValidationType.Unique },
-            { new Guid("{AA7EEB02-2FC2-429F-9259-C9958EFDFCB2}"), ValidationType.RequiredExpression }
+            { new ObjectId("5ca877084a73264e4c06dfea"), ValidationType.Email },
+            { new ObjectId("5ca877074a73264e4c06dfde"), ValidationType.MaximumLength },
+            { new ObjectId("5ca877074a73264e4c06dfdf"), ValidationType.MaximumValue },
+            { new ObjectId("5ca877074a73264e4c06dfe0"), ValidationType.MinimumLength },
+            { new ObjectId("5ca877074a73264e4c06dfe1"), ValidationType.MinimumValue },
+            { new ObjectId("5ca877074a73264e4c06dfe2"), ValidationType.Pattern },
+            { new ObjectId("5ca877084a73264e4c06dfeb"), ValidationType.Required },
+            { new ObjectId("5ca877084a73264e4c06dfec"), ValidationType.RequiredTrue },
+            { new ObjectId("5ca877084a73264e4c06dfed"), ValidationType.Unique },
+            { new ObjectId("5ca8770e4a73264e4c06e032"), ValidationType.RequiredExpression }
         };
 
         /// <summary>
         /// Validation Primary Key
         /// </summary>
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Validation Type Id
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid ValidationTypeId { get; set; }
+        public ObjectId ValidationTypeId { get; set; }
         /// <summary>
         /// Validation Type Enum
         /// </summary>

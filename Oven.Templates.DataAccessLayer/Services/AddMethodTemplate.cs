@@ -226,7 +226,7 @@ namespace Oven.Templates.DataAccessLayer.Services
 
 {string.Join(Environment.NewLine, properties)}
 
-            if (!string.IsNullOrEmpty(post.Id) && Guid.TryParse(post.Id, out var id))
+            if (!string.IsNullOrEmpty(post.Id) && ObjectId.TryParse(post.Id, out var id))
             {{
                 newRecord.Id = id.ToString();
             }}

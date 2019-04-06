@@ -6,7 +6,7 @@ namespace Oven.Templates.SolutionFiles
     /// <summary>
     /// Solution file
     /// </summary>
-    public class SolutionTemplate: ITemplate
+    public class SolutionTemplate : ITemplate
     {
         private readonly Project Project;
 

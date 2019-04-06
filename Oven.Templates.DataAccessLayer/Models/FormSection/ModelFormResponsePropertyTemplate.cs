@@ -28,11 +28,11 @@ namespace Oven.Templates.DataAccessLayer.Models
                         properties.Add($@"        /// <summary>
         /// {formField.TitleValue}
         /// </summary>
-        internal Guid Guid{formField.InternalNameCSharp}
+        internal ObjectId ObjectId{formField.InternalNameCSharp}
         {{
             get
             {{
-                return Guid.Parse({formField.InternalNameCSharp});
+                return ObjectId.Parse({formField.InternalNameCSharp});
             }}
             set
             {{
@@ -50,11 +50,11 @@ namespace Oven.Templates.DataAccessLayer.Models
                     properties.Add($@"        /// <summary>
         /// {formField.TitleValue}
         /// </summary>
-        internal Guid Guid{formField.InternalNameCSharp}
+        internal ObjectId ObjectId{formField.InternalNameCSharp}
         {{
             get
             {{
-                return Guid.Parse({formField.InternalNameCSharp});
+                return ObjectId.Parse({formField.InternalNameCSharp});
             }}
             set
             {{

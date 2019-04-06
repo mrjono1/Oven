@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Oven.Interfaces;
 using Oven.Request;
 using System;
@@ -46,7 +47,7 @@ namespace Oven.Templates.Api.Services
 
             if (Project.Id == Project.KitchenId)
             {
-                var projectEntity = Project.Entities.SingleOrDefault(a => a.Id == new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"));
+                var projectEntity = Project.Entities.SingleOrDefault(a => a.Id == new ObjectId("{5ca869596668b25914b67e6e}"));
                 exportFunctions.Add(new ExportFunctionTemplate(Project, projectEntity).Function());
             }
 

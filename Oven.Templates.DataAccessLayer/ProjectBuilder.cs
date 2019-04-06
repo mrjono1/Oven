@@ -32,7 +32,7 @@ namespace Oven.Templates.DataAccessLayer
             solutionWriter.AddTemplate(new Models.ModelTemplateBuilder(project));
 
             // Extensions
-         //   solutionWriter.AddTemplate(new Extensions.GuidExtensions(project));
+         //   solutionWriter.AddTemplate(new Extensions.ObjectIdExtensions(project));
             solutionWriter.AddTemplate(new Extensions.StringExtensions(project));
 
             // Create Entity Service Interfaces

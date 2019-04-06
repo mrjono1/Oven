@@ -46,11 +46,11 @@ namespace System
 {{
     public static class StringExtensions
     {{
-        public static Guid GuidValue(this string value)
+        public static ObjectId ObjectIdValue(this string value)
         {{
-            return Guid.Parse(value);
+            return ObjectId.Parse(value);
         }}
-        public static Guid? GuidNullableValue(this string value)
+        public static ObjectId? ObjectIdNullableValue(this string value)
         {{
             if (string.IsNullOrWhiteSpace(value))
             {{
@@ -58,7 +58,7 @@ namespace System
             }}
             else
             {{
-                return Guid.Parse(value);
+                return ObjectId.Parse(value);
             }}
         }}
     }}

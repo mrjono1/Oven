@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,7 +15,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Default Base Endpoint: This can be overriden for each environment
         /// </summary>

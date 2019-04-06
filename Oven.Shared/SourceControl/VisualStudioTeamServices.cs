@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RestSharp;
@@ -18,7 +19,7 @@ namespace Oven.SourceControl
         /// <summary>
         /// Returned project id
         /// </summary>
-        public Guid? ProjectId { get; set; }
+        public ObjectId? ProjectId { get; set; }
 
         /// <summary>
         /// Constructor

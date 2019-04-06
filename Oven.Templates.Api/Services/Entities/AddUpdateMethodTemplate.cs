@@ -202,7 +202,7 @@ namespace Oven.Templates.Api.Services
         /// <summary>
         /// {Screen.Title} Update
         /// </summary>
-        public virtual async Task<Guid> UpdateAsync(Guid id, {Screen.InternalName}Request put)
+        public virtual async Task<ObjectId> UpdateAsync(ObjectId id, {Screen.InternalName}Request put)
         {{
             if (put == null)
             {{
@@ -257,7 +257,7 @@ namespace Oven.Templates.Api.Services
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        public virtual async Task<Guid> CreateAsync({Screen.InternalName}Request post)
+        public virtual async Task<ObjectId> CreateAsync({Screen.InternalName}Request post)
         {{
             if (post == null)
             {{
@@ -269,7 +269,7 @@ namespace Oven.Templates.Api.Services
 
             if (post.Id == null)
             {{
-                post.Id = Guid.NewGuid();
+                post.Id = ObjectId.NewObjectId();
             }}
             await _context.{Screen.Entity.InternalNamePlural}.InsertOneAsync(newRecord);
 

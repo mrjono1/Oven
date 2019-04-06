@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Oven.Request
     [System.Diagnostics.DebuggerDisplay("Project: {Title}")]
     public partial class Project
     {
-        public static readonly Guid KitchenId = new Guid("{66E47378-5CD8-40BC-833C-CDA2CC97058A}");
+        public static readonly ObjectId KitchenId = new ObjectId("{5ca86ae16668b25914b67e73}");
         /// <summary>
         /// Constructor sets default values
         /// </summary>
@@ -35,7 +36,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Internal Name
         /// </summary>
@@ -91,7 +92,7 @@ namespace Oven.Request
         /// Default Screen to load
         /// </summary>
         [NonDefault]
-        public Guid? DefaultScreenId { get; set; }
+        public ObjectId? DefaultScreenId { get; set; }
 
         /// <summary>
         /// Any NuGet dependencies to include

@@ -3,16 +3,16 @@ using Oven.Request;
 namespace Oven.Templates.Api.Utilities
 {
     /// <summary>
-    /// Required Guid Attribute Template
+    /// Required ObjectId Attribute Template
     /// </summary>
-    public class RequiredGuidAttributeTemplate
+    public class RequiredObjectIdAttributeTemplate
     {
         /// <summary>
         /// File name
         /// </summary>
         public static string FileName()
         {
-            return "RequiredGuidAttribute.cs";
+            return "RequiredObjectIdAttribute.cs";
         }
 
         /// <summary>
@@ -26,11 +26,11 @@ using System.ComponentModel.DataAnnotations;
 namespace {project.InternalName}
 {{
         [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    sealed public class RequiredGuidAttribute : ValidationAttribute
+    sealed public class RequiredObjectIdAttribute : ValidationAttribute
     {{
         public override bool IsValid(Object value)
         {{
-            if (value == null || (Guid)value == Guid.Empty)
+            if (value == null || (ObjectId)value == ObjectId.Empty)
                 return false;
 
             return true;

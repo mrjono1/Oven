@@ -83,11 +83,11 @@ namespace Oven.SourceControl.Models
             public ProcessTemplate()
             {
                 // Scrum - Defult as at 2017-12-27
-                TemplateTypeId = "6b724908-ef14-45cf-84f8-768b5384da45";
+                TemplateTypeId = "5ca8770f4a73264e4c06e039";
             }
 
             /// <summary>
-            /// Template Type Id (Guid)
+            /// Template Type Id (ObjectId)
             /// </summary>
             public string TemplateTypeId { get; set; }
         }

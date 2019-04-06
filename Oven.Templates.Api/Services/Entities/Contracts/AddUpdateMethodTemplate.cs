@@ -28,7 +28,7 @@ namespace Oven.Templates.Api.Services.Contracts
         /// <summary>
         /// {Screen.Title} Update
         /// </summary>
-        Task<Guid> UpdateAsync(Guid id, {Screen.InternalName}Request request);";
+        Task<ObjectId> UpdateAsync(ObjectId id, {Screen.InternalName}Request request);";
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Oven.Templates.Api.Services.Contracts
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        Task<Guid> CreateAsync({Screen.InternalName}Request request);";
+        Task<ObjectId> CreateAsync({Screen.InternalName}Request request);";
         }
 
     }

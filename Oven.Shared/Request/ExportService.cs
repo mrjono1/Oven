@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -13,12 +14,12 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Entity Id
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid EntityId { get; set; }
+        public ObjectId EntityId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using Humanizer;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,13 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Screen Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, HttpVerb> HttpVerbDictonary = new Dictionary<Guid, HttpVerb>
+        internal static readonly Dictionary<ObjectId, HttpVerb> HttpVerbDictonary = new Dictionary<ObjectId, HttpVerb>
         {
-            { Guid.Empty, HttpVerb.None},
-            { new Guid("{E057D18F-9E74-4C0E-A2A0-58029354AD66}"), HttpVerb.Get },
-            { new Guid("{A6DCEFE6-4DA6-4952-96DC-6B1D7EFE2FF1}"), HttpVerb.Post },
-            { new Guid("{DDD557C8-3E4C-4E9E-8F83-88BEE5A67CA6}"), HttpVerb.Put },
-            { new Guid("{A60BE34E-7505-483D-8888-69C406E82F80}"), HttpVerb.Delete }
+            { ObjectId.Empty, HttpVerb.None},
+            { new ObjectId("5ca8770e4a73264e4c06e033"), HttpVerb.Get },
+            { new ObjectId("5ca8770f4a73264e4c06e034"), HttpVerb.Post },
+            { new ObjectId("5ca8770f4a73264e4c06e035"), HttpVerb.Put },
+            { new ObjectId("5ca8770f4a73264e4c06e036"), HttpVerb.Delete }
         };
 
         /// <summary>
@@ -30,7 +31,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Title
         /// </summary>
@@ -58,7 +59,7 @@ namespace Oven.Request
         /// <summary>
         /// Http verb eg. GET, POST, PUT, PATCH
         /// </summary>
-        public Guid? VerbId { get; set; }
+        public ObjectId? VerbId { get; set; }
         /// <summary>
         /// Http verb eg. GET, POST, PUT, PATCH
         /// </summary>
@@ -68,13 +69,13 @@ namespace Oven.Request
         {
             get
             {
-                var id = VerbId ?? Guid.Empty;
+                var id = VerbId ?? ObjectId.Empty;
                 return HttpVerbDictonary[id];
             }
             set
             {
                 var id = HttpVerbDictonary.SingleOrDefault(v => v.Value == value).Key;
-                if (id == Guid.Empty)
+                if (id == ObjectId.Empty)
                 {
                     VerbId = null;
                 }
