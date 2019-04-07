@@ -22,12 +22,13 @@ namespace Oven
                 DefaultScreenId = new ObjectId("5ca876ed4a73264e4c06dedb"),
                 EnableCustomCode = true
             };
+
             project.Entities = new Entity[]
             {
                 #region Project Entity
                 new Entity()
                 {
-                    Id = new ObjectId("{5ca869596668b25914b67e6e}"),
+                    Id = new ObjectId("5ca869596668b25914b67e6e"),
                     InternalName = "Project",
                     Title = "Project",
                     Properties = new Property[]
@@ -253,7 +254,7 @@ namespace Oven
                             Id = new ObjectId("5ca876f24a73264e4c06def9"),
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new ObjectId("{5ca869596668b25914b67e6e}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
@@ -533,7 +534,7 @@ namespace Oven
                             InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new ObjectId("{5ca869596668b25914b67e6e}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
@@ -598,7 +599,7 @@ namespace Oven
                             Id = new ObjectId("5ca876f14a73264e4c06def0"),
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new ObjectId("{5ca869596668b25914b67e6e}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation
@@ -959,7 +960,7 @@ namespace Oven
                             InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new ObjectId("{5ca869596668b25914b67e6e}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
@@ -1393,7 +1394,7 @@ namespace Oven
                             InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new ObjectId("{5ca869596668b25914b67e6e}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
@@ -1511,7 +1512,7 @@ namespace Oven
                             InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new ObjectId("{5ca869596668b25914b67e6e}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
@@ -1626,7 +1627,7 @@ namespace Oven
                 new Screen()
                 {
                     Id = new ObjectId("5ca876ed4a73264e4c06dedb"),
-                    EntityId = new ObjectId("{5ca869596668b25914b67e6e}"),
+                    EntityId = new ObjectId("5ca869596668b25914b67e6e"),
                     ScreenType = ScreenType.Search,
                     Title = "Home",
                     Path = "home",
@@ -1656,7 +1657,7 @@ namespace Oven
                         new ScreenSection
                         {
                             Id = new ObjectId("5ca877024a73264e4c06dfab"),
-                            EntityId = new ObjectId("{5ca869596668b25914b67e6e}"),
+                            EntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ScreenSectionType = ScreenSectionType.Search,
                             Title = "Projects",
                             InternalName = "Projects",
@@ -1700,7 +1701,7 @@ namespace Oven
                 new Screen()
                 {
                     Id = new ObjectId("5ca877024a73264e4c06dfac"),
-                    EntityId = new ObjectId("{5ca869596668b25914b67e6e}"),
+                    EntityId = new ObjectId("5ca869596668b25914b67e6e"),
                     ScreenType = ScreenType.Form,
                     Title = "Project",
                     Path = "project",
@@ -2472,9 +2473,9 @@ namespace Oven
                                             UniqueidentifierValues = new ObjectId[]
                                             {
                                                 // Parent Relationship One To Many
-                                                new ObjectId("{5ca86c626668b25914b67e78}"),
+                                                new ObjectId("5ca86c626668b25914b67e78"),
                                                 // Reference Relationship
-                                                new ObjectId("{5ca86c956668b25914b67e79}"),
+                                                new ObjectId("5ca86c956668b25914b67e79"),
                                                 // Parent Relationship One To One
                                                 new ObjectId("5ca877064a73264e4c06dfda")
                                             }
@@ -2488,7 +2489,7 @@ namespace Oven
                                         {
                                             PropertyId = new ObjectId("5ca876f34a73264e4c06df06"),
                                             Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                            UniqueidentifierValue = new ObjectId("{5ca86b506668b25914b67e76}")
+                                            UniqueidentifierValue = new ObjectId("5ca86b506668b25914b67e76")
                                         }
                                     },
                                     new FormField
@@ -2499,7 +2500,7 @@ namespace Oven
                                         {
                                             PropertyId = new ObjectId("5ca876f34a73264e4c06df06"),
                                             Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                            UniqueidentifierValue = new ObjectId("{5ca86b656668b25914b67e77}")
+                                            UniqueidentifierValue = new ObjectId("5ca86b656668b25914b67e77")
                                         }
                                     },
                                     new FormField
@@ -2521,7 +2522,7 @@ namespace Oven
                                         {
                                             PropertyId = new ObjectId("5ca876f34a73264e4c06df06"),
                                             Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                            UniqueidentifierValue = new ObjectId("{5ca86b146668b25914b67e74}")
+                                            UniqueidentifierValue = new ObjectId("5ca86b146668b25914b67e74")
                                         }
                                     },
                                 }
@@ -2904,11 +2905,11 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new ObjectId("{5ca86a896668b25914b67e70}"),
+                                Id = new ObjectId("5ca86a896668b25914b67e70"),
                                 Title = "Application Link"
                             },
                             new {
-                                Id = new ObjectId("{5ca86a9b6668b25914b67e71}"),
+                                Id = new ObjectId("5ca86a9b6668b25914b67e71"),
                                 Title = "New"
                             }
                         })
@@ -2996,23 +2997,23 @@ namespace Oven
                                 Title = "String"
                             },
                             new {
-                                Id = new ObjectId("{5ca86b506668b25914b67e76}"),
+                                Id = new ObjectId("5ca86b506668b25914b67e76"),
                                 Title = "Integer"
                             },
                             new {
-                                Id = new ObjectId("{5ca86b266668b25914b67e75}"),
+                                Id = new ObjectId("5ca86b266668b25914b67e75"),
                                 Title = "Date Time"
                             },
                             new {
-                                Id = new ObjectId("{5ca86b146668b25914b67e74}"),
+                                Id = new ObjectId("5ca86b146668b25914b67e74"),
                                 Title = "Boolean"
                             },
                             new {
-                                Id = new ObjectId("{5ca86c626668b25914b67e78}"),
+                                Id = new ObjectId("5ca86c626668b25914b67e78"),
                                 Title = "Parent Relationship, One to Many"
                             },
                             new {
-                                Id = new ObjectId("{5ca86c956668b25914b67e79}"),
+                                Id = new ObjectId("5ca86c956668b25914b67e79"),
                                 Title = "Reference Relationship"
                             },
                             new {
@@ -3020,7 +3021,7 @@ namespace Oven
                                 Title = "Parent Relationship, One to One"
                             },
                             new {
-                                Id = new ObjectId("{5ca86b656668b25914b67e77}"),
+                                Id = new ObjectId("5ca86b656668b25914b67e77"),
                                 Title = "Double"
                             }
                         })
@@ -3246,7 +3247,7 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new ObjectId("{5ca86a296668b25914b67e6f}"),
+                                Id = new ObjectId("5ca86a296668b25914b67e6f"),
                                 Title = "Reference"
                             }
                         })

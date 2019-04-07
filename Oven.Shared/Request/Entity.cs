@@ -33,7 +33,7 @@ namespace Oven.Request
         internal static readonly Dictionary<ObjectId, EntityTemplate> EntityTemplateDictonary = new Dictionary<ObjectId, EntityTemplate>
         {
             { ObjectId.Empty, EntityTemplate.None },
-            { new ObjectId("{5ca86a296668b25914b67e6f}"), EntityTemplate.Reference }
+            { new ObjectId("5ca86a296668b25914b67e6f"), EntityTemplate.Reference }
         };
 
         /// <summary>

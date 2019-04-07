@@ -32,12 +32,12 @@ namespace Oven.Request
         /// </summary>
         internal static readonly Dictionary<ObjectId, PropertyType> PropertyTypeDictonary = new Dictionary<ObjectId, PropertyType>
         {
-            { new ObjectId("{5ca86b146668b25914b67e74}"), PropertyType.Boolean },
-            { new ObjectId("{5ca86b266668b25914b67e75}"), PropertyType.DateTime },
-            { new ObjectId("{5ca86b506668b25914b67e76}"), PropertyType.Integer },
-            { new ObjectId("{5ca86b656668b25914b67e77}"), PropertyType.Double },
-            { new ObjectId("{5ca86c626668b25914b67e78}"), PropertyType.ParentRelationshipOneToMany },
-            { new ObjectId("{5ca86c956668b25914b67e79}"), PropertyType.ReferenceRelationship },
+            { new ObjectId("5ca86b146668b25914b67e74"), PropertyType.Boolean },
+            { new ObjectId("5ca86b266668b25914b67e75"), PropertyType.DateTime },
+            { new ObjectId("5ca86b506668b25914b67e76"), PropertyType.Integer },
+            { new ObjectId("5ca86b656668b25914b67e77"), PropertyType.Double },
+            { new ObjectId("5ca86c626668b25914b67e78"), PropertyType.ParentRelationshipOneToMany },
+            { new ObjectId("5ca86c956668b25914b67e79"), PropertyType.ReferenceRelationship },
             { new ObjectId("5ca877064a73264e4c06dfda"), PropertyType.ParentRelationshipOneToOne },
             { new ObjectId("5ca877044a73264e4c06dfc1"), PropertyType.String },
             { new ObjectId("5ca877094a73264e4c06dff8"), PropertyType.PrimaryKey },

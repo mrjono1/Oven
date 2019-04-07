@@ -31,7 +31,7 @@ namespace Oven.Templates.Api.Models.Export
 
             if (Project.Id == Project.KitchenId)
             {
-                var projectEntity = Project.Entities.SingleOrDefault(a => a.Id == new ObjectId("{5ca869596668b25914b67e6e}"));
+                var projectEntity = Project.Entities.SingleOrDefault(a => a.Id == new ObjectId("5ca869596668b25914b67e6e"));
                 templates.AddRange(new ExportModelTemplateBuilder(Project, projectEntity, projectEntity).GetTemplates());
             }
 

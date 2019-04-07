@@ -55,6 +55,7 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
             }
 
             return $@"using MongoDB.Driver;
+using System.Threading.Tasks;
 
 namespace {Project.InternalName}.DataAccessLayer
 {{
@@ -63,6 +64,7 @@ namespace {Project.InternalName}.DataAccessLayer
     /// </summary>
     public interface IApplicationDbContext
     {{
+        Task Seed();
 {string.Join(Environment.NewLine, properties)}
     }}
 }}";

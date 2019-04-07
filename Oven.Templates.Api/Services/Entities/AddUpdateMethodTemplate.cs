@@ -269,7 +269,7 @@ namespace Oven.Templates.Api.Services
 
             if (post.Id == null)
             {{
-                post.Id = ObjectId.NewObjectId();
+                post.Id = ObjectId.GenerateNewId();
             }}
             await _context.{Screen.Entity.InternalNamePlural}.InsertOneAsync(newRecord);
 

@@ -81,7 +81,7 @@ namespace Oven.Templates.DataAccessLayer.Services
             {{
                 throw new ArgumentNullException(); 
             }}
-            if (!ObjectId.TryParse(id, out ObjectId ObjectId))
+            if (!ObjectId.TryParse(id, out ObjectId objectId))
             {{
                 throw new ArgumentException(""Invalid id format"", ""id"");
             }}

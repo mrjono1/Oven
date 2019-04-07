@@ -47,7 +47,7 @@ namespace Oven.Templates.Api.Services
 
             if (Project.Id == Project.KitchenId)
             {
-                var projectEntity = Project.Entities.SingleOrDefault(a => a.Id == new ObjectId("{5ca869596668b25914b67e6e}"));
+                var projectEntity = Project.Entities.SingleOrDefault(a => a.Id == new ObjectId("5ca869596668b25914b67e6e"));
                 exportFunctions.Add(new ExportFunctionTemplate(Project, projectEntity).Function());
             }
 

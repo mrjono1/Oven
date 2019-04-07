@@ -19,9 +19,9 @@ namespace Oven.Request
         /// </summary>
         internal static readonly Dictionary<ObjectId, MenuItemType> MenuItemTypeDictonary = new Dictionary<ObjectId, MenuItemType>
         {
-            { new ObjectId("{5ca86a896668b25914b67e70}"), MenuItemType.ApplicationLink },
-            { new ObjectId("{5ca86a9b6668b25914b67e71}"), MenuItemType.New },
-            { new ObjectId("{5ca86aad6668b25914b67e72}"), MenuItemType.ServerFunction }
+            { new ObjectId("5ca86a896668b25914b67e70"), MenuItemType.ApplicationLink },
+            { new ObjectId("5ca86a9b6668b25914b67e71"), MenuItemType.New },
+            { new ObjectId("5ca86aad6668b25914b67e72"), MenuItemType.ServerFunction }
         };
 
         /// <summary>

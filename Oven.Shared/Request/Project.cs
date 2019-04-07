@@ -13,7 +13,7 @@ namespace Oven.Request
     [System.Diagnostics.DebuggerDisplay("Project: {Title}")]
     public partial class Project
     {
-        public static readonly ObjectId KitchenId = new ObjectId("{5ca86ae16668b25914b67e73}");
+        public static readonly ObjectId KitchenId = new ObjectId("5ca86ae16668b25914b67e73");
         /// <summary>
         /// Constructor sets default values
         /// </summary>
