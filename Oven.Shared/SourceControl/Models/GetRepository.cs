@@ -1,4 +1,3 @@
-using MongoDB.Bson;
 using System;
 
 namespace Oven.SourceControl.Models
@@ -16,7 +15,7 @@ namespace Oven.SourceControl.Models
         /// <summary>
         /// Identifier
         /// </summary>
-        public ObjectId Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// Name

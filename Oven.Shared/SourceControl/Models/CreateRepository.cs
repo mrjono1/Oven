@@ -26,7 +26,7 @@ namespace Oven.SourceControl.Models
             /// <summary>
             /// Identifier
             /// </summary>
-            public ObjectId Id { get; set; }
+            public Guid Id { get; set; }
         }
     }
 }
