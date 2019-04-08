@@ -66,6 +66,36 @@ namespace Oven.Templates.DataAccessLayer.Entities
                     {
                         attributes.Add("[BsonRequired]");
                     }
+
+                    switch (property.PropertyType)
+                    {
+                        case PropertyType.String:
+                            if (property.DefaultStringValue != null)
+                            {
+                                attributes.Add($@"[BsonDefaultValue(""{property.DefaultStringValue}"")]");
+                            }
+                            break;
+                        case PropertyType.Integer:
+                            if (property.DefaultIntegerValue != null)
+                            {
+                                attributes.Add($@"[BsonDefaultValue({property.DefaultIntegerValue.Value})]");
+                            }
+                            break;
+                        case PropertyType.Boolean:
+                            if (property.DefaultBooleanValue != null)
+                            {
+                                attributes.Add($@"[BsonDefaultValue({property.DefaultBooleanValue.Value.ToString().ToLower()})]");
+                            }
+                            break;
+                        case PropertyType.Double:
+                            if (property.DefaultDoubleValue != null)
+                            {
+                                attributes.Add($@"[BsonDefaultValue({property.DefaultDoubleValue.Value})]");
+                            }
+                            break;
+                    }
+
+
                     return $@"        /// <summary>
         /// {property.Title}
         /// </summary>
