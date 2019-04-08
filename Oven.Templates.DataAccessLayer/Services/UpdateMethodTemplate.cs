@@ -206,6 +206,11 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// </summary>
         public virtual async Task<string> UpdateAsync(string id, {Screen.InternalName}Request request)
         {{
+            return await UpsertAsync(id, request, false);
+        }}
+
+        public virtual async Task<string> UpsertAsync(string id, {Screen.InternalName}Request request, bool upsert = false)
+        {{
             if (string.IsNullOrWhiteSpace(id) || request == null)
             {{
                 throw new ArgumentNullException(); 
@@ -221,7 +226,7 @@ namespace Oven.Templates.DataAccessLayer.Services
             
 {string.Join(Environment.NewLine, properties)}
                 
-            var result = await _context.{Screen.Entity.InternalNamePlural}.UpdateOneAsync(filter, update.Combine(updates));
+            var result = await _context.{Screen.Entity.InternalNamePlural}.UpdateOneAsync(filter, update.Combine(updates), new UpdateOptions {{ IsUpsert = upsert }});
             if (result.IsAcknowledged)
             {{
                 return id;

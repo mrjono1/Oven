@@ -72,13 +72,15 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
             var seedFunction = new SeedFunctionTemplate(Project).GetFunction();
 
             return $@"using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using {Project.InternalName}.DataAccessLayer.Entities;
-using Newtonsoft.Json;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace {Project.InternalName}.DataAccessLayer
 {{

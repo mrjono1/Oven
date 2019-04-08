@@ -20,78 +20,45 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
 
         public string GetFunction()
         {
-            var seed = new Dictionary<string, string>();
+            var functionCalls = new List<string>();
+            var functions = new List<string>();
+
             foreach (var entity in Project.Entities.Where(e => e.Seed != null))
             {
                 var content = Newtonsoft.Json.JsonConvert.SerializeObject(entity.Seed.JsonData);
 
-                var seedStringBuilder = new StringBuilder($@"        private async Task {entity.InternalName}Seed()
-              {{
-                  var content = {content};
-                  // TODO: possibly could convert this to delegate so only executed if needed
-                  var items = JsonConvert.DeserializeObject<List<Entities.{entity.InternalName}>>(content);");
+                functionCalls.Add($"await {entity.InternalName}Seed();");
 
-                      seedStringBuilder.AppendLine($@"
-                  if (!{entity.InternalNamePlural}.Any())
-                  {{
-                      await {entity.InternalNamePlural}.AddRangeAsync(items);
-                  }}");
+                functions.Add($@"        private async Task {entity.InternalName}Seed()
+        {{
+            var content = {content};
+            
+            var items = JsonConvert.DeserializeObject<List<Models.{entity.InternalName}Request>>(content);
+            var service = new Services.{entity.InternalName}Service(this);
 
-                      switch (entity.Seed.SeedType)
-                      {
-                          case SeedType.EnsureAllAdded:
-                              // TODO: can this be done better with AttachRange?
-                      seedStringBuilder.AppendLine($@"           else
-                  {{
-                      foreach (var item in items)
-                      {{
-                          var existing = await {entity.InternalNamePlural}.AnyAsync(p => p.Id == item.Id);
-                          if (!existing){{
-                              await {entity.InternalNamePlural}.AddAsync(item);
-                          }}
-                      }}
-                  }}");
-                              break;
-                          case SeedType.EnsureAllUpdated:
-                              seedStringBuilder.AppendLine($@"            else
-                  {{
-                      foreach (var item in items)
-                      {{
-                          var existing = await {entity.InternalNamePlural}.AsNoTracking().SingleOrDefaultAsync(a => a.Id == item.Id);
-                          if (existing == null){{
-                             await {entity.InternalNamePlural}.AddAsync(item);
-                          }}
-                          else
-                          {{
-                              {entity.InternalNamePlural}.Attach(item);
-                          }}
-                      }}
-                  }}");
-                              break;
-                      }
-
-                      seedStringBuilder.AppendLine(@"            await SaveChangesAsync();
-              }");
-                      seed.Add($"            await {entity.InternalName}Seed();", seedStringBuilder.ToString());
+            foreach (var item in items)
+            {{
+                var id = item.Id.ToString();
+                await service.UpsertAsync(id, item, true);
+            }}
+        }}");
             }
 
             string seedData = null;
-            if (seed.Any())
+            if (functionCalls.Any())
             {
-                seedData = $@"        #region Seed
-        internal async Task Seed()
+                seedData = $@"        
+        #region Seed
+        public async Task Seed()
         {{
-{string.Join(Environment.NewLine, seed.Keys)}
+{functionCalls.IndentLines(3)}
         }}
 
-{string.Join(Environment.NewLine, seed.Values)}
+{string.Join(Environment.NewLine,  functions)}
         #endregion";
             }
 
-            return $@"
-        public async Task Seed(){{
-
-        }}";
+            return seedData;
         }
     }
 }
