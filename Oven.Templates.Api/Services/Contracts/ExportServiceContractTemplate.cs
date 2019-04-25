@@ -48,12 +48,13 @@ namespace Oven.Templates.Api.Services.Contracts
                 exportFunctions.Add($@"        /// <summary>
         /// Export Project Async
         /// </summary>
-        Task<Models.Project.Export.Project> ExportProjectAsync(Guid id);");
+        Task<Models.Project.Export.Project> ExportProjectAsync(ObjectId id);");
             }
 
             return $@"using System;
 using System.Threading.Tasks;
 using {Project.InternalName}.DataAccessLayer.Entities;
+using MongoDB.Bson;
 
 namespace {Project.InternalName}.Services.Contracts
 {{

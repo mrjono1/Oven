@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Feature Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, Feature> FeatureDictonary = new Dictionary<Guid, Feature>
+        internal static readonly Dictionary<ObjectId, Feature> FeatureDictonary = new Dictionary<ObjectId, Feature>
         {
-            { new Guid("{6114120E-BD93-4CE4-A673-7DC295F93CFE}"), Feature.New }
+            { new ObjectId("5ca877094a73264e4c06dff1"), Feature.New }
         };
 
         /// <summary>
@@ -25,13 +26,13 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Feature Id
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid FeatureId { get; set; }
+        public ObjectId FeatureId { get; set; }
         /// <summary>
         /// Screen Type
         /// </summary>

@@ -67,41 +67,22 @@ namespace Oven.Templates.React.ProjectFiles
                 }
             }
 
-            string dbConnection = null;
-            string dbConnectionSetup = null;
-            if (Project.UseMySql)
-            {
-                dbConnectionSetup = $@"
-            var useMySqlInApp = Configuration[""useMySqlInApp""];
-            var connectionString = ""Server=localhost;database={Project.InternalName};uid=root;pwd=password;"";
-            if (!string.IsNullOrEmpty(useMySqlInApp) && useMySqlInApp.Equals(""true"", StringComparison.OrdinalIgnoreCase))
-            {{
-                connectionString = Environment.GetEnvironmentVariable(""MYSQLCONNSTR_localdb"").ToString();
-            }}";
-                dbConnection = $@"options.UseMySql(connectionString));";
-            }
-            else
-            {
-                dbConnection = $@"options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));";
-            }
-
+            var dbConnection = $@"options.UseSqlServer(Configuration.GetConnectionString(""DefaultConnection"")));";
+            
             var serviceSection = "";
-            if (Project.EnableCustomCode)
-            {
-                var services = new List<string>();
-                serviceNames.ForEach(name => services.Add($"{{ typeof(I{name}), typeof({name}) }}"));
-                // Create Entity Services
-                foreach (var entity in Project.Entities)
-                {
-                    if (Project.Screens.Any(_ => _.EntityId == entity.Id))
-                    {
-                        services.Add($"{{ typeof(I{entity.InternalName}Service), typeof({entity.InternalName}Service) }}");
-                    }
-                }
-                serviceSection = $@"            var servicesDictionary = new System.Collections.Generic.Dictionary<Type, Type>
+            var services = new List<string>();
+            serviceNames.ForEach(name => services.Add($"{{ typeof(I{name}), typeof({name}) }}"));
+            
+            serviceSection = $@"            var servicesDictionary = new System.Collections.Generic.Dictionary<Type, Type>
             {{
                 {string.Join(string.Concat(",", Environment.NewLine, "                "), services)}
             }};
+
+            var dalServices = new DataAccessLayer.DatabaseContext().GetServices(services, Configuration);
+            foreach (var item in dalServices)
+            {{
+                servicesDictionary.Add(item.Key, item.Value);
+            }}
 
             var extensionPoint = new Api.Custom.ExtensionPoint();
             var serviceExtensions = extensionPoint.GetServices();
@@ -119,76 +100,41 @@ namespace Oven.Templates.React.ProjectFiles
                 }}
             }}";
 
-            }
-            else
-            {
-                var services = new List<string>();
-                serviceNames.ForEach(name => services.Add($"services.AddTransient<I{name}, {name}>();"));
-                // Create Entity Services
-                foreach (var entity in Project.Entities)
-                {
-                    if (Project.Screens.Any(_ => _.EntityId == entity.Id))
-                    {
-                        services.Add($"services.AddTransient<I{entity.InternalName}Service, {entity.InternalName}Service>();");
-                    }
-                }
-                serviceSection = string.Join(string.Concat(Environment.NewLine, "            "), services);
-            }
 
             return $@"using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.PlatformAbstractions;
-using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Swagger;
 using {Project.InternalName}.Services;
 using {Project.InternalName}.Services.Contracts;
 
 namespace {Project.InternalName}
 {{
-    
     /// <summary>
     /// Startup
     /// </summary>
     public class Startup
     {{
-        /// <summary>
-        /// Main
-        /// </summary>
-        public static void Main(string[] args)
-        {{
-            var host = new WebHostBuilder()
-                .UseKestrel()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .Build();
-
-            host.Run();
-        }}
 
         /// <summary>
         /// Startup
         /// </summary>
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {{
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile(""appsettings.json"", optional: true, reloadOnChange: true)
-                .AddJsonFile($""appsettings.{{env.EnvironmentName}}.json"", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = configuration;
         }}
 
         /// <summary>
         /// Configuration
         /// </summary>
-        public IConfigurationRoot Configuration {{ get; }}
+        public IConfiguration Configuration {{ get; }}
+
 
         /// <summary>
         /// This method gets called by the runtime. Use this method to add services to the container.
@@ -196,13 +142,15 @@ namespace {Project.InternalName}
         public void ConfigureServices(IServiceCollection services)
         {{
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            // Add Entity Framework service{dbConnectionSetup}
-            services.AddDbContext<DataAccessLayer.ApplicationDbContext>(options =>
-                {dbConnection}
+            // In production, the React files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {{
+                configuration.RootPath = ""ClientApp/build"";
+            }});
 
-            var xmlfilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, ""{Project.InternalName}.xml"");
+            /*var xmlfilePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, ""{Project.InternalName}.xml"");
 
             // Add Swagger service
             services.AddSwaggerGen(c =>
@@ -210,7 +158,7 @@ namespace {Project.InternalName}
                 c.CustomSchemaIds(x => x.FullName);
                 c.SwaggerDoc(""v1"", new Info {{ Title = ""{Project.Title} API"", Version = ""v1"" }});
                 c.IncludeXmlComments(xmlfilePath);
-            }});
+            }});*/
 
             // Services
 {serviceSection}
@@ -219,38 +167,49 @@ namespace {Project.InternalName}
         /// <summary>
         /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         /// </summary>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DataAccessLayer.ApplicationDbContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {{
-            loggerFactory.AddConsole(Configuration.GetSection(""Logging""));
-            loggerFactory.AddDebug();
-
-            // Initialize database
-            context.Initialize().Wait();
-
             if (env.IsDevelopment())
             {{
                 app.UseDeveloperExceptionPage();
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {{
-                    HotModuleReplacement = true
-                }});
             }}
             else
             {{
-                app.UseExceptionHandler(""/Home/Error"");
+                app.UseExceptionHandler(""/Error"");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
             }}
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseMvc(routes =>
+            {{
+                routes.MapRoute(
+                    name: ""default"",
+                    template: ""{{controller}}/{{action=Index}}/{{id?}}"");
+            }});
+
+            app.UseSpa(spa =>
+            {{
+                spa.Options.SourcePath = ""ClientApp"";
+
+                if (env.IsDevelopment())
+                {{
+                    spa.UseReactDevelopmentServer(npmScript: ""start"");
+                }}
+            }});
+
+            /*// Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
             // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {{
                 c.SwaggerEndpoint(""/swagger/v1/swagger.json"", ""{Project.Title} API V1"");
-            }});
+            }});*/
 
-            app.MapWhen(x => !x.Request.Path.Value.StartsWith(""/swagger"", StringComparison.OrdinalIgnoreCase), builder =>
+            /*app.MapWhen(x => !x.Request.Path.Value.StartsWith(""/swagger"", StringComparison.OrdinalIgnoreCase), builder =>
             {{
                 builder.UseMvc(routes =>
                 {{
@@ -258,7 +217,7 @@ namespace {Project.InternalName}
                         name: ""spa-fallback"",
                         defaults: new {{ controller = ""Home"", action = ""Index"" }});
                 }});
-            }});
+            }});*/
         }}
     }}
 }}";

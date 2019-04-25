@@ -1,4 +1,5 @@
 using Humanizer;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +16,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid EntityPropertyId { get; set; }
+        public ObjectId EntityPropertyId { get; set; }
         /// <summary>
         /// Optional: Title, Defaulted from Entity if not provided
         /// </summary>
@@ -58,6 +59,8 @@ namespace Oven.Request
             {
                 switch (Property.PropertyType)
                 {
+                    case PropertyType.PrimaryKey:
+                        return "Id";
                     case PropertyType.ParentRelationshipOneToMany:
                         return $"{Property.InternalName}Id";
                     case PropertyType.ReferenceRelationship:

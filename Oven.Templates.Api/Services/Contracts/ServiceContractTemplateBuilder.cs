@@ -51,5 +51,7 @@ namespace Oven.Templates.Api.Services.Contracts
 
             return templates;
         }
+
+        public IEnumerable<ITemplateBuilder> GetTemplateBuilders() => new ITemplateBuilder[] { };
     }
 }

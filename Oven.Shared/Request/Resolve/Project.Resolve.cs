@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +72,7 @@ namespace Oven.Request
             {
                 administrationScreen = new Screen()
                 {
-                    Id = new Guid("{43037072-42F2-4B5C-A72E-1A08F149709A}"),
+                    Id = new ObjectId("5ca8770f4a73264e4c06e037"),
                     Title = "Administration",
                     ScreenType = ScreenType.Html,
                     Path = "administration"
@@ -117,7 +118,7 @@ namespace Oven.Request
 
                 administrationSection = new ScreenSection()
                 {
-                    Id = new Guid("{0F93AE3B-930D-4F6B-B73F-2EB63F225FAD}"),
+                    Id = new ObjectId("5ca8770f4a73264e4c06e038"),
                     InternalName = "Administration",
                     Title = "Administration",
                     ScreenSectionType = ScreenSectionType.MenuList,

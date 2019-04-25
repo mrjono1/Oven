@@ -5,7 +5,7 @@ using Humanizer;
 using Oven.Helpers;
 using Oven.Request;
 
-namespace Oven.Templates.Api.Entities
+namespace Oven.Templates.Api.Services
 {
     /// <summary>
     /// Contoller Edit Method Template
@@ -190,18 +190,11 @@ namespace Oven.Templates.Api.Entities
             var effes = RequestTransforms.GetScreenSectionEntityFields(Screen);
 
             var properties = new List<string>();
-
-            // TODO: Includes are not recursive yet
-            var includes = new List<string>();
             foreach (var effe in effes)
             {
                 if (effe.Entity.Id == Screen.EntityId)
                 {
                     properties.AddRange(Property(effe, effes));
-                }
-                else
-                {
-                    includes.Add($@"                .Include(p => p.{effe.Entity.InternalName})");
                 }
             }
 
@@ -209,14 +202,14 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {Screen.Title} Update
         /// </summary>
-        public virtual async Task<Guid> UpdateAsync(Guid id, {Screen.InternalName}Request put)
+        public virtual async Task<ObjectId> UpdateAsync(ObjectId id, {Screen.InternalName}Request put)
         {{
             if (put == null)
             {{
                 throw new ArgumentNullException(); 
             }}
-            
-            var existingRecord = await _context.{Screen.Entity.InternalNamePlural}{(includes.Any() ? string.Concat(Environment.NewLine, string.Join(Environment.NewLine, includes)) : string.Empty)}
+            /*
+            var existingRecord = await _context.{Screen.Entity.InternalNamePlural}
                 .SingleOrDefaultAsync(record => record.Id == id);
 
             if (existingRecord == null){{
@@ -225,14 +218,14 @@ namespace Oven.Templates.Api.Entities
 
 {string.Join(Environment.NewLine, properties)}
 
-            await _context.SaveChangesAsync();
+            var result = await collection.UpdateOneAsync(filter, update);*/
 
             return id;
         }}";
         }
         #endregion
 
-        #region POST (Add)
+        #region Add
         /// <summary>
         /// POST Verb Method, for adding new records
         /// </summary>
@@ -264,7 +257,7 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        public virtual async Task<Guid> CreateAsync({Screen.InternalName}Request post)
+        public virtual async Task<ObjectId> CreateAsync({Screen.InternalName}Request post)
         {{
             if (post == null)
             {{
@@ -274,10 +267,13 @@ namespace Oven.Templates.Api.Entities
 
 {string.Join(Environment.NewLine, properties)}
 
-            _context.{Screen.Entity.InternalNamePlural}.Add(newRecord);
-            await _context.SaveChangesAsync();
+            if (post.Id == null)
+            {{
+                post.Id = ObjectId.GenerateNewId();
+            }}
+            await _context.{Screen.Entity.InternalNamePlural}.InsertOneAsync(newRecord);
 
-            return newRecord.Id;
+            return post.Id.Value;
         }}";
         }
         #endregion

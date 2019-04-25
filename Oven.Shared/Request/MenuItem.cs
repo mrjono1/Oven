@@ -1,4 +1,5 @@
 using Humanizer;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,11 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Menu Item Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, MenuItemType> MenuItemTypeDictonary = new Dictionary<Guid, MenuItemType>
+        internal static readonly Dictionary<ObjectId, MenuItemType> MenuItemTypeDictonary = new Dictionary<ObjectId, MenuItemType>
         {
-            { new Guid("{51810E74-59E6-44AF-B6D3-1B8ECF82EE54}"), MenuItemType.ApplicationLink },
-            { new Guid("{A7B39F29-3887-4744-A4E3-926607DB15D2}"), MenuItemType.New },
-            { new Guid("{2BB3BFAC-FBA8-4786-A854-193EC73A01AF}"), MenuItemType.ServerFunction }
+            { new ObjectId("5ca86a896668b25914b67e70"), MenuItemType.ApplicationLink },
+            { new ObjectId("5ca86a9b6668b25914b67e71"), MenuItemType.New },
+            { new ObjectId("5ca86aad6668b25914b67e72"), MenuItemType.ServerFunction }
         };
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Title
         /// </summary>
@@ -41,7 +42,7 @@ namespace Oven.Request
         /// Navigate to Screen Id
         /// </summary>
         [NonDefault]
-        public Guid? ScreenId { get; set; }
+        public ObjectId? ScreenId { get; set; }
         /// <summary>
         /// Icon css class
         /// </summary>
@@ -51,7 +52,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid MenuItemTypeId { get; set; }
+        public ObjectId MenuItemTypeId { get; set; }
         /// <summary>
         /// Server side C# code
         /// </summary>

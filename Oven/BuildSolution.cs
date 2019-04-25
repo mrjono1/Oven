@@ -40,7 +40,7 @@ namespace Oven
             SourceControl.Git git = null;
             SourceControl.Models.GetRepository repository = null;
             Dictionary<string, SourceControl.Models.GetRepository> repos = null;
-            if (builderSettings.GitPushOn || builderSettings.GitPullOn || builderSettings.CreateMigrations)
+            if (builderSettings.GitPushOn || builderSettings.GitPullOn)
             {
                 git = new SourceControl.Git(topProjectDirectory, project, builderSettings.GitUserName, builderSettings.GitEmail, builderSettings.VstsPersonalAccessToken);
             }
@@ -67,6 +67,14 @@ namespace Oven
             // React
             var react = new Templates.React.ProjectBuilder();
             errors = await react.RunAsync(builderSettings, project, solutionWriter, solutionDirectory);
+            if (!string.IsNullOrEmpty(errors))
+            {
+                return errors;
+            }
+
+            // Shared
+            var shared = new Templates.Shared.ProjectBuilder();
+            errors = await shared.RunAsync(builderSettings, project, solutionWriter, solutionDirectory, git, repository);
             if (!string.IsNullOrEmpty(errors))
             {
                 return errors;

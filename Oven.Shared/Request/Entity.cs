@@ -1,4 +1,5 @@
 using Humanizer;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,10 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Entity Template Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, EntityTemplate> EntityTemplateDictonary = new Dictionary<Guid, EntityTemplate>
+        internal static readonly Dictionary<ObjectId, EntityTemplate> EntityTemplateDictonary = new Dictionary<ObjectId, EntityTemplate>
         {
-            { Guid.Empty, EntityTemplate.None },
-            { new Guid("{B79D1C90-6320-4A07-9753-2A41110611C8}"), EntityTemplate.Reference }
+            { ObjectId.Empty, EntityTemplate.None },
+            { new ObjectId("5ca86a296668b25914b67e6f"), EntityTemplate.Reference }
         };
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
 
         /// <summary>
         /// Title of and Entity
@@ -94,7 +95,7 @@ namespace Oven.Request
         /// Optional: Entity Template Id, if specified it will define default behaviours for this entity
         /// </summary>
         [NonDefault]
-        public Guid? EntityTemplateId { get; set; }
+        public ObjectId? EntityTemplateId { get; set; }
         /// <summary>
         /// Entity Template
         /// </summary>
@@ -104,13 +105,13 @@ namespace Oven.Request
         {
             get
             {
-                var id = EntityTemplateId ?? Guid.Empty;
+                var id = EntityTemplateId ?? ObjectId.Empty;
                 return EntityTemplateDictonary[id];
             }
             set
             {
                 var id = EntityTemplateDictonary.SingleOrDefault(v => v.Value == value).Key;
-                if (id == Guid.Empty)
+                if (id == ObjectId.Empty)
                 {
                     EntityTemplateId = null;
                 }

@@ -2,6 +2,7 @@ using Oven.Request;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using MongoDB.Bson;
 
 namespace Oven
 {
@@ -12,78 +13,79 @@ namespace Oven
         {
             var project = new Project
             {
-                Id = new Guid("{66E47378-5CD8-40BC-833C-CDA2CC97058A}"),
+                Id = Project.KitchenId,
                 InternalName = "Kitchen",
                 MajorVersion = 0,
                 MinorVersion = 3,
                 BuildVersion = 0,
                 Title = "Oven - Kitchen",
-                DefaultScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
+                DefaultScreenId = new ObjectId("5ca876ed4a73264e4c06dedb"),
                 EnableCustomCode = true
             };
+
             project.Entities = new Entity[]
             {
                 #region Project Entity
                 new Entity()
                 {
-                    Id = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                    Id = new ObjectId("5ca869596668b25914b67e6e"),
                     InternalName = "Project",
                     Title = "Project",
                     Properties = new Property[]
                     {
                         new Property("Id")
                         {
-                            Id = new Guid("{C3E14B66-FF43-478A-95D0-39524F6555B5}"),
+                            Id = new ObjectId("5ca876ed4a73264e4c06dedc"),
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property("Title")
                         {
-                            Id = new Guid("{CB6D802C-1F26-4D23-9272-6396E6268D72}"),
+                            Id = new ObjectId("5ca876ee4a73264e4c06dedd"),
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{8D5A78EB-B24D-4789-A498-1D37B57BF63D}"),
+                                    Id = new ObjectId("5ca876ee4a73264e4c06dede"),
                                     ValidationType = ValidationType.Unique
                                 },
                                 new Validation
                                 {
-                                    Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dedf"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 100
                                 },
                                 new Validation{
-                                    Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dee0"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property("InternalName")
                         {
-                            Id = new Guid("{883DB867-2098-4CA0-AE63-87DE09FDEF76}"),
+                            Id = new ObjectId("5ca876f04a73264e4c06dee1"),
                             PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{F60F66AC-F6AD-45E2-9850-9A474CC43C4E}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dee2"),
                                     ValidationType = ValidationType.Unique
                                 },
                                 new Validation
                                 {
-                                    Id = new Guid("{FF3EF7FD-7A8F-45A5-ACB0-C0A2F97C816B}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dee3"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 100
                                 },
                                 new Validation
                                 {
-                                    Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dee4"),
                                     ValidationType = ValidationType.Required
                                 },
                                 new Validation{
-                                    Id = new Guid("{E1FA289D-B336-4C79-983E-77A1D733B078}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dee5"),
                                     ValidationType = ValidationType.Pattern,
                                     StringValue = "^[a-zA-Z]+$"
                                 }
@@ -91,7 +93,7 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{F1EEF37B-F40D-44D4-832F-ACEC4B63D147}"),
+                            Id = new ObjectId("5ca876f14a73264e4c06dee6"),
                             InternalName = "MajorVersion",
                             PropertyType = PropertyType.Integer,
                             Title = "Major Version",
@@ -99,7 +101,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{09ED3A71-3F3A-46BB-B24B-D2796E796A39}"),
+                                    Id = new ObjectId("5ca876f14a73264e4c06dee7"),
                                     ValidationType = ValidationType.Required
                                 }
                             },
@@ -107,7 +109,7 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{97E822CB-7A95-4C14-BED4-6CE19602FEE8}"),
+                            Id = new ObjectId("5ca876f14a73264e4c06dee8"),
                             InternalName = "MinorVersion",
                             PropertyType = PropertyType.Integer,
                             Title = "Minor Version",
@@ -115,7 +117,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{18954CB6-7C4B-42E7-AF4D-F242461D16C2}"),
+                                    Id = new ObjectId("5ca876f14a73264e4c06dee9"),
                                     ValidationType = ValidationType.Required
                                 }
                             },
@@ -123,7 +125,7 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{D7E750B0-159D-464C-A88C-6E67673CFAF2}"),
+                            Id = new ObjectId("5ca876f14a73264e4c06deea"),
                             InternalName = "BuildVersion",
                             PropertyType = PropertyType.Integer,
                             Title = "Build Version",
@@ -132,14 +134,14 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{B3784D79-72C0-4DC6-86C3-4ECD256821D1}"),
+                                    Id = new ObjectId("5ca876f14a73264e4c06deeb"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{0FBD3AA3-E6DD-4CCB-9FAA-E8AA8C8009F8}"),
+                            Id = new ObjectId("5ca876f14a73264e4c06deec"),
                             InternalName = "CreatedDate",
                             PropertyType = PropertyType.DateTime,
                             Title = "Created Date",
@@ -147,34 +149,34 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{E9625AE5-85A7-42FF-95D1-D39265F35628}"),
+                                    Id = new ObjectId("5ca876f14a73264e4c06deed"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property("DefaultScreen")
                         {
-                            Id = new Guid("{6C22EF44-E5C0-4E3F-B315-A03703AB9D97}"),
+                            Id = new ObjectId("5ca876f14a73264e4c06deee"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Default Screen",
-                            ReferenceEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                            ReferenceEntityId = new ObjectId("5ca876f14a73264e4c06deef"),
                             FilterExpression = new Expression
                             {
-                                PropertyId = new Guid("{C3E14B66-FF43-478A-95D0-39524F6555B5}"),
+                                PropertyId = new ObjectId("5ca876ed4a73264e4c06dedc"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                ReferencePropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}")
+                                ReferencePropertyId = new ObjectId("5ca876f14a73264e4c06def0")
                             }
                         },
                         new Property("EnableCustomCode")
                         {
-                            Id = new Guid("{59B35D44-12FB-47A8-8589-A585DEA6BC29}"),
+                            Id = new ObjectId("5ca876f24a73264e4c06def1"),
                             PropertyType = PropertyType.Boolean,
                             Title = "Enable Custom Code",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{EE9F042B-C608-4602-9B31-D2F5E0C01406}"),
+                                    Id = new ObjectId("5ca876f24a73264e4c06def2"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
@@ -185,19 +187,19 @@ namespace Oven
                 #region Entity Entity
                 new Entity("Entity")
                 {
-                    Id = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                    Id = new ObjectId("5ca876f24a73264e4c06def3"),
                     Title = "Entity",
                     Properties = new Property[]
                     {
                         new Property("Id")
                         {
-                            Id = new Guid("{4B5077DA-1516-44C4-81CC-D0CE25BBBCF0}"),
+                            Id = new ObjectId("5ca876f24a73264e4c06def4"),
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{6D09DE04-2FDA-4091-A4DA-B3448ABA1A52}"),
+                            Id = new ObjectId("5ca876f24a73264e4c06def5"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -205,19 +207,19 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{CDE9AA00-9880-4689-993A-3C6C37D7FC0E}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dedf"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 100
                                 },
                                 new Validation{
-                                    Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dee0"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{1CB8E873-07C7-461A-8859-672CE66C8513}"),
+                            Id = new ObjectId("5ca876f24a73264e4c06def6"),
                             InternalName = "InternalName",
                             PropertyType = PropertyType.String,
                             Title = "Internal Name",
@@ -225,12 +227,12 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{FF3EF7FD-7A8F-45A5-ACB0-C0A2F97C816B}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dee3"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 100
                                 },
                                 new Validation{
-                                    Id = new Guid("{2BE86AB2-5542-4E67-AF78-17E7A95B7B4E}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dee4"),
                                     ValidationType = ValidationType.Required
                                 },
                                 new Validation{
@@ -241,29 +243,29 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{331D99C4-1D7A-48D3-8979-987A5285F3B3}"),
+                            Id = new ObjectId("5ca876f24a73264e4c06def7"),
                             InternalName = "EntityTemplate",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity Template",
-                            ReferenceEntityId = new Guid("{E20337EA-37F3-48D1-96F7-3CF2A40A7F52}")
+                            ReferenceEntityId = new ObjectId("5ca876f24a73264e4c06def8")
                         },
                         new Property("Project")
                         {
-                            Id = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}"),
+                            Id = new ObjectId("5ca876f24a73264e4c06def9"),
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{5657C193-061A-430E-BB29-183A510DD92E}"),
+                                    Id = new ObjectId("5ca876f04a73264e4c06dee0"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{0AC3BDBB-79A4-4E0E-89F5-07CA3B5C0CE8}"),
+                            Id = new ObjectId("5ca876f24a73264e4c06defa"),
                             InternalName = "HasSeed",
                             PropertyType = PropertyType.Boolean,
                             Title = "Has Seed Data",
@@ -272,7 +274,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{89510E67-A33E-46C1-8A53-3290121DFD22}"),
+                                    Id = new ObjectId("5ca876f24a73264e4c06defb"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
@@ -283,65 +285,65 @@ namespace Oven
                 #region Property Entity
                 new Entity()
                 {
-                    Id = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                    Id = new ObjectId("5ca876f34a73264e4c06defc"),
                     InternalName = "Property",
                     Title = "Property",
                     Properties = new Property[]
                     {
                         new Property("Id")
                         {
-                            Id = new Guid("{D34BF79B-F052-4090-BBDD-8FAE69A256C4}"),
+                            Id = new ObjectId("5ca876f34a73264e4c06defd"),
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property("Entity")
                         {
-                            Id = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}"),
+                            Id = new ObjectId("5ca876f34a73264e4c06defe"),
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Entity",
-                            ReferenceEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            ReferenceEntityId = new ObjectId("5ca876f24a73264e4c06def3"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{D69A337F-7171-4CAE-9E9D-492FE9578D89}"),
+                                    Id = new ObjectId("5ca876f34a73264e4c06deff"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property("Title")
                         {
-                            Id = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}"),
+                            Id = new ObjectId("5ca876f34a73264e4c06df00"),
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{ACB68BF7-5842-42C7-B77A-88AC71CA22B1}"),
+                                    Id = new ObjectId("5ca876f34a73264e4c06df01"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{1EACE07B-FD49-4B18-AA3F-36DF87D63B6E}"),
+                                    Id = new ObjectId("5ca876f34a73264e4c06df02"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property("InternalName")
                         {
-                            Id = new Guid("{C52F7B8E-CAD0-40FF-8E89-B313A290A96E}"),
+                            Id = new ObjectId("5ca876f34a73264e4c06df03"),
                             PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{74789541-1939-4F0F-9098-EBDF0AE70A1C}"),
+                                    Id = new ObjectId("5ca876f34a73264e4c06df04"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{035339EF-C09F-4412-8779-BD2088387757}"),
+                                    Id = new ObjectId("5ca876f34a73264e4c06df05"),
                                     ValidationType = ValidationType.Required
                                 },
                                 new Validation{
@@ -352,62 +354,62 @@ namespace Oven
                         },
                         new Property("PropertyType")
                         {
-                            Id = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                            Id = new ObjectId("5ca876f34a73264e4c06df06"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Property Type",
-                            ReferenceEntityId = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
+                            ReferenceEntityId = new ObjectId("5ca876f34a73264e4c06df07"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{674C76ED-B47D-425B-BF6D-9C606FE58217}"),
+                                    Id = new ObjectId("5ca876f44a73264e4c06df08"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property("PropertyTemplate")
                         {
-                            Id = new Guid("{53AD68E2-5C5C-405C-8407-67EA58862B0D}"),
+                            Id = new ObjectId("5ca876f44a73264e4c06df09"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Property Template",
-                            ReferenceEntityId = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}")
+                            ReferenceEntityId = new ObjectId("5ca876f44a73264e4c06df0a")
                         },
                         new Property("ParentEntity")
                         {
-                            Id = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}"),
+                            Id = new ObjectId("5ca876f44a73264e4c06df0b"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "ParentEntity",
                             // Entity
-                            ReferenceEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            ReferenceEntityId = new ObjectId("5ca876f24a73264e4c06def3"),
                             FilterExpression = new Expression
                             {
                                 // ProjectId
-                                PropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
+                                PropertyId = new ObjectId("5ca876f14a73264e4c06def0"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Entity.ProjectId
-                                ReferencePropertyId = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}")
+                                ReferencePropertyId = new ObjectId("5ca876f24a73264e4c06def9")
                             }
                         },
                         new Property("DefaultIntegerValue")
                         {
-                            Id = new Guid("{62FE9985-98A3-4D40-BC68-8AF641FDABFC}"),
+                            Id = new ObjectId("5ca876f44a73264e4c06df0c"),
                             PropertyType = PropertyType.Integer,
                             Title = "Default Value"
                         },
                         new Property("DefaultDoubleValue")
                         {
-                            Id = new Guid("{61862CC1-DFD4-4578-BF6E-FFA195D6F6A1}"),
+                            Id = new ObjectId("5ca876f44a73264e4c06df0d"),
                             PropertyType = PropertyType.Double,
                             Title = "Default Value"
                         },
                         new Property("DefaultStringValue")
                         {
-                            Id = new Guid("{63935FCA-CC40-4A78-A21C-F76FD761701B}"),
+                            Id = new ObjectId("5ca876f44a73264e4c06df0e"),
                             PropertyType = PropertyType.String,
                             Title = "Default Value"
                         },
                         new Property("DefaultBooleanValue")
                         {
-                            Id = new Guid("{836DA351-CCCF-4269-89CA-98E7CD67E77E}"),
+                            Id = new ObjectId("5ca876f44a73264e4c06df0f"),
                             PropertyType = PropertyType.Boolean,
                             Title = "Default Value",
                             DefaultBooleanValue = false
@@ -418,21 +420,21 @@ namespace Oven
                 #region Validation Entity
                 new Entity()
                 {
-                    Id = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
+                    Id = new ObjectId("5ca876f44a73264e4c06df10"),
                     InternalName = "Validation",
                     Title = "Validation",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{B9E9AC32-5942-4DFF-8AFD-DEDC26795824}"),
+                            Id = new ObjectId("5ca876f44a73264e4c06df11"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{3690A6AE-0573-40F3-8680-0BCE13931EE3}"),
+                            Id = new ObjectId("5ca876f44a73264e4c06df12"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -440,70 +442,70 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{D7C58A33-816E-45D7-8E8A-E7FCC44C270E}"),
+                                    Id = new ObjectId("5ca876f54a73264e4c06df13"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{07CC8E0F-E69A-4B93-892A-2795B8E34C48}"),
+                                    Id = new ObjectId("5ca876f54a73264e4c06df14"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{BA0702F8-6F26-4A25-9300-31B44F14B3A8}"),
+                            Id = new ObjectId("5ca876f54a73264e4c06df15"),
                             InternalName = "Property",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Property",
-                            ReferenceEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                            ReferenceEntityId = new ObjectId("5ca876f34a73264e4c06defc"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{FC73C9C5-953A-414F-9C20-4B5C57F4F709}"),
+                                    Id = new ObjectId("5ca876f54a73264e4c06df16"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
+                            Id = new ObjectId("5ca876f54a73264e4c06df17"),
                             InternalName = "ValidationType",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Validation Type",
-                            ReferenceEntityId = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
+                            ReferenceEntityId = new ObjectId("5ca876f54a73264e4c06df18"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{707BD4C0-7ED4-4865-9168-176B4E843E72}"),
+                                    Id = new ObjectId("5ca876f54a73264e4c06df19"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{37E3DBC5-1B98-446D-B46B-1BD530CAD376}"),
+                            Id = new ObjectId("5ca876f54a73264e4c06df1a"),
                             InternalName = "IntegerValue",
                             PropertyType = PropertyType.Integer,
                             Title = "Integer Value"
                         },
                         new Property()
                         {
-                            Id = new Guid("{8E35139C-E60C-4432-B1F7-62CEA1451593}"),
+                            Id = new ObjectId("5ca876f54a73264e4c06df1b"),
                             InternalName = "DoubleValue",
                             PropertyType = PropertyType.Double,
                             Title = "Double Value"
                         },
                         new Property()
                         {
-                            Id = new Guid("{E2F53C95-BA38-47E1-93CD-38F4B04F44D0}"),
+                            Id = new ObjectId("5ca876f54a73264e4c06df1c"),
                             InternalName = "StringValue",
                             PropertyType = PropertyType.String,
                             Title = "String Value"
                         },
                         new Property()
                         {
-                            Id = new Guid("{640B7178-5C6D-4265-9ADE-EDC606FC3362}"),
+                            Id = new ObjectId("5ca876f64a73264e4c06df1d"),
                             InternalName = "Message",
                             PropertyType = PropertyType.String,
                             Title = "Message"
@@ -514,36 +516,36 @@ namespace Oven
 
                 new Entity()
                 {
-                    Id = new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
+                    Id = new ObjectId("5ca876f64a73264e4c06df1e"),
                     InternalName = "MenuItem",
                     Title = "Menu Item",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{3A849E52-28FA-4CAF-908D-BD2D65C0FAFA}"),
+                            Id = new ObjectId("5ca876f64a73264e4c06df1f"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{51B87800-E2AC-48E6-917F-36B9E46F209E}"),
+                            Id = new ObjectId("5ca876f64a73264e4c06df20"),
                             InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{768E1FAE-3617-4641-AC0F-B8AB3A52BF85}"),
+                                    Id = new ObjectId("5ca876f64a73264e4c06df21"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{72267B8D-5004-4065-B4DC-882706185284}"),
+                            Id = new ObjectId("5ca876f64a73264e4c06df22"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -551,122 +553,122 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{D049B0D9-B488-4F18-A832-8549348FDA56}"),
+                                    Id = new ObjectId("5ca876f64a73264e4c06df23"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{6D39BDE7-2E3C-4A1A-82D6-FD7750245B67}"),
+                                    Id = new ObjectId("5ca876f64a73264e4c06df24"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{62ECF628-B217-4800-A8AF-AC3E62F01203}"),
+                            Id = new ObjectId("5ca876f64a73264e4c06df25"),
                             InternalName = "MenuItemType",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Type",
-                            ReferenceEntityId = new Guid("{092F60B1-EE1E-4451-A771-013376C93E65}")
+                            ReferenceEntityId = new ObjectId("5ca876f64a73264e4c06df26")
                         },
                         new Property()
                         {
-                            Id = new Guid("{94202D7E-D704-4C89-B4B1-AB720C976762}"),
+                            Id = new ObjectId("5ca876f64a73264e4c06df27"),
                             InternalName = "Screen",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Screen",
-                            ReferenceEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}")
+                            ReferenceEntityId = new ObjectId("5ca876f14a73264e4c06deef")
                         },
                     }
                 },
                 #region Screen Entity
                 new Entity("Screen")
                 {
-                    Id = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                    Id = new ObjectId("5ca876f14a73264e4c06deef"),
                     Title = "Screen",
                     Properties = new Property[]
                     {
                         new Property("Id")
                         {
-                            Id = new Guid("{CCDFE624-33F8-4B38-9871-E051A301B73B}"),
+                            Id = new ObjectId("5ca876f74a73264e4c06df28"),
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property("Project")
                         {
-                            Id = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
+                            Id = new ObjectId("5ca876f14a73264e4c06def0"),
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{253608F3-0E63-4F67-B7C4-940D2472D3F7}"),
+                                    Id = new ObjectId("5ca876f74a73264e4c06df29"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property("Title")
                         {
-                            Id = new Guid("{34B85ED2-3B10-4974-9451-7B87203F1E0F}"),
+                            Id = new ObjectId("5ca876f74a73264e4c06df2a"),
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{5E707736-477F-46FF-977C-3030A2FC45EC}"),
+                                    Id = new ObjectId("5ca876f74a73264e4c06df2b"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{5F6980CE-0E4B-4FCB-AC99-228FD14CDB0E}"),
+                                    Id = new ObjectId("5ca876f74a73264e4c06df2c"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property("Path")
                         {
-                            Id = new Guid("{B2F3E579-DEA2-4E82-A69D-F7CD247E1765}"),
+                            Id = new ObjectId("5ca876f74a73264e4c06df2d"),
                             PropertyType = PropertyType.String,
                             Title = "Path/Slug"
                         },
                         new Property("Entity")
                         {
-                            Id = new Guid("{A02115B5-4E6A-4D7B-AB80-9E58516B1E3A}"),
+                            Id = new ObjectId("5ca876f74a73264e4c06df2e"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity",
                             // Entity
-                            ReferenceEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            ReferenceEntityId = new ObjectId("5ca876f24a73264e4c06def3"),
                             FilterExpression = new Expression
                             {
                                 // ProjectId
-                                PropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
+                                PropertyId = new ObjectId("5ca876f14a73264e4c06def0"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Entity.ProjectId
-                                ReferencePropertyId = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}")
+                                ReferencePropertyId = new ObjectId("5ca876f24a73264e4c06def9")
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{92AD26A8-FECE-4AE0-809B-8CBE42AA7E6A}"),
+                            Id = new ObjectId("5ca876f74a73264e4c06df2f"),
                             InternalName = "Template",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Template",
-                            ReferenceEntityId = new Guid("{564E3EC4-59E0-4EEB-A9E5-F1367E1FEB29}")
+                            ReferenceEntityId = new ObjectId("5ca876f74a73264e4c06df30")
                         },
                         new Property()
                         {
-                            Id = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}"),
+                            Id = new ObjectId("5ca876f74a73264e4c06df31"),
                             InternalName = "ScreenType",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Screen Type",
-                            ReferenceEntityId = new Guid("{C04282DB-CB85-445D-BB4B-AEBB3801DAC7}")
+                            ReferenceEntityId = new ObjectId("5ca876f74a73264e4c06df32")
                         },
                         new Property()
                         {
-                            Id = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
+                            Id = new ObjectId("5ca876f84a73264e4c06df33"),
                             InternalName = "HasDefaultObject",
                             PropertyType = PropertyType.Boolean,
                             Title = "Has Default Object",
@@ -675,21 +677,21 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{026BF989-817D-4651-9760-1D5AA51FBD1B}"),
+                                    Id = new ObjectId("5ca876f84a73264e4c06df34"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{995334B4-ED6C-44B8-AF11-51F05A6C9EC0}"),
+                            Id = new ObjectId("5ca876f84a73264e4c06df35"),
                             InternalName = "DefaultObjectJsonData",
                             PropertyType = PropertyType.String,
                             Title = "Default Object Json Data",
                             ValidationItems = new Validation[]
                             {
                                 //new Validation{
-                                //    Id = new Guid("{27779132-34C7-4EB5-8B35-33CDE6C3B6AF}"),
+                                //    Id = new ObjectId("5ca876f84a73264e4c06df36"),
                                 //    ValidationType = ValidationType.RequiredExpression
                                 //}
                             }
@@ -699,14 +701,14 @@ namespace Oven
 #endregion
                 new Entity()
                 {
-                    Id = new Guid("{F6C0ADDF-CBE3-48F1-8B9E-51C91EEC534F}"),
+                    Id = new ObjectId("5ca876f84a73264e4c06df37"),
                     InternalName = "ScreenFeature",
                     Title = "Screen Feature",
                     Properties = new Property[]
                     {
                         new Property("Id")
                         {
-                            Id = new Guid("{2D145AAC-C180-462E-8837-FD769BE7E5FE}"),
+                            Id = new ObjectId("5ca876f84a73264e4c06df38"),
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
@@ -715,51 +717,51 @@ namespace Oven
                 #region Screen Section Entity
                 new Entity()
                 {
-                    Id = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                    Id = new ObjectId("5ca876f84a73264e4c06df39"),
                     InternalName = "ScreenSection",
                     Title = "Screen Section",
                     Properties = new Property[]
                     {
                         new Property("Id")
                         {
-                            Id = new Guid("{0727AAE6-EA99-4456-95C1-07E9115A54EC}"),
+                            Id = new ObjectId("5ca876f84a73264e4c06df3a"),
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property("Title")
                         {
-                            Id = new Guid("{61E1AAE0-315E-4BBB-B622-0E3D91B9959A}"),
+                            Id = new ObjectId("5ca876f84a73264e4c06df3b"),
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{E95C3F08-F572-42BB-9FD9-F7BD2663D514}"),
+                                    Id = new ObjectId("5ca876f84a73264e4c06df3c"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{A83F2125-A810-43CC-8FFD-C6E91BF3DD13}"),
+                                    Id = new ObjectId("5ca876f84a73264e4c06df3d"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property("InternalName")
                         {
-                            Id = new Guid("{17FAC43C-9ED4-4D2B-ADA6-B59DA4D10C61}"),
+                            Id = new ObjectId("5ca876f84a73264e4c06df3e"),
                             PropertyType = PropertyType.String,
                             Title = "Internal Name",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{D377A570-990A-471D-B3BE-F6D46C590210}"),
+                                    Id = new ObjectId("5ca876f94a73264e4c06df3f"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{D5C76B55-96B8-41DD-9055-485A8614E34F}"),
+                                    Id = new ObjectId("5ca876f94a73264e4c06df40"),
                                     ValidationType = ValidationType.Required
                                 },
                                 new Validation{
@@ -770,78 +772,78 @@ namespace Oven
                         },
                         new Property("Screen")
                         {
-                            Id = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}"),
+                            Id = new ObjectId("5ca876f94a73264e4c06df41"),
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Screen",
-                            ReferenceEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                            ReferenceEntityId = new ObjectId("5ca876f14a73264e4c06deef"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{78C27422-D703-404C-8446-F46E655EAF01}"),
+                                    Id = new ObjectId("5ca876f94a73264e4c06df42"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property("NavigateToScreen")
                         {
-                            Id = new Guid("{3EDDA39A-A700-486D-ABD8-7D9E14C6F550}"),
+                            Id = new ObjectId("5ca876f94a73264e4c06df43"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Navigate to screen",
-                            ReferenceEntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                            ReferenceEntityId = new ObjectId("5ca876f14a73264e4c06deef"),
                             FilterExpression = new Expression
                             {
                                 // Screen
-                                EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                                EntityId = new ObjectId("5ca876f14a73264e4c06deef"),
                                 // Screen.ProjectId
-                                PropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
+                                PropertyId = new ObjectId("5ca876f14a73264e4c06def0"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Screen.ProjectId
-                                ReferencePropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}")
+                                ReferencePropertyId = new ObjectId("5ca876f14a73264e4c06def0")
                             },
                         },
                         new Property("ScreenSectionType")
                         {
-                            Id = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                            Id = new ObjectId("5ca876f94a73264e4c06df44"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Screen Section Type",
-                            ReferenceEntityId = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
+                            ReferenceEntityId = new ObjectId("5ca876f94a73264e4c06df45"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{83F70DAD-02EB-42CB-8002-6671E33A0B49}"),
+                                    Id = new ObjectId("5ca876f94a73264e4c06df46"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property("Entity")
                         {
-                            Id = new Guid("{D6BB1A68-8C2A-4251-8EA0-B3AC6C9362AD}"),
+                            Id = new ObjectId("5ca876f94a73264e4c06df47"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity",
                             // Entity
-                            ReferenceEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            ReferenceEntityId = new ObjectId("5ca876f24a73264e4c06def3"),
                             FilterExpression = new Expression
                             {
                                 // Screen
-                                EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                                EntityId = new ObjectId("5ca876f14a73264e4c06deef"),
                                 // Screen.ProjectId
-                                PropertyId = new Guid("{5AF2A706-9A35-4E99-9492-BCCE8A9CCBCD}"),
+                                PropertyId = new ObjectId("5ca876f14a73264e4c06def0"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Entity.ProjectId
-                                ReferencePropertyId = new Guid("{E6C4C4D9-A3E8-45B6-8B71-F33E6E159483}")
+                                ReferencePropertyId = new ObjectId("5ca876f24a73264e4c06def9")
                             },
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{872BB43B-C432-4EFA-AABE-4908E96EA1FB}"),
+                                    Id = new ObjectId("5ca876f94a73264e4c06df48"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property("Html")
                         {
-                            Id = new Guid("{B92AFD77-FFAC-4F87-B7A7-CDFA98AFD59E}"),
+                            Id = new ObjectId("5ca876fa4a73264e4c06df49"),
                             PropertyType = PropertyType.String,
                             Title = "Html"
                         }
@@ -851,51 +853,51 @@ namespace Oven
                 #region Seed Entity
                 new Entity()
                 {
-                    Id = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}"),
+                    Id = new ObjectId("5ca876fa4a73264e4c06df4a"),
                     InternalName = "Seed",
                     Title = "Seed",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{AC0AF908-F0A7-44B4-AFBB-DCB8CEABD782}"),
+                            Id = new ObjectId("5ca876fa4a73264e4c06df4b"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{E6F6876A-80C3-4856-8489-30FBEB260AA2}"),
+                            Id = new ObjectId("5ca876fa4a73264e4c06df4c"),
                             InternalName = "Entity",
                             PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Entity",
-                            ReferenceEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}")
+                            ReferenceEntityId = new ObjectId("5ca876f24a73264e4c06def3")
                         },
                         new Property()
                         {
-                            Id = new Guid("{503A6F65-87A0-453A-B0CC-880F171D65F8}"),
+                            Id = new ObjectId("5ca876fa4a73264e4c06df4d"),
                             InternalName = "JsonData",
                             PropertyType = PropertyType.String,
                             Title = "Json Data",
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{3BC3CC2D-42D1-4CCD-BD94-22CFD28078FC}"),
+                                    Id = new ObjectId("5ca876fa4a73264e4c06df4e"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{445099D8-864E-447F-A60C-13F501A02C46}"),
+                            Id = new ObjectId("5ca876fa4a73264e4c06df4f"),
                             InternalName = "SeedType",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Seed Type",
-                            ReferenceEntityId = new Guid("{EA6A9786-573A-4821-824C-3FB5322D2A51}"),
+                            ReferenceEntityId = new ObjectId("5ca876fa4a73264e4c06df50"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{1CDD43FA-D63E-441A-A4FB-6B25A47D30AE}"),
+                                    Id = new ObjectId("5ca876fa4a73264e4c06df51"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
@@ -906,21 +908,21 @@ namespace Oven
                 #region Service Entity
                 new Entity()
                 {
-                    Id = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}"),
+                    Id = new ObjectId("5ca876fa4a73264e4c06df52"),
                     InternalName = "Service",
                     Title = "Service",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{19152CE0-B2AC-4267-A5E1-D06B1D7DFC01}"),
+                            Id = new ObjectId("5ca876fa4a73264e4c06df53"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{6E11DECD-0526-4BC1-91C8-A7F1AA338635}"),
+                            Id = new ObjectId("5ca876fa4a73264e4c06df54"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -928,23 +930,23 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{7688B9DF-576E-40C5-B752-D0F31A5660F7}"),
+                                    Id = new ObjectId("5ca876fb4a73264e4c06df55"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{AAD3E008-8EAD-4A22-84E8-E15A9157603C}"),
+                                    Id = new ObjectId("5ca876fb4a73264e4c06df56"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{01C880DB-2D97-425A-905D-D7CC571A4709}"),
+                            Id = new ObjectId("5ca876fb4a73264e4c06df57"),
                             InternalName = "ServiceType",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Service Type",
-                            ReferenceEntityId = new Guid("{65D65D11-D1F0-421E-811E-A8CBB84CBB0D}"),
+                            ReferenceEntityId = new ObjectId("5ca876fb4a73264e4c06df58"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
@@ -954,15 +956,15 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{D6D616EB-E922-4782-BC9D-D68F1F07DB60}"),
+                            Id = new ObjectId("5ca876fb4a73264e4c06df59"),
                             InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{1EF431AF-E3D0-4510-93E0-58FD49D602D0}"),
+                                    Id = new ObjectId("5ca876fb4a73264e4c06df5a"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
@@ -973,37 +975,37 @@ namespace Oven
                 #region Export Service Entity
                 new Entity()
                 {
-                    Id = new Guid("{2B77156B-E550-4E46-8472-FAFA3D04966E}"),
+                    Id = new ObjectId("5ca876fb4a73264e4c06df5b"),
                     InternalName = "ExportService",
                     Title = "Export Service",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{4B576F42-685D-4683-B48A-5B6FF5E450CA}"),
+                            Id = new ObjectId("5ca876fb4a73264e4c06df5c"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{3E70E9E0-707D-4441-B4F0-199B70B31A64}"),
+                            Id = new ObjectId("5ca876fb4a73264e4c06df5d"),
                             InternalName = "Service",
                             PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Service",
-                            ReferenceEntityId = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}")
+                            ReferenceEntityId = new ObjectId("5ca876fa4a73264e4c06df52")
                         },
                         new Property()
                         {
-                            Id = new Guid("{4430E6C1-70EA-41E9-AA58-67176D9310E4}"),
+                            Id = new ObjectId("5ca876fb4a73264e4c06df5e"),
                             InternalName = "Entity",
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Root Entity",
-                            ReferenceEntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            ReferenceEntityId = new ObjectId("5ca876f24a73264e4c06def3"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{FB010C63-85C0-445C-8880-FF989F908F33}"),
+                                    Id = new ObjectId("5ca876fb4a73264e4c06df5f"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
@@ -1014,29 +1016,29 @@ namespace Oven
                 #region Web Service Entity
                 new Entity()
                 {
-                    Id = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
+                    Id = new ObjectId("5ca876fb4a73264e4c06df60"),
                     InternalName = "WebService",
                     Title = "Web Service",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{A13AA1B4-127A-4316-B05B-BFFCCB8B7BF6}"),
+                            Id = new ObjectId("5ca876fc4a73264e4c06df61"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{ACD4EA5B-644F-4DFD-9082-A0E58402B11D}"),
+                            Id = new ObjectId("5ca876fc4a73264e4c06df62"),
                             InternalName = "Service",
                             PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Service",
-                            ReferenceEntityId = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}")
+                            ReferenceEntityId = new ObjectId("5ca876fa4a73264e4c06df52")
                         },
                         new Property()
                         {
-                            Id = new Guid("{CB83CA7F-B62D-48E4-9833-54B1B07A7E70}"),
+                            Id = new ObjectId("5ca876fc4a73264e4c06df63"),
                             InternalName = "DefaultBaseEndpoint",
                             PropertyType = PropertyType.String,
                             Title = "Default Base Endpoint",
@@ -1044,12 +1046,12 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{41363BA5-4AE5-4EAE-9608-1398836D23F1}"),
+                                    Id = new ObjectId("5ca876fc4a73264e4c06df64"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{66B86E99-9AA5-4890-81BA-1FBF9CADBCC6}"),
+                                    Id = new ObjectId("5ca876fc4a73264e4c06df65"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
@@ -1060,21 +1062,21 @@ namespace Oven
                 #region Web Service Operation Entity
                 new Entity()
                 {
-                    Id = new Guid("{9878D52D-9962-4131-BE6C-1CED4004C8C4}"),
+                    Id = new ObjectId("5ca876fc4a73264e4c06df66"),
                     InternalName = "WebServiceOperation",
                     Title = "Web Service Operation",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{B9CCBA2A-7AD2-42F0-9F86-37C8D086EA1D}"),
+                            Id = new ObjectId("5ca876fc4a73264e4c06df67"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{9FB3FA12-C979-4015-847C-EB8E52C8FBD0}"),
+                            Id = new ObjectId("5ca876fc4a73264e4c06df68"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -1082,19 +1084,19 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{A710F453-B259-42AB-8A2A-BAF31144C1AF}"),
+                                    Id = new ObjectId("5ca876fc4a73264e4c06df69"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation{
-                                    Id = new Guid("{00D2823B-ABB9-4912-9712-434EB63B92A5}"),
+                                    Id = new ObjectId("5ca876fc4a73264e4c06df6a"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{EE1E832A-A9A1-4152-B7B5-A4D23914F6A7}"),
+                            Id = new ObjectId("5ca876fc4a73264e4c06df6b"),
                             InternalName = "RelativeRoute",
                             PropertyType = PropertyType.String,
                             Title = "Relative Route",
@@ -1102,7 +1104,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{56755225-7577-45E1-8AC0-E97A2654F355}"),
+                                    Id = new ObjectId("5ca876fd4a73264e4c06df6c"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 }
@@ -1111,7 +1113,7 @@ namespace Oven
                         // TODO: Convert verb to reference
                         new Property()
                         {
-                            Id = new Guid("{E32BF54A-E604-4E97-81B9-CECF9BA5D32D}"),
+                            Id = new ObjectId("5ca876fd4a73264e4c06df6d"),
                             InternalName = "Verb",
                             PropertyType = PropertyType.String,
                             Title = "Verb",
@@ -1119,7 +1121,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{15722367-9BD8-4E35-B9F0-7DA5C3182452}"),
+                                    Id = new ObjectId("5ca876fd4a73264e4c06df6e"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 }
@@ -1127,15 +1129,15 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{A619FE2D-DEDA-430F-BBF4-E1F7A919F95F}"),
+                            Id = new ObjectId("5ca876fd4a73264e4c06df6f"),
                             InternalName = "WebService",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Web Service",
-                            ReferenceEntityId = new Guid("{BBC97BD0-9FF6-4FF0-95E4-979B91F61B9D}"),
+                            ReferenceEntityId = new ObjectId("5ca876fb4a73264e4c06df60"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{80F8E11E-925F-4A0A-83BD-9232EF939916}"),
+                                    Id = new ObjectId("5ca876fd4a73264e4c06df70"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
@@ -1146,27 +1148,27 @@ namespace Oven
                 #region Form Field Entity
                 new Entity()
                 {
-                    Id = new Guid("{8D68FDDE-6621-472B-9F2C-04ADE443E51C}"),
+                    Id = new ObjectId("5ca876fd4a73264e4c06df71"),
                     InternalName = "FormField",
                     Title = "Form Field",
                     Properties = new Property[]
                     {
                         new Property("Id")
                         {
-                            Id = new Guid("{941173BD-D4B0-4216-8CCE-DC3DF81456A5}"),
+                            Id = new ObjectId("5ca876fd4a73264e4c06df72"),
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property("Title")
                         {
-                            Id = new Guid("{218A6A13-5A20-49D0-8770-ECD570D94599}"),
+                            Id = new ObjectId("5ca876fd4a73264e4c06df73"),
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{35982768-3C3A-41E1-9080-F25218529A5B}"),
+                                    Id = new ObjectId("5ca876fd4a73264e4c06df74"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 }
@@ -1174,32 +1176,32 @@ namespace Oven
                         },
                         new Property("FormSection")
                         {
-                            Id = new Guid("{FB5EC954-8935-48B2-BCEB-FCE643098C63}"),
+                            Id = new ObjectId("5ca876fd4a73264e4c06df75"),
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Form Section",
-                            ReferenceEntityId = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}")
+                            ReferenceEntityId = new ObjectId("5ca876fd4a73264e4c06df76")
                         },
                         new Property("EntityProperty")
                         {
-                            Id = new Guid("{307F022C-B5ED-4F1F-8015-9DF223F95599}"),
+                            Id = new ObjectId("5ca876fe4a73264e4c06df77"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity Property",
-                            ReferenceEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                            ReferenceEntityId = new ObjectId("5ca876f34a73264e4c06defc"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{42B9A2C7-DDB4-4B83-AFB1-0A282DC72839}"),
+                                    Id = new ObjectId("5ca876fe4a73264e4c06df78"),
                                     ValidationType = ValidationType.Required
                                 }
                             },
                             FilterExpression = new Expression
                             {
                                 // ScreenSection.EntityId
-                                PropertyId = new Guid("{D6BB1A68-8C2A-4251-8EA0-B3AC6C9362AD}"),
+                                PropertyId = new ObjectId("5ca876f94a73264e4c06df47"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Property.EntityId
-                                ReferencePropertyId = new Guid("{863F7481-3190-42AF-879C-53535BD468E6}")
+                                ReferencePropertyId = new ObjectId("5ca876f34a73264e4c06defe")
                             }
                         }
                     }
@@ -1208,21 +1210,21 @@ namespace Oven
                 #region Form Section Entity
                 new Entity()
                 {
-                    Id = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}"),
+                    Id = new ObjectId("5ca876fd4a73264e4c06df76"),
                     InternalName = "FormSection",
                     Title = "Form Section",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{3DEF9251-17DA-4BFA-B941-CA0E14C298B7}"),
+                            Id = new ObjectId("5ca876fe4a73264e4c06df79"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property("Dummy")
                         {
-                            Id = new Guid("{8A0F2995-B90C-446E-8199-F7FF5D6B107D}"),
+                            Id = new ObjectId("5ca876fe4a73264e4c06df7a"),
                             PropertyType = PropertyType.String,
                             Title = "Dummy",
                             DefaultStringValue = "Dummy",
@@ -1236,11 +1238,11 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{381E1C63-004D-4AAB-B41D-86D62D39A7F9}"),
+                            Id = new ObjectId("5ca876fe4a73264e4c06df7b"),
                             InternalName = "ScreenSection",
                             PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Screen Section",
-                            ReferenceEntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                            ReferenceEntityId = new ObjectId("5ca876f84a73264e4c06df39"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation
@@ -1249,12 +1251,12 @@ namespace Oven
                                     Expression = new Expression
                                     {
                                         // Screen Section
-                                        EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                                        EntityId = new ObjectId("5ca876f84a73264e4c06df39"),
                                         // Screen Section Type
-                                        PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                        PropertyId = new ObjectId("5ca876f94a73264e4c06df44"),
                                         Operator = Request.Enumerations.ExpressionOperator.Equal,
                                         // Form
-                                        UniqueidentifierValue = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}")
+                                        UniqueidentifierValue = new ObjectId("5ca876fe4a73264e4c06df7c")
                                     }
                                 }
                             }
@@ -1266,29 +1268,29 @@ namespace Oven
                 #region Search Section Entity
                 new Entity()
                 {
-                    Id = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}"),
+                    Id = new ObjectId("5ca876fe4a73264e4c06df7d"),
                     InternalName = "SearchSection",
                     Title = "Search Section",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{621D9C10-93FB-4178-9670-28CEBABF5C7A}"),
+                            Id = new ObjectId("5ca876fe4a73264e4c06df7e"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{4923CC53-3325-4070-BEE5-B8B07CBDC751}"),
+                            Id = new ObjectId("5ca876fe4a73264e4c06df7f"),
                             InternalName = "ScreenSection",
                             PropertyType = PropertyType.ParentRelationshipOneToOne,
                             Title = "Screen Section",
-                            ReferenceEntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}")
+                            ReferenceEntityId = new ObjectId("5ca876f84a73264e4c06df39")
                         },
                         new Property("Dummy")
                         {
-                            Id = new Guid("{4641F0DF-8380-4633-9390-3E3E59B54118}"),
+                            Id = new ObjectId("5ca876fe4a73264e4c06df80"),
                             PropertyType = PropertyType.String,
                             Title = "Dummy",
                             DefaultStringValue = "Dummy",
@@ -1306,27 +1308,27 @@ namespace Oven
                 #region Search Column Entity
                 new Entity()
                 {
-                    Id = new Guid("{559E8929-2395-4BFD-AF37-DCA314368DA5}"),
+                    Id = new ObjectId("5ca876fe4a73264e4c06df81"),
                     InternalName = "SearchColumn",
                     Title = "Search Column",
                     Properties = new Property[]
                     {
                         new Property("Id")
                         {
-                            Id = new Guid("{16650A1E-9786-482F-814E-331698DF389C}"),
+                            Id = new ObjectId("5ca876ff4a73264e4c06df82"),
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property("Title")
                         {
-                            Id = new Guid("{7334EF78-E75A-45A1-BFB6-122CDDC8281B}"),
+                            Id = new ObjectId("5ca876ff4a73264e4c06df83"),
                             PropertyType = PropertyType.String,
                             Title = "Title",
                             ValidationItems = new Validation[]
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{A67BA3F9-3DB5-4A51-B5CF-F4CBD0125483}"),
+                                    Id = new ObjectId("5ca876ff4a73264e4c06df84"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 }
@@ -1334,7 +1336,7 @@ namespace Oven
                         },
                         new Property("Ordinal")
                         {
-                            Id = new Guid("{483D2C5E-1C04-4C2E-8468-4753D3F88996}"),
+                            Id = new ObjectId("5ca876ff4a73264e4c06df85"),
                             PropertyType = PropertyType.Integer,
                             Title = "Ordinal",
                             DefaultIntegerValue = 1,
@@ -1342,28 +1344,28 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{A67BA3F9-3DB5-4A51-B5CF-F4CBD0125483}"),
+                                    Id = new ObjectId("5ca876ff4a73264e4c06df84"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property("SearchSection")
                         {
-                            Id = new Guid("{DCC45498-8A8A-4A47-9414-B46E6EDFC921}"),
+                            Id = new ObjectId("5ca876ff4a73264e4c06df86"),
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Search Section",
-                            ReferenceEntityId = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}")
+                            ReferenceEntityId = new ObjectId("5ca876fe4a73264e4c06df7d")
                         },
                         new Property("EntityProperty")
                         {
-                            Id = new Guid("{8623E412-9601-4A64-9B99-A9439D725B37}"),
+                            Id = new ObjectId("5ca876ff4a73264e4c06df87"),
                             PropertyType = PropertyType.ReferenceRelationship,
                             Title = "Entity Property",
-                            ReferenceEntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                            ReferenceEntityId = new ObjectId("5ca876f34a73264e4c06defc"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{C7DD9CDB-2A42-49F1-9EFC-EB2E78516518}"),
+                                    Id = new ObjectId("5ca876ff4a73264e4c06df88"),
                                     ValidationType = ValidationType.Required
                                 },
                             }
@@ -1374,36 +1376,36 @@ namespace Oven
                 #region NuGet Import Entity
                 new Entity()
                 {
-                    Id = new Guid("{91D514EB-27BD-4557-AF85-BE4EB99AA123}"),
+                    Id = new ObjectId("5ca876ff4a73264e4c06df89"),
                     InternalName = "NuGetDependency",
                     Title = "NuGet Import",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{EFE04E0E-668E-4708-AE98-A52EA3AAC13D}"),
+                            Id = new ObjectId("5ca876ff4a73264e4c06df8a"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{B3E67603-2BB6-4D4D-9491-112EE7E727E2}"),
+                            Id = new ObjectId("5ca876ff4a73264e4c06df8b"),
                             InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{A26BC965-B079-41FE-B9BC-A57159814C17}"),
+                                    Id = new ObjectId("5ca876ff4a73264e4c06df8c"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{0360F581-A74E-43F5-A679-664FE47A3E30}"),
+                            Id = new ObjectId("5ca877004a73264e4c06df8d"),
                             InternalName = "Include",
                             PropertyType = PropertyType.String,
                             Title = "Include",
@@ -1411,20 +1413,20 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{AED6AFE7-769D-4E52-A675-C8FE66F18DCA}"),
+                                    Id = new ObjectId("5ca877004a73264e4c06df8e"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation
                                 {
-                                    Id = new Guid("{3EDA8200-9F4E-4774-BEDA-3C72468D1154}"),
+                                    Id = new ObjectId("5ca877004a73264e4c06df8f"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{1155DB37-5EA7-4C72-B968-AC1CD35E8DA2}"),
+                            Id = new ObjectId("5ca877004a73264e4c06df90"),
                             InternalName = "Version",
                             PropertyType = PropertyType.String,
                             Title = "Version",
@@ -1432,7 +1434,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{7A5DC485-3649-454D-A688-5F49E1AAD142}"),
+                                    Id = new ObjectId("5ca877004a73264e4c06df91"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
@@ -1440,7 +1442,7 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{6E81C5D5-C25F-4002-AAC4-F88232CDAB10}"),
+                            Id = new ObjectId("5ca877004a73264e4c06df92"),
                             InternalName = "PrivateAssets",
                             PropertyType = PropertyType.String,
                             Title = "Private Assets",
@@ -1448,7 +1450,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{5E739BBD-7501-4ADE-B9E9-7F92EC480535}"),
+                                    Id = new ObjectId("5ca877004a73264e4c06df93"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 2048
                                 },
@@ -1456,7 +1458,7 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{4AAC04F0-D204-4FC9-803E-32A666D8D34C}"),
+                            Id = new ObjectId("5ca877004a73264e4c06df94"),
                             InternalName = "IncludeAssets",
                             PropertyType = PropertyType.String,
                             Title = "Include Assets",
@@ -1464,7 +1466,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{EF6DFE3A-AD43-417B-8954-13BCA681A8D1}"),
+                                    Id = new ObjectId("5ca877004a73264e4c06df95"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 2048
                                 },
@@ -1472,7 +1474,7 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{5CCA7C80-95FF-4915-ADAA-20D743923287}"),
+                            Id = new ObjectId("5ca877004a73264e4c06df96"),
                             InternalName = "ExcludeAssets",
                             PropertyType = PropertyType.String,
                             Title = "Exclude Assets",
@@ -1480,7 +1482,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{FD5D48C0-9761-457F-B40B-7FB78FBCF744}"),
+                                    Id = new ObjectId("5ca877004a73264e4c06df97"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 2048
                                 },
@@ -1492,36 +1494,36 @@ namespace Oven
                 #region NuGet Package Source Entity
                 new Entity()
                 {
-                    Id = new Guid("{9209A86B-2D99-462D-A983-10A54F476282}"),
+                    Id = new ObjectId("5ca877004a73264e4c06df98"),
                     InternalName = "NuGetPackageSource",
                     Title = "NuGet Package Source",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{C22A41F9-01C9-496B-998F-294E2D43B2E9}"),
+                            Id = new ObjectId("5ca877014a73264e4c06df99"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{3A66C9E4-F2FF-40F0-9CAE-C5756ABD1DDE}"),
+                            Id = new ObjectId("5ca877014a73264e4c06df9a"),
                             InternalName = "Project",
                             PropertyType = PropertyType.ParentRelationshipOneToMany,
                             Title = "Project",
-                            ReferenceEntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            ReferenceEntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ValidationItems = new Validation[]
                             {
                                 new Validation{
-                                    Id = new Guid("{4CE0401D-D74F-44FE-9D0A-55587E117F4E}"),
+                                    Id = new ObjectId("5ca877014a73264e4c06df9b"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{37782EE1-2011-49D1-9E03-B82171B1BCE4}"),
+                            Id = new ObjectId("5ca877014a73264e4c06df9c"),
                             InternalName = "Key",
                             PropertyType = PropertyType.String,
                             Title = "Key",
@@ -1529,17 +1531,17 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{BBEAD77B-02A4-4D9A-A916-C08D22543783}"),
+                                    Id = new ObjectId("5ca877014a73264e4c06df9d"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 },
                                 new Validation
                                 {
-                                    Id = new Guid("{91BA5C5E-F659-4B0A-9A13-9C892BA7E483}"),
+                                    Id = new ObjectId("5ca877014a73264e4c06df9e"),
                                     ValidationType = ValidationType.Required
                                 },
                                 new Validation{
-                                    Id = new Guid("{46A2D5C5-152E-400D-9E3E-F6989A3D5149}"),
+                                    Id = new ObjectId("5ca877014a73264e4c06df9f"),
                                     ValidationType = ValidationType.Pattern,
                                     StringValue = "^[a-zA-Z]+$"
                                 }
@@ -1547,7 +1549,7 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{95EAF129-4B8E-44B1-849D-347EB6BCC161}"),
+                            Id = new ObjectId("5ca877014a73264e4c06dfa0"),
                             InternalName = "Value",
                             PropertyType = PropertyType.String,
                             Title = "Value",
@@ -1555,20 +1557,20 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{6FC1A9B4-F215-4915-ADAD-F7AF57A2AE00}"),
+                                    Id = new ObjectId("5ca877014a73264e4c06dfa1"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 2048
                                 },
                                 new Validation
                                 {
-                                    Id = new Guid("{95FA3F58-0D8B-40B4-8438-8BA5688BBCDF}"),
+                                    Id = new ObjectId("5ca877014a73264e4c06dfa2"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
                         },
                         new Property()
                         {
-                            Id = new Guid("{B3D09458-D4D9-4DB7-99E6-D644D621D35B}"),
+                            Id = new ObjectId("5ca877014a73264e4c06dfa3"),
                             InternalName = "ApiKey",
                             PropertyType = PropertyType.String,
                             Title = "Api Key",
@@ -1576,7 +1578,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{5F6C529F-DF7D-44E8-A6E9-43A7DE040101}"),
+                                    Id = new ObjectId("5ca877024a73264e4c06dfa4"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 }
@@ -1584,7 +1586,7 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{E69048CC-3F16-4B9D-9D39-2BD13048FC3B}"),
+                            Id = new ObjectId("5ca877024a73264e4c06dfa5"),
                             InternalName = "Username",
                             PropertyType = PropertyType.String,
                             Title = "User name",
@@ -1592,7 +1594,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{291EA2DD-3E6A-4B3E-96F4-896263FA6525}"),
+                                    Id = new ObjectId("5ca877024a73264e4c06dfa6"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 }
@@ -1600,7 +1602,7 @@ namespace Oven
                         },
                         new Property()
                         {
-                            Id = new Guid("{A14AF33A-3554-40B2-87D7-BCC7FBD26337}"),
+                            Id = new ObjectId("5ca877024a73264e4c06dfa7"),
                             InternalName = "ClearTextPassword",
                             PropertyType = PropertyType.String,
                             Title = "Password",
@@ -1608,7 +1610,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{B8C16CD0-9822-420D-926E-D1203EEF5C2F}"),
+                                    Id = new ObjectId("5ca877024a73264e4c06dfa8"),
                                     ValidationType = ValidationType.MaximumLength,
                                     IntegerValue = 200
                                 }
@@ -1624,8 +1626,8 @@ namespace Oven
                 #region Home Screen
                 new Screen()
                 {
-                    Id = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
-                    EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                    Id = new ObjectId("5ca876ed4a73264e4c06dedb"),
+                    EntityId = new ObjectId("5ca869596668b25914b67e6e"),
                     ScreenType = ScreenType.Search,
                     Title = "Home",
                     Path = "home",
@@ -1633,7 +1635,7 @@ namespace Oven
                     ScreenFeatures = new ScreenFeature[]
                     {
                         new ScreenFeature{
-                            Id = new Guid("{00CAB28C-F1CA-4FDC-9184-AC7DDA7FD3C5}"),
+                            Id = new ObjectId("5ca877024a73264e4c06dfa9"),
                             Feature = Feature.New
                         }
                     },
@@ -1641,7 +1643,7 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{532605D4-DCD3-4B5B-AC63-7CC6E90F6792}"),
+                            Id = new ObjectId("5ca877024a73264e4c06dfaa"),
                             Title = "Home",
                             InternalName = "Home",
                             ScreenSectionType = ScreenSectionType.Html,
@@ -1654,12 +1656,12 @@ namespace Oven
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{56997673-082E-4FE0-BDC0-8088B0559694}"),
-                            EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                            Id = new ObjectId("5ca877024a73264e4c06dfab"),
+                            EntityId = new ObjectId("5ca869596668b25914b67e6e"),
                             ScreenSectionType = ScreenSectionType.Search,
                             Title = "Projects",
                             InternalName = "Projects",
-                            NavigateToScreenId = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
+                            NavigateToScreenId = new ObjectId("5ca877024a73264e4c06dfac"),
                             SearchSection = new SearchSection
                             {
 
@@ -1667,25 +1669,25 @@ namespace Oven
                                 {
                                     new SearchColumn
                                     {
-                                        EntityPropertyId = new Guid("{CB6D802C-1F26-4D23-9272-6396E6268D72}"),
+                                        EntityPropertyId = new ObjectId("5ca876ee4a73264e4c06dedd"),
                                         Title = "Title",
                                         Ordinal = 0
                                     },
                                     new SearchColumn
                                     {
-                                        EntityPropertyId = new Guid("{F1EEF37B-F40D-44D4-832F-ACEC4B63D147}"),
+                                        EntityPropertyId = new ObjectId("5ca876f14a73264e4c06dee6"),
                                         Title = "Major Version",
                                         Ordinal = 10
                                     },
                                     new SearchColumn
                                     {
-                                        EntityPropertyId = new Guid("{97E822CB-7A95-4C14-BED4-6CE19602FEE8}"),
+                                        EntityPropertyId = new ObjectId("5ca876f14a73264e4c06dee8"),
                                         Title = "Minor Version",
                                         Ordinal = 20
                                     },
                                     new SearchColumn
                                     {
-                                        EntityPropertyId = new Guid("{D7E750B0-159D-464C-A88C-6E67673CFAF2}"),
+                                        EntityPropertyId = new ObjectId("5ca876f14a73264e4c06deea"),
                                         Title = "Build Version",
                                         Ordinal = 40
                                     },
@@ -1698,8 +1700,8 @@ namespace Oven
                 #region Project Form Screen
                 new Screen()
                 {
-                    Id = new Guid("{835D26D3-2349-4914-AB85-2195756A5DAA}"),
-                    EntityId = new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"),
+                    Id = new ObjectId("5ca877024a73264e4c06dfac"),
+                    EntityId = new ObjectId("5ca869596668b25914b67e6e"),
                     ScreenType = ScreenType.Form,
                     Title = "Project",
                     Path = "project",
@@ -1707,26 +1709,26 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{BCB84DAB-B0AD-45B9-975D-5C07DE4F8990}"),
+                            Id = new ObjectId("5ca877024a73264e4c06dfad"),
                             Title = "Project",
                             InternalName = "Project",
                             ScreenSectionType = ScreenSectionType.Form
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{903FEB8F-DC3C-49AA-AB1F-BB5C82F20DC5}"),
+                            Id = new ObjectId("5ca877024a73264e4c06dfae"),
                             Title = "Entities",
                             InternalName = "Entities",
                             ScreenSectionType = ScreenSectionType.Search,
-                            EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
-                            NavigateToScreenId = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
+                            EntityId = new ObjectId("5ca876f24a73264e4c06def3"),
+                            NavigateToScreenId = new ObjectId("5ca877034a73264e4c06dfaf"),
                             MenuItems = new MenuItem[]
                             {
                                 new MenuItem
                                 {
-                                    Id = new Guid("{AE228BBC-8A38-4D7D-B3B0-7964A281B7A5}"),
+                                    Id = new ObjectId("5ca877034a73264e4c06dfb0"),
                                     MenuItemType = MenuItemType.New,
-                                    ScreenId = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
+                                    ScreenId = new ObjectId("5ca877034a73264e4c06dfaf"),
                                     Title = "New"
                                 }
                             },
@@ -1737,13 +1739,13 @@ namespace Oven
                                     new SearchColumn
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{6D09DE04-2FDA-4091-A4DA-B3448ABA1A52}"),
+                                        EntityPropertyId = new ObjectId("5ca876f24a73264e4c06def5"),
                                         Ordinal = 10
                                     },
                                     new SearchColumn
                                     {
                                         // Internal Name
-                                        EntityPropertyId = new Guid("{1CB8E873-07C7-461A-8859-672CE66C8513}"),
+                                        EntityPropertyId = new ObjectId("5ca876f24a73264e4c06def6"),
                                         Ordinal = 20
                                     }
                                 }
@@ -1751,19 +1753,19 @@ namespace Oven
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{DC2C45E5-1965-4D44-8B66-0A72E45BB720}"),
+                            Id = new ObjectId("5ca877034a73264e4c06dfb1"),
                             Title = "Screens",
                             InternalName = "Screens",
                             ScreenSectionType = ScreenSectionType.Search,
-                            EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
-                            NavigateToScreenId = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
+                            EntityId = new ObjectId("5ca876f14a73264e4c06deef"),
+                            NavigateToScreenId = new ObjectId("5ca877034a73264e4c06dfb2"),
                             MenuItems = new MenuItem[]
                             {
                                 new MenuItem
                                 {
-                                    Id = new Guid("{1B08D6F7-28E7-4FBD-86A6-E1BAAE655585}"),
+                                    Id = new ObjectId("5ca877034a73264e4c06dfb3"),
                                     MenuItemType = MenuItemType.New,
-                                    ScreenId = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
+                                    ScreenId = new ObjectId("5ca877034a73264e4c06dfb2"),
                                     Title = "New"
                                 }
                             },
@@ -1774,100 +1776,100 @@ namespace Oven
                                     new SearchColumn
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{34B85ED2-3B10-4974-9451-7B87203F1E0F}")
+                                        EntityPropertyId = new ObjectId("5ca876f74a73264e4c06df2a")
                                     },
                                     new SearchColumn
                                     {
                                         // Path/Slug
-                                        EntityPropertyId = new Guid("{B2F3E579-DEA2-4E82-A69D-F7CD247E1765}")
+                                        EntityPropertyId = new ObjectId("5ca876f74a73264e4c06df2d")
                                     },
                                     new SearchColumn
                                     {
                                         // Screen Type
-                                        EntityPropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}")
+                                        EntityPropertyId = new ObjectId("5ca876f74a73264e4c06df31")
                                     },
                                     new SearchColumn
                                     {
                                         // Entity
-                                        EntityPropertyId = new Guid("{A02115B5-4E6A-4D7B-AB80-9E58516B1E3A}")
+                                        EntityPropertyId = new ObjectId("5ca876f74a73264e4c06df2e")
                                     }
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{09D4859E-BAC7-4BEA-9F4C-14690AEE01F6}"),
+                            Id = new ObjectId("5ca877034a73264e4c06dfb4"),
                             Title = "Menu Items",
                             InternalName = "MenuItems",
                             ScreenSectionType = ScreenSectionType.Search,
-                            EntityId = new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
-                            NavigateToScreenId = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
+                            EntityId = new ObjectId("5ca876f64a73264e4c06df1e"),
+                            NavigateToScreenId = new ObjectId("5ca877034a73264e4c06dfb5"),
                             MenuItems = new MenuItem[]
                             {
                                 new MenuItem
                                 {
-                                    Id = new Guid("{CE3A30D9-6091-4D01-BCBB-ACE9EAD5D3F5}"),
+                                    Id = new ObjectId("5ca877034a73264e4c06dfb6"),
                                     MenuItemType = MenuItemType.New,
-                                    ScreenId = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
+                                    ScreenId = new ObjectId("5ca877034a73264e4c06dfb5"),
                                     Title = "New"
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{BAAB75F0-E712-431C-8AB0-6166914889D8}"),
+                            Id = new ObjectId("5ca877034a73264e4c06dfb7"),
                             Title = "Services",
                             InternalName = "Services",
                             ScreenSectionType = ScreenSectionType.Search,
-                            EntityId = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}"),
-                            NavigateToScreenId = new Guid("{04F72D2F-2280-4635-8F57-485E6F44026A}"),
+                            EntityId = new ObjectId("5ca876fa4a73264e4c06df52"),
+                            NavigateToScreenId = new ObjectId("5ca877034a73264e4c06dfb8"),
                             MenuItems = new MenuItem[]
                             {
                                 new MenuItem
                                 {
-                                    Id = new Guid("{4491A95A-3C34-4CE7-9FFE-B1825DE5523D}"),
+                                    Id = new ObjectId("5ca877034a73264e4c06dfb9"),
                                     MenuItemType = MenuItemType.New,
-                                    ScreenId = new Guid("{04F72D2F-2280-4635-8F57-485E6F44026A}"),
+                                    ScreenId = new ObjectId("5ca877034a73264e4c06dfb8"),
                                     Title = "New"
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{D34EE092-BB9A-4E34-A086-073ABAF4512D}"),
+                            Id = new ObjectId("5ca877034a73264e4c06dfba"),
                             Title = "Dependencies",
                             InternalName = "NuGetDependencies",
                             ScreenSectionType = ScreenSectionType.Search,
                             OrderBy = "Include",
-                            EntityId = new Guid("{91D514EB-27BD-4557-AF85-BE4EB99AA123}"),
-                            NavigateToScreenId = new Guid("{CE390639-0ED5-4488-8D8A-726C0E817766}"),
+                            EntityId = new ObjectId("5ca876ff4a73264e4c06df89"),
+                            NavigateToScreenId = new ObjectId("5ca877044a73264e4c06dfbb"),
                             MenuItems = new MenuItem[]
                             {
                                 new MenuItem
                                 {
-                                    Id = new Guid("{CDFAF102-783A-4052-9048-7218FFA9B624}"),
+                                    Id = new ObjectId("5ca877044a73264e4c06dfbc"),
                                     MenuItemType = MenuItemType.New,
-                                    ScreenId = new Guid("{CE390639-0ED5-4488-8D8A-726C0E817766}"),
+                                    ScreenId = new ObjectId("5ca877044a73264e4c06dfbb"),
                                     Title = "New"
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{48B73AFE-FF0B-4AE2-9E69-7E7C72C6221F}"),
+                            Id = new ObjectId("5ca877044a73264e4c06dfbd"),
                             Title = "Dependency Libraries",
                             InternalName = "NuGetPackageSources",
                             ScreenSectionType = ScreenSectionType.Search,
                             OrderBy = "Key",
-                            EntityId = new Guid("{9209A86B-2D99-462D-A983-10A54F476282}"),
-                            NavigateToScreenId = new Guid("{33508886-531C-4A8E-B01B-28A139A5AEC9}"),
+                            EntityId = new ObjectId("5ca877004a73264e4c06df98"),
+                            NavigateToScreenId = new ObjectId("5ca877044a73264e4c06dfbe"),
                             MenuItems = new MenuItem[]
                             {
                                 new MenuItem
                                 {
-                                    Id = new Guid("{EBC67739-2E1A-4043-AE57-4B124C852144}"),
+                                    Id = new ObjectId("5ca877044a73264e4c06dfbf"),
                                     MenuItemType = MenuItemType.New,
-                                    ScreenId = new Guid("{33508886-531C-4A8E-B01B-28A139A5AEC9}"),
+                                    ScreenId = new ObjectId("5ca877044a73264e4c06dfbe"),
                                     Title = "New"
                                 }
                             }
@@ -1878,7 +1880,7 @@ namespace Oven
                     {
                         new MenuItem
                         {
-                            Id = new Guid("{FCB3AFDB-5CEB-41E7-AE2B-6122ECCB966D}"),
+                            Id = new ObjectId("5ca877044a73264e4c06dfc0"),
                             Title = "Publish",
                             Icon = "glyphicon glyphicon-cloud-upload",
                             MenuItemType = MenuItemType.ServerFunction,
@@ -1892,8 +1894,8 @@ namespace Oven
                 #region Entity Form Screen
                 new Screen()
                 {
-                    Id = new Guid("{B1CE9862-EA2F-4EBC-95FF-D6FB87F21EE7}"),
-                    EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                    Id = new ObjectId("5ca877034a73264e4c06dfaf"),
+                    EntityId = new ObjectId("5ca876f24a73264e4c06def3"),
                     ScreenType = ScreenType.Form,
                     Title = "Entity",
                     Path = "entity",
@@ -1904,7 +1906,7 @@ namespace Oven
                             new {
                                 Title = "Title",
                                 InternalName = "Title",
-                                PropertyTypeId = "{A05F5788-04C3-487D-92F1-A755C73230D4}"
+                                PropertyTypeId = "5ca877044a73264e4c06dfc1"
                             }
                         }
                     }),
@@ -1912,10 +1914,10 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{8130C0F4-F8F7-4A7A-9793-85B8939589EB}"),
+                            Id = new ObjectId("5ca877044a73264e4c06dfc2"),
                             Title = "Entity",
                             InternalName = "Entity",
-                            EntityId = new Guid("{149F1936-1EE1-481F-9038-A6B766B85BF3}"),
+                            EntityId = new ObjectId("5ca876f24a73264e4c06def3"),
                             ScreenSectionType = ScreenSectionType.Form,
                             FormSection = new FormSection()
                             {
@@ -1924,41 +1926,41 @@ namespace Oven
                                     new FormField
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{6D09DE04-2FDA-4091-A4DA-B3448ABA1A52}")
+                                        EntityPropertyId = new ObjectId("5ca876f24a73264e4c06def5")
                                     },
                                     new FormField
                                     {
                                         // Internal Name
-                                        EntityPropertyId = new Guid("{1CB8E873-07C7-461A-8859-672CE66C8513}")
+                                        EntityPropertyId = new ObjectId("5ca876f24a73264e4c06def6")
                                     },
                                     new FormField
                                     {
                                         // Entity Template
-                                        EntityPropertyId = new Guid("{331D99C4-1D7A-48D3-8979-987A5285F3B3}")
+                                        EntityPropertyId = new ObjectId("5ca876f24a73264e4c06def7")
                                     },
                                     new FormField
                                     {
                                         // Has Seed Data
-                                        EntityPropertyId = new Guid("{0AC3BDBB-79A4-4E0E-89F5-07CA3B5C0CE8}")
+                                        EntityPropertyId = new ObjectId("5ca876f24a73264e4c06defa")
                                     }
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{C2A19FAF-5C62-43D2-8FA4-2293B4B68569}"),
+                            Id = new ObjectId("5ca877044a73264e4c06dfc3"),
                             Title = "Properties",
                             InternalName = "Properties",
-                            ScreenSectionTypeId = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"), // Search
-                            EntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
-                            NavigateToScreenId = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
+                            ScreenSectionTypeId = new ObjectId("5ca877044a73264e4c06dfc4"), // Search
+                            EntityId = new ObjectId("5ca876f34a73264e4c06defc"),
+                            NavigateToScreenId = new ObjectId("5ca877054a73264e4c06dfc5"),
                             MenuItems = new MenuItem[]
                             {
                                 new MenuItem
                                 {
-                                    Id = new Guid("{C236C6DC-A21A-44DF-B125-FFA46E1810FC}"),
+                                    Id = new ObjectId("5ca877054a73264e4c06dfc6"),
                                     MenuItemType = MenuItemType.New,
-                                    ScreenId = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
+                                    ScreenId = new ObjectId("5ca877054a73264e4c06dfc5"),
                                     Title = "New"
                                 }
                             },
@@ -1969,32 +1971,32 @@ namespace Oven
                                     new SearchColumn
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}")
+                                        EntityPropertyId = new ObjectId("5ca876f34a73264e4c06df00")
                                     },
                                     new SearchColumn
                                     {
                                         // Internal Name
-                                        EntityPropertyId = new Guid("{C52F7B8E-CAD0-40FF-8E89-B313A290A96E}")
+                                        EntityPropertyId = new ObjectId("5ca876f34a73264e4c06df03")
                                     },
                                     new SearchColumn
                                     {
                                         // Property Type
-                                        EntityPropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}")
+                                        EntityPropertyId = new ObjectId("5ca876f34a73264e4c06df06")
                                     }
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{193EBB3E-45C8-47DD-A058-0004626AC9EB}"),
+                            Id = new ObjectId("5ca877054a73264e4c06dfc7"),
                             Title = "Seed",
                             InternalName = "Seed",
                             ScreenSectionType = ScreenSectionType.Form,
-                            EntityId = new Guid("{84F8D049-967E-4BF0-BC6B-9D73151FAA84}"),
-                            ParentScreenSectionId = new Guid("{8130C0F4-F8F7-4A7A-9793-85B8939589EB}"),
+                            EntityId = new ObjectId("5ca876fa4a73264e4c06df4a"),
+                            ParentScreenSectionId = new ObjectId("5ca877044a73264e4c06dfc2"),
                             VisibilityExpression = new Expression
                             {
-                                PropertyId = new Guid("{0AC3BDBB-79A4-4E0E-89F5-07CA3B5C0CE8}"),
+                                PropertyId = new ObjectId("5ca876f24a73264e4c06defa"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 BooleanValue = true
                             }
@@ -2005,8 +2007,8 @@ namespace Oven
                 #region Screen Form Screen
                 new Screen()
                 {
-                    Id = new Guid("{1A844688-994A-4BEC-8AAC-8C498529E451}"),
-                    EntityId =new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                    Id = new ObjectId("5ca877034a73264e4c06dfb2"),
+                    EntityId =new ObjectId("5ca876f14a73264e4c06deef"),
                     ScreenType = ScreenType.Form,
                     Title = "Screen",
                     Path = "screen",
@@ -2014,11 +2016,11 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
+                            Id = new ObjectId("5ca877054a73264e4c06dfc8"),
                             Title = "Screen",
                             InternalName = "Screen",
                             ScreenSectionType = ScreenSectionType.Form,
-                            EntityId = new Guid("{604D9354-FAA6-4EC1-AC50-02DA79BD4526}"),
+                            EntityId = new ObjectId("5ca876f14a73264e4c06deef"),
                             FormSection = new FormSection
                             {
                                 FormFields = new FormField[]
@@ -2026,64 +2028,64 @@ namespace Oven
                                     new FormField
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{34B85ED2-3B10-4974-9451-7B87203F1E0F}")
+                                        EntityPropertyId = new ObjectId("5ca876f74a73264e4c06df2a")
                                     },
                                     new FormField
                                     {
                                         // Screen Type
-                                        EntityPropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}")
+                                        EntityPropertyId = new ObjectId("5ca876f74a73264e4c06df31")
                                     },
                                     new FormField
                                     {
                                         // Path
-                                        EntityPropertyId = new Guid("{B2F3E579-DEA2-4E82-A69D-F7CD247E1765}")
+                                        EntityPropertyId = new ObjectId("5ca876f74a73264e4c06df2d")
                                     },
                                     new FormField
                                     {
                                         // Entity
-                                        EntityPropertyId = new Guid("{A02115B5-4E6A-4D7B-AB80-9E58516B1E3A}"),
+                                        EntityPropertyId = new ObjectId("5ca876f74a73264e4c06df2e"),
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}"),
+                                            PropertyId = new ObjectId("5ca876f74a73264e4c06df31"),
                                             Operator = Request.Enumerations.ExpressionOperator.In,
-                                            UniqueidentifierValues = new Guid[]
+                                            UniqueidentifierValues = new ObjectId[]
                                             {
                                                 // Search
-                                                new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
+                                                new ObjectId("5ca877054a73264e4c06dfc9"),
                                                 // Form
-                                                new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"),
+                                                new ObjectId("5ca877054a73264e4c06dfca"),
                                             }
                                         }
                                     },
                                     new FormField
                                     {
                                         // Template
-                                        EntityPropertyId = new Guid("{92AD26A8-FECE-4AE0-809B-8CBE42AA7E6A}")
+                                        EntityPropertyId = new ObjectId("5ca876f74a73264e4c06df2f")
                                     },
                                     new FormField
                                     {
                                         // Has Default Object
-                                        EntityPropertyId = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
+                                        EntityPropertyId = new ObjectId("5ca876f84a73264e4c06df33"),
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{84614E32-DD65-4CE5-9FE2-1AA4FD6A0C38}"),
+                                            PropertyId = new ObjectId("5ca876f74a73264e4c06df31"),
                                             Operator = Request.Enumerations.ExpressionOperator.In,
-                                            UniqueidentifierValues = new Guid[]
+                                            UniqueidentifierValues = new ObjectId[]
                                             {
                                                 // Search
-                                                new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
+                                                new ObjectId("5ca877054a73264e4c06dfc9"),
                                                 // Form
-                                                new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"),
+                                                new ObjectId("5ca877054a73264e4c06dfca"),
                                             }
                                         }
                                     },
                                     new FormField
                                     {
                                         //Default Object Json Data
-                                        EntityPropertyId = new Guid("{995334B4-ED6C-44B8-AF11-51F05A6C9EC0}"),
+                                        EntityPropertyId = new ObjectId("5ca876f84a73264e4c06df35"),
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{11F840B4-07E8-459C-AF70-910B5900C8DA}"),
+                                            PropertyId = new ObjectId("5ca876f84a73264e4c06df33"),
                                             Operator = Request.Enumerations.ExpressionOperator.Equal,
                                             BooleanValue = true
                                         }
@@ -2093,12 +2095,12 @@ namespace Oven
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{CDC681CF-6298-43D7-8A14-B360D12E287D}"),
+                            Id = new ObjectId("5ca877054a73264e4c06dfcb"),
                             Title = "Screen Sections",
                             InternalName = "ScreenSections",
                             ScreenSectionType = ScreenSectionType.Search,
-                            EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
-                            NavigateToScreenId = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
+                            EntityId = new ObjectId("5ca876f84a73264e4c06df39"),
+                            NavigateToScreenId = new ObjectId("5ca877054a73264e4c06dfcc"),
                             SearchSection = new SearchSection
                             {
                                 SearchColumns = new SearchColumn[]
@@ -2106,22 +2108,22 @@ namespace Oven
                                     new SearchColumn
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{61E1AAE0-315E-4BBB-B622-0E3D91B9959A}")
+                                        EntityPropertyId = new ObjectId("5ca876f84a73264e4c06df3b")
                                     },
                                     new SearchColumn
                                     {
                                         // Internal Name
-                                        EntityPropertyId = new Guid("{17FAC43C-9ED4-4D2B-ADA6-B59DA4D10C61}")
+                                        EntityPropertyId = new ObjectId("5ca876f84a73264e4c06df3e")
                                     },
                                     new SearchColumn
                                     {
                                         // Screen Section Type
-                                        EntityPropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}")
+                                        EntityPropertyId = new ObjectId("5ca876f94a73264e4c06df44")
                                     },
                                     new SearchColumn
                                     {
                                         // Entity
-                                        EntityPropertyId = new Guid("{D6BB1A68-8C2A-4251-8EA0-B3AC6C9362AD}")
+                                        EntityPropertyId = new ObjectId("5ca876f94a73264e4c06df47")
                                     }
                                 }
                             },
@@ -2129,9 +2131,9 @@ namespace Oven
                             {
                                 new MenuItem
                                 {
-                                    Id = new Guid("{9F917C0A-D82E-40C7-AB5A-A81772AF8A70}"),
+                                    Id = new ObjectId("5ca877054a73264e4c06dfcd"),
                                     MenuItemType = MenuItemType.New,
-                                    ScreenId = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
+                                    ScreenId = new ObjectId("5ca877054a73264e4c06dfcc"),
                                     Title = "New"
                                 }
                             }
@@ -2142,8 +2144,8 @@ namespace Oven
                 #region Screen Section Form Screen
                 new Screen()
                 {
-                    Id = new Guid("{2A87A77C-6A99-4B3E-BB61-2BEC93ECFC7B}"),
-                    EntityId =new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                    Id = new ObjectId("5ca877054a73264e4c06dfcc"),
+                    EntityId =new ObjectId("5ca876f84a73264e4c06df39"),
                     ScreenType = ScreenType.Form,
                     Title = "Screen Section",
                     Path = "screen-section",
@@ -2151,11 +2153,11 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
+                            Id = new ObjectId("5ca877054a73264e4c06dfc8"),
                             Title = "Screen Section",
                             InternalName = "ScreenSection",
                             ScreenSectionType = ScreenSectionType.Form,
-                            EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                            EntityId = new ObjectId("5ca876f84a73264e4c06df39"),
                             FormSection = new FormSection
                             {
                                 FormFields = new FormField[]
@@ -2163,55 +2165,50 @@ namespace Oven
                                     new FormField
                                     {
                                         // Screen
-                                        EntityPropertyId = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}")
+                                        EntityPropertyId = new ObjectId("5ca876f94a73264e4c06df41"),
+                                        IsHiddenFromUi = true
                                     },
                                     new FormField
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{61E1AAE0-315E-4BBB-B622-0E3D91B9959A}")
+                                        EntityPropertyId = new ObjectId("5ca876f84a73264e4c06df3b")
                                     },
                                     new FormField
                                     {
                                         // Internal Name
-                                        EntityPropertyId = new Guid("{17FAC43C-9ED4-4D2B-ADA6-B59DA4D10C61}")
+                                        EntityPropertyId = new ObjectId("5ca876f84a73264e4c06df3e")
                                     },
                                     new FormField
                                     {
                                         // Screen Section Type
-                                        EntityPropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}")
+                                        EntityPropertyId = new ObjectId("5ca876f94a73264e4c06df44")
                                     },
                                     new FormField
                                     {
                                         // Entity
-                                        EntityPropertyId = new Guid("{D6BB1A68-8C2A-4251-8EA0-B3AC6C9362AD}")
+                                        EntityPropertyId = new ObjectId("5ca876f94a73264e4c06df47")
                                     },
                                     new FormField
                                     {
                                         // Navigate To Screen
-                                        EntityPropertyId = new Guid("{3EDDA39A-A700-486D-ABD8-7D9E14C6F550}")
-                                    },
-                                    new FormField
-                                    {
-                                        // Screen
-                                        EntityPropertyId = new Guid("{C3CE72B7-DE38-4CEE-B4BD-C950308D261B}"),
-                                        IsHiddenFromUi = true
+                                        EntityPropertyId = new ObjectId("5ca876f94a73264e4c06df43")
                                     }
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{01E6D1DF-E5BE-492B-B7B8-34B93EB35A60}"),
+                            Id = new ObjectId("5ca877054a73264e4c06dfce"),
                             Title = "Html Screen Section",
                             InternalName = "HtmlScreenSection",
                             ScreenSectionType = ScreenSectionType.Form,
-                            EntityId = new Guid("{1379E266-2600-426F-AEBB-790D008A46AB}"),
+                            EntityId = new ObjectId("5ca876f84a73264e4c06df39"),
                             VisibilityExpression = new Expression
                             {
-                                PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                PropertyId = new ObjectId("5ca876f94a73264e4c06df44"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Html
-                                UniqueidentifierValue = new Guid("{38EF9B44-A993-479B-91EC-1FE436E91556}")
+                                UniqueidentifierValue = new ObjectId("5ca877054a73264e4c06dfcf")
                             },
                             FormSection = new FormSection
                             {
@@ -2220,25 +2217,25 @@ namespace Oven
                                     new FormField
                                     {
                                         // Html
-                                        EntityPropertyId = new Guid("{B92AFD77-FFAC-4F87-B7A7-CDFA98AFD59E}")
+                                        EntityPropertyId = new ObjectId("5ca876fa4a73264e4c06df49")
                                     }
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{26DE012C-3622-46C2-BC6F-49B611B2CECE}"),
+                            Id = new ObjectId("5ca877064a73264e4c06dfd0"),
                             Title = "Form Section",
                             InternalName = "FormSection",
-                            EntityId = new Guid("{114176DC-3440-4E3A-A929-4A243A188B4F}"),
+                            EntityId = new ObjectId("5ca876fd4a73264e4c06df76"),
                             ScreenSectionType = ScreenSectionType.Form,
-                            ParentScreenSectionId = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
+                            ParentScreenSectionId = new ObjectId("5ca877054a73264e4c06dfc8"),
                             VisibilityExpression = new Expression
                             {
-                                PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                PropertyId = new ObjectId("5ca876f94a73264e4c06df44"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Form
-                                UniqueidentifierValue = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}")
+                                UniqueidentifierValue = new ObjectId("5ca876fe4a73264e4c06df7c")
                             },
                             FormSection = new FormSection
                             {
@@ -2246,26 +2243,26 @@ namespace Oven
                                 {
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{8A0F2995-B90C-446E-8199-F7FF5D6B107D}")
+                                        EntityPropertyId = new ObjectId("5ca876fe4a73264e4c06df7a")
                                     }
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{35D50B7D-9ADE-46E3-B3F7-B3DE81704DB2}"),
+                            Id = new ObjectId("5ca877064a73264e4c06dfd1"),
                             Title = "Form Fields",
                             InternalName = "FormFields",
                             ScreenSectionType = ScreenSectionType.Search,
-                            EntityId = new Guid("{8D68FDDE-6621-472B-9F2C-04ADE443E51C}"),
-                            ParentScreenSectionId = new Guid("{26DE012C-3622-46C2-BC6F-49B611B2CECE}"),
-                            NavigateToScreenId = new Guid("{47F0B19F-6EF4-4D9D-AD73-D4701259364C}"),
+                            EntityId = new ObjectId("5ca876fd4a73264e4c06df71"),
+                            ParentScreenSectionId = new ObjectId("5ca877064a73264e4c06dfd0"),
+                            NavigateToScreenId = new ObjectId("5ca877064a73264e4c06dfd2"),
                             VisibilityExpression = new Expression
                             {
-                                PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                PropertyId = new ObjectId("5ca876f94a73264e4c06df44"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Form
-                                UniqueidentifierValue = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}")
+                                UniqueidentifierValue = new ObjectId("5ca876fe4a73264e4c06df7c")
                             },
                             SearchSection = new SearchSection
                             {
@@ -2274,30 +2271,30 @@ namespace Oven
                                     new SearchColumn
                                     {
                                         // Entity Property
-                                        EntityPropertyId = new Guid("{307F022C-B5ED-4F1F-8015-9DF223F95599}")
+                                        EntityPropertyId = new ObjectId("5ca876fe4a73264e4c06df77")
                                     },
                                     new SearchColumn
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{218A6A13-5A20-49D0-8770-ECD570D94599}")
+                                        EntityPropertyId = new ObjectId("5ca876fd4a73264e4c06df73")
                                     }
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{8B66CCB1-B5BC-4BE3-9C8A-1372B67BC07E}"),
+                            Id = new ObjectId("5ca877064a73264e4c06dfd3"),
                             Title = "Search Section",
                             InternalName = "SearchSection",
-                            EntityId = new Guid("{64903354-DB1A-46F5-AD6A-30973F4CA30D}"),
+                            EntityId = new ObjectId("5ca876fe4a73264e4c06df7d"),
                             ScreenSectionType = ScreenSectionType.Form,
-                            ParentScreenSectionId = new Guid("{94718B2B-01EA-41A1-95BD-88C76B55A0EC}"),
+                            ParentScreenSectionId = new ObjectId("5ca877054a73264e4c06dfc8"),
                             VisibilityExpression = new Expression
                             {
-                                PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                PropertyId = new ObjectId("5ca876f94a73264e4c06df44"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Search
-                                UniqueidentifierValue = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}")
+                                UniqueidentifierValue = new ObjectId("5ca877044a73264e4c06dfc4")
                             },
                             FormSection = new FormSection
                             {
@@ -2305,26 +2302,26 @@ namespace Oven
                                 {
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{4641F0DF-8380-4633-9390-3E3E59B54118}")
+                                        EntityPropertyId = new ObjectId("5ca876fe4a73264e4c06df80")
                                     }
                                 }
                             }
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{0C12DEEA-2496-48E7-9E1C-045FBC1B01ED}"),
+                            Id = new ObjectId("5ca877064a73264e4c06dfd4"),
                             Title = "Search Columns",
                             InternalName = "SearchColumns",
                             ScreenSectionType = ScreenSectionType.Search,
-                            EntityId = new Guid("{559E8929-2395-4BFD-AF37-DCA314368DA5}"),
-                            ParentScreenSectionId = new Guid("{8B66CCB1-B5BC-4BE3-9C8A-1372B67BC07E}"),
-                            NavigateToScreenId = new Guid("{E8713635-0B11-491C-BA2F-62D743E5A948}"),
+                            EntityId = new ObjectId("5ca876fe4a73264e4c06df81"),
+                            ParentScreenSectionId = new ObjectId("5ca877064a73264e4c06dfd3"),
+                            NavigateToScreenId = new ObjectId("5ca877064a73264e4c06dfd5"),
                             VisibilityExpression = new Expression
                             {
-                                PropertyId = new Guid("{2A1E69D0-46F8-43BB-8ECB-80067D70C24C}"),
+                                PropertyId = new ObjectId("5ca876f94a73264e4c06df44"),
                                 Operator = Request.Enumerations.ExpressionOperator.Equal,
                                 // Search
-                                UniqueidentifierValue = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}")
+                                UniqueidentifierValue = new ObjectId("5ca877044a73264e4c06dfc4")
                             },
                             SearchSection = new SearchSection
                             {
@@ -2333,16 +2330,16 @@ namespace Oven
                                     new SearchColumn
                                     {
                                         // Entity Property
-                                        EntityPropertyId = new Guid("{8623E412-9601-4A64-9B99-A9439D725B37}")
+                                        EntityPropertyId = new ObjectId("5ca876ff4a73264e4c06df87")
                                     },
                                     new SearchColumn
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{7334EF78-E75A-45A1-BFB6-122CDDC8281B}")
+                                        EntityPropertyId = new ObjectId("5ca876ff4a73264e4c06df83")
                                     },
                                     new SearchColumn
                                     {
-                                        EntityPropertyId = new Guid("{483D2C5E-1C04-4C2E-8468-4753D3F88996}")
+                                        EntityPropertyId = new ObjectId("5ca876ff4a73264e4c06df85")
                                     }
                                 }
                             }
@@ -2353,8 +2350,8 @@ namespace Oven
                 #region Form Field Screen
                 new Screen
                 {
-                    Id = new Guid("{47F0B19F-6EF4-4D9D-AD73-D4701259364C}"),
-                    EntityId = new Guid("{8D68FDDE-6621-472B-9F2C-04ADE443E51C}"),
+                    Id = new ObjectId("5ca877064a73264e4c06dfd2"),
+                    EntityId = new ObjectId("5ca876fd4a73264e4c06df71"),
                     Path = "form-field",
                     ScreenType = ScreenType.Form,
                     Title = "Form Field",
@@ -2362,8 +2359,8 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{4A523292-8C78-4E1B-8CB0-5199FF4F924B}"),
-                            EntityId = new Guid("{8D68FDDE-6621-472B-9F2C-04ADE443E51C}"),
+                            Id = new ObjectId("5ca877064a73264e4c06dfd6"),
+                            EntityId = new ObjectId("5ca876fd4a73264e4c06df71"),
                             ScreenSectionType = ScreenSectionType.Form,
                             Title = "Form Field",
                             InternalName = "FormField",
@@ -2374,12 +2371,12 @@ namespace Oven
                                     new FormField
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{218A6A13-5A20-49D0-8770-ECD570D94599}")
+                                        EntityPropertyId = new ObjectId("5ca876fd4a73264e4c06df73")
                                     },
                                     new FormField
                                     {
                                         // Entity Property
-                                        EntityPropertyId = new Guid("{307F022C-B5ED-4F1F-8015-9DF223F95599}")
+                                        EntityPropertyId = new ObjectId("5ca876fe4a73264e4c06df77")
                                     }
                                 }
                             }
@@ -2390,8 +2387,8 @@ namespace Oven
                 #region Search Column Screen
                 new Screen
                 {
-                    Id = new Guid("{E8713635-0B11-491C-BA2F-62D743E5A948}"),
-                    EntityId = new Guid("{559E8929-2395-4BFD-AF37-DCA314368DA5}"),
+                    Id = new ObjectId("5ca877064a73264e4c06dfd5"),
+                    EntityId = new ObjectId("5ca876fe4a73264e4c06df81"),
                     Path = "search-column",
                     ScreenType = ScreenType.Form,
                     Title = "Search Column",
@@ -2399,8 +2396,8 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{036D2648-F1DB-4C22-9D20-8DB8BA386D81}"),
-                            EntityId = new Guid("{559E8929-2395-4BFD-AF37-DCA314368DA5}"),
+                            Id = new ObjectId("5ca877064a73264e4c06dfd7"),
+                            EntityId = new ObjectId("5ca876fe4a73264e4c06df81"),
                             ScreenSectionType = ScreenSectionType.Form,
                             Title = "Search Column",
                             InternalName = "SearchColumn"
@@ -2411,8 +2408,8 @@ namespace Oven
                 #region Menu Item
                 new Screen()
                 {
-                    Id = new Guid("{005F52E5-9AF5-4155-AAD2-82FF2E6AC5B1}"),
-                    EntityId =new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}"),
+                    Id = new ObjectId("5ca877034a73264e4c06dfb5"),
+                    EntityId = new ObjectId("5ca876f64a73264e4c06df1e"),
                     ScreenType = ScreenType.Form,
                     Title = "Menu Item",
                     Path = "menu-item",
@@ -2420,11 +2417,11 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{DDD8CB45-FCDD-4C24-AEB5-2CBB80836AC2}"),
+                            Id = new ObjectId("5ca877064a73264e4c06dfd8"),
                             Title = "Menu Item",
                             InternalName = "MenuItem",
                             ScreenSectionType = ScreenSectionType.Form,
-                            EntityId = new Guid("{D4F9AFCF-66A4-4E23-9C13-4F5873B51FDC}")
+                            EntityId = new ObjectId("5ca876f64a73264e4c06df1e")
                         }
                     }
                 },
@@ -2432,8 +2429,8 @@ namespace Oven
                 #region Property Form Screen
                 new Screen()
                 {
-                    Id = new Guid("{064AB31A-E92A-4647-A517-2A1BAC54EE73}"),
-                    EntityId = new Guid("{DE9790AD-6FC3-4CE3-B63B-EEAA1DF7CFCB}"),
+                    Id = new ObjectId("5ca877054a73264e4c06dfc5"),
+                    EntityId = new ObjectId("5ca876f34a73264e4c06defc"),
                     ScreenType = ScreenType.Form,
                     Title = "Property",
                     Path = "property",
@@ -2441,7 +2438,7 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{03934004-41EF-40A7-B317-723019001DCB}"),
+                            Id = new ObjectId("5ca877064a73264e4c06dfd9"),
                             Title = "Property",
                             InternalName = "Property",
                             ScreenSectionType = ScreenSectionType.Form,
@@ -2451,81 +2448,81 @@ namespace Oven
                                 {
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{6F7F0BBE-B6E2-4766-BA5D-2A9F6540D4E0}")
+                                        EntityPropertyId = new ObjectId("5ca876f34a73264e4c06df00")
                                     },
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{C52F7B8E-CAD0-40FF-8E89-B313A290A96E}")
+                                        EntityPropertyId = new ObjectId("5ca876f34a73264e4c06df03")
                                     },
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}")
+                                        EntityPropertyId = new ObjectId("5ca876f34a73264e4c06df06")
                                     },
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{53AD68E2-5C5C-405C-8407-67EA58862B0D}")
+                                        EntityPropertyId = new ObjectId("5ca876f44a73264e4c06df09")
                                     },
                                     new FormField
                                     {
                                         // Parent Entity
-                                        EntityPropertyId = new Guid("{A84BD0B2-656D-4301-A722-7FE3ABC837C5}"),
+                                        EntityPropertyId = new ObjectId("5ca876f44a73264e4c06df0b"),
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            PropertyId = new ObjectId("5ca876f34a73264e4c06df06"),
                                             Operator = Request.Enumerations.ExpressionOperator.In,
-                                            UniqueidentifierValues = new Guid[]
+                                            UniqueidentifierValues = new ObjectId[]
                                             {
                                                 // Parent Relationship One To Many
-                                                new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"),
+                                                new ObjectId("5ca86c626668b25914b67e78"),
                                                 // Reference Relationship
-                                                new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"),
+                                                new ObjectId("5ca86c956668b25914b67e79"),
                                                 // Parent Relationship One To One
-                                                new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}")
+                                                new ObjectId("5ca877064a73264e4c06dfda")
                                             }
                                         }
                                     },
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{62FE9985-98A3-4D40-BC68-8AF641FDABFC}"),
+                                        EntityPropertyId = new ObjectId("5ca876f44a73264e4c06df0c"),
                                         Title = "Default Value", // Integer
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            PropertyId = new ObjectId("5ca876f34a73264e4c06df06"),
                                             Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                            UniqueidentifierValue = new Guid("{F126388B-8A6E-41DB-A98A-A0E511016441}")
+                                            UniqueidentifierValue = new ObjectId("5ca86b506668b25914b67e76")
                                         }
                                     },
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{61862CC1-DFD4-4578-BF6E-FFA195D6F6A1}"),
+                                        EntityPropertyId = new ObjectId("5ca876f44a73264e4c06df0d"),
                                         Title = "Default Value", // Double
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            PropertyId = new ObjectId("5ca876f34a73264e4c06df06"),
                                             Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                            UniqueidentifierValue = new Guid("{B967BF8D-0722-43F0-9945-CBEB4160822F}")
+                                            UniqueidentifierValue = new ObjectId("5ca86b656668b25914b67e77")
                                         }
                                     },
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{63935FCA-CC40-4A78-A21C-F76FD761701B}"),
+                                        EntityPropertyId = new ObjectId("5ca876f44a73264e4c06df0e"),
                                         Title = "Default Value", // String
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            PropertyId = new ObjectId("5ca876f34a73264e4c06df06"),
                                             Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                            UniqueidentifierValue = new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}")
+                                            UniqueidentifierValue = new ObjectId("5ca877044a73264e4c06dfc1")
                                         }
                                     },
                                     new FormField
                                     {
-                                        EntityPropertyId = new Guid("{836DA351-CCCF-4269-89CA-98E7CD67E77E}"),
+                                        EntityPropertyId = new ObjectId("5ca876f44a73264e4c06df0f"),
                                         Title = "Default Value", // Boolean
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{81D18B38-6B6B-4A0F-932E-7EB55F6E44E8}"),
+                                            PropertyId = new ObjectId("5ca876f34a73264e4c06df06"),
                                             Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                            UniqueidentifierValue = new Guid("{2C1D2E2A-3531-41D9-90D3-3632C368B12A}")
+                                            UniqueidentifierValue = new ObjectId("5ca86b146668b25914b67e74")
                                         }
                                     },
                                 }
@@ -2533,13 +2530,13 @@ namespace Oven
                         },
                         new ScreenSection
                         {
-                            Id = new Guid("{5B8A2C75-C319-40BD-87A4-444987A04A04}"),
+                            Id = new ObjectId("5ca877074a73264e4c06dfdb"),
                             Title = "Validation",
                             InternalName = "Validation",
-                            EntityId = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
+                            EntityId = new ObjectId("5ca876f44a73264e4c06df10"),
                             ScreenSectionType = ScreenSectionType.Search,
                             // Validation
-                            NavigateToScreenId = new Guid("{12A2E083-5CFA-450C-9585-38DE0C60DCC2}"),
+                            NavigateToScreenId = new ObjectId("5ca877074a73264e4c06dfdc"),
                             SearchSection = new SearchSection
                             {
                                 SearchColumns = new SearchColumn[]
@@ -2547,12 +2544,12 @@ namespace Oven
                                     new SearchColumn
                                     {
                                         // Title
-                                        EntityPropertyId = new Guid("{3690A6AE-0573-40F3-8680-0BCE13931EE3}")
+                                        EntityPropertyId = new ObjectId("5ca876f44a73264e4c06df12")
                                     },
                                     new SearchColumn
                                     {
                                         // Validation Type
-                                        EntityPropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}")
+                                        EntityPropertyId = new ObjectId("5ca876f54a73264e4c06df17")
                                     }
                                 }
                             }
@@ -2563,19 +2560,19 @@ namespace Oven
                 #region Validation Form Screen
                 new Screen
                 {
-                    Id = new Guid("{12A2E083-5CFA-450C-9585-38DE0C60DCC2}"),
+                    Id = new ObjectId("5ca877074a73264e4c06dfdc"),
                     Title = "Validation",
                     Path = "validation",
-                    EntityId = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
+                    EntityId = new ObjectId("5ca876f44a73264e4c06df10"),
                     ScreenType = ScreenType.Form,
                     ScreenSections = new ScreenSection[]
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{511119F3-9E30-4BCF-8887-32447DF171D2}"),
+                            Id = new ObjectId("5ca877074a73264e4c06dfdd"),
                             Title = "Validation",
                             InternalName = "Validation",
-                            EntityId = new Guid("{FF2103AE-FE34-410C-BC03-042AF7449D2D}"),
+                            EntityId = new ObjectId("5ca876f44a73264e4c06df10"),
                             ScreenSectionType = ScreenSectionType.Form,
                             FormSection = new FormSection
                             {
@@ -2583,72 +2580,72 @@ namespace Oven
                                 {
                                     new FormField{
                                         // Title
-                                        EntityPropertyId = new Guid("{3690A6AE-0573-40F3-8680-0BCE13931EE3}")
+                                        EntityPropertyId = new ObjectId("5ca876f44a73264e4c06df12")
                                     },
                                     new FormField
                                     {
                                         // Parent Relationship
-                                        EntityPropertyId = new Guid("{BA0702F8-6F26-4A25-9300-31B44F14B3A8}")
+                                        EntityPropertyId = new ObjectId("5ca876f54a73264e4c06df15")
                                     },
                                     new FormField
                                     {
                                         // Validation Type
-                                        EntityPropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}")
+                                        EntityPropertyId = new ObjectId("5ca876f54a73264e4c06df17")
                                     },
                                     new FormField
                                     {
                                         // Integer Value
-                                        EntityPropertyId = new Guid("{37E3DBC5-1B98-446D-B46B-1BD530CAD376}"),
+                                        EntityPropertyId = new ObjectId("5ca876f54a73264e4c06df1a"),
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
+                                            PropertyId = new ObjectId("5ca876f54a73264e4c06df17"),
                                             Operator = Request.Enumerations.ExpressionOperator.In,
-                                            UniqueidentifierValues = new Guid[]
+                                            UniqueidentifierValues = new ObjectId[]
                                             {
                                                 // Max Length
-                                                new Guid("{F7788E3D-7753-4491-98B1-AE78E16CDD0E}"),
+                                                new ObjectId("5ca877074a73264e4c06dfde"),
                                                 // Max Value
-                                                new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"),
+                                                new ObjectId("5ca877074a73264e4c06dfdf"),
                                                 // Min Length
-                                                new Guid("{35D78EB6-F5DE-4E7B-AE79-B69A1D3DC7C9}"),
+                                                new ObjectId("5ca877074a73264e4c06dfe0"),
                                                 // Min Value
-                                                new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}")
+                                                new ObjectId("5ca877074a73264e4c06dfe1")
                                             }
                                         }
                                     },
                                     new FormField
                                     {
                                         // Double Value
-                                        EntityPropertyId = new Guid("{8E35139C-E60C-4432-B1F7-62CEA1451593}"),
+                                        EntityPropertyId = new ObjectId("5ca876f54a73264e4c06df1b"),
                                         VisibilityExpression = new Expression
                                         {
-                                            PropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
+                                            PropertyId = new ObjectId("5ca876f54a73264e4c06df17"),
                                             Operator = Request.Enumerations.ExpressionOperator.In,
-                                            UniqueidentifierValues = new Guid[]
+                                            UniqueidentifierValues = new ObjectId[]
                                             {
                                                 // Max Value
-                                                new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"),
+                                                new ObjectId("5ca877074a73264e4c06dfdf"),
                                                 // Min Value
-                                                new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}")
+                                                new ObjectId("5ca877074a73264e4c06dfe1")
                                             }
                                         }
                                     },
                                     new FormField
                                     {
                                         // String Value
-                                        EntityPropertyId = new Guid("{E2F53C95-BA38-47E1-93CD-38F4B04F44D0}"),
+                                        EntityPropertyId = new ObjectId("5ca876f54a73264e4c06df1c"),
                                         Title = "Regular Expression",
                                         VisibilityExpression  = new Expression
                                         {
-                                            PropertyId = new Guid("{89E340FC-A7BB-44D4-A783-45801941B752}"),
+                                            PropertyId = new ObjectId("5ca876f54a73264e4c06df17"),
                                             Operator = Request.Enumerations.ExpressionOperator.Equal,
-                                            UniqueidentifierValue = new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}")
+                                            UniqueidentifierValue = new ObjectId("5ca877074a73264e4c06dfe2")
                                         }
                                     },
                                     new FormField
                                     {
                                         // Message
-                                        EntityPropertyId = new Guid("{640B7178-5C6D-4265-9ADE-EDC606FC3362}"),
+                                        EntityPropertyId = new ObjectId("5ca876f64a73264e4c06df1d"),
                                         Title = "Validation Failed Message (Optional)"
                                     }
                                 }
@@ -2660,8 +2657,8 @@ namespace Oven
                 #region Service Form Screen
                 new Screen()
                 {
-                    Id = new Guid("{04F72D2F-2280-4635-8F57-485E6F44026A}"),
-                    EntityId = new Guid("{0D30E5F1-7C29-4BB6-9C7E-39BC51884684}"),
+                    Id = new ObjectId("5ca877034a73264e4c06dfb8"),
+                    EntityId = new ObjectId("5ca876fa4a73264e4c06df52"),
                     ScreenType = ScreenType.Form,
                     Title = "Service",
                     Path = "service",
@@ -2669,7 +2666,7 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{ADE6F0EE-DA71-4E4A-8458-95E12761303B}"),
+                            Id = new ObjectId("5ca877074a73264e4c06dfe3"),
                             Title = "Service",
                             InternalName = "Service",
                             ScreenSectionType = ScreenSectionType.Form
@@ -2680,8 +2677,8 @@ namespace Oven
                 #region NuGet Import Screens
                 new Screen
                 {
-                    Id = new Guid("{CE390639-0ED5-4488-8D8A-726C0E817766}"),
-                    EntityId = new Guid("{91D514EB-27BD-4557-AF85-BE4EB99AA123}"),
+                    Id = new ObjectId("5ca877044a73264e4c06dfbb"),
+                    EntityId = new ObjectId("5ca876ff4a73264e4c06df89"),
                     ScreenType = ScreenType.Form,
                     Title = "NuGet Dependency",
                     Path = "nuget",
@@ -2689,7 +2686,7 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{5A227F15-3C1E-4C47-A997-B0BD7D4F6A92}"),
+                            Id = new ObjectId("5ca877074a73264e4c06dfe4"),
                             Title = "NuGet Dependency",
                             InternalName = "NuGetDependency",
                             ScreenSectionType = ScreenSectionType.Form,
@@ -2701,8 +2698,8 @@ namespace Oven
                 #region NuGet Package Source Screens
                 new Screen
                 {
-                    Id = new Guid("{33508886-531C-4A8E-B01B-28A139A5AEC9}"),
-                    EntityId = new Guid("{9209A86B-2D99-462D-A983-10A54F476282}"),
+                    Id = new ObjectId("5ca877044a73264e4c06dfbe"),
+                    EntityId = new ObjectId("5ca877004a73264e4c06df98"),
                     ScreenType = ScreenType.Form,
                     Title = "NuGet Package Source",
                     Path = "nugetSource",
@@ -2710,7 +2707,7 @@ namespace Oven
                     {
                         new ScreenSection
                         {
-                            Id = new Guid("{BCD1AB41-2E44-4EE6-995C-F042C6CB321B}"),
+                            Id = new ObjectId("5ca877074a73264e4c06dfe5"),
                             Title = "NuGet Package Source",
                             InternalName = "NuGetPackageSource",
                             ScreenSectionType = ScreenSectionType.Form,
@@ -2727,7 +2724,7 @@ namespace Oven
                 new MenuItem
                 {
                     Title = "Projects",
-                    ScreenId = new Guid("{C59B48E0-73B1-4393-8D6E-64CFE06304B2}"),
+                    ScreenId = new ObjectId("5ca876ed4a73264e4c06dedb"),
                     Icon = "glyphicon glyphicon-th-list"
                 }
             };
@@ -2737,7 +2734,7 @@ namespace Oven
             project.Services = new Service[]
             {
                 new Service(){
-                    Id = new Guid("{359525A8-CCA2-4AC1-9348-23057D616A75}"),
+                    Id = new ObjectId("5ca877084a73264e4c06dfe6"),
                     Title = "Master Builder Api",
                     ServiceType = ServiceType.WebService,
                     WebService = new WebService
@@ -2747,7 +2744,7 @@ namespace Oven
                         {
                             new WebServiceOperation
                             {
-                                Id = new Guid("{99B9358B-2266-47BC-957A-DC6EF459D4A1}"),
+                                Id = new ObjectId("5ca877084a73264e4c06dfe7"),
                                 Title = "Publish",
                                 Verb = HttpVerb.Post,
                                 RelativeRoute = "/api/builder/publish"
@@ -2772,7 +2769,7 @@ namespace Oven
                 #region Validation Type Entity
                 new Entity()
                 {
-                    Id = new Guid("{91104448-B314-41C3-8573-2BDF7CCBB701}"),
+                    Id = new ObjectId("5ca876f54a73264e4c06df18"),
                     InternalName = "ValidationType",
                     Title = "Validation Type",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -2780,14 +2777,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{03020776-6F7E-41CD-9475-6E2CA72E92B4}"),
+                            Id = new ObjectId("5ca877084a73264e4c06dfe8"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{771B57F0-F3D8-4E12-AA93-C801447BDB83}"),
+                            Id = new ObjectId("5ca877084a73264e4c06dfe9"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -2800,39 +2797,39 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{17CC19D3-8E91-432E-98F7-4D9368DE3C44}"),
+                                Id = new ObjectId("5ca877084a73264e4c06dfea"),
                                 Title = "Email"
                             },
                             new {
-                                Id = new Guid("{F7788E3D-7753-4491-98B1-AE78E16CDD0E}"),
+                                Id = new ObjectId("5ca877074a73264e4c06dfde"),
                                 Title = "Maximum Length"
                             },
                             new {
-                                Id = new Guid("{0046F484-17EB-4665-AE59-45189BB203A9}"),
+                                Id = new ObjectId("5ca877074a73264e4c06dfdf"),
                                 Title = "Maximum Value"
                             },
                             new {
-                                Id = new Guid("{35D78EB6-F5DE-4E7B-AE79-B69A1D3DC7C9}"),
+                                Id = new ObjectId("5ca877074a73264e4c06dfe0"),
                                 Title = "Minimum Length"
                             },
                             new {
-                                Id = new Guid("{A679CB09-DE53-42F7-BB89-7E29947B51A1}"),
+                                Id = new ObjectId("5ca877074a73264e4c06dfe1"),
                                 Title = "Minimum Value"
                             },
                             new {
-                                Id = new Guid("{C0A88F1A-AAA8-47DA-A75B-94490915616C}"),
+                                Id = new ObjectId("5ca877074a73264e4c06dfe2"),
                                 Title = "Pattern"
                             },
                             new {
-                                Id = new Guid("{BD110234-F05D-42AB-BF2E-382B83093D0C}"),
+                                Id = new ObjectId("5ca877084a73264e4c06dfeb"),
                                 Title = "Required"
                             },
                             new {
-                                Id = new Guid("{CB9A60D3-42B3-411F-8FCE-2FC36C812A16}"),
+                                Id = new ObjectId("5ca877084a73264e4c06dfec"),
                                 Title = "Required True"
                             },
                             new {
-                                Id = new Guid("{890C7A9E-09AE-4BB8-970E-85C564F753F1}"),
+                                Id = new ObjectId("5ca877084a73264e4c06dfed"),
                                 Title = "Unique"
                             }
                         })
@@ -2842,7 +2839,7 @@ namespace Oven
                 #region Feature Entity
                 new Entity()
                 {
-                    Id = new Guid("{D0E141A6-42CE-4AD3-A95E-24D40537342F}"),
+                    Id = new ObjectId("5ca877084a73264e4c06dfee"),
                     InternalName = "Feature",
                     Title = "Feature",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -2850,14 +2847,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{087C5441-AC68-4DE0-A1DE-03A59B6C58B5}"),
+                            Id = new ObjectId("5ca877084a73264e4c06dfef"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
+                            Id = new ObjectId("5ca877084a73264e4c06dff0"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -2870,7 +2867,7 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{6114120E-BD93-4CE4-A673-7DC295F93CFE}"),
+                                Id = new ObjectId("5ca877094a73264e4c06dff1"),
                                 Title = "New"
                             }
                         })
@@ -2880,7 +2877,7 @@ namespace Oven
                 #region Menu Item Type Entity
                 new Entity()
                 {
-                    Id = new Guid("{092F60B1-EE1E-4451-A771-013376C93E65}"),
+                    Id = new ObjectId("5ca876f64a73264e4c06df26"),
                     InternalName = "MenuItemType",
                     Title = "Menu Item Type",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -2888,14 +2885,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{543BCF58-4929-4386-8B01-FBF4C1680430}"),
+                            Id = new ObjectId("5ca877094a73264e4c06dff2"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{7D223CCB-41AF-4888-B441-61B3BDBBE56B}"),
+                            Id = new ObjectId("5ca877094a73264e4c06dff3"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -2908,11 +2905,11 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{51810E74-59E6-44AF-B6D3-1B8ECF82EE54}"),
+                                Id = new ObjectId("5ca86a896668b25914b67e70"),
                                 Title = "Application Link"
                             },
                             new {
-                                Id = new Guid("{A7B39F29-3887-4744-A4E3-926607DB15D2}"),
+                                Id = new ObjectId("5ca86a9b6668b25914b67e71"),
                                 Title = "New"
                             }
                         })
@@ -2922,7 +2919,7 @@ namespace Oven
                 #region Property Template Entity
                 new Entity()
                 {
-                    Id = new Guid("{08A8E760-8620-44A9-9A15-646B6A53C881}"),
+                    Id = new ObjectId("5ca876f44a73264e4c06df0a"),
                     InternalName = "PropertyTemplate",
                     Title = "Property Template",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -2930,14 +2927,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{ACEF7F12-2CF4-46AC-BFCC-60EA3E017E9F}"),
+                            Id = new ObjectId("5ca877094a73264e4c06dff4"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{732EA747-96A8-4437-A18A-B1BB990160A5}"),
+                            Id = new ObjectId("5ca877084a73264e4c06dff0"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -2950,11 +2947,11 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
+                                Id = new ObjectId("5ca877054a73264e4c06dfc9"),
                                 Title = "Primary Key"
                             },
                             new {
-                                Id = new Guid("{1B966A14-45B9-4E34-92BB-E2D46D97C5C3}"),
+                                Id = new ObjectId("5ca877094a73264e4c06dff5"),
                                 Title = "Reference Title"
                             }
                         })
@@ -2964,7 +2961,7 @@ namespace Oven
                 #region Property Type Entity
                 new Entity()
                 {
-                    Id = new Guid("{0B543B54-60AB-4FEA-BBD7-320AD50F3A06}"),
+                    Id = new ObjectId("5ca876f34a73264e4c06df07"),
                     InternalName = "PropertyType",
                     Title = "Property Type",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -2972,14 +2969,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{2E259BAE-F1E8-4B10-8672-8FDEC3061C80}"),
+                            Id = new ObjectId("5ca877094a73264e4c06dff6"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{8B61C0F2-9800-483C-A33E-0EFEDA6482BB}"),
+                            Id = new ObjectId("5ca877094a73264e4c06dff7"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -2992,39 +2989,39 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{4247CAB3-DA47-4921-81B4-1DFF78909859}"),
+                                Id = new ObjectId("5ca877094a73264e4c06dff8"),
                                 Title = "Uniqueidentifier"
                             },
                             new {
-                                Id = new Guid("{A05F5788-04C3-487D-92F1-A755C73230D4}"),
+                                Id = new ObjectId("5ca877044a73264e4c06dfc1"),
                                 Title = "String"
                             },
                             new {
-                                Id = new Guid("{F126388B-8A6E-41DB-A98A-A0E511016441}"),
+                                Id = new ObjectId("5ca86b506668b25914b67e76"),
                                 Title = "Integer"
                             },
                             new {
-                                Id = new Guid("{25E3A798-5F63-4A1E-93B3-A0BCE69836BC}"),
+                                Id = new ObjectId("5ca86b266668b25914b67e75"),
                                 Title = "Date Time"
                             },
                             new {
-                                Id = new Guid("{2C1D2E2A-3531-41D9-90D3-3632C368B12A}"),
+                                Id = new ObjectId("5ca86b146668b25914b67e74"),
                                 Title = "Boolean"
                             },
                             new {
-                                Id = new Guid("{8BB0B472-E8C4-4DCF-9EF4-FFA088B5A175}"),
+                                Id = new ObjectId("5ca86c626668b25914b67e78"),
                                 Title = "Parent Relationship, One to Many"
                             },
                             new {
-                                Id = new Guid("{B42A437F-3DED-4B5F-A573-1CCEC1B2D58E}"),
+                                Id = new ObjectId("5ca86c956668b25914b67e79"),
                                 Title = "Reference Relationship"
                             },
                             new {
-                                Id = new Guid("{7028DE7D-85DF-4116-8A9A-C565AFD5CE49}"),
+                                Id = new ObjectId("5ca877064a73264e4c06dfda"),
                                 Title = "Parent Relationship, One to One"
                             },
                             new {
-                                Id = new Guid("{B967BF8D-0722-43F0-9945-CBEB4160822F}"),
+                                Id = new ObjectId("5ca86b656668b25914b67e77"),
                                 Title = "Double"
                             }
                         })
@@ -3034,7 +3031,7 @@ namespace Oven
                 #region Screen Section Type Entity
                 new Entity()
                 {
-                    Id = new Guid("{6B3442DE-02EA-4A89-BBC9-3C7E698C94EF}"),
+                    Id = new ObjectId("5ca876f94a73264e4c06df45"),
                     InternalName = "ScreenSectionType",
                     Title = "Screen Section Type",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -3042,14 +3039,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{4BBA98F7-4C6F-4E60-BE3F-06180D8A6141}"),
+                            Id = new ObjectId("5ca877094a73264e4c06dff9"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{4A67B6BF-99A0-4446-A61C-AF3EB857099C}"),
+                            Id = new ObjectId("5ca877094a73264e4c06dffa"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3062,19 +3059,19 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{DC1169A8-8F49-45E9-9969-B64BEF4D0F42}"),
+                                Id = new ObjectId("5ca876fe4a73264e4c06df7c"),
                                 Title = "Form"
                             },
                             new {
-                                Id = new Guid("{0637300C-B76E-45E2-926A-055BB335129F}"),
+                                Id = new ObjectId("5ca877044a73264e4c06dfc4"),
                                 Title = "Search"
                             },
                             new {
-                                Id = new Guid("{4270A420-64CB-4A2C-B718-2C645DB2B57B}"),
+                                Id = new ObjectId("5ca877094a73264e4c06dffb"),
                                 Title = "List of Menu Items"
                             },
                             new {
-                                Id = new Guid("{38EF9B44-A993-479B-91EC-1FE436E91556}"),
+                                Id = new ObjectId("5ca877054a73264e4c06dfcf"),
                                 Title = "Html"
                             },
                         })
@@ -3084,7 +3081,7 @@ namespace Oven
                 #region Screen Type Entity
                 new Entity()
                 {
-                    Id = new Guid("{C04282DB-CB85-445D-BB4B-AEBB3801DAC7}"),
+                    Id = new ObjectId("5ca876f74a73264e4c06df32"),
                     InternalName = "ScreenType",
                     Title = "Screen Type",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -3092,14 +3089,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{C9DBA086-ACC8-4BD9-8EEB-2B2AAF38CC78}"),
+                            Id = new ObjectId("5ca8770a4a73264e4c06dffc"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{749ACD4D-1873-4314-B0A1-E61EED934D3C}"),
+                            Id = new ObjectId("5ca8770a4a73264e4c06dffd"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3112,19 +3109,19 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"),
+                                Id = new ObjectId("5ca877054a73264e4c06dfc9"),
                                 Title = "Search"
                             },
                             new {
-                                Id = new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"),
+                                Id = new ObjectId("5ca877054a73264e4c06dfca"),
                                 Title = "Edit"
                             },
                             new {
-                                Id = new Guid("{ACE5A965-7005-4E34-9C66-AF0F0CD15AE9}"),
+                                Id = new ObjectId("5ca8770a4a73264e4c06dffe"),
                                 Title = "View"
                             },
                             new {
-                                Id = new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"),
+                                Id = new ObjectId("5ca8770a4a73264e4c06dfff"),
                                 Title = "Html"
                             }
                         })
@@ -3134,7 +3131,7 @@ namespace Oven
                 #region Screen Template Entity
                 new Entity()
                 {
-                    Id = new Guid("{564E3EC4-59E0-4EEB-A9E5-F1367E1FEB29}"),
+                    Id = new ObjectId("5ca876f74a73264e4c06df30"),
                     InternalName = "ScreenTemplate",
                     Title = "Screen Template",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -3142,14 +3139,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{C76EBB7F-2830-43B5-8A02-3F27825BD1C1}"),
+                            Id = new ObjectId("5ca8770a4a73264e4c06e000"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{9B383F17-C149-470A-BF58-47C8057B74FF}"),
+                            Id = new ObjectId("5ca8770a4a73264e4c06e001"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3162,11 +3159,11 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{142B82E8-471B-47E5-A13F-158D2B06874B}"),
+                                Id = new ObjectId("5ca8770a4a73264e4c06e002"),
                                 Title = "Reference"
                             },
                             new {
-                                Id = new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"),
+                                Id = new ObjectId("5ca8770a4a73264e4c06e003"),
                                 Title = "Home"
                             }
                         })
@@ -3176,7 +3173,7 @@ namespace Oven
                 #region Seed Type Entity
                 new Entity()
                 {
-                    Id = new Guid("{EA6A9786-573A-4821-824C-3FB5322D2A51}"),
+                    Id = new ObjectId("5ca876fa4a73264e4c06df50"),
                     InternalName = "SeedType",
                     Title = "Seed Type",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -3184,14 +3181,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{623C2ADB-9FAD-43F6-8DDD-970B21D49CCE}"),
+                            Id = new ObjectId("5ca8770a4a73264e4c06e004"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{E67EC40A-C1B6-4465-BA91-D40A488317BC}"),
+                            Id = new ObjectId("5ca8770a4a73264e4c06e005"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3204,15 +3201,15 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{8A07A94D-4A5F-420F-B02A-4B2223B1213B}"),
+                                Id = new ObjectId("5ca8770b4a73264e4c06e006"),
                                 Title = "Add if none"
                             },
                             new {
-                                Id = new Guid("{2729F45B-269F-42B1-BBA9-3E76DC9D1CBB}"),
+                                Id = new ObjectId("5ca8770b4a73264e4c06e007"),
                                 Title = "Ensure All Added"
                             },
                             new {
-                                Id = new Guid("{6989AE9F-D5BD-4861-ABE6-0142EDDE6130}"),
+                                Id = new ObjectId("5ca8770b4a73264e4c06e008"),
                                 Title = "Ensure All Updated"
                             }
                         })
@@ -3222,7 +3219,7 @@ namespace Oven
                 #region Entity Template Entity
                 new Entity()
                 {
-                    Id = new Guid("{E20337EA-37F3-48D1-96F7-3CF2A40A7F52}"),
+                    Id = new ObjectId("5ca876f24a73264e4c06def8"),
                     InternalName = "EntityTemplate",
                     Title = "Entity Template",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -3230,14 +3227,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{5D0BEB0A-4B91-4B40-83F0-8EAE7426CCF6}"),
+                            Id = new ObjectId("5ca8770b4a73264e4c06e009"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{83CFE967-1FEF-44F1-A3DC-C03FC2F0B167}"),
+                            Id = new ObjectId("5ca8770b4a73264e4c06e00a"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3250,7 +3247,7 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{B79D1C90-6320-4A07-9753-2A41110611C8}"),
+                                Id = new ObjectId("5ca86a296668b25914b67e6f"),
                                 Title = "Reference"
                             }
                         })
@@ -3260,7 +3257,7 @@ namespace Oven
                 #region Service Type Entity
                 new Entity()
                 {
-                    Id = new Guid("{65D65D11-D1F0-421E-811E-A8CBB84CBB0D}"),
+                    Id = new ObjectId("5ca876fb4a73264e4c06df58"),
                     InternalName = "ServiceType",
                     Title = "Service Type",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -3268,14 +3265,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{83B85CF2-1D09-473B-9212-9602E9CD7F5D}"),
+                            Id = new ObjectId("5ca8770b4a73264e4c06e00b"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{372DD3D3-F71D-4A25-91E6-7F8DC7D5AA44}"),
+                            Id = new ObjectId("5ca8770b4a73264e4c06e00c"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3288,12 +3285,12 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{87D5B4C5-9862-4282-8BB2-E2707A17036A}"),
+                                Id = new ObjectId("5ca8770b4a73264e4c06e00d"),
                                 Title = "Web Service"
                             },
                             new
                             {
-                                Id = new Guid("{DD6A4434-16E1-41BF-B75B-C78E3A8D46BF}"),
+                                Id = new ObjectId("5ca8770b4a73264e4c06e00e"),
                                 Title = "Export"
                             }
                         })
@@ -3303,7 +3300,7 @@ namespace Oven
                 #region Http Verb
                 new Entity()
                 {
-                    Id = new Guid("{384874D5-107B-48A3-980C-8F299BEADAE1}"),
+                    Id = new ObjectId("5ca8770b4a73264e4c06e00f"),
                     InternalName = "HttpVerb",
                     Title = "Http Verb",
                     EntityTemplate = Request.EntityTemplate.Reference,
@@ -3311,14 +3308,14 @@ namespace Oven
                     {
                         new Property()
                         {
-                            Id = new Guid("{431DFED1-4CD6-4D26-8BEF-54109AA9FC43}"),
+                            Id = new ObjectId("5ca8770b4a73264e4c06e010"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{37BEB522-5AA5-46B2-A2B3-5111F9596A50}"),
+                            Id = new ObjectId("5ca8770c4a73264e4c06e011"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3331,22 +3328,22 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{EF85B946-2F8D-49D6-AFE7-924D53CBA328}"),
+                                Id = new ObjectId("5ca8770c4a73264e4c06e012"),
                                 Title = "Get"
                             },
                             new
                             {
-                                Id = new Guid("{B5EFB225-77A7-4BC7-8062-BC4B296CEFAB}"),
+                                Id = new ObjectId("5ca8770c4a73264e4c06e013"),
                                 Title = "Post"
                             },
                             new
                             {
-                                Id = new Guid("{AC3CA150-F44C-4F6C-A26F-09573DB433CF}"),
+                                Id = new ObjectId("5ca8770c4a73264e4c06e014"),
                                 Title = "Put"
                             },
                             new
                             {
-                                Id = new Guid("{B6FBA91F-753D-4B80-9624-BDDA8F0E2868}"),
+                                Id = new ObjectId("5ca8770c4a73264e4c06e015"),
                                 Title = "Delete"
                             }
                         })
@@ -3362,20 +3359,20 @@ namespace Oven
             {
                 new Entity("User")
                 {
-                    Id = new Guid("{2DC156C4-8A0E-4DE8-92A5-922C450473CF}"),
+                    Id = new ObjectId("5ca8770c4a73264e4c06e016"),
                     Title = "User",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{E3B517D7-703F-4867-9100-482ACC9A45CE}"),
+                            Id = new ObjectId("5ca8770c4a73264e4c06e017"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{D75F1D27-A656-46F2-9117-5A9F39E56723}"),
+                            Id = new ObjectId("5ca8770c4a73264e4c06e018"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3383,7 +3380,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid(""),
+                                    Id = new ObjectId(""),
                                     ValidationType = ValidationType.Required
                                 }
                             }
@@ -3393,20 +3390,20 @@ namespace Oven
                 },
                 new Entity("UserRole")
                 {
-                    Id = new Guid("{F2C7B8A9-1C8B-4E38-A964-2E98361DA5AE}"),
+                    Id = new ObjectId("5ca8770c4a73264e4c06e019"),
                     Title = "User Role",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{B95C164B-11FB-46F4-9012-FB162F93B221}"),
+                            Id = new ObjectId("5ca8770c4a73264e4c06e01a"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{7AD3D455-2EAB-471C-B137-EDD91A8B7366}"),
+                            Id = new ObjectId("5ca8770c4a73264e4c06e01b"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title"
@@ -3416,20 +3413,20 @@ namespace Oven
                 },
                 new Entity("Role")
                 {
-                    Id = new Guid("{AD16B078-26F8-4544-B8F7-AF2EA3298C01}"),
+                    Id = new ObjectId("5ca8770d4a73264e4c06e01c"),
                     Title = "Role",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{C6A6C38D-5635-426C-8686-F34E4D3406BF}"),
+                            Id = new ObjectId("5ca8770d4a73264e4c06e01d"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{BEC9721C-7F62-4DBA-9C65-6A0A970966E7}"),
+                            Id = new ObjectId("5ca8770d4a73264e4c06e01e"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3437,7 +3434,7 @@ namespace Oven
                             {
                                 new Validation
                                 {
-                                    Id = new Guid("{D958367C-5B31-4B00-9851-0F16ED7AD33D}"),
+                                    Id = new ObjectId("5ca8770d4a73264e4c06e01f"),
                                     ValidationType = ValidationType.Required
                                 }
                             }
@@ -3447,50 +3444,50 @@ namespace Oven
                 },
                 new Entity("Audit")
                 {
-                    Id = new Guid("{E10D2B13-C11E-4962-AAFA-EDCFD6905E4B}"),
+                    Id = new ObjectId("5ca8770d4a73264e4c06e020"),
                     Title = "Audit",
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{BA67C0BC-D99D-475B-A225-B553AF8E2931}"),
+                            Id = new ObjectId("5ca8770d4a73264e4c06e021"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{FCE53DDA-2FDE-401E-8359-8B2B405860D6}"),
+                            Id = new ObjectId("5ca8770d4a73264e4c06e022"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title"
                         },
                         new Property("Action")
                         {
-                            Id = new Guid("{FD589DEB-B68D-4AE3-BB06-1A6209105761}"),
+                            Id = new ObjectId("5ca8770d4a73264e4c06e023"),
                             Title = "Action",
                             PropertyType = PropertyType.ReferenceRelationship,
-                            ReferenceEntityId = new Guid("{31509CCC-920D-443E-A4CA-EB71C9A98CAB}")
+                            ReferenceEntityId = new ObjectId("5ca8770d4a73264e4c06e024")
                         }
                     }
                 },
                 new Entity("Action")
                 {
-                    Id = new Guid("{31509CCC-920D-443E-A4CA-EB71C9A98CAB}"),
+                    Id = new ObjectId("5ca8770d4a73264e4c06e024"),
                     Title = "Action",
                     EntityTemplate = Request.EntityTemplate.Reference,
                     Properties = new Property[]
                     {
                         new Property()
                         {
-                            Id = new Guid("{6458DE21-695D-4DB1-8FB9-111F03E9AE0D}"),
+                            Id = new ObjectId("5ca8770d4a73264e4c06e025"),
                             InternalName = "Id",
                             PropertyType = PropertyType.PrimaryKey,
                             Title = "Id"
                         },
                         new Property()
                         {
-                            Id = new Guid("{810DD8DC-DFCC-4B92-AC3C-3B26630E76B2}"),
+                            Id = new ObjectId("5ca8770d4a73264e4c06e026"),
                             InternalName = "Title",
                             PropertyType = PropertyType.String,
                             Title = "Title",
@@ -3503,17 +3500,17 @@ namespace Oven
                         JsonData = JsonConvert.SerializeObject(new []
                         {
                             new {
-                                Id = new Guid("{DF69FFB1-AFCE-4AAE-B03E-659EC4731731}"),
+                                Id = new ObjectId("5ca8770d4a73264e4c06e027"),
                                 Title = "Insert"
                             },
                             new
                             {
-                                Id = new Guid("{627E77A7-A973-4F04-9E8A-96E6A1B5B799}"),
+                                Id = new ObjectId("5ca8770e4a73264e4c06e028"),
                                 Title = "Update"
                             },
                             new
                             {
-                                Id = new Guid("{0AE9F2E5-986F-4CF4-8179-274262C67BE4}"),
+                                Id = new ObjectId("5ca8770e4a73264e4c06e029"),
                                 Title = "Delete"
                             }
                         })

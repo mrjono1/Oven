@@ -1,4 +1,5 @@
-﻿using Oven.Request;
+﻿using MongoDB.Bson;
+using Oven.Request;
 using System;
 using System.Collections.Generic;
 
@@ -18,6 +19,6 @@ namespace Oven.Helpers
         /// Child Entites
         /// </summary>
         public List<ScreenItem> ChildScreenItems { get; set; }
-        public IEnumerable<Guid> ParentScreenSectionIds { get; set; }
+        public IEnumerable<ObjectId> ParentScreenSectionIds { get; set; }
     }
 }

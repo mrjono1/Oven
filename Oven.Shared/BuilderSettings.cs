@@ -29,9 +29,5 @@ namespace Oven.Shared
         /// Allow pull from git
         /// </summary>
         public bool GitPullOn { get; set; } = true;
-        /// <summary>
-        /// Allow creation of EF Migrations. NOTE: If Git Push or Git Pull is off you run the risk of currupting your local database
-        /// </summary>
-        public bool CreateMigrations { get; set; } = true;
     }
 }

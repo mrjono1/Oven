@@ -1,4 +1,5 @@
 using Humanizer;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,10 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Entity Template Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ServiceType> ServiceTypeDictonary = new Dictionary<Guid, ServiceType>
+        internal static readonly Dictionary<ObjectId, ServiceType> ServiceTypeDictonary = new Dictionary<ObjectId, ServiceType>
         {
-            { new Guid("{87D5B4C5-9862-4282-8BB2-E2707A17036A}"), ServiceType.WebService },
-            { new Guid("{DD6A4434-16E1-41BF-B75B-C78E3A8D46BF}"), ServiceType.ExportService }
+            { new ObjectId("5ca8770b4a73264e4c06e00d"), ServiceType.WebService },
+            { new ObjectId("5ca8770b4a73264e4c06e00e"), ServiceType.ExportService }
         };
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Title
         /// </summary>
@@ -53,7 +54,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid ServiceTypeId { get; set; }
+        public ObjectId ServiceTypeId { get; set; }
         /// <summary>
         /// Service Type
         /// </summary>

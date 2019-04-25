@@ -46,7 +46,7 @@ namespace Oven.Templates.DataAccessLayer.Entities
         {
             var constructorDefaultValues = new List<string>
             {
-                "            Id = Guid.NewGuid();"
+                "            Id = ObjectId.GenerateNewId();"
             };
             var properties = new List<string>();
             var navigationProperties = new List<string>();
@@ -126,7 +126,9 @@ namespace Oven.Templates.DataAccessLayer.Entities
                 }
             }
 
-            return $@"using System; {(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
+            return $@"using System; 
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;{(navigationProperties.Any() ? string.Concat(Environment.NewLine, "using System.Collections.Generic;") : string.Empty)}
 
 namespace {Project.InternalName}.DataAccessLayer.Entities
 {{

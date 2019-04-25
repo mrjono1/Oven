@@ -58,7 +58,7 @@ module.exports = (env) => {{
         new ManifestPlugin({{
             seed: {{
                 name: '{Project.Title}',
-                short_name: '{new string(Project.Title.Take(12).ToArray())}',
+                short_name: '{new string(Project.Title.Replace(" ","").Take(12).ToArray())}',
                 theme_color: '{Project.ThemeColour}',
                 display: 'standalone',
                 start_url: '/'

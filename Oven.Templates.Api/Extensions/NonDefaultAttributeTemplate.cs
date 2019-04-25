@@ -56,14 +56,14 @@ namespace Oven.Templates.Api.Extensions
         }}
 
         /// <summary>
-        /// Stops you from having to test for things like Guid.Empty
+        /// Stops you from having to test for things like ObjectId.Empty
         /// </summary>
         /// <param name=""value"">The value to test</param>
         /// <returns><c>false</c> if the <paramref name=""value""/> is equal the default value of an instance of its own type.</returns>
-        /// <remarks>Is meant for use with primitive types or structs like DateTime, Guid, etc. Specifically ignores null values so that it can be combined with RequiredAttribute. Should not be used with Strings.</remarks>
+        /// <remarks>Is meant for use with primitive types or structs like DateTime, ObjectId, etc. Specifically ignores null values so that it can be combined with RequiredAttribute. Should not be used with Strings.</remarks>
         /// <example>
         /// [NonDefault] 
-        /// public Guid SomeId {{ get; set;}}
+        /// public ObjectId SomeId {{ get; set;}}
         /// </example>
         public override bool IsValid(object value)
         {{

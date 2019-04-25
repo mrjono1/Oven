@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Oven.Templates.Api.Entities
+namespace Oven.Templates.Api.Services
 {
     /// <summary>
     /// Controller Template
@@ -31,7 +31,7 @@ namespace Oven.Templates.Api.Entities
         /// <summary>
         /// Get file path
         /// </summary>
-        public string[] GetFilePath() => new string[] { "Services", "Entities" };
+        public string[] GetFilePath() => new string[] { "Services" };
 
         /// <summary>
         /// Has Entity Actions
@@ -51,11 +51,11 @@ namespace Oven.Templates.Api.Entities
                 $@"        /// <summary>
         /// Database Context
         /// </summary>
-        protected readonly ApplicationDbContext _context;"
+        protected readonly IApplicationDbContext _context;"
             };
             var constructorParameters = new List<string>
             {
-                $"ApplicationDbContext context"
+                $"IApplicationDbContext context"
             };
             var constructorFieldMappings = new List<string>
             {
@@ -106,8 +106,10 @@ using {Project.InternalName}.Models;
 using {Project.InternalName}.DataAccessLayer;
 using {Project.InternalName}.DataAccessLayer.Entities;
 using {Project.InternalName}.Services.Contracts;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using MongoDB.Bson;
+using MongoDB.Driver;
+
 {string.Join(Environment.NewLine, usings.Distinct())}
 
 namespace {Project.InternalName}.Services

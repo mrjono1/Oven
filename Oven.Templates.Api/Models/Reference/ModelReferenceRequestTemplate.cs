@@ -62,6 +62,7 @@ namespace Oven.Templates.Api.Models.Reference
             return $@"using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
 
 namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
 {{

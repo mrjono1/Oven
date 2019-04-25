@@ -37,14 +37,14 @@ namespace Oven.Templates.Api.Controllers
         [HttpGet(""{{id}}"")]
         [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> GetAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, Guid id)
+        public async Task<IActionResult> GetAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, ObjectId id)
         {{
             if (!ModelState.IsValid)
             {{
                 return new BadRequestObjectResult(ModelState);
             }}
 
-            if (id == Guid.Empty)
+            if (id == ObjectId.Empty)
             {{
                 return NotFound();
             }}
@@ -74,9 +74,9 @@ namespace Oven.Templates.Api.Controllers
         [HttpPut(""{{id}}"")]
         [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> UpdateAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, [FromRoute]Guid id, [FromBody]{Screen.InternalName}Request request)
+        public async Task<IActionResult> UpdateAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, [FromRoute]ObjectId id, [FromBody]{Screen.InternalName}Request request)
         {{
-            if (request == null)
+            if (id == ObjectId.Empty || request == null)
             {{
                 return BadRequest();
             }}
@@ -151,14 +151,14 @@ namespace Oven.Templates.Api.Controllers
         /// </summary>
         [HttpDelete(""{{id}}"")]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> DeleteAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, Guid id)
+        public async Task<IActionResult> DeleteAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, ObjectId id)
         {{
             if (!ModelState.IsValid)
             {{
                 return new BadRequestObjectResult(ModelState);
             }}
 
-            if (id == Guid.Empty)
+            if (id == ObjectId.Empty)
             {{
                 return NotFound();
             }}
@@ -183,7 +183,7 @@ namespace Oven.Templates.Api.Controllers
             //    {
             //        case PropertyType.ParentRelationship:
             //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
+            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && ObjectId.TryParse(operation.value.ToString(), out ObjectId {formField.InternalNameCSharp.Camelize()}))
             //            {{
             //                entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
             //            }}
@@ -197,7 +197,7 @@ namespace Oven.Templates.Api.Controllers
 
             //        case PropertyType.ReferenceRelationship:
             //            patchEntityOperations.Add($@"                     case ""/{formField.InternalNameCSharp.Camelize()}"":
-            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && Guid.TryParse(operation.value.ToString(), out Guid {formField.InternalNameCSharp.Camelize()}))
+            //            if (operation.value != null && !string.IsNullOrWhiteSpace(operation.value.ToString()) && ObjectId.TryParse(operation.value.ToString(), out ObjectId {formField.InternalNameCSharp.Camelize()}))
             //            {{
             //                entity.{formField.InternalNameCSharp} = {formField.InternalNameCSharp.Camelize()};
             //            }}
@@ -302,9 +302,9 @@ namespace Oven.Templates.Api.Controllers
         [HttpPatch(""{Screen.InternalName}/{{id}}"")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> {Screen.InternalName}([FromRoute]Guid id, [FromBody]JsonPatchDocument<{Screen.InternalName}Request> patch)
+        public async Task<IActionResult> {Screen.InternalName}([FromRoute]string id, [FromBody]JsonPatchDocument<{Screen.InternalName}Request> request)
         {{
-            if (patch == null)
+            if (string.IsNullOrWhiteSpace(id) || request == null)
             {{
                 return BadRequest();
             }}
@@ -314,7 +314,7 @@ namespace Oven.Templates.Api.Controllers
                 return new BadRequestObjectResult(ModelState);
             }}
 
-            if (!patch.Operations.Any())
+            if (!request.Operations.Any())
             {{
                 return Ok();
             }}
@@ -323,7 +323,7 @@ namespace Oven.Templates.Api.Controllers
             var entityEntry = _context.{Screen.Entity.InternalNamePlural}.Attach(entity);
             
             // do stuff
-            foreach(var operation in patch.Operations)
+            foreach(var operation in request.Operations)
             {{
                 switch (operation.path)
                 {{

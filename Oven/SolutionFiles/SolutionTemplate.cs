@@ -6,7 +6,7 @@ namespace Oven.Templates.SolutionFiles
     /// <summary>
     /// Solution file
     /// </summary>
-    public class SolutionTemplate: ITemplate
+    public class SolutionTemplate : ITemplate
     {
         private readonly Project Project;
 
@@ -54,6 +54,8 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project(""{{9A19103F-16F7-4668-BE54-9A1E7A4F7556}}"") = ""{Project.InternalName}"", ""{Project.InternalName}\{Project.InternalName}.csproj"", ""{{{Project.ProjectWebId.ToString().ToUpperInvariant()}}}""
 EndProject
+Project(""{{9A19103F-16F7-4668-BE54-9A1E7A4F7556}}"") = ""{Project.InternalName}.Shared"", ""{Project.InternalName}.Shared\{Project.InternalName}.Shared.csproj"", ""{{{Project.ProjectSharedId.ToString().ToUpperInvariant()}}}""
+EndProject
 Project(""{{9A19103F-16F7-4668-BE54-9A1E7A4F7556}}"") = ""{Project.InternalName}.Api"", ""{Project.InternalName}.Api\{Project.InternalName}.Api.csproj"", ""{{{Project.ProjectApiId.ToString().ToUpperInvariant()}}}""
 EndProject
 Project(""{{9A19103F-16F7-4668-BE54-9A1E7A4F7556}}"") = ""{Project.InternalName}.DataAccessLayer"", ""{Project.InternalName}.DataAccessLayer\{Project.InternalName}.DataAccessLayer.csproj"", ""{{{Project.ProjectDataAccessLayerId.ToString().ToUpperInvariant()}}}""
@@ -68,6 +70,10 @@ EndProject
 		{{{Project.ProjectWebId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{{{Project.ProjectWebId.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
         {{{Project.ProjectWebId.ToString().ToUpperInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
+		{{{Project.ProjectSharedId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{{{Project.ProjectSharedId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{{{Project.ProjectSharedId.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+        {{{Project.ProjectSharedId.ToString().ToUpperInvariant()}}}.Release|Any CPU.Build.0 = Release|Any CPU
 		{{{Project.ProjectApiId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{{{Project.ProjectApiId.ToString().ToUpperInvariant()}}}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{{{Project.ProjectApiId.ToString().ToUpperInvariant()}}}.Release|Any CPU.ActiveCfg = Release|Any CPU

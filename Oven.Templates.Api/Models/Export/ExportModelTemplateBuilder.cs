@@ -52,5 +52,7 @@ namespace Oven.Templates.Api.Models.Export
 
             return templates;
         }
+
+        public IEnumerable<ITemplateBuilder> GetTemplateBuilders() => new ITemplateBuilder[] { };
     }
 }

@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Oven.Interfaces;
 using Oven.Request;
 using System;
@@ -46,7 +47,7 @@ namespace Oven.Templates.Api.Services
 
             if (Project.Id == Project.KitchenId)
             {
-                var projectEntity = Project.Entities.SingleOrDefault(a => a.Id == new Guid("{89920EA4-9099-487A-AEBB-390E401FEC26}"));
+                var projectEntity = Project.Entities.SingleOrDefault(a => a.Id == new ObjectId("5ca869596668b25914b67e6e"));
                 exportFunctions.Add(new ExportFunctionTemplate(Project, projectEntity).Function());
             }
 
@@ -57,6 +58,7 @@ using System.Threading.Tasks;
 using {Project.InternalName}.DataAccessLayer;
 using {Project.InternalName}.DataAccessLayer.Entities;
 using {Project.InternalName}.Services.Contracts;
+using MongoDB.Bson;
 
 namespace {Project.InternalName}.Services
 {{
@@ -68,12 +70,12 @@ namespace {Project.InternalName}.Services
         /// <summary>
         /// Database Context
         /// </summary>
-        private readonly ApplicationDbContext _context;
+        private readonly IApplicationDbContext _context;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ExportService(ApplicationDbContext context)
+        public ExportService(IApplicationDbContext context)
         {{
             _context = context;
         }}

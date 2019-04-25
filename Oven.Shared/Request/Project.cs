@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Oven.Request
     [System.Diagnostics.DebuggerDisplay("Project: {Title}")]
     public partial class Project
     {
-        public static readonly Guid KitchenId = new Guid("{66E47378-5CD8-40BC-833C-CDA2CC97058A}");
+        public static readonly ObjectId KitchenId = new ObjectId("5ca86ae16668b25914b67e73");
         /// <summary>
         /// Constructor sets default values
         /// </summary>
@@ -27,8 +28,7 @@ namespace Oven.Request
                 "bin",
                 "obj",
                 "node_modules",
-                "Properties",
-                "Migrations"
+                "Properties"
             };
         }
         /// <summary>
@@ -36,7 +36,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Internal Name
         /// </summary>
@@ -92,7 +92,7 @@ namespace Oven.Request
         /// Default Screen to load
         /// </summary>
         [NonDefault]
-        public Guid? DefaultScreenId { get; set; }
+        public ObjectId? DefaultScreenId { get; set; }
 
         /// <summary>
         /// Any NuGet dependencies to include
@@ -125,11 +125,6 @@ namespace Oven.Request
                 return $"{MajorVersion}.{MinorVersion}.{BuildVersion}";
             }
         }
-        /// <summary>
-        /// Use MySql instead of MS Sql (not fully implemented explicit migrations needed)
-        /// </summary>
-        [JsonIgnore]
-        public bool UseMySql { get; set; }
         /// <summary>
         /// Allow Destructive Database Change, things like dropping columns, tables, keys
         /// </summary>
@@ -171,6 +166,11 @@ namespace Oven.Request
         /// </summary>
         [JsonIgnore]
         public Guid ProjectWebId { get; set; } = new Guid("{2AF7569A-8978-4FA6-B7B7-E49CB9AE46D8}");
+        /// <summary>
+        /// Internal Id of the Shared Project
+        /// </summary>
+        [JsonIgnore]
+        public Guid ProjectSharedId { get; set; } = new Guid("{9F905352-6C68-4738-B27D-F695C47EF611}");
         /// <summary>
         /// Internal Id of the Api Project
         /// </summary>

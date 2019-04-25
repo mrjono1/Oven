@@ -19,14 +19,41 @@ namespace Oven.Templates.DataAccessLayer
 
             // Project Files
             solutionWriter.AddTemplate(new ProjectFiles.ProjectTemplate(project));
-            solutionWriter.AddTemplate(new ProjectFiles.ApplicationDbContextTemplate(project));
-            solutionWriter.AddTemplate(new ProjectFiles.ApplicationDbContextFactoryTemplate(project));
+            solutionWriter.AddTemplate(new ProjectFiles.SettingsTemplate(project));
 
-            // Entities
+            // Entites
             solutionWriter.AddTemplate(new Entities.EntityTemplateBuilder(project));
 
-            // Entity Type Config
-            solutionWriter.AddTemplate(new EntityTypeConfigurations.EntityTypeConfigTemplateBuilder(project));
+            solutionWriter.AddTemplate(new ProjectFiles.DatabaseContextTemplate(project));
+            solutionWriter.AddTemplate(new ProjectFiles.ApplicationDbContextTemplate(project));
+            solutionWriter.AddTemplate(new ProjectFiles.IApplicationDbContextTemplate(project));
+
+            // Models
+            solutionWriter.AddTemplate(new Models.ModelTemplateBuilder(project));
+
+            // Extensions
+         //   solutionWriter.AddTemplate(new Extensions.ObjectIdExtensions(project));
+            solutionWriter.AddTemplate(new Extensions.StringExtensions(project));
+
+            // Create Entity Service Interfaces
+            foreach (var entity in project.Entities)
+            {
+                var service = new Services.Contracts.EntityServiceTemplate(project, entity);
+                if (service.HasEntityActions)
+                {
+                    solutionWriter.AddTemplate(service);
+                }
+            }
+
+            // Create Entity Services
+            foreach (var entity in project.Entities)
+            {
+                var service = new Services.EntityServiceTemplate(project, entity);
+                if (service.HasEntityActions)
+                {
+                    solutionWriter.AddTemplate(service);
+                }
+            }
 
             var errors = await solutionWriter.WriteAndClean();
 
@@ -35,21 +62,6 @@ namespace Oven.Templates.DataAccessLayer
                 return errors;
             }
 
-            if (builderSettings.CreateMigrations)
-            {
-                var dalProjectChanged = git.FolderChanged(repository, $"{project.InternalName}.DataAccessLayer");
-
-                if (dalProjectChanged)
-                {
-                    var migration = new Migrations.Migration(dalProjectDirectory);
-                    var migrationResult = await migration.Migrate();
-                    if (!migrationResult.Success)
-                    {
-                        return $"Migration Generation Failed: {migrationResult.Message}";
-                    }
-                }
-            }
-            
             return null;
         }
     }

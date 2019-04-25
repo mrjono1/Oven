@@ -1,4 +1,5 @@
 using Humanizer;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -18,23 +19,23 @@ namespace Oven.Request
         /// <summary>
         /// Register of all Screen Type Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ScreenType> ScreenTypeDictonary = new Dictionary<Guid, ScreenType>
+        internal static readonly Dictionary<ObjectId, ScreenType> ScreenTypeDictonary = new Dictionary<ObjectId, ScreenType>
         {
-            { Guid.Empty, ScreenType.None},
-            { new Guid("{03CD1D4E-CA2B-4466-8016-D96C2DABEB0D}"), ScreenType.Search },
-            { new Guid("{9B422DE1-FACE-4A63-9A46-0BD1AF3D47F4}"), ScreenType.Form },
-            { new Guid("{ACE5A965-7005-4E34-9C66-AF0F0CD15AE9}"), ScreenType.View },
-            { new Guid("{7A37305E-C518-4A16-91AE-BCF2AE032A9C}"), ScreenType.Html }
+            { ObjectId.Empty, ScreenType.None},
+            { new ObjectId("5ca877054a73264e4c06dfc9"), ScreenType.Search },
+            { new ObjectId("5ca877054a73264e4c06dfca"), ScreenType.Form },
+            { new ObjectId("5ca8770a4a73264e4c06dffe"), ScreenType.View },
+            { new ObjectId("5ca8770a4a73264e4c06dfff"), ScreenType.Html }
         };
 
         /// <summary>
         /// Register of all Screen Template Ids to Enum for easy use
         /// </summary>
-        internal static readonly Dictionary<Guid, ScreenTemplate> ScreenTemplateDictonary = new Dictionary<Guid, ScreenTemplate>
+        internal static readonly Dictionary<ObjectId, ScreenTemplate> ScreenTemplateDictonary = new Dictionary<ObjectId, ScreenTemplate>
         {
-            { Guid.Empty, ScreenTemplate.None},
-            { new Guid("{142B82E8-471B-47E5-A13F-158D2B06874B}"), ScreenTemplate.Reference },
-            { new Guid("{79FEFA81-D6F7-4168-BCAF-FE6494DC3D72}"), ScreenTemplate.Home }
+            { ObjectId.Empty, ScreenTemplate.None},
+            { new ObjectId("5ca8770a4a73264e4c06e002"), ScreenTemplate.Reference },
+            { new ObjectId("5ca8770a4a73264e4c06e003"), ScreenTemplate.Home }
         };
 
         /// <summary>
@@ -42,7 +43,7 @@ namespace Oven.Request
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
         /// <summary>
         /// SEO Meta description
         /// </summary>
@@ -55,13 +56,13 @@ namespace Oven.Request
         /// Entity Id for entity related screens
         /// </summary>
         [NonDefault]
-        public Guid? EntityId { get; set; }
+        public ObjectId? EntityId { get; set; }
         /// <summary>
         /// Screen Type Id
         /// </summary>
         [Required]
         [NonDefault]
-        public Guid ScreenTypeId { get; set; }
+        public ObjectId ScreenTypeId { get; set; }
         /// <summary>
         /// Path segment
         /// </summary>
@@ -69,7 +70,7 @@ namespace Oven.Request
         /// <summary>
         /// Screen Template Id, using a template means the screen will get updated when the template does
         /// </summary>
-        public Guid? TemplateId { get; set; }
+        public ObjectId? TemplateId { get; set; }
         /// <summary>
         /// Screen Features
         /// </summary>
@@ -129,13 +130,13 @@ namespace Oven.Request
         {
             get
             {
-                var id = TemplateId ?? Guid.Empty;
+                var id = TemplateId ?? ObjectId.Empty;
                 return ScreenTemplateDictonary[id];
             }
             set
             {
                 var id = ScreenTemplateDictonary.SingleOrDefault(v => v.Value == value).Key;
-                if (id == Guid.Empty)
+                if (id == ObjectId.Empty)
                 {
                     TemplateId = null;
                 }
