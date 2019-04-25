@@ -216,7 +216,7 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// {Screen.Title} Add
         /// </summary>
-        public virtual async Task<string> CreateAsync({Screen.InternalName}Request post)
+        public virtual async Task<ObjectId> CreateAsync({Screen.InternalName}Request post)
         {{
             if (post == null)
             {{
@@ -226,10 +226,10 @@ namespace Oven.Templates.DataAccessLayer.Services
 
 {string.Join(Environment.NewLine, properties)}
 
-            if (!string.IsNullOrEmpty(post.Id) && ObjectId.TryParse(post.Id, out var id))
-            {{
-                newRecord.Id = id.ToString();
-            }}
+          //  if (!string.IsNullOrEmpty(post.Id) && ObjectId.TryParse(post.Id, out var id))
+          //  {{
+          //      newRecord.Id = id;
+          //  }}
             await _context.{Screen.Entity.InternalNamePlural}.InsertOneAsync(newRecord);
 
             return newRecord.Id;

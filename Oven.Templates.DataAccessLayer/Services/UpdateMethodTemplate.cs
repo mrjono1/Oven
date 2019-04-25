@@ -204,18 +204,14 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// {Screen.Title} Update
         /// </summary>
-        public virtual async Task<string> UpdateAsync(string id, {Screen.InternalName}Request request)
+        public virtual async Task<ObjectId> UpdateAsync(ObjectId id, {Screen.InternalName}Request request)
         {{
             return await UpsertAsync(id, request, false);
         }}
 
-        public virtual async Task<string> UpsertAsync(string id, {Screen.InternalName}Request request, bool upsert = false)
+        public virtual async Task<ObjectId> UpsertAsync(ObjectId id, {Screen.InternalName}Request request, bool upsert = false)
         {{
-            if (string.IsNullOrWhiteSpace(id) || request == null)
-            {{
-                throw new ArgumentNullException(); 
-            }}
-            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            if (id == ObjectId.Empty)
             {{
                 throw new ArgumentException(""Invalid ObjectId"", ""id"");
             }}
@@ -231,7 +227,7 @@ namespace Oven.Templates.DataAccessLayer.Services
             {{
                 return id;
             }}
-            return null;
+            return ObjectId.Empty;
         }}";
         }
     }

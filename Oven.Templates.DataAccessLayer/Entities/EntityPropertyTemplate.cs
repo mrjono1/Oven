@@ -22,14 +22,14 @@ namespace Oven.Templates.DataAccessLayer.Entities
         /// Primary Key
         /// </summary>
         [BsonId]
-        public string Id { get; set; }";
+        public ObjectId Id { get; set; }";
 
                 case PropertyType.ParentRelationshipOneToMany:
                     var parentRelationshipEntity = project.Entities.Where(p => p.Id == property.ReferenceEntityId.Value).Single();
                     return $@"        /// <summary>
         /// Foreign Key (Parent Relationship 1:Many) to {parentRelationshipEntity.InternalName}
         /// </summary>
-        public string {property.InternalName}Id {{ get; set; }}
+        public {property.CsType} {property.InternalName}Id {{ get; set; }}
         /// <summary>
         /// Foreign Key navigation object (Parent Relationship 1:Many) to {parentRelationshipEntity.InternalName}
         /// </summary>
@@ -40,7 +40,7 @@ namespace Oven.Templates.DataAccessLayer.Entities
                     return $@"        /// <summary>
         /// Foreign Key (Reference Relationship) to {referenceRelationshipEntity.InternalName}
         /// </summary>
-        public string {property.InternalName}Id {{ get; set; }}
+        public {property.CsType} {property.InternalName}Id {{ get; set; }}
         /// <summary>
         /// Foreign Key navigation object (Reference Relationship) to {referenceRelationshipEntity.InternalName}
         /// </summary>
@@ -51,7 +51,7 @@ namespace Oven.Templates.DataAccessLayer.Entities
                     return $@"        /// <summary>
         /// Foreign Key (Parent Relationship 1:1) to {oneToOneRelationshipEntity.InternalName}
         /// </summary>
-        public string {property.InternalName}Id {{ get; set; }}
+        public {property.CsType} {property.InternalName}Id {{ get; set; }}
         /// <summary>
         /// Foreign Key navigation object (Parent Relationship 1:1) to {oneToOneRelationshipEntity.InternalName}
         /// </summary>

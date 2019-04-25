@@ -28,13 +28,9 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// {Entity.Title} Delete
         /// </summary>
-        public virtual async Task<bool> DeleteAsync(string id)
+        public virtual async Task<bool> DeleteAsync(ObjectId id)
         {{
-            if (string.IsNullOrWhiteSpace(id))
-            {{
-                throw new ArgumentNullException(); 
-            }}
-            if (!ObjectId.TryParse(id, out ObjectId objectId))
+            if (id == ObjectId.Empty)
             {{
                 throw new ArgumentException(""Invalid ObjectId"", ""id"");
             }}

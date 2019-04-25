@@ -37,14 +37,14 @@ namespace Oven.Templates.Api.Controllers
         [HttpGet(""{{id}}"")]
         [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> GetAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, string id)
+        public async Task<IActionResult> GetAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, ObjectId id)
         {{
             if (!ModelState.IsValid)
             {{
                 return new BadRequestObjectResult(ModelState);
             }}
 
-            if (string.IsNullOrWhiteSpace(id))
+            if (id == ObjectId.Empty)
             {{
                 return NotFound();
             }}
@@ -74,9 +74,9 @@ namespace Oven.Templates.Api.Controllers
         [HttpPut(""{{id}}"")]
         [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> UpdateAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, [FromRoute]string id, [FromBody]{Screen.InternalName}Request request)
+        public async Task<IActionResult> UpdateAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, [FromRoute]ObjectId id, [FromBody]{Screen.InternalName}Request request)
         {{
-            if (string.IsNullOrWhiteSpace(id) || request == null)
+            if (id == ObjectId.Empty || request == null)
             {{
                 return BadRequest();
             }}
@@ -151,14 +151,14 @@ namespace Oven.Templates.Api.Controllers
         /// </summary>
         [HttpDelete(""{{id}}"")]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> DeleteAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, string id)
+        public async Task<IActionResult> DeleteAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, ObjectId id)
         {{
             if (!ModelState.IsValid)
             {{
                 return new BadRequestObjectResult(ModelState);
             }}
 
-            if (string.IsNullOrWhiteSpace(id))
+            if (id == ObjectId.Empty)
             {{
                 return NotFound();
             }}

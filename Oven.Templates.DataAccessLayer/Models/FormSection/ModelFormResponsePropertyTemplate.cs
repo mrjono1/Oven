@@ -25,20 +25,6 @@ namespace Oven.Templates.DataAccessLayer.Models
             {
                 case PropertyType.PrimaryKey:
                 case PropertyType.ParentRelationshipOneToMany:
-                        properties.Add($@"        /// <summary>
-        /// {formField.TitleValue}
-        /// </summary>
-        internal ObjectId ObjectId{formField.InternalNameCSharp}
-        {{
-            get
-            {{
-                return ObjectId.Parse({formField.InternalNameCSharp});
-            }}
-            set
-            {{
-                {formField.InternalNameCSharp} = value.ToString();
-            }}
-        }}");
                     break;
                 case PropertyType.ReferenceRelationship:
                     // Foreign Title
@@ -47,20 +33,6 @@ namespace Oven.Templates.DataAccessLayer.Models
         /// </summary>
         [Display(Name = ""{formField.TitleValue}"")]
         public string {formField.InternalNameAlternateCSharp} {{ get; set; }}");
-                    properties.Add($@"        /// <summary>
-        /// {formField.TitleValue}
-        /// </summary>
-        internal ObjectId ObjectId{formField.InternalNameCSharp}
-        {{
-            get
-            {{
-                return ObjectId.Parse({formField.InternalNameCSharp});
-            }}
-            set
-            {{
-                {formField.InternalNameCSharp} = value.ToString();
-            }}
-        }}");
                     break;
             }
 

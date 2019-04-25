@@ -100,6 +100,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using {Project.InternalName}.DataAccessLayer.Models;
 using {Project.InternalName}.DataAccessLayer;
 using {Project.InternalName}.DataAccessLayer.Entities;

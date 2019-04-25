@@ -26,14 +26,14 @@ namespace Oven.Templates.DataAccessLayer.Models.Export
                 return $@"        /// <summary>
         /// {property.Title}
         /// </summary>
-        public string {property.InternalName}Id {{ get; set; }}";
+        public {property.CsType} {property.InternalName}Id {{ get; set; }}";
             }
             else if (property.PropertyType == PropertyType.PrimaryKey)
             {
                 return @"        /// <summary>
         /// Primary Key
         /// </summary>
-        public string Id { get; set; }";
+        public ObjectId Id { get; set; }";
             }
             else
             {

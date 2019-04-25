@@ -85,6 +85,7 @@ namespace Oven.Templates.DataAccessLayer.Services.Contracts
             return $@"using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using {Project.InternalName}.DataAccessLayer.Models;
 
 namespace {Project.InternalName}.DataAccessLayer.Services.Contracts

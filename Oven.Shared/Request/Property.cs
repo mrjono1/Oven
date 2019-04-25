@@ -175,9 +175,10 @@ namespace Oven.Request
             switch (PropertyType)
             {
                 case PropertyType.PrimaryKey:
+                    return "ObjectId";
                 case PropertyType.ParentRelationshipOneToMany:
                 case PropertyType.ReferenceRelationship:
-                    return $"string";
+                    return $"ObjectId{(!required ? "?" : string.Empty)}";
                 case PropertyType.String:
                     return "string";
                 case PropertyType.Integer:

@@ -38,7 +38,7 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
 
             foreach (var item in items)
             {{
-                var id = item.Id.ToString();
+                var id = item.Id;
                 await service.UpsertAsync(id, item, true);
             }}
         }}");

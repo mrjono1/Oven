@@ -72,6 +72,7 @@ namespace Oven.Templates.DataAccessLayer.Models
             return $@"using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
 
 namespace {Project.InternalName}.DataAccessLayer.Models
 {{

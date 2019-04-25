@@ -58,14 +58,7 @@ namespace Oven.Templates.DataAccessLayer.Models
         /// {parentEntity.Title} Id
         /// </summary>
         [Required]
-        public string {parentEntity.InternalName}Id {{ get; set; }}
-        internal ObjectId {parentEntity.InternalName}ObjectIdId
-        {{ 
-            get
-            {{
-                return ObjectId.Parse({parentEntity.InternalName}Id);
-            }}
-        }}";
+        public ObjectId {parentEntity.InternalName}Id {{ get; set; }}";
             }
             
 
@@ -85,7 +78,7 @@ namespace {Project.InternalName}.DataAccessLayer.Models
         public int end {{ get; set; }}
         public string order {{ get; set; }}
         public string sort {{ get; set; }}
-        {parentPropertyString}
+{parentPropertyString}
         // TODO: Search fields
     }}
 }}";

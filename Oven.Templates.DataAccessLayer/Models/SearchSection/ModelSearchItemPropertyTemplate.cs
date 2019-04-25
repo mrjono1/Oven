@@ -20,22 +20,6 @@ namespace Oven.Templates.DataAccessLayer.Models
         [Display(Name = ""{searchColumn.TitleValue}"")]
         public {searchColumn.TypeCSharp} {searchColumn.InternalNameCSharp} {{ get; set; }}" };
 
-            if (searchColumn.PropertyType == PropertyType.PrimaryKey) {
-                properties.Add($@"        /// <summary>
-        /// {searchColumn.TitleValue}
-        /// </summary>
-        internal ObjectId ObjectIdId
-        {{
-            get
-            {{
-                return ObjectId.Parse(Id);
-            }}
-            set
-            {{
-                Id = value.ToString();
-            }}
-        }}");
-            }
             return string.Join(Environment.NewLine, properties);
         }
     }

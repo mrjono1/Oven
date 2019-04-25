@@ -75,18 +75,14 @@ namespace Oven.Templates.DataAccessLayer.Services
         /// <summary>
         /// {Screen.Title} Get
         /// </summary>
-        public virtual async Task<{Screen.FormResponseClass}> GetAsync(string id)
+        public virtual async Task<{Screen.FormResponseClass}> GetAsync(ObjectId id)
         {{
-            if (string.IsNullOrWhiteSpace(id))
+            if (id == ObjectId.Empty)
             {{
-                throw new ArgumentNullException(); 
-            }}
-            if (!ObjectId.TryParse(id, out ObjectId objectId))
-            {{
-                throw new ArgumentException(""Invalid id format"", ""id"");
+                throw new ArgumentException(""Invalid ObjectId"", ""id"");
             }}
             
-            var filter = Builders<{Screen.Entity.InternalName}>.Filter.Eq(a => a.Id, id.ToLower());
+            var filter = Builders<{Screen.Entity.InternalName}>.Filter.Eq(a => a.Id, id);
             var query = _context.{Screen.Entity.InternalNamePlural}.Find(filter)
                 .Project(p => new {Screen.FormResponseClass}() {{
 {properties.IndentLines(5, ",")}

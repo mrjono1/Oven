@@ -46,7 +46,7 @@ namespace Oven.Templates.DataAccessLayer.Entities
         {
             var constructorDefaultValues = new List<string>
             {
-                "            Id = ObjectId.GenerateNewId().ToString();"
+                "            Id = ObjectId.GenerateNewId();"
             };
             var properties = new List<string>();
             var navigationProperties = new List<string>();
