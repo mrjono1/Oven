@@ -50,7 +50,7 @@ namespace Oven.Templates.Api.ProjectFiles
                 { "Swashbuckle.AspNetCore", "3.0.0" },
                 { "Swashbuckle.AspNetCore.Swagger", "3.0.0" },
                 { "Swashbuckle.AspNetCore.SwaggerUi", "3.0.0" },
-                { "RestSharp", "106.4.2"}
+                { "RestSharp", "106.6.9"}
             };
 
             if (!Project.UsePutForUpdate)

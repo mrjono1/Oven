@@ -74,11 +74,11 @@ namespace Oven.Templates.DataAccessLayer.Services
                         select item;
 
             var totalItems = query.Count();
-            var items = new {screenSection.SearchSection.SearchItemClass}[0];
+            var items = new List<{screenSection.SearchSection.SearchItemClass}>();
 
             if (totalItems != 0 && request.end != 0)
             {{
-                items = query
+                items = await query
                     .OrderBy(p => p.{screenSection.SearchSection.OrderBy})
                     .Skip(request.start)
                     .Take(request.end - request.start)
@@ -86,12 +86,12 @@ namespace Oven.Templates.DataAccessLayer.Services
                     {{
 {string.Join(string.Concat(",", Environment.NewLine), propertyMapping)}
                     }})
-                    .ToArray();
+                    .ToListAsync();
             }}
             
             return new {screenSection.SearchSection.SearchResponseClass} {{
                 TotalItems = totalItems,
-                Items = items,
+                Items = items.ToArray(),
             }};
         }}";
         }

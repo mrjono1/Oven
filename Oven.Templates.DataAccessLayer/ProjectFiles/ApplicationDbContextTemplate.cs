@@ -89,8 +89,8 @@ namespace {Project.InternalName}.DataAccessLayer
     /// </summary>
     public class ApplicationDbContext : IApplicationDbContext
     {{
-        private MongoClient _mongoClient;
-        private IMongoDatabase _database;
+        private readonly MongoClient _mongoClient;
+        private readonly IMongoDatabase _database;
 
         /// <summary>
         /// Application Database Context

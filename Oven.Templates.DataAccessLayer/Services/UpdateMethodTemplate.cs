@@ -218,7 +218,7 @@ namespace Oven.Templates.DataAccessLayer.Services
             
             var filter = Builders<{Screen.Entity.InternalName}>.Filter.Eq(s => s.Id, id);
             var update = Builders<{Screen.Entity.InternalName}>.Update;
-            var updates = new List<UpdateDefinition<{Screen.Entity.InternalName}>>();
+            var updates = new List<UpdateDefinition<{Screen.Entity.InternalName}>>{{ }};
             
 {string.Join(Environment.NewLine, properties)}
                 

@@ -45,7 +45,7 @@ namespace Oven.Templates.Shared.ProjectFiles
 
             var nugetReferences = new Dictionary<string, string>
             {
-                { "Newtonsoft.Json", "11.0.2"}
+                { "Newtonsoft.Json", "12.0.2"}
             };
             
             foreach (var item in nugetReferences)

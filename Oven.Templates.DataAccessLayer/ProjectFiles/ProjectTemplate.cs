@@ -42,13 +42,11 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
         public string GetFileContent()
         {
             var packageReferences = new StringBuilder();
-
-            var mongoDbVersion = "2.7.3";
             var nugetReferences = new Dictionary<string, string>
             {
                 { "Microsoft.AspNetCore.All", null },
-                { "MongoDB.Driver", mongoDbVersion},
-                { "Newtonsoft.Json", "11.0.2"}
+                { "MongoDB.Driver", "2.8.0"},
+                { "Newtonsoft.Json", "12.0.2"}
             };
 
             foreach (var item in nugetReferences)

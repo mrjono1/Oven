@@ -108,6 +108,7 @@ using {Project.InternalName}.DataAccessLayer.Services.Contracts;
 using System.Diagnostics;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 {string.Join(Environment.NewLine, usings.Distinct())}
 

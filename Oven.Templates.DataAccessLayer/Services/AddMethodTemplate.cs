@@ -160,7 +160,7 @@ namespace Oven.Templates.DataAccessLayer.Services
                     {
                         properties.Add($@"            if ({childObjectName} != null)
             {{
-                {existingObjectName}.{childEntityFormFieldEntity.InternalName} = new {childEntityFormFieldEntity.InternalName}();
+                {existingObjectName}.{childEntityFormFieldEntity.InternalName} = new {childEntityFormFieldEntity.InternalName} {{ }};
 {string.Join(Environment.NewLine, childProperties)}
             }}");
                     }
@@ -174,7 +174,7 @@ namespace Oven.Templates.DataAccessLayer.Services
             {{
                 if ({existingObjectName}.{childEntityFormFieldEntity.InternalName} == null || !{existingObjectName}.{childEntityFormFieldEntity.InternalName}.{parentPropertyInternalName}Id.HasValue)
                 {{
-                    {existingObjectName}.{childEntityFormFieldEntity.InternalName} = new {childEntityFormFieldEntity.InternalName}();
+                    {existingObjectName}.{childEntityFormFieldEntity.InternalName} = new {childEntityFormFieldEntity.InternalName} {{ }};
                 }}
 {string.Join(Environment.NewLine, childProperties)}
             }}");
@@ -202,7 +202,7 @@ namespace Oven.Templates.DataAccessLayer.Services
                 }
             }
 
-            var newRecord = $"            var newRecord = new {Screen.Entity.InternalName}();";
+            var newRecord = $"            var newRecord = new {Screen.Entity.InternalName} {{ }};";
 
             if (!string.IsNullOrWhiteSpace(Screen.DefaultObjectJsonData))
             {
