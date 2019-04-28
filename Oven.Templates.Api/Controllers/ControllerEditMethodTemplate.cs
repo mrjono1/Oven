@@ -24,43 +24,6 @@ namespace Oven.Templates.Api.Controllers
             ScreenSections = screenSections;
         }
 
-        #region GET
-        /// <summary>
-        /// GET Verb method
-        /// </summary>
-        internal string GetMethod()
-        {
-            return $@"
-        /// <summary>
-        /// {Screen.Title} Get
-        /// </summary>
-        [HttpGet(""{{id}}"")]
-        [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
-        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> GetAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, ObjectId id)
-        {{
-            if (!ModelState.IsValid)
-            {{
-                return new BadRequestObjectResult(ModelState);
-            }}
-
-            if (id == ObjectId.Empty)
-            {{
-                return NotFound();
-            }}
-            
-            var result = await {Screen.Entity.InternalName.Camelize()}Service.GetAsync(id);
-
-            if (result == null)
-            {{
-                return NotFound();
-            }}
-
-            return Ok(result);
-        }}";
-        }
-        #endregion
-
         #region PUT (Update)
         /// <summary>
         /// PUT Verb Method, for updating records

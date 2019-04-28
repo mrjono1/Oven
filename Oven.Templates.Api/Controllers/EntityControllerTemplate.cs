@@ -80,7 +80,7 @@ namespace Oven.Templates.Api.Controllers
             if (formSections.Any())
             {
                 var controllerFormSectionMethodsPartial = new ControllerFormSectionMethodsPartial(Project, formScreen, formSections);
-                controllerActions.Add(controllerFormSectionMethodsPartial.GetMethod());
+                controllerActions.Add(new ControllerGetMethodTemplate(Project, formScreen).GetMethod());
                 controllerActions.Add(controllerFormSectionMethodsPartial.PostMethod());
                 controllerActions.Add(controllerFormSectionMethodsPartial.DeleteMethod());
 
