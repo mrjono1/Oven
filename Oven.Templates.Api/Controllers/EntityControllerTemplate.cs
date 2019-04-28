@@ -82,7 +82,7 @@ namespace Oven.Templates.Api.Controllers
                 var controllerFormSectionMethodsPartial = new ControllerFormSectionMethodsPartial(Project, formScreen, formSections);
                 controllerActions.Add(new ControllerGetMethodTemplate(Project, formScreen).GetMethod());
                 controllerActions.Add(controllerFormSectionMethodsPartial.PostMethod());
-                controllerActions.Add(controllerFormSectionMethodsPartial.DeleteMethod());
+                controllerActions.Add(new ControllerDeleteMethodTemplate(Project, formScreen).DeleteMethod());
 
                 if (Project.UsePutForUpdate)
                 {

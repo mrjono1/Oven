@@ -101,38 +101,7 @@ namespace Oven.Templates.Api.Controllers
         }}";
         }
         #endregion
-
-        #region Delete
-        /// <summary>
-        /// DELETE Verb method
-        /// </summary>
-        internal string DeleteMethod()
-        {
-            return $@"
-        /// <summary>
-        /// {Screen.Title} Delete
-        /// </summary>
-        [HttpDelete(""{{id}}"")]
-        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> DeleteAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, ObjectId id)
-        {{
-            if (!ModelState.IsValid)
-            {{
-                return new BadRequestObjectResult(ModelState);
-            }}
-
-            if (id == ObjectId.Empty)
-            {{
-                return NotFound();
-            }}
-            
-            await {Screen.Entity.InternalName.Camelize()}Service.DeleteAsync(id);
-
-            return Ok();
-        }}";
-        }
-#endregion
-
+        
         #region PATCH (Update not in use)
         /// <summary>
         /// PATCH Verb method, for updating records
