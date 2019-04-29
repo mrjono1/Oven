@@ -8,23 +8,20 @@ namespace Oven.Templates.Api.Controllers
     /// <summary>
     /// Contoller Edit Method Template
     /// </summary>
-    public class ControllerFormSectionMethodsPartial
+    public class ControllerUpdateMethodTemplate
     {
         private readonly Project Project;
         private readonly Screen Screen;
-        private readonly IEnumerable<ScreenSection> ScreenSections;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ControllerFormSectionMethodsPartial(Project project, Screen screen, IEnumerable<ScreenSection> screenSections)
+        public ControllerUpdateMethodTemplate(Project project, Screen screen)
         {
             Project = project;
             Screen = screen;
-            ScreenSections = screenSections;
         }
 
-        #region PUT (Update)
         /// <summary>
         /// PUT Verb Method, for updating records
         /// </summary>
@@ -37,21 +34,21 @@ namespace Oven.Templates.Api.Controllers
         [HttpPut(""{{id}}"")]
         [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> UpdateAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, [FromRoute]ObjectId id, [FromBody]{Screen.InternalName}Request request)
-        {{
-            if (id == ObjectId.Empty || request == null)
-            {{
-                return BadRequest();
-            }}
-            
+        public async Task<IActionResult> UpdateAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, [FromRoute]string id, [FromBody]{Screen.InternalName}Request request)
+        {{            
             if (!ModelState.IsValid)
             {{
                 return new BadRequestObjectResult(ModelState);
             }}
-            
-            await {Screen.Entity.InternalName.Camelize()}Service.UpdateAsync(id, request);
+          
+            if (string.IsNullOrWhiteSpace(id) || !ObjectId.TryParse(id, out ObjectId objectId))
+            {{
+                return BadRequest();
+            }}
 
-            var result = await {Screen.Entity.InternalName.Camelize()}Service.GetAsync(id);
+            await {Screen.Entity.InternalName.Camelize()}Service.UpdateAsync(objectId, request);
+
+            var result = await {Screen.Entity.InternalName.Camelize()}Service.GetAsync(objectId);
 
             if (result == null)
             {{
@@ -61,47 +58,7 @@ namespace Oven.Templates.Api.Controllers
             return Ok(result);
         }}";
         }
-        #endregion
 
-        #region POST (Add)
-        /// <summary>
-        /// POST Verb Method, for adding new records
-        /// </summary>
-        internal string PostMethod()
-        {
-            return $@"
-        /// <summary>
-        /// {Screen.Title} Add
-        /// </summary>
-        [HttpPost]
-        [ProducesResponseType(typeof({Screen.FormResponseClass}), 200)]
-        [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), 400)]
-        public async Task<IActionResult> CreateAsync([FromServices] I{Screen.Entity.InternalName}Service {Screen.Entity.InternalName.Camelize()}Service, [FromBody]{Screen.InternalName}Request request)
-        {{
-            if (request == null)
-            {{
-                return BadRequest();
-            }}
-            
-            if (!ModelState.IsValid)
-            {{
-                return new BadRequestObjectResult(ModelState);
-            }}
-
-            var id = await {Screen.Entity.InternalName.Camelize()}Service.CreateAsync(request);
-
-            var result = await {Screen.Entity.InternalName.Camelize()}Service.GetAsync(id);
-
-            if (result == null)
-            {{
-                return NotFound();
-            }}
-
-            return Ok(result);
-        }}";
-        }
-        #endregion
-        
         #region PATCH (Update not in use)
         /// <summary>
         /// PATCH Verb method, for updating records

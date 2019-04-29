@@ -79,19 +79,18 @@ namespace Oven.Templates.Api.Controllers
 
             if (formSections.Any())
             {
-                var controllerFormSectionMethodsPartial = new ControllerFormSectionMethodsPartial(Project, formScreen, formSections);
                 controllerActions.Add(new ControllerGetMethodTemplate(Project, formScreen).GetMethod());
-                controllerActions.Add(controllerFormSectionMethodsPartial.PostMethod());
+                controllerActions.Add(new ControllerAddMethodTemplate(Project, formScreen).PostMethod());
                 controllerActions.Add(new ControllerDeleteMethodTemplate(Project, formScreen).DeleteMethod());
 
                 if (Project.UsePutForUpdate)
                 {
-                    controllerActions.Add(controllerFormSectionMethodsPartial.PutMethod());
+                    controllerActions.Add(new ControllerUpdateMethodTemplate(Project, formScreen).PutMethod());
                 }
                 else
                 {
                     usings.Add("using Microsoft.AspNetCore.JsonPatch;");
-                    controllerActions.Add(controllerFormSectionMethodsPartial.PatchMethod());
+                    controllerActions.Add(new ControllerUpdateMethodTemplate(Project, formScreen).PatchMethod());
                 }
             }
 
