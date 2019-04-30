@@ -2,7 +2,7 @@ using Oven.Request;
 using System.Collections.Generic;
 using Oven.Interfaces;
 
-namespace Oven.Templates.Api.Extensions
+namespace Oven.Templates.DataAccessLayer.Extensions
 {
     /// <summary>
     /// Extensions Template Builder
@@ -26,8 +26,6 @@ namespace Oven.Templates.Api.Extensions
         {
             return new List<ITemplate>
             {
-                new NonDefaultAttributeTemplate(Project),
-                new ObjectIdJsonConverterTemplate(Project)
             };
         }
 

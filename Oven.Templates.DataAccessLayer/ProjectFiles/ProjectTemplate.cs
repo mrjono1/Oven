@@ -68,6 +68,10 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include=""..\{Project.InternalName}.Shared\{Project.InternalName}.Shared.csproj"" />
+  </ItemGroup>
+
+  <ItemGroup>
 {packageReferences}
   </ItemGroup>
   <PropertyGroup>

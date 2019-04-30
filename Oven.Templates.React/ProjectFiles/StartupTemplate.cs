@@ -113,6 +113,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using {Project.InternalName}.Services;
 using {Project.InternalName}.Services.Contracts;
+using Oven.Api;
 
 namespace {Project.InternalName}
 {{
@@ -142,7 +143,11 @@ namespace {Project.InternalName}
         public void ConfigureServices(IServiceCollection services)
         {{
             // Add framework services.
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options =>
+                    options.SerializerSettings.Converters.Add(new ObjectIdJsonConverter())
+                );
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

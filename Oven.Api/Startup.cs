@@ -57,8 +57,10 @@ namespace Oven.Api
             {
                 options.Filters.Add(new RequireHttpsAttribute());
             });
-
-            services.AddMvc();
+            services.AddMvc()
+            .AddJsonOptions(options =>
+                options.SerializerSettings.Converters.Add(new ObjectIdJsonConverter())
+            );
             services.AddSingleton<IConfiguration>(Configuration);
 
             // Add Swagger service

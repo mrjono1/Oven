@@ -15,11 +15,19 @@ namespace Oven.Templates.DataAccessLayer.Models
         /// </summary>
         public static string Evaluate(FormField formField)
         {
-            var properties = new List<string>() { $@"        /// <summary>
+            var attributes = new List<string>
+            {
+                $@"/// <summary>
         /// {formField.TitleValue}
         /// </summary>
-        [Display(Name = ""{formField.TitleValue}"")]
-        public {formField.TypeCSharp} {formField.InternalNameCSharp} {{ get; set; }}" };
+        [Display(Name = ""{formField.TitleValue}"")]"
+            };
+
+            var property = $@"        {string.Join(string.Concat(Environment.NewLine, "        "), attributes)}
+        public {formField.TypeCSharp} {formField.InternalNameCSharp} {{ get; set; }}";
+
+
+            var properties = new List<string>{ property };
 
             switch (formField.PropertyType)
             {
@@ -37,6 +45,7 @@ namespace Oven.Templates.DataAccessLayer.Models
             }
 
             return string.Join(Environment.NewLine, properties);
+
         }
     }
 }

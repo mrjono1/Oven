@@ -22,7 +22,7 @@ namespace Oven.Templates.DataAccessLayer.Models
         /// </summary>
         [Display(Name = ""{formField.TitleValue}"")]"
             };
-
+            
             if (formField.Property.ValidationItems != null){
                 foreach (var item in formField.Property.ValidationItems)
                 {
