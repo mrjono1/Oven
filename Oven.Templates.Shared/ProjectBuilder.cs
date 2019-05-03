@@ -20,6 +20,9 @@ namespace Oven.Templates.Shared
             // Project Files
             solutionWriter.AddTemplate(new ProjectFiles.ProjectTemplate(project));
 
+            // Extensions
+            solutionWriter.AddTemplate(new Extensions.ExtensionsTemplateBuilder(project));
+
             var errors = await solutionWriter.WriteAndClean();
 
             if (!string.IsNullOrEmpty(errors))

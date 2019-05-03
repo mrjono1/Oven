@@ -45,10 +45,7 @@ namespace Oven.Templates.Api.Controllers
         {
             var usings = new List<string>();
             var controllerActions = new List<string>();
-
-            var privateFields = new List<string>();
             var constructorParameters = new List<string>();
-            var constructorFieldMappings = new List<string>();
             var referenceFormFields = new List<FormField>();
             var formSections = new List<ScreenSection>();
             Screen formScreen = null;
@@ -115,15 +112,6 @@ namespace {Project.InternalName}.Controllers
     [Route(""api/{Entity.InternalNamePlural}"")]
     public class {Entity.InternalNamePlural}ApiController : ControllerBase
     {{
-{string.Join(Environment.NewLine, privateFields)}
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public {Entity.InternalNamePlural}ApiController({string.Join(string.Concat(",", Environment.NewLine, "          "), constructorParameters)})
-        {{
-            {string.Join(string.Concat(Environment.NewLine, "            "), constructorFieldMappings)}
-        }}
 {string.Join(Environment.NewLine, controllerActions)}
     }}
 }}";

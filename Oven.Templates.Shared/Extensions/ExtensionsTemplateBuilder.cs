@@ -2,7 +2,7 @@ using Oven.Request;
 using System.Collections.Generic;
 using Oven.Interfaces;
 
-namespace Oven.Templates.Api.Extensions
+namespace Oven.Templates.Shared.Extensions
 {
     /// <summary>
     /// Extensions Template Builder

@@ -44,6 +44,7 @@ namespace Oven.Templates.Api.Models
         public string GetFileContent()
         {
             return $@"using System;
+using Oven.Shared;
 
 namespace {Project.InternalName}.Models
 {{

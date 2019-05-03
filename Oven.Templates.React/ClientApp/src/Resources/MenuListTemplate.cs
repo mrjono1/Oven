@@ -63,15 +63,21 @@ namespace Oven.Templates.React.ClientApp.Src.Resources
             return $@"import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import {{ Title, MenuItemLink }} from 'react-admin';
+import {{ Title, MenuItemLink, fetchUtils }} from 'react-admin';
 import LabelIcon from '@material-ui/icons/Label';
 import {{ withRouter }} from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+
+async function seedDataAction() {{
+    await fetchUtils.fetchJson('api/Administration/seed', {{ method: 'GET' }});
+}};
 
 const AdminMenu = ({{ onClick }}) => (
     <Card>
         <Title title=""Administration"" />
         <CardContent>
-{string.Join(Environment.NewLine, menuListItems).IndentLines(12)}
+            <Button color=""primary"" onClick={{seedDataAction}}>Seed Data</Button>
+{ string.Join(Environment.NewLine, menuListItems).IndentLines(12)}
         </CardContent>
     </Card>
 );

@@ -33,13 +33,14 @@ namespace Oven.Templates.DataAccessLayer.ProjectFiles
         {{
             var content = {content};
             
-            var items = JsonConvert.DeserializeObject<List<Models.{entity.InternalName}Request>>(content);
+            var items = JsonConvert.DeserializeObject<List<Models.{entity.InternalName}Request>>(content,
+                new JsonSerializerSettings {{ Converters = new JsonConverter[] {{ new ObjectIdJsonConverter() }} }}
+            );
             var service = new Services.{entity.InternalName}Service(this);
 
             foreach (var item in items)
             {{
-                var id = item.Id;
-                await service.UpsertAsync(id, item, true);
+                await service.UpsertAsync(item.Id, item, true);
             }}
         }}");
             }

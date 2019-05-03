@@ -45,6 +45,7 @@ namespace Oven.Templates.Api.Models.Reference
         {
             return $@"using System;
 using MongoDB.Bson;
+using Oven.Shared;
 
 namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
 {{

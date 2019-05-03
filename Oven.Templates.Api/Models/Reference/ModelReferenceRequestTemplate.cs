@@ -63,6 +63,7 @@ namespace Oven.Templates.Api.Models.Reference
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using MongoDB.Bson;
+using Oven.Shared;
 
 namespace {Project.InternalName}.Models.{Screen.InternalName}.Reference
 {{

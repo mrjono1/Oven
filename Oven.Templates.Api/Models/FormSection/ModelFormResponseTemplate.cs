@@ -86,6 +86,7 @@ namespace Oven.Templates.Api.Models
 
             return $@"using System;
 using System.ComponentModel.DataAnnotations;
+using Oven.Shared;
 
 namespace {Project.InternalName}.Models
 {{

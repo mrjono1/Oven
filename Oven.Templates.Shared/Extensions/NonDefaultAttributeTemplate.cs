@@ -1,7 +1,7 @@
 using Oven.Interfaces;
 using Oven.Request;
 
-namespace Oven.Templates.Api.Extensions
+namespace Oven.Templates.Shared.Extensions
 {
     /// <summary>
     /// Non Default Attribute Template

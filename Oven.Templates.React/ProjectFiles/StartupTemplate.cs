@@ -113,7 +113,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using {Project.InternalName}.Services;
 using {Project.InternalName}.Services.Contracts;
-using Oven.Api;
+using Oven.Shared;
 
 namespace {Project.InternalName}
 {{

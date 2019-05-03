@@ -25,7 +25,10 @@ namespace Oven.Templates.Api.Controllers
         /// <returns></returns>
         public IEnumerable<ITemplate> GetTemplates()
         {
-            var templates = new List<ITemplate>();
+            var templates = new List<ITemplate>
+            {
+                new AdministrationControllerTemplate(Project)
+            };
 
             // Create Enity Controllers
             foreach (var entity in Project.Entities)

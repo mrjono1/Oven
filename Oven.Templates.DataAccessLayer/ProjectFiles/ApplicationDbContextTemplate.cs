@@ -81,6 +81,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using Oven.Shared;
 
 namespace {Project.InternalName}.DataAccessLayer
 {{

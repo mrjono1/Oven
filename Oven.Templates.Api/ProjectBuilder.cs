@@ -37,9 +37,6 @@ namespace Oven.Templates.Api
             // Models/Export
             solutionWriter.AddTemplate(new Models.Export.ModelTemplateBuilder(project));
 
-            // Extensions
-            solutionWriter.AddTemplate(new Extensions.ExtensionsTemplateBuilder(project));
-
             var errors = await solutionWriter.WriteAndClean();
             if (!string.IsNullOrEmpty(errors))
             {

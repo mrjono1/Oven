@@ -72,7 +72,8 @@ namespace {Project.InternalName}.DataAccessLayer
             // Services
             var servicesList = new Dictionary<Type, Type>
             {{
-                {{typeof(IApplicationDbContext), typeof(ApplicationDbContext)}},
+                {{ typeof(IApplicationDbContext), typeof(ApplicationDbContext) }},
+                {{ typeof(IAdministrationService),typeof(AdministrationService) }},
                 {string.Join(string.Concat(",", Environment.NewLine, "                "), services)}
             }};
 
