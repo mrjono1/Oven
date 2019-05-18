@@ -29,10 +29,13 @@ namespace Oven.Request
         /// </summary>
         public Expression VisibilityExpression { get; set; }
         /// <summary>
-        /// If true this property always hidden from the UI, also could be used in an expression
+        /// If true this property always hidden from the UI, but the property is available client side, also could be used in an expression
         /// </summary>
         public bool IsHiddenFromUi { get; set; }
-
+        /// <summary>
+        /// The field order on the page
+        /// </summary>
+        public int Ordinal { get; set; } = 0;
         #region Internal Helper Properties
         /// <summary>
         /// Project

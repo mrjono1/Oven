@@ -6,6 +6,10 @@
     public enum DefaultDateTimeType
     {
         /// <summary>
+        ///  None
+        /// </summary>
+        None,
+        /// <summary>
         ///  The current Date Time
         /// </summary>
         Now,

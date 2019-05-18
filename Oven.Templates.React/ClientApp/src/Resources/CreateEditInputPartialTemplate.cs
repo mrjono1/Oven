@@ -150,6 +150,16 @@ namespace Oven.Templates.React.ClientApp.Src.Resources
                     break;
                 case PropertyType.DateTime:
                     type = "DateInput";
+                    switch (FormField.Property.DefaultDateTimeType)
+                    {
+                        case DefaultDateTimeType.Now:
+                            defaultValue = $@"{{new Date()}}";
+                            break;
+                        case DefaultDateTimeType.SpecifiedValue:
+                            // TODO: test this
+                            defaultValue = $@"{{{FormField.Property.DefaultDataTimeValue.Value}}}";
+                            break;
+                    }
                     break;
                 case PropertyType.Boolean:
                     if (FormField.Property.DefaultBooleanValue.HasValue)

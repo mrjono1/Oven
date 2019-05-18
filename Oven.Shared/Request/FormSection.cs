@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +10,12 @@ namespace Oven.Request
     /// </summary>
     public partial class FormSection
     {
+        /// <summary>
+        /// Uniqueidentifier
+        /// </summary>
+        [Required]
+        [NonDefault]
+        public ObjectId Id { get; set; }
         /// <summary>
         /// Form Fields
         /// </summary>

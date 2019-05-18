@@ -50,6 +50,7 @@ namespace Oven.Request
         /// </summary>
         public static readonly Dictionary<ObjectId, DefaultDateTimeType> DefaultDateTimeTypeDictonary = new Dictionary<ObjectId, DefaultDateTimeType>
         {
+            { ObjectId.Empty, Request.DefaultDateTimeType.None },
             { new ObjectId("5cdf46e4c7f4dfed0da8fed7"), Request.DefaultDateTimeType.Now },
             { new ObjectId("5cdf46cc38ff4825954bdc46"), Request.DefaultDateTimeType.SpecifiedValue }
         };
@@ -289,13 +290,13 @@ namespace Oven.Request
         /// </summary>
         [JsonIgnore]
         [NotMapped]
-        public DefaultDateTimeType? DefaultDateTimeType
+        public DefaultDateTimeType DefaultDateTimeType
         {
             get
             {
-                if (!DefaultDateTimeType.HasValue || DefaultDateTimeTypeId == ObjectId.Empty)
+                if (!DefaultDateTimeTypeId.HasValue || DefaultDateTimeTypeId.Value == ObjectId.Empty)
                 {
-                    return null;
+                    return DefaultDateTimeType.None;
                 }
                 return DefaultDateTimeTypeDictonary[DefaultDateTimeTypeId.Value];
             }
