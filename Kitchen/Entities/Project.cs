@@ -8,9 +8,9 @@ namespace Kitchen.Entities
 {
     public class Project
     {
-        public static Entity GetEntity()
+        public static Oven.Request.Entity GetEntity()
         {
-            return new Entity()
+            return new Oven.Request.Entity()
             {
                 Id = new ObjectId("5ca869596668b25914b67e6e"),
                 InternalName = "Project",

@@ -1,3 +1,4 @@
+using Humanizer;
 using Oven.Interfaces;
 using Oven.Request;
 using System;
@@ -110,17 +111,11 @@ namespace Oven.Templates.DataAccessLayer.Entities
         public ICollection<{item.e.InternalName}> {item.e.InternalNamePlural} {{ get; set; }}");
                         break;
 
-                    case PropertyType.ReferenceRelationship:
-                        navigationProperties.Add($@"        /// <summary>
-        /// Foreign Key (Via Reference Relationship) to {item.e.InternalName}.{item.p.InternalName}
-        /// </summary>
-        public ICollection<{item.e.InternalName}> {item.p.InternalName}{item.e.InternalNamePlural} {{ get; set; }}");
-                        break;
-
                     case PropertyType.ParentRelationshipOneToOne:
                         navigationProperties.Add($@"        /// <summary>
-        /// One to One Navigation object (One To One Relationship) to {item.e.InternalName}
+        /// One to One Relationship to Embedded Document {item.e.InternalName}
         /// </summary>
+        [BsonElement(""{item.e.InternalName.Camelize()}"")]
         public {item.e.InternalName} {item.e.InternalName} {{ get; set; }}");
                         break;
                 }

@@ -40,23 +40,8 @@ namespace Oven.Templates.DataAccessLayer.Entities
                     return $@"        /// <summary>
         /// Foreign Key (Reference Relationship) to {referenceRelationshipEntity.InternalName}
         /// </summary>
-        public {property.CsType} {property.InternalName}Id {{ get; set; }}
-        /// <summary>
-        /// Foreign Key navigation object (Reference Relationship) to {referenceRelationshipEntity.InternalName}
-        /// </summary>
-        public {referenceRelationshipEntity.InternalName} {property.InternalName} {{ get; set; }}";
-
-                case PropertyType.ParentRelationshipOneToOne:
-                    var oneToOneRelationshipEntity = project.Entities.Where(p => p.Id == property.ReferenceEntityId.Value).Single();
-                    return $@"        /// <summary>
-        /// Foreign Key (Parent Relationship 1:1) to {oneToOneRelationshipEntity.InternalName}
-        /// </summary>
-        public {property.CsType} {property.InternalName}Id {{ get; set; }}
-        /// <summary>
-        /// Foreign Key navigation object (Parent Relationship 1:1) to {oneToOneRelationshipEntity.InternalName}
-        /// </summary>
-        public {oneToOneRelationshipEntity.InternalName} {property.InternalName} {{ get; set; }}";
-
+        public {property.CsType} {property.InternalName}Id {{ get; set; }}";
+        
                 default:
                     var attributes = new List<string>
                     {

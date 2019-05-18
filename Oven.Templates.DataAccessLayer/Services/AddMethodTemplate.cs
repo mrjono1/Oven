@@ -226,16 +226,11 @@ namespace Oven.Templates.DataAccessLayer.Services
 
 {string.Join(Environment.NewLine, properties)}
 
-          //  if (!string.IsNullOrEmpty(post.Id) && ObjectId.TryParse(post.Id, out var id))
-          //  {{
-          //      newRecord.Id = id;
-          //  }}
             await _context.{Screen.Entity.InternalNamePlural}.InsertOneAsync(newRecord);
 
             return newRecord.Id;
         }}";
         }
         #endregion
-
     }
 }
