@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oven", "Oven\Oven.csproj", "{EB541725-6D16-44FD-9DBE-0BFD8AC9A064}"
 EndProject
@@ -24,7 +24,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oven.Templates.React", "Ove
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oven.Templates.Api.Custom", "Oven.Templates.Api.Custom\Oven.Templates.Api.Custom.csproj", "{2AC9635C-1AAC-41EF-9C1C-A8191BD708C5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oven.Templates.Shared", "Oven.Templates.Shared\Oven.Templates.Shared.csproj", "{F030A863-426A-4BCE-84F0-484B772F0B33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oven.Templates.Shared", "Oven.Templates.Shared\Oven.Templates.Shared.csproj", "{F030A863-426A-4BCE-84F0-484B772F0B33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kitchen", "Kitchen\Kitchen.csproj", "{6E1A3401-5142-4252-8761-F6D3FB78D3E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,10 @@ Global
 		{F030A863-426A-4BCE-84F0-484B772F0B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F030A863-426A-4BCE-84F0-484B772F0B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F030A863-426A-4BCE-84F0-484B772F0B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E1A3401-5142-4252-8761-F6D3FB78D3E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E1A3401-5142-4252-8761-F6D3FB78D3E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E1A3401-5142-4252-8761-F6D3FB78D3E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E1A3401-5142-4252-8761-F6D3FB78D3E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

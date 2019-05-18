@@ -46,6 +46,15 @@ namespace Oven.Request
         };
 
         /// <summary>
+        /// Register of all Entity Template Ids to Enum for easy use
+        /// </summary>
+        public static readonly Dictionary<ObjectId, DefaultDateTimeType> DefaultDateTimeTypeDictonary = new Dictionary<ObjectId, DefaultDateTimeType>
+        {
+            { new ObjectId("5cdf46e4c7f4dfed0da8fed7"), Request.DefaultDateTimeType.Now },
+            { new ObjectId("5cdf46cc38ff4825954bdc46"), Request.DefaultDateTimeType.SpecifiedValue }
+        };
+
+        /// <summary>
         /// Register of all Property Template Ids to Enum for easy use
         /// </summary>
         internal static readonly Dictionary<ObjectId, PropertyTemplate> PropertyTemplateDictonary = new Dictionary<ObjectId, PropertyTemplate>
@@ -263,6 +272,39 @@ namespace Oven.Request
         /// Default Boolean Value
         /// </summary>
         public bool? DefaultBooleanValue { get; set; }
+        /// <summary>
+        /// Default Date Time Value
+        /// </summary>
+        public DateTime? DefaultDataTimeValue { get; set; }
+
+        /// <summary>
+        /// What Type of Default Date Time Value
+        /// </summary>
+        [Required]
+        [NonDefault]
+        public ObjectId? DefaultDateTimeTypeId { get; set; }
+
+        /// <summary>
+        /// What Type of Default Date Time Value
+        /// </summary>
+        [JsonIgnore]
+        [NotMapped]
+        public DefaultDateTimeType? DefaultDateTimeType
+        {
+            get
+            {
+                if (!DefaultDateTimeType.HasValue || DefaultDateTimeTypeId == ObjectId.Empty)
+                {
+                    return null;
+                }
+                return DefaultDateTimeTypeDictonary[DefaultDateTimeTypeId.Value];
+            }
+            set
+            {
+                DefaultDateTimeTypeId = DefaultDateTimeTypeDictonary.SingleOrDefault(v => v.Value == value).Key;
+            }
+        }
+
         /// <summary>
         /// Server Side Filter Expression
         /// </summary>

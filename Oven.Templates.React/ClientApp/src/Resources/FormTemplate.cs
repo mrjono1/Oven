@@ -137,7 +137,7 @@ const {Screen.Entity.InternalName}Edit = (props) => (
 
 const {Screen.Entity.InternalName}Create = (props) => (
     <Create {{...props}} title=""Create {Screen.Title}"">
-        <SimpleForm redirect=""edit"">
+        <SimpleForm redirect=""list"">
 {screenSections.IndentLines(3)}
         </SimpleForm>
     </Create>

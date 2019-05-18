@@ -41,7 +41,10 @@ namespace Oven.Templates.React.ClientApp.Src.Resources
         /// </summary>
         public string GetFileContent()
         {
-            var menuListItems = new List<string>();
+            // The Tuple is to allow sorting by the display text, that does not have to be unique although should
+            // I don't want throw an exception for this
+
+            var menuListItems = new List<Tuple<string, string>>();
             if (ScreenSection.MenuListMenuItems != null)
             {
                 foreach (var menuItem in ScreenSection.MenuListMenuItems)
@@ -50,12 +53,12 @@ namespace Oven.Templates.React.ClientApp.Src.Resources
                     {
                         var screen = Project.Screens.Single(a => a.Id == menuItem.ScreenId);
 
-                        menuListItems.Add($@"<MenuItemLink 
+                        menuListItems.Add(new Tuple<string, string>(menuItem.Title ?? screen.Title, $@"<MenuItemLink 
     to=""/{screen.Path ?? menuItem.Path}""
     primaryText=""{menuItem.Title ?? screen.Title}""
     leftIcon={{<LabelIcon />}}
     onClick={{onClick}}
-/>");
+/>"));
                     }
                 }
             }
@@ -77,7 +80,7 @@ const AdminMenu = ({{ onClick }}) => (
         <Title title=""Administration"" />
         <CardContent>
             <Button color=""primary"" onClick={{seedDataAction}}>Seed Data</Button>
-{ string.Join(Environment.NewLine, menuListItems).IndentLines(12)}
+{ string.Join(Environment.NewLine, menuListItems.OrderBy(a => a.Item1).Select(a => a.Item2)).IndentLines(12)}
         </CardContent>
     </Card>
 );
